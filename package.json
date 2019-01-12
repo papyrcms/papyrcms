@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "sass": "node-sass sass/main.scss css/style.css -w",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "stage": "now && now alias nextjs-cms.now.sh"
@@ -22,8 +21,7 @@
     "lodash": "^4.17.11",
     "mailchimp-api-v3": "^1.12.1",
     "mongoose": "^5.3.2",
-    "next": "^7.0.1",
-    "next-redux-wrapper": "^2.0.0",
+    "next": "^7.0.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.1",
@@ -37,6 +35,6 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "node-sass": "^4.9.4"
+    "node-sass": "^4.11.0"
   }
 }
