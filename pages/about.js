@@ -18,12 +18,13 @@ class AboutPage extends Component {
 
   render() {
 
+    const { aboutPageSettings } = this.props.settings;
+
     return (
       <PostsFilter
         component={ SectionStandard }
         posts={ this.props.posts }
-        maxPosts={ 1 }
-        postTags={ ['about'] }
+        settings={ aboutPageSettings }
         componentProps={{ title: 'About', className: 'about-page' }}
       />
     );
@@ -32,7 +33,7 @@ class AboutPage extends Component {
 
 
 const mapStateToProps = state => {
-  return { posts: state.posts };
+  return { posts: state.posts, settings: state.settings };
 };
 
 

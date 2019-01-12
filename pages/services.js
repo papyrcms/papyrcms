@@ -18,12 +18,13 @@ class ServicesPage extends Component {
 
   render() {
 
+    const { servicesPageSettings } = this.props.settings;
+
     return (
       <PostsFilter
         component={ SectionStandard }
         posts={ this.props.posts }
-        maxPosts={ 3 }
-        postTags={ ['services'] }
+        settings={ servicesPageSettings }
         componentProps={{ title: 'Services', className: 'services-page' }}
       />
     );
@@ -32,7 +33,7 @@ class ServicesPage extends Component {
 
 
 const mapStateToProps = state => {
-  return { posts: state.posts };
+  return { posts: state.posts, settings: state.settings };
 };
 
 

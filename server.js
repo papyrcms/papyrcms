@@ -61,6 +61,7 @@ app.prepare()
       if ( settings.length === 0 ) {
         appSettings = new Settings();
         appSettings.save();
+        console.log( 'New settings document created' );
 
         // Give mongo time to save the document 
         // before running the funciton again

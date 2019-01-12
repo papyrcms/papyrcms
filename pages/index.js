@@ -19,6 +19,8 @@ class Landing extends Component {
 
   render() {
 
+    const { sectionCardSettings, sectionVideoSettings } = this.props.settings;
+
     const sectionCardsProps = {
       title: 'This is the Section Card component',
       contentLength: 200,
@@ -30,15 +32,13 @@ class Landing extends Component {
         <PostsFilter
           component={ SectionCards }
           posts={ this.props.posts }
-          maxPosts={ 6 }
-          postTags={ ['sample'] }
+          settings={ sectionCardSettings }
           componentProps={ sectionCardsProps }
         />
         <PostsFilter 
           component={ SectionVideo }
           posts={ this.props.posts }
-          maxPosts={ 1 }
-          postTags={ ['video-section'] }
+          settings={ sectionVideoSettings }
         />
       </div>
     );
@@ -47,7 +47,7 @@ class Landing extends Component {
 
 
 const mapStateToProps = state => {
-  return { posts: state.posts };
+  return { posts: state.posts, settings: state.settings };
 };
 
 

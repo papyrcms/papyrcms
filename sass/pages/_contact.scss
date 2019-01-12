@@ -1,6 +1,7 @@
 .contact-page {
   padding: 5rem 20vw;
   padding-bottom: 10rem;
+  background-color: $color-grey-light;
 
   @include respond(tab-port) {
     padding: 5rem 15vw;

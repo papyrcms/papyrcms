@@ -1,4 +1,4 @@
-import react, { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { setSettings } from '../store';
@@ -16,18 +16,103 @@ class AdminPage extends Component {
 
     super( props );
 
-    this.state = props.settings;
+    const {
+      enableMenu,
+      enableCommenting,
+      enableEmailing,
+      enableUserPosts,
+
+      aboutPageSettings,
+      servicesPageSettings,
+      sectionCardSettings,
+      sectionVideoSettings
+    } = props.settings;
+
+    let pageSettingsObjects = [
+      aboutPageSettings,
+      servicesPageSettings,
+      sectionCardSettings,
+      sectionVideoSettings
+    ];
+
+    pageSettingsObjects = this.concatonateTags( pageSettingsObjects );
+
+    this.state = {
+      enableMenu,
+      enableCommenting,
+      enableEmailing,
+      enableUserPosts,
+      appSettingsVerification: '',
+
+      users: props.users,
+
+      aboutPageSettings,
+      servicesPageSettings,
+      sectionCardSettings,
+      sectionVideoSettings
+    };
   }
 
 
-  handleSubmit( event ) {
+  concatonateTags( pageSettingsObjects ) {
+
+    // Turn tags arrays into strings
+    _.map( pageSettingsObjects, object => {
+      let tags = '';
+
+      _.map(object.postTags, (tag, i) => {
+        if (i < object.postTags.length - 1) {
+          tags = `${tags}${tag}, `;
+        } else {
+          tags = `${tags}${tag}`;
+        }
+      });
+
+      object.postTags = tags;
+    });
+
+    return pageSettingsObjects;
+  }
+
+
+  handleSubmit( event, settings ) {
 
     event.preventDefault();
 
-    axios.post( '/admin/settings', this.state )
+    const areObjects = typeof settings[Object.keys(settings)[0]] === 'object';
+
+    if ( areObjects ) {
+      _.map( settings, pageSettings => {
+        let postTags = [];
+  
+        _.map( pageSettings.postTags.split( ',' ), tag => {
+          let pendingTag = tag;
+          pendingTag = pendingTag.trim();
+
+          if ( !!pendingTag ) {
+            postTags.push( pendingTag );
+          }
+        });
+
+        pageSettings.postTags = postTags;
+      });
+    }
+
+    axios.post( '/admin/settings', settings )
       .then( response => {
         if ( !!response.data._id ) {
+          const message = 'Your app settings have been updated.';
+
           this.props.setSettings( response.data );
+          this.setState({ appSettingsVerification: message });
+          
+          if ( areObjects ) {
+            settings = this.concatonateTags( settings );
+
+            _.map( settings, settingsObject => {
+              this.setState({ ...this.state, [settingsObject]: settingsObject });
+            });
+          }
         }
       }).catch( error => {
         console.log(error);
@@ -36,7 +121,8 @@ class AdminPage extends Component {
 
 
   renderUsers() {
-    const { users } = this.props;
+
+    const { users } = this.state;
 
     return _.map( users, user => {
       return (
@@ -48,56 +134,184 @@ class AdminPage extends Component {
   }
 
 
-  render() {
+  renderAppSettingsForm() {
 
-    const { 
+    const {
       enableMenu,
-      enableCommenting, 
+      enableCommenting,
+      enableEmailing,
+      enableUserPosts,
+    } = this.state;
+
+    const settings = {
+      enableMenu,
+      enableCommenting,
       enableEmailing,
       enableUserPosts
+    };
+
+    return (
+      <form className="settings-form" onSubmit={event => this.handleSubmit(event, settings)}>
+
+        <h3 className="heading-tertiary settings-form__title">App Settings</h3>
+
+        <div className="settings-form__field">
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id="enable-emailing"
+            checked={enableEmailing ? true : false}
+            onChange={() => this.setState({ enableEmailing: !enableEmailing })}
+          />
+          <label className="settings-form__label" htmlFor="enable-emailing">Enable Emailing</label>
+        </div>
+
+        <div className="settings-form__field">
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id="enable-menu"
+            checked={enableMenu ? true : false}
+            onChange={() => this.setState({ enableMenu: !enableMenu })}
+          />
+          <label className="settings-form__label" htmlFor="enable-menu">Enable Menu</label>
+        </div>
+
+        <div className="settings-form__field">
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id="enable-commenting"
+            checked={enableCommenting ? true : false}
+            onChange={() => this.setState({ enableCommenting: !enableCommenting })}
+          />
+          <label className="settings-form__label" htmlFor="enable-commenting">Enable Commenting</label>
+        </div>
+
+        <div className="settings-form__field">
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id="enable-user-posts"
+            checked={enableUserPosts ? true : false}
+            onChange={() => this.setState({ enableUserPosts: !enableUserPosts })}
+          />
+          <label className="settings-form__label" htmlFor="enable-user-posts">Enable User Posting</label>
+        </div>
+
+        <div className="settings-form__submit">
+          <input type="submit" className="button button-primary" />
+        </div>
+
+      </form>
+    );
+  }
+
+
+  renderUsersForm() {
+
+    return (
+      <form className="users-form">
+
+        <h3 className="heading-tertiary">Users</h3>
+
+        <ul className="users-form__list">
+          { this.renderUsers() }
+        </ul>
+
+      </form>
+    );
+  }
+  
+  
+  renderPageSettingsFormSection( pageSettings ) {
+
+    return _.map( pageSettings, pageSettings => {
+
+      let { maxPosts, postTags, title } = pageSettings;
+
+      return (
+        <div className="page-settings-form__group" key={ title }>
+          <h4>{ title }</h4>
+
+          <div className="page-settings-form__field">
+            <label className="page-settings-form__label" htmlFor="about-max-posts">Maximum posts</label>
+            <input
+              className="page-settings-form__input"
+              type="number"
+              id="about-max-posts"
+              value={maxPosts}
+              onChange={event => {
+                pageSettings.maxPosts = event.target.value;
+                this.setState({ ...this.state, [pageSettings]: pageSettings });
+              }}
+            />
+          </div>
+
+          <div className="page-settings-form__field">
+            <label className="page-settings-form__label" htmlFor="about-tags">Post tags to use</label>
+            <input
+              className="page-settings-form__input"
+              placeholder="Separated by commas"
+              type="text"
+              id="about-tags"
+              value={postTags}
+              onChange={event => {
+                pageSettings.postTags = event.target.value;
+                this.setState({ ...this.state, [pageSettings]: pageSettings });
+              }}
+            />
+          </div>
+        </div>
+      );
+    });
+  }
+
+
+  renderPageSettingsForm() {
+
+    const {
+      aboutPageSettings,
+      servicesPageSettings,
+      sectionCardSettings,
+      sectionVideoSettings
     } = this.state;
+
+
+    const pageSettings = {
+      aboutPageSettings,
+      servicesPageSettings,
+      sectionCardSettings,
+      sectionVideoSettings
+    };
+
+    return (
+      <form className="page-settings-form" onSubmit={ event => this.handleSubmit( event, pageSettings ) }>
+        
+        <h3 className="heading-tertiary">Page Settings</h3>
+
+        { this.renderPageSettingsFormSection( pageSettings ) }
+
+        <input type="submit" className="button button-primary" />
+
+      </form>
+    );
+  }
+
+
+  render() {
+
+    const { appSettingsVerification } = this.state;
 
     return (
       <div className="admin-page">
-        <form onSubmit={ event => this.handleSubmit( event ) }>
-          <label htmlFor="enable-emailing">Enable Emailing</label>
-          <input
-            type="checkbox"
-            id="enable-emailing"
-            checked={ enableEmailing ? true : false }
-            onChange={ () => this.setState({ enableEmailing: !enableEmailing }) }
-          />
-
-          <label htmlFor="enable-menu">Enable Menu</label>
-          <input
-            type="checkbox"
-            id="enable-menu"
-            checked={ enableMenu ? true : false }
-            onChange={ () => this.setState({ enableMenu: !enableMenu }) }
-          />
-
-          <label htmlFor="enable-commenting">Enable Commenting</label>
-          <input
-            type="checkbox"
-            id="enable-commenting"
-            checked={ enableCommenting ? true : false }
-            onChange={ () => this.setState({ enableCommenting: !enableCommenting }) }
-          />
-
-          <label htmlFor="enable-user-posts">Enable User Posting</label>
-          <input
-            type="checkbox"
-            id="enable-user-posts"
-            checked={ enableUserPosts ? true : false }
-            onChange={ () => this.setState({ enableUserPosts }) }
-          />
-
-          <input type="submit" className="button button-primary" />
-        </form>
-
-        <ul>
-          { this.renderUsers() }
-        </ul>
+        <h2 className="heading-secondary admin-page__title">Admin Dashboard</h2>
+        <p className="admin-page__verification">{ appSettingsVerification }</p>
+        <div className="admin-page__forms">
+          { this.renderAppSettingsForm() }
+          { this.renderUsersForm() }
+          { this.renderPageSettingsForm() }
+        </div>
       </div>
     );
   }

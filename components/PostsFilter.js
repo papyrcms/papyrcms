@@ -9,14 +9,15 @@ class PostsFilter extends Component {
 
     let posts;
     let numberPosts = 0;
+    const { maxPosts, postTags } = this.props.settings;
 
     // Filter posts by postTags and maxPosts
-    if ( !!props.postTags && props.postTags.length > 0 ) {
+    if ( !!postTags && postTags.length > 0 ) {
       posts = props.posts.filter( post => {
         let included = false;
 
-        _.map( props.postTags, tag => {
-          if ( post.tags.includes( tag ) && numberPosts < props.maxPosts ) {
+        _.map( postTags, tag => {
+          if ( post.tags.includes( tag ) && numberPosts < maxPosts ) {
             included = true;
           }
         });

@@ -1,0 +1,80 @@
+.admin-page {
+  background-color: $color-grey-light;
+  padding: 3rem 15vw;
+
+  &__title {
+    border-bottom: .1rem solid $color-grey;
+    margin-bottom: 2rem;
+  }
+ 
+  &__forms {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 3rem;
+
+    @include respond(tab-port) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+  }
+
+  &__checkbox {
+    margin-right: 1rem;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &__label {
+    letter-spacing: .1rem;
+  }
+
+  &__submit {
+    margin-top: 2rem;
+  }
+}
+
+.users-form {
+
+  &__list {
+    list-style-type: none;
+  }
+}
+
+.page-settings-form {
+
+  &__group {
+    margin-bottom: 3rem;
+  }
+
+  &__field {
+    margin-left: 1rem;
+  }
+
+  &__label {
+    letter-spacing: .1rem;
+  }
+
+  &__input {
+    height: 4rem;
+    width: 100%;
+    padding: 1rem;
+    font-size: 2rem;
+    color: $color-grey-dark;
+    letter-spacing: .1rem;
+    border-radius: 1rem;
+  }
+}
