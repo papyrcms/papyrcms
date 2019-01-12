@@ -1,0 +1,63 @@
+.header {
+  padding: 6rem;
+  background-color: $color-grey-dark;
+  height: 30rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @include respond(tab-land) {
+    display: block;
+    text-align: center;
+  }
+
+  @include respond(phone) {
+    padding: 6rem 0;
+  }
+
+  &__menu-item {
+
+    @include respond(phone) {
+      letter-spacing: .2rem;
+    }
+
+    &--1 {
+      animation: moveInRight 1s ease-out .3s;
+      animation-fill-mode: backwards;
+    }
+
+    &--2 {
+      animation: moveInRight 1s ease-out .6s;
+      animation-fill-mode: backwards;
+    }
+
+    &--3 {
+      animation: moveInRight 1s ease-out .9s;
+      animation-fill-mode: backwards;
+    }
+
+    &--4 {
+      animation: moveInRight 1s ease-out 1.2s;
+      animation-fill-mode: backwards;
+    }
+  }
+
+  &__menu-item:link,
+  &__menu-item:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: $color-grey-light;
+    list-style-type: none;
+    display: inline-block;
+    letter-spacing: .3rem;
+    padding: 1rem 2rem;
+    transition: all .4s;
+
+    &:hover {
+      background-color: $color-grey-light;
+      color: $color-grey-dark;
+    }
+  }
+}

@@ -1,0 +1,63 @@
+.profile-page {
+  padding: 5rem;
+  background-color: $color-grey-light;
+  min-height: calc(100vh - 30rem);
+
+  &__not-logged-in {
+    font-weight: 400;
+    font-size: 3rem;
+    font-style: italic;
+  }
+}
+
+.profile {
+  display: grid;
+  grid-gap: 3rem;
+  grid-template-columns: 1fr;
+
+  & > *:not(:last-child) {
+    border-bottom: .1rem solid $color-grey-dark;
+  }
+
+  & > *:not(:first-child) {
+    padding-bottom: 3.5rem;
+  }
+
+  &__credentials {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    font-style: italic;
+  }
+
+  &__logout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__input {
+    width: 30rem;
+    height: 4rem;
+    padding: 1rem;
+    font-size: 2rem;
+    letter-spacing: .1rem;
+    color: $color-grey-dark;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__validation {
+    color: $color-tertiary-0;
+    letter-spacing: .1rem;
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+}

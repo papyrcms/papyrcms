@@ -1,0 +1,91 @@
+.post-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  padding: 3rem 0;
+
+  &__label {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    letter-spacing: .2rem;
+    font-style: italic;
+    margin-left: 1rem;
+  }
+
+  &__input {
+    height: 4rem;
+    width: 100%;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-size: 2rem;
+    color: $color-grey-dark;
+    letter-spacing: .1rem;
+    border-radius: 1rem;
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    @include respond(phone) {
+      flex-direction: column;
+    }
+  }
+
+  &__image {
+    max-height: 30rem;
+    max-width: 100%;
+    margin: 3rem;
+    align-self: center;
+  }
+
+  &__field {
+    flex: 0 0 47%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__text-editor {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  &__publish {
+    margin: 3rem 0;
+  }
+
+  &__checkbox {
+    &--input {
+      display: none;
+    }
+
+    &--span {
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: .2rem solid $color-grey-dark;
+      border-radius: 50%;
+      cursor: pointer;
+      background-color: $color-grey-light;
+      transform: translateY(.75rem);
+      margin-left: 2rem;
+      transition: all .2s;
+    }
+
+    &--input:checked + * > &--span {
+      background-color: $color-primary-3;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    
+    width: 100%;
+    margin-top: 3rem;
+  }
+}

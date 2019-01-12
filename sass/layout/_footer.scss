@@ -1,0 +1,38 @@
+.footer {
+  background-color: $color-grey-light-2;
+  min-height: 20rem;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__title {
+    font-size: 4rem;
+    font-weight: 500;
+    letter-spacing: .2rem;
+  }
+}
+
+.credit {
+  margin-top: 4rem;
+
+  &__text {
+    color: $color-grey;
+  }
+  
+  &__link {
+    &:link,
+    &:visited {
+      text-decoration: none;
+      color: $color-grey;
+    }
+  }
+}

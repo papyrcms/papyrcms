@@ -1,0 +1,130 @@
+.posts-show-page {
+  padding: 3rem 10vw;
+  background-color: $color-grey-light;
+}
+
+.post {
+  padding: 2rem 7vw;
+  border-radius: 1rem;
+
+  @include respond(tab-port) {
+    padding: 2rem 4vw;
+  }
+
+  @include respond(phone) {
+    padding: 2rem 1vw;
+  }
+
+  &__title {
+    border-bottom: .1rem solid $color-grey-dark;
+
+    @include respond(tab-port) {
+      letter-spacing: .4rem;
+    }
+
+    @include respond(phone) {
+      font-size: 2.5rem;
+      letter-spacing: .3rem;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    justify-content: flex-end;
+
+    & > em {
+      margin-left: 1rem;
+    }
+  }
+
+  &__image {
+    max-width: calc(50% - 2rem);
+    float: left;
+    padding-right: 4rem;
+    padding-top: 2rem;
+
+    @include respond(tab-port) {
+      max-width: calc(55% - 2rem);
+    }
+
+    @include respond(phone) {
+      max-width: calc(60% - 2rem);
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__content {
+    white-space: pre-wrap;
+    padding-top: 1rem;
+    letter-spacing: .1rem;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    & > * {
+      margin-left: 2rem;
+    }
+  }
+}
+
+.comments {
+  padding: 2rem 7rem;
+
+  &__title {
+    color: $color-grey-dark;
+    border-bottom: .1rem solid $color-grey-dark;
+  }
+
+  &__none {
+    text-align: center;
+    padding-top: 2rem;
+  }
+}
+
+.comment {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: .1rem solid $color-grey-dark;
+
+  &__content {
+    white-space: pre-wrap;
+    padding-top: 1rem;
+    letter-spacing: .1rem;
+  }
+
+  &__author {
+    font-style: italic;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 2rem;
+
+    & > * {
+      margin-right: 2rem;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 7rem;
+  }
+
+  &__editing {
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 1rem;
+
+    &--state {
+      font-style: italic;
+      margin-right: 1rem;
+    }
+  }
+}

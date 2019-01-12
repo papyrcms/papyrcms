@@ -1,0 +1,71 @@
+body {
+  font-family: 'Montserrat', 'Lato', sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: $color-grey-dark;
+  font-size: 1.6rem;
+}
+
+.heading-primary {
+  color: $color-grey-light;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Lato', sans-serif;
+
+  &--main {
+    font-size: 5rem;
+    letter-spacing: 1rem;
+    font-weight: 400;
+    display: block;
+
+    animation: moveInLeft 1s ease-out;
+
+    @include respond(phone) {
+      font-size: 4.5rem;
+      letter-spacing: .5rem;
+    }
+  }
+
+  &--sub {
+    font-size: 1.5rem;
+    letter-spacing: .5rem;
+    font-weight: 400;
+    display: block;
+
+    animation: moveInLeft 1s ease-out .5s;
+    animation-fill-mode: backwards;
+
+    @include respond(tab-land) {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    @include respond(phone) {
+      letter-spacing: .3rem;
+    }
+  }
+}
+
+.heading-secondary {
+  font-family: 'Lato', sans-serif;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: block;
+  color: $color-primary-0;
+  letter-spacing: .7rem;
+}
+
+.heading-tertiary,
+.heading-tertiary--dark {
+  text-transform: uppercase;
+  letter-spacing: .5rem;
+  font-size: 2.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: $color-grey-dark;
+
+  &--light {
+    color: $color-grey-light;
+  }
+}

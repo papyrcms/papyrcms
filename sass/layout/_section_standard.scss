@@ -1,0 +1,50 @@
+.section-standard {
+
+  &__post {
+    margin-bottom: 3rem;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 4rem;
+    align-items: center;
+
+    @include respond(tab-port) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond(phone) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__text {
+    grid-column: span 2;
+
+    @include respond(tab-port) {
+      grid-column: span 1;
+    }
+
+    @include respond(phone) {
+      order: 1;
+    }
+
+    &--wide {
+      grid-column: span 3;
+    }
+  }
+
+  &__image {
+    grid-column: span 1;
+
+    @include respond(phone) {
+      order: 2;
+      width: 70vw;
+      justify-self: center;
+      margin-bottom: 5rem;
+    }
+    
+    img {
+      width: 100%;
+    }
+  }
+}

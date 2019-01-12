@@ -1,0 +1,63 @@
+.posts-all-page {
+  min-height: calc(100vh - 30rem);
+  background-color: $color-grey-light;
+  padding: 5rem;
+  padding-top: 0;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+
+    border-bottom: .1rem solid $color-grey-dark;
+    margin-bottom: 2rem;
+
+    @include respond(tab-port) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__header {
+    @include respond(phone) {
+      letter-spacing: .3rem;
+    }
+  }
+
+  &__search {
+    @include respond(phone) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    &--label {
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      letter-spacing: .2rem;
+      font-style: italic;
+      margin-right: 2vw;
+    }
+
+    &--input {
+      width: 40rem;
+      height: 4rem;
+      padding: 1rem;
+      margin: 1rem 0;
+      font-size: 2rem;
+      color: $color-grey-dark;
+      letter-spacing: .1rem;
+      border-radius: 1rem;
+
+      @include respond(tab-port) {
+        width: 30rem;
+        height: 3.5rem;
+      }
+
+      @include respond(phone) {
+        width: 20rem;
+        height: 3rem;
+      }
+    }
+  }
+}
