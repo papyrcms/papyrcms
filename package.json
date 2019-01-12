@@ -1,13 +1,15 @@
 {
   "name": "nextjs-cms",
   "version": "1.0.0",
-  "description": "",
+  "description": "A dynamic CMS template made with Next.js",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "stage": "now && now alias nextjs-cms.now.sh"
+    "stage": "now && now alias nextjs-cms.now.sh",
+    "deploy": "git push heroku master",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
   "keywords": [],
   "author": "",
