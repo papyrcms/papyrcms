@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import keys from '../config/keys';
 import PostsFilter from '../components/PostsFilter';
 import SectionCards from '../components/SectionCards';
 import SectionVideo from '../components/SectionVideo';
 
 class Landing extends Component {
 
-  static async getInitialProps() {
+  static async getInitialProps( context ) {
 
-    const rootUrl = keys.rootURL ? keys.rootURL : '';
-    const posts = await axios.get(`${rootUrl}/api/published_posts`);
+    let posts = [];
 
-    return { posts: posts.data };
+    if ( !!context.res ) {
+      posts = context.query.posts;
+    } else {
+      const response = await axios.get(`/api/published_posts`);
+      posts = response.data
+    }
+
+    return { posts };
   }
 
 

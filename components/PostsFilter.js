@@ -7,7 +7,7 @@ class PostsFilter extends Component {
 
     super( props );
 
-    let posts;
+    let posts = [];
     let numberPosts = 0;
     const { maxPosts, postTags } = this.props.settings;
 
@@ -16,11 +16,19 @@ class PostsFilter extends Component {
       posts = props.posts.filter( post => {
         let included = false;
 
-        _.map( postTags, tag => {
-          if ( post.tags.includes( tag ) && numberPosts < maxPosts ) {
-            included = true;
-          }
-        });
+        if ( 
+          typeof postTags === 'string' &&
+          post.tags.includes(postTags) &&
+          numberPosts < maxPosts
+        ) {
+          included = true;
+        } else {
+          _.map( postTags, tag => {
+            if ( post.tags.includes( tag ) && numberPosts < maxPosts ) {
+              included = true;
+            }
+          });
+        }
 
         if ( included ) { numberPosts++; }
         return included;

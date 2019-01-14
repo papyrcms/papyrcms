@@ -3,12 +3,23 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { setSettings } from '../store';
 import axios from 'axios';
+import keys from '../config/keys';
 
 class AdminPage extends Component {
 
   static async getInitialProps( context ) {
 
-    return { users: context.query.users };
+    let users = [];
+
+    if ( !!context.res ) {
+      users = context.query.users;
+    } else {
+      const rootUrl = keys.rootURL ? keys.rootURL : '';
+      const response = await axios.get(`${rootUrl}/api/admin/users`);
+      users = response.data;
+    }
+
+    return { users };
   }
 
   
@@ -98,7 +109,7 @@ class AdminPage extends Component {
       });
     }
 
-    axios.post( '/admin/settings', settings )
+    axios.post( '/api/admin/settings', settings )
       .then( response => {
         if ( !!response.data._id ) {
           const message = 'Your app settings have been updated.';

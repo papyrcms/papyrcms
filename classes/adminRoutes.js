@@ -1,4 +1,5 @@
 const SettingsModel = require('../models/settings');
+const UserModel = require('../models/user');
 
 class AdminRoutes {
 
@@ -6,6 +7,7 @@ class AdminRoutes {
 
     this.server = server;
     this.app = app;
+    this.UserModel = UserModel;
     this.SettingsModel = SettingsModel;
     this.settings = {};
 
@@ -27,25 +29,46 @@ class AdminRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get( '/admin', this.renderPage.bind( this ) );
+    this.server.get( '/admin', this.checkIfAdmin, this.renderPage.bind( this ) );
 
     // API
-    this.server.post( '/admin/settings', this.changeSettings.bind( this ) );
+    this.server.get( '/api/admin/users', this.checkIfAdmin, this.sendAllUsers.bind( this ) );
+    this.server.post( '/api/admin/settings', this.checkIfAdmin, this.changeSettings.bind( this ) );
   }
 
 
-  // Redirect to home if a user is not logged in
-  // or if the logged in user is not an admin
-  renderPage( req, res ) {
+  checkIfAdmin( req, res, next ) {
 
     if ( req.user && req.user.isAdmin ) {
-      const queryParams = { users: res.locals.users };
-
-      this.app.render( req, res, req.url, queryParams );
+      next();
     } else {
-
-      res.redirect( '/' );
+      res.send('You need to be an admin to do that');
     }
+  }
+
+
+  async fetchAllUsers() {
+
+    const users = await this.UserModel.find();
+
+    return users;
+  }
+
+
+  async sendAllUsers( req, res ) {
+
+    const users = await this.fetchAllUsers();
+
+    res.send( users );
+  }
+
+
+  async renderPage( req, res ) {
+
+    const users = await this.fetchAllUsers();
+    const queryParams = { users };
+
+    this.app.render( req, res, req.url, queryParams );
   }
 
 
@@ -66,18 +89,12 @@ class AdminRoutes {
 
   async changeSettings( req, res ) {
 
-    if ( req.user && req.user.isAdmin ) {
+    // Update the settings document in the db
+    const settingsDocument = { _id: this.settings._id };
+    await this.SettingsModel.findOneAndUpdate( settingsDocument, req.body ).exec();
 
-      // Update the settings document in the db
-      const settingsDocument = { _id: this.settings._id };
-      await this.SettingsModel.findOneAndUpdate( settingsDocument, req.body ).exec();
-
-      // Update settings within the app
-      this.assignSettings( res );
-    } else {
-
-      res.send( 'You need to be an admin to do that' );
-    }
+    // Update settings within the app
+    this.assignSettings( res );
   }
 }
 

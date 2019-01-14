@@ -11,6 +11,8 @@ class PostsAll extends Component {
     const rootUrl = keys.rootURL ? keys.rootURL : '';
     const posts = await axios.get( `${rootUrl}/api/posts` );
 
+    console.log('I AM HERE');
+
     return { posts: posts.data };
   }
 
@@ -82,6 +84,7 @@ class PostsAll extends Component {
 
 
 const mapStateToProps = state => {
+  console.log(state.posts);
   return { posts: state.posts };
 };
 
