@@ -1,5 +1,5 @@
-import React from 'react';
-import renderHTML from 'react-render-html';
+import React from 'react'
+import renderHTML from 'react-render-html'
 
 const SectionVideo = props => {
   return (
@@ -17,7 +17,7 @@ const SectionVideo = props => {
       </video>
 
     </section>
-  );
+  )
 }
 
-export default SectionVideo;
+export default SectionVideo

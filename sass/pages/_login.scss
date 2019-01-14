@@ -12,9 +12,9 @@
     padding: 3rem 5rem;
     width: 40rem;
 
-    background-color: $color-primary-3;
-    color: $color-white;
-    border-radius: 1.5rem;
+    background-color: $color-grey-light-2;
+    color: $color-grey-dark;
+    border-radius: .8rem;
     box-shadow: $shadow;
   }
 
@@ -37,7 +37,7 @@
   }
 
   &__validation {
-    color: $color-tertiary-3;
+    color: $color-tertiary-2;
     letter-spacing: .1rem;
     font-size: 1.4rem;
     font-style: italic;

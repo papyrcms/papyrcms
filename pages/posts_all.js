@@ -1,63 +1,61 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { connect } from 'react-redux';
-import keys from '../config/keys';
-import PostIndex from '../components/PostIndex';
+import React, { Component } from 'react'
+import axios from 'axios'
+import { connect } from 'react-redux'
+import keys from '../config/keys'
+import PostIndex from '../components/PostIndex'
 
 class PostsAll extends Component {
 
   static async getInitialProps() {
 
-    const rootUrl = keys.rootURL ? keys.rootURL : '';
-    const posts = await axios.get( `${rootUrl}/api/posts` );
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const posts = await axios.get( `${rootUrl}/api/posts` )
 
-    console.log('I AM HERE');
-
-    return { posts: posts.data };
+    return { posts: posts.data }
   }
 
 
   constructor( props ) {
 
-    super( props );
+    super( props )
 
-    this.state = { searchText: '', posts: props.posts };
+    this.state = { searchText: '', posts: props.posts }
   }
 
 
   onSearchTextChange( event ) {
 
-    this.setState({ searchText: event.target.value });
+    this.setState({ searchText: event.target.value })
 
-    let foundPosts = [];
+    let foundPosts = []
 
     // Go through each post
     _.map( this.props.posts, post => {
 
       // Go through each post's tag
       _.map( post.tags, tag => {
-        let isFound = false;
+        let isFound = false
 
         _.map( foundPosts, foundPost => {
           if ( foundPost._id === post._id ) {
-            isFound = true;
+            isFound = true
           }
-        });
+        })
 
         // If we are searching for the tag and we haven't already included the post, include it
         if ( tag.includes( event.target.value ) && !isFound ) {
-          foundPosts.push( post );
+          foundPosts.push( post )
         }
-      });
-    });
+      })
+    })
 
-    this.setState({ posts: foundPosts });
+    this.setState({ posts: foundPosts })
   }
   
 
   render() {
 
-    const { searchText, posts } = this.state;
+    const { searchText, posts } = this.state
 
     return (
       <div className="posts-all-page">
@@ -78,15 +76,14 @@ class PostsAll extends Component {
         </div>
         <PostIndex posts={ posts } />
       </div>
-    );
+    )
   }
 }
 
 
 const mapStateToProps = state => {
-  console.log(state.posts);
-  return { posts: state.posts };
-};
+  return { posts: state.posts }
+}
 
 
-export default connect( mapStateToProps )( PostsAll );
+export default connect( mapStateToProps )( PostsAll )

@@ -1,49 +1,49 @@
-const MessageModel = require('../models/message');
+const MessageModel = require('../models/message')
 
 class ContactRoutes {
 
   constructor( server, app ) {
 
-    this.server = server;
-    this.app = app;
-    this.MessageModel = MessageModel;
+    this.server = server
+    this.app = app
+    this.MessageModel = MessageModel
 
-    this.registerRoutes();
+    this.registerRoutes()
   }
 
 
   registerRoutes() {
 
     // Views
-    this.server.get( '/contact', this.renderPage.bind( this ) );
+    this.server.get( '/contact', this.renderPage.bind( this ) )
 
     // Message API
-    this.server.post( '/api/contact', this.createMessage.bind( this ) );
+    this.server.post( '/api/contact', this.createMessage.bind( this ) )
   }
 
 
   renderPage( req, res ) {
 
-    const actualPage = '/contact';
+    const actualPage = '/contact'
 
-    this.app.render( req, res, actualPage );
+    this.app.render( req, res, actualPage )
   }
 
 
   createMessage( req, res ) {
 
-    const { contactName, contactEmail, contactMessage } = req.body;
+    const { contactName, contactEmail, contactMessage } = req.body
     const messageObj = {
       name: contactName,
       email: contactEmail,
       message: contactMessage,
-    };
-    const message = new this.MessageModel( messageObj );
+    }
+    const message = new this.MessageModel( messageObj )
 
-    message.save();
-    res.send( message );
+    message.save()
+    res.send( message )
   }
 }
 
 
-module.exports = ContactRoutes;
+module.exports = ContactRoutes

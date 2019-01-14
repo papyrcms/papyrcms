@@ -1,8 +1,8 @@
-import React from 'react';
-import Head from 'next/head';
-import Header from './Header';
-import Footer from './Footer';
-import NavMenu from './NavMenu';
+import React from 'react'
+import Head from 'next/head'
+import Header from './Header'
+import Footer from './Footer'
+import NavMenu from './NavMenu'
 
 const Layout = props => {
   return (
@@ -33,7 +33,7 @@ const Layout = props => {
       />
       
     </div>
-  );
+  )
 }
 
-export default Layout;
+export default Layout

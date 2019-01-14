@@ -1,31 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import _ from 'lodash';
-import { setSettings } from '../store';
-import axios from 'axios';
-import keys from '../config/keys';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import _ from 'lodash'
+import { setSettings } from '../store'
+import axios from 'axios'
+import keys from '../config/keys'
 
 class AdminPage extends Component {
 
   static async getInitialProps( context ) {
 
-    let users = [];
+    let users = []
 
     if ( !!context.res ) {
-      users = context.query.users;
+      users = context.query.users
     } else {
-      const rootUrl = keys.rootURL ? keys.rootURL : '';
-      const response = await axios.get(`${rootUrl}/api/admin/users`);
-      users = response.data;
+      const rootUrl = keys.rootURL ? keys.rootURL : ''
+      const response = await axios.get(`${rootUrl}/api/admin/users`)
+      users = response.data
     }
 
-    return { users };
+    return { users }
   }
 
   
   constructor( props ) {
 
-    super( props );
+    super( props )
 
     const {
       enableMenu,
@@ -37,16 +37,16 @@ class AdminPage extends Component {
       servicesPageSettings,
       sectionCardSettings,
       sectionVideoSettings
-    } = props.settings;
+    } = props.settings
 
     let pageSettingsObjects = [
       aboutPageSettings,
       servicesPageSettings,
       sectionCardSettings,
       sectionVideoSettings
-    ];
+    ]
 
-    pageSettingsObjects = this.concatonateTags( pageSettingsObjects );
+    pageSettingsObjects = this.concatonateTags( pageSettingsObjects )
 
     this.state = {
       enableMenu,
@@ -69,79 +69,79 @@ class AdminPage extends Component {
 
     // Turn tags arrays into strings
     _.map( pageSettingsObjects, object => {
-      let tags = '';
+      let tags = ''
 
       _.map(object.postTags, (tag, i) => {
         if (i < object.postTags.length - 1) {
-          tags = `${tags}${tag}, `;
+          tags = `${tags}${tag}, `
         } else {
-          tags = `${tags}${tag}`;
+          tags = `${tags}${tag}`
         }
-      });
+      })
 
-      object.postTags = tags;
-    });
+      object.postTags = tags
+    })
 
-    return pageSettingsObjects;
+    return pageSettingsObjects
   }
 
 
   handleSubmit( event, settings ) {
 
-    event.preventDefault();
+    event.preventDefault()
 
-    const areObjects = typeof settings[Object.keys(settings)[0]] === 'object';
+    const areObjects = typeof settings[Object.keys(settings)[0]] === 'object'
 
     if ( areObjects ) {
       _.map( settings, pageSettings => {
-        let postTags = [];
+        let postTags = []
   
         _.map( pageSettings.postTags.split( ',' ), tag => {
-          let pendingTag = tag;
-          pendingTag = pendingTag.trim();
+          let pendingTag = tag
+          pendingTag = pendingTag.trim()
 
           if ( !!pendingTag ) {
-            postTags.push( pendingTag );
+            postTags.push( pendingTag )
           }
-        });
+        })
 
-        pageSettings.postTags = postTags;
-      });
+        pageSettings.postTags = postTags
+      })
     }
 
     axios.post( '/api/admin/settings', settings )
       .then( response => {
         if ( !!response.data._id ) {
-          const message = 'Your app settings have been updated.';
+          const message = 'Your app settings have been updated.'
 
-          this.props.setSettings( response.data );
-          this.setState({ appSettingsVerification: message });
+          this.props.setSettings( response.data )
+          this.setState({ appSettingsVerification: message })
           
           if ( areObjects ) {
-            settings = this.concatonateTags( settings );
+            settings = this.concatonateTags( settings )
 
             _.map( settings, settingsObject => {
-              this.setState({ ...this.state, [settingsObject]: settingsObject });
-            });
+              this.setState({ ...this.state, [settingsObject]: settingsObject })
+            })
           }
         }
       }).catch( error => {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
 
 
   renderUsers() {
 
-    const { users } = this.state;
+    const { users } = this.state
 
     return _.map( users, user => {
       return (
         <li key={ user._id }>
           { user.email }
         </li>
-      );
-    });
+      )
+    })
   }
 
 
@@ -152,14 +152,14 @@ class AdminPage extends Component {
       enableCommenting,
       enableEmailing,
       enableUserPosts,
-    } = this.state;
+    } = this.state
 
     const settings = {
       enableMenu,
       enableCommenting,
       enableEmailing,
       enableUserPosts
-    };
+    }
 
     return (
       <form className="settings-form" onSubmit={event => this.handleSubmit(event, settings)}>
@@ -215,7 +215,7 @@ class AdminPage extends Component {
         </div>
 
       </form>
-    );
+    )
   }
 
 
@@ -231,7 +231,7 @@ class AdminPage extends Component {
         </ul>
 
       </form>
-    );
+    )
   }
   
   
@@ -239,7 +239,7 @@ class AdminPage extends Component {
 
     return _.map( pageSettings, pageSettings => {
 
-      let { maxPosts, postTags, title } = pageSettings;
+      let { maxPosts, postTags, title } = pageSettings
 
       return (
         <div className="page-settings-form__group" key={ title }>
@@ -253,8 +253,8 @@ class AdminPage extends Component {
               id="about-max-posts"
               value={maxPosts}
               onChange={event => {
-                pageSettings.maxPosts = event.target.value;
-                this.setState({ ...this.state, [pageSettings]: pageSettings });
+                pageSettings.maxPosts = event.target.value
+                this.setState({ ...this.state, [pageSettings]: pageSettings })
               }}
             />
           </div>
@@ -268,14 +268,14 @@ class AdminPage extends Component {
               id="about-tags"
               value={postTags}
               onChange={event => {
-                pageSettings.postTags = event.target.value;
-                this.setState({ ...this.state, [pageSettings]: pageSettings });
+                pageSettings.postTags = event.target.value
+                this.setState({ ...this.state, [pageSettings]: pageSettings })
               }}
             />
           </div>
         </div>
-      );
-    });
+      )
+    })
   }
 
 
@@ -286,7 +286,7 @@ class AdminPage extends Component {
       servicesPageSettings,
       sectionCardSettings,
       sectionVideoSettings
-    } = this.state;
+    } = this.state
 
 
     const pageSettings = {
@@ -294,7 +294,7 @@ class AdminPage extends Component {
       servicesPageSettings,
       sectionCardSettings,
       sectionVideoSettings
-    };
+    }
 
     return (
       <form className="page-settings-form" onSubmit={ event => this.handleSubmit( event, pageSettings ) }>
@@ -306,13 +306,13 @@ class AdminPage extends Component {
         <input type="submit" className="button button-primary" />
 
       </form>
-    );
+    )
   }
 
 
   render() {
 
-    const { appSettingsVerification } = this.state;
+    const { appSettingsVerification } = this.state
 
     return (
       <div className="admin-page">
@@ -324,14 +324,14 @@ class AdminPage extends Component {
           { this.renderPageSettingsForm() }
         </div>
       </div>
-    );
+    )
   }
 }
 
 
 const mapStateToProps = state => {
-  return { settings: state.settings, users: state.users };
+  return { settings: state.settings, users: state.users }
 }
 
 
-export default connect( mapStateToProps, { setSettings } )( AdminPage );
+export default connect( mapStateToProps, { setSettings } )( AdminPage )

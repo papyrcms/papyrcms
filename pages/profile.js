@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import Router from 'next/router';
-import Link from 'next/link';
-import { setCurrentUser } from '../store';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import Router from 'next/router'
+import Link from 'next/link'
+import { setCurrentUser } from '../store'
 
 class Profile extends Component {
 
   constructor( props ) {
 
-    super( props );
+    super( props )
 
     if ( !!props.currentUser ) {
       this.state = {
@@ -20,7 +20,7 @@ class Profile extends Component {
         firstName: props.currentUser.firstName || '',
         lastName: props.currentUser.lastName || '',
         infoValidation: ''
-      };
+      }
     } else {
       this.state = {
         oldPassword: '',
@@ -30,7 +30,7 @@ class Profile extends Component {
         firstName: '',
         lastName: '',
         infoValidation: ''
-      };
+      }
     }
   }
 
@@ -40,64 +40,59 @@ class Profile extends Component {
     axios.get( '/api/logout' )
       .then( res => {
         if ( res.data === 'logged out' ) {
-          Router.push( '/' );
-          this.props.setCurrentUser( null );
+          Router.push( '/' )
+          this.props.setCurrentUser( null )
         }
       }).catch( err => {
-        console.log( err );
-      });
+        console.log( err )
+      })
   }
 
 
   handleInfoSubmit( event ) {
 
-    event.preventDefault();
+    event.preventDefault()
 
-    const { firstName, lastName } = this.state;
-    const infoData = { firstName, lastName, userId: this.props.currentUser._id };
+    const { firstName, lastName } = this.state
+    const infoData = { firstName, lastName, userId: this.props.currentUser._id }
     
     axios.put( '/api/currentUser', infoData )
       .then( res => {
         if ( !!res.data.error ) {
-          return this.setState({ infoValidation: res.data.error });
+          return this.setState({ infoValidation: res.data.error })
         } else {
           axios.get( '/api/currentUser' )
             .then( res => {
-              this.props.setCurrentUser( res.data );
-              this.setState( { infoValidation: 'User info updated.' });
+              this.props.setCurrentUser( res.data )
+              this.setState( { infoValidation: 'User info updated.' })
             }).catch( err => {
-              console.log( err );
-            });
+              console.log( err )
+            })
         }
       }).catch( err => {
-        console.log( err );
-      });
+        console.log( err )
+      })
   }
 
 
   handlePasswordSubmit( event ) {
 
-    event.preventDefault();
+    event.preventDefault()
 
-    const { oldPassword, newPassword, newPasswordConfirm } = this.state;
-    const passwordData = { oldPassword, newPassword, newPasswordConfirm, userId: this.props.currentUser._id };
+    const { oldPassword, newPassword, newPasswordConfirm } = this.state
+    const passwordData = { oldPassword, newPassword, newPasswordConfirm, userId: this.props.currentUser._id }
 
     axios.post( '/api/changePassword', passwordData )
       .then( res => {
-        if ( !!res.data.error ) {
-          this.setState({ passwordValidation: res.data.error });
-        } else {
-          this.setState({ 
-            passwordValidation: 'Your password has been saved!',
-            oldPassword: '',
-            newPassword: '',
-            newPasswordConfirm: ''
-          });
-        }
+        this.setState({ 
+          passwordValidation: res.data.message,
+          oldPassword: '',
+          newPassword: '',
+          newPasswordConfirm: ''
+        })
       }).catch( err => {
-        console.log( err );
-        this.setState({ passwordValidation: 'Something went wrong. Please try again.' });
-      });
+        this.setState({ passwordValidation: err.response.data.message })
+      })
   }
 
 
@@ -111,15 +106,15 @@ class Profile extends Component {
             <button className="button button-primary">Admin Dashboard</button>
           </Link>
         </div>
-      );
+      )
     }
   }
 
 
   renderProfilePage() {
 
-    const { currentUser } = this.props;
-    const { firstName, lastName, infoValidation, oldPassword, newPassword, newPasswordConfirm, passwordValidation } = this.state;
+    const { currentUser } = this.props
+    const { firstName, lastName, infoValidation, oldPassword, newPassword, newPasswordConfirm, passwordValidation } = this.state
 
     if ( !!currentUser ) {
       return (
@@ -213,7 +208,7 @@ class Profile extends Component {
       ); // End profile
 
     } else { // If not logged in
-      return <h3 className="profile-page__not-logged-in">You need to be logged in to view this page.</h3>;
+      return <h3 className="profile-page__not-logged-in">You need to be logged in to view this page.</h3>
     }
   }
 
@@ -224,14 +219,14 @@ class Profile extends Component {
       <div className="profile-page">
         { this.renderProfilePage() }
       </div>
-    );
+    )
   }
 }
 
 
 const mapStateToProps = state => {
-  return { currentUser: state.currentUser };
+  return { currentUser: state.currentUser }
 }
 
 
-export default connect( mapStateToProps, { setCurrentUser } )( Profile );
+export default connect( mapStateToProps, { setCurrentUser } )( Profile )

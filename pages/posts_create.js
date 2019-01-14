@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import Router from 'next/router';
-import PostsForm from '../components/PostsForm';
+import React, { Component } from 'react'
+import axios from 'axios'
+import _ from 'lodash'
+import { connect } from 'react-redux'
+import Router from 'next/router'
+import PostsForm from '../components/PostsForm'
 
 class PostsCreate extends Component {
 
   constructor( props ) {
 
-    super( props );
+    super( props )
 
-    this.state = { title: '', tags: '', mainImage: '', content: '', publish: false };
+    this.state = { title: '', tags: '', mainImage: '', content: '', publish: false }
   }
 
 
   handleSubmit( event ) {
 
-    event.preventDefault();
+    event.preventDefault()
 
-    const { title, tags, mainImage, content, publish } = this.state;
-    let tagArray = [];
+    const { title, tags, mainImage, content, publish } = this.state
+    let tagArray = []
 
     _.map( tags.split( ',' ), tag => {
-      let pendingTag = tag;
-      pendingTag = pendingTag.trim();
+      let pendingTag = tag
+      pendingTag = pendingTag.trim()
 
       if ( !!pendingTag ) {
-        tagArray.push( pendingTag );
+        tagArray.push( pendingTag )
       }
-    });
+    })
 
-    const postObject = { title, tags: tagArray, mainImage, content, published: publish };
+    const postObject = { title, tags: tagArray, mainImage, content, published: publish }
 
     axios.post( '/api/posts', postObject )
       .then( response => {
-        Router.push( '/posts' );
+        Router.push( '/posts' )
       }).catch( error => {
-        console.log( error );
+        console.log( error )
       });
   }
 
   render() {
 
-    const { title, tags, mainImage, content, publish } = this.state;
+    const { title, tags, mainImage, content, publish } = this.state
 
     return (
       <div className="posts-create-page">
@@ -63,14 +63,14 @@ class PostsCreate extends Component {
           handleSubmit={ event => this.handleSubmit(event) }
         />
       </div>
-    );
+    )
   }
 }
 
 
 const mapStateToProps = state => {
-  return { currentUser: state.currentUser };
-};
+  return { currentUser: state.currentUser }
+}
 
 
-export default connect( mapStateToProps )( PostsCreate );
+export default connect( mapStateToProps )( PostsCreate )

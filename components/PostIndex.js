@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import renderHTML from 'react-render-html';
-import Link from 'next/link';
+import React, { Component } from 'react'
+import _ from 'lodash'
+import renderHTML from 'react-render-html'
+import Link from 'next/link'
 
 class PostIndex extends Component {
 
@@ -13,14 +13,14 @@ class PostIndex extends Component {
       } else {
         return <span key={tag}>{tag}</span>
       }
-    });
+    })
   }
 
 
   renderTagsSection( tags ) {
 
     if ( !!tags[0] ) {
-      return <p className="post-item__tags">Tags: <em>{ this.renderTags( tags ) }</em></p>;
+      return <p className="post-item__tags">Tags: <em>{ this.renderTags( tags ) }</em></p>
     }
   }
 
@@ -39,11 +39,11 @@ class PostIndex extends Component {
 
   renderPosts() {
 
-    const { posts } = this.props;
+    const { posts } = this.props
 
     if ( !!posts && !!posts[0] ) {
       return _.map( posts, post => {
-        const { _id, title, tags, mainImage, content } = post;
+        const { _id, title, tags, mainImage, content } = post
 
         return (
           <div key={ _id } className="post-item">
@@ -63,19 +63,19 @@ class PostIndex extends Component {
               </div>
             </div>
           </div>
-        );
-      });
+        )
+      })
     } else {
-      return <h3 className="heading-tertiary">Nothing published yet</h3>;
+      return <h3 className="heading-tertiary">Nothing published yet</h3>
     }
   }
 
 
   render() {
 
-    return <div className="post-index">{ this.renderPosts() }</div>;
+    return <div className="post-index">{ this.renderPosts() }</div>
   }
 }
 
 
-export default PostIndex;
+export default PostIndex

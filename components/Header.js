@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import Link from 'next/link';
-import { connect } from 'react-redux';
-import { setCurrentUser } from '../store';
+import React, { Component } from 'react'
+import Link from 'next/link'
+import { connect } from 'react-redux'
+import { setCurrentUser } from '../store'
 
 class Header extends Component {
 
   renderAdminItems() {
 
-    const { currentUser } = this.props;
+    const { currentUser } = this.props
 
     if ( !!currentUser && currentUser.isAdmin ) {
       return (
@@ -20,7 +20,7 @@ class Header extends Component {
             <a className="header__menu-item header__menu-item--3"><li>My Posts</li></a>
           </Link>
         </span>
-      );
+      )
     }
   }
 
@@ -34,14 +34,14 @@ class Header extends Component {
             <a className="header__menu-item header__menu-item--4"><li>Profile</li></a>
           </Link>
         </span>
-      );
+      )
     }
 
     return (
       <Link href="/login">
         <a className="header__menu-item header__menu-item--2"><li>Login</li></a>
       </Link>
-    );
+    )
   }
 
 
@@ -55,7 +55,7 @@ class Header extends Component {
           { this.renderAdminItems() }
           { this.renderAuthenticator() }
         </ul>
-      );
+      )
     }
   }
 
@@ -72,14 +72,14 @@ class Header extends Component {
         </h1>
         { this.renderNav() }
       </header>
-    );
+    )
   }
 }
 
 
 const mapStateToProps = state => {
-  return { currentUser: state.currentUser, settings: state.settings };
+  return { currentUser: state.currentUser, settings: state.settings }
 }
 
 
-export default connect( mapStateToProps, { setCurrentUser })( Header );
+export default connect( mapStateToProps, { setCurrentUser })( Header )

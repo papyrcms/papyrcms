@@ -1,5 +1,5 @@
-import React from 'react';
-import CKEditor from 'react-ckeditor-component';
+import React from 'react'
+import CKEditor from 'react-ckeditor-component'
 
 const TextEditor = props => {
   const { content, className, onChange } = props;
@@ -12,7 +12,7 @@ const TextEditor = props => {
         "change": event => onChange( event.editor.getData() )
       }}
     />
-  );
-};
+  )
+}
 
-export default TextEditor;
+export default TextEditor

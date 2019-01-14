@@ -1,58 +1,54 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import Router from 'next/router';
-import { connect } from 'react-redux';
-import { setCurrentUser } from '../store';
+import React, { Component } from 'react'
+import axios from 'axios'
+import Router from 'next/router'
+import { connect } from 'react-redux'
+import { setCurrentUser } from '../store'
 
 class RegisterForm extends Component {
 
   constructor( props ) {
 
-    super( props );
+    super( props )
 
-    this.state = { email: '', password: '', passwordConfirm: '', validationMessage: '' };
+    this.state = { email: '', password: '', passwordConfirm: '', validationMessage: '' }
   }
 
 
   handleSubmit( event ) {
 
-    event.preventDefault();
+    event.preventDefault()
 
-    const { email, password, passwordConfirm } = this.state;
-    let message = '';
+    const { email, password, passwordConfirm } = this.state
+    let message = ''
 
     axios.post( '/api/register', { username: email, password, passwordConfirm })
       .then( res => {
         if ( res.data.error ) {
-          if ( res.data.error.name === "MissingUsernameError" ) {
-            message = 'No email was given';
-          } else {
-            message = res.data.error.message;
-          }
+          message = res.data.error.message
 
-          this.setState({ validationMessage: message });
-
+          this.setState({ validationMessage: message })
         } else if ( res.data === 'success' ) {
           axios.get( '/api/currentUser' )
             .then( res => {
-              this.props.setCurrentUser( res.data );
-              Router.push( '/profile' );
+              this.props.setCurrentUser( res.data )
+              Router.push( '/profile' )
             }).catch( err => {
-              console.log( err );
+              message = err.response.data.message
+
+              this.setState({ validationMessage: message })
             });
         }
       }).catch( err => {
-        console.log( err );
-        message = 'Something went wrong. Please try again.';
+        message = err.response.data.message
 
-        this.setState({ validationMessage: message });
+        this.setState({ validationMessage: message })
       });
   }
 
 
   render() {
 
-    const { email, password, passwordConfirm, validationMessage } = this.state;
+    const { email, password, passwordConfirm, validationMessage } = this.state
 
     return (
       <form onSubmit={ this.handleSubmit.bind( this ) } className={ this.props.className }>
@@ -96,9 +92,9 @@ class RegisterForm extends Component {
           />
         </div>
       </form>
-    );
+    )
   }
 }
 
 
-export default connect( null, { setCurrentUser })( RegisterForm );
+export default connect( null, { setCurrentUser })( RegisterForm )

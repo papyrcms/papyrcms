@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from 'react'
+import Link from 'next/link'
 
 const Footer = props => {
   return (
@@ -21,7 +21,7 @@ const Footer = props => {
       </div>
 
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

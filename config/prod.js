@@ -4,4 +4,4 @@ module.exports = {
   rootURL: process.env.ROOT_URL,
   mailchimpKey: process.env.MAILCHIMP_KEY,
   port: process.env.PORT
-};
+}

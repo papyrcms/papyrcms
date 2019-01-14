@@ -1,6 +1,6 @@
-import React from 'react';
-import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegisterForm';
+import React from 'react'
+import LoginForm from '../components/LoginForm'
+import RegisterForm from '../components/RegisterForm'
 
 const Login = () => {
   return (
@@ -8,7 +8,7 @@ const Login = () => {
       <LoginForm className="login-page__form" />
       <RegisterForm className="login-page__form" />
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login

@@ -1,24 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
-import keys from '../config/keys';
-import PostsFilter from '../components/PostsFilter';
-import SectionStandard from '../components/SectionStandard';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import keys from '../config/keys'
+import PostsFilter from '../components/PostsFilter'
+import SectionStandard from '../components/SectionStandard'
 
 class ServicesPage extends Component {
 
   static async getInitialProps() {
 
-    const rootUrl = keys.rootURL ? keys.rootURL : '';
-    const posts = await axios.get(`${rootUrl}/api/published_posts`);
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const posts = await axios.get(`${rootUrl}/api/published_posts`)
 
-    return { posts: posts.data };
+    return { posts: posts.data }
   }
 
 
   render() {
 
-    const { servicesPageSettings } = this.props.settings;
+    const { servicesPageSettings } = this.props.settings
 
     return (
       <PostsFilter
@@ -27,14 +27,14 @@ class ServicesPage extends Component {
         settings={ servicesPageSettings }
         componentProps={{ title: 'Services', className: 'services-page' }}
       />
-    );
+    )
   }
 }
 
 
 const mapStateToProps = state => {
-  return { posts: state.posts, settings: state.settings };
-};
+  return { posts: state.posts, settings: state.settings }
+}
 
 
-export default connect( mapStateToProps )( ServicesPage );
+export default connect( mapStateToProps )( ServicesPage )

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import RichTextEditor from './RichTextEditor';
+import React, { Component } from 'react'
+import RichTextEditor from './RichTextEditor'
 
 class PostForm extends Component {
 
   renderPublish() {
 
-    const { isAdminUser, publish, onPublishChange } = this.props;
+    const { isAdminUser, publish, onPublishChange } = this.props
 
     if ( isAdminUser ) {
       return (
@@ -83,9 +83,9 @@ class PostForm extends Component {
         </div>
 
       </form>
-    );
+    )
   }
 }
 
 
-export default PostForm;
+export default PostForm

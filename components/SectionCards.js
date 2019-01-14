@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import renderHTML from 'react-render-html';
-import Link from 'next/link';
+import React, { Component } from 'react'
+import _ from 'lodash'
+import renderHTML from 'react-render-html'
+import Link from 'next/link'
 
 class SectionCards extends Component {
 
@@ -20,10 +20,10 @@ class SectionCards extends Component {
   renderPosts() {
 
     // Set defaults for contentLength
-    const contentLength = this.props.contentLength || 300;
+    const contentLength = this.props.contentLength || 300
 
-    return _.map( this.props.posts, ( post, i ) => {
-      let postContent = post.content.length >= contentLength ? `${post.content.substring( 0, contentLength ).trim()} . . .` : post.content;
+    return _.map( this.props.posts, post => {
+      let postContent = post.content.length >= contentLength ? `${post.content.substring( 0, contentLength ).trim()} . . .` : post.content
 
       return (
         <li key={post._id} className="section-cards__card">
@@ -51,4 +51,4 @@ class SectionCards extends Component {
 }
 
 
-export default SectionCards;
+export default SectionCards

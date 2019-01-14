@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import renderHTML from 'react-render-html';
+import React, { Component } from 'react'
+import _ from 'lodash'
+import renderHTML from 'react-render-html'
 
 class SectionStandard extends Component {
 
@@ -10,14 +10,14 @@ class SectionStandard extends Component {
       <div className="section-standard__image">
         <img src={ imageSource } />
       </div>
-    );
+    )
   }
 
 
   renderEndImage( post, i ) {
 
     if ( i % 2 !== 0 && !!post.mainImage ) {
-      return this.renderImage( post.mainImage );
+      return this.renderImage( post.mainImage )
     }
   }
 
@@ -25,7 +25,7 @@ class SectionStandard extends Component {
   renderStartImage( post, i ) {
 
     if ( i % 2 === 0 && !!post.mainImage ) {
-      return this.renderImage( post.mainImage );
+      return this.renderImage( post.mainImage )
     }
   }
 
@@ -33,7 +33,7 @@ class SectionStandard extends Component {
   renderPosts() {
 
     return _.map( this.props.posts, ( post, i ) => {
-      const postTextClassName = !!post.mainImage ? 'section-standard__text' : 'section-standard__text--wide';
+      const postTextClassName = !!post.mainImage ? 'section-standard__text' : 'section-standard__text--wide'
 
       return (
         <div className="section-standard__post" key={ post._id }>
@@ -63,4 +63,4 @@ class SectionStandard extends Component {
   }
 }
 
-export default SectionStandard;
+export default SectionStandard

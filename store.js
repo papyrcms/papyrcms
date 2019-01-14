@@ -1,6 +1,6 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import reduxThunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import reduxThunk from 'redux-thunk'
 
 
 const initialState = {
@@ -9,47 +9,47 @@ const initialState = {
   post: {},
   users: [],
   settings: {}
-};
+}
 
 
 export const reducer = ( state = initialState, action ) => {
   switch ( action.type ) {
     case 'set_current_user':
-      return { ...state, currentUser: action.payload };
+      return { ...state, currentUser: action.payload }
     case 'set_posts':
-      return { ...state, posts: action.payload };
+      return { ...state, posts: action.payload }
     case 'set_post':
-      return { ...state, post: action.payload };
+      return { ...state, post: action.payload }
     case 'set_users':
-      return { ...state, users: action.payload };
+      return { ...state, users: action.payload }
     case 'set_settings':
-      return { ...state, settings: action.payload };
+      return { ...state, settings: action.payload }
     default:
-      return state;
+      return state
   }
 };
 
 
 export const setCurrentUser = currentUser => {
-  return { type: 'set_current_user', payload: currentUser };
-};
+  return { type: 'set_current_user', payload: currentUser }
+}
 
 export const setPosts = posts => {
-  return { type: 'set_posts', payload: posts };
-};
+  return { type: 'set_posts', payload: posts }
+}
 
 export const setPost = post => {
-  return { type: 'set_post', payload: post };
-};
+  return { type: 'set_post', payload: post }
+}
 
 export const setUsers = users => {
-  return { type: 'set_users', payload: users };
-};
+  return { type: 'set_users', payload: users }
+}
 
 export const setSettings = settings => {
-  return { type: 'set_settings', payload: settings };
-};
+  return { type: 'set_settings', payload: settings }
+}
 
 export function initializeStore ( initialState = initialState ) {
-  return createStore( reducer, initialState, composeWithDevTools( applyMiddleware( reduxThunk ) ) );
-};
+  return createStore( reducer, initialState, composeWithDevTools( applyMiddleware( reduxThunk ) ) )
+}

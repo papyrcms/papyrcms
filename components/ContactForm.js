@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react'
+import axios from 'axios'
 
 class ContactForm extends Component {
 
@@ -12,26 +12,26 @@ class ContactForm extends Component {
       contactEmail: '',
       contactMessage: '',
       formValidation: ''
-    };
+    }
   }
 
 
   handleSubmit( event ) {
 
-    event.preventDefault();
+    event.preventDefault()
 
-    const { contactName, contactEmail, contactMessage } = this.state;
-    const contactObject = { contactName, contactEmail, contactMessage };
-    let message = '';
+    const { contactName, contactEmail, contactMessage } = this.state
+    const contactObject = { contactName, contactEmail, contactMessage }
+    let message = ''
 
     if (
       contactName === '' ||
       contactEmail === '' ||
       contactMessage === ''
     ) {
-      message = 'Please complete all the fields';
+      message = 'Please complete all the fields'
 
-      this.setState({ formValidation: message });
+      this.setState({ formValidation: message })
     } else {
 
       axios.post( '/api/contact', contactObject )
@@ -43,15 +43,15 @@ class ContactForm extends Component {
             formValidation: 'Thanks for reaching out! I\'ll be in touch.'
           });
         }).catch( error => {
-          console.log( error );
-        });
+          console.log( error )
+        })
     }
   }
 
   
   render() {
 
-    const { contactName, contactEmail, contactMessage, formValidation } = this.state;
+    const { contactName, contactEmail, contactMessage, formValidation } = this.state
 
     return (
       <div className="contact-form">
@@ -100,9 +100,9 @@ class ContactForm extends Component {
 
         </form>
       </div>
-    );
+    )
   }
 }
 
 
-export default ContactForm;
+export default ContactForm

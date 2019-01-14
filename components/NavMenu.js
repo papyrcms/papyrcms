@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from 'react'
+import Link from 'next/link'
 
 const NavMenu = props => {
   return (
@@ -42,7 +42,7 @@ const NavMenu = props => {
 
       </ul>
     </nav>
-  );
+  )
 }
 
-export default NavMenu;
+export default NavMenu

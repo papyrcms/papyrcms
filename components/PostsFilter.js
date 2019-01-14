@@ -1,43 +1,43 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
+import React, { Component } from 'react'
+import _ from 'lodash'
 
 class PostsFilter extends Component {
 
   constructor( props ) {
 
-    super( props );
+    super( props )
 
-    let posts = [];
-    let numberPosts = 0;
-    const { maxPosts, postTags } = this.props.settings;
+    let posts = []
+    let numberPosts = 0
+    const { maxPosts, postTags } = this.props.settings
 
     // Filter posts by postTags and maxPosts
     if ( !!postTags && postTags.length > 0 ) {
       posts = props.posts.filter( post => {
-        let included = false;
+        let included = false
 
         if ( 
           typeof postTags === 'string' &&
           post.tags.includes(postTags) &&
           numberPosts < maxPosts
         ) {
-          included = true;
+          included = true
         } else {
           _.map( postTags, tag => {
             if ( post.tags.includes( tag ) && numberPosts < maxPosts ) {
-              included = true;
+              included = true
             }
           });
         }
 
-        if ( included ) { numberPosts++; }
-        return included;
+        if ( included ) { numberPosts++ }
+        return included
       });
     } else {
-      posts = props.posts;
+      posts = props.posts
     }
 
-    this.state = { posts };
+    this.state = { posts }
   }
 
 
@@ -53,4 +53,4 @@ class PostsFilter extends Component {
 }
 
 
-export default PostsFilter;
+export default PostsFilter

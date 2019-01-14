@@ -1,8 +1,8 @@
-import React from 'react';
-import RichTextEditor from './RichTextEditor';
+import React from 'react'
+import RichTextEditor from './RichTextEditor'
 
 const CommentForm = props => {
-  const { content, onChange, onSubmit, detached, onDetachClick } = props;
+  const { content, onChange, onSubmit, detached, onDetachClick } = props
 
   return (
     <form className={ `comment-form  ${detached ? 'detached' : ''}` } onSubmit={ onSubmit.bind( this ) }>
@@ -24,7 +24,7 @@ const CommentForm = props => {
       </div>
 
     </form>
-  );
+  )
 }
 
-export default CommentForm;
+export default CommentForm
