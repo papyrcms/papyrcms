@@ -61,7 +61,7 @@ class AdminPage extends Component {
       servicesPageSettings,
       sectionCardSettings,
       sectionVideoSettings
-    };
+    }
   }
 
 

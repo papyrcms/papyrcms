@@ -56,7 +56,7 @@ class MyApp extends App {
           </Layout>
         </Provider>
       </Container>
-    );
+    )
   }
 }
 

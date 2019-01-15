@@ -46,7 +46,7 @@ class Landing extends Component {
           settings={ sectionVideoSettings }
         />
       </div>
-    );
+    )
   }
 }
 

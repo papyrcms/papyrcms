@@ -205,7 +205,7 @@ class Profile extends Component {
             </form>
           </div>
         </div>
-      ); // End profile
+      ) // End profile
 
     } else { // If not logged in
       return <h3 className="profile-page__not-logged-in">You need to be logged in to view this page.</h3>

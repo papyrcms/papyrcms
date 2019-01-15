@@ -27,12 +27,12 @@ class PostsFilter extends Component {
             if ( post.tags.includes( tag ) && numberPosts < maxPosts ) {
               included = true
             }
-          });
+          })
         }
 
         if ( included ) { numberPosts++ }
         return included
-      });
+      })
     } else {
       posts = props.posts
     }
@@ -48,7 +48,7 @@ class PostsFilter extends Component {
         posts={ this.state.posts }
         { ...this.props.componentProps }
       />
-    );
+    )
   }
 }
 

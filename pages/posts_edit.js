@@ -50,7 +50,7 @@ class PostsEdit extends Component {
 
     // Turn tags string into an array
     _.map( tags.split( ',' ), tag => {
-      let pendingTag = tag;
+      let pendingTag = tag
       pendingTag = pendingTag.trim()
 
       if ( !!pendingTag ) {

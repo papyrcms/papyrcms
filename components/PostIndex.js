@@ -32,7 +32,7 @@ class PostIndex extends Component {
         <div className="post-item__image">
           <img src={ image } />
         </div>
-      );
+      )
     }
   }
 

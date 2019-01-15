@@ -5,7 +5,7 @@ class ContactForm extends Component {
 
   constructor( props ) {
 
-    super( props );
+    super( props )
 
     this.state = {
       contactName: '',
@@ -41,7 +41,7 @@ class ContactForm extends Component {
             contactEmail: '',
             contactMessage: '',
             formValidation: 'Thanks for reaching out! I\'ll be in touch.'
-          });
+          })
         }).catch( error => {
           console.log( error )
         })

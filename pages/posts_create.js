@@ -38,7 +38,7 @@ class PostsCreate extends Component {
         Router.push( '/posts' )
       }).catch( error => {
         console.log( error )
-      });
+      })
   }
 
   render() {

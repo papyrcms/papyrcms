@@ -12,7 +12,7 @@ class SectionCards extends Component {
         <Link href={ `/posts_show?id=${post._id}` } as={ `/posts/${post._id}` }>
           <a className="section-cards__link">Read More</a>
         </Link>
-      );
+      )
     }
   }
 
@@ -32,8 +32,8 @@ class SectionCards extends Component {
           <div className="section-cards__content">{ renderHTML( postContent ) }</div>
           {this.renderReadMore( post )}
         </li>
-      );
-    });
+      )
+    })
   }
 
 
@@ -46,7 +46,7 @@ class SectionCards extends Component {
           {this.renderPosts()}
         </ul>
       </section>
-    );
+    )
   }
 }
 

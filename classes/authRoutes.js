@@ -1,6 +1,6 @@
-const Mailchimp = require( 'mailchimp-api-v3' )
 const UserModel = require( '../models/user' )
 const passport = require( 'passport' )
+const Email = require( 'email-templates' )
 const keys = require( '../config/keys' )
 
 class AuthRoutes {
@@ -11,7 +11,6 @@ class AuthRoutes {
     this.app = app
     this.UserModel = UserModel
     this.passport = passport
-    this.mailchimp = new Mailchimp( keys.mailchimpKey )
 
     this.registerRoutes()
   }
@@ -33,38 +32,30 @@ class AuthRoutes {
   }
 
 
-  async sendWelcomeEmail( res, userEmail ) {
-
-    if ( res.locals.settings.enableEmailing ) {
-      const result = await this.mailchimp.get('/lists')
-      const list = result.lists[0]
-
-      const memberInfo = {
-        email_address: userEmail,
-        status: 'unsubscribed',
-      }
-      
-      this.mailchimp.post(`/lists/${list.id}/members`, memberInfo)
-    }
-  }
-
-
   renderPage( req, res ) {
 
-    this.app.render( req, res, req.url );
+    this.app.render( req, res, req.url )
   }
 
 
   sendCurrentUser( req, res ) {
 
-    res.send( req.user );
+    res.send( req.user )
   }
 
 
   registerUser( req, res ) {
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    const { username, password, passwordConfirm } = req.body
+    const { firstName, lastName, username, password, passwordConfirm } = req.body
+
+    if ( !firstName || firstName === '' ) {
+      res.status(400).send({ message: 'Please enter your first name' })
+    }
+
+    if ( !lastName || lastName === '' ) {
+      res.status(400).send({ message: 'Please enter your last name' })
+    }
 
     // Make sure "username" is in email format
     if ( !regex.test( String( username ).toLowerCase() ) ) {
@@ -79,7 +70,7 @@ class AuthRoutes {
     // The LocalStrategy module requires a username
     // Set username and email as the user's email
     const newUser = new this.UserModel({
-      username, email: username
+      username, email: username, firstName, lastName
     })
 
     this.UserModel.register( newUser, password, err => {
@@ -88,10 +79,36 @@ class AuthRoutes {
       }
 
       this.passport.authenticate( 'local' )( req, res, () => {
-        this.sendWelcomeEmail( res, newUser.email )
+        this.sendEmail( newUser, res.locals.settings.enableEmailing )
         res.send( 'success' )
-      });
-    });
+      })
+    })
+  }
+
+
+  sendEmail( newUser, enableEmailing ) {
+
+    if ( enableEmailing ) {
+      const email = new Email({
+        message: {
+          from: keys.siteEmail
+        },
+        send: true,
+        transport: `smtps://${keys.siteEmail}:${keys.siteEmailPassword}@smtp.gmail.com`
+      })
+
+      email.send({
+        template: 'welcome',
+        message: {
+          to: newUser.email
+        },
+        locals: {
+          user: newUser
+        }
+      })
+      .then()
+      .catch(error => console.log(error))
+    }
   }
 
 
@@ -136,7 +153,7 @@ class AuthRoutes {
               foundUser.setPassword( newPassword, () => {
                 foundUser.save()
                 res.send({ message: 'Your password has been saved!' })
-              });
+              })
             }
           } else if ( !!err ) {
             res.status(400).send( err )
@@ -147,7 +164,7 @@ class AuthRoutes {
       } else {
         res.status(400).send( err )
       }
-    });
+    })
   }
   
 

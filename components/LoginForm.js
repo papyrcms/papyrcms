@@ -27,7 +27,7 @@ class LoginForm extends Component {
             Router.push( '/profile' )
           }).catch( err => {
             console.log( err )
-          });
+          })
       }).catch( err => {
         console.log( err )
         const message = 'Something went wrong. Please try again.'

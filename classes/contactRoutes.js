@@ -1,4 +1,6 @@
+const Email = require( 'email-templates' )
 const MessageModel = require('../models/message')
+const keys = require( '../config/keys' )
 
 class ContactRoutes {
 
@@ -30,6 +32,30 @@ class ContactRoutes {
   }
 
 
+  sendEmail( message ) {
+
+    const email = new Email({
+      message: {
+        from: keys.siteEmail
+      },
+      send: true,
+      transport: `smtps://${keys.siteEmail}:${keys.siteEmailPassword}@smtp.gmail.com`
+    })
+
+    email.send({
+      template: 'contact',
+      message: {
+        to: keys.adminEmail
+      },
+      locals: {
+        message
+      }
+    })
+    .then()
+    .catch(error => console.log(error))
+  }
+
+
   createMessage( req, res ) {
 
     const { contactName, contactEmail, contactMessage } = req.body
@@ -39,6 +65,8 @@ class ContactRoutes {
       message: contactMessage,
     }
     const message = new this.MessageModel( messageObj )
+
+    this.sendEmail( message )
 
     message.save()
     res.send( message )

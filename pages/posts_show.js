@@ -43,7 +43,7 @@ class PostsShow extends Component {
           Router.push( '/posts' )
         }).catch( error => {
           console.log( error )
-        });
+        })
     }
   }
 
@@ -52,7 +52,7 @@ class PostsShow extends Component {
 
     event.preventDefault()
 
-    const { post } = this.props;
+    const { post } = this.props
     const { commentFormContent, comments, editingComment } = this.state
     const commentObject = { content: commentFormContent }
 
@@ -62,7 +62,7 @@ class PostsShow extends Component {
           this.setState({ comments: [...comments, res.data], commentFormContent: '' })
         }).catch( err => {
           console.log( err )
-        });
+        })
     } else {
       axios.put( `/api/posts/${post._id}/comments/${editingComment}`, commentObject )
         .then( res => {
@@ -73,10 +73,10 @@ class PostsShow extends Component {
 
               this.setState({ comments: newCommentState, commentFormContent: '', editingComment: null })
             }
-          });
+          })
         }).catch( err => {
           console.log( err )
-        });
+        })
     }
   }
 
@@ -142,10 +142,10 @@ class PostsShow extends Component {
   
               this.setState({ comments: newCommentState })
             }
-          });
+          })
         }).catch( err => {
           console.log( err )
-        });
+        })
     }
   }
 
@@ -204,7 +204,7 @@ class PostsShow extends Component {
             Stop Editing
           </button>
         </div>
-      );
+      )
     }
   }
 

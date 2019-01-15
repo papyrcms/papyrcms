@@ -2,7 +2,7 @@ import React from 'react'
 import CKEditor from 'react-ckeditor-component'
 
 const TextEditor = props => {
-  const { content, className, onChange } = props;
+  const { content, className, onChange } = props
 
   return (
     <CKEditor

@@ -47,7 +47,7 @@ class Header extends Component {
 
   renderNav() {
 
-    const { settings, currentUser } = this.props;
+    const { settings, currentUser } = this.props
 
     if ( settings.enableMenu || ( currentUser && currentUser.isAdmin ) ) {
       return (
@@ -62,7 +62,7 @@ class Header extends Component {
 
   render() {
     
-    const { mainTitle, subTitle } = this.props;
+    const { mainTitle, subTitle } = this.props
 
     return (
       <header className="header">

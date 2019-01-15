@@ -67,7 +67,7 @@ Settings.find().exec(( error, settings ) => {
   } else {
     appSettings = settings[0]
   }
-});
+})
 
 // Set user and settings to res.locals
 server.use( ( req, res, done ) => {
@@ -76,7 +76,7 @@ server.use( ( req, res, done ) => {
   res.locals.settings = appSettings
 
   done()
-});
+})
 
 app.prepare().then( () => {
 
@@ -87,7 +87,7 @@ app.prepare().then( () => {
     const queryParams = { posts }
 
     app.render( req, res, actualPage, queryParams )
-  });
+  })
 
   // Register Routes
   new AdminRoutes( server, app )

@@ -46,8 +46,8 @@ class SectionStandard extends Component {
           </div>
           { this.renderEndImage( post, i ) }
         </div>
-      );
-    });
+      )
+    })
   }
 
 
@@ -59,7 +59,7 @@ class SectionStandard extends Component {
 
         {this.renderPosts()}
       </div>
-    );
+    )
   }
 }
 

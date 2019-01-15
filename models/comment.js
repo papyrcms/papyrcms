@@ -19,6 +19,6 @@ const commentSchema = new mongoose.Schema({
 },
   {
     usePushEach: true
-  });
+  })
 
 module.exports = mongoose.model('comment', commentSchema)

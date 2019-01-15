@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import axios from 'axios';
+import axios from 'axios'
 import RichTextEditor from './RichTextEditor'
 
 class PostForm extends Component {
@@ -80,7 +80,7 @@ class PostForm extends Component {
 
   render() {
 
-    const { title, tags, mainImage, content, onTitleChange, onTagsChange, onContentChange, handleSubmit } = this.props;
+    const { title, tags, mainImage, content, onTitleChange, onTagsChange, onContentChange, handleSubmit } = this.props
 
     return (
       <form encType="multipart/form-data" className="post-form" onSubmit={ handleSubmit.bind( this ) }>
