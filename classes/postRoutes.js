@@ -1,5 +1,8 @@
+const cloudinary = require( 'cloudinary' )
+const multer = require( 'multer' )
 const PostModel = require( '../models/post' )
 const CommentModel = require( '../models/comment' )
+const keys = require( '../config/keys' )
 
 class PostRoutes {
 
@@ -10,6 +13,29 @@ class PostRoutes {
     this.postType = postType
     this.PostModel = PostModel
     this.CommentModel = CommentModel
+    this.cloudinary = cloudinary
+
+    // Multer config
+    const storage = multer.diskStorage({
+      filename: (req, file, callback) => {
+        callback(null, Date.now() + file.originalname)
+      }
+    })
+    const fileFilter = (req, file, cb) => {
+      if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false)
+      }
+      cb(null, true)
+    }
+
+    this.upload = multer({ storage, fileFilter })
+
+    // Cloudinary config
+    this.cloudinary.config({
+      cloud_name: keys.cloudinaryCloudName,
+      api_key: keys.cloudinaryApiKey,
+      api_secret: keys.cloudinaryApiSecret
+    })
 
     this.registerRoutes()
   }
@@ -24,6 +50,7 @@ class PostRoutes {
     this.server.get( `/${this.postType}/:id/edit`, this.allowUserPosts, this.renderPage.bind( this, '_edit' ) )
 
     // Post API
+    this.server.post( '/api/upload', this.allowUserPosts, this.upload.single( 'file' ), this.uploadImage.bind( this ) )
     this.server.post( `/api/${this.postType}`, this.allowUserPosts, this.createPost.bind( this ) )
     this.server.get( `/api/${this.postType}`, this.sendAllPosts.bind( this ) )
     this.server.get( `/api/published_${this.postType}`, this.sendPublishedPosts.bind( this ) )
@@ -68,6 +95,14 @@ class PostRoutes {
     const queryParams = { id }
 
     this.app.render( req, res, actualPage, queryParams )
+  }
+
+
+  async uploadImage( req, res ) {
+
+    const uploadResponse = await this.cloudinary.v2.uploader.upload( req.file.path, { angle: 0 } )
+
+    res.send( uploadResponse.secure_url )
   }
 
 

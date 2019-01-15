@@ -13,6 +13,17 @@
     margin-left: 1rem;
   }
 
+  &__label-section {
+    display: flex;
+    align-items: center;
+    
+    & > * {
+      margin-right: 2rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+
   &__input {
     height: 4rem;
     width: 100%;
