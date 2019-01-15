@@ -94,7 +94,19 @@ class AuthRoutes {
           from: keys.siteEmail
         },
         send: true,
-        transport: `smtps://${keys.siteEmail}:${keys.siteEmailPassword}@smtp.gmail.com`
+        transport: {
+          host: "smtp.gmail.com",
+          port: 465,
+          secure: true,
+          auth: {
+            type: 'OAuth2',
+            user: keys.siteEmail,
+            clientId: keys.gmailClientId,
+            clientSecret: keys.gmailClientSecret,
+            refreshToken: keys.gmailRefreshToken,
+            accessToken: keys.gmailAccessToken
+          }
+        }
       })
 
       email.send({
