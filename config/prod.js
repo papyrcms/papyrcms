@@ -3,7 +3,6 @@ module.exports = {
   gmailClientSecret: process.env.GMAIL_CLIENT_SECRET,
   gmailRefreshToken: process.env.GMAIL_REFRESH_TOKEN,
   gmailAccessToken: process.env.GMAIL_ACCESS_TOKEN,
-  siteEmailPassword: process.env.SITE_EMAIL_PASSWORD,
   siteEmail: process.env.SITE_EMAIL,
   adminEmail: process.env.ADMIN_EMAIL,
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
