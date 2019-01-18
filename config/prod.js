@@ -8,6 +8,8 @@ module.exports = {
   gmailClientSecret: process.env.GMAIL_CLIENT_SECRET,
   gmailRefreshToken: process.env.GMAIL_REFRESH_TOKEN,
 
+  googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
+
   siteEmail: process.env.SITE_EMAIL,
   adminEmail: process.env.ADMIN_EMAIL,
 

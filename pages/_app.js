@@ -4,6 +4,7 @@ import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
 import { setCurrentUser, setPosts, setPost, setUsers, setSettings } from '../store'
 import Layout from '../components/Layout'
+import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 
 class MyApp extends App {
@@ -45,7 +46,26 @@ class MyApp extends App {
   }
 
 
+  // Google Analytics
+  componentDidMount() {
+
+    if ( !window.GA_INITIALIED ) {
+      initGA()
+      window.GA_INITIALIED = true
+    }
+
+    logPageView()
+  }
+
+
+  componentDidUpdate() {
+    
+    logPageView()
+  }
+
+
   render() {
+
     const { Component, reduxStore } = this.props
 
     return (
