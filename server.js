@@ -89,7 +89,7 @@ app.prepare().then( () => {
     app.render( req, res, actualPage, queryParams )
   })
 
-  server.post( '/api/googleAnalyticsId', (req, res) => {
+  server.get( '/api/googleAnalyticsId', (req, res) => {
     if ( req.get('host') ) {
       res.send(keys.googleAnalyticsId)
     } else {
