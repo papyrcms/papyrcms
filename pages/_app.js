@@ -46,20 +46,25 @@ class MyApp extends App {
   }
 
 
-  // Google Analytics
   componentDidMount() {
 
-    if ( !window.GA_INITIALIED ) {
-      initGA()
-      window.GA_INITIALIED = true
-    }
-
-    logPageView()
+    this.logPageView()
   }
 
 
   componentDidUpdate() {
-    
+
+    this.logPageView()
+  }
+
+
+  logPageView() {
+
+    if (!window.GA_INITIALIED) {
+      initGA()
+      window.GA_INITIALIED = true
+    }
+
     logPageView()
   }
 
