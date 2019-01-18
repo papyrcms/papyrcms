@@ -2,3 +2,4 @@ node_modules
 .next
 config/dev.js
 now.json
+.env
