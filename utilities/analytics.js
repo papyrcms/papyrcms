@@ -1,9 +1,8 @@
 import ReactGA from 'react-ga'
-import keys from '../config/keys'
 
-export const initGA = () => {
-  console.log(keys)
-  ReactGA.initialize(keys.googleAnalyticsId)
+export const initGA = googleAnalyticsId => {
+  console.log(googleAnalyticsId)
+  ReactGA.initialize(googleAnalyticsId)
 }
 
 export const logPageView = () => {
