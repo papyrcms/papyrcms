@@ -1,12 +1,13 @@
 import ReactGA from 'react-ga'
+import axios from 'axios'
 
-export const initGA = googleAnalyticsId => {
-  console.log(googleAnalyticsId)
-  ReactGA.initialize(googleAnalyticsId)
+export const initGA = async () => {
+  const res = await axios.get('/api/googleAnalyticsId')
+
+  ReactGA.initialize(res.data)
 }
 
 export const logPageView = () => {
-  console.log(window.location.pathname)
   ReactGA.set({ page: window.location.pathname })
   ReactGA.pageview(window.location.pathname)
 }

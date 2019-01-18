@@ -2,7 +2,6 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
-import keys from '../config/keys'
 import { setCurrentUser, setPosts, setPost, setUsers, setSettings } from '../store'
 import Layout from '../components/Layout'
 import { initGA, logPageView } from '../utilities/analytics'
@@ -62,7 +61,7 @@ class MyApp extends App {
   logPageView() {
 
     if (!window.GA_INITIALIED) {
-      initGA(keys.googleAnalyticsId)
+      initGA()
       window.GA_INITIALIED = true
     }
 

@@ -6,7 +6,7 @@ const passport = require( 'passport' )
 const express = require( 'express' )
 const next = require( 'next' )
 const keys = require( './config/keys' )
-console.log(keys)
+
 // Models
 const Settings = require( './models/settings' )
 const Post = require( './models/post' )
@@ -87,6 +87,14 @@ app.prepare().then( () => {
     const queryParams = { posts }
 
     app.render( req, res, actualPage, queryParams )
+  })
+
+  server.post( '/api/googleAnalyticsId', (req, res) => {
+    if ( req.get('host') ) {
+      res.send(keys.googleAnalyticsId)
+    } else {
+      res.send('nunya beezwax')
+    }
   })
 
   // Register Routes
