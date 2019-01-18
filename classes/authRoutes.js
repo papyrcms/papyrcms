@@ -1,7 +1,6 @@
 const UserModel = require( '../models/user' )
+const Mailer = require( './mailer' )
 const passport = require( 'passport' )
-const Email = require( 'email-templates' )
-const keys = require( '../config/keys' )
 
 class AuthRoutes {
 
@@ -79,48 +78,18 @@ class AuthRoutes {
       }
 
       this.passport.authenticate( 'local' )( req, res, () => {
-        this.sendEmail( newUser, res.locals.settings.enableEmailing )
+
+        const mailer = new Mailer()
+        const templatePath = 'emails/welcome.html'
+        const subject = `Welcome, ${newUser.firstName}!`
+        
+        if ( res.locals.settings.enableEmailing ) {
+          mailer.sendEmail( newUser, templatePath, newUser.email, subject )
+        }
+
         res.send( 'success' )
       })
     })
-  }
-
-
-  sendEmail( newUser, enableEmailing ) {
-
-    if ( enableEmailing ) {
-      const email = new Email({
-        message: {
-          from: keys.siteEmail
-        },
-        send: true,
-        transport: {
-          host: "smtp.gmail.com",
-          port: 465,
-          secure: true,
-          auth: {
-            type: 'OAuth2',
-            user: keys.siteEmail,
-            clientId: keys.gmailClientId,
-            clientSecret: keys.gmailClientSecret,
-            refreshToken: keys.gmailRefreshToken,
-            accessToken: keys.gmailAccessToken
-          }
-        }
-      })
-
-      email.send({
-        template: 'welcome',
-        message: {
-          to: newUser.email
-        },
-        locals: {
-          user: newUser
-        }
-      })
-      .then()
-      .catch(error => console.log(error))
-    }
   }
 
 

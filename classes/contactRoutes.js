@@ -1,5 +1,5 @@
-const Email = require( 'email-templates' )
-const MessageModel = require('../models/message')
+const MessageModel = require( '../models/message' )
+const Mailer = require( './mailer' )
 const keys = require( '../config/keys' )
 
 class ContactRoutes {
@@ -32,42 +32,6 @@ class ContactRoutes {
   }
 
 
-  sendEmail( message ) {
-
-    const email = new Email({
-      message: {
-        from: keys.siteEmail
-      },
-      send: true,
-      transport: {
-        host: "smtp.gmail.com",
-        port: 465,
-        secure: true,
-        auth: {
-          type: 'OAuth2',
-          user: keys.siteEmail,
-          clientId: keys.gmailClientId,
-          clientSecret: keys.gmailClientSecret,
-          refreshToken: keys.gmailRefreshToken,
-          accessToken: keys.gmailAccessToken
-        }
-      }
-    })
-
-    email.send({
-      template: 'contact',
-      message: {
-        to: keys.adminEmail
-      },
-      locals: {
-        message
-      }
-    })
-    .then()
-    .catch(error => console.log(error))
-  }
-
-
   createMessage( req, res ) {
 
     const { contactName, contactEmail, contactMessage } = req.body
@@ -78,7 +42,15 @@ class ContactRoutes {
     }
     const message = new this.MessageModel( messageObj )
 
-    this.sendEmail( message )
+    const mailer = new Mailer();
+    const templatePath = 'emails/contact.html'
+    const subject = `New message from ${message.name}!`
+
+    const sent = mailer.sendEmail( message, templatePath, keys.adminEmail, subject )
+
+    if (sent) {
+      message.emailSent = true
+    }
 
     message.save()
     res.send( message )
