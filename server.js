@@ -6,7 +6,7 @@ const passport = require( 'passport' )
 const express = require( 'express' )
 const next = require( 'next' )
 const keys = require( './config/keys' )
-
+console.log(keys)
 // Models
 const Settings = require( './models/settings' )
 const Post = require( './models/post' )
