@@ -2,6 +2,7 @@ import ReactGA from 'react-ga'
 import keys from '../config/keys'
 
 export const initGA = () => {
+  console.log(keys.googleAnalyticsId)
   ReactGA.initialize(keys.googleAnalyticsId)
 }
 
