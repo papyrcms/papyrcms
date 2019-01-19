@@ -35,7 +35,7 @@ class PostForm extends Component {
 
   handleFileInputChange( event ) {
 
-    const { onMainImageChange } = this.props
+    const { onmainMediaChange } = this.props
     let formData = new FormData
 
     formData.append( 'file', event.target.files[0] )
@@ -44,7 +44,7 @@ class PostForm extends Component {
       .then( res => {
 
         const imageChange = { target: { value: res.data } }
-        onMainImageChange( imageChange )
+        onmainMediaChange( imageChange )
       }).catch( err => {
         console.log( err.response )
       })
@@ -53,7 +53,7 @@ class PostForm extends Component {
 
   renderImageInput() {
 
-    const { mainImage, onMainImageChange } = this.props
+    const { mainMedia, onmainMediaChange } = this.props
 
     if ( this.state.imageUpload ) {
       return (
@@ -73,8 +73,8 @@ class PostForm extends Component {
           className="post-form__input"
           type="text"
           name="image"
-          value={mainImage}
-          onChange={event => onMainImageChange(event)}
+          value={mainMedia}
+          onChange={event => onmainMediaChange(event)}
         />
       )
     }
@@ -83,20 +83,20 @@ class PostForm extends Component {
 
   renderImage() {
 
-    const { mainImage } = this.props
+    const { mainMedia } = this.props
 
-    if ( mainImage.match(/\.(jpg|jpeg|png|gif)$/i) ) {
+    if ( mainMedia.match(/\.(jpg|jpeg|png|gif)$/i) ) {
       return (
         <img 
           className="post-form__image" 
-          src={mainImage}
+          src={mainMedia}
         />
       )
-    } else if( mainImage.match(/\.(mp4|webm)$/i) ) {
+    } else if( mainMedia.match(/\.(mp4|webm)$/i) ) {
       return (
         <video className="post-form__image" autoPlay muted loop>
-          <source src={mainImage} type="video/mp4" />
-          <source src={mainImage} type="video/webm" />
+          <source src={mainMedia} type="video/mp4" />
+          <source src={mainMedia} type="video/webm" />
           Your browser is not supported.
         </video>
       )

@@ -5,7 +5,7 @@ const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   tags: [String],
-  mainImage: String,
+  mainMedia: String,
   subImages: [String],
   published: { type: Boolean, default: false },
   comments: [{

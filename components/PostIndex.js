@@ -43,11 +43,11 @@ class PostIndex extends Component {
 
     if ( !!posts && !!posts[0] ) {
       return _.map( posts, post => {
-        const { _id, title, tags, mainImage, content } = post
+        const { _id, title, tags, mainMedia, content } = post
 
         return (
           <div key={ _id } className="post-item">
-            { this.renderImageSection( mainImage ) }
+            { this.renderImageSection( mainMedia ) }
             <div className="post-item__details">
               <div className="post-item__top">
                 <h3 className="post-item__title heading-tertiary">{ title }</h3>

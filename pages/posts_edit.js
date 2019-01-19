@@ -34,7 +34,7 @@ class PostsEdit extends Component {
     this.state = { 
       title: props.post.title, 
       tags: tags, 
-      mainImage: props.post.mainImage || '', 
+      mainMedia: props.post.mainMedia || '', 
       content: props.post.content,
       publish: props.post.published
     }
@@ -45,7 +45,7 @@ class PostsEdit extends Component {
 
     event.preventDefault()
 
-    const { title, tags, mainImage, content, publish } = this.state
+    const { title, tags, mainMedia, content, publish } = this.state
     let tagArray = []
 
     // Turn tags string into an array
@@ -58,7 +58,7 @@ class PostsEdit extends Component {
       }
     })
 
-    const postObject = { title, tags: tagArray, mainImage, content, published: publish }
+    const postObject = { title, tags: tagArray, mainMedia, content, published: publish }
 
     axios.put( `/api/posts/${this.props.post._id}`, postObject )
       .then( response => {
@@ -69,7 +69,7 @@ class PostsEdit extends Component {
   }
 
   render() {
-    const { title, tags, mainImage, content, publish } = this.state
+    const { title, tags, mainMedia, content, publish } = this.state
 
     return (
       <div className="posts-edit-page">
@@ -80,8 +80,8 @@ class PostsEdit extends Component {
           onTitleChange={ event => this.setState({ title: event.target.value }) }
           tags={ tags }
           onTagsChange={ event => this.setState({ tags: event.target.value }) }
-          mainImage={ mainImage }
-          onMainImageChange={ event => this.setState({ mainImage: event.target.value }) }
+          mainMedia={ mainMedia }
+          onmainMediaChange={ event => this.setState({ mainMedia: event.target.value }) }
           content={ content }
           onContentChange={ newContent => this.setState({ content: newContent }) }
           publish={ publish }

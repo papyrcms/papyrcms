@@ -11,7 +11,7 @@ class PostsCreate extends Component {
 
     super( props )
 
-    this.state = { title: '', tags: '', mainImage: '', content: '', publish: false }
+    this.state = { title: '', tags: '', mainMedia: '', content: '', publish: false }
   }
 
 
@@ -19,7 +19,7 @@ class PostsCreate extends Component {
 
     event.preventDefault()
 
-    const { title, tags, mainImage, content, publish } = this.state
+    const { title, tags, mainMedia, content, publish } = this.state
     let tagArray = []
 
     _.map( tags.split( ',' ), tag => {
@@ -31,7 +31,7 @@ class PostsCreate extends Component {
       }
     })
 
-    const postObject = { title, tags: tagArray, mainImage, content, published: publish }
+    const postObject = { title, tags: tagArray, mainMedia, content, published: publish }
 
     axios.post( '/api/posts', postObject )
       .then( response => {
@@ -43,7 +43,7 @@ class PostsCreate extends Component {
 
   render() {
 
-    const { title, tags, mainImage, content, publish } = this.state
+    const { title, tags, mainMedia, content, publish } = this.state
 
     return (
       <div className="posts-create-page">
@@ -54,8 +54,8 @@ class PostsCreate extends Component {
           onTitleChange={ event => this.setState({ title: event.target.value }) }
           tags={ tags }
           onTagsChange={ event => this.setState({ tags: event.target.value }) }
-          mainImage={ mainImage }
-          onMainImageChange={ event => this.setState({ mainImage: event.target.value }) }
+          mainMedia={ mainMedia }
+          onmainMediaChange={ event => this.setState({ mainMedia: event.target.value }) }
           content={ content }
           onContentChange={ newContent => this.setState({ content: newContent }) }
           publish={ publish }

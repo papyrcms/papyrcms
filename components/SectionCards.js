@@ -28,7 +28,7 @@ class SectionCards extends Component {
       return (
         <li key={post._id} className="section-cards__card">
           <h3 className="section-cards__title">{ post.title }</h3>
-          <img className="section-cards__image" src={ post.mainImage } />
+          <img className="section-cards__image" src={ post.mainMedia } />
           <div className="section-cards__content">{ renderHTML( postContent ) }</div>
           {this.renderReadMore( post )}
         </li>

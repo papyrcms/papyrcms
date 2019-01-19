@@ -20,13 +20,13 @@ class SectionStandard extends Component {
     const { imageLeft, imageRight } = this.props
 
     if ( imageRight && !imageLeft ) {
-      return this.renderImage( post.mainImage )
+      return this.renderImage( post.mainMedia )
     } else if ( 
       ( ( !imageRight && !imageLeft ) ||
       ( imageRight && imageLeft ) ) &&
-      i % 2 !== 0 && !!post.mainImage 
+      i % 2 !== 0 && !!post.mainMedia 
     ) {
-      return this.renderImage( post.mainImage )
+      return this.renderImage( post.mainMedia )
     }
   }
 
@@ -36,13 +36,13 @@ class SectionStandard extends Component {
     const { imageLeft, imageRight } = this.props
 
     if ( imageLeft && !imageRight ) {
-      return this.renderImage( post.mainImage )
+      return this.renderImage( post.mainMedia )
     } else if ( 
       ( ( !imageRight && !imageLeft ) ||
       ( imageRight && imageLeft ) ) &&
-      i % 2 === 0 && !!post.mainImage 
+      i % 2 === 0 && !!post.mainMedia 
     ) {
-      return this.renderImage( post.mainImage )
+      return this.renderImage( post.mainMedia )
     }
   }
   
@@ -72,7 +72,7 @@ class SectionStandard extends Component {
   renderPosts() {
     
     return _.map( this.props.posts, ( post, i ) => {
-      const postTextClassName = !!post.mainImage ? 'section-standard__text' : 'section-standard__text--wide'
+      const postTextClassName = !!post.mainMedia ? 'section-standard__text' : 'section-standard__text--wide'
 
       return (
         <div className="section-standard__post" key={ post._id }>
