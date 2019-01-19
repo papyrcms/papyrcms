@@ -79,7 +79,7 @@ server.use( ( req, res, done ) => {
 })
 
 app.prepare().then( () => {
-
+  
   // Root Route
   server.get( '/', async ( req, res ) => {
     const actualPage = '/index'
@@ -89,11 +89,19 @@ app.prepare().then( () => {
     app.render( req, res, actualPage, queryParams )
   })
 
-  server.get( '/api/googleAnalyticsId', (req, res) => {
-    if ( req.get('host') ) {
-      res.send(keys.googleAnalyticsId)
+  server.post( '/api/googleAnalyticsId', (req, res) => {
+    if ( `${req.protocol}://${req.get('host')}` === keys.rootURL && req.body.authorize ) {
+      res.send( keys.googleAnalyticsId )
     } else {
       res.send('nunya beezwax')
+    }
+  })
+
+  server.post('/api/stripePubKey', (req, res) => {
+    if ( `${req.protocol}://${req.get('host')}` === keys.rootURL && req.body.authorize) {
+      res.send( keys.stripePublishableTestKey )
+    } else {
+      res.send( 'nunya beezwax' )
     }
   })
 

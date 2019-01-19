@@ -2,7 +2,7 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
-import { setCurrentUser, setPosts, setPost, setUsers, setSettings } from '../store'
+import { setCurrentUser, setPosts, setPost, setUsers, setSettings, setStripePubKey } from '../store'
 import Layout from '../components/Layout'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
@@ -35,6 +35,11 @@ class MyApp extends App {
       reduxStore.dispatch( setUsers( pageProps.users ))
     }
 
+    // If a stripe publishable key was receieved, send it to the redux store
+    if ( !!pageProps.stripePubKey ) {
+      reduxStore.dispatch( setStripePubKey( pageProps.stripePubKey ))
+    }
+
     // Set Current User and Website Settings in the redux store
     if ( isServer ) {
       reduxStore.dispatch( setSettings( res.locals.settings ))
@@ -48,22 +53,11 @@ class MyApp extends App {
 
   componentDidMount() {
 
-    this.logPageView()
+    initGA()
   }
 
 
   componentDidUpdate() {
-
-    this.logPageView()
-  }
-
-
-  logPageView() {
-
-    if (!window.GA_INITIALIED) {
-      initGA()
-      window.GA_INITIALIED = true
-    }
 
     logPageView()
   }

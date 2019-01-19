@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { injectStripe, CardElement } from 'react-stripe-elements'
+import { injectStripe, CardCVCElement, CardExpiryElement, CardNumberElement } from 'react-stripe-elements'
 
 class DonateForm extends Component {
 
   constructor( props ) {
+    
     super( props )
 
     this.state = { elements: null, card: null }
@@ -23,10 +24,14 @@ class DonateForm extends Component {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
 
-        <label>
-          Card details
-          <CardElement />
-        </label>
+        <label>Card Number</label>
+        <CardNumberElement />
+
+        <label>Card Expiration</label>
+        <CardExpiryElement />
+
+        <label>Card CVC</label>
+        <CardCVCElement />
 
         <input
           type="submit"

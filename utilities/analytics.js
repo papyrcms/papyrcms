@@ -2,24 +2,35 @@ import ReactGA from 'react-ga'
 import axios from 'axios'
 
 export const initGA = async () => {
-  const res = await axios.get('/api/googleAnalyticsId')
 
-  ReactGA.initialize(res.data)
+  if (!window.GA_INITIALIED) {
+    const res = await axios.post('/api/googleAnalyticsId', { authorize: true })
+
+    ReactGA.initialize(res.data)
+    window.GA_INITIALIED = true
+
+    logPageView()
+  }
 }
 
 export const logPageView = () => {
-  ReactGA.set({ page: window.location.pathname })
-  ReactGA.pageview(window.location.pathname)
+
+  if (window.GA_INITIALIED) {
+    ReactGA.set({ page: window.location.pathname })
+    ReactGA.pageview(window.location.pathname)
+  }
 }
 
 export const logEvent = (category = '', action = '') => {
-  if (category && action) {
+
+  if (window.GA_INITIALIED && category && action) {
     ReactGA.event({ category, action })
   }
 }
 
 export const logException = (description = '', fatal = false) => {
-  if (description) {
+  
+  if (window.GA_INITIALIED && description) {
     ReactGA.exception({ description, fatal })
   }
 }

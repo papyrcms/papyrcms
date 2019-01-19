@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
 import { StripeProvider, Elements } from 'react-stripe-elements'
+import axios from 'axios'
+import { connect } from 'react-redux'
 import keys from '../config/keys'
 import DonateForm from '../components/DonateForm'
 
 class Donate extends Component {
+
+  static async getInitialProps() {
+
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const res = await axios.post( `${rootUrl}/api/stripePubKey`, { authorize: true })
+
+    return { stripePubKey: res.data }
+  }
+
 
   constructor( props ) {
 
@@ -15,7 +26,7 @@ class Donate extends Component {
 
   componentDidMount() {
 
-    this.setState({ stripe: window.Stripe( keys.stripePublishableTestKey ) })
+    this.setState({ stripe: window.Stripe( this.props.stripePubKey ) })
   }
 
 
@@ -35,4 +46,9 @@ class Donate extends Component {
 }
 
 
-export default Donate
+const mapStateToProps = state => {
+  return { stripePubKey: state.stripePubKey }
+}
+
+
+export default connect( mapStateToProps )( Donate )
