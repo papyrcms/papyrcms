@@ -6,6 +6,7 @@ import Router from 'next/router'
 import renderHTML from 'react-render-html'
 import { connect } from 'react-redux'
 import CommentForm from '../components/CommentForm'
+import Media from '../components/Media'
 import keys from '../config/keys'
 
 class PostsShow extends Component {
@@ -120,10 +121,10 @@ class PostsShow extends Component {
   }
 
 
-  renderMainMedia( image ) {
+  renderMainMedia( media ) {
 
-    if ( !!image ) {
-      return <div className="post__image"><img src={image} /></div>
+    if ( !!media ) {
+      return <div className="post__image"><Media src={media} /></div>
     }
   }
 
