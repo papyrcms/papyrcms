@@ -120,7 +120,7 @@ class PostsShow extends Component {
   }
 
 
-  rendermainMedia( image ) {
+  renderMainMedia( image ) {
 
     if ( !!image ) {
       return <div className="post__image"><img src={image} /></div>
@@ -256,7 +256,7 @@ class PostsShow extends Component {
         <div className="post">
           <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
           { this.renderTagsSection( tags ) }
-          { this.rendermainMedia( mainMedia ) }
+          { this.renderMainMedia( mainMedia ) }
           <div className="post__content">{ renderHTML( content ) }</div>
           { this.renderAuthentication() }
         </div>

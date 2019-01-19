@@ -81,7 +81,7 @@ class PostsEdit extends Component {
           tags={ tags }
           onTagsChange={ event => this.setState({ tags: event.target.value }) }
           mainMedia={ mainMedia }
-          onmainMediaChange={ event => this.setState({ mainMedia: event.target.value }) }
+          onMainMediaChange={ event => this.setState({ mainMedia: event.target.value }) }
           content={ content }
           onContentChange={ newContent => this.setState({ content: newContent }) }
           publish={ publish }

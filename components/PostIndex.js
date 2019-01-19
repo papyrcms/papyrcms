@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
+import Media from './Media'
 
 class PostIndex extends Component {
 
@@ -25,12 +26,11 @@ class PostIndex extends Component {
   }
 
 
-  renderImageSection( image ) {
-
-    if ( !!image ) {
+  renderMediaSection( media ) {
+    if ( !!media ) {
       return (
         <div className="post-item__image">
-          <img src={ image } />
+          <Media src={ media } />
         </div>
       )
     }
@@ -47,7 +47,7 @@ class PostIndex extends Component {
 
         return (
           <div key={ _id } className="post-item">
-            { this.renderImageSection( mainMedia ) }
+            { this.renderMediaSection( mainMedia ) }
             <div className="post-item__details">
               <div className="post-item__top">
                 <h3 className="post-item__title heading-tertiary">{ title }</h3>

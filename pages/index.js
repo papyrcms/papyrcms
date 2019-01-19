@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import PostsFilter from '../components/PostsFilter'
 import SectionCards from '../components/SectionCards'
-import SectionVideo from '../components/SectionVideo'
+import SectionMedia from '../components/SectionMedia'
 
 class Landing extends Component {
 
@@ -33,6 +33,10 @@ class Landing extends Component {
       count: 3
     }
 
+    const sectionMediaProps = {
+      className: "section-video"
+    }
+
     return (
       <div className="landing">
         <PostsFilter
@@ -42,9 +46,10 @@ class Landing extends Component {
           componentProps={ sectionCardsProps }
         />
         <PostsFilter 
-          component={ SectionVideo }
+          component={ SectionMedia }
           posts={ this.props.posts }
           settings={ sectionVideoSettings }
+          componentProps={ sectionMediaProps }
         />
       </div>
     )

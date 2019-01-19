@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import RichTextEditor from './RichTextEditor'
+import Media from './Media';
 
 class PostForm extends Component {
 
   constructor( props ) {
     super( props )
 
-    this.state = { imageUpload: false }
+    this.state = { mediaUpload: false, uploadedMedia: false, dots: '' }
   }
 
 
@@ -35,27 +36,28 @@ class PostForm extends Component {
 
   handleFileInputChange( event ) {
 
-    const { onmainMediaChange } = this.props
+    const { onMainMediaChange } = this.props
     let formData = new FormData
 
+    this.setState({ uploadedMedia: true })
     formData.append( 'file', event.target.files[0] )
 
     axios.post( '/api/upload', formData )
       .then( res => {
 
         const imageChange = { target: { value: res.data } }
-        onmainMediaChange( imageChange )
+        onMainMediaChange( imageChange )
       }).catch( err => {
         console.log( err.response )
       })
   }
 
 
-  renderImageInput() {
+  renderMediaInput() {
 
-    const { mainMedia, onmainMediaChange } = this.props
+    const { mainMedia, onMainMediaChange } = this.props
 
-    if ( this.state.imageUpload ) {
+    if ( this.state.mediaUpload ) {
       return (
         <div>
           <p>Please wait to submit the form until you see the media you uploaded to ensure it uploads properly.</p>
@@ -74,31 +76,50 @@ class PostForm extends Component {
           type="text"
           name="image"
           value={mainMedia}
-          onChange={event => onmainMediaChange(event)}
+          onChange={event => onMainMediaChange(event)}
         />
       )
     }
   }
 
 
-  renderImage() {
+  renderDots() {
+
+    const { uploadedMedia, dots } = this.state
+
+    if ( uploadedMedia && this.props.mainMedia === '' ) {
+      setTimeout(() => {
+        switch ( dots ) {
+          case ' .':
+            this.setState({ dots: ' . .' })
+            break
+          case ' . .':
+            this.setState({ dots: ' . . .' })
+            break
+          default: 
+            this.setState({ dots: ' .' })
+            break
+          }
+      }, 700)
+    }
+
+    return dots;
+  }
+
+
+  renderMedia() {
 
     const { mainMedia } = this.props
 
-    if ( mainMedia.match(/\.(jpg|jpeg|png|gif)$/i) ) {
+
+    if ( this.state.uploadedMedia && mainMedia === '' ) {
+      return <h3 className="heading-tertiary">Loading{this.renderDots()}</h3>
+    } else {
       return (
-        <img 
-          className="post-form__image" 
+        <Media
+          className="post-form__image"
           src={mainMedia}
         />
-      )
-    } else if( mainMedia.match(/\.(mp4|webm)$/i) ) {
-      return (
-        <video className="post-form__image" autoPlay muted loop>
-          <source src={mainMedia} type="video/mp4" />
-          <source src={mainMedia} type="video/webm" />
-          Your browser is not supported.
-        </video>
       )
     }
   }
@@ -144,8 +165,8 @@ class PostForm extends Component {
             <input
               type="radio"
               name="image"
-              checked={this.state.imageUpload ? false : true}
-              onChange={() => this.setState({ imageUpload: false })}
+              checked={this.state.mediaUpload ? false : true}
+              onChange={() => this.setState({ mediaUpload: false })}
             />
             <label htmlFor="image-url">URL</label>
           </span>
@@ -153,15 +174,15 @@ class PostForm extends Component {
             <input
               type="radio"
               name="image"
-              checked={this.state.imageUpload ? true : false}
-              onChange={() => this.setState({ imageUpload: true })}
+              checked={this.state.mediaUpload ? true : false}
+              onChange={() => this.setState({ mediaUpload: true })}
             />
             <label htmlFor="image-upload">Upload</label>
           </span>
         </div>
 
-        { this.renderImageInput() }
-        { this.renderImage() }
+        { this.renderMediaInput() }
+        { this.renderMedia() }
 
         <label className="post-form__label">Content</label>
         <RichTextEditor

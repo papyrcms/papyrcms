@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
+import Media from './Media'
 
 class SectionCards extends Component {
 
@@ -28,7 +29,7 @@ class SectionCards extends Component {
       return (
         <li key={post._id} className="section-cards__card">
           <h3 className="section-cards__title">{ post.title }</h3>
-          <img className="section-cards__image" src={ post.mainMedia } />
+          <Media className="section-cards__image" src={ post.mainMedia } />
           <div className="section-cards__content">{ renderHTML( postContent ) }</div>
           {this.renderReadMore( post )}
         </li>

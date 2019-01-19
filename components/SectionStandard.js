@@ -2,47 +2,48 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
+import Media from './Media'
 
 class SectionStandard extends Component {
 
-  renderImage( imageSource ) {
+  renderMedia( mediaSource ) {
 
     return (
       <div className="section-standard__image">
-        <img src={ imageSource } />
+        <Media src={ mediaSource } />
       </div>
     )
   }
 
 
-  renderRightImage( post, i ) {
+  renderRightMedia( post, i ) {
 
-    const { imageLeft, imageRight } = this.props
+    const { mediaLeft, mediaRight } = this.props
 
-    if ( imageRight && !imageLeft ) {
-      return this.renderImage( post.mainMedia )
+    if ( mediaRight && !mediaLeft ) {
+      return this.renderMedia( post.mainMedia )
     } else if ( 
-      ( ( !imageRight && !imageLeft ) ||
-      ( imageRight && imageLeft ) ) &&
+      ( ( !mediaRight && !mediaLeft ) ||
+      ( mediaRight && mediaLeft ) ) &&
       i % 2 !== 0 && !!post.mainMedia 
     ) {
-      return this.renderImage( post.mainMedia )
+      return this.renderMedia( post.mainMedia )
     }
   }
 
 
-  renderLeftImage( post, i ) {
+  renderLeftMedia( post, i ) {
 
-    const { imageLeft, imageRight } = this.props
+    const { mediaLeft, mediaRight } = this.props
 
-    if ( imageLeft && !imageRight ) {
-      return this.renderImage( post.mainMedia )
+    if ( mediaLeft && !mediaRight ) {
+      return this.renderMedia( post.mainMedia )
     } else if ( 
-      ( ( !imageRight && !imageLeft ) ||
-      ( imageRight && imageLeft ) ) &&
+      ( ( !mediaRight && !mediaLeft ) ||
+      ( mediaRight && mediaLeft ) ) &&
       i % 2 === 0 && !!post.mainMedia 
     ) {
-      return this.renderImage( post.mainMedia )
+      return this.renderMedia( post.mainMedia )
     }
   }
   
@@ -76,12 +77,12 @@ class SectionStandard extends Component {
 
       return (
         <div className="section-standard__post" key={ post._id }>
-          { this.renderLeftImage( post, i ) }
+          { this.renderLeftMedia( post, i ) }
           <div className={ postTextClassName }>
             <h3 className="heading-tertiary">{ post.title }</h3>
             { this.renderContent( post ) }
           </div>
-          { this.renderRightImage( post, i ) }
+          { this.renderRightMedia( post, i ) }
         </div>
       )
     })
