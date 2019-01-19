@@ -1,10 +1,15 @@
-.section-video {
+.section-video, .section-image {
   height: 100%;
   width: 100%;
-  opacity: .5;
   overflow: hidden;
   position: relative;
   background-color: $color-grey-light;
+
+  &--fixed {
+    min-height: 80vh;
+    background: transparent;
+    position: relative;
+  }
 
   &__text {
     position: absolute;
@@ -37,11 +42,27 @@
     }
   }
 
-  &__video {
+  &__media {
     height: 100%;
     max-height: 80vh;
     width: 100%;
     object-fit: cover;
     margin-bottom: -1rem;
+    opacity: .5;
+
+    &--fixed {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      background-color: transparent;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
   }
+}
+
+.section-image {
+  opacity: 1;
 }

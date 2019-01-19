@@ -4,7 +4,7 @@ import _ from 'lodash'
 class PostsFilter extends Component {
 
   constructor( props ) {
-
+console.log(props)
     super( props )
 
     let posts = []

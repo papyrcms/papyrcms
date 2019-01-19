@@ -90,10 +90,12 @@ class SectionStandard extends Component {
 
 
   render() {
+console.log(this.props)
+    const { className, title } = this.props
 
     return (
-      <div className={ `${ this.props.className } section-standard` }>
-        <h2 className="heading-secondary u-margin-bottom-medium">{ this.props.title }</h2>
+      <div className={ `${className} section-standard` }>
+        <h2 className="heading-secondary u-margin-bottom-medium">{ title }</h2>
 
         {this.renderPosts()}
       </div>

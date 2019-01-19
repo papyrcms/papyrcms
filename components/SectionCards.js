@@ -40,12 +40,12 @@ class SectionCards extends Component {
 
   render() {
 
-    const { count } = this.props
-    const listCountClass = count ? `section-cards__list--${count}` : 'section-cards__list--3'
+    const { perRow, title } = this.props
+    const listCountClass = perRow ? `section-cards__list--${perRow}` : 'section-cards__list--3'
 
     return (
       <section className='section-cards'>
-        <h2 className='heading-secondary section-cards__header'>{ this.props.title }</h2>
+        <h2 className='heading-secondary section-cards__header'>{ title }</h2>
         <ul className={`section-cards__list ${listCountClass}`}>
           {this.renderPosts()}
         </ul>

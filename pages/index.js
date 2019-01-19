@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import PostsFilter from '../components/PostsFilter'
 import SectionCards from '../components/SectionCards'
 import SectionMedia from '../components/SectionMedia'
+import SectionStandard from '../components/SectionStandard'
 
 class Landing extends Component {
 
@@ -25,31 +26,65 @@ class Landing extends Component {
   render() {
 
     const { sectionCardSettings, sectionVideoSettings } = this.props.settings
-
-    const sectionCardsProps = {
-      title: 'This is the Section Card component',
-      contentLength: 200,
-      readMore: true,
-      count: 3
-    }
-
-    const sectionMediaProps = {
-      className: "section-video"
-    }
+    const { posts } = this.props
 
     return (
       <div className="landing">
         <PostsFilter
           component={ SectionCards }
-          posts={ this.props.posts }
+          posts={ posts }
           settings={ sectionCardSettings }
-          componentProps={ sectionCardsProps }
+          componentProps={{
+            title: 'This is the Section Card component',
+            contentLength: 200,
+            readMore: true,
+            perRow: 3
+          }}
         />
         <PostsFilter 
           component={ SectionMedia }
-          posts={ this.props.posts }
+          posts={ posts }
           settings={ sectionVideoSettings }
-          componentProps={ sectionMediaProps }
+          componentProps={{
+            className: "section-video",
+          }}
+        />
+        <PostsFilter
+          component={SectionStandard}
+          posts={posts}
+          settings={{
+            postTags: 'services',
+            maxPosts: 2
+          }}
+          componentProps={{
+            title: 'This is the Standard Section',
+          }}
+        />
+        <PostsFilter
+          component={ SectionMedia }
+          posts={ posts }
+          settings={{
+            postTags: 'books',
+            maxPosts: 1
+          }}
+          componentProps={{
+            className: 'section-image',
+            fixed: true
+          }}
+        />
+        <PostsFilter
+          component={SectionCards}
+          posts={posts}
+          settings={{
+            postTags: 'sample',
+            maxPosts: 4
+          }}
+          componentProps={{
+            title: 'Another Card Section',
+            contentLength: 100,
+            perRow: 4,
+            readMore: true
+          }}
         />
       </div>
     )
