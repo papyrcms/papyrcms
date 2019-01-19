@@ -29,7 +29,8 @@ class Landing extends Component {
     const sectionCardsProps = {
       title: 'This is the Section Card component',
       contentLength: 200,
-      readMore: true
+      readMore: true,
+      count: 3
     }
 
     return (

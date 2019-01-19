@@ -7,8 +7,16 @@
     list-style-type: none;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 4vw;
+
+    &--3 {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 4vw;
+    }
+
+    &--4 {
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 3vw;
+    }
 
     @include respond(tab-port) {
       grid-template-columns: repeat(2, 1fr);
