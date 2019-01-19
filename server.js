@@ -14,6 +14,7 @@ const User = require( './models/user' )
 
 // Classes
 const ContactRoutes = require( './classes/contactRoutes' )
+const PaymentRoutes = require( './classes/paymentRoutes' )
 const AdminRoutes = require( './classes/adminRoutes' )
 const AuthRoutes = require( './classes/authRoutes' )
 const PostRoutes = require( './classes/postRoutes' )
@@ -97,19 +98,12 @@ app.prepare().then( () => {
     }
   })
 
-  server.post('/api/stripePubKey', (req, res) => {
-    if ( `${req.protocol}://${req.get('host')}` === keys.rootURL && req.body.authorize) {
-      res.send( keys.stripePublishableTestKey )
-    } else {
-      res.send( 'nunya beezwax' )
-    }
-  })
-
   // Register Routes
   new AdminRoutes( server, app )
   new AuthRoutes( server, app )
   new PostRoutes( server, app, 'posts' )
   new ContactRoutes( server, app )
+  new PaymentRoutes( server, app )
 
   // Anything without a specified route
   server.get( '*', ( req, res ) => {

@@ -36,14 +36,16 @@ class AdminPage extends Component {
       aboutPageSettings,
       servicesPageSettings,
       sectionCardSettings,
-      sectionVideoSettings
+      sectionVideoSettings,
+      donatePageSettings
     } = props.settings
 
     let pageSettingsObjects = [
       aboutPageSettings,
       servicesPageSettings,
       sectionCardSettings,
-      sectionVideoSettings
+      sectionVideoSettings,
+      donatePageSettings
     ]
 
     pageSettingsObjects = this.concatonateTags( pageSettingsObjects )
@@ -60,7 +62,8 @@ class AdminPage extends Component {
       aboutPageSettings,
       servicesPageSettings,
       sectionCardSettings,
-      sectionVideoSettings
+      sectionVideoSettings,
+      donatePageSettings
     }
   }
 
@@ -285,7 +288,8 @@ class AdminPage extends Component {
       aboutPageSettings,
       servicesPageSettings,
       sectionCardSettings,
-      sectionVideoSettings
+      sectionVideoSettings,
+      donatePageSettings
     } = this.state
 
 
@@ -293,7 +297,8 @@ class AdminPage extends Component {
       aboutPageSettings,
       servicesPageSettings,
       sectionCardSettings,
-      sectionVideoSettings
+      sectionVideoSettings,
+      donatePageSettings
     }
 
     return (
@@ -301,7 +306,9 @@ class AdminPage extends Component {
         
         <h3 className="heading-tertiary">Page Settings</h3>
 
-        { this.renderPageSettingsFormSection( pageSettings ) }
+        <div className="page-settings-form__content">
+          { this.renderPageSettingsFormSection( pageSettings ) }
+        </div>
 
         <input type="submit" className="button button-primary" />
 

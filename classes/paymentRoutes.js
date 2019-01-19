@@ -1,0 +1,51 @@
+const keys = require( '../config/keys' )
+
+class PaymentRoutes {
+
+  constructor( server, app ) {
+
+    this.server = server
+    this.app = app
+
+    this.registerRoutes()
+  }
+  
+  
+  registerRoutes() {
+
+    // Views
+    this.server.get( '/donate', this.renderPage.bind( this ) )
+
+    // Message API
+    this.server.post( '/api/donate', this.createDonation.bind( this ) )
+    this.server.post( '/api/stripePubKey', this.sendStripePubKey.bind( this ) )
+  }
+
+
+  createDonation( req, res ) {
+
+    console.log(req.body)
+
+    res.send('oh yeah')
+  }
+
+
+  renderPage( req, res ) {
+
+    const actualPage = '/donate'
+
+    this.app.render( req, res, actualPage )
+  }
+
+
+  sendStripePubKey( req, res ) {
+
+    if (`${req.protocol}://${req.get('host')}` === keys.rootURL && req.body.authorize) {
+      res.send( keys.stripePublishableTestKey )
+    } else {
+      res.send('nunya beezwax')
+    }
+  }
+}
+
+module.exports = PaymentRoutes

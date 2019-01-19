@@ -4,15 +4,17 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../config/keys'
 import DonateForm from '../components/DonateForm'
+import PostsFilter from '../components/PostsFilter'
 
 class Donate extends Component {
 
   static async getInitialProps() {
 
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const res = await axios.post( `${rootUrl}/api/stripePubKey`, { authorize: true })
+    const stripePubKey = await axios.post( `${rootUrl}/api/stripePubKey`, { authorize: true })
+    const posts = await axios.get(`${rootUrl}/api/published_posts`)
 
-    return { stripePubKey: res.data }
+    return { stripePubKey: stripePubKey.data, posts: posts.data }
   }
 
 
@@ -31,23 +33,27 @@ class Donate extends Component {
 
 
   render() {
+
+    const { posts, settings } = this.props
     
     return (
-      <div>
-        <h2 className="heading-secondary">Donation</h2>
-        <StripeProvider stripe={this.state.stripe}>
-          <Elements>
-            <DonateForm />
-          </Elements>
-        </StripeProvider>
-      </div>
+      <StripeProvider stripe={this.state.stripe}>
+        <Elements>
+          <PostsFilter
+            component={DonateForm}
+            posts={posts}
+            settings={settings.donatePageSettings}
+            componentProps={{ title: "Donate" }}
+          />
+        </Elements>
+      </StripeProvider>
     ) 
   }
 }
 
 
-const mapStateToProps = state => {
-  return { stripePubKey: state.stripePubKey }
+const mapStateToProps = ({ stripePubKey, settings, posts }) => {
+  return { stripePubKey, settings, posts }
 }
 
 

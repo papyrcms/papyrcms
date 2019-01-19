@@ -16,6 +16,11 @@ const settignsSchema = new mongoose.Schema({
     maxPosts: { type: Number, default: 1 },
     postTags: { type: [String], default: [] }
   }, 
+  donatePageSettings: {
+    title: { type: String, default: "Donate Page Settings" },
+    maxPosts: { type: Number, default: 1 },
+    postTags: { type: [String], default: [] }
+  }, 
   sectionCardSettings: {
     title: { type: String, default: "Card Section Settings" },
     maxPosts: { type: Number, default: 1 },

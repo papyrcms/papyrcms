@@ -38,6 +38,12 @@ const NavMenu = props => {
             </li>
           </Link>
 
+          <Link href="/donate">
+            <li className="nav-menu__item">
+              <a>Donate</a>
+            </li>
+          </Link>
+
         </div>
 
       </ul>

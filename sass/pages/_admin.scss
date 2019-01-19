@@ -12,7 +12,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 3rem;
 
-    @include respond(tab-port) {
+    @include respond(phone) {
       grid-template-columns: 1fr;
     }
   }
@@ -55,9 +55,30 @@
 }
 
 .page-settings-form {
+  grid-column: span 2;
+
+  @include respond(phone) {
+    grid-column: span 1;
+  }
+
+  &__content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
+
+    margin-bottom: 2rem;
+
+    @include respond(tab-port) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond(phone) {
+      grid-template-columns: 1fr;
+    }
+  }
 
   &__group {
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
   }
 
   &__field {
@@ -69,10 +90,10 @@
   }
 
   &__input {
-    height: 4rem;
+    height: 3rem;
     width: 100%;
     padding: 1rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: $color-grey-dark;
     letter-spacing: .1rem;
     border-radius: 1rem;
