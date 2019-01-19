@@ -21,10 +21,12 @@ class PostRoutes {
         callback(null, Date.now() + file.originalname)
       }
     })
+    
     const fileFilter = (req, file, cb) => {
-      if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
-        return cb(new Error('Only image files are allowed!'), false)
+      if (!file.originalname.match(/\.(jpg|jpeg|png|gif|mp4|webm)$/i)) {
+        return cb(new Error('Only image and video files are allowed!'), false)
       }
+
       cb(null, true)
     }
 
@@ -50,7 +52,7 @@ class PostRoutes {
     this.server.get( `/${this.postType}/:id/edit`, this.allowUserPosts, this.renderPage.bind( this, '_edit' ) )
 
     // Post API
-    this.server.post( '/api/upload', this.allowUserPosts, this.upload.single( 'file' ), this.uploadImage.bind( this ) )
+    this.server.post( '/api/upload', this.allowUserPosts, this.upload.single( 'file' ), this.uploadMedia.bind( this ) )
     this.server.post( `/api/${this.postType}`, this.allowUserPosts, this.createPost.bind( this ) )
     this.server.get( `/api/${this.postType}`, this.sendAllPosts.bind( this ) )
     this.server.get( `/api/published_${this.postType}`, this.sendPublishedPosts.bind( this ) )
@@ -98,9 +100,9 @@ class PostRoutes {
   }
 
 
-  async uploadImage( req, res ) {
+  async uploadMedia( req, res ) {
 
-    const uploadResponse = await this.cloudinary.v2.uploader.upload( req.file.path, { angle: 0 } )
+    const uploadResponse = await this.cloudinary.v2.uploader.upload( req.file.path, { resource_type: 'auto', angle: 0 } )
 
     res.send( uploadResponse.secure_url )
   }

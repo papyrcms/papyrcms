@@ -57,12 +57,15 @@ class PostForm extends Component {
 
     if ( this.state.imageUpload ) {
       return (
-        <input
-          className="post-form__input"
-          type="file"
-          name="file"
-          onChange={event => this.handleFileInputChange(event)}
-        />
+        <div>
+          <p>Please wait to submit the form until you see the media you uploaded to ensure it uploads properly.</p>
+          <input
+            className="post-form__input"
+            type="file"
+            name="file"
+            onChange={event => this.handleFileInputChange(event)}
+          />
+        </div>
       )
     } else {
       return (
@@ -78,9 +81,32 @@ class PostForm extends Component {
   }
 
 
+  renderImage() {
+
+    const { mainImage } = this.props
+
+    if ( mainImage.match(/\.(jpg|jpeg|png|gif)$/i) ) {
+      return (
+        <img 
+          className="post-form__image" 
+          src={mainImage}
+        />
+      )
+    } else if( mainImage.match(/\.(mp4|webm)$/i) ) {
+      return (
+        <video className="post-form__image" autoPlay muted loop>
+          <source src={mainImage} type="video/mp4" />
+          <source src={mainImage} type="video/webm" />
+          Your browser is not supported.
+        </video>
+      )
+    }
+  }
+
+
   render() {
 
-    const { title, tags, mainImage, content, onTitleChange, onTagsChange, onContentChange, handleSubmit } = this.props
+    const { title, tags, content, onTitleChange, onTagsChange, onContentChange, handleSubmit } = this.props
 
     return (
       <form encType="multipart/form-data" className="post-form" onSubmit={ handleSubmit.bind( this ) }>
@@ -113,7 +139,7 @@ class PostForm extends Component {
         </div>
 
         <div className="post-form__label-section">
-          <label className="post-form__label">Image</label>
+          <label className="post-form__label">Media</label>
           <span>
             <input
               type="radio"
@@ -133,9 +159,9 @@ class PostForm extends Component {
             <label htmlFor="image-upload">Upload</label>
           </span>
         </div>
-        { this.renderImageInput() }
 
-        <img className={ `post-form__image ${mainImage === '' ? 'u-no-margin' : ''}` } src={ mainImage } />
+        { this.renderImageInput() }
+        { this.renderImage() }
 
         <label className="post-form__label">Content</label>
         <RichTextEditor
