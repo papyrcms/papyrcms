@@ -20,12 +20,17 @@ class ServicesPage extends Component {
 
     const { servicesPageSettings } = this.props.settings
 
+    const componentProps = { 
+      title: 'Services', 
+      className: 'services-page'
+    }
+
     return (
       <PostsFilter
         component={ SectionStandard }
         posts={ this.props.posts }
         settings={ servicesPageSettings }
-        componentProps={{ title: 'Services', className: 'services-page' }}
+        componentProps={ componentProps }
       />
     )
   }

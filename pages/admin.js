@@ -32,6 +32,7 @@ class AdminPage extends Component {
       enableCommenting,
       enableEmailing,
       enableUserPosts,
+      enableDonations,
 
       aboutPageSettings,
       servicesPageSettings,
@@ -55,6 +56,7 @@ class AdminPage extends Component {
       enableCommenting,
       enableEmailing,
       enableUserPosts,
+      enableDonations,
       appSettingsVerification: '',
 
       users: props.users,
@@ -155,13 +157,15 @@ class AdminPage extends Component {
       enableCommenting,
       enableEmailing,
       enableUserPosts,
+      enableDonations,
     } = this.state
 
     const settings = {
       enableMenu,
       enableCommenting,
       enableEmailing,
-      enableUserPosts
+      enableUserPosts,
+      enableDonations
     }
 
     return (
@@ -211,6 +215,17 @@ class AdminPage extends Component {
             onChange={() => this.setState({ enableUserPosts: !enableUserPosts })}
           />
           <label className="settings-form__label" htmlFor="enable-user-posts">Enable User Posting</label>
+        </div>
+
+        <div className="settings-form__field">
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id="enable-donations"
+            checked={enableDonations ? true : false}
+            onChange={() => this.setState({ enableDonations: !enableDonations })}
+          />
+          <label className="settings-form__label" htmlFor="enable-donations">Enable Donations</label>
         </div>
 
         <div className="settings-form__submit">

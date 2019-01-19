@@ -5,6 +5,7 @@ const settignsSchema = new mongoose.Schema({
   enableMenu: { type: Boolean, default: false },
   enableCommenting: { type: Boolean, default: false },
   enableUserPosts: { type: Boolean, default: false },
+  enableDonations: { type: Boolean, default: false },
 
   aboutPageSettings: {
     title: { type: String, default: "About Page Settings" },
