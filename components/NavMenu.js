@@ -9,12 +9,20 @@ class NavMenu extends Component {
     if ( this.props.settings.enableDonations ) {
       return (
         <Link href="/donate">
-          <li className="nav-menu__item">
+          <li className="nav-menu__item" onClick={() => this.onClick()}>
             <a>Donate</a>
           </li>
         </Link>
       )
     }
+  }
+
+
+  onClick() {
+
+    const checkbox = document.getElementById('nav-menu-checkbox');
+
+    checkbox.classList.toggle('checked')
   }
 
 
@@ -32,32 +40,33 @@ class NavMenu extends Component {
 
           <div className="nav-menu__items">
           
-            <input type="checkbox" className="nav-menu__item--checkbox" id="nav-menu-checkbox" />
-            <label 
-              htmlFor="nav-menu-checkbox" 
+            {/* <input type="checkbox" onClick={() => this.onClick()}className="nav-menu__item--checkbox" id="nav-menu-checkbox" /> */}
+            <label
+              onClick={() => this.onClick()}
+              id="nav-menu-checkbox" 
               className="nav-menu__item nav-menu__item--hamburger"
             ></label>
 
             <Link href="/">
-              <li className="nav-menu__item">
+              <li onClick={() => this.onClick()} className="nav-menu__item">
                 <a>Home</a>
               </li>
             </Link>
 
             <Link href="/about">
-              <li className="nav-menu__item">
+              <li onClick={() => this.onClick()} className="nav-menu__item">
                 <a>About</a>
               </li>
             </Link>
 
             <Link href="/services">
-              <li className="nav-menu__item">
+              <li onClick={() => this.onClick()} className="nav-menu__item">
                 <a>Services</a>
               </li>
             </Link>
 
             <Link href="/contact">
-              <li className="nav-menu__item">
+              <li onClick={() => this.onClick()} className="nav-menu__item">
                 <a>Contact</a>
               </li>
             </Link>

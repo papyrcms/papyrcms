@@ -17,6 +17,10 @@
     &--4 {
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 3vw;
+
+      @include respond(tab-land) {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     @include respond(tab-port) {

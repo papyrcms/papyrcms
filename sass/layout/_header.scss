@@ -1,7 +1,7 @@
 .header {
   padding: 6rem;
   background-color: $color-grey-dark;
-  height: 30rem;
+  height: 40rem;
 
   display: flex;
   justify-content: space-between;
@@ -9,8 +9,9 @@
   flex-wrap: wrap;
 
   @include respond(tab-land) {
-    display: block;
     text-align: center;
+    justify-content: center;
+    flex-direction: column;
   }
 
   @include respond(phone) {
