@@ -40,7 +40,6 @@ class NavMenu extends Component {
 
           <div className="nav-menu__items">
           
-            {/* <input type="checkbox" onClick={() => this.onClick()}className="nav-menu__item--checkbox" id="nav-menu-checkbox" /> */}
             <label
               onClick={() => this.onClick()}
               id="nav-menu-checkbox" 
