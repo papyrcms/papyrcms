@@ -32,6 +32,12 @@ class NavMenu extends Component {
 
           <div className="nav-menu__items">
           
+            <input type="checkbox" className="nav-menu__item--checkbox" id="nav-menu-checkbox" />
+            <label 
+              htmlFor="nav-menu-checkbox" 
+              className="nav-menu__item nav-menu__item--hamburger"
+            ></label>
+
             <Link href="/">
               <li className="nav-menu__item">
                 <a>Home</a>

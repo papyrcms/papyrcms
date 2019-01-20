@@ -4,6 +4,10 @@
   
   display: flex;
   justify-content: space-between;
+  
+  @include respond(phone) {
+    justify-content: center;
+  }
 
   &__logo {
     max-width: 5rem;
@@ -13,12 +17,22 @@
     img {
       width: 100%;
     }
+
+    @include respond(phone) {
+      display: none;
+    }
   }
 
   &__items {
     list-style-type: none;
     display: flex;
     justify-content: flex-end;
+    position: relative;
+
+    @include respond(phone) {
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   &__item {
@@ -33,10 +47,77 @@
 
     &:not(:last-child) {
       border-right: 1px solid $color-grey-light-2;
+
+      @include respond(phone) {
+        border-right: none;
+        position: relative;
+      }
     }
 
-    &:hover {
+    &:hover:not(.nav-menu__item--hamburger) {
       background-color: $color-grey-light-2;
     }
+
+    &--hamburger {
+      display: none;
+
+      @include respond(phone) {
+        display: flex;
+        margin-top: -1rem;
+        margin-bottom: -2rem;
+        
+        &, &::before, &::after {
+          display: block;
+          border-bottom: .2rem solid $color-grey-dark;
+          width: 3rem;
+          padding: 2rem;
+        }
+        
+        &::before, &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          transition: all .2s;
+        }
+
+        &::before { top: -1.2rem; }
+        &::after { top: 1.3rem; }
+
+        & ~ .nav-menu__item {
+          z-index: -1;
+          height: 0;
+          opacity: 0;
+          transition: all .3s;
+        }
+      }
+    }
+
+    &--checkbox:checked + &--hamburger {
+
+      border-bottom: none;
+      margin-bottom: 2rem;
+      
+      &::before {
+        top: 3rem;
+        left: 1.4rem;
+        transform: rotate(135deg);
+      }
+
+      &::after {
+        top: 3rem;
+        left: -1.4rem;
+        transform: rotate(-135deg);
+      }
+
+      & ~ .nav-menu__item {
+        opacity: 1;
+        height: 4rem;
+        z-index: 1;
+      }
+    }
   }
+}
+
+#nav-menu-checkbox {
+  display: none;
 }

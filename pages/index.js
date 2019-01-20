@@ -50,8 +50,8 @@ class Landing extends Component {
           }}
         />
         <PostsFilter
-          component={SectionStandard}
-          posts={posts}
+          component={ SectionStandard }
+          posts={ posts }
           settings={{
             postTags: 'services',
             maxPosts: 2
@@ -73,8 +73,8 @@ class Landing extends Component {
           }}
         />
         <PostsFilter
-          component={SectionCards}
-          posts={posts}
+          component={ SectionCards }
+          posts={ posts }
           settings={{
             postTags: 'sample',
             maxPosts: 4

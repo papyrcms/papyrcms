@@ -90,7 +90,7 @@ class SectionStandard extends Component {
 
 
   render() {
-console.log(this.props)
+
     const { className, title } = this.props
 
     return (
