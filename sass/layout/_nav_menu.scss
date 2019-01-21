@@ -113,7 +113,7 @@
 
     &::after {
       top: 3rem;
-      left: -.3rem;
+      left: -.4rem;
       transform: rotate(-135deg);
     }
 
@@ -122,6 +122,10 @@
       height: 4rem;
       z-index: 1;
       padding: .5rem 2vw;
+
+      &:last-of-type {
+        margin-bottom: 1rem;
+      }
     }
   }
 }
