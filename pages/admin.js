@@ -76,15 +76,17 @@ class AdminPage extends Component {
     _.map( pageSettingsObjects, object => {
       let tags = ''
 
-      _.map(object.postTags, (tag, i) => {
-        if (i < object.postTags.length - 1) {
-          tags = `${tags}${tag}, `
-        } else {
-          tags = `${tags}${tag}`
-        }
-      })
-
-      object.postTags = tags
+      if ( typeof object.postTags === 'array' ) {
+        _.map( object.postTags, ( tag, i ) => {
+          if ( i < object.postTags.length - 1 ) {
+            tags = `${tags}${tag}, `
+          } else {
+            tags = `${tags}${tag}`
+          }
+        })
+        
+        object.postTags = tags
+      }
     })
 
     return pageSettingsObjects
