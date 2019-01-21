@@ -17,8 +17,17 @@ body {
     letter-spacing: 1rem;
     font-weight: 400;
     display: block;
+    margin-bottom: 2rem;
 
     animation: moveInLeft 1s ease-out;
+
+    @include respond(tab-land) {
+      margin-bottom: 1rem;
+    }
+
+    @include respond(tab-port) {
+      margin-bottom: 0;
+    }
 
     @include respond(phone) {
       font-size: 4.5rem;

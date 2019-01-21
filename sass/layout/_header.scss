@@ -20,6 +20,10 @@
 
   &__menu-item {
 
+    &:not(:last-child) {
+      border-right: .1rem solid $color-grey-light;
+    }
+
     @include respond(phone) {
       letter-spacing: .2rem;
     }

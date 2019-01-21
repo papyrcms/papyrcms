@@ -47,6 +47,7 @@ class Landing extends Component {
           settings={ sectionVideoSettings }
           componentProps={{
             className: "section-video",
+            // fixed: true
           }}
         />
         <PostsFilter

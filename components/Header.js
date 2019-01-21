@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import { setCurrentUser } from '../store'
@@ -11,7 +11,7 @@ class Header extends Component {
 
     if ( !!currentUser && currentUser.isAdmin ) {
       return (
-        <span>
+        <Fragment>
           <Link href="/posts_create" as="/posts/new">
             <a className="header__menu-item header__menu-item--2"><li>Add Post</li></a>
           </Link>
@@ -19,7 +19,7 @@ class Header extends Component {
           <Link href="/posts_all" as="/posts">
             <a className="header__menu-item header__menu-item--3"><li>My Posts</li></a>
           </Link>
-        </span>
+        </Fragment>
       )
     }
   }
@@ -29,11 +29,11 @@ class Header extends Component {
 
     if ( !!this.props.currentUser ) {
       return (
-        <span>
+        <Fragment>
           <Link href="/profile">
             <a className="header__menu-item header__menu-item--4"><li>Profile</li></a>
           </Link>
-        </span>
+        </Fragment>
       )
     }
 

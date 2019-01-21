@@ -23,7 +23,7 @@ class Mailer {
 
     oauth2Client.getAccessToken()
       .then( response => this.accessToken = response.token )
-      .catch( error => console.log('error', error) )
+      .catch( error => console.error('error', error) )
   }
 
 

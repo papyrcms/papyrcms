@@ -27,7 +27,7 @@ class DonateForm extends Component {
 
     axios.post( '/api/donate', response )
       .then(response => console.log(response))
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 
 

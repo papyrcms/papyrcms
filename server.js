@@ -47,31 +47,31 @@ passport.deserializeUser( User.deserializeUser() )
 // Configure app settings
 let appSettings
 
-// Search for a settings document
-Settings.find().exec(( error, settings ) => {
-
-  if ( error ) {
-    console.log( error )
-  }
-
-  // We only EVER want ONE settings document
-  // If no document exists, create one and rerun function
-  if ( settings.length === 0 ) {
-    appSettings = new Settings()
-    appSettings.save()
-    console.log( 'New settings document created' )
-
-    // Give mongo time to save the document 
-    // before running the funciton again
-    // to prevent creating a duplicate settings document
-    setTimeout( () => {}, 3000 )
-  } else {
-    appSettings = settings[0]
-  }
-})
-
 // Set user and settings to res.locals
 server.use( ( req, res, done ) => {
+  
+  // Search for a settings document
+  Settings.find().exec(( error, settings ) => {
+  
+    if ( error ) {
+      console.error( error )
+    }
+  
+    // We only EVER want ONE settings document
+    // If no document exists, create one and rerun function
+    if ( settings.length === 0 ) {
+      appSettings = new Settings()
+      appSettings.save()
+      console.log( 'New settings document created' )
+  
+      // Give mongo time to save the document 
+      // before running the funciton again
+      // to prevent creating a duplicate settings document
+      setTimeout( () => {}, 3000 )
+    } else {
+      appSettings = settings[0]
+    }
+  })
 
   res.locals.currentUser = req.user
   res.locals.settings = appSettings
@@ -101,7 +101,7 @@ app.prepare().then( () => {
   // Register Routes
   new AdminRoutes( server, app )
   new AuthRoutes( server, app )
-  new PostRoutes( server, app, 'posts' )
+  new PostRoutes( server, app, 'posts', true )
   new ContactRoutes( server, app )
   new PaymentRoutes( server, app )
 

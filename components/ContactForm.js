@@ -43,7 +43,7 @@ class ContactForm extends Component {
             formValidation: 'Thanks for reaching out! I\'ll be in touch.'
           })
         }).catch( error => {
-          console.log( error )
+          console.error( error )
         })
     }
   }

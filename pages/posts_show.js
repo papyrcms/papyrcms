@@ -43,7 +43,7 @@ class PostsShow extends Component {
         .then( res => {
           Router.push( '/posts' )
         }).catch( error => {
-          console.log( error )
+          console.error( error )
         })
     }
   }
@@ -62,7 +62,7 @@ class PostsShow extends Component {
         .then( res => {
           this.setState({ comments: [...comments, res.data], commentFormContent: '' })
         }).catch( err => {
-          console.log( err )
+          console.error( err )
         })
     } else {
       axios.put( `/api/posts/${post._id}/comments/${editingComment}`, commentObject )
@@ -76,7 +76,7 @@ class PostsShow extends Component {
             }
           })
         }).catch( err => {
-          console.log( err )
+          console.error( err )
         })
     }
   }
@@ -145,7 +145,7 @@ class PostsShow extends Component {
             }
           })
         }).catch( err => {
-          console.log( err )
+          console.error( err )
         })
     }
   }

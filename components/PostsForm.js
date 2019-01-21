@@ -48,7 +48,7 @@ class PostForm extends Component {
         const imageChange = { target: { value: res.data } }
         onMainMediaChange( imageChange )
       }).catch( err => {
-        console.log( err.response )
+        console.error( err.response )
       })
   }
 

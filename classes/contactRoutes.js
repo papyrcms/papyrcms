@@ -8,7 +8,6 @@ class ContactRoutes {
 
     this.server = server
     this.app = app
-    this.MessageModel = MessageModel
 
     this.registerRoutes()
   }
@@ -40,7 +39,7 @@ class ContactRoutes {
       email: contactEmail,
       message: contactMessage,
     }
-    const message = new this.MessageModel( messageObj )
+    const message = new MessageModel( messageObj )
 
     const mailer = new Mailer();
     const templatePath = 'emails/contact.html'

@@ -56,6 +56,7 @@
 
     @include respond(phone) {
       font-size: 2.5rem;
+      padding: 0;
     }
     
     &:hover:not(.nav-menu__item--hamburger) {
@@ -67,14 +68,14 @@
 
       @include respond(phone) {
         display: flex;
-        margin-top: -1rem;
-        margin-bottom: -2rem;
+        margin: 3.5rem;
+        margin-top: 2.5rem;
         
         &, &::before, &::after {
           display: block;
           border-bottom: .2rem solid $color-grey-dark;
           width: 3rem;
-          padding: 2rem;
+          padding-bottom: 1rem;
         }
         
         &::before, &::after {
@@ -98,25 +99,29 @@
   }
 }
 
-.checked {
-  border-bottom: none;
-  margin-bottom: 2rem;
-  
-  &::before {
-    top: 3rem;
-    left: 1.4rem;
-    transform: rotate(135deg);
-  }
+@include respond(phone) {
+  .checked {
+    border-bottom: none;
+    margin-top: .5rem;
+    margin-bottom: 5rem;
+    
+    &::before {
+      top: 3rem;
+      left: .3rem;
+      transform: rotate(135deg);
+    }
 
-  &::after {
-    top: 3rem;
-    left: -1.4rem;
-    transform: rotate(-135deg);
-  }
+    &::after {
+      top: 3rem;
+      left: -.3rem;
+      transform: rotate(-135deg);
+    }
 
-  & ~ .nav-menu__item {
-    opacity: 1;
-    height: 4rem;
-    z-index: 1;
+    & ~ .nav-menu__item {
+      opacity: 1;
+      height: 4rem;
+      z-index: 1;
+      padding: .5rem 2vw;
+    }
   }
 }

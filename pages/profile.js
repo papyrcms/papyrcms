@@ -44,7 +44,7 @@ class Profile extends Component {
           this.props.setCurrentUser( null )
         }
       }).catch( err => {
-        console.log( err )
+        console.error( err )
       })
   }
 
@@ -66,11 +66,11 @@ class Profile extends Component {
               this.props.setCurrentUser( res.data )
               this.setState( { infoValidation: 'User info updated.' })
             }).catch( err => {
-              console.log( err )
+              console.error( err )
             })
         }
       }).catch( err => {
-        console.log( err )
+        console.error( err )
       })
   }
 

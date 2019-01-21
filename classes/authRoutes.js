@@ -8,8 +8,6 @@ class AuthRoutes {
 
     this.server = server
     this.app = app
-    this.UserModel = UserModel
-    this.passport = passport
 
     this.registerRoutes()
   }
@@ -23,7 +21,7 @@ class AuthRoutes {
 
     // API
     this.server.post( '/api/register', this.registerUser.bind( this ) )
-    this.server.post( '/api/login', this.passport.authenticate( 'local', {} ), this.sendCurrentUser.bind( this ) )
+    this.server.post( '/api/login', passport.authenticate( 'local', {} ), this.sendCurrentUser.bind( this ) )
     this.server.get( '/api/currentUser', this.sendCurrentUser.bind( this ) )
     this.server.put( '/api/currentUser', this.updateCurrentUser.bind( this ) )
     this.server.post( '/api/changePassword', this.changeUserPassword.bind( this ) )
@@ -39,7 +37,7 @@ class AuthRoutes {
 
   sendCurrentUser( req, res ) {
 
-    res.send( req.user )
+    res.send( res.locals.currentUser )
   }
 
 
@@ -68,16 +66,16 @@ class AuthRoutes {
 
     // The LocalStrategy module requires a username
     // Set username and email as the user's email
-    const newUser = new this.UserModel({
+    const newUser = new UserModel({
       username, email: username, firstName, lastName
     })
 
-    this.UserModel.register( newUser, password, err => {
+    UserModel.register( newUser, password, err => {
       if ( err ) {
         res.send({ error: err })
       }
 
-      this.passport.authenticate( 'local' )( req, res, () => {
+      passport.authenticate( 'local' )( req, res, () => {
 
         const mailer = new Mailer()
         const templatePath = 'emails/welcome.html'
@@ -104,7 +102,7 @@ class AuthRoutes {
     }
 
     const newUserData = { firstName, lastName }
-    const updatedUser = await this.UserModel.findOneAndUpdate( { _id: userId }, newUserData )
+    const updatedUser = await UserModel.findOneAndUpdate( { _id: userId }, newUserData )
 
     res.send( updatedUser )
   }
@@ -121,7 +119,7 @@ class AuthRoutes {
       res.status(400).send({ message: 'You need to fill in your new password.' })
     }
 
-    this.UserModel.findById( userId, ( err, foundUser ) => {
+    UserModel.findById( userId, ( err, foundUser ) => {
       if (!!foundUser) {
         // Make sure the entered password is the user's password
         foundUser.authenticate( oldPassword, ( err, user, passwordError ) => {

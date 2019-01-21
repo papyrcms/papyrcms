@@ -26,10 +26,10 @@ class LoginForm extends Component {
             this.props.setCurrentUser( res.data )
             Router.push( '/profile' )
           }).catch( err => {
-            console.log( err )
+            console.error( err )
           })
       }).catch( err => {
-        console.log( err )
+        console.error( err )
         const message = 'Something went wrong. Please try again.'
 
         this.setState({ validationMessage: message })

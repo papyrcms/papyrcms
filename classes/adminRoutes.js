@@ -7,8 +7,6 @@ class AdminRoutes {
 
     this.server = server
     this.app = app
-    this.UserModel = UserModel
-    this.SettingsModel = SettingsModel
     this.settings = {}
 
     this.getSettings()
@@ -19,7 +17,7 @@ class AdminRoutes {
   async getSettings() {
 
     // Get our settings
-    const settings = await this.SettingsModel.find()
+    const settings = await SettingsModel.find()
 
     // Assign the first (and only) document as our settings
     this.settings = settings[0]
@@ -49,7 +47,7 @@ class AdminRoutes {
 
   async fetchAllUsers() {
 
-    const users = await this.UserModel.find()
+    const users = await UserModel.find()
 
     return users
   }
@@ -75,7 +73,7 @@ class AdminRoutes {
   async assignSettings( res ) {
 
     // Get the new settings
-    const settings = await this.SettingsModel.findById( this.settings._id )
+    const settings = await SettingsModel.findById( this.settings._id )
 
     // Assign settings to this object
     this.settings = settings
@@ -83,7 +81,7 @@ class AdminRoutes {
     // Assign new settings to res.locals
     res.locals.settings = this.settings
 
-    res.send( this.settings )
+    return this.settings
   }
 
 
@@ -91,10 +89,12 @@ class AdminRoutes {
 
     // Update the settings document in the db
     const settingsDocument = { _id: this.settings._id }
-    await this.SettingsModel.findOneAndUpdate( settingsDocument, req.body ).exec()
+    await SettingsModel.findOneAndUpdate( settingsDocument, req.body )
 
     // Update settings within the app
-    this.assignSettings( res )
+    const settings = await this.assignSettings( res )
+
+    res.send( settings )
   }
 }
 

@@ -37,7 +37,7 @@ class PostsCreate extends Component {
       .then( response => {
         Router.push( '/posts' )
       }).catch( error => {
-        console.log( error )
+        console.error( error )
       })
   }
 
