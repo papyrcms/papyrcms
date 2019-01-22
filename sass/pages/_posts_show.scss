@@ -44,12 +44,14 @@
     padding-right: 4rem;
     padding-top: 2rem;
 
-    @include respond(tab-port) {
-      max-width: calc(55% - 2rem);
+    @include respond(tab-land) {
+      max-width: calc(60% - 2rem);
     }
 
     @include respond(phone) {
-      max-width: calc(60% - 2rem);
+      max-width: 100%;
+      padding-right: 0;
+      padding-bottom: 2rem;
     }
 
     img, video {
@@ -79,6 +81,14 @@
 
 .comments {
   padding: 2rem 7rem;
+
+  @include respond(tab-port) {
+    padding: 2rem 4rem;
+  }
+
+  @include respond(phone) {
+    padding: 2rem 0;
+  }
 
   &__title {
     color: $color-grey-dark;
@@ -120,6 +130,15 @@
     display: flex;
     flex-direction: column;
     padding: 2rem 7rem;
+
+    @include respond(tab-port) {
+      padding: 2rem 4rem;
+    }
+
+    @include respond(phone) {
+      padding: 2rem 0;
+    }
+
   }
 
   &__editing {

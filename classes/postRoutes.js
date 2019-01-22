@@ -6,12 +6,11 @@ const keys = require( '../config/keys' )
 
 class PostRoutes {
 
-  constructor( server, app, postType, adminOnly ) {
+  constructor( server, app, postType ) {
 
     this.server = server
     this.app = app
     this.postType = postType
-    this.adminOnly = adminOnly
 
     // Multer config
     const storage = multer.diskStorage({
@@ -69,7 +68,7 @@ class PostRoutes {
 
     const { settings, currentUser } = res.locals
     
-    if ( this.adminOnly && settings.enableUserPosts || ( currentUser && currentUser.isAdmin ) ) {
+    if ( settings.enableUserPosts || ( currentUser && currentUser.isAdmin ) ) {
       next()
     } else {
       res.status(401).send({ message: 'You are not allowed to do that' })
@@ -81,7 +80,7 @@ class PostRoutes {
 
     const { settings, currentUser } = res.locals
 
-    if ( this.adminOnly && settings.enableCommenting || ( currentUser && currentUser.isAdmin ) ) {
+    if ( settings.enableCommenting || ( currentUser && currentUser.isAdmin ) ) {
       next()
     } else {
       res.status(401).send({ message: 'You are not allowed to do that' })

@@ -1,6 +1,9 @@
 .comment-form {
-  padding: 0 15rem;
   width: 100%;
+
+  &__login {
+    text-align: center;
+  }
 
   &.detached {
     width: 50%;

@@ -9,8 +9,10 @@ class SectionCards extends Component {
   renderReadMore( post ) {
 
     if ( this.props.readMore ) {
+      const path = this.props.path ? this.props.path : 'posts'
+
       return (
-        <Link href={ `/posts_show?id=${post._id}` } as={ `/posts/${post._id}` }>
+        <Link href={ `/${path}_show?id=${post._id}` } as={ `/${path}/${post._id}` }>
           <a className="section-cards__link">Read More</a>
         </Link>
       )

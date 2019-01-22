@@ -70,6 +70,12 @@ class NavMenu extends Component {
               </li>
             </Link>
 
+            <Link href="/blog">
+              <li onClick={() => this.onClick()} className="nav-menu__item">
+                <a>Blog</a>
+              </li>
+            </Link>
+
             { this.renderDonateItem() }
           </div>
 

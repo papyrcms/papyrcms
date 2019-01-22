@@ -50,7 +50,7 @@ class SectionStandard extends Component {
   
   renderContent( post ) {
 
-    const { readMore } = this.props
+    const { readMore, path } = this.props
 
     const contentLength = this.props.contentLength || 300
     let postContent = post.content.length >= contentLength ? `${post.content.substring( 0, contentLength).trim() } . . .` : post.content
@@ -59,7 +59,7 @@ class SectionStandard extends Component {
       return (
         <div>
           { renderHTML( postContent )}
-          <Link href={`/posts/${post._id}`}>
+          <Link href={`/${path}_show?id=${post._id}`} as={`/${path}/${post._id}`}>
             <a>Read More</a>
           </Link>
         </div>

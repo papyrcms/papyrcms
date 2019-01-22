@@ -37,15 +37,17 @@ class PostForm extends Component {
   handleFileInputChange( event ) {
 
     const { onMainMediaChange } = this.props
+    let imageChange = { target: { value: '' } }
+    onMainMediaChange(imageChange)
+    this.setState({ uploadedMedia: true })
+
     let formData = new FormData
 
-    this.setState({ uploadedMedia: true })
     formData.append( 'file', event.target.files[0] )
 
     axios.post( '/api/upload', formData )
       .then( res => {
-
-        const imageChange = { target: { value: res.data } }
+        imageChange.target.value = res.data
         onMainMediaChange( imageChange )
       }).catch( err => {
         console.error( err.response )
