@@ -42,7 +42,7 @@ class Donate extends Component {
           <PostsFilter
             component={DonateForm}
             posts={posts}
-            settings={settings.donatePageSettings}
+            settings={{ maxPosts: 1, postTags: 'donate' }}
             componentProps={{ title: "Donate" }}
           />
         </Elements>

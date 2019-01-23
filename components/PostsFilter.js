@@ -9,7 +9,7 @@ class PostsFilter extends Component {
 
     let posts = []
     let numberPosts = 0
-    const { maxPosts, postTags } = this.props.settings
+    const { maxPosts, postTags } = props.settings
 
     // Filter posts by postTags and maxPosts
     if ( !!postTags && postTags.length > 0 ) {

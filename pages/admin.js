@@ -34,22 +34,11 @@ class AdminPage extends Component {
       enableUserPosts,
       enableDonations,
 
-      aboutPageSettings,
-      servicesPageSettings,
-      sectionCardSettings,
-      sectionVideoSettings,
-      donatePageSettings
+      sectionCardSettings
     } = props.settings
 
-    let pageSettingsObjects = [
-      aboutPageSettings,
-      servicesPageSettings,
-      sectionCardSettings,
-      sectionVideoSettings,
-      donatePageSettings
-    ]
-
-    pageSettingsObjects = this.concatonateTags( pageSettingsObjects )
+    const { maxPosts, postTags, title } = sectionCardSettings
+    const tagsString = this.concatonateTags( postTags )
 
     this.state = {
       enableMenu,
@@ -57,39 +46,51 @@ class AdminPage extends Component {
       enableEmailing,
       enableUserPosts,
       enableDonations,
+
       appSettingsVerification: '',
 
       users: props.users,
 
-      aboutPageSettings,
-      servicesPageSettings,
-      sectionCardSettings,
-      sectionVideoSettings,
-      donatePageSettings
+      sectionCardTitle: title,
+      sectionCardMaxPosts: maxPosts,
+      sectionCardPostTags: tagsString,
     }
   }
 
 
-  concatonateTags( pageSettingsObjects ) {
+  concatonateTags( tagsArray ) {
 
     // Turn tags arrays into strings
-    _.map( pageSettingsObjects, object => {
-      let tags = ''
+    let tagsString = ''
 
-      if ( typeof object.postTags === 'array' ) {
-        _.map( object.postTags, ( tag, i ) => {
-          if ( i < object.postTags.length - 1 ) {
-            tags = `${tags}${tag}, `
-          } else {
-            tags = `${tags}${tag}`
-          }
-        })
-        
-        object.postTags = tags
+    _.map( tagsArray, ( tag, i ) => {
+      if ( i < tagsArray.length - 1 ) {
+        tagsString = `${tagsString}${tag}, `
+      } else {
+        tagsString = `${tagsString}${tag}`
       }
     })
 
-    return pageSettingsObjects
+    return tagsString
+  }
+
+
+  separateTags( tagsString ) {
+
+    // Turn tags string into an array
+    let tagsArray = []
+
+    _.map( tagsString.split( ',' ), tag => {
+      let pendingTag = tag
+
+      pendingTag = pendingTag.trim()
+
+      if ( !!pendingTag ) {
+        tagsArray.push( pendingTag )
+      }
+    })
+
+    return tagsArray
   }
 
 
@@ -97,23 +98,10 @@ class AdminPage extends Component {
 
     event.preventDefault()
 
-    const areObjects = typeof settings[Object.keys(settings)[0]] === 'object'
+    if ( settings.postTags ) {
+      settings.postTags = this.separateTags( settings.postTags )
 
-    if ( areObjects ) {
-      _.map( settings, pageSettings => {
-        let postTags = []
-  
-        _.map( pageSettings.postTags.split( ',' ), tag => {
-          let pendingTag = tag
-          pendingTag = pendingTag.trim()
-
-          if ( !!pendingTag ) {
-            postTags.push( pendingTag )
-          }
-        })
-
-        pageSettings.postTags = postTags
-      })
+      settings = { sectionCardSettings: settings }
     }
 
     axios.post( '/api/admin/settings', settings )
@@ -123,14 +111,6 @@ class AdminPage extends Component {
 
           this.props.setSettings( response.data )
           this.setState({ appSettingsVerification: message })
-          
-          if ( areObjects ) {
-            settings = this.concatonateTags( settings )
-
-            _.map( settings, settingsObject => {
-              this.setState({ ...this.state, [settingsObject]: settingsObject })
-            })
-          }
         }
       }).catch( error => {
         console.error(error)
@@ -253,78 +233,56 @@ class AdminPage extends Component {
       </form>
     )
   }
-  
-  
-  renderPageSettingsFormSection( pageSettings ) {
-
-    return _.map( pageSettings, pageSettings => {
-
-      let { maxPosts, postTags, title } = pageSettings
-
-      return (
-        <div className="page-settings-form__group" key={ title }>
-          <h4>{ title }</h4>
-
-          <div className="page-settings-form__field">
-            <label className="page-settings-form__label" htmlFor="about-max-posts">Maximum posts</label>
-            <input
-              className="page-settings-form__input"
-              type="number"
-              id="about-max-posts"
-              value={maxPosts}
-              onChange={event => {
-                pageSettings.maxPosts = event.target.value
-                this.setState({ ...this.state, [pageSettings]: pageSettings })
-              }}
-            />
-          </div>
-
-          <div className="page-settings-form__field">
-            <label className="page-settings-form__label" htmlFor="about-tags">Post tags to use</label>
-            <input
-              className="page-settings-form__input"
-              placeholder="Separated by commas"
-              type="text"
-              id="about-tags"
-              value={postTags}
-              onChange={event => {
-                pageSettings.postTags = event.target.value
-                this.setState({ ...this.state, [pageSettings]: pageSettings })
-              }}
-            />
-          </div>
-        </div>
-      )
-    })
-  }
 
 
   renderPageSettingsForm() {
 
     const {
-      aboutPageSettings,
-      servicesPageSettings,
-      sectionCardSettings,
-      sectionVideoSettings,
-      donatePageSettings
+      sectionCardTitle,
+      sectionCardMaxPosts,
+      sectionCardPostTags,
     } = this.state
 
-
-    const pageSettings = {
-      aboutPageSettings,
-      servicesPageSettings,
-      sectionCardSettings,
-      sectionVideoSettings,
-      donatePageSettings
+    const settings = {
+      title: sectionCardTitle,
+      maxPosts: sectionCardMaxPosts,
+      postTags: sectionCardPostTags,
     }
 
     return (
-      <form className="page-settings-form" onSubmit={ event => this.handleSubmit( event, pageSettings ) }>
+      <form className="page-settings-form" onSubmit={ event => this.handleSubmit( event, settings ) }>
         
         <h3 className="heading-tertiary">Page Settings</h3>
 
         <div className="page-settings-form__content">
-          { this.renderPageSettingsFormSection( pageSettings ) }
+          <div className="page-settings-form__group" key={sectionCardTitle}>
+            <h4>{sectionCardTitle}</h4>
+
+            <div className="page-settings-form__field">
+              <label className="page-settings-form__label" htmlFor="about-max-posts">Maximum posts</label>
+              <input
+                className="page-settings-form__input"
+                type="number"
+                id="about-max-posts"
+                value={sectionCardMaxPosts}
+                onChange={event => this.setState({ ...this.state, sectionCardMaxPosts: event.target.value })}
+              />
+            </div>
+
+            <div className="page-settings-form__field">
+              <label className="page-settings-form__label" htmlFor="about-tags">Post tags to use</label>
+              <input
+                className="page-settings-form__input"
+                placeholder="Separated by commas"
+                type="text"
+                id="about-tags"
+                value={sectionCardPostTags}
+                onChange={event => {
+                  this.setState({ ...this.state, sectionCardPostTags: event.target.value })
+                }}
+              />
+            </div>
+          </div>
         </div>
 
         <input type="submit" className="button button-primary" />

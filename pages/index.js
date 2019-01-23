@@ -25,7 +25,7 @@ class Landing extends Component {
 
   render() {
 
-    const { sectionCardSettings, sectionVideoSettings } = this.props.settings
+    const { sectionCardSettings } = this.props.settings
     const { posts } = this.props
 
     return (
@@ -44,7 +44,10 @@ class Landing extends Component {
         <PostsFilter 
           component={ SectionMedia }
           posts={ posts }
-          settings={ sectionVideoSettings }
+          settings={{
+            maxPosts: 1,
+            postTags: 'video-section'
+          }}
           componentProps={{
             className: "section-video",
             // fixed: true
@@ -77,8 +80,8 @@ class Landing extends Component {
           component={ SectionCards }
           posts={ posts }
           settings={{
-            postTags: 'sample',
-            maxPosts: 4
+            maxPosts: 4,
+            postTags: 'sample'
           }}
           componentProps={{
             title: 'Another Card Section',

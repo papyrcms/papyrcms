@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Link from 'next/link'
+import _ from 'lodash'
 import keys from '../config/keys'
 import PostsFilter from '../components/PostsFilter'
 import SectionStandard from '../components/SectionStandard'
@@ -19,7 +20,14 @@ class BlogPage extends Component {
 
   renderAllBlogsLink() {
 
-    if ( this.props.posts.length > 5 ) {
+    let blogs = []
+    _.map( this.props.posts, post => {
+      if ( post.tags.includes('blog') ) {
+        blogs.push( post )
+      }
+    })
+
+    if ( blogs.length > 5 ) {
       return (
         <Link href="/blog_all" as="/blog/all">
           <a className="blog-page__button button button-secondary">See all posts</a>

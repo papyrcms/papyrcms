@@ -18,19 +18,18 @@ class ServicesPage extends Component {
 
   render() {
 
-    const { servicesPageSettings } = this.props.settings
-
-    const componentProps = { 
-      title: 'Services', 
-      className: 'services-page'
-    }
-
     return (
       <PostsFilter
         component={ SectionStandard }
         posts={ this.props.posts }
-        settings={ servicesPageSettings }
-        componentProps={ componentProps }
+        settings={{
+          postTags: 'services',
+          maxPosts: 9999
+        }}
+        componentProps={{
+          title: 'Services',
+          className: 'services-page'
+        }}
       />
     )
   }
