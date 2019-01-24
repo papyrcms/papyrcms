@@ -106,11 +106,11 @@ class PostRoutes {
   }
 
 
-  createPost(req, res) {
-
+  createPost( req, res ) {
+console.log(req.body)
     const post = new PostModel( req.body )
     post.author = req.user
-
+console.log(post)
     post.save()
     res.send( post )
   }
