@@ -72,13 +72,12 @@ server.use( ( req, res, done ) => {
     } else {
       appSettings = settings[0]
     }
-    
+
     res.locals.settings = appSettings
+    res.locals.currentUser = req.user
+  
+    done()
   })
-
-  res.locals.currentUser = req.user
-
-  done()
 })
 
 app.prepare().then( () => {

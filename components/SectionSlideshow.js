@@ -37,7 +37,7 @@ class SectionSlideshow extends Component {
     return _.map( this.props.posts, ( post, i ) => {
       return (
         <SectionMedia
-          key={post._id}
+          key={ post._id }
           posts={[post]}
           className={`${this.state.counter !== i ? 'slide--hidden' : ''} slide`}
         />
@@ -51,10 +51,12 @@ class SectionSlideshow extends Component {
     return _.map(this.props.posts, ( post, i ) => {
       return (
         <input
-          onClick={() => this.setState({ selected: i, counter: i }) }
+          onClick={ () => this.setState({ selected: i, counter: i }) }
           className="section-slideshow__button"
           type="radio"
-          checked={this.state.counter === i ? true : false}
+          checked={ this.state.counter === i ? true : false }
+          onChange={ () => {} }
+          key={ post._id }
         />
       )
     })

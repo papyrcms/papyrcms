@@ -2,7 +2,7 @@ import React from 'react'
 
 const Media = props => {
 
-  const { src, className } = props
+  const { src, className, alt } = props
 
   if (src.match(/\.(mp4|webm)$/i)) {
     return (
@@ -19,6 +19,7 @@ const Media = props => {
       <img
         className={className}
         src={src}
+        alt={alt}
       />
     )
   }

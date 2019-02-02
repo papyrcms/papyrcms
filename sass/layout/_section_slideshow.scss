@@ -6,6 +6,10 @@
   background-color: $color-grey-light;
   display: block;
 
+  &__button {
+    margin: .2rem;
+  }
+
   &__buttons {
     position: absolute;
     bottom: 2rem;

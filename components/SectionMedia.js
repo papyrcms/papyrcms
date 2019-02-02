@@ -5,7 +5,7 @@ import Media from './Media'
 const SectionMedia = props => {
 
   const { title, content, mainMedia } = props.posts[0]
-  const { className, fixed } = props
+  const { className, fixed, alt } = props
 
   return (
     <section className={`${className}${fixed ? '--fixed' : '' }`}>
@@ -18,6 +18,7 @@ const SectionMedia = props => {
       <Media
         className={`${className}__media${ fixed ? '--fixed' : '' }`}
         src={ mainMedia }
+        alt={ alt }
       />
 
     </section>
