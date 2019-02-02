@@ -1,8 +1,10 @@
 .section-slideshow {
   position: relative;
-  height: 80vh;
+  height: 100%;
   width: 100%;
+  min-height: 65vh;
   background-color: $color-grey-light;
+  display: block;
 
   &__buttons {
     position: absolute;
@@ -15,8 +17,8 @@
 
 .slide {
   position: absolute;
-  height: auto;
-  min-height: 80vh;
+  background-color: $color-grey-light;
+  height: 65vh;
   width: 100%;
   overflow: hidden;
   transition: all 1.5s ease;
@@ -63,9 +65,5 @@
     width: 100vw;
     object-fit: cover;
     margin-bottom: -1rem;
-
-    img {
-      width: 100vw;
-    }
   }
 }
