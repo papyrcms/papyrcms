@@ -5,6 +5,7 @@ import PostsFilter from '../components/PostsFilter'
 import SectionCards from '../components/SectionCards'
 import SectionMedia from '../components/SectionMedia'
 import SectionStandard from '../components/SectionStandard'
+import SectionSlideshow from '../components/SectionSlideshow';
 
 class Landing extends Component {
 
@@ -25,7 +26,6 @@ class Landing extends Component {
 
   render() {
 
-    const { sectionCardSettings } = this.props.settings
     const { posts } = this.props
 
     return (
@@ -33,7 +33,10 @@ class Landing extends Component {
         <PostsFilter
           component={ SectionCards }
           posts={ posts }
-          settings={ sectionCardSettings }
+          settings={{
+            maxPosts: 3,
+            postTags: 'sample'
+          }}
           componentProps={{
             title: 'This is the Section Card component',
             contentLength: 200,
@@ -88,6 +91,17 @@ class Landing extends Component {
             contentLength: 100,
             perRow: 4,
             readMore: true
+          }}
+        />
+        <PostsFilter
+          component={ SectionSlideshow }
+          posts={ posts }
+          settings={{
+            maxPosts: 4,
+            postTags: 'slideshow-section'
+          }}
+          componentProps={{
+            timer: 5000
           }}
         />
       </div>

@@ -68,7 +68,7 @@ class PostRoutes {
 
     const { settings, currentUser } = res.locals
     
-    if ( settings.enableUserPosts || ( currentUser && currentUser.isAdmin ) ) {
+    if ( (settings && settings.enableUserPosts ) || ( currentUser && currentUser.isAdmin ) ) {
       next()
     } else {
       res.status(401).send({ message: 'You are not allowed to do that' })

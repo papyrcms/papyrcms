@@ -6,12 +6,6 @@ const settignsSchema = new mongoose.Schema({
   enableCommenting: { type: Boolean, default: false },
   enableUserPosts: { type: Boolean, default: false },
   enableDonations: { type: Boolean, default: false },
-
-  sectionCardSettings: {
-    title: { type: String, default: "Card Section Settings" },
-    maxPosts: { type: Number, default: 1 },
-    postTags: { type: [String], default: [] }
-  },
 },
 {
   usePushEach: true

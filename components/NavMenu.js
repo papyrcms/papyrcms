@@ -6,7 +6,9 @@ class NavMenu extends Component {
 
   renderDonateItem() {
 
-    if ( this.props.settings.enableDonations ) {
+    const { settings } = this.props
+
+    if ( !!settings && settings.enableDonations ) {
       return (
         <Link href="/donate">
           <li className="nav-menu__item" onClick={() => this.onClick()}>

@@ -32,13 +32,8 @@ class AdminPage extends Component {
       enableCommenting,
       enableEmailing,
       enableUserPosts,
-      enableDonations,
-
-      sectionCardSettings
+      enableDonations
     } = props.settings
-
-    const { maxPosts, postTags, title } = sectionCardSettings
-    const tagsString = this.concatonateTags( postTags )
 
     this.state = {
       enableMenu,
@@ -50,59 +45,13 @@ class AdminPage extends Component {
       appSettingsVerification: '',
 
       users: props.users,
-
-      sectionCardTitle: title,
-      sectionCardMaxPosts: maxPosts,
-      sectionCardPostTags: tagsString,
     }
-  }
-
-
-  concatonateTags( tagsArray ) {
-
-    // Turn tags arrays into strings
-    let tagsString = ''
-
-    _.map( tagsArray, ( tag, i ) => {
-      if ( i < tagsArray.length - 1 ) {
-        tagsString = `${tagsString}${tag}, `
-      } else {
-        tagsString = `${tagsString}${tag}`
-      }
-    })
-
-    return tagsString
-  }
-
-
-  separateTags( tagsString ) {
-
-    // Turn tags string into an array
-    let tagsArray = []
-
-    _.map( tagsString.split( ',' ), tag => {
-      let pendingTag = tag
-
-      pendingTag = pendingTag.trim()
-
-      if ( !!pendingTag ) {
-        tagsArray.push( pendingTag )
-      }
-    })
-
-    return tagsArray
   }
 
 
   handleSubmit( event, settings ) {
 
     event.preventDefault()
-
-    if ( settings.postTags ) {
-      settings.postTags = this.separateTags( settings.postTags )
-
-      settings = { sectionCardSettings: settings }
-    }
 
     axios.post( '/api/admin/settings', settings )
       .then( response => {
@@ -235,63 +184,6 @@ class AdminPage extends Component {
   }
 
 
-  renderPageSettingsForm() {
-
-    const {
-      sectionCardTitle,
-      sectionCardMaxPosts,
-      sectionCardPostTags,
-    } = this.state
-
-    const settings = {
-      title: sectionCardTitle,
-      maxPosts: sectionCardMaxPosts,
-      postTags: sectionCardPostTags,
-    }
-
-    return (
-      <form className="page-settings-form" onSubmit={ event => this.handleSubmit( event, settings ) }>
-        
-        <h3 className="heading-tertiary">Page Settings</h3>
-
-        <div className="page-settings-form__content">
-          <div className="page-settings-form__group" key={sectionCardTitle}>
-            <h4>{sectionCardTitle}</h4>
-
-            <div className="page-settings-form__field">
-              <label className="page-settings-form__label" htmlFor="about-max-posts">Maximum posts</label>
-              <input
-                className="page-settings-form__input"
-                type="number"
-                id="about-max-posts"
-                value={sectionCardMaxPosts}
-                onChange={event => this.setState({ ...this.state, sectionCardMaxPosts: event.target.value })}
-              />
-            </div>
-
-            <div className="page-settings-form__field">
-              <label className="page-settings-form__label" htmlFor="about-tags">Post tags to use</label>
-              <input
-                className="page-settings-form__input"
-                placeholder="Separated by commas"
-                type="text"
-                id="about-tags"
-                value={sectionCardPostTags}
-                onChange={event => {
-                  this.setState({ ...this.state, sectionCardPostTags: event.target.value })
-                }}
-              />
-            </div>
-          </div>
-        </div>
-
-        <input type="submit" className="button button-primary" />
-
-      </form>
-    )
-  }
-
-
   render() {
 
     const { appSettingsVerification } = this.state
@@ -303,7 +195,6 @@ class AdminPage extends Component {
         <div className="admin-page__forms">
           { this.renderAppSettingsForm() }
           { this.renderUsersForm() }
-          { this.renderPageSettingsForm() }
         </div>
       </div>
     )

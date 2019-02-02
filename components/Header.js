@@ -49,7 +49,7 @@ class Header extends Component {
 
     const { settings, currentUser } = this.props
 
-    if ( settings.enableMenu || ( currentUser && currentUser.isAdmin ) ) {
+    if ( ( settings && settings.enableMenu ) || ( currentUser && currentUser.isAdmin ) ) {
       return (
         <ul className="header__menu">
           { this.renderAdminItems() }

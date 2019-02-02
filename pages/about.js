@@ -24,7 +24,7 @@ class AboutPage extends Component {
       <PostsFilter
         component={ SectionStandard }
         posts={ this.props.posts }
-        settings={ aboutPageSettings }
+        settings={{ maxPosts: 1, postTags: ['about'] }}
         componentProps={{ title: 'About', className: 'about-page' }}
       />
     )
