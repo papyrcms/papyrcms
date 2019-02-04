@@ -55,7 +55,6 @@ class ContactForm extends Component {
 
     return (
       <div className="contact-form">
-        <h2 className="heading-secondary contact-form__header">Contact</h2>
 
         <form className="contact-form__form" onSubmit={ this.handleSubmit.bind( this ) }>
 
