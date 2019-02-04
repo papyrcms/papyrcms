@@ -37,14 +37,14 @@ class PaymentRoutes {
 
     const { source, amount } = req.body
 
-    // const charge = await stripe.charges.create({
-    //   source: source.id,
-    //   amount: amount * 100,
-    //   currency: 'usd',
-    //   description: 'Anonymous donation'
-    // })
+    const charge = await stripe.charges.create({
+      source: source.id,
+      amount: amount * 100,
+      currency: 'usd',
+      description: 'Anonymous donation'
+    })
 
-    // res.send( charge )
+    res.send( charge )
   }
 
 
