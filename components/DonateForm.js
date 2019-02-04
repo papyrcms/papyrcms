@@ -27,14 +27,16 @@ class DonateForm extends Component {
     const response = await this.props.stripe.createSource({ type: 'card' })
     response.amount = this.state.amount
 
-    axios.post( '/api/donate', response )
-      .then(response => { 
-        console.log(response.data)
-        if ( response.data.status === 'succeeded' ) {
-          this.setState({ paid: true })
-        }
-      })
-      .catch(error => console.error(error))
+    console.log(response)
+
+    // axios.post( '/api/donate', response )
+    //   .then(response => { 
+    //     console.log(response.data)
+    //     if ( response.data.status === 'succeeded' ) {
+    //       this.setState({ paid: true })
+    //     }
+    //   })
+    //   .catch(error => console.error(error))
   }
 
 
@@ -103,6 +105,7 @@ class DonateForm extends Component {
               type="submit"
               className="button button-primary donate-form__submit"
               value={ processing ? 'Processing' : 'Submit' }
+              disabled={ processing ? true : false }
             />
 
           </div>
