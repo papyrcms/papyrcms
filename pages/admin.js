@@ -32,7 +32,8 @@ class AdminPage extends Component {
       enableCommenting,
       enableEmailing,
       enableUserPosts,
-      enableDonations
+      enableDonations,
+      enableRegistration
     } = props.settings
 
     this.state = {
@@ -41,6 +42,7 @@ class AdminPage extends Component {
       enableEmailing,
       enableUserPosts,
       enableDonations,
+      enableRegistration,
 
       appSettingsVerification: '',
 
@@ -89,6 +91,7 @@ class AdminPage extends Component {
       enableEmailing,
       enableUserPosts,
       enableDonations,
+      enableRegistration,
     } = this.state
 
     const settings = {
@@ -96,7 +99,8 @@ class AdminPage extends Component {
       enableCommenting,
       enableEmailing,
       enableUserPosts,
-      enableDonations
+      enableDonations,
+      enableRegistration
     }
 
     return (
@@ -157,6 +161,17 @@ class AdminPage extends Component {
             onChange={() => this.setState({ enableDonations: !enableDonations })}
           />
           <label className="settings-form__label" htmlFor="enable-donations">Enable Donations</label>
+        </div>
+
+        <div className="settings-form__field">
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id="enable-registration"
+            checked={enableRegistration ? true : false}
+            onChange={() => this.setState({ enableRegistration: !enableRegistration })}
+          />
+          <label className="settings-form__label" htmlFor="enable-registration">Enable User Registration</label>
         </div>
 
         <div className="settings-form__submit">

@@ -77,8 +77,8 @@ server.use( ( req, res, done ) => {
     res.locals.currentUser = req.user
   
     done()
-  })
-})
+  }) // End callback
+}) // End middleware
 
 app.prepare().then( () => {
   

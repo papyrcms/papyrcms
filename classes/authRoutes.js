@@ -29,6 +29,16 @@ class AuthRoutes {
   }
 
 
+  allowRegister( req, res, next ) {
+
+    if ( res.locals.settings.enableRegistration ) {
+      next()
+    } else {
+      res.status(400).send({ message: 'You\'re not allowed to do that.' })
+    }
+  }
+
+
   renderPage( req, res ) {
 
     this.app.render( req, res, req.url )

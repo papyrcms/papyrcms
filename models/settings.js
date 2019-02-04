@@ -6,6 +6,7 @@ const settignsSchema = new mongoose.Schema({
   enableCommenting: { type: Boolean, default: false },
   enableUserPosts: { type: Boolean, default: false },
   enableDonations: { type: Boolean, default: false },
+  enableRegistration: { type: Boolean, default: true }
 },
 {
   usePushEach: true
