@@ -24,7 +24,7 @@ class DonateForm extends Component {
 
     this.setState({ processing: true })
 
-    console.log(this.stripe)
+    console.log(this.props.stripe)
 
     const response = await this.props.stripe.createSource({ type: 'card' })
     response.amount = this.state.amount
