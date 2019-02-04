@@ -1,4 +1,5 @@
 const keys = require( '../config/keys' )
+const stripe = require( 'stripe' )( keys.stripeSecretTestKey )
 
 class PaymentRoutes {
 
@@ -32,11 +33,18 @@ class PaymentRoutes {
   }
 
 
-  createDonation( req, res ) {
+  async createDonation( req, res ) {
 
-    console.log(req.body)
+    const { source, amount } = req.body
 
-    res.send('oh yeah')
+    const charge = await stripe.charges.create({
+      source: source.id,
+      amount: amount * 100,
+      currency: 'usd',
+      description: 'Anonymous donation'
+    })
+
+    res.send( charge )
   }
 
 
