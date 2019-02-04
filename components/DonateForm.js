@@ -24,21 +24,20 @@ class DonateForm extends Component {
 
     this.setState({ processing: true })
 
-    console.log(this.props.stripe)
-
     const response = await this.props.stripe.createSource({ type: 'card' })
     response.amount = this.state.amount
 
-    console.log(response)
-
-    // axios.post( '/api/donate', response )
-    //   .then(response => { 
-    //     console.log(response.data)
-    //     if ( response.data.status === 'succeeded' ) {
-    //       this.setState({ paid: true })
-    //     }
-    //   })
-    //   .catch(error => console.error(error))
+    axios.post( '/api/donate', response )
+      .then(response => { 
+        console.log(response.data)
+        if ( response.data.status === 'succeeded' ) {
+          this.setState({ paid: true })
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        this.setState({ processing: false })
+      })
   }
 
 

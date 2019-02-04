@@ -57,7 +57,7 @@ class PaymentRoutes {
 
 
   sendStripePubKey( req, res ) {
-
+    console.log(`${req.protocol}://${req.get('host')}`, keys.rootURL, req.body.authorize)
     if (`${req.protocol}://${req.get('host')}` === keys.rootURL && req.body.authorize) {
       res.send( keys.stripePublishableTestKey )
     } else {
