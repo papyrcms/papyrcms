@@ -11,7 +11,7 @@ class Donate extends Component {
   static async getInitialProps() {
 
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const stripePubKey = await axios.post( `${rootUrl}/api/stripePubKey`, { authorize: true })
+    const stripePubKey = await axios.post( `${rootUrl}/api/stripePubKey`)
     const posts = await axios.get(`${rootUrl}/api/published_posts`)
 
     return { stripePubKey: stripePubKey.data, posts: posts.data }

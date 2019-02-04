@@ -58,7 +58,7 @@ class PaymentRoutes {
 
   sendStripePubKey( req, res ) {
 
-    if ( keys.rootURL.includes( req.get('host') ) && req.body.authorize) {
+    if ( keys.rootURL.includes( req.get('host') ) ) {
       res.send( keys.stripePublishableTestKey )
     } else {
       res.send('nunya beezwax')
