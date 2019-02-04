@@ -92,7 +92,7 @@ app.prepare().then( () => {
   })
 
   server.post( '/api/googleAnalyticsId', (req, res) => {
-    if ( `${req.protocol}://${req.get('host')}` === keys.rootURL && req.body.authorize ) {
+    if ( keys.rootURL.includes( req.get('host') ) && req.body.authorize ) {
       res.send( keys.googleAnalyticsId )
     } else {
       res.send('nunya beezwax')
