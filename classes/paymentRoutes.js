@@ -35,16 +35,26 @@ class PaymentRoutes {
 
   async createDonation( req, res ) {
 
-    const { source, amount } = req.body
-
-    const charge = await stripe.charges.create({
+    const { source, amount, email } = req.body
+    const paymentDetails = {
       source: source.id,
       amount: amount * 100,
+      receipt_email: email,
       currency: 'usd',
-      description: 'Anonymous donation'
-    })
+      description: 'Single donation'
+    }
+
+    const charge = await this.makePayment( paymentDetails )
 
     res.send( charge )
+  }
+
+
+  async makePayment( paymentDetails ) {
+
+    const charge = await stripe.charges.create( paymentDetails )
+
+    return charge
   }
 
 

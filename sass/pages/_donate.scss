@@ -30,7 +30,7 @@
     flex-direction: column;
     width: 100%;
 
-    &--number, &--amount {
+    &--number {
       grid-column: span 2;
 
       @include respond(phone) {
@@ -52,6 +52,18 @@
     padding: 1rem;
     border-radius: .5rem;
     background-color: $color-white;
+  }
+
+  &__validation {
+    color: $color-tertiary-2;
+    letter-spacing: .1rem;
+    font-size: 1.4rem;
+    font-style: italic;
+    grid-column: span 2;
+
+    @include respond(phone) {
+      grid-column: span 1;
+    }
   }
 
   &__submit {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { 
   injectStripe, 
   CardCVCElement, 
@@ -14,7 +15,13 @@ class DonateForm extends Component {
 
     super( props )
 
-    this.state = { amount: 1.00, processing: false, paid: false }
+    this.state = { 
+      email: props.currentUser ? props.currentUser.email : '', 
+      amount: 1.00, 
+      processing: false, 
+      paid: false,
+      validation: ''
+    }
   }
 
 
@@ -24,26 +31,47 @@ class DonateForm extends Component {
 
     this.setState({ processing: true })
 
-    const response = await this.props.stripe.createSource({ type: 'card' })
-    response.amount = this.state.amount
+    const { amount, email } = this.state
+    const data = await this.props.stripe.createSource({ type: 'card' })
+    let message = ''
 
-    axios.post( '/api/donate', response )
-      .then(response => { 
-        console.log(response.data)
-        if ( response.data.status === 'succeeded' ) {
-          this.setState({ paid: true })
-        }
-      })
-      .catch(error => {
-        console.error(error)
-        this.setState({ processing: false })
-      })
+    switch ( true ) {
+      case !!data.error:
+        message = data.error.message
+        return this.setState({ processing: false, validation: message })
+
+      case amount < 1:
+        message = 'You must donate at least 1 dollar.'
+        return this.setState({ processing: false, validation: message })
+
+      case email === '':
+        message = 'Please enter your email.'
+        return this.setState({ processing: false, validation: message })
+
+      default:
+
+        data.amount = amount
+        data.email = email
+
+        axios.post( '/api/donate', data )
+          .then(response => { 
+            console.log(response.data)
+            if ( response.data.status === 'succeeded' ) {
+              this.setState({ paid: true })
+            }
+          })
+          .catch(error => {
+            console.error(error)
+            message = 'Something went wrong. Please try again later.'
+            this.setState({ processing: false, validation: message })
+          })
+    }
   }
 
 
   renderForm() {
 
-    const { amount, processing, paid } = this.state
+    const { amount, email, processing, paid, validation } = this.state
     const { title, posts } = this.props
 
     if ( !paid ) {
@@ -56,6 +84,28 @@ class DonateForm extends Component {
           />
 
           <div className="donate-form__card-section">
+
+            <div className="donate-form__section donate-form__section--email">
+              <label className="donate-form__label">Email</label>
+              <input
+                type="email"
+                value={email}
+                className="donate-form__input"
+                onChange={event => this.setState({ email: event.target.value })}
+              />
+            </div>
+
+            <div className="donate-form__section donate-form__section--amount">
+              <label className="donate-form__label">Amount</label>
+              <input
+                type="number"
+                min="1"
+                step=".01"
+                value={amount}
+                className="donate-form__input"
+                onChange={event => this.setState({ amount: event.target.value })}
+              />
+            </div>
 
             <div className="donate-form__section donate-form__section--number">
               <label className="donate-form__label">Card Number</label>
@@ -90,17 +140,7 @@ class DonateForm extends Component {
               </div>
             </div>
 
-            <div className="donate-form__section donate-form__section--amount">
-              <label className="donate-form__label">Amount</label>
-              <input
-                type="number"
-                min="1"
-                step=".01"
-                value={ amount }
-                className="donate-form__input"
-                onChange={ event => this.setState({ amount: event.target.value }) }
-              />
-            </div>
+            <p className="donate-form__validation">{ validation }</p>
 
             <input
               type="submit"
@@ -126,4 +166,9 @@ class DonateForm extends Component {
 }
 
 
-export default injectStripe( DonateForm )
+const mapStateToProps = state => {
+  return { currentUser: state.currentUser }
+}
+
+
+export default injectStripe( connect( mapStateToProps )( DonateForm ) )
