@@ -1,4 +1,4 @@
-const mongoose = require( 'mongoose' )
+const mongoose = require('mongoose')
 
 const settignsSchema = new mongoose.Schema({
   enableEmailing: { type: Boolean, default: false },
@@ -13,4 +13,4 @@ const settignsSchema = new mongoose.Schema({
   usePushEach: true
 })
 
-module.exports = mongoose.model( 'settings', settignsSchema )
+module.exports = mongoose.model('settings', settignsSchema)

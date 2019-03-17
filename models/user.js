@@ -1,5 +1,5 @@
-const mongoose = require( 'mongoose' )
-const passportLocalMongoose = require( 'passport-local-mongoose' )
+const mongoose = require('mongoose')
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const userSchema = new mongoose.Schema({
 
@@ -20,6 +20,6 @@ const userSchema = new mongoose.Schema({
   usePushEach: true
 })
 
-userSchema.plugin( passportLocalMongoose )
+userSchema.plugin(passportLocalMongoose)
 
-module.exports = mongoose.model( 'user', userSchema )
+module.exports = mongoose.model('user', userSchema)

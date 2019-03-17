@@ -9,11 +9,11 @@ import SectionSlideshow from '../components/SectionSlideshow'
 
 class Landing extends Component {
 
-  static async getInitialProps( context ) {
+  static async getInitialProps(context) {
 
     let posts = []
 
-    if ( !!context.res ) {
+    if (!!context.res) {
       posts = context.query.posts
     } else {
       const response = await axios.get(`/api/published_posts`)
@@ -31,8 +31,8 @@ class Landing extends Component {
     return (
       <div className="landing">
         <PostsFilter
-          component={ SectionCards }
-          posts={ posts }
+          component={SectionCards}
+          posts={posts}
           settings={{
             maxPosts: 3,
             postTags: 'sample'
@@ -44,9 +44,9 @@ class Landing extends Component {
             perRow: 3
           }}
         />
-        <PostsFilter 
-          component={ SectionMedia }
-          posts={ posts }
+        <PostsFilter
+          component={SectionMedia}
+          posts={posts}
           settings={{
             maxPosts: 1,
             postTags: 'video-section'
@@ -57,8 +57,8 @@ class Landing extends Component {
           }}
         />
         <PostsFilter
-          component={ SectionStandard }
-          posts={ posts }
+          component={SectionStandard}
+          posts={posts}
           settings={{
             postTags: 'services',
             maxPosts: 2
@@ -68,8 +68,8 @@ class Landing extends Component {
           }}
         />
         <PostsFilter
-          component={ SectionMedia }
-          posts={ posts }
+          component={SectionMedia}
+          posts={posts}
           settings={{
             postTags: 'books',
             maxPosts: 1
@@ -80,8 +80,8 @@ class Landing extends Component {
           }}
         />
         <PostsFilter
-          component={ SectionCards }
-          posts={ posts }
+          component={SectionCards}
+          posts={posts}
           settings={{
             maxPosts: 4,
             postTags: 'sample'
@@ -94,8 +94,8 @@ class Landing extends Component {
           }}
         />
         <PostsFilter
-          component={ SectionSlideshow }
-          posts={ posts }
+          component={SectionSlideshow}
+          posts={posts}
           settings={{
             maxPosts: 4,
             postTags: 'slideshow-section'
@@ -115,4 +115,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( Landing )
+export default connect(mapStateToProps)(Landing)

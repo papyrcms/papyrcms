@@ -6,13 +6,13 @@ import Media from './Media'
 
 class SectionCards extends Component {
 
-  renderReadMore( post ) {
+  renderReadMore(post) {
 
-    if ( this.props.readMore ) {
+    if (this.props.readMore) {
       const path = this.props.path ? this.props.path : 'posts'
 
       return (
-        <Link href={ `/${path}_show?id=${post._id}` } as={ `/${path}/${post._id}` }>
+        <Link href={`/${path}_show?id=${post._id}`} as={`/${path}/${post._id}`}>
           <a className="section-cards__link">Read More</a>
         </Link>
       )
@@ -29,15 +29,15 @@ class SectionCards extends Component {
       // Set defaults for characterCount
       const characterCount = contentLength || 300
 
-      return _.map( posts, post => {
-        let postContent = post.content.length >= characterCount ? `${post.content.substring( 0, characterCount ).trim()} . . .` : post.content
+      return _.map(posts, post => {
+        let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
 
         return (
           <li key={post._id} className="section-cards__card">
-            <h3 className="section-cards__title">{ post.title }</h3>
-            <Media className="section-cards__image" src={ post.mainMedia } />
-            <div className="section-cards__content">{ renderHTML( postContent ) }</div>
-            {this.renderReadMore( post )}
+            <h3 className="section-cards__title">{post.title}</h3>
+            <Media className="section-cards__image" src={post.mainMedia} />
+            <div className="section-cards__content">{renderHTML(postContent)}</div>
+            {this.renderReadMore(post)}
           </li>
         )
       })
@@ -54,7 +54,7 @@ class SectionCards extends Component {
 
     return (
       <section className='section-cards'>
-        <h2 className='heading-secondary section-cards__header'>{ title }</h2>
+        <h2 className='heading-secondary section-cards__header'>{title}</h2>
         <ul className={`section-cards__list ${listCountClass}`}>
           {this.renderPosts()}
         </ul>

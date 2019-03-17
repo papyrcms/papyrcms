@@ -1,7 +1,7 @@
-const mongoose = require( 'mongoose' )
+const mongoose = require('mongoose')
 
 const commentSchema = new mongoose.Schema({
-  
+
   content: { type: String, required: true },
   replies: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -17,8 +17,8 @@ const commentSchema = new mongoose.Schema({
     ref: 'post'
   }
 },
-  {
-    usePushEach: true
-  })
+{
+  usePushEach: true
+})
 
 module.exports = mongoose.model('comment', commentSchema)

@@ -22,12 +22,12 @@ class Mailer {
     })
 
     oauth2Client.getAccessToken()
-      .then( response => this.accessToken = response.token )
-      .catch( error => console.error('error', error) )
+      .then(response => this.accessToken = response.token)
+      .catch(error => console.error('error', error))
   }
 
 
-  async sendEmail( model, templatePath, recipient, subject ) {
+  async sendEmail(model, templatePath, recipient, subject) {
 
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -45,14 +45,14 @@ class Mailer {
 
     let sent
 
-    this.readHTMLFile( templatePath, ( err, html ) => {
+    this.readHTMLFile(templatePath, (err, html) => {
 
       if (err) {
         return false
       }
 
-      const template = handlebars.compile( html )
-      const htmlToSend = template( model )
+      const template = handlebars.compile(html)
+      const htmlToSend = template(model)
 
       const mailOptions = {
         from: keys.siteEmail,
@@ -62,7 +62,7 @@ class Mailer {
         html: htmlToSend
       }
 
-      transporter.sendMail( mailOptions, ( error, response ) => {
+      transporter.sendMail(mailOptions, (error, response) => {
 
         if (error) {
           sent = false
@@ -80,14 +80,14 @@ class Mailer {
   }
 
 
-  readHTMLFile( path, callback ) {
+  readHTMLFile(path, callback) {
 
-    fs.readFile(path, { encoding: 'utf-8' }, function ( err, html ) {
+    fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
       if (err) {
-        callback( err )
+        callback(err)
       }
       else {
-        callback( null, html )
+        callback(null, html)
       }
     })
   }

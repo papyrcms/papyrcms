@@ -3,34 +3,34 @@ import _ from 'lodash'
 
 class PostsFilter extends Component {
 
-  constructor( props ) {
+  constructor(props) {
 
-    super( props )
+    super(props)
 
     let posts = []
     let numberPosts = 0
     const { maxPosts, postTags } = props.settings
 
     // Filter posts by postTags and maxPosts
-    if ( !!postTags && postTags.length > 0 ) {
-      posts = props.posts.filter( post => {
+    if (!!postTags && postTags.length > 0) {
+      posts = props.posts.filter(post => {
         let included = false
 
-        if ( 
+        if (
           typeof postTags === 'string' &&
           post.tags.includes(postTags) &&
           numberPosts < maxPosts
         ) {
           included = true
         } else {
-          _.map( postTags, tag => {
-            if ( post.tags.includes( tag ) && numberPosts < maxPosts ) {
+          _.map(postTags, tag => {
+            if (post.tags.includes(tag) && numberPosts < maxPosts) {
               included = true
             }
           })
         }
 
-        if ( included ) { numberPosts++ }
+        if (included) { numberPosts++ }
         return included
       })
     } else {
@@ -44,9 +44,9 @@ class PostsFilter extends Component {
   render() {
 
     return (
-      <this.props.component 
-        posts={ this.state.posts }
-        { ...this.props.componentProps }
+      <this.props.component
+        posts={this.state.posts}
+        {...this.props.componentProps}
       />
     )
   }

@@ -12,7 +12,7 @@ const Media = props => {
         Your browser is not supported.
       </video>
     )
-  } else if ( src === '' || !src ) {
+  } else if (src === '' || !src) {
     return null
   } else {
     return (

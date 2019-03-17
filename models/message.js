@@ -1,4 +1,4 @@
-const mongoose = require( 'mongoose' )
+const mongoose = require('mongoose')
 
 const messageSchema = new mongoose.Schema({
 
@@ -12,4 +12,4 @@ const messageSchema = new mongoose.Schema({
   usePushEach: true
 })
 
-module.exports = mongoose.model( 'message', messageSchema )
+module.exports = mongoose.model('message', messageSchema)

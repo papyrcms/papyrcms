@@ -4,9 +4,9 @@ import SectionMedia from './SectionMedia'
 
 class SectionSlideshow extends Component {
 
-  constructor( props ) {
+  constructor(props) {
 
-    super( props )
+    super(props)
 
     this.state = { counter: 0, selected: null }
   }
@@ -14,7 +14,7 @@ class SectionSlideshow extends Component {
 
   componentDidMount() {
 
-    setInterval( this.incrimentCounter.bind(this), this.props.timer || 5000 )
+    setInterval(this.incrimentCounter.bind(this), this.props.timer || 5000)
   }
 
 
@@ -22,11 +22,11 @@ class SectionSlideshow extends Component {
 
     const { counter, selected } = this.state
 
-    if ( selected === null ) {
-      if ( counter === this.props.posts.length-1 ) {
+    if (selected === null) {
+      if (counter === this.props.posts.length - 1) {
         this.setState({ counter: 0 })
       } else {
-        this.setState({ counter: counter+1 })
+        this.setState({ counter: counter + 1 })
       }
     }
   }
@@ -34,10 +34,10 @@ class SectionSlideshow extends Component {
 
   renderSlides() {
 
-    return _.map( this.props.posts, ( post, i ) => {
+    return _.map(this.props.posts, (post, i) => {
       return (
         <SectionMedia
-          key={ post._id }
+          key={post._id}
           posts={[post]}
           className={`${this.state.counter !== i ? 'slide--hidden' : ''} slide`}
         />
@@ -48,15 +48,15 @@ class SectionSlideshow extends Component {
 
   renderButtons() {
 
-    return _.map(this.props.posts, ( post, i ) => {
+    return _.map(this.props.posts, (post, i) => {
       return (
         <input
-          onClick={ () => this.setState({ selected: i, counter: i }) }
+          onClick={() => this.setState({ selected: i, counter: i })}
           className="section-slideshow__button"
           type="radio"
-          checked={ this.state.counter === i ? true : false }
-          onChange={ () => {} }
-          key={ post._id }
+          checked={this.state.counter === i ? true : false}
+          onChange={() => { }}
+          key={post._id}
         />
       )
     })
@@ -67,7 +67,7 @@ class SectionSlideshow extends Component {
 
     return (
       <div className="section-slideshow">
-        { this.renderSlides() }
+        {this.renderSlides()}
         <div className="section-slideshow__buttons">
           {this.renderButtons()}
         </div>

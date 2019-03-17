@@ -29,7 +29,7 @@ export const logEvent = (category = '', action = '') => {
 }
 
 export const logException = (description = '', fatal = false) => {
-  
+
   if (window.GA_INITIALIED && description) {
     ReactGA.exception({ description, fatal })
   }

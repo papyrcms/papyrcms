@@ -21,8 +21,8 @@ class StorePage extends Component {
     return (
       <div>
         <PostsFilter
-          component={ SectionCards }
-          posts={ this.props.posts }
+          component={SectionCards}
+          posts={this.props.posts}
           settings={{
             postTags: "product",
             maxPosts: "9999"
@@ -46,4 +46,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( StorePage )
+export default connect(mapStateToProps)(StorePage)

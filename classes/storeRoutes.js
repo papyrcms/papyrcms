@@ -2,7 +2,7 @@ const ProductModel = require('../models/product')
 
 class StoreRoutes {
 
-  constructor( server, app ) {
+  constructor(server, app) {
 
     this.app = app
     this.server = server
@@ -14,10 +14,10 @@ class StoreRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/store', this.checkIfStoreEnabled, this.renderPage.bind( this, '' ))
-    this.server.get('/store/new', this.checkIfStoreEnabled, this.checkIfAdmin, this.renderPage.bind( this, '_create' ))
-    this.server.get('/store/checkout', this.checkIfStoreEnabled, this.renderPage.bind( this, '_checkout' ))
-    this.server.get('/store/:id', this.checkIfStoreEnabled, this.renderPage.bind( this, '_show' ))
+    this.server.get('/store', this.checkIfStoreEnabled, this.renderPage.bind(this, ''))
+    this.server.get('/store/new', this.checkIfStoreEnabled, this.checkIfAdmin, this.renderPage.bind(this, '_create'))
+    this.server.get('/store/checkout', this.checkIfStoreEnabled, this.renderPage.bind(this, '_checkout'))
+    this.server.get('/store/:id', this.checkIfStoreEnabled, this.renderPage.bind(this, '_show'))
     this.server.get('/store/:id/edit', this.checkIfStoreEnabled, this.checkIfAdmin, this.renderPage.bind(this, '_edit'))
 
     // Store API
@@ -34,7 +34,7 @@ class StoreRoutes {
 
     const { currentUser } = res.locals
 
-    if ( currentUser && currentUser.isAdmin ) {
+    if (currentUser && currentUser.isAdmin) {
       next()
     } else {
       res.status(401).send({ message: 'You are not allowed to do that' })
@@ -60,7 +60,7 @@ class StoreRoutes {
     const id = !!req.params ? req.params.id : null
     const queryParams = { id }
 
-    this.app.render( req, res, actualPage, queryParams )
+    this.app.render(req, res, actualPage, queryParams)
   }
 
 

@@ -25,14 +25,14 @@ const Layout = props => {
       />
 
       <main>
-        { props.children }
+        {props.children}
       </main>
 
-      <Footer 
+      <Footer
         ctaText="Get in touch"
         ctaButtonText="contact"
       />
-      
+
     </div>
   )
 }

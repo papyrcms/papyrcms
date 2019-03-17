@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 class NavMenu extends Component {
 
   renderStoreItem() {
-    
+
     const { settings } = this.props
 
-    if ( !!settings && settings.enableStore ) {
+    if (!!settings && settings.enableStore) {
 
       return (
         <Link href="/store">
@@ -25,7 +25,7 @@ class NavMenu extends Component {
 
     const { settings } = this.props
 
-    if ( !!settings && settings.enableDonations ) {
+    if (!!settings && settings.enableDonations) {
       return (
         <Link href="/donate">
           <li className="nav-menu__item" onClick={() => this.onClick()}>
@@ -58,10 +58,10 @@ class NavMenu extends Component {
           </Link>
 
           <div className="nav-menu__items">
-          
+
             <label
               onClick={() => this.onClick()}
-              id="nav-menu-checkbox" 
+              id="nav-menu-checkbox"
               className="nav-menu__item nav-menu__item--hamburger"
             ></label>
 
@@ -95,8 +95,8 @@ class NavMenu extends Component {
               </li>
             </Link>
 
-            { this.renderStoreItem() }
-            { this.renderDonateItem() }
+            {this.renderStoreItem()}
+            {this.renderDonateItem()}
           </div>
 
         </ul>
@@ -111,4 +111,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( NavMenu )
+export default connect(mapStateToProps)(NavMenu)

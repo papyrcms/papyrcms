@@ -6,11 +6,11 @@ import PostShow from '../components/PostShow'
 
 class PostsShow extends Component {
 
-  static async getInitialProps( context ) {
+  static async getInitialProps(context) {
 
     const { id } = context.query
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const post = await axios.get( `${rootUrl}/api/posts/${id}` )
+    const post = await axios.get(`${rootUrl}/api/posts/${id}`)
 
     return { post: post.data }
   }
@@ -40,4 +40,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( PostsShow )
+export default connect(mapStateToProps)(PostsShow)

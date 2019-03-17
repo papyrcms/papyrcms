@@ -21,13 +21,13 @@ class BlogPage extends Component {
   renderAllBlogsLink() {
 
     let blogs = []
-    _.map( this.props.blogs, blog => {
-      if ( blog.tags.includes('blog') ) {
-        blogs.push( blog )
+    _.map(this.props.blogs, blog => {
+      if (blog.tags.includes('blog')) {
+        blogs.push(blog)
       }
     })
 
-    if ( blogs.length > 5 ) {
+    if (blogs.length > 5) {
       return (
         <Link href="/blog_all" as="/blog/all">
           <a className="blog-page__button button button-secondary">See all blog posts</a>
@@ -42,8 +42,8 @@ class BlogPage extends Component {
     return (
       <div className="blog-page">
         <PostsFilter
-          component={ SectionStandard }
-          posts={ this.props.blogs }
+          component={SectionStandard}
+          posts={this.props.blogs}
           settings={{
             maxPosts: "5"
           }}
@@ -55,7 +55,7 @@ class BlogPage extends Component {
           }}
         />
 
-        { this.renderAllBlogsLink() }
+        {this.renderAllBlogsLink()}
       </div>
     )
   }
@@ -67,4 +67,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( BlogPage )
+export default connect(mapStateToProps)(BlogPage)

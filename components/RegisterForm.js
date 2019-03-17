@@ -6,46 +6,46 @@ import { setCurrentUser } from '../store'
 
 class RegisterForm extends Component {
 
-  constructor( props ) {
+  constructor(props) {
 
-    super( props )
+    super(props)
 
-    this.state = { 
+    this.state = {
       firstName: '',
       lastName: '',
-      email: '', 
-      password: '', 
-      passwordConfirm: '', 
-      validationMessage: '' 
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      validationMessage: ''
     }
   }
 
 
-  handleSubmit( event ) {
+  handleSubmit(event) {
 
     event.preventDefault()
 
     const { firstName, lastName, email, password, passwordConfirm } = this.state
     let message = ''
 
-    axios.post( '/api/register', { firstName, lastName, username: email, password, passwordConfirm })
-      .then( res => {
-        if ( res.data.error ) {
+    axios.post('/api/register', { firstName, lastName, username: email, password, passwordConfirm })
+      .then(res => {
+        if (res.data.error) {
           message = res.data.error.message
 
           this.setState({ validationMessage: message })
-        } else if ( res.data === 'success' ) {
-          axios.get( '/api/currentUser' )
-            .then( res => {
-              this.props.setCurrentUser( res.data )
-              Router.push( '/profile' )
-            }).catch( err => {
+        } else if (res.data === 'success') {
+          axios.get('/api/currentUser')
+            .then(res => {
+              this.props.setCurrentUser(res.data)
+              Router.push('/profile')
+            }).catch(err => {
               message = err.response.data.message
 
               this.setState({ validationMessage: message })
             })
         }
-      }).catch( err => {
+      }).catch(err => {
         message = err.response.data.message
 
         this.setState({ validationMessage: message })
@@ -57,9 +57,9 @@ class RegisterForm extends Component {
 
     const { firstName, lastName, email, password, passwordConfirm, validationMessage } = this.state
 
-    if ( this.props.settings.enableRegistration ) {
+    if (this.props.settings.enableRegistration) {
       return (
-        <form onSubmit={ this.handleSubmit.bind( this ) } className={ this.props.className }>
+        <form onSubmit={this.handleSubmit.bind(this)} className={this.props.className}>
           <h3 className="heading-tertiary u-margin-bottom-small">Register</h3>
 
           <label className="login-page__label" htmlFor='first_name_register_input'>First Name</label>
@@ -88,8 +88,8 @@ class RegisterForm extends Component {
             name='email'
             id='email_register_input'
             className="login-page__input"
-            value={ email }
-            onChange={ event => this.setState({ email: event.target.value }) }
+            value={email}
+            onChange={event => this.setState({ email: event.target.value })}
           />
 
           <label className="login-page__label" htmlFor='password_register_input'>Password</label>
@@ -97,8 +97,8 @@ class RegisterForm extends Component {
             type='password'
             name='password'
             className="login-page__input"
-            value={ password }
-            onChange={event => this.setState({ password: event.target.value }) }
+            value={password}
+            onChange={event => this.setState({ password: event.target.value })}
           />
 
           <label className="login-page__label" htmlFor='password_confirm_register_input'>Confirm Password</label>
@@ -106,11 +106,11 @@ class RegisterForm extends Component {
             type='password'
             name='passwordConfirm'
             className="login-page__input"
-            value={ passwordConfirm }
-            onChange={event => this.setState({ passwordConfirm: event.target.value }) }
+            value={passwordConfirm}
+            onChange={event => this.setState({ passwordConfirm: event.target.value })}
           />
 
-          <p className="login-page__validation">{ validationMessage }</p>
+          <p className="login-page__validation">{validationMessage}</p>
 
           <div className="login-page__submit">
             <input
@@ -139,4 +139,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps, { setCurrentUser })( RegisterForm )
+export default connect(mapStateToProps, { setCurrentUser })(RegisterForm)

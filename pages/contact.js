@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import ContactForm from '../components/ContactForm'
-import PostsFilter from'../components/PostsFilter'
+import PostsFilter from '../components/PostsFilter'
 import SectionStandard from '../components/SectionStandard'
 import keys from '../config/keys'
 
@@ -22,8 +22,8 @@ class Contact extends Component {
     return (
       <Fragment>
         <PostsFilter
-          component={ SectionStandard }
-          posts={ this.props.posts }
+          component={SectionStandard}
+          posts={this.props.posts}
           settings={{ maxPosts: 1, postTags: ['contact'] }}
           componentProps={{ title: 'Contact' }}
         />
@@ -41,4 +41,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( Contact )
+export default connect(mapStateToProps)(Contact)

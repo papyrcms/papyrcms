@@ -6,10 +6,10 @@ const TextEditor = props => {
 
   return (
     <CKEditor
-      content={ content }
-      activeClass={ className }
+      content={content}
+      activeClass={className}
       events={{
-        "change": event => onChange( event.editor.getData() )
+        "change": event => onChange(event.editor.getData())
       }}
     />
   )

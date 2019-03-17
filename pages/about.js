@@ -22,8 +22,8 @@ class AboutPage extends Component {
 
     return (
       <PostsFilter
-        component={ SectionStandard }
-        posts={ this.props.posts }
+        component={SectionStandard}
+        posts={this.props.posts}
         settings={{ maxPosts: 1, postTags: ['about'] }}
         componentProps={{ title: 'About', className: 'about-page' }}
       />
@@ -37,4 +37,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( AboutPage )
+export default connect(mapStateToProps)(AboutPage)

@@ -8,17 +8,17 @@ const SectionMedia = props => {
   const { className, fixed, alt } = props
 
   return (
-    <section className={`${className}${fixed ? '--fixed' : '' }`}>
+    <section className={`${className}${fixed ? '--fixed' : ''}`}>
 
       <div className={`${className}__text`}>
-        <h2 className={`${className}__title`}>{ title }</h2>
-        <div className={`${className}__subtext`}>{ renderHTML( content ) }</div>
+        <h2 className={`${className}__title`}>{title}</h2>
+        <div className={`${className}__subtext`}>{renderHTML(content)}</div>
       </div>
-      
+
       <Media
-        className={`${className}__media${ fixed ? '--fixed' : '' }`}
-        src={ mainMedia }
-        alt={ alt }
+        className={`${className}__media${fixed ? '--fixed' : ''}`}
+        src={mainMedia}
+        alt={alt}
       />
 
     </section>

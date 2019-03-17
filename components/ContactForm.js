@@ -3,9 +3,9 @@ import axios from 'axios'
 
 class ContactForm extends Component {
 
-  constructor( props ) {
+  constructor(props) {
 
-    super( props )
+    super(props)
 
     this.state = {
       contactName: '',
@@ -16,7 +16,7 @@ class ContactForm extends Component {
   }
 
 
-  handleSubmit( event ) {
+  handleSubmit(event) {
 
     event.preventDefault()
 
@@ -34,21 +34,21 @@ class ContactForm extends Component {
       this.setState({ formValidation: message })
     } else {
 
-      axios.post( '/api/contact', contactObject )
-        .then( response => {
+      axios.post('/api/contact', contactObject)
+        .then(response => {
           this.setState({
             contactName: '',
             contactEmail: '',
             contactMessage: '',
             formValidation: 'Thanks for reaching out! I\'ll be in touch.'
           })
-        }).catch( error => {
-          console.error( error )
+        }).catch(error => {
+          console.error(error)
         })
     }
   }
 
-  
+
   render() {
 
     const { contactName, contactEmail, contactMessage, formValidation } = this.state
@@ -56,7 +56,7 @@ class ContactForm extends Component {
     return (
       <div className="contact-form">
 
-        <form className="contact-form__form" onSubmit={ this.handleSubmit.bind( this ) }>
+        <form className="contact-form__form" onSubmit={this.handleSubmit.bind(this)}>
 
           <div className="contact-form__field">
             <label htmlFor="contact-name" className="contact-form__label">Name</label>
@@ -64,8 +64,8 @@ class ContactForm extends Component {
               id="contact-name"
               className="contact-form__input"
               type="text"
-              value={ contactName }
-              onChange={ event => this.setState({ contactName: event.target.value }) }
+              value={contactName}
+              onChange={event => this.setState({ contactName: event.target.value })}
             />
           </div>
 
@@ -75,8 +75,8 @@ class ContactForm extends Component {
               id="contact-email"
               className="contact-form__input"
               type="text"
-              value={ contactEmail }
-              onChange={ event => this.setState({ contactEmail: event.target.value }) }
+              value={contactEmail}
+              onChange={event => this.setState({ contactEmail: event.target.value })}
             />
           </div>
 
@@ -85,8 +85,8 @@ class ContactForm extends Component {
             <textarea
               id="contact-message"
               className="contact-form__textarea"
-              value={ contactMessage }
-              onChange={ event => this.setState({ contactMessage: event.target.value }) }
+              value={contactMessage}
+              onChange={event => this.setState({ contactMessage: event.target.value })}
             />
           </div>
 
@@ -95,7 +95,7 @@ class ContactForm extends Component {
             className="button button-primary contact-form__submit"
           />
 
-          <p className="contact-form__validation">{ formValidation }</p>
+          <p className="contact-form__validation">{formValidation}</p>
 
         </form>
       </div>

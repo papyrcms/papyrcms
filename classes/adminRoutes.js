@@ -3,7 +3,7 @@ const UserModel = require('../models/user')
 
 class AdminRoutes {
 
-  constructor( server, app ) {
+  constructor(server, app) {
 
     this.server = server
     this.app = app
@@ -27,17 +27,17 @@ class AdminRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get( '/admin', this.checkIfAdmin, this.renderPage.bind( this ) )
+    this.server.get('/admin', this.checkIfAdmin, this.renderPage.bind(this))
 
     // API
-    this.server.get( '/api/admin/users', this.checkIfAdmin, this.sendAllUsers.bind( this ) )
-    this.server.post( '/api/admin/settings', this.checkIfAdmin, this.changeSettings.bind( this ) )
+    this.server.get('/api/admin/users', this.checkIfAdmin, this.sendAllUsers.bind(this))
+    this.server.post('/api/admin/settings', this.checkIfAdmin, this.changeSettings.bind(this))
   }
 
 
-  checkIfAdmin( req, res, next ) {
+  checkIfAdmin(req, res, next) {
 
-    if ( req.user && req.user.isAdmin ) {
+    if (req.user && req.user.isAdmin) {
       next()
     } else {
       res.status(401).send({ message: 'You are not allowed to do that' })
@@ -53,27 +53,27 @@ class AdminRoutes {
   }
 
 
-  async sendAllUsers( req, res ) {
+  async sendAllUsers(req, res) {
 
     const users = await this.fetchAllUsers()
 
-    res.send( users )
+    res.send(users)
   }
 
 
-  async renderPage( req, res ) {
+  async renderPage(req, res) {
 
     const users = await this.fetchAllUsers()
     const queryParams = { users }
 
-    this.app.render( req, res, req.url, queryParams )
+    this.app.render(req, res, req.url, queryParams)
   }
 
 
-  async assignSettings( res ) {
+  async assignSettings(res) {
 
     // Get the new settings
-    const settings = await SettingsModel.findById( this.settings._id )
+    const settings = await SettingsModel.findById(this.settings._id)
 
     // Assign settings to this object
     this.settings = settings
@@ -85,16 +85,16 @@ class AdminRoutes {
   }
 
 
-  async changeSettings( req, res ) {
+  async changeSettings(req, res) {
 
     // Update the settings document in the db
     const settingsDocument = { _id: this.settings._id }
-    await SettingsModel.findOneAndUpdate( settingsDocument, req.body )
+    await SettingsModel.findOneAndUpdate(settingsDocument, req.body)
 
     // Update settings within the app
-    const settings = await this.assignSettings( res )
+    const settings = await this.assignSettings(res)
 
-    res.send( settings )
+    res.send(settings)
   }
 }
 

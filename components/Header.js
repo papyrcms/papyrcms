@@ -6,7 +6,7 @@ class Header extends Component {
 
   renderAuthenticator() {
 
-    if ( !!this.props.currentUser ) {
+    if (!!this.props.currentUser) {
       return (
         <Link href="/profile">
           <a className="header__menu-item header__menu-item--4"><li>Profile</li></a>
@@ -26,10 +26,10 @@ class Header extends Component {
 
     const { settings, currentUser } = this.props
 
-    if ( ( settings && settings.enableMenu ) || ( currentUser && currentUser.isAdmin ) ) {
+    if ((settings && settings.enableMenu) || (currentUser && currentUser.isAdmin)) {
       return (
         <ul className="header__menu">
-          { this.renderAuthenticator() }
+          {this.renderAuthenticator()}
         </ul>
       )
     }
@@ -37,16 +37,16 @@ class Header extends Component {
 
 
   render() {
-    
+
     const { mainTitle, subTitle } = this.props
 
     return (
       <header className="header">
         <h1 className="heading-primary">
-          <span className="heading-primary--main">{ mainTitle }</span>
-          <span className="heading-primary--sub">{ subTitle }</span>
+          <span className="heading-primary--main">{mainTitle}</span>
+          <span className="heading-primary--sub">{subTitle}</span>
         </h1>
-        { this.renderNav() }
+        {this.renderNav()}
       </header>
     )
   }
@@ -58,4 +58,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( Header )
+export default connect(mapStateToProps)(Header)

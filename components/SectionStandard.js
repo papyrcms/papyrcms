@@ -6,66 +6,66 @@ import Media from './Media'
 
 class SectionStandard extends Component {
 
-  renderMedia( mediaSource ) {
+  renderMedia(mediaSource) {
 
     return (
       <div className="section-standard__image">
-        <Media src={ mediaSource } />
+        <Media src={mediaSource} />
       </div>
     )
   }
 
 
-  renderRightMedia( post, i ) {
+  renderRightMedia(post, i) {
 
     const { mediaLeft, mediaRight } = this.props
 
-    if ( mediaRight && !mediaLeft ) {
-      return this.renderMedia( post.mainMedia )
-    } else if ( 
-      ( ( !mediaRight && !mediaLeft ) ||
-      ( mediaRight && mediaLeft ) ) &&
-      i % 2 !== 0 && !!post.mainMedia 
+    if (mediaRight && !mediaLeft) {
+      return this.renderMedia(post.mainMedia)
+    } else if (
+      ((!mediaRight && !mediaLeft) ||
+        (mediaRight && mediaLeft)) &&
+      i % 2 !== 0 && !!post.mainMedia
     ) {
-      return this.renderMedia( post.mainMedia )
+      return this.renderMedia(post.mainMedia)
     }
   }
 
 
-  renderLeftMedia( post, i ) {
+  renderLeftMedia(post, i) {
 
     const { mediaLeft, mediaRight } = this.props
 
-    if ( mediaLeft && !mediaRight ) {
-      return this.renderMedia( post.mainMedia )
-    } else if ( 
-      ( ( !mediaRight && !mediaLeft ) ||
-      ( mediaRight && mediaLeft ) ) &&
-      i % 2 === 0 && !!post.mainMedia 
+    if (mediaLeft && !mediaRight) {
+      return this.renderMedia(post.mainMedia)
+    } else if (
+      ((!mediaRight && !mediaLeft) ||
+        (mediaRight && mediaLeft)) &&
+      i % 2 === 0 && !!post.mainMedia
     ) {
-      return this.renderMedia( post.mainMedia )
+      return this.renderMedia(post.mainMedia)
     }
   }
-  
-  
-  renderContent( post ) {
+
+
+  renderContent(post) {
 
     const { readMore, path } = this.props
 
     const contentLength = this.props.contentLength || 300
-    let postContent = post.content.length >= contentLength ? `${post.content.substring( 0, contentLength).trim() } . . .` : post.content
+    let postContent = post.content.length >= contentLength ? `${post.content.substring(0, contentLength).trim()} . . .` : post.content
 
-    if ( readMore ) {
+    if (readMore) {
       return (
         <div>
-          { renderHTML( postContent )}
+          {renderHTML(postContent)}
           <Link href={`/${path}_show?id=${post._id}`} as={`/${path}/${post._id}`}>
             <a>Read More</a>
           </Link>
         </div>
       )
     } else {
-      return renderHTML( post.content )
+      return renderHTML(post.content)
     }
   }
 
@@ -75,17 +75,17 @@ class SectionStandard extends Component {
     const { path, posts } = this.props
 
     if (posts.length !== 0) {
-      return _.map( posts, ( post, i ) => {
+      return _.map(posts, (post, i) => {
         const postTextClassName = !!post.mainMedia ? 'section-standard__text' : 'section-standard__text--wide'
 
         return (
-          <div className="section-standard__post" key={ post._id }>
-            { this.renderLeftMedia( post, i ) }
-            <div className={ postTextClassName }>
-              <h3 className="heading-tertiary">{ post.title }</h3>
-              { this.renderContent( post ) }
+          <div className="section-standard__post" key={post._id}>
+            {this.renderLeftMedia(post, i)}
+            <div className={postTextClassName}>
+              <h3 className="heading-tertiary">{post.title}</h3>
+              {this.renderContent(post)}
             </div>
-            { this.renderRightMedia( post, i ) }
+            {this.renderRightMedia(post, i)}
           </div>
         )
       })
@@ -100,8 +100,8 @@ class SectionStandard extends Component {
     const { className, title } = this.props
 
     return (
-      <div className={ `${className} section-standard` }>
-        <h2 className="heading-secondary u-margin-bottom-medium">{ title }</h2>
+      <div className={`${className} section-standard`}>
+        <h2 className="heading-secondary u-margin-bottom-medium">{title}</h2>
 
         {this.renderPosts()}
       </div>

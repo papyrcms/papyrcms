@@ -77,8 +77,8 @@ export const setStripePubKey = key => {
 // Initialization
 export const initializeStore = (initialState = initialState) => {
   return createStore(
-    reducer, 
-    initialState, 
+    reducer,
+    initialState,
     composeWithDevTools(
       applyMiddleware(reduxThunk)
     )

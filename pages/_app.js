@@ -10,14 +10,14 @@ import '../sass/main.scss'
 class MyApp extends App {
 
   static async getInitialProps({ Component, ctx }) {
-    
+
     const { reduxStore, req, res } = ctx
     const isServer = !!req
     let pageProps = {}
 
     // Run getInitialProps for each component
-    if ( Component.getInitialProps ) {
-      pageProps = await Component.getInitialProps( ctx )
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
     }
 
     // If a post was recieved, send it to the redux store
@@ -41,19 +41,19 @@ class MyApp extends App {
     }
 
     // If an array of users was recieved, send them to the redux store
-    if ( !!pageProps.users ) {
-      reduxStore.dispatch( setUsers( pageProps.users ))
+    if (!!pageProps.users) {
+      reduxStore.dispatch(setUsers(pageProps.users))
     }
 
     // If a stripe publishable key was receieved, send it to the redux store
-    if ( !!pageProps.stripePubKey ) {
-      reduxStore.dispatch( setStripePubKey( pageProps.stripePubKey ))
+    if (!!pageProps.stripePubKey) {
+      reduxStore.dispatch(setStripePubKey(pageProps.stripePubKey))
     }
 
     // Set Current User and Website Settings in the redux store
-    if ( isServer ) {
-      reduxStore.dispatch( setSettings( res.locals.settings ))
-      reduxStore.dispatch( setCurrentUser( res.locals.currentUser ))
+    if (isServer) {
+      reduxStore.dispatch(setSettings(res.locals.settings))
+      reduxStore.dispatch(setCurrentUser(res.locals.currentUser))
     }
 
     // Return nothing. Props are set by the redux store
@@ -79,7 +79,7 @@ class MyApp extends App {
 
     return (
       <Container>
-        <Provider store={ reduxStore }>
+        <Provider store={reduxStore}>
           <Layout>
             <Component />
           </Layout>
@@ -89,4 +89,4 @@ class MyApp extends App {
   }
 }
 
-export default withReduxStore( MyApp )
+export default withReduxStore(MyApp)

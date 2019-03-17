@@ -7,37 +7,37 @@ import PostsForm from '../components/PostsForm'
 
 class PostsCreate extends Component {
 
-  constructor( props ) {
+  constructor(props) {
 
-    super( props )
+    super(props)
 
     this.state = { title: '', tags: '', mainMedia: '', content: '', publish: false }
   }
 
 
-  handleSubmit( event ) {
+  handleSubmit(event) {
 
     event.preventDefault()
 
     const { title, tags, mainMedia, content, publish } = this.state
     let tagArray = []
 
-    _.map( tags.split( ',' ), tag => {
+    _.map(tags.split(','), tag => {
       let pendingTag = tag
       pendingTag = pendingTag.trim()
 
-      if ( !!pendingTag ) {
-        tagArray.push( pendingTag )
+      if (!!pendingTag) {
+        tagArray.push(pendingTag)
       }
     })
 
     const postObject = { title, tags: tagArray, mainMedia, content, published: publish }
 
-    axios.post( '/api/posts', postObject )
-      .then( response => {
-        Router.push( '/posts' )
-      }).catch( error => {
-        console.error( error )
+    axios.post('/api/posts', postObject)
+      .then(response => {
+        Router.push('/posts')
+      }).catch(error => {
+        console.error(error)
       })
   }
 
@@ -48,19 +48,19 @@ class PostsCreate extends Component {
     return (
       <div className="posts-create-page">
         <h2 className="heading-secondary">New Post</h2>
-        <PostsForm 
-          isAdminUser={ this.props.currentUser.isAdmin }
-          title={ title } 
-          onTitleChange={ event => this.setState({ title: event.target.value }) }
-          tags={ tags }
-          onTagsChange={ event => this.setState({ tags: event.target.value }) }
-          mainMedia={ mainMedia }
-          onMainMediaChange={ event => this.setState({ mainMedia: event.target.value }) }
-          content={ content }
-          onContentChange={ newContent => this.setState({ content: newContent }) }
-          publish={ publish }
-          onPublishChange={ () => this.setState({ publish: !publish }) }
-          handleSubmit={ event => this.handleSubmit(event) }
+        <PostsForm
+          isAdminUser={this.props.currentUser.isAdmin}
+          title={title}
+          onTitleChange={event => this.setState({ title: event.target.value })}
+          tags={tags}
+          onTagsChange={event => this.setState({ tags: event.target.value })}
+          mainMedia={mainMedia}
+          onMainMediaChange={event => this.setState({ mainMedia: event.target.value })}
+          content={content}
+          onContentChange={newContent => this.setState({ content: newContent })}
+          publish={publish}
+          onPublishChange={() => this.setState({ publish: !publish })}
+          handleSubmit={event => this.handleSubmit(event)}
         />
       </div>
     )
@@ -73,4 +73,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( PostsCreate )
+export default connect(mapStateToProps)(PostsCreate)

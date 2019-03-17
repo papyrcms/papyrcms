@@ -7,11 +7,11 @@ import { setCurrentUser } from '../store'
 
 class Profile extends Component {
 
-  constructor( props ) {
+  constructor(props) {
 
-    super( props )
+    super(props)
 
-    if ( !!props.currentUser ) {
+    if (!!props.currentUser) {
       this.state = {
         oldPassword: '',
         newPassword: '',
@@ -37,60 +37,60 @@ class Profile extends Component {
 
   onLogoutClick() {
 
-    axios.get( '/api/logout' )
-      .then( res => {
-        if ( res.data === 'logged out' ) {
-          Router.push( '/' )
-          this.props.setCurrentUser( null )
+    axios.get('/api/logout')
+      .then(res => {
+        if (res.data === 'logged out') {
+          Router.push('/')
+          this.props.setCurrentUser(null)
         }
-      }).catch( err => {
-        console.error( err )
+      }).catch(err => {
+        console.error(err)
       })
   }
 
 
-  handleInfoSubmit( event ) {
+  handleInfoSubmit(event) {
 
     event.preventDefault()
 
     const { firstName, lastName } = this.state
     const infoData = { firstName, lastName, userId: this.props.currentUser._id }
-    
-    axios.put( '/api/currentUser', infoData )
-      .then( res => {
-        if ( !!res.data.error ) {
+
+    axios.put('/api/currentUser', infoData)
+      .then(res => {
+        if (!!res.data.error) {
           return this.setState({ infoValidation: res.data.error })
         } else {
-          axios.get( '/api/currentUser' )
-            .then( res => {
-              this.props.setCurrentUser( res.data )
-              this.setState( { infoValidation: 'User info updated.' })
-            }).catch( err => {
-              console.error( err )
+          axios.get('/api/currentUser')
+            .then(res => {
+              this.props.setCurrentUser(res.data)
+              this.setState({ infoValidation: 'User info updated.' })
+            }).catch(err => {
+              console.error(err)
             })
         }
-      }).catch( err => {
-        console.error( err )
+      }).catch(err => {
+        console.error(err)
       })
   }
 
 
-  handlePasswordSubmit( event ) {
+  handlePasswordSubmit(event) {
 
     event.preventDefault()
 
     const { oldPassword, newPassword, newPasswordConfirm } = this.state
     const passwordData = { oldPassword, newPassword, newPasswordConfirm, userId: this.props.currentUser._id }
 
-    axios.post( '/api/changePassword', passwordData )
-      .then( res => {
-        this.setState({ 
+    axios.post('/api/changePassword', passwordData)
+      .then(res => {
+        this.setState({
           passwordValidation: res.data.message,
           oldPassword: '',
           newPassword: '',
           newPasswordConfirm: ''
         })
-      }).catch( err => {
+      }).catch(err => {
         this.setState({ passwordValidation: err.response.data.message })
       })
   }
@@ -98,7 +98,7 @@ class Profile extends Component {
 
   renderAdmin() {
 
-    if ( this.props.currentUser.isAdmin ) {
+    if (this.props.currentUser.isAdmin) {
       return (
         <div>
           <p>You are an admin.</p>
@@ -116,7 +116,7 @@ class Profile extends Component {
     const { currentUser } = this.props
     const { firstName, lastName, infoValidation, oldPassword, newPassword, newPasswordConfirm, passwordValidation } = this.state
 
-    if ( !!currentUser ) {
+    if (!!currentUser) {
       return (
         <div className="profile">
           <h1 className="heading-secondary">Profile</h1>
@@ -125,9 +125,9 @@ class Profile extends Component {
             <div className="profile__logout">
               <span>Not {!!currentUser.firstName ? currentUser.firstName : currentUser.email}?</span>
               <button
-                onClick={ () => this.onLogoutClick() }
+                onClick={() => this.onLogoutClick()}
                 className="button button-primary"
-                >
+              >
                 Log Out
               </button>
             </div>
@@ -138,14 +138,14 @@ class Profile extends Component {
             <p>Email: {currentUser.email}</p>
 
             {/* Personal Info Form */}
-            <form className="profile__form" onSubmit={ this.handleInfoSubmit.bind(this) }>
+            <form className="profile__form" onSubmit={this.handleInfoSubmit.bind(this)}>
               <label htmlFor="profile-first-name">First Name</label>
               <input
                 id="profile-first-name"
                 type="text"
                 name="firstName"
                 value={firstName}
-                onChange={ event => this.setState({ firstName: event.target.value })}
+                onChange={event => this.setState({ firstName: event.target.value })}
                 className="profile__input"
               />
               <label htmlFor="profile-last-name">Last Name</label>
@@ -154,7 +154,7 @@ class Profile extends Component {
                 type="text"
                 name="lastName"
                 value={lastName}
-                onChange={ event => this.setState({ lastName: event.target.value })}
+                onChange={event => this.setState({ lastName: event.target.value })}
                 className="profile__input"
               />
               <p className="profile__validation">{infoValidation}</p>
@@ -168,14 +168,14 @@ class Profile extends Component {
           <div className="profile__password">
             {/* Change Password Form */}
             <h3>Reset Password</h3>
-            <form className="profile__form" onSubmit={ this.handlePasswordSubmit.bind(this) }>
+            <form className="profile__form" onSubmit={this.handlePasswordSubmit.bind(this)}>
               <label htmlFor="profile-current-password">Current Password</label>
               <input
                 id="profile-current-password"
                 type="password"
                 name="oldPassword"
                 value={oldPassword}
-                onChange={ event => this.setState({ oldPassword: event.target.value }) }
+                onChange={event => this.setState({ oldPassword: event.target.value })}
                 className="profile__input"
               />
               <label htmlFor="profile-new-password">New Password</label>
@@ -184,7 +184,7 @@ class Profile extends Component {
                 type="password"
                 name="newPassword"
                 value={newPassword}
-                onChange={ event => this.setState({ newPassword: event.target.value }) }
+                onChange={event => this.setState({ newPassword: event.target.value })}
                 className="profile__input"
               />
               <label htmlFor="profile-confirm-password">Confirm New Password</label>
@@ -193,7 +193,7 @@ class Profile extends Component {
                 type="password"
                 name="newPasswordConfirm"
                 value={newPasswordConfirm}
-                onChange={ event => this.setState({ newPasswordConfirm: event.target.value }) }
+                onChange={event => this.setState({ newPasswordConfirm: event.target.value })}
                 className="profile__input"
               />
               <p className="profile__validation">{passwordValidation}</p>
@@ -217,7 +217,7 @@ class Profile extends Component {
 
     return (
       <div className="profile-page">
-        { this.renderProfilePage() }
+        {this.renderProfilePage()}
       </div>
     )
   }
@@ -229,4 +229,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps, { setCurrentUser } )( Profile )
+export default connect(mapStateToProps, { setCurrentUser })(Profile)

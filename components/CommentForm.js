@@ -5,7 +5,7 @@ const CommentForm = props => {
   const { content, onChange, onSubmit, detached, onDetachClick } = props
 
   return (
-    <form className={ `comment-form  ${detached ? 'detached' : ''}` } onSubmit={ onSubmit.bind( this ) }>
+    <form className={`comment-form  ${detached ? 'detached' : ''}`} onSubmit={onSubmit.bind(this)}>
 
       <label htmlFor="comment-text-editor" className="comment-form__label">Comment</label>
       <RichTextEditor
@@ -18,7 +18,7 @@ const CommentForm = props => {
       <div className="comment-form__bottom">
         <input className="button button-primary" type="submit" />
         <div className="comment-form__detach">
-          <input id="detach-checkbox" className="comment-form__checkbox--input" type="checkbox" onClick={ () => onDetachClick() } />
+          <input id="detach-checkbox" className="comment-form__checkbox--input" type="checkbox" onClick={() => onDetachClick()} />
           <label className="comment-form__detach--label" htmlFor="detach-checkbox">{detached ? 'Attach' : 'Detach'} comment form<span className="comment-form__checkbox--span"></span></label>
         </div>
       </div>

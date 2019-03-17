@@ -11,14 +11,14 @@ class StoreCreate extends Component {
 
     super(props)
 
-    this.state = { 
-      title: '', 
+    this.state = {
+      title: '',
       price: 0.00,
       quantity: 0,
-      tags: '', 
-      mainImage: '', 
-      description: '', 
-      publish: false 
+      tags: '',
+      mainImage: '',
+      description: '',
+      publish: false
     }
   }
 
@@ -39,14 +39,14 @@ class StoreCreate extends Component {
       }
     })
 
-    const productObject = { 
+    const productObject = {
       title,
       price,
       quantity,
-      tags: tagArray, 
-      mainImage, 
-      description, 
-      published: publish 
+      tags: tagArray,
+      mainImage,
+      description,
+      published: publish
     }
 
     axios.post('/api/products', productObject)
@@ -60,7 +60,7 @@ class StoreCreate extends Component {
 
   renderForm() {
 
-    if ( this.props.settings.enableStore ) {
+    if (this.props.settings.enableStore) {
       const { title, tags, price, quantity, mainImage, description, publish } = this.state
 
       return (
@@ -102,4 +102,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( StoreCreate )
+export default connect(mapStateToProps)(StoreCreate)

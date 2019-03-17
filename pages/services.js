@@ -20,8 +20,8 @@ class ServicesPage extends Component {
 
     return (
       <PostsFilter
-        component={ SectionStandard }
-        posts={ this.props.posts }
+        component={SectionStandard}
+        posts={this.props.posts}
         settings={{
           postTags: 'services',
           maxPosts: 9999
@@ -41,4 +41,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( ServicesPage )
+export default connect(mapStateToProps)(ServicesPage)

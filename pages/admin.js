@@ -8,11 +8,11 @@ import keys from '../config/keys'
 
 class AdminPage extends Component {
 
-  static async getInitialProps( context ) {
+  static async getInitialProps(context) {
 
     let users = []
 
-    if ( !!context.res ) {
+    if (!!context.res) {
       users = context.query.users
     } else {
       const rootUrl = keys.rootURL ? keys.rootURL : ''
@@ -23,10 +23,10 @@ class AdminPage extends Component {
     return { users }
   }
 
-  
-  constructor( props ) {
 
-    super( props )
+  constructor(props) {
+
+    super(props)
 
     const {
       enableMenu,
@@ -54,19 +54,19 @@ class AdminPage extends Component {
   }
 
 
-  handleSubmit( event, settings ) {
+  handleSubmit(event, settings) {
 
     event.preventDefault()
 
-    axios.post( '/api/admin/settings', settings )
-      .then( response => {
-        if ( !!response.data._id ) {
+    axios.post('/api/admin/settings', settings)
+      .then(response => {
+        if (!!response.data._id) {
           const message = 'Your app settings have been updated.'
 
-          this.props.setSettings( response.data )
+          this.props.setSettings(response.data)
           this.setState({ appSettingsVerification: message })
         }
-      }).catch( error => {
+      }).catch(error => {
         console.error(error)
       })
   }
@@ -76,10 +76,10 @@ class AdminPage extends Component {
 
     const { users } = this.state
 
-    return _.map( users, user => {
+    return _.map(users, user => {
       return (
-        <li key={ user._id }>
-          { user.email }
+        <li key={user._id}>
+          {user.email}
         </li>
       )
     })
@@ -207,7 +207,7 @@ class AdminPage extends Component {
         <h3 className="heading-tertiary">Users</h3>
 
         <ul className="users-form__list">
-          { this.renderUsers() }
+          {this.renderUsers()}
         </ul>
 
       </form>
@@ -219,7 +219,7 @@ class AdminPage extends Component {
 
     const { settings } = this.props
 
-    if ( settings.enableStore ) {
+    if (settings.enableStore) {
       return (
         <Fragment>
           <Link href="/store_create" as="/store/new">
@@ -261,14 +261,14 @@ class AdminPage extends Component {
             <a className="admin-page__link">My Blogs</a>
           </Link>
 
-          { this.renderStoreMenuItems() }
+          {this.renderStoreMenuItems()}
         </div>
 
-        <p className="admin-page__verification">{ appSettingsVerification }</p>
+        <p className="admin-page__verification">{appSettingsVerification}</p>
 
         <div className="admin-page__forms">
-          { this.renderAppSettingsForm() }
-          { this.renderUsersForm() }
+          {this.renderAppSettingsForm()}
+          {this.renderUsersForm()}
         </div>
 
       </div>
@@ -282,4 +282,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps, { setSettings } )( AdminPage )
+export default connect(mapStateToProps, { setSettings })(AdminPage)

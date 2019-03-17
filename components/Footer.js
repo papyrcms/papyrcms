@@ -6,15 +6,15 @@ const Footer = props => {
     <footer className='footer'>
 
       <div className="cta">
-        <h2 className="cta__title u-margin-bottom-small">{ props.ctaText }</h2>
+        <h2 className="cta__title u-margin-bottom-small">{props.ctaText}</h2>
         <Link href="/contact">
-          <button className="button button-primary">{ props.ctaButtonText }</button>
+          <button className="button button-primary">{props.ctaButtonText}</button>
         </Link>
       </div>
 
       <div className="credit">
         <p className="credit__text">
-          Website created by 
+          Website created by
           <a className="credit__link" href="https://derekgarnett.com"> Derek Garnett </a>
           &copy; 2019
         </p>

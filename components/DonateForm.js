@@ -1,31 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { 
-  injectStripe, 
-  CardCVCElement, 
-  CardExpiryElement, 
-  CardNumberElement 
+import {
+  injectStripe,
+  CardCVCElement,
+  CardExpiryElement,
+  CardNumberElement
 } from 'react-stripe-elements'
 import SectionStandard from '../components/SectionStandard'
 import axios from 'axios'
 
 class DonateForm extends Component {
 
-  constructor( props ) {
+  constructor(props) {
 
-    super( props )
+    super(props)
 
     this.state = {
-      email: props.currentUser ? props.currentUser.email : '', 
-      amount: 1.00, 
-      processing: false, 
+      email: props.currentUser ? props.currentUser.email : '',
+      amount: 1.00,
+      processing: false,
       paid: false,
       validation: ''
     }
   }
 
 
-  async handleSubmit( event ) {
+  async handleSubmit(event) {
 
     event.preventDefault()
 
@@ -35,7 +35,7 @@ class DonateForm extends Component {
     const data = await this.props.stripe.createSource({ type: 'card' })
     let message = ''
 
-    switch ( true ) {
+    switch (true) {
       case !!data.error:
         message = data.error.message
         return this.setState({ processing: false, validation: message })
@@ -53,10 +53,10 @@ class DonateForm extends Component {
         data.amount = amount
         data.email = email
 
-        axios.post( '/api/donate', data )
-          .then(response => { 
+        axios.post('/api/donate', data)
+          .then(response => {
             console.log(response.data)
-            if ( response.data.status === 'succeeded' ) {
+            if (response.data.status === 'succeeded') {
               this.setState({ paid: true })
             }
           })
@@ -74,13 +74,13 @@ class DonateForm extends Component {
     const { amount, email, processing, paid, validation } = this.state
     const { title, posts } = this.props
 
-    if ( !paid ) {
+    if (!paid) {
       return (
-        <form className="donate-form" onSubmit={ this.handleSubmit.bind(this) }>
+        <form className="donate-form" onSubmit={this.handleSubmit.bind(this)}>
 
           <SectionStandard
-            title={ title }
-            posts={ posts }
+            title={title}
+            posts={posts}
           />
 
           <div className="donate-form__card-section">
@@ -110,10 +110,12 @@ class DonateForm extends Component {
             <div className="donate-form__section donate-form__section--number">
               <label className="donate-form__label">Card Number</label>
               <div className="donate-form__input">
-                <CardNumberElement 
-                  style={{ base: { 
-                    color: '#333' 
-                  }}}
+                <CardNumberElement
+                  style={{
+                    base: {
+                      color: '#333'
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -121,10 +123,12 @@ class DonateForm extends Component {
             <div className="donate-form__section donate-form__section--expiration">
               <label className="donate-form__label">Card Expiration</label>
               <div className="donate-form__input">
-                <CardExpiryElement 
-                  style={{ base: { 
-                    color: '#333' 
-                  }}}
+                <CardExpiryElement
+                  style={{
+                    base: {
+                      color: '#333'
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -132,21 +136,23 @@ class DonateForm extends Component {
             <div className="donate-form__section donate-form__section--cvc">
               <label className="donate-form__label">Card CVC</label>
               <div className="donate-form__input">
-                <CardCVCElement 
-                  style={{ base: { 
-                    color: '#333' 
-                  }}}
+                <CardCVCElement
+                  style={{
+                    base: {
+                      color: '#333'
+                    }
+                  }}
                 />
               </div>
             </div>
 
-            <p className="donate-form__validation">{ validation }</p>
+            <p className="donate-form__validation">{validation}</p>
 
             <input
               type="submit"
               className="button button-primary donate-form__submit"
-              value={ processing ? 'Processing' : 'Submit' }
-              disabled={ processing ? true : false }
+              value={processing ? 'Processing' : 'Submit'}
+              disabled={processing ? true : false}
             />
 
           </div>
@@ -160,7 +166,7 @@ class DonateForm extends Component {
 
 
   render() {
-    
+
     return this.renderForm()
   }
 }
@@ -171,4 +177,4 @@ const mapStateToProps = state => {
 }
 
 
-export default injectStripe( connect( mapStateToProps )( DonateForm ) )
+export default injectStripe(connect(mapStateToProps)(DonateForm))

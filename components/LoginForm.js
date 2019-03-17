@@ -6,30 +6,30 @@ import { setCurrentUser } from '../store'
 
 class LoginForm extends Component {
 
-  constructor( props ) {
-    super( props )
+  constructor(props) {
+    super(props)
 
     this.state = { email: '', password: '', validationMessage: '' }
   }
 
 
-  handleSubmit( event ) {
+  handleSubmit(event) {
 
     event.preventDefault()
 
     const { email, password } = this.state
 
-    axios.post( '/api/login', { username: email, password })
-      .then( res => {
-        axios.get( '/api/currentUser' )
-          .then( res => {
-            this.props.setCurrentUser( res.data )
-            Router.push( '/profile' )
-          }).catch( err => {
-            console.error( err )
+    axios.post('/api/login', { username: email, password })
+      .then(res => {
+        axios.get('/api/currentUser')
+          .then(res => {
+            this.props.setCurrentUser(res.data)
+            Router.push('/profile')
+          }).catch(err => {
+            console.error(err)
           })
-      }).catch( err => {
-        console.error( err )
+      }).catch(err => {
+        console.error(err)
         const message = 'Something went wrong. Please try again.'
 
         this.setState({ validationMessage: message })
@@ -42,18 +42,18 @@ class LoginForm extends Component {
     const { email, password, validationMessage } = this.state
 
     return (
-      <form onSubmit={ this.handleSubmit.bind( this ) } className={ this.props.className }>
+      <form onSubmit={this.handleSubmit.bind(this)} className={this.props.className}>
 
         <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
 
         <label className="login-page__label" htmlFor='email_login_input'>Email</label>
-        <input 
+        <input
           type='text'
           name='username'
           id='email_login_input'
           className="login-page__input"
-          value={ email }
-          onChange={ event => this.setState({ email: event.target.value }) }
+          value={email}
+          onChange={event => this.setState({ email: event.target.value })}
         />
 
         <label className="login-page__label" htmlFor='password_login_input'>Password</label>
@@ -62,11 +62,11 @@ class LoginForm extends Component {
           name='password'
           id='password_login_input'
           className="login-page__input"
-          value={ password }
-          onChange={ event => this.setState({ password: event.target.value }) }
+          value={password}
+          onChange={event => this.setState({ password: event.target.value })}
         />
 
-        <p className="login-page__validation">{ validationMessage }</p>
+        <p className="login-page__validation">{validationMessage}</p>
 
         <div className="login-page__submit">
           <input
@@ -81,4 +81,4 @@ class LoginForm extends Component {
   }
 }
 
-export default connect( null, { setCurrentUser })( LoginForm )
+export default connect(null, { setCurrentUser })(LoginForm)

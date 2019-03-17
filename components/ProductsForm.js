@@ -5,8 +5,8 @@ import Media from './Media'
 
 class ProductsForm extends Component {
 
-  constructor( props ) {
-    super( props )
+  constructor(props) {
+    super(props)
 
     this.state = { imageUpload: false, uploadedImage: false, dots: '' }
   }
@@ -16,7 +16,7 @@ class ProductsForm extends Component {
 
     const { isAdminUser, publish, onPublishChange } = this.props
 
-    if ( isAdminUser ) {
+    if (isAdminUser) {
       return (
         <div className="post-form__publish">
           <input
@@ -24,8 +24,8 @@ class ProductsForm extends Component {
             className="post-form__checkbox--input"
             type="checkbox"
             name="published"
-            checked={ publish }
-            onChange={ () => onPublishChange() }
+            checked={publish}
+            onChange={() => onPublishChange()}
           />
           <label htmlFor="publish-checkbox" className="post-form__label">Publish Product <span className="post-form__checkbox--span"></span></label>
         </div>
@@ -34,24 +34,24 @@ class ProductsForm extends Component {
   }
 
 
-  handleFileInputChange( event ) {
+  handleFileInputChange(event) {
 
     const { onMainImageChange } = this.props
     let imageChange = { target: { value: '' } }
 
-    onMainImageChange( imageChange )
+    onMainImageChange(imageChange)
     this.setState({ uploadedImage: true })
 
     let formData = new FormData
 
-    formData.append( 'file', event.target.files[0] )
+    formData.append('file', event.target.files[0])
 
-    axios.post( '/api/upload', formData )
+    axios.post('/api/upload', formData)
       .then(res => {
         imageChange.target.value = res.data
-        onMainImageChange( imageChange )
-      }).catch( err => {
-        console.error( err.response )
+        onMainImageChange(imageChange)
+      }).catch(err => {
+        console.error(err.response)
       })
   }
 
@@ -60,7 +60,7 @@ class ProductsForm extends Component {
 
     const { mainImage, onMainImageChange } = this.props
 
-    if ( this.state.imageUpload ) {
+    if (this.state.imageUpload) {
       return (
         <div>
           <p>Please wait to submit the form until you see the image you uploaded to ensure it uploads properly.</p>
@@ -78,8 +78,8 @@ class ProductsForm extends Component {
           className="post-form__input"
           type="text"
           name="image"
-          value={ mainImage }
-          onChange={ event => onMainImageChange(event) }
+          value={mainImage}
+          onChange={event => onMainImageChange(event)}
         />
       )
     }
@@ -90,8 +90,8 @@ class ProductsForm extends Component {
 
     const { uploadedImage, dots } = this.state
 
-    if ( uploadedImage && this.props.mainImage === '' ) {
-      setTimeout( () => {
+    if (uploadedImage && this.props.mainImage === '') {
+      setTimeout(() => {
         switch (dots) {
           case ' .':
             this.setState({ dots: ' . .' })
@@ -103,7 +103,7 @@ class ProductsForm extends Component {
             this.setState({ dots: ' .' })
             break
         }
-      }, 700 )
+      }, 700)
     }
 
     return dots
@@ -115,13 +115,13 @@ class ProductsForm extends Component {
     const { mainImage } = this.props
 
 
-    if ( this.state.uploadedImage && mainImage === '' ) {
-      return <h3 className="heading-tertiary">Loading{ this.renderDots() }</h3>
+    if (this.state.uploadedImage && mainImage === '') {
+      return <h3 className="heading-tertiary">Loading{this.renderDots()}</h3>
     } else {
       return (
         <Media
           className="post-form__image"
-          src={ mainImage }
+          src={mainImage}
         />
       )
     }
@@ -133,7 +133,7 @@ class ProductsForm extends Component {
     const { title, tags, price, quantity, description, onTitleChange, onQuantityChange, onPriceChange, onDescriptionChange, handleSubmit } = this.props
 
     return (
-      <form encType="multipart/form-data" className="post-form" onSubmit={ handleSubmit.bind(this) }>
+      <form encType="multipart/form-data" className="post-form" onSubmit={handleSubmit.bind(this)}>
 
         <div className='post-form__top'>
           <div className="post-form__field">
@@ -142,8 +142,8 @@ class ProductsForm extends Component {
               className="post-form__input"
               type="text"
               name="title"
-              value={ title }
-              onChange={ event => onTitleChange(event) }
+              value={title}
+              onChange={event => onTitleChange(event)}
             />
           </div>
 
@@ -168,8 +168,8 @@ class ProductsForm extends Component {
               name="price"
               step='.01'
               min='0'
-              value={ price }
-              onChange={ event => onPriceChange(event) }
+              value={price}
+              onChange={event => onPriceChange(event)}
             />
           </div>
 
@@ -181,8 +181,8 @@ class ProductsForm extends Component {
               name="quantity"
               step='1'
               min='0'
-              value={ quantity }
-              onChange={ event => onQuantityChange(event) }
+              value={quantity}
+              onChange={event => onQuantityChange(event)}
             />
           </div>
         </div>
@@ -193,8 +193,8 @@ class ProductsForm extends Component {
             <input
               type="radio"
               name="image"
-              checked={ this.state.imageUpload ? false : true }
-              onChange={ () => this.setState({ imageUpload: false }) }
+              checked={this.state.imageUpload ? false : true}
+              onChange={() => this.setState({ imageUpload: false })}
             />
             <label htmlFor="image-url">URL</label>
           </span>
@@ -202,25 +202,25 @@ class ProductsForm extends Component {
             <input
               type="radio"
               name="image"
-              checked={ this.state.imageUpload ? true : false }
-              onChange={ () => this.setState({ imageUpload: true }) }
+              checked={this.state.imageUpload ? true : false}
+              onChange={() => this.setState({ imageUpload: true })}
             />
             <label htmlFor="image-upload">Upload</label>
           </span>
         </div>
 
-        { this.renderImageInput() }
-        { this.renderImage() }
+        {this.renderImageInput()}
+        {this.renderImage()}
 
         <label className="post-form__label">Description</label>
         <RichTextEditor
           className="post-form__text-editor"
-          content={ description }
-          onChange={ newDescription => onDescriptionChange(newDescription) }
+          content={description}
+          onChange={newDescription => onDescriptionChange(newDescription)}
         />
 
         <div className="post-form__bottom">
-          { this.renderPublish() }
+          {this.renderPublish()}
           <input className="button button-primary post-form__submit" type="submit" />
         </div>
 
