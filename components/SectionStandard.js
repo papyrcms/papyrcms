@@ -71,21 +71,27 @@ class SectionStandard extends Component {
 
 
   renderPosts() {
-    
-    return _.map( this.props.posts, ( post, i ) => {
-      const postTextClassName = !!post.mainMedia ? 'section-standard__text' : 'section-standard__text--wide'
 
-      return (
-        <div className="section-standard__post" key={ post._id }>
-          { this.renderLeftMedia( post, i ) }
-          <div className={ postTextClassName }>
-            <h3 className="heading-tertiary">{ post.title }</h3>
-            { this.renderContent( post ) }
+    const { path, posts } = this.props
+
+    if (posts.length !== 0) {
+      return _.map( posts, ( post, i ) => {
+        const postTextClassName = !!post.mainMedia ? 'section-standard__text' : 'section-standard__text--wide'
+
+        return (
+          <div className="section-standard__post" key={ post._id }>
+            { this.renderLeftMedia( post, i ) }
+            <div className={ postTextClassName }>
+              <h3 className="heading-tertiary">{ post.title }</h3>
+              { this.renderContent( post ) }
+            </div>
+            { this.renderRightMedia( post, i ) }
           </div>
-          { this.renderRightMedia( post, i ) }
-        </div>
-      )
-    })
+        )
+      })
+    } else {
+      return <h3 className="heading-tertiary">There are no {path}s yet.</h3>
+    }
   }
 
 

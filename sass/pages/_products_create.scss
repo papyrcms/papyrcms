@@ -1,0 +1,12 @@
+.products-create-page {
+  background-color: $color-grey-light;
+  padding: 5rem 17vw;
+
+  @include respond(tab-port) {
+    padding: 4rem 12vw;
+  }
+
+  @include respond(phone) {
+    padding: 3rem 7vw;
+  }
+}

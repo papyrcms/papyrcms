@@ -41,7 +41,7 @@ class ContactRoutes {
     }
     const message = new MessageModel( messageObj )
 
-    const mailer = new Mailer();
+    const mailer = new Mailer()
     const templatePath = 'emails/contact.html'
     const subject = `New message from ${message.name}!`
 

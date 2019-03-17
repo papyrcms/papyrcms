@@ -22,21 +22,28 @@ class SectionCards extends Component {
 
   renderPosts() {
 
-    // Set defaults for contentLength
-    const contentLength = this.props.contentLength || 300
+    const { path, posts, contentLength } = this.props
 
-    return _.map( this.props.posts, post => {
-      let postContent = post.content.length >= contentLength ? `${post.content.substring( 0, contentLength ).trim()} . . .` : post.content
+    if (posts.length !== 0) {
 
-      return (
-        <li key={post._id} className="section-cards__card">
-          <h3 className="section-cards__title">{ post.title }</h3>
-          <Media className="section-cards__image" src={ post.mainMedia } />
-          <div className="section-cards__content">{ renderHTML( postContent ) }</div>
-          {this.renderReadMore( post )}
-        </li>
-      )
-    })
+      // Set defaults for characterCount
+      const characterCount = contentLength || 300
+
+      return _.map( posts, post => {
+        let postContent = post.content.length >= characterCount ? `${post.content.substring( 0, characterCount ).trim()} . . .` : post.content
+
+        return (
+          <li key={post._id} className="section-cards__card">
+            <h3 className="section-cards__title">{ post.title }</h3>
+            <Media className="section-cards__image" src={ post.mainMedia } />
+            <div className="section-cards__content">{ renderHTML( postContent ) }</div>
+            {this.renderReadMore( post )}
+          </li>
+        )
+      })
+    } else {
+      return <h3 className="heading-tertiary">There are no {path}s yet.</h3>
+    }
   }
 
 

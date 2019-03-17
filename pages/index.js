@@ -5,7 +5,7 @@ import PostsFilter from '../components/PostsFilter'
 import SectionCards from '../components/SectionCards'
 import SectionMedia from '../components/SectionMedia'
 import SectionStandard from '../components/SectionStandard'
-import SectionSlideshow from '../components/SectionSlideshow';
+import SectionSlideshow from '../components/SectionSlideshow'
 
 class Landing extends Component {
 

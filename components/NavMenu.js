@@ -4,6 +4,23 @@ import { connect } from 'react-redux'
 
 class NavMenu extends Component {
 
+  renderStoreItem() {
+    
+    const { settings } = this.props
+
+    if ( !!settings && settings.enableStore ) {
+
+      return (
+        <Link href="/store">
+          <li onClick={() => this.onClick()} className="nav-menu__item">
+            <a>Store</a>
+          </li>
+        </Link>
+      )
+    }
+  }
+
+
   renderDonateItem() {
 
     const { settings } = this.props
@@ -22,7 +39,7 @@ class NavMenu extends Component {
 
   onClick() {
 
-    const checkbox = document.getElementById('nav-menu-checkbox');
+    const checkbox = document.getElementById('nav-menu-checkbox')
 
     checkbox.classList.toggle('checked')
   }
@@ -78,6 +95,7 @@ class NavMenu extends Component {
               </li>
             </Link>
 
+            { this.renderStoreItem() }
             { this.renderDonateItem() }
           </div>
 

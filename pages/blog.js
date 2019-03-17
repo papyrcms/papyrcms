@@ -12,25 +12,25 @@ class BlogPage extends Component {
   static async getInitialProps() {
 
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const posts = await axios.get(`${rootUrl}/api/published_posts`)
+    const blogs = await axios.get(`${rootUrl}/api/published_blogs`)
 
-    return { posts: posts.data }
+    return { blogs: blogs.data }
   }
 
 
   renderAllBlogsLink() {
 
     let blogs = []
-    _.map( this.props.posts, post => {
-      if ( post.tags.includes('blog') ) {
-        blogs.push( post )
+    _.map( this.props.blogs, blog => {
+      if ( blog.tags.includes('blog') ) {
+        blogs.push( blog )
       }
     })
 
     if ( blogs.length > 5 ) {
       return (
         <Link href="/blog_all" as="/blog/all">
-          <a className="blog-page__button button button-secondary">See all posts</a>
+          <a className="blog-page__button button button-secondary">See all blog posts</a>
         </Link>
       )
     }
@@ -43,9 +43,8 @@ class BlogPage extends Component {
       <div className="blog-page">
         <PostsFilter
           component={ SectionStandard }
-          posts={ this.props.posts }
+          posts={ this.props.blogs }
           settings={{
-            postTags: "blog",
             maxPosts: "5"
           }}
           componentProps={{
@@ -64,7 +63,7 @@ class BlogPage extends Component {
 
 
 const mapStateToProps = state => {
-  return { posts: state.posts, settings: state.settings }
+  return { blogs: state.blogs }
 }
 
 

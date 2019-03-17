@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import keys from '../config/keys'
 import PostShow from '../components/PostShow'
 
-class PostsShow extends Component {
+class StoreShow extends Component {
 
   static async getInitialProps( context ) {
 
@@ -22,11 +22,10 @@ class PostsShow extends Component {
 
     return (
       <PostShow
-        currentUser={currentUser}
-        post={post}
-        settings={settings}
-        enableCommenting={false}
-        path="posts"
+        currentUser={ currentUser }
+        post={ post }
+        settings={ settings }
+        enableCommenting={ false }
       />
     )
   }
@@ -40,4 +39,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect( mapStateToProps )( PostsShow )
+export default connect( mapStateToProps )( StoreShow )

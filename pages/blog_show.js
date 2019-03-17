@@ -10,32 +10,33 @@ class BlogShow extends Component {
 
     const { id } = context.query
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const post = await axios.get(`${rootUrl}/api/posts/${id}`)
+    const blog = await axios.get(`${rootUrl}/api/blogs/${id}`)
 
-    return { post: post.data }
+    return { blog: blog.data }
   }
 
 
   render() {
 
-    const { currentUser, post, settings } = this.props
+    const { currentUser, blog, settings } = this.props
 
     return (
       <PostShow
         currentUser={currentUser}
-        post={post}
+        post={blog}
         settings={settings}
         enableCommenting={true}
+        path="blog"
+        apiPath="blogs"
       />
     )
   }
 }
 
-
 const mapStateToProps = state => {
-  const { currentUser, post, settings } = state
+  const { currentUser, blog, settings } = state
 
-  return { currentUser, post, settings }
+  return { currentUser, blog, settings }
 }
 
 

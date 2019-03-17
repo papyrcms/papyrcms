@@ -9,7 +9,7 @@ class Mailer {
 
   constructor() {
 
-    this.accessToken;
+    this.accessToken
 
     const oauth2Client = new OAuth2(
       keys.gmailClientId,

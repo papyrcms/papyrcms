@@ -1,19 +1,28 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import Link from 'next/link'
 import keys from '../config/keys'
 import PostsFilter from '../components/PostsFilter'
 import SectionCards from '../components/SectionCards'
 
 class BlogPage extends Component {
 
-  static async getInitialProps() {
+  static async getInitialProps(context) {
+
+    let currentUser
+
+    // Depending on if we are doing a client or server render
+    if (Object.keys(context.query).length === 0 && context.query.constructor === Object) {
+      currentUser = context.reduxStore.getState().currentUser
+    } else {
+      currentUser = context.query.currentUser
+    }
 
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const posts = await axios.get(`${rootUrl}/api/published_posts`)
+    const blogRequest = currentUser && currentUser.isAdmin ? 'blogs' : 'published_blogs'
+    const blogs = await axios.get(`${rootUrl}/api/${blogRequest}`)
 
-    return { posts: posts.data }
+    return { blogs: blogs.data }
   }
 
 
@@ -23,9 +32,9 @@ class BlogPage extends Component {
       <div>
         <PostsFilter
           component={SectionCards}
-          posts={this.props.posts}
+          posts={this.props.blogs}
           settings={{
-            postTags: "blog",
+            // postTags: "blog",
             maxPosts: "9999"
           }}
           componentProps={{
@@ -43,7 +52,7 @@ class BlogPage extends Component {
 
 
 const mapStateToProps = state => {
-  return { posts: state.posts, settings: state.settings }
+  return { blogs: state.blogs, settings: state.settings }
 }
 
 

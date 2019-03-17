@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import { setSettings } from '../store'
 import axios from 'axios'
+import Link from 'next/link'
 import keys from '../config/keys'
 
 class AdminPage extends Component {
@@ -33,7 +34,8 @@ class AdminPage extends Component {
       enableEmailing,
       enableUserPosts,
       enableDonations,
-      enableRegistration
+      enableRegistration,
+      enableStore
     } = props.settings
 
     this.state = {
@@ -43,6 +45,7 @@ class AdminPage extends Component {
       enableUserPosts,
       enableDonations,
       enableRegistration,
+      enableStore,
 
       appSettingsVerification: '',
 
@@ -92,6 +95,7 @@ class AdminPage extends Component {
       enableUserPosts,
       enableDonations,
       enableRegistration,
+      enableStore,
     } = this.state
 
     const settings = {
@@ -100,7 +104,8 @@ class AdminPage extends Component {
       enableEmailing,
       enableUserPosts,
       enableDonations,
-      enableRegistration
+      enableRegistration,
+      enableStore
     }
 
     return (
@@ -174,6 +179,17 @@ class AdminPage extends Component {
           <label className="settings-form__label" htmlFor="enable-registration">Enable User Registration</label>
         </div>
 
+        <div className="settings-form__field">
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id="enable-store"
+            checked={enableStore ? true : false}
+            onChange={() => this.setState({ enableStore: !enableStore })}
+          />
+          <label className="settings-form__label" htmlFor="enable-store">Enable Store</label>
+        </div>
+
         <div className="settings-form__submit">
           <input type="submit" className="button button-primary" />
         </div>
@@ -199,18 +215,62 @@ class AdminPage extends Component {
   }
 
 
+  renderStoreMenuItems() {
+
+    const { settings } = this.props
+
+    if ( settings.enableStore ) {
+      return (
+        <Fragment>
+          <Link href="/store_create" as="/store/new">
+            <a className="admin-page__link">Add Product</a>
+          </Link>
+
+          <Link href="/store_all" as="/store/all">
+            <a className="admin-page__link">My Products</a>
+          </Link>
+        </Fragment>
+      )
+    }
+  }
+
+
   render() {
 
     const { appSettingsVerification } = this.state
 
     return (
       <div className="admin-page">
+
         <h2 className="heading-secondary admin-page__title">Admin Dashboard</h2>
+
+        <div className="admin-page__links">
+          <Link href="/posts_create" as="/posts/new">
+            <a className="admin-page__link">Add Post</a>
+          </Link>
+
+          <Link href="/posts_all" as="/posts">
+            <a className="admin-page__link">My Posts</a>
+          </Link>
+
+          <Link href="/blog_create" as="/blog/new">
+            <a className="admin-page__link">Add Blog</a>
+          </Link>
+
+          <Link href="/blog_all" as="/blog/all">
+            <a className="admin-page__link">My Blogs</a>
+          </Link>
+
+          { this.renderStoreMenuItems() }
+        </div>
+
         <p className="admin-page__verification">{ appSettingsVerification }</p>
+
         <div className="admin-page__forms">
           { this.renderAppSettingsForm() }
           { this.renderUsersForm() }
         </div>
+
       </div>
     )
   }

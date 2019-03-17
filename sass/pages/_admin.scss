@@ -4,7 +4,30 @@
 
   &__title {
     border-bottom: .1rem solid $color-grey;
-    margin-bottom: 2rem;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+
+    border-bottom: .1rem solid $color-grey;
+    padding-bottom: .1rem;
+    background-color: $color-grey-light-2;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      padding: 1.2rem 2rem;
+      text-decoration: none;
+      color: $color-grey-dark;
+      transition: all .4s;
+      font-size: 2rem;
+    }
+
+    &:hover {
+      background-color: $color-grey-light;
+    }
   }
  
   &__forms {

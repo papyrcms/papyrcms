@@ -19,6 +19,7 @@ const AdminRoutes = require( './classes/adminRoutes' )
 const AuthRoutes = require( './classes/authRoutes' )
 const PostRoutes = require( './classes/postRoutes' )
 const BlogRoutes = require( './classes/blogRoutes' )
+const StoreRoutes = require( './classes/storeRoutes' )
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -102,10 +103,11 @@ app.prepare().then( () => {
   // Register Routes
   new AdminRoutes( server, app )
   new AuthRoutes( server, app )
-  new PostRoutes( server, app, 'posts' )
+  new PostRoutes( server, app )
   new ContactRoutes( server, app )
   new PaymentRoutes( server, app )
   new BlogRoutes( server, app )
+  // new StoreRoutes( server, app )
 
   // Anything without a specified route
   server.get( '*', ( req, res ) => {

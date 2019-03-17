@@ -72,13 +72,13 @@ class PostShow extends Component {
 
   renderAuthentication() {
 
-    const { post, currentUser } = this.props
+    const { post, currentUser, path } = this.props
 
     if (!!currentUser && (currentUser._id === post.author._id || currentUser.isAdmin)) {
       return (
         <div className="post__buttons">
           <button className="button button-secondary" onClick={() => this.onDeleteClick()}>Delete</button>
-          <Link href={`/posts_edit?id=${post._id}`} as={`/posts/${post._id}/edit`}>
+          <Link href={`/${path}_edit?id=${post._id}`} as={`/${path}/${post._id}/edit`}>
             <button className="button button-tertiary">Edit</button>
           </Link>
         </div>
@@ -122,7 +122,7 @@ class PostShow extends Component {
     const confirm = window.confirm('Are you sure you want to delete this comment?')
 
     if (confirm) {
-      axios.delete(`/api/posts/${post._id}/comments/${comment._id}`)
+      axios.delete(`/api/${apiPath || path}/${post._id}/comments/${comment._id}`)
         .then(res => {
           _.map(this.state.comments, (sComment, i) => {
             if (sComment._id === res.data) {

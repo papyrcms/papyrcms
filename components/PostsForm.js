@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import RichTextEditor from './RichTextEditor'
-import Media from './Media';
+import Media from './Media'
 
 class PostForm extends Component {
 
@@ -105,7 +105,7 @@ class PostForm extends Component {
       }, 700)
     }
 
-    return dots;
+    return dots
   }
 
 

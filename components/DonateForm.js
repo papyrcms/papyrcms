@@ -7,7 +7,7 @@ import {
   CardNumberElement 
 } from 'react-stripe-elements'
 import SectionStandard from '../components/SectionStandard'
-import axios from 'axios';
+import axios from 'axios'
 
 class DonateForm extends Component {
 
@@ -15,7 +15,7 @@ class DonateForm extends Component {
 
     super( props )
 
-    this.state = { 
+    this.state = {
       email: props.currentUser ? props.currentUser.email : '', 
       amount: 1.00, 
       processing: false, 
