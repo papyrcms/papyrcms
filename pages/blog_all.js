@@ -7,20 +7,27 @@ import SectionCards from '../components/SectionCards'
 
 class BlogPage extends Component {
 
-  static async getInitialProps(context) {
+  static async getInitialProps({ req, query, reduxStore }) {
 
     let currentUser
+    let axiosConfig = {}
 
     // Depending on if we are doing a client or server render
-    if (Object.keys(context.query).length === 0 && context.query.constructor === Object) {
-      currentUser = context.reduxStore.getState().currentUser
+    if (!!req) {
+      currentUser = query.currentUser
+      axiosConfig = {
+        withCredentials: true,
+        headers: {
+          Cookie: req.headers.cookie
+        }
+      }
     } else {
-      currentUser = context.query.currentUser
+      currentUser = reduxStore.getState().currentUser
     }
 
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const blogRequest = currentUser && currentUser.isAdmin ? 'blogs' : 'published_blogs'
-    const blogs = await axios.get(`${rootUrl}/api/${blogRequest}`)
+    const blogs = await axios.get(`${rootUrl}/api/${blogRequest}`, axiosConfig)
 
     return { blogs: blogs.data }
   }

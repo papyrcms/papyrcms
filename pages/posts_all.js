@@ -6,10 +6,22 @@ import PostIndex from '../components/PostIndex'
 
 class PostsAll extends Component {
 
-  static async getInitialProps() {
+  static async getInitialProps({ req }) {
+
+    let axiosConfig = {}
+
+    // Depending on if we are doing a client or server render
+    if (!!req) {
+      axiosConfig = {
+        withCredentials: true,
+        headers: {
+          Cookie: req.headers.cookie
+        }
+      }
+    }
 
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const posts = await axios.get(`${rootUrl}/api/posts`)
+    const posts = await axios.get(`${rootUrl}/api/posts`, axiosConfig)
 
     return { posts: posts.data }
   }

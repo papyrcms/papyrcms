@@ -8,11 +8,22 @@ import keys from '../config/keys'
 
 class BlogEdit extends Component {
 
-  static async getInitialProps(context) {
+  static async getInitialProps({ query, req }) {
 
-    const { id } = context.query
+    let axiosConfig
+
+    // Depending on if we are doing a client or server render
+    if (!!req) {
+      axiosConfig = {
+        withCredentials: true,
+        headers: {
+          Cookie: req.headers.cookie
+        }
+      }
+    }
+
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const blog = await axios.get(`${rootUrl}/api/blogs/${id}`)
+    const blog = await axios.get(`${rootUrl}/api/blogs/${query.id}`, axiosConfig)
 
     return { blog: blog.data }
   }

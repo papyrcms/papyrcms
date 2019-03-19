@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const express = require('express')
 const next = require('next')
+const cors = require('cors')
 const keys = require('./config/keys')
 
 // Models
@@ -32,6 +33,12 @@ const server = express()
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
 mongoose.set('useFindAndModify', false)
 mongoose.Promise = global.Promise
+
+// CORS
+server.use(cors({
+  methods:['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}))
 
 // Middleware helpers
 server.use(bodyParser.json())

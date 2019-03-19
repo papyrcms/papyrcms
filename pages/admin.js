@@ -32,7 +32,6 @@ class AdminPage extends Component {
       enableMenu,
       enableCommenting,
       enableEmailing,
-      enableUserPosts,
       enableDonations,
       enableRegistration,
       enableStore
@@ -42,7 +41,6 @@ class AdminPage extends Component {
       enableMenu,
       enableCommenting,
       enableEmailing,
-      enableUserPosts,
       enableDonations,
       enableRegistration,
       enableStore,
@@ -92,7 +90,6 @@ class AdminPage extends Component {
       enableMenu,
       enableCommenting,
       enableEmailing,
-      enableUserPosts,
       enableDonations,
       enableRegistration,
       enableStore,
@@ -102,7 +99,6 @@ class AdminPage extends Component {
       enableMenu,
       enableCommenting,
       enableEmailing,
-      enableUserPosts,
       enableDonations,
       enableRegistration,
       enableStore
@@ -144,17 +140,6 @@ class AdminPage extends Component {
             onChange={() => this.setState({ enableCommenting: !enableCommenting })}
           />
           <label className="settings-form__label" htmlFor="enable-commenting">Enable Commenting</label>
-        </div>
-
-        <div className="settings-form__field">
-          <input
-            className="settings-form__checkbox"
-            type="checkbox"
-            id="enable-user-posts"
-            checked={enableUserPosts ? true : false}
-            onChange={() => this.setState({ enableUserPosts: !enableUserPosts })}
-          />
-          <label className="settings-form__label" htmlFor="enable-user-posts">Enable User Posting</label>
         </div>
 
         <div className="settings-form__field">
