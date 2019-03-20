@@ -56,17 +56,21 @@ class AdminPage extends Component {
 
     event.preventDefault()
 
-    axios.post('/api/admin/settings', settings)
-      .then(response => {
-        if (!!response.data._id) {
-          const message = 'Your app settings have been updated.'
+    const confirm = window.confirm("Are you sure you are happy with these settings?")
 
-          this.props.setSettings(response.data)
-          this.setState({ appSettingsVerification: message })
-        }
-      }).catch(error => {
-        console.error(error)
-      })
+    if (confirm) {
+      axios.post('/api/admin/settings', settings)
+        .then(response => {
+          if (!!response.data._id) {
+            const message = 'Your app settings have been updated.'
+
+            this.props.setSettings(response.data)
+            this.setState({ appSettingsVerification: message })
+          }
+        }).catch(error => {
+          console.error(error)
+        })
+    }
   }
 
 
@@ -253,7 +257,7 @@ class AdminPage extends Component {
 
         <div className="admin-page__forms">
           {this.renderAppSettingsForm()}
-          {this.renderUsersForm()}
+          {/* {this.renderUsersForm()} */}
         </div>
 
       </div>

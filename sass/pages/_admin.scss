@@ -31,13 +31,11 @@
   }
  
   &__forms {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 3rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 
-    @include respond(phone) {
-      grid-template-columns: 1fr;
-    }
+    margin-top: 2rem;
   }
 }
 
