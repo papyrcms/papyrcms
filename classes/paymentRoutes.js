@@ -1,5 +1,6 @@
 const keys = require('../config/keys')
 const stripe = require('stripe')(keys.stripeSecretTestKey)
+const { sanitizeRequestBody } = require('../utilities/middleware')
 
 class PaymentRoutes {
 
@@ -18,8 +19,8 @@ class PaymentRoutes {
     this.server.get('/donate', this.donationEnabled, this.renderPage.bind(this))
 
     // Message API
-    this.server.post('/api/donate', this.donationEnabled, this.createDonation.bind(this))
-    this.server.post('/api/stripePubKey', this.donationEnabled, this.sendStripePubKey.bind(this))
+    this.server.post('/api/donate', this.donationEnabled, sanitizeRequestBody, this.createDonation.bind(this))
+    this.server.post('/api/stripePubKey', this.donationEnabled, sanitizeRequestBody, this.sendStripePubKey.bind(this))
   }
 
 

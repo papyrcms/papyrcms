@@ -1,6 +1,6 @@
 const PostModel = require('../models/post')
 const CommentModel = require('../models/comment')
-const middleware = require('../utilities/middleware')
+const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
 class BlogRoutes {
 
@@ -18,17 +18,17 @@ class BlogRoutes {
     // Views
     this.server.get('/blog', this.renderPage.bind(this, ''))
     this.server.get('/blog/all', this.renderPage.bind(this, '_all'))
-    this.server.get('/blog/new', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_create'))
+    this.server.get('/blog/new', checkIfAdmin.bind(this), this.renderPage.bind(this, '_create'))
     this.server.get('/blog/:id', this.renderPage.bind(this, '_show'))
-    this.server.get('/blog/:id/edit', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_edit'))
+    this.server.get('/blog/:id/edit', checkIfAdmin.bind(this), this.renderPage.bind(this, '_edit'))
 
     // Blog API
-    this.server.post('/api/blogs', middleware.checkIfAdmin.bind(this), this.createBlog.bind(this))
-    this.server.get('/api/blogs', middleware.checkIfAdmin.bind(this), this.sendAllBlogs.bind(this))
+    this.server.post('/api/blogs', checkIfAdmin.bind(this), sanitizeRequestBody, this.createBlog.bind(this))
+    this.server.get('/api/blogs', checkIfAdmin.bind(this), this.sendAllBlogs.bind(this))
     this.server.get('/api/published_blogs', this.sendPublishedBlogs.bind(this))
     this.server.get('/api/blogs/:id', this.sendOneBlog.bind(this))
-    this.server.put('/api/blogs/:id', middleware.checkIfAdmin.bind(this), this.updateBlog.bind(this))
-    this.server.delete('/api/blogs/:id', middleware.checkIfAdmin.bind(this), this.deleteBlog.bind(this))
+    this.server.put('/api/blogs/:id', checkIfAdmin.bind(this), sanitizeRequestBody, this.updateBlog.bind(this))
+    this.server.delete('/api/blogs/:id', checkIfAdmin.bind(this), this.deleteBlog.bind(this))
   }
 
 

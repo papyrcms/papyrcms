@@ -1,6 +1,6 @@
 const SettingsModel = require('../models/settings')
 const UserModel = require('../models/user')
-const middleware = require('../utilities/middleware')
+const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
 class AdminRoutes {
 
@@ -28,11 +28,11 @@ class AdminRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/admin', middleware.checkIfAdmin, this.renderPage.bind(this))
+    this.server.get('/admin', checkIfAdmin, this.renderPage.bind(this))
 
     // API
-    this.server.get('/api/admin/users', middleware.checkIfAdmin, this.sendAllUsers.bind(this))
-    this.server.post('/api/admin/settings', middleware.checkIfAdmin, this.changeSettings.bind(this))
+    this.server.get('/api/admin/users', checkIfAdmin, this.sendAllUsers.bind(this))
+    this.server.post('/api/admin/settings', checkIfAdmin, sanitizeRequestBody, this.changeSettings.bind(this))
   }
 
 

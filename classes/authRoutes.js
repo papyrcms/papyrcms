@@ -20,7 +20,7 @@ class AuthRoutes {
     this.server.get('/profile', this.renderPage.bind(this))
 
     // API
-    this.server.post('/api/register', this.registerUser.bind(this))
+    this.server.post('/api/register', this.allowRegisterUser, this.registerUser.bind(this))
     this.server.post('/api/login', passport.authenticate('local', {}), this.sendCurrentUser.bind(this))
     this.server.get('/api/currentUser', this.sendCurrentUser.bind(this))
     this.server.put('/api/currentUser', this.updateCurrentUser.bind(this))

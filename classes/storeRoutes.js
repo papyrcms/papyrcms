@@ -1,5 +1,5 @@
 const ProductModel = require('../models/product')
-const middleware = require('../utilities/middleware')
+const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
 class StoreRoutes {
 
@@ -16,18 +16,18 @@ class StoreRoutes {
 
     // Views
     this.server.get('/store', this.checkIfStoreEnabled, this.renderPage.bind(this, ''))
-    this.server.get('/store/new', this.checkIfStoreEnabled, middleware.checkIfAdmin, this.renderPage.bind(this, '_create'))
+    this.server.get('/store/new', this.checkIfStoreEnabled, checkIfAdmin, this.renderPage.bind(this, '_create'))
     this.server.get('/store/checkout', this.checkIfStoreEnabled, this.renderPage.bind(this, '_checkout'))
     this.server.get('/store/:id', this.checkIfStoreEnabled, this.renderPage.bind(this, '_show'))
-    this.server.get('/store/:id/edit', this.checkIfStoreEnabled, middleware.checkIfAdmin, this.renderPage.bind(this, '_edit'))
+    this.server.get('/store/:id/edit', this.checkIfStoreEnabled, checkIfAdmin, this.renderPage.bind(this, '_edit'))
 
     // Store API
-    this.server.post('/api/products', middleware.checkIfAdmin, this.createProduct.bind(this))
+    this.server.post('/api/products', checkIfAdmin, sanitizeRequestBody, this.createProduct.bind(this))
     this.server.get('/api/products', this.sendAllProducts.bind(this))
     this.server.get('/api/published_products', this.sendPublishedProducts.bind(this))
     this.server.get('/api/products/:id', this.sendOneProduct.bind(this))
-    this.server.put('/api/products/:id', middleware.checkIfAdmin, this.updateProduct.bind(this))
-    this.server.delete('/api/products/:id', middleware.checkIfAdmin, this.deleteProduct.bind(this))
+    this.server.put('/api/products/:id', checkIfAdmin, sanitizeRequestBody, this.updateProduct.bind(this))
+    this.server.delete('/api/products/:id', checkIfAdmin, this.deleteProduct.bind(this))
   }
 
 
