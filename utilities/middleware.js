@@ -1,7 +1,7 @@
 const _ = require('lodash')
 const sanitizeHTML = require('sanitize-html')
 
-export const checkIfAdmin = (req, res, next) => {
+const checkIfAdmin = (req, res, next) => {
 
   const { currentUser } = res.locals
 
@@ -13,12 +13,14 @@ export const checkIfAdmin = (req, res, next) => {
 }
 
 
-export const sanitizeRequestBody = (req, res, next) => {
+const sanitizeRequestBody = (req, res, next) => {
 
   // Santize inputs
   _.map(req.body, (input) => {
-    req.body[input] = sanitizeHTML(input);
+    req.body[input] = sanitizeHTML(input)
   })
 
   next()
 }
+
+module.exports = { checkIfAdmin, sanitizeRequestBody }
