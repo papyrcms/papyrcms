@@ -1,8 +1,6 @@
-const cloudinary = require('cloudinary')
-const multer = require('multer')
 const PostModel = require('../models/post')
 const CommentModel = require('../models/comment')
-const keys = require('../config/keys')
+const middleware = require('../utilities/middleware')
 
 class BlogRoutes {
 
@@ -20,27 +18,17 @@ class BlogRoutes {
     // Views
     this.server.get('/blog', this.renderPage.bind(this, ''))
     this.server.get('/blog/all', this.renderPage.bind(this, '_all'))
-    this.server.get('/blog/new', this.checkIfAdmin.bind(this), this.renderPage.bind(this, '_create'))
+    this.server.get('/blog/new', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_create'))
     this.server.get('/blog/:id', this.renderPage.bind(this, '_show'))
-    this.server.get('/blog/:id/edit', this.checkIfAdmin.bind(this), this.renderPage.bind(this, '_edit'))
+    this.server.get('/blog/:id/edit', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_edit'))
 
     // Blog API
-    this.server.post('/api/blogs', this.checkIfAdmin.bind(this), this.createBlog.bind(this))
-    this.server.get('/api/blogs', this.checkIfAdmin.bind(this), this.sendAllBlogs.bind(this))
+    this.server.post('/api/blogs', middleware.checkIfAdmin.bind(this), this.createBlog.bind(this))
+    this.server.get('/api/blogs', middleware.checkIfAdmin.bind(this), this.sendAllBlogs.bind(this))
     this.server.get('/api/published_blogs', this.sendPublishedBlogs.bind(this))
     this.server.get('/api/blogs/:id', this.sendOneBlog.bind(this))
-    this.server.put('/api/blogs/:id', this.checkIfAdmin.bind(this), this.updateBlog.bind(this))
-    this.server.delete('/api/blogs/:id', this.checkIfAdmin.bind(this), this.deleteBlog.bind(this))
-  }
-
-
-  checkIfAdmin(req, res, next) {
-
-    if (req.user && req.user.isAdmin) {
-      next()
-    } else {
-      res.status(401).send({ message: 'You are not allowed to do that' })
-    }
+    this.server.put('/api/blogs/:id', middleware.checkIfAdmin.bind(this), this.updateBlog.bind(this))
+    this.server.delete('/api/blogs/:id', middleware.checkIfAdmin.bind(this), this.deleteBlog.bind(this))
   }
 
 

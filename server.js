@@ -7,6 +7,8 @@ const passport = require('passport')
 const express = require('express')
 const next = require('next')
 const cors = require('cors')
+
+// App keys
 const keys = require('./config/keys')
 
 // Models
@@ -116,7 +118,7 @@ app.prepare().then(() => {
   new ContactRoutes(server, app)
   new PaymentRoutes(server, app)
   new BlogRoutes(server, app)
-  // new StoreRoutes( server, app )
+  // new StoreRoutes(server, app)
 
   // Anything without a specified route
   server.get('*', (req, res) => {

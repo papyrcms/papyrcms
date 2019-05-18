@@ -3,6 +3,7 @@ const multer = require('multer')
 const PostModel = require('../models/post')
 const CommentModel = require('../models/comment')
 const keys = require('../config/keys')
+const middleware = require('../utilities/middleware')
 
 class PostRoutes {
 
@@ -42,36 +43,24 @@ class PostRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/posts', this.checkIfAdmin.bind(this), this.renderPage.bind(this, '_all'))
-    this.server.get('/posts/new', this.checkIfAdmin.bind(this), this.renderPage.bind(this, '_create'))
-    this.server.get('/posts/:id', this.checkIfAdmin.bind(this), this.renderPage.bind(this, '_show'))
-    this.server.get('/posts/:id/edit', this.checkIfAdmin.bind(this), this.renderPage.bind(this, '_edit'))
+    this.server.get('/posts', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_all'))
+    this.server.get('/posts/new', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_create'))
+    this.server.get('/posts/:id', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_show'))
+    this.server.get('/posts/:id/edit', middleware.checkIfAdmin.bind(this), this.renderPage.bind(this, '_edit'))
 
     // Post API
-    this.server.post('/api/upload', this.checkIfAdmin.bind(this), this.upload.single('file'), this.uploadMedia.bind(this))
-    this.server.post('/api/posts', this.checkIfAdmin.bind(this), this.createPost.bind(this))
-    this.server.get('/api/posts', this.checkIfAdmin.bind(this), this.sendAllPosts.bind(this))
+    this.server.post('/api/upload', middleware.checkIfAdmin.bind(this), this.upload.single('file'), this.uploadMedia.bind(this))
+    this.server.post('/api/posts', middleware.checkIfAdmin.bind(this), this.createPost.bind(this))
+    this.server.get('/api/posts', middleware.checkIfAdmin.bind(this), this.sendAllPosts.bind(this))
     this.server.get('/api/published_posts', this.sendPublishedPosts.bind(this))
     this.server.get('/api/posts/:id', this.sendOnePost.bind(this))
-    this.server.put('/api/posts/:id', this.checkIfAdmin.bind(this), this.updatePost.bind(this))
-    this.server.delete('/api/posts/:id', this.checkIfAdmin.bind(this), this.deletePost.bind(this))
+    this.server.put('/api/posts/:id', middleware.checkIfAdmin.bind(this), this.updatePost.bind(this))
+    this.server.delete('/api/posts/:id', middleware.checkIfAdmin.bind(this), this.deletePost.bind(this))
 
     // Comment API
     this.server.post('/api/post/:id/comments', this.allowUserComments, this.createComment.bind(this))
     this.server.put('/api/post/:id/comments/:comment_id', this.allowUserComments, this.updateComment.bind(this))
     this.server.delete('/api/post/:id/comments/:comment_id', this.allowUserComments, this.deleteComment.bind(this))
-  }
-
-
-  checkIfAdmin(req, res, next) {
-
-    const { currentUser } = res.locals
-
-    if (currentUser && currentUser.isAdmin) {
-      next()
-    } else {
-      res.status(401).send({ message: 'You are not allowed to do that' })
-    }
   }
 
 

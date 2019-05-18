@@ -1,5 +1,6 @@
 const SettingsModel = require('../models/settings')
 const UserModel = require('../models/user')
+const middleware = require('../utilities/middleware')
 
 class AdminRoutes {
 
@@ -27,21 +28,11 @@ class AdminRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/admin', this.checkIfAdmin, this.renderPage.bind(this))
+    this.server.get('/admin', middleware.checkIfAdmin, this.renderPage.bind(this))
 
     // API
-    this.server.get('/api/admin/users', this.checkIfAdmin, this.sendAllUsers.bind(this))
-    this.server.post('/api/admin/settings', this.checkIfAdmin, this.changeSettings.bind(this))
-  }
-
-
-  checkIfAdmin(req, res, next) {
-
-    if (req.user && req.user.isAdmin) {
-      next()
-    } else {
-      res.status(401).send({ message: 'You are not allowed to do that' })
-    }
+    this.server.get('/api/admin/users', middleware.checkIfAdmin, this.sendAllUsers.bind(this))
+    this.server.post('/api/admin/settings', middleware.checkIfAdmin, this.changeSettings.bind(this))
   }
 
 

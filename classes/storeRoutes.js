@@ -1,4 +1,5 @@
 const ProductModel = require('../models/product')
+const middleware = require('../utilities/middleware')
 
 class StoreRoutes {
 
@@ -15,30 +16,18 @@ class StoreRoutes {
 
     // Views
     this.server.get('/store', this.checkIfStoreEnabled, this.renderPage.bind(this, ''))
-    this.server.get('/store/new', this.checkIfStoreEnabled, this.checkIfAdmin, this.renderPage.bind(this, '_create'))
+    this.server.get('/store/new', this.checkIfStoreEnabled, middleware.checkIfAdmin, this.renderPage.bind(this, '_create'))
     this.server.get('/store/checkout', this.checkIfStoreEnabled, this.renderPage.bind(this, '_checkout'))
     this.server.get('/store/:id', this.checkIfStoreEnabled, this.renderPage.bind(this, '_show'))
-    this.server.get('/store/:id/edit', this.checkIfStoreEnabled, this.checkIfAdmin, this.renderPage.bind(this, '_edit'))
+    this.server.get('/store/:id/edit', this.checkIfStoreEnabled, middleware.checkIfAdmin, this.renderPage.bind(this, '_edit'))
 
     // Store API
-    this.server.post('/api/products', this.checkIfAdmin, this.createProduct.bind(this))
+    this.server.post('/api/products', middleware.checkIfAdmin, this.createProduct.bind(this))
     this.server.get('/api/products', this.sendAllProducts.bind(this))
     this.server.get('/api/published_products', this.sendPublishedProducts.bind(this))
     this.server.get('/api/products/:id', this.sendOneProduct.bind(this))
-    this.server.put('/api/products/:id', this.checkIfAdmin, this.updateProduct.bind(this))
-    this.server.delete('/api/products/:id', this.checkIfAdmin, this.deleteProduct.bind(this))
-  }
-
-
-  checkIfAdmin(req, res, next) {
-
-    const { currentUser } = res.locals
-
-    if (currentUser && currentUser.isAdmin) {
-      next()
-    } else {
-      res.status(401).send({ message: 'You are not allowed to do that' })
-    }
+    this.server.put('/api/products/:id', middleware.checkIfAdmin, this.updateProduct.bind(this))
+    this.server.delete('/api/products/:id', middleware.checkIfAdmin, this.deleteProduct.bind(this))
   }
 
 
