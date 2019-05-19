@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
     "stage": "now && now alias nextjs-cms.now.sh",
-    "deploy": "git push heroku master",
+    "deploy": "npm run heroku-config && git push heroku master",
     "heroku-config": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
