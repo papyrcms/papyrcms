@@ -13,15 +13,20 @@ class Landing extends Component {
   static async getInitialProps(context) {
 
     let posts = []
+    let googleMapsKey = ''
 
     if (!!context.res) {
       posts = context.query.posts
+      googleMapsKey = context.query.googleMapsKey
     } else {
       const response = await axios.get(`/api/published_posts`)
       posts = response.data
+      const res = await axios.post('/api/googleMapsKey')
+      googleMapsKey = res.data
     }
 
-    return { posts }
+
+    return { posts, googleMapsKey }
   }
 
 

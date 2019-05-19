@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import renderHTML from 'react-render-html'
 import GoogleMapReact from 'google-map-react'
-import keys from '../config/keys'
+import { connect } from 'react-redux'
 
 const Position = () => <div className="section-maps__position" />
 
@@ -17,7 +17,7 @@ class SectionMaps extends Component {
     return (
       <div className="section-maps__map">
         <GoogleMapReact
-          bootstrapURLKeys={{ key: keys.googleMapsKey }}
+          bootstrapURLKeys={{ key: this.props.googleMapsKey }}
           defaultCenter={center}
           defaultZoom={zoom}
         >
@@ -77,4 +77,10 @@ class SectionMaps extends Component {
   }
 }
 
-export default SectionMaps
+
+const mapStateToProps = state => {
+  return { googleMapsKey: state.googleMapsKey }
+}
+
+
+export default connect(mapStateToProps)(SectionMaps)

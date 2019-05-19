@@ -2,7 +2,7 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
-import { setCurrentUser, setPosts, setPost, setBlogs, setBlog, setUsers, setSettings, setStripePubKey, setRoute } from '../store'
+import { setCurrentUser, setPosts, setPost, setBlogs, setBlog, setUsers, setSettings, setStripePubKey, setRoute, setGoogleMapsKey } from '../store'
 import Layout from '../components/Layout'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
@@ -21,6 +21,11 @@ class MyApp extends App {
     // Run getInitialProps for each component
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
+    }
+
+    // If a google maps key was recieved, send it to the redux store
+    if (!!pageProps.googleMapsKey) {
+      reduxStore.dispatch(setGoogleMapsKey(pageProps.googleMapsKey))
     }
 
     // If a post was recieved, send it to the redux store

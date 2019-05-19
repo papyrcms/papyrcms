@@ -99,7 +99,7 @@ app.prepare().then(() => {
   server.get('/', async (req, res) => {
     const actualPage = '/index'
     const posts = await Post.find({ published: true }).sort({ created: -1 })
-    const queryParams = { posts }
+    const queryParams = { posts, googleMapsKey: keys.googleMapsKey }
 
     app.render(req, res, actualPage, queryParams)
   })
@@ -107,6 +107,14 @@ app.prepare().then(() => {
   server.post('/api/googleAnalyticsId', (req, res) => {
     if (keys.rootURL.includes(req.get('host'))) {
       res.send(keys.googleAnalyticsId)
+    } else {
+      res.send('nunya beezwax')
+    }
+  })
+
+  server.post('/api/googleMapsKey', (req, res) => {
+    if (keys.rootURL.includes(req.get('host'))) {
+      res.send(keys.googleMapsKey)
     } else {
       res.send('nunya beezwax')
     }
