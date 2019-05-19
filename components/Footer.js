@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 
 const Footer = props => {
 
-  console.log(props)
-
   const excludeFooterRoutes = [
     '/admin',
     '/posts_create',
