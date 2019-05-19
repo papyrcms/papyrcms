@@ -7,9 +7,6 @@ const messageSchema = new mongoose.Schema({
   message: { type: String, required: true },
   emailSent: { type: Boolean, default: false },
   created: { type: Date, default: Date.now },
-},
-{
-  usePushEach: true
 })
 
 module.exports = mongoose.model('message', messageSchema)

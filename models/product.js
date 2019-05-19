@@ -11,9 +11,6 @@ const productSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
   price: { type: Number, required: true },
   quantity: Number
-},
-{
-  usePushEach: true
 })
 
 module.exports = mongoose.model('product', productSchema)

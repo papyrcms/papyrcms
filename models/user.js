@@ -15,9 +15,6 @@ const userSchema = new mongoose.Schema({
 
   // Account creation date
   created: { type: Date, default: Date.now }
-},
-{
-  usePushEach: true
 })
 
 userSchema.plugin(passportLocalMongoose)

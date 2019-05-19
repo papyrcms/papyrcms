@@ -34,6 +34,7 @@ const server = express()
 // Mongo config
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
 mongoose.set('useFindAndModify', false)
+mongoose.plugin(schema => { schema.options.usePushEach = true })
 mongoose.Promise = global.Promise
 
 // CORS

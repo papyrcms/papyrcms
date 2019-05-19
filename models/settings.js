@@ -7,9 +7,6 @@ const settignsSchema = new mongoose.Schema({
   enableDonations: { type: Boolean, default: false },
   enableRegistration: { type: Boolean, default: true },
   enableStore: { type: Boolean, default: false }
-},
-{
-  usePushEach: true
 })
 
 module.exports = mongoose.model('settings', settignsSchema)
