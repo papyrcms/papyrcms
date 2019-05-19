@@ -160,7 +160,12 @@ class DonateForm extends Component {
         </form>
       )
     } else {
-      return <h3 className="heading-tertiary donate-form">Thank you for your donation!</h3>
+      return (
+        <div className="donate-form">
+          <h3 className="heading-tertiary">Thank you for your donation!</h3>
+          <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
+        </div>
+      )
     }
   }
 
