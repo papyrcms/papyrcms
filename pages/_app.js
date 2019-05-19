@@ -15,8 +15,10 @@ class MyApp extends App {
     const isServer = !!req
     let pageProps = {}
 
+    const { dispatch } = reduxStore
+
     // Pass the route to the redux store
-    reduxStore.dispatch(setRoute(pathname))
+    dispatch(setRoute(pathname))
 
     // Run getInitialProps for each component
     if (Component.getInitialProps) {
@@ -25,43 +27,43 @@ class MyApp extends App {
 
     // If a google maps key was recieved, send it to the redux store
     if (!!pageProps.googleMapsKey) {
-      reduxStore.dispatch(setGoogleMapsKey(pageProps.googleMapsKey))
+      dispatch(setGoogleMapsKey(pageProps.googleMapsKey))
     }
 
     // If a post was recieved, send it to the redux store
     if (!!pageProps.post) {
-      reduxStore.dispatch(setPost(pageProps.post))
+      dispatch(setPost(pageProps.post))
     }
 
     // If an array of posts were recieved, send them to the redux store
     if (!!pageProps.posts) {
-      reduxStore.dispatch(setPosts(pageProps.posts))
+      dispatch(setPosts(pageProps.posts))
     }
 
     // If a blog was recieved, send it to the redux store
     if (!!pageProps.blog) {
-      reduxStore.dispatch(setBlog(pageProps.blog))
+      dispatch(setBlog(pageProps.blog))
     }
 
     // If an array of blogs were recieved, send them to the redux store
     if (!!pageProps.blogs) {
-      reduxStore.dispatch(setBlogs(pageProps.blogs))
+      dispatch(setBlogs(pageProps.blogs))
     }
 
     // If an array of users was recieved, send them to the redux store
     if (!!pageProps.users) {
-      reduxStore.dispatch(setUsers(pageProps.users))
+      dispatch(setUsers(pageProps.users))
     }
 
     // If a stripe publishable key was receieved, send it to the redux store
     if (!!pageProps.stripePubKey) {
-      reduxStore.dispatch(setStripePubKey(pageProps.stripePubKey))
+      dispatch(setStripePubKey(pageProps.stripePubKey))
     }
 
     // Set Current User and Website Settings in the redux store
     if (isServer) {
-      reduxStore.dispatch(setSettings(res.locals.settings))
-      reduxStore.dispatch(setCurrentUser(res.locals.currentUser))
+      dispatch(setSettings(res.locals.settings))
+      dispatch(setCurrentUser(res.locals.currentUser))
     }
 
     // Return nothing. Props are set by the redux store

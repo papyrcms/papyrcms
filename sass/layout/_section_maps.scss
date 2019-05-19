@@ -2,31 +2,38 @@
 
   background-color: $color-grey-light;
   padding: 5rem 10rem;
-  white-space: pre-wrap;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  &__content{
+    white-space: pre-wrap;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    & > * {
+      margin: 2rem;
+    }
+
+    @include respond(tab-port) {
+      flex-direction: column;
+    }  
+  }  
 
   @include respond(tab-land) {
     padding: 3rem 5rem;
-  }
+  }  
 
   @include respond(tab-port) {
     flex-direction: column;
     padding: 2rem 3rem;
-  }
-
-  & > * {
-    margin: 2rem;
-  }
+  }  
 
   &__text {
     flex: 1;
   }
 
   &__title {
-
+    margin: 0 2rem;
   }
 
   &__subtext {
