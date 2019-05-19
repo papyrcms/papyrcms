@@ -12,7 +12,8 @@ const initialState = {
   blog: {},
   users: [],
   settings: {},
-  stripePubKey: ''
+  stripePubKey: '',
+  route: ''
 }
 
 
@@ -35,6 +36,8 @@ export const reducer = (state = initialState, action) => {
       return { ...state, settings: action.payload }
     case 'set_pub_key':
       return { ...state, stripePubKey: action.payload }
+    case 'set_route':
+      return { ...state, route: action.payload }
     default:
       return state
   }
@@ -72,6 +75,10 @@ export const setSettings = settings => {
 
 export const setStripePubKey = key => {
   return { type: 'set_pub_key', payload: key }
+}
+
+export const setRoute = route => {
+  return { type: 'set_route', payload: route }
 }
 
 // Initialization

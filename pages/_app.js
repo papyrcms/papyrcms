@@ -2,7 +2,7 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
-import { setCurrentUser, setPosts, setPost, setBlogs, setBlog, setUsers, setSettings, setStripePubKey } from '../store'
+import { setCurrentUser, setPosts, setPost, setBlogs, setBlog, setUsers, setSettings, setStripePubKey, setRoute } from '../store'
 import Layout from '../components/Layout'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
@@ -11,9 +11,12 @@ class MyApp extends App {
 
   static async getInitialProps({ Component, ctx }) {
 
-    const { reduxStore, req, res } = ctx
+    const { reduxStore, req, res, pathname } = ctx
     const isServer = !!req
     let pageProps = {}
+
+    // Pass the route to the redux store
+    reduxStore.dispatch(setRoute(pathname))
 
     // Run getInitialProps for each component
     if (Component.getInitialProps) {
