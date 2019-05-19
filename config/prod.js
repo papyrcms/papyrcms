@@ -9,6 +9,7 @@ module.exports = {
   gmailRefreshToken: process.env.GMAIL_REFRESH_TOKEN,
 
   googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
+  googleMapsKey: process.env.GOOGLE_MAPS_KEY,
 
   siteEmail: process.env.SITE_EMAIL,
   adminEmail: process.env.ADMIN_EMAIL,

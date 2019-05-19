@@ -6,6 +6,7 @@ import SectionCards from '../components/SectionCards'
 import SectionMedia from '../components/SectionMedia'
 import SectionStandard from '../components/SectionStandard'
 import SectionSlideshow from '../components/SectionSlideshow'
+import SectionMaps from '../components/SectionMaps'
 
 class Landing extends Component {
 
@@ -102,6 +103,18 @@ class Landing extends Component {
           }}
           componentProps={{
             timer: 5000
+          }}
+        />
+        <PostsFilter
+          component={SectionMaps}
+          posts={posts}
+          settings={{
+            maxPosts: 3,
+            postTags: ['maps-section', 'main'],
+            strictTags: true
+          }}
+          componentProps={{
+            mapLocation: 'end'
           }}
         />
       </div>
