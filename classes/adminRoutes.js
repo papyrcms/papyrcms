@@ -28,11 +28,24 @@ class AdminRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/admin', checkIfAdmin, this.renderPage.bind(this))
+    this.server.get(
+      '/admin', 
+      checkIfAdmin, 
+      this.renderPage.bind(this)
+    )
 
     // API
-    this.server.get('/api/admin/users', checkIfAdmin, this.sendAllUsers.bind(this))
-    this.server.post('/api/admin/settings', checkIfAdmin, sanitizeRequestBody, this.changeSettings.bind(this))
+    this.server.get(
+      '/api/admin/users', 
+      checkIfAdmin, 
+      this.sendAllUsers.bind(this)
+    )
+    this.server.post(
+      '/api/admin/settings', 
+      checkIfAdmin, 
+      sanitizeRequestBody, 
+      this.changeSettings.bind(this)
+    )
   }
 
 

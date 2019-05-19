@@ -17,10 +17,17 @@ class ContactRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/contact', this.renderPage.bind(this))
+    this.server.get(
+      '/contact', 
+      this.renderPage.bind(this)
+    )
 
     // Message API
-    this.server.post('/api/contact', sanitizeRequestBody, this.createMessage.bind(this))
+    this.server.post(
+      '/api/contact', 
+      sanitizeRequestBody, 
+      this.createMessage.bind(this)
+    )
   }
 
 

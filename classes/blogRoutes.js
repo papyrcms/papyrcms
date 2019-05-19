@@ -16,19 +16,60 @@ class BlogRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/blog', this.renderPage.bind(this, ''))
-    this.server.get('/blog/all', this.renderPage.bind(this, '_all'))
-    this.server.get('/blog/new', checkIfAdmin.bind(this), this.renderPage.bind(this, '_create'))
-    this.server.get('/blog/:id', this.renderPage.bind(this, '_show'))
-    this.server.get('/blog/:id/edit', checkIfAdmin.bind(this), this.renderPage.bind(this, '_edit'))
+    this.server.get(
+      '/blog', 
+      this.renderPage.bind(this, '')
+    )
+    this.server.get(
+      '/blog/all', 
+      this.renderPage.bind(this, '_all')
+    )
+    this.server.get(
+      '/blog/new', 
+      checkIfAdmin, 
+      this.renderPage.bind(this, '_create')
+    )
+    this.server.get(
+      '/blog/:id', 
+      this.renderPage.bind(this, '_show')
+    )
+    this.server.get(
+      '/blog/:id/edit', 
+      checkIfAdmin, 
+      this.renderPage.bind(this, '_edit')
+    )
 
     // Blog API
-    this.server.post('/api/blogs', checkIfAdmin.bind(this), sanitizeRequestBody, this.createBlog.bind(this))
-    this.server.get('/api/blogs', checkIfAdmin.bind(this), this.sendAllBlogs.bind(this))
-    this.server.get('/api/published_blogs', this.sendPublishedBlogs.bind(this))
-    this.server.get('/api/blogs/:id', this.sendOneBlog.bind(this))
-    this.server.put('/api/blogs/:id', checkIfAdmin.bind(this), sanitizeRequestBody, this.updateBlog.bind(this))
-    this.server.delete('/api/blogs/:id', checkIfAdmin.bind(this), this.deleteBlog.bind(this))
+    this.server.post(
+      '/api/blogs', 
+      checkIfAdmin, 
+      sanitizeRequestBody, 
+      this.createBlog.bind(this)
+    )
+    this.server.get(
+      '/api/blogs', 
+      checkIfAdmin, 
+      this.sendAllBlogs.bind(this)
+    )
+    this.server.get(
+      '/api/published_blogs', 
+      this.sendPublishedBlogs.bind(this)
+    )
+    this.server.get(
+      '/api/blogs/:id', 
+      this.sendOneBlog.bind(this)
+    )
+    this.server.put(
+      '/api/blogs/:id', 
+      checkIfAdmin, 
+      sanitizeRequestBody, 
+      this.updateBlog.bind(this)
+    )
+    this.server.delete(
+      '/api/blogs/:id', 
+      checkIfAdmin, 
+      this.deleteBlog.bind(this)
+    )
   }
 
 

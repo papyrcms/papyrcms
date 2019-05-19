@@ -1,6 +1,7 @@
 const UserModel = require('../models/user')
 const Mailer = require('./mailer')
 const passport = require('passport')
+const { sanitizeRequestBody } = require('../utilities/middleware')
 
 class AuthRoutes {
 
@@ -16,16 +17,45 @@ class AuthRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/login', this.renderPage.bind(this))
-    this.server.get('/profile', this.renderPage.bind(this))
+    this.server.get(
+      '/login', 
+      this.renderPage.bind(this)
+    )
+    this.server.get(
+      '/profile', 
+      this.renderPage.bind(this)
+    )
 
     // API
-    this.server.post('/api/register', this.allowRegisterUser, this.registerUser.bind(this))
-    this.server.post('/api/login', passport.authenticate('local', {}), this.sendCurrentUser.bind(this))
-    this.server.get('/api/currentUser', this.sendCurrentUser.bind(this))
-    this.server.put('/api/currentUser', this.updateCurrentUser.bind(this))
-    this.server.post('/api/changePassword', this.changeUserPassword.bind(this))
-    this.server.get('/api/logout', this.logoutUser.bind(this))
+    this.server.post(
+      '/api/register', 
+      this.allowRegisterUser, 
+      this.registerUser.bind(this)
+    )
+    this.server.post(
+      '/api/login', 
+      sanitizeRequestBody,
+      passport.authenticate('local', {}), 
+      this.sendCurrentUser.bind(this)
+    )
+    this.server.get(
+      '/api/currentUser', 
+      this.sendCurrentUser.bind(this)
+    )
+    this.server.put(
+      '/api/currentUser', 
+      sanitizeRequestBody,
+      this.updateCurrentUser.bind(this)
+    )
+    this.server.post(
+      '/api/changePassword',
+      sanitizeRequestBody, 
+      this.changeUserPassword.bind(this)
+    )
+    this.server.get(
+      '/api/logout', 
+      this.logoutUser.bind(this)
+    )
   }
 
 

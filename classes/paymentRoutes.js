@@ -16,11 +16,25 @@ class PaymentRoutes {
   registerRoutes() {
 
     // Views
-    this.server.get('/donate', this.donationEnabled, this.renderPage.bind(this))
+    this.server.get(
+      '/donate', 
+      this.donationEnabled, 
+      this.renderPage.bind(this)
+    )
 
     // Message API
-    this.server.post('/api/donate', this.donationEnabled, sanitizeRequestBody, this.createDonation.bind(this))
-    this.server.post('/api/stripePubKey', this.donationEnabled, sanitizeRequestBody, this.sendStripePubKey.bind(this))
+    this.server.post(
+      '/api/donate', 
+      this.donationEnabled, 
+      sanitizeRequestBody, 
+      this.createDonation.bind(this)
+    )
+    this.server.post(
+      '/api/stripePubKey', 
+      this.donationEnabled, 
+      sanitizeRequestBody, 
+      this.sendStripePubKey.bind(this)
+    )
   }
 
 
