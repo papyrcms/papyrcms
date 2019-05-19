@@ -50,6 +50,7 @@
     "stripe": "^6.20.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.4",
     "node-sass": "^4.11.0"
   }
 }
