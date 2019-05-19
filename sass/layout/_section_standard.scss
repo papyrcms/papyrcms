@@ -49,6 +49,14 @@
     
     img, video {
       width: 100%;
+      box-shadow: $shadow-low;
+      backface-visibility: hidden;
+      transition: all .2s ease-in-out;
+    
+      &:hover {
+        transform: scale(1.008) translate(.2rem, -.3rem);
+        box-shadow: $shadow-high;
+      }
     }
   }
 }
