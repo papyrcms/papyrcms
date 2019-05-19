@@ -59,7 +59,7 @@ class AuthRoutes {
   }
 
 
-  allowRegister(req, res, next) {
+  allowRegisterUser(req, res, next) {
 
     if (res.locals.settings.enableRegistration) {
       next()
