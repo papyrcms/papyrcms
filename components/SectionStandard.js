@@ -83,7 +83,7 @@ class SectionStandard extends Component {
 
   renderPosts() {
 
-    const { path, posts } = this.props
+    const { emptyMessage, posts } = this.props
 
     if (posts.length !== 0) {
       return _.map(posts, (post, i) => {

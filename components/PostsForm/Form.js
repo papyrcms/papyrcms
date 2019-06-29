@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import RichTextEditor from './RichTextEditor'
-import Media from './Media'
+import _ from 'lodash'
+import RichTextEditor from '../RichTextEditor'
+import Media from '../Media'
 
-class PostForm extends Component {
+class Form extends Component {
 
   constructor(props) {
+
     super(props)
 
     this.state = { mediaUpload: false, uploadedMedia: false, dots: '' }
@@ -14,7 +16,7 @@ class PostForm extends Component {
 
   renderPublish() {
 
-    const { isAdminUser, publish, onPublishChange } = this.props
+    const { isAdminUser, publish, changeState } = this.props
 
     if (isAdminUser) {
       return (
@@ -25,7 +27,7 @@ class PostForm extends Component {
             type="checkbox"
             name="published"
             checked={publish}
-            onChange={() => onPublishChange()}
+            onChange={() => changeState(!publish, 'publish')}
           />
           <label htmlFor="publish-checkbox" className="post-form__label">Publish Post <span className="post-form__checkbox--span"></span></label>
         </div>
@@ -36,9 +38,9 @@ class PostForm extends Component {
 
   handleFileInputChange(event) {
 
-    const { onMainMediaChange } = this.props
-    let imageChange = { target: { value: '' } }
-    onMainMediaChange(imageChange)
+    const { changeState } = this.props
+
+    changeState('', 'mainMedia')
     this.setState({ uploadedMedia: true })
 
     let formData = new FormData
@@ -47,8 +49,7 @@ class PostForm extends Component {
 
     axios.post('/api/upload', formData)
       .then(res => {
-        imageChange.target.value = res.data
-        onMainMediaChange(imageChange)
+        changeState(res.data, 'mainMedia')
       }).catch(err => {
         console.error(err.response)
       })
@@ -57,7 +58,7 @@ class PostForm extends Component {
 
   renderMediaInput() {
 
-    const { mainMedia, onMainMediaChange } = this.props
+    const { mainMedia, changeState } = this.props
 
     if (this.state.mediaUpload) {
       return (
@@ -78,7 +79,7 @@ class PostForm extends Component {
           type="text"
           name="image"
           value={mainMedia}
-          onChange={event => onMainMediaChange(event)}
+          onChange={event => changeState(event.target.value, 'mainMedia')}
         />
       )
     }
@@ -127,9 +128,23 @@ class PostForm extends Component {
   }
 
 
+  renderAdditionalFields() {
+
+    const { additionalFields, changeState } = this.props
+
+    if (additionalFields) {
+      return _.map(additionalFields, Field => {
+        return <Field key="" changeState={changeState} />
+      })
+    } else {
+      return null
+    }
+  }
+
+
   render() {
 
-    const { title, tags, content, onTitleChange, onTagsChange, onContentChange, handleSubmit } = this.props
+    const { title, tags, content, changeState, handleSubmit } = this.props
 
     return (
       <form encType="multipart/form-data" className="post-form" onSubmit={handleSubmit.bind(this)}>
@@ -142,7 +157,7 @@ class PostForm extends Component {
               type="text"
               name="title"
               value={title}
-              onChange={event => onTitleChange(event)}
+              onChange={event => changeState(event.target.value, 'title')}
             />
           </div>
 
@@ -156,7 +171,7 @@ class PostForm extends Component {
               type="text"
               name="tags"
               value={tags}
-              onChange={event => onTagsChange(event)}
+              onChange={event => changeState(event.target.value, 'tags')}
             />
           </div>
         </div>
@@ -183,6 +198,8 @@ class PostForm extends Component {
           </span>
         </div>
 
+        {this.renderAdditionalFields()}
+
         {this.renderMediaInput()}
         {this.renderMedia()}
 
@@ -190,7 +207,7 @@ class PostForm extends Component {
         <RichTextEditor
           className="post-form__text-editor"
           content={content}
-          onChange={newContent => onContentChange(newContent)}
+          onChange={newContent => changeState(newContent, 'content')}
         />
 
         <div className="post-form__bottom">
@@ -204,4 +221,4 @@ class PostForm extends Component {
 }
 
 
-export default PostForm
+export default Form
