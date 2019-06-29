@@ -15,7 +15,7 @@ const AboutPage = props => (
 )
 
 
-AboutPage.getInitialProps = () => {
+AboutPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
   const posts = await axios.get(`${rootUrl}/api/published_posts`)

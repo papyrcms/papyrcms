@@ -23,7 +23,7 @@ const StorePage = props => (
 )
 
 
-StorePage.getInitialProps = () => {
+StorePage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
   const products = await axios.get(`${rootUrl}/api/products`)

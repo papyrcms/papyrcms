@@ -21,7 +21,7 @@ const ContactPage = props => (
 )
 
 
-ContactPage.getInitialProps = () => {
+ContactPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
   const posts = await axios.get(`${rootUrl}/api/published_posts`)

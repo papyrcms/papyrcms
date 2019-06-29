@@ -25,17 +25,13 @@ const BlogRoutes = require('./controllers/blogRoutes')
 const CommentRoutes = require('./controllers/commentRoutes')
 const StoreRoutes = require('./controllers/storeRoutes')
 
-// Server config
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
-const server = express()
-
 // Mongo config
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
 mongoose.set('useFindAndModify', false)
 mongoose.plugin(schema => { schema.options.usePushEach = true })
 mongoose.Promise = global.Promise
+
+const server = express()
 
 // CORS
 server.use(cors({
@@ -61,6 +57,11 @@ passport.deserializeUser(User.deserializeUser())
 // Set user and settings to res.locals
 const { configureSettings } = require('./utilities/middleware')
 server.use(configureSettings)
+
+// Server config
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
 
@@ -104,13 +105,13 @@ app.prepare().then(() => {
     return handle(req, res)
   })
 
-  server.listen(keys.port, (err) => {
+  server.listen(keys.port, err => {
     if (err) {
       throw err
     }
     console.log(`> Ready on ${keys.rootURL}`)
   })
-}).catch((ex) => {
+}).catch(ex => {
   console.error(ex.stack)
   process.exit(1)
 })

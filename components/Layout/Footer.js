@@ -2,14 +2,14 @@ import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 
-const Footer = props => {
+const excludeFooterRoutes = [
+  '/admin',
+  '/posts_create',
+  '/posts_all',
+  '/blog_create'
+]
 
-  const excludeFooterRoutes = [
-    '/admin',
-    '/posts_create',
-    '/posts_all',
-    '/blog_create'
-  ]
+const Footer = props => {
 
   // Only include the footer if the current route is not in the array
   if (!excludeFooterRoutes.includes(props.route)) {
