@@ -4,13 +4,24 @@ import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from './Media'
 
+/**
+ * SectionStandard will render Posts in a more horizontal style
+ * 
+ * props include:
+ *   title: String - The title to display above the cards
+ *   readMore: Boolean - If true, a link to the full post will render at the bottom of each card
+ *   path: String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
+ *   contentLength: String - How many characters to show in the card content
+ *   emptyMessage: String - Message to display if there are no posts
+ *   posts: Array [Object - The post to be rendered as a card]
+ */
 class SectionStandard extends Component {
 
-  renderMedia(mediaSource) {
+  renderMedia(post) {
 
     return (
       <div className="section-standard__image">
-        <Media src={mediaSource} />
+        <Media src={post.mainMedia} alt={post.title} />
       </div>
     )
   }
@@ -21,13 +32,13 @@ class SectionStandard extends Component {
     const { mediaLeft, mediaRight } = this.props
 
     if (mediaRight && !mediaLeft) {
-      return this.renderMedia(post.mainMedia)
+      return this.renderMedia(post)
     } else if (
       ((!mediaRight && !mediaLeft) ||
         (mediaRight && mediaLeft)) &&
       i % 2 !== 0 && !!post.mainMedia
     ) {
-      return this.renderMedia(post.mainMedia)
+      return this.renderMedia(post)
     }
   }
 
@@ -37,13 +48,13 @@ class SectionStandard extends Component {
     const { mediaLeft, mediaRight } = this.props
 
     if (mediaLeft && !mediaRight) {
-      return this.renderMedia(post.mainMedia)
+      return this.renderMedia(post)
     } else if (
       ((!mediaRight && !mediaLeft) ||
         (mediaRight && mediaLeft)) &&
       i % 2 === 0 && !!post.mainMedia
     ) {
-      return this.renderMedia(post.mainMedia)
+      return this.renderMedia(post)
     }
   }
 
@@ -90,7 +101,7 @@ class SectionStandard extends Component {
         )
       })
     } else {
-      return <h3 className="heading-tertiary">There are no {path}s yet.</h3>
+      return <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
     }
   }
 

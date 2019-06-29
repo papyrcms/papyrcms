@@ -100,7 +100,29 @@ class StoreRoutes {
 
   createProduct(req, res) {
 
-    const product = new ProductModel(req.body)
+    const {
+      title,
+      content,
+      tags,
+      mainMedia,
+      subImages,
+      published,
+      created,
+      price,
+      stock
+    } = req.body
+
+    const product = new ProductModel({
+      title,
+      content,
+      tags,
+      mainMedia,
+      subImages,
+      published,
+      created,
+      price,
+      stock
+    })
 
     product.save()
     res.send(product)

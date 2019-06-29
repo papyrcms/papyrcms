@@ -42,16 +42,17 @@ class BlogPage extends Component {
     return (
       <div className="blog-page">
         <PostsFilter
-          component={SectionStandard}
           posts={this.props.blogs}
           settings={{
             maxPosts: "5"
           }}
+          component={SectionStandard}
           componentProps={{
             title: 'Blog',
             mediaLeft: true,
             readMore: true,
-            path: 'blog'
+            path: 'blog',
+            emptyMessage: 'There are no blogs yet.'
           }}
         />
 

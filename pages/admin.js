@@ -215,7 +215,7 @@ class AdminPage extends Component {
             <a className="admin-page__link">Add Product</a>
           </Link>
 
-          <Link href="/store_all" as="/store/all">
+          <Link href="/store_all" as="/store">
             <a className="admin-page__link">My Products</a>
           </Link>
         </Fragment>

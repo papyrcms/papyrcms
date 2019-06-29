@@ -8,7 +8,8 @@
 
   &__links {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
     border-bottom: .1rem solid $color-grey;
     padding-bottom: .1rem;

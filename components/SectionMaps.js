@@ -5,6 +5,14 @@ import { connect } from 'react-redux'
 
 const Position = () => <div className="section-maps__position" />
 
+/**
+ * SectionMaps will render a section with some text and a
+ * google map at a particular location
+ * 
+ * props include:
+ *   mapLocation: String('start' or 'end') - renders the map before or after the content
+ *   posts: Array[Object - latitude, longitude, and content posts]
+ */
 class SectionMaps extends Component {
 
   renderMap(latitude, longitude, zoom = 15) {

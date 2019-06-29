@@ -126,9 +126,9 @@ class PostRoutes {
 
   allowUserComments(req, res, next) {
 
-    const { settings, currentUser } = res.locals
+    const { settings } = res.locals
 
-    if (settings.enableCommenting || (currentUser && currentUser.isAdmin)) {
+    if (settings.enableCommenting || (req.user && req.user.isAdmin)) {
       next()
     } else {
       res.status(401).send({ message: 'You are not allowed to do that' })

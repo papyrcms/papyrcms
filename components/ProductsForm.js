@@ -36,10 +36,10 @@ class ProductsForm extends Component {
 
   handleFileInputChange(event) {
 
-    const { onMainImageChange } = this.props
+    const { onMainMediaChange } = this.props
     let imageChange = { target: { value: '' } }
 
-    onMainImageChange(imageChange)
+    onMainMediaChange(imageChange)
     this.setState({ uploadedImage: true })
 
     let formData = new FormData
@@ -49,7 +49,7 @@ class ProductsForm extends Component {
     axios.post('/api/upload', formData)
       .then(res => {
         imageChange.target.value = res.data
-        onMainImageChange(imageChange)
+        onMainMediaChange(imageChange)
       }).catch(err => {
         console.error(err.response)
       })
@@ -58,7 +58,7 @@ class ProductsForm extends Component {
 
   renderImageInput() {
 
-    const { mainImage, onMainImageChange } = this.props
+    const { mainMedia, onMainMediaChange } = this.props
 
     if (this.state.imageUpload) {
       return (
@@ -78,8 +78,8 @@ class ProductsForm extends Component {
           className="post-form__input"
           type="text"
           name="image"
-          value={mainImage}
-          onChange={event => onMainImageChange(event)}
+          value={mainMedia}
+          onChange={event => onMainMediaChange(event)}
         />
       )
     }
@@ -90,7 +90,7 @@ class ProductsForm extends Component {
 
     const { uploadedImage, dots } = this.state
 
-    if (uploadedImage && this.props.mainImage === '') {
+    if (uploadedImage && this.props.mainMedia === '') {
       setTimeout(() => {
         switch (dots) {
           case ' .':
@@ -112,16 +112,16 @@ class ProductsForm extends Component {
 
   renderImage() {
 
-    const { mainImage } = this.props
+    const { mainMedia } = this.props
 
 
-    if (this.state.uploadedImage && mainImage === '') {
+    if (this.state.uploadedImage && mainMedia === '') {
       return <h3 className="heading-tertiary">Loading{this.renderDots()}</h3>
     } else {
       return (
         <Media
           className="post-form__image"
-          src={mainImage}
+          src={mainMedia}
         />
       )
     }
@@ -130,7 +130,7 @@ class ProductsForm extends Component {
 
   render() {
 
-    const { title, tags, price, quantity, description, onTitleChange, onQuantityChange, onPriceChange, onDescriptionChange, handleSubmit } = this.props
+    const { title, tags, price, quantity, description, onTitleChange, onTagsChange, onQuantityChange, onPriceChange, onDescriptionChange, handleSubmit } = this.props
 
     return (
       <form encType="multipart/form-data" className="post-form" onSubmit={handleSubmit.bind(this)}>

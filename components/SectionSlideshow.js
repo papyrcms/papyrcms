@@ -2,6 +2,13 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import SectionMedia from './SectionMedia'
 
+/**
+ * SectionSlideshow will render a media slideshow across the width of the screen
+ * 
+ * props include:
+ *   timer: Integer - Milliseconds between media changes
+ *   posts: Array[Object - Posts to be switched between]
+ */
 class SectionSlideshow extends Component {
 
   constructor(props) {
@@ -40,6 +47,7 @@ class SectionSlideshow extends Component {
           key={post._id}
           posts={[post]}
           className={`${this.state.counter !== i ? 'slide--hidden' : ''} slide`}
+          alt={post.title}
         />
       )
     })

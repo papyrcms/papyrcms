@@ -3,9 +3,7 @@ const sanitizeHTML = require('sanitize-html')
 
 const checkIfAdmin = (req, res, next) => {
 
-  const { currentUser } = res.locals
-
-  if (currentUser && currentUser.isAdmin) {
+  if (req.user && req.user.isAdmin) {
     next()
   } else {
     res.status(401).send({ message: 'You are not allowed to do that' })

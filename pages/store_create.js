@@ -14,9 +14,9 @@ class StoreCreate extends Component {
     this.state = {
       title: '',
       price: 0.00,
-      quantity: 0,
+      stock: 0,
       tags: '',
-      mainImage: '',
+      mainMedia: '',
       description: '',
       publish: false
     }
@@ -27,7 +27,7 @@ class StoreCreate extends Component {
 
     event.preventDefault()
 
-    const { title, price, quantity, tags, mainImage, description, publish } = this.state
+    const { title, price, quantity, tags, mainMedia, description, publish } = this.state
     let tagArray = []
 
     _.map(tags.split(','), tag => {
@@ -44,7 +44,7 @@ class StoreCreate extends Component {
       price,
       quantity,
       tags: tagArray,
-      mainImage,
+      mainMedia,
       description,
       published: publish
     }
@@ -60,39 +60,37 @@ class StoreCreate extends Component {
 
   renderForm() {
 
-    if (this.props.settings.enableStore) {
-      const { title, tags, price, quantity, mainImage, description, publish } = this.state
+    const { title, tags, price, quantity, mainMedia, description, publish } = this.state
 
-      return (
-        <div className="products-create-page">
-          <h2 className="heading-secondary">New Product</h2>
-          <ProductsForm
-            isAdminUser={this.props.currentUser.isAdmin}
-            title={title}
-            onTitleChange={event => this.setState({ title: event.target.value })}
-            price={price}
-            onPriceChange={event => this.setState({ price: event.target.value })}
-            quantity={quantity}
-            onQuantityChange={event => this.setState({ quantity: event.target.value })}
-            tags={tags}
-            onTagsChange={event => this.setState({ tags: event.target.value })}
-            mainImage={mainImage}
-            onMainImageChange={event => this.setState({ mainImage: event.target.value })}
-            description={description}
-            onDescriptionChange={newDescription => this.setState({ description: newDescription })}
-            publish={publish}
-            onPublishChange={() => this.setState({ publish: !publish })}
-            handleSubmit={event => this.handleSubmit(event)}
-          />
-        </div>
-      )
-    } else { return null }
+    return (
+      <div className="products-create-page">
+        <h2 className="heading-secondary">New Product</h2>
+        <ProductsForm
+          isAdminUser={this.props.currentUser.isAdmin}
+          title={title}
+          onTitleChange={event => this.setState({ title: event.target.value })}
+          price={price}
+          onPriceChange={event => this.setState({ price: event.target.value })}
+          quantity={quantity}
+          onQuantityChange={event => this.setState({ quantity: event.target.value })}
+          tags={tags}
+          onTagsChange={event => this.setState({ tags: event.target.value })}
+          mainMedia={mainMedia}
+          onMainMediaChange={event => this.setState({ mainMedia: event.target.value })}
+          description={description}
+          onDescriptionChange={newDescription => this.setState({ description: newDescription })}
+          publish={publish}
+          onPublishChange={() => this.setState({ publish: !publish })}
+          handleSubmit={event => this.handleSubmit(event)}
+        />
+      </div>
+    )
   }
 
 
   render() {
 
-    this.renderForm()
+    return this.renderForm()
   }
 }
 

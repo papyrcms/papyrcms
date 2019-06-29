@@ -63,7 +63,7 @@ class MyApp extends App {
     // Set Current User and Website Settings in the redux store
     if (isServer) {
       dispatch(setSettings(res.locals.settings))
-      dispatch(setCurrentUser(res.locals.currentUser))
+      dispatch(setCurrentUser(req.user))
     }
 
     // Return nothing. Props are set by the redux store

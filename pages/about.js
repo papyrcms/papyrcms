@@ -25,7 +25,7 @@ class AboutPage extends Component {
         component={SectionStandard}
         posts={this.props.posts}
         settings={{ maxPosts: 1, postTags: ['about'] }}
-        componentProps={{ title: 'About', className: 'about-page' }}
+        componentProps={{ title: 'About', className: 'about-page', emptyMessage: 'Coming soon' }}
       />
     )
   }

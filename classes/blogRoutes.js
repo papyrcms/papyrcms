@@ -1,4 +1,4 @@
-const PostModel = require('../models/post')
+const BlogModel = require('../models/blog')
 const CommentModel = require('../models/comment')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
@@ -75,9 +75,9 @@ class BlogRoutes {
 
   allowUserComments(req, res, next) {
 
-    const { settings, currentUser } = res.locals
+    const { settings } = res.locals
 
-    if (settings.enableCommenting || (currentUser && currentUser.isAdmin)) {
+    if (settings.enableCommenting || (req.user && req.user.isAdmin)) {
       next()
     } else {
       res.status(401).send({ message: 'You are not allowed to do that' })
@@ -98,9 +98,8 @@ class BlogRoutes {
 
   createBlog(req, res) {
 
-    const blog = new PostModel(req.body)
+    const blog = new BlogModel(req.body)
     blog.author = req.user
-    blog.type = 'blog'
 
     blog.save()
     res.send(blog)
@@ -109,7 +108,7 @@ class BlogRoutes {
 
   async sendAllBlogs(req, res) {
 
-    const foundBlogs = await PostModel.find({ type: 'blog' }).sort({ created: -1 })
+    const foundBlogs = await BlogModel.find().sort({ created: -1 })
 
     res.send(foundBlogs)
   }
@@ -117,7 +116,7 @@ class BlogRoutes {
 
   async sendPublishedBlogs(req, res) {
 
-    const foundBlogs = await PostModel.find({ published: true, type: 'blog' }).sort({ created: -1 })
+    const foundBlogs = await BlogModel.find({ published: true }).sort({ created: -1 })
 
     res.send(foundBlogs)
   }
@@ -125,7 +124,7 @@ class BlogRoutes {
 
   async sendOneBlog(req, res) {
 
-    const foundBlog = await PostModel.findById(req.params.id)
+    const foundBlog = await BlogModel.findById(req.params.id)
       .populate('author')
       .populate('comments')
       .populate({ path: 'comments', populate: { path: 'author' } })
@@ -136,7 +135,7 @@ class BlogRoutes {
 
   async updateBlog(req, res) {
 
-    const updatedBlog = await PostModel.findOneAndUpdate({ _id: req.params.id }, req.body)
+    const updatedBlog = await BlogModel.findOneAndUpdate({ _id: req.params.id }, req.body)
 
     res.send(updatedBlog)
   }
@@ -144,13 +143,13 @@ class BlogRoutes {
 
   async deleteBlog(req, res) {
 
-    const blog = await PostModel.findById(req.params.id)
+    const blog = await BlogModel.findById(req.params.id)
 
     blog.comments.forEach(async comment => {
       await CommentModel.findOneAndDelete({ _id: comment })
     })
 
-    await PostModel.findByIdAndDelete(req.params.id)
+    await BlogModel.findByIdAndDelete(req.params.id)
 
     res.send('blog deleted')
   }

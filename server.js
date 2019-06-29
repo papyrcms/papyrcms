@@ -81,13 +81,12 @@ server.use((req, res, done) => {
       // Give mongo time to save the document 
       // before running the funciton again
       // to prevent creating a duplicate settings document
-      setTimeout(() => { }, 3000)
+      setTimeout(() => {}, 3000)
     } else {
       appSettings = settings[0]
     }
 
     res.locals.settings = appSettings
-    res.locals.currentUser = req.user
 
     done()
   }) // End callback

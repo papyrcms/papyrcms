@@ -2,10 +2,22 @@ import React from 'react'
 import renderHTML from 'react-render-html'
 import Media from './Media'
 
+/**
+ * SectionMedia will render an image or video across the width
+ * of the screen
+ * 
+ * props include:
+ *   className: String - The classname to prefix each class for the media
+ *   posts: Array[Object - One post to be rendered]
+ *   fixed: Boolean - Determine whether the media will be fixed to the background or scroll with the view
+ *   alt: String - The alt attribute for the media
+ */
 const SectionMedia = props => {
 
   const { title, content, mainMedia } = props.posts[0]
-  const { className, fixed, alt } = props
+  const { fixed, alt } = props
+  let { className } = props;
+  className = className ? className : 'media'
 
   return (
     <section className={`${className}${fixed ? '--fixed' : ''}`}>

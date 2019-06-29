@@ -4,6 +4,24 @@ import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from './Media'
 
+
+/**
+ * SectionCards will display a section of card-like components
+ * 
+ * props include:
+ *   title: String - The title to display above the cards
+ *   perRow: Integer - How many cards will fit on one row at full width - must be 3 or 4
+ *   readMore: Boolean - If true, a link to the full post will render at the bottom of each card
+ *   path: String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
+ *   contentLength: String - How many characters to show in the card content
+ *   emptyMessage: String - Message to display if there are no posts
+ *   infoProps: Object {
+ *     before: String - Text to display before the property
+ *     property: String - The property of the post to render
+ *     after: String - Text to display after the property
+ *   }
+ *   posts: Array [Object - The post to be rendered as a card]
+ */
 class SectionCards extends Component {
 
   renderReadMore(post) {
@@ -20,9 +38,23 @@ class SectionCards extends Component {
   }
 
 
+  renderInfoProps(post) {
+
+    return _.map(this.props.infoProps, prop => {
+      return (
+        <div key={`${post._id}-${prop.property}`} className="section-cards__info">
+          <span className="section-cards__info--before">{prop.before}</span>
+          <span className="section-cards__info--prop">{post[prop.property]}</span>
+          <span className="section-cards__info--after">{prop.after}</span>
+        </div>
+      )
+    })
+  }
+
+
   renderPosts() {
 
-    const { path, posts, contentLength } = this.props
+    const { posts, contentLength, emptyMessage } = this.props
 
     if (posts.length !== 0) {
 
@@ -35,14 +67,15 @@ class SectionCards extends Component {
         return (
           <li key={post._id} className="section-cards__card">
             <h3 className="section-cards__title">{post.title}</h3>
-            <Media className="section-cards__image" src={post.mainMedia} />
+            <Media className="section-cards__image" src={post.mainMedia} alt={post.title} />
+            {this.renderInfoProps(post)}
             <div className="section-cards__content">{renderHTML(postContent)}</div>
             {this.renderReadMore(post)}
           </li>
         )
       })
     } else {
-      return <h3 className="heading-tertiary">There are no {path}s yet.</h3>
+      return <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
     }
   }
 

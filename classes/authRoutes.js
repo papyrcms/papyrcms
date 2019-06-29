@@ -77,7 +77,7 @@ class AuthRoutes {
 
   sendCurrentUser(req, res) {
 
-    res.send(res.locals.currentUser)
+    res.send(req.user)
   }
 
 

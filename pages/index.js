@@ -82,7 +82,8 @@ class Landing extends Component {
           }}
           componentProps={{
             className: 'section-image',
-            fixed: true
+            fixed: true,
+            alt: 'Some books'
           }}
         />
         <PostsFilter

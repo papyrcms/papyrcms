@@ -49,7 +49,8 @@ class BlogPage extends Component {
             perRow: 4,
             readMore: true,
             path: 'blog',
-            contentLength: 200
+            contentLength: 200,
+            emptyMessage: 'There are no blogs yet.'
           }}
         />
       </div>
