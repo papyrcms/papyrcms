@@ -1,3 +1,18 @@
+/**
+ * PostsForm is an extendable form to be able to save and edit
+ * posts of varying types
+ * 
+ * props include:
+ *   pageTitle: String - The title displayed above the form
+ *   post: Object - The post being edited if editing
+ *   apiEndpoint: String - The api endpoint to post/put the request to
+ *   redirectRoute: String - The route to redirect to after submitting
+ *   editing: Boolean - If the form is an edit form. This will use axios.put instead of axois.post
+ *   additionalFields: Array[Component] - Additional form fields to render to the form
+ *   additionalState: Object - Additional state data to accompany any additional fields
+ *   additionalPostAttributes: Object - Additional data for the back end to accompany any additional fields
+ */
+
 import React, { Component } from 'react'
 import Router from 'next/router'
 import axios from 'axios'

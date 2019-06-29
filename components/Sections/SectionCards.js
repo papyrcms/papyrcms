@@ -1,10 +1,3 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
-import renderHTML from 'react-render-html'
-import Link from 'next/link'
-import Media from '../Media'
-
-
 /**
  * SectionCards will display a section of card-like components
  * 
@@ -22,6 +15,14 @@ import Media from '../Media'
  *   }
  *   posts: Array [Object - The post to be rendered as a card]
  */
+
+ 
+import React, { Component } from 'react'
+import _ from 'lodash'
+import renderHTML from 'react-render-html'
+import Link from 'next/link'
+import Media from '../Media'
+
 class SectionCards extends Component {
 
   renderReadMore(post) {

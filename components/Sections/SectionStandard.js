@@ -1,9 +1,3 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
-import renderHTML from 'react-render-html'
-import Link from 'next/link'
-import Media from '../Media'
-
 /**
  * SectionStandard will render Posts in a more horizontal style
  * 
@@ -15,6 +9,15 @@ import Media from '../Media'
  *   emptyMessage: String - Message to display if there are no posts
  *   posts: Array [Object - The post to be rendered as a card]
  */
+
+
+import React, { Component } from 'react'
+import _ from 'lodash'
+import renderHTML from 'react-render-html'
+import Link from 'next/link'
+import Media from '../Media'
+
+
 class SectionStandard extends Component {
 
   renderMedia(post) {

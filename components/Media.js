@@ -1,5 +1,3 @@
-import React from 'react'
-
 /**
  * Media dynamically renders video/img elements
  * 
@@ -8,6 +6,10 @@ import React from 'react'
  *   className: String - The class name of the video/img element
  *   alt: String - The alt property for a passed image
  */
+
+
+import React from 'react'
+
 const Media = props => {
 
   const { src, className, alt } = props

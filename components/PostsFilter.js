@@ -1,6 +1,3 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
-
 /**
  * PostsFilter filters an array of posts by tags and number of posts
  * to provide for a component
@@ -15,6 +12,11 @@ import _ from 'lodash'
  *   component: Component/Function - The component to pass the filtered posts to as this.props.posts
  *   componentProps: Object - Any props required for the passed component
  */
+
+
+import React, { Component } from 'react'
+import _ from 'lodash'
+
 class PostsFilter extends Component {
 
   constructor(props) {

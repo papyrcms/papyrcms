@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
@@ -187,4 +188,12 @@ class Comment extends Component {
 }
 
 
-export default Comment
+const mapStateToProps = state => {
+
+  const { currentUser, settings } = state
+
+  return { currentUser, settings }
+}
+
+
+export default connect(mapStateToProps)(Comment)

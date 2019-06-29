@@ -1,3 +1,11 @@
+/**
+ * Header displayed in every view
+ * 
+ * props include:
+ *   mainTitle: String - Text displayed in big letters
+ *   subTitle: String - Smaller text displayed under the main Title
+ */
+
 import React, { Component } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'

@@ -1,3 +1,11 @@
+/**
+ * Footer for every view except those listed in excludeFooterRoutes
+ * 
+ * props include:
+ *   ctaText: String - Heading text over the CTA button
+ *   ctaButtonText: String - Text inside the CTA button
+ */
+
 import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'

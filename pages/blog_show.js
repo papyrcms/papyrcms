@@ -6,9 +6,7 @@ import PostShow from '../components/PostShow/'
 
 const BlogShow = props => (
   <PostShow
-    currentUser={props.currentUser}
     post={props.blog}
-    settings={props.settings}
     enableCommenting={true}
     path="blog"
     apiPath="/api/blogs"
@@ -29,9 +27,7 @@ BlogShow.getInitialProps = async context => {
 
 const mapStateToProps = state => {
 
-  const { currentUser, blog, settings } = state
-
-  return { currentUser, blog, settings }
+  return { blog: state.blog }
 }
 
 

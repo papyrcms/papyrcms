@@ -1,3 +1,13 @@
+/**
+ * RichTextEditor is a react-wrapped component using CK Editor
+ * 
+ * props include:
+ *   content: String - The text content inside the editor
+ *   className: String - The class applied to the editor wrapper
+ *   onChange: Function - The event handler when the content is changed
+ */
+
+
 import React from 'react'
 import CKEditor from 'react-ckeditor-component'
 

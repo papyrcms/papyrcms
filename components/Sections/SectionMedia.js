@@ -1,7 +1,3 @@
-import React from 'react'
-import renderHTML from 'react-render-html'
-import Media from '../Media'
-
 /**
  * SectionMedia will render an image or video across the width
  * of the screen
@@ -12,6 +8,12 @@ import Media from '../Media'
  *   fixed: Boolean - Determine whether the media will be fixed to the background or scroll with the view
  *   alt: String - The alt attribute for the media
  */
+
+
+import React from 'react'
+import renderHTML from 'react-render-html'
+import Media from '../Media'
+
 const SectionMedia = props => {
 
   const { title, content, mainMedia } = props.posts[0]

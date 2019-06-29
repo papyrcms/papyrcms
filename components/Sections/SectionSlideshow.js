@@ -1,7 +1,3 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
-import SectionMedia from './SectionMedia'
-
 /**
  * SectionSlideshow will render a media slideshow across the width of the screen
  * 
@@ -9,6 +5,13 @@ import SectionMedia from './SectionMedia'
  *   timer: Integer - Milliseconds between media changes
  *   posts: Array[Object - Posts to be switched between]
  */
+
+
+import React, { Component } from 'react'
+import _ from 'lodash'
+import SectionMedia from './SectionMedia'
+
+
 class SectionSlideshow extends Component {
 
   constructor(props) {

@@ -1,10 +1,17 @@
+/**
+ * Layout wrapping all views
+ * 
+ * props include:
+ *   children: Component - The page rendered
+ */
+
 import React from 'react'
 import Head from 'next/head'
 import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
 
-const Layout = props => {
+export default props => {
   return (
     <div className="app">
 
@@ -37,5 +44,3 @@ const Layout = props => {
     </div>
   )
 }
-
-export default Layout

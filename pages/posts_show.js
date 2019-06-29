@@ -6,9 +6,7 @@ import PostShow from '../components/PostShow/'
 
 const PostsShow = props => (
   <PostShow
-    currentUser={props.currentUser}
     post={props.post}
-    settings={props.settings}
     enableCommenting={false}
     path="posts"
   />
@@ -26,9 +24,8 @@ PostsShow.getInitialProps = async context => {
 
 
 const mapStateToProps = state => {
-  const { currentUser, post, settings } = state
-
-  return { currentUser, post, settings }
+  
+  return { post: state.post }
 }
 
 

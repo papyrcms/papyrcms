@@ -1,4 +1,16 @@
+/**
+ * PostShow is the main component to show the details of a particular post
+ * 
+ * props include:
+ *   post: Object - The post that will be displayed on the page
+ *   enableCommenting: Boolean - Whether or not users can comment on this post
+ *   path: String - The prefix for accessing the edit page
+ *   apiPath: String - The api prefix for CRUD operations
+ *   redirectRoute: String - The route to redirect to after deleting the post
+ */
+
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import _ from 'lodash'
 import Link from 'next/link'
@@ -78,7 +90,7 @@ class PostShow extends Component {
 
   render() {
 
-    const { post, settings, enableCommenting, currentUser, apiPath } = this.props
+    const { post, enableCommenting, apiPath } = this.props
     const { title, tags, mainMedia, content } = post
 
     return (
@@ -94,8 +106,6 @@ class PostShow extends Component {
         <Comment 
           post={post}
           comments={post.comments}
-          currentUser={currentUser}
-          settings={settings} 
           enableCommenting={enableCommenting}
           apiPath={apiPath}
         /> 
@@ -104,4 +114,13 @@ class PostShow extends Component {
   }
 }
 
-export default PostShow
+
+const mapStateToProps = state => {
+
+  const { currentUser, settings } = state
+
+  return { currentUser, settings }
+}
+
+
+export default connect(mapStateToProps)(PostShow)
