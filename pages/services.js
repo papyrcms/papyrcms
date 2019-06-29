@@ -5,34 +5,28 @@ import keys from '../config/keys'
 import PostsFilter from '../components/PostsFilter'
 import SectionStandard from '../components/SectionStandard'
 
-class ServicesPage extends Component {
+const ServicesPage = props => (
+  <PostsFilter
+    component={SectionStandard}
+    posts={props.posts}
+    settings={{
+      postTags: 'services',
+      maxPosts: 9999
+    }}
+    componentProps={{
+      title: 'Services',
+      className: 'services-page'
+    }}
+  />
+)
 
-  static async getInitialProps() {
 
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const posts = await axios.get(`${rootUrl}/api/published_posts`)
+ServicesPage.getInitialProps = () => {
 
-    return { posts: posts.data }
-  }
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const posts = await axios.get(`${rootUrl}/api/published_posts`)
 
-
-  render() {
-
-    return (
-      <PostsFilter
-        component={SectionStandard}
-        posts={this.props.posts}
-        settings={{
-          postTags: 'services',
-          maxPosts: 9999
-        }}
-        componentProps={{
-          title: 'Services',
-          className: 'services-page'
-        }}
-      />
-    )
-  }
+  return { posts: posts.data }
 }
 
 

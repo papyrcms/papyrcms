@@ -23,6 +23,7 @@ const AdminRoutes = require('./classes/adminRoutes')
 const AuthRoutes = require('./classes/authRoutes')
 const PostRoutes = require('./classes/postRoutes')
 const BlogRoutes = require('./classes/blogRoutes')
+const CommentRoutes = require('./classes/commentRoutes')
 const StoreRoutes = require('./classes/storeRoutes')
 
 // Server config
@@ -123,6 +124,7 @@ app.prepare().then(() => {
   new AdminRoutes(server, app)
   new AuthRoutes(server, app)
   new PostRoutes(server, app)
+  new CommentRoutes(server, app)
   new ContactRoutes(server, app)
   new PaymentRoutes(server, app)
   new BlogRoutes(server, app)

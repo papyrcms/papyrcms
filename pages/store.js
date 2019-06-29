@@ -1,45 +1,39 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../config/keys'
 import SectionCards from '../components/SectionCards'
 
-class StorePage extends Component {
+const StorePage = props => (
+  <div>
+    <SectionCards
+      posts={props.products}
+      title='Store'
+      perRow={4}
+      readMore={true}
+      path='store'
+      contentLength={200}
+      emptyMessage='There are no products yet.'
+      infoProps={[
+        { before: '$', property: 'price' },
+        { property: 'stock', after: ' in stock'}
+      ]}
+    />
+  </div>
+)
 
-  static async getInitialProps() {
 
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const products = await axios.get(`${rootUrl}/api/products`)
+StorePage.getInitialProps = () => {
 
-    return { posts: products.data }
-  }
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const products = await axios.get(`${rootUrl}/api/products`)
 
-
-  render() {
-
-    return (
-      <div>
-        <SectionCards
-          posts={this.props.products}
-          title='Store'
-          perRow={4}
-          readMore={true}
-          path='store'
-          contentLength={200}
-          emptyMessage='There are no products yet.'
-          infoProps={[
-            { before: '$', property: 'price' },
-            { property: 'stock', after: ' in stock'}
-          ]}
-        />
-      </div>
-    )
-  }
+  return { posts: products.data }
 }
 
 
 const mapStateToProps = state => {
-  return { products: state.posts, settings: state.settings }
+  return { products: state.posts }
 }
 
 

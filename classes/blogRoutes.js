@@ -47,8 +47,8 @@ class BlogRoutes {
       this.createBlog.bind(this)
     )
     this.server.get(
-      '/api/blogs', 
-      checkIfAdmin, 
+      '/api/blogs',
+      checkIfAdmin,
       this.sendAllBlogs.bind(this)
     )
     this.server.get(
@@ -143,13 +143,14 @@ class BlogRoutes {
 
   async deleteBlog(req, res) {
 
-    const blog = await BlogModel.findById(req.params.id)
+    const { id } = req.params
+    const blog = await BlogModel.findById(id)
 
     blog.comments.forEach(async comment => {
       await CommentModel.findOneAndDelete({ _id: comment })
     })
 
-    await BlogModel.findByIdAndDelete(req.params.id)
+    await BlogModel.findByIdAndDelete(id)
 
     res.send('blog deleted')
   }

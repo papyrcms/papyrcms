@@ -1,35 +1,27 @@
-import React, { Component } from 'react'
+import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../config/keys'
-import PostShow from '../components/PostShow'
+import PostShow from '../components/PostShow/'
 
-class PostsShow extends Component {
+const PostsShow = props => (
+  <PostShow
+    currentUser={props.currentUser}
+    post={props.post}
+    settings={props.settings}
+    enableCommenting={false}
+    path="posts"
+  />
+)
 
-  static async getInitialProps(context) {
 
-    const { id } = context.query
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const post = await axios.get(`${rootUrl}/api/posts/${id}`)
+PostsShow.getInitialProps = async context => {
 
-    return { post: post.data }
-  }
+  const { id } = context.query
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const post = await axios.get(`${rootUrl}/api/posts/${id}`)
 
-
-  render() {
-
-    const { currentUser, post, settings } = this.props
-
-    return (
-      <PostShow
-        currentUser={currentUser}
-        post={post}
-        settings={settings}
-        enableCommenting={false}
-        path="posts"
-      />
-    )
-  }
+  return { post: post.data }
 }
 
 

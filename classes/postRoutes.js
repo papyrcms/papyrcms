@@ -102,37 +102,6 @@ class PostRoutes {
       checkIfAdmin, 
       this.deletePost.bind(this)
     )
-
-    // Comment API
-    this.server.post(
-      '/api/post/:id/comments', 
-      this.allowUserComments, 
-      sanitizeRequestBody, 
-      this.createComment.bind(this)
-    )
-    this.server.put(
-      '/api/post/:id/comments/:comment_id', 
-      this.allowUserComments, 
-      sanitizeRequestBody, 
-      this.updateComment.bind(this)
-    )
-    this.server.delete(
-      '/api/post/:id/comments/:comment_id', 
-      this.allowUserComments, 
-      this.deleteComment.bind(this)
-    )
-  }
-
-
-  allowUserComments(req, res, next) {
-
-    const { settings } = res.locals
-
-    if (settings.enableCommenting || (req.user && req.user.isAdmin)) {
-      next()
-    } else {
-      res.status(401).send({ message: 'You are not allowed to do that' })
-    }
   }
 
 
@@ -211,48 +180,6 @@ class PostRoutes {
     await PostModel.findByIdAndDelete(req.params.id)
 
     res.send('post deleted')
-  }
-
-
-  async createComment(req, res) {
-
-    const { body, user, params } = req
-    const comment = new CommentModel({
-      content: body.content,
-      author: user
-    })
-    const post = await PostModel.findById(params.id)
-
-    comment.save()
-    post.comments.push(comment)
-    post.save()
-    res.send(comment)
-  }
-
-
-  async updateComment(req, res) {
-
-    const commentDocument = { _id: req.params.comment_id }
-    const updatedComment = await CommentModel.findOneAndUpdate(commentDocument, req.body)
-
-    res.send(updatedComment)
-  }
-
-
-  async deleteComment(req, res) {
-
-    const post = await PostModel.findById(req.params.id)
-
-    post.comments.forEach((comment, i) => {
-      if (req.params.comment_id === comment._id.toString()) {
-        post.comments.splice(i, 1)
-      }
-    })
-    post.save()
-
-    await CommentModel.findOneAndDelete({ _id: req.params.comment_id })
-
-    res.send(req.params.comment_id)
   }
 }
 

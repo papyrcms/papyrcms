@@ -5,7 +5,7 @@ import Router from 'next/router'
 import Link from 'next/link'
 import { setCurrentUser } from '../store'
 
-class Profile extends Component {
+class ProfilePage extends Component {
 
   constructor(props) {
 
@@ -229,4 +229,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, { setCurrentUser })(Profile)
+export default connect(mapStateToProps, { setCurrentUser })(ProfilePage)

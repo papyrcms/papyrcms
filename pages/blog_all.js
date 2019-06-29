@@ -6,23 +6,21 @@ import PostsFilter from '../components/PostsFilter'
 import SectionCards from '../components/SectionCards'
 
 const BlogAllPage = props => (
-  <div>
-    <PostsFilter
-      component={SectionCards}
-      posts={props.blogs}
-      settings={{
-        maxPosts: "9999"
-      }}
-      componentProps={{
-        title: 'Blog',
-        perRow: 4,
-        readMore: true,
-        path: 'blog',
-        contentLength: 200,
-        emptyMessage: 'There are no blogs yet.'
-      }}
-    />
-  </div>
+  <PostsFilter
+    component={SectionCards}
+    posts={props.blogs}
+    settings={{
+      maxPosts: "9999"
+    }}
+    componentProps={{
+      title: 'Blog',
+      perRow: 4,
+      readMore: true,
+      path: 'blog',
+      contentLength: 200,
+      emptyMessage: 'There are no blogs yet.'
+    }}
+  />
 )
 
 

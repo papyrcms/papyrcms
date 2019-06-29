@@ -1,39 +1,34 @@
-import React, { Component } from 'react'
+import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../config/keys'
-import PostShow from '../components/PostShow'
+import PostShow from '../components/PostShow/'
 
-class BlogShow extends Component {
+const BlogShow = props => (
+  <PostShow
+    currentUser={props.currentUser}
+    post={props.blog}
+    settings={props.settings}
+    enableCommenting={true}
+    path="blog"
+    apiPath="/api/blogs"
+    redirectRoute="/blog/all"
+  />
+)
 
-  static async getInitialProps(context) {
 
-    const { id } = context.query
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const blog = await axios.get(`${rootUrl}/api/blogs/${id}`)
+BlogShow.getInitialProps = async context => {
 
-    return { blog: blog.data }
-  }
+  const { id } = context.query
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const blog = await axios.get(`${rootUrl}/api/blogs/${id}`)
 
-
-  render() {
-
-    const { currentUser, blog, settings } = this.props
-
-    return (
-      <PostShow
-        currentUser={currentUser}
-        post={blog}
-        settings={settings}
-        enableCommenting={true}
-        path="blog"
-        apiPath="blogs"
-      />
-    )
-  }
+  return { blog: blog.data }
 }
 
+
 const mapStateToProps = state => {
+
   const { currentUser, blog, settings } = state
 
   return { currentUser, blog, settings }

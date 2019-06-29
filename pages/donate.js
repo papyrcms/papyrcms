@@ -6,7 +6,7 @@ import keys from '../config/keys'
 import DonateForm from '../components/DonateForm'
 import PostsFilter from '../components/PostsFilter'
 
-class Donate extends Component {
+class DonatePage extends Component {
 
   static async getInitialProps() {
 
@@ -34,16 +34,16 @@ class Donate extends Component {
 
   render() {
 
-    const { posts, settings } = this.props
+    const { posts } = this.props
 
     return (
       <StripeProvider stripe={this.state.stripe}>
         <Elements>
           <PostsFilter
-            component={DonateForm}
             posts={posts}
             settings={{ maxPosts: 1, postTags: 'donate' }}
             componentProps={{ title: "Donate" }}
+            component={DonateForm}
           />
         </Elements>
       </StripeProvider>
@@ -57,4 +57,4 @@ const mapStateToProps = ({ stripePubKey, settings, posts }) => {
 }
 
 
-export default connect(mapStateToProps)(Donate)
+export default connect(mapStateToProps)(DonatePage)

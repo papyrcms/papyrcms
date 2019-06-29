@@ -55,7 +55,6 @@ class DonateForm extends Component {
 
         axios.post('/api/donate', data)
           .then(response => {
-            console.log(response.data)
             if (response.data.status === 'succeeded') {
               this.setState({ paid: true })
             }
@@ -69,7 +68,7 @@ class DonateForm extends Component {
   }
 
 
-  renderForm() {
+  render() {
 
     const { amount, email, processing, paid, validation } = this.state
     const { title, posts } = this.props
@@ -167,12 +166,6 @@ class DonateForm extends Component {
         </div>
       )
     }
-  }
-
-
-  render() {
-
-    return this.renderForm()
   }
 }
 

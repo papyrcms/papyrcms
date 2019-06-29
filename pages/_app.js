@@ -3,7 +3,7 @@ import App, { Container } from 'next/app'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
 import { setCurrentUser, setPosts, setPost, setBlogs, setBlog, setUsers, setSettings, setStripePubKey, setRoute, setGoogleMapsKey } from '../store'
-import Layout from '../components/Layout'
+import Layout from '../components/Layout/'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 
