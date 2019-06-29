@@ -12,19 +12,18 @@ const cors = require('cors')
 const keys = require('./config/keys')
 
 // Models
-const Settings = require('./models/settings')
 const Post = require('./models/post')
 const User = require('./models/user')
 
-// Classes
-const ContactRoutes = require('./classes/contactRoutes')
-const PaymentRoutes = require('./classes/paymentRoutes')
-const AdminRoutes = require('./classes/adminRoutes')
-const AuthRoutes = require('./classes/authRoutes')
-const PostRoutes = require('./classes/postRoutes')
-const BlogRoutes = require('./classes/blogRoutes')
-const CommentRoutes = require('./classes/commentRoutes')
-const StoreRoutes = require('./classes/storeRoutes')
+// Controllers
+const ContactRoutes = require('./controllers/contactRoutes')
+const PaymentRoutes = require('./controllers/paymentRoutes')
+const AdminRoutes = require('./controllers/adminRoutes')
+const AuthRoutes = require('./controllers/authRoutes')
+const PostRoutes = require('./controllers/postRoutes')
+const BlogRoutes = require('./controllers/blogRoutes')
+const CommentRoutes = require('./controllers/commentRoutes')
+const StoreRoutes = require('./controllers/storeRoutes')
 
 // Server config
 const dev = process.env.NODE_ENV !== 'production'
@@ -59,39 +58,9 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-// Configure app settings
-let appSettings
-
 // Set user and settings to res.locals
-server.use((req, res, done) => {
-
-  // Search for a settings document
-  Settings.find().exec((error, settings) => {
-
-    if (error) {
-      console.error(error)
-    }
-
-    // We only EVER want ONE settings document
-    // If no document exists, create one and rerun function
-    if (settings.length === 0) {
-      appSettings = new Settings()
-      appSettings.save()
-      console.log('New settings document created')
-
-      // Give mongo time to save the document 
-      // before running the funciton again
-      // to prevent creating a duplicate settings document
-      setTimeout(() => {}, 3000)
-    } else {
-      appSettings = settings[0]
-    }
-
-    res.locals.settings = appSettings
-
-    done()
-  }) // End callback
-}) // End middleware
+const { configureSettings } = require('./utilities/middleware')
+server.use(configureSettings)
 
 app.prepare().then(() => {
 

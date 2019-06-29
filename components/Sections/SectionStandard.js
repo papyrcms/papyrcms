@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
-import Media from './Media'
+import Media from '../Media'
 
 /**
  * SectionStandard will render Posts in a more horizontal style

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import ContactForm from '../components/ContactForm'
 import PostsFilter from '../components/PostsFilter'
-import SectionStandard from '../components/SectionStandard'
+import { SectionStandard } from '../components/Sections/'
 import keys from '../config/keys'
 
 const ContactPage = props => (

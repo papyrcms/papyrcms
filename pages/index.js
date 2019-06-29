@@ -2,11 +2,13 @@ import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import PostsFilter from '../components/PostsFilter'
-import SectionCards from '../components/SectionCards'
-import SectionMedia from '../components/SectionMedia'
-import SectionStandard from '../components/SectionStandard'
-import SectionSlideshow from '../components/SectionSlideshow'
-import SectionMaps from '../components/SectionMaps'
+import { 
+  SectionCards,
+  SectionMedia,
+  SectionStandard,
+  SectionSlideshow,
+  SectionMaps
+} from '../components/Sections/'
 
 const LandingPage = props => (
   <div className="landing">

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import _ from 'lodash'
 import keys from '../config/keys'
 import PostsFilter from '../components/PostsFilter'
-import SectionStandard from '../components/SectionStandard'
+import { SectionStandard } from '../components/Sections/'
 
 class BlogPage extends Component {
 

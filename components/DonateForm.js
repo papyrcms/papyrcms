@@ -6,7 +6,7 @@ import {
   CardExpiryElement,
   CardNumberElement
 } from 'react-stripe-elements'
-import SectionStandard from '../components/SectionStandard'
+import { SectionStandard } from '../components/Sections/'
 import axios from 'axios'
 
 class DonateForm extends Component {

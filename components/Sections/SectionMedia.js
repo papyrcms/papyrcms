@@ -1,6 +1,6 @@
 import React from 'react'
 import renderHTML from 'react-render-html'
-import Media from './Media'
+import Media from '../Media'
 
 /**
  * SectionMedia will render an image or video across the width

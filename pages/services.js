@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../config/keys'
 import PostsFilter from '../components/PostsFilter'
-import SectionStandard from '../components/SectionStandard'
+import { SectionStandard } from '../components/Sections/'
 
 const ServicesPage = props => (
   <PostsFilter

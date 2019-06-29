@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../config/keys'
 import PostsFilter from '../components/PostsFilter'
-import SectionCards from '../components/SectionCards'
+import { SectionCards } from '../components/Sections/'
 
 const BlogAllPage = props => (
   <PostsFilter
