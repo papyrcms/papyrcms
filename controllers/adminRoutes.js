@@ -1,29 +1,10 @@
+const _ = require('lodash')
+const Controller = require('./abstractController')
 const SettingsModel = require('../models/settings')
 const UserModel = require('../models/user')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
-class AdminRoutes {
-
-  constructor(server, app) {
-
-    this.server = server
-    this.app = app
-    this.settings = {}
-
-    this.getSettings()
-    this.registerRoutes()
-  }
-
-
-  async getSettings() {
-
-    // Get our settings
-    const settings = await SettingsModel.find()
-
-    // Assign the first (and only) document as our settings
-    this.settings = settings[0]
-  }
-
+class AdminRoutes extends Controller {
 
   registerRoutes() {
 
@@ -74,31 +55,30 @@ class AdminRoutes {
   }
 
 
-  async assignSettings(res) {
-
-    // Get the new settings
-    const settings = await SettingsModel.findById(this.settings._id)
-
-    // Assign settings to this object
-    this.settings = settings
-
-    // Assign new settings to res.locals
-    res.locals.settings = this.settings
-
-    return this.settings
-  }
-
-
   async changeSettings(req, res) {
 
-    // Update the settings document in the db
-    const settingsDocument = { _id: this.settings._id }
-    await SettingsModel.findOneAndUpdate(settingsDocument, req.body)
+    const settings = await SettingsModel.find()
 
-    // Update settings within the app
-    const settings = await this.assignSettings(res)
+    settings.forEach(setting => {
 
-    res.send(settings)
+      _.map(req.body, async (value, key) => {
+        if (typeof setting.options[key] !== 'undefined') {
+          switch (value) {
+            case 'true':
+              value = true
+              break
+            case 'false':
+              value = false
+              break
+            default: value
+          }
+          setting.options[key] = value
+          await SettingsModel.findOneAndUpdate({ _id: setting._id }, setting)
+        }
+      })
+    })
+
+    res.send(req.body)
   }
 }
 

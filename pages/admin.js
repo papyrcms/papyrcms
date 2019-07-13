@@ -28,45 +28,52 @@ class AdminPage extends Component {
 
     super(props)
 
-    const {
-      enableMenu,
-      enableCommenting,
-      enableEmailing,
-      enableDonations,
-      enableRegistration,
-      enableStore
-    } = props.settings
-
     this.state = {
-      enableMenu,
-      enableCommenting,
-      enableEmailing,
-      enableDonations,
-      enableRegistration,
-      enableStore,
-
       appSettingsVerification: '',
 
       users: props.users,
     }
+
+    _.map(props.settings, (value, key) => {
+      this.state[key] = value
+    })
   }
 
 
-  handleSubmit(event, settings) {
+  handleSubmit(event) {
 
     event.preventDefault()
 
     const confirm = window.confirm("Are you sure you are happy with these settings?")
-
+    
     if (confirm) {
+
+      const settings = {}
+  
+      _.map(this.props.settings, (value, key) => {
+        settings[key] = this.state[key]
+      })
+
       axios.post('/api/admin/settings', settings)
         .then(response => {
-          if (!!response.data._id) {
-            const message = 'Your app settings have been updated.'
+          const message = 'Your app settings have been updated.'
 
-            this.props.setSettings(response.data)
-            this.setState({ appSettingsVerification: message })
-          }
+          const newSettings = {}
+
+          _.map(response.data, (value, key) => {
+            switch (value) {
+              case 'true':
+                newSettings[key] = true
+                break
+              case 'false':
+                newSettings[key] = false
+                break
+              default: value
+            }
+          })
+
+          this.props.setSettings(newSettings)
+          this.setState({ appSettingsVerification: message })
         }).catch(error => {
           console.error(error)
         })
@@ -88,96 +95,38 @@ class AdminPage extends Component {
   }
 
 
+  renderSettingsInputs() {
+
+    return _.map(this.props.settings, (value, key) => {
+
+      // Format label
+      const result = key.replace(/([A-Z])/g, " $1")
+      const label = result.charAt(0).toUpperCase() + result.slice(1)
+
+      return (
+        <div className="settings-form__field" key={key}>
+          <input
+            className="settings-form__checkbox"
+            type="checkbox"
+            id={key}
+            checked={this.state[key] ? true : false}
+            onChange={() => this.setState({ [key]: !this.state[key] })}
+          />
+          <label className="settings-form__label" htmlFor={key}>{label}</label>
+        </div>
+      )
+    })
+  }
+
+
   renderAppSettingsForm() {
 
-    const {
-      enableMenu,
-      enableCommenting,
-      enableEmailing,
-      enableDonations,
-      enableRegistration,
-      enableStore,
-    } = this.state
-
-    const settings = {
-      enableMenu,
-      enableCommenting,
-      enableEmailing,
-      enableDonations,
-      enableRegistration,
-      enableStore
-    }
-
     return (
-      <form className="settings-form" onSubmit={event => this.handleSubmit(event, settings)}>
+      <form className="settings-form" onSubmit={event => this.handleSubmit(event)}>
 
         <h3 className="heading-tertiary settings-form__title">App Settings</h3>
 
-        <div className="settings-form__field">
-          <input
-            className="settings-form__checkbox"
-            type="checkbox"
-            id="enable-emailing"
-            checked={enableEmailing ? true : false}
-            onChange={() => this.setState({ enableEmailing: !enableEmailing })}
-          />
-          <label className="settings-form__label" htmlFor="enable-emailing">Enable Emailing</label>
-        </div>
-
-        <div className="settings-form__field">
-          <input
-            className="settings-form__checkbox"
-            type="checkbox"
-            id="enable-menu"
-            checked={enableMenu ? true : false}
-            onChange={() => this.setState({ enableMenu: !enableMenu })}
-          />
-          <label className="settings-form__label" htmlFor="enable-menu">Enable Menu</label>
-        </div>
-
-        <div className="settings-form__field">
-          <input
-            className="settings-form__checkbox"
-            type="checkbox"
-            id="enable-commenting"
-            checked={enableCommenting ? true : false}
-            onChange={() => this.setState({ enableCommenting: !enableCommenting })}
-          />
-          <label className="settings-form__label" htmlFor="enable-commenting">Enable Commenting</label>
-        </div>
-
-        <div className="settings-form__field">
-          <input
-            className="settings-form__checkbox"
-            type="checkbox"
-            id="enable-donations"
-            checked={enableDonations ? true : false}
-            onChange={() => this.setState({ enableDonations: !enableDonations })}
-          />
-          <label className="settings-form__label" htmlFor="enable-donations">Enable Donations</label>
-        </div>
-
-        <div className="settings-form__field">
-          <input
-            className="settings-form__checkbox"
-            type="checkbox"
-            id="enable-registration"
-            checked={enableRegistration ? true : false}
-            onChange={() => this.setState({ enableRegistration: !enableRegistration })}
-          />
-          <label className="settings-form__label" htmlFor="enable-registration">Enable User Registration</label>
-        </div>
-
-        <div className="settings-form__field">
-          <input
-            className="settings-form__checkbox"
-            type="checkbox"
-            id="enable-store"
-            checked={enableStore ? true : false}
-            onChange={() => this.setState({ enableStore: !enableStore })}
-          />
-          <label className="settings-form__label" htmlFor="enable-store">Enable Store</label>
-        </div>
+        {this.renderSettingsInputs()}
 
         <div className="settings-form__submit">
           <input type="submit" className="button button-primary" />

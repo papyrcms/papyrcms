@@ -1,14 +1,25 @@
+const Controller = require('./abstractController')
 const ProductModel = require('../models/product')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
+const { configureSettings } = require('../utilities/functions')
+const _ = require('lodash')
 
-class StoreRoutes {
 
-  constructor(server, app) {
+class StoreRoutes extends Controller {
 
-    this.app = app
-    this.server = server
+  registerSettings() {
 
-    this.registerRoutes()
+    // Middleware to configure store settings
+    this.server.use(async (req, res, next) => {
+
+      const defaultSettings = { enableStore: false }
+      const settings = await configureSettings('store', defaultSettings)
+
+      _.map(settings, (optionValue, optionKey) => {
+        res.locals.settings[optionKey] = optionValue
+      })
+      next()
+    })
   }
 
 

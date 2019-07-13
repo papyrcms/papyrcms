@@ -1,14 +1,25 @@
+const Controller = require('./abstractController')
 const CommentModel = require('../models/comment')
 const { sanitizeRequestBody } = require('../utilities/middleware')
+const { configureSettings } = require('../utilities/functions')
+const _ = require('lodash')
 
-class CommentRoutes {
 
-  constructor(server, app) {
+class CommentRoutes extends Controller {
 
-    this.server = server
-    this.app = app
+  registerSettings() {
 
-    this.registerRoutes()
+    // Middleware to configure comment settings
+    this.server.use(async (req, res, next) => {
+
+      const defaultSettings = { enableCommenting: false }
+      const settings = await configureSettings('comment', defaultSettings)
+
+      _.map(settings, (optionValue, optionKey) => {
+        res.locals.settings[optionKey] = optionValue
+      })
+      next()
+    })
   }
 
 

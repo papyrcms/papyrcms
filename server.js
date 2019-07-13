@@ -7,12 +7,12 @@ const passport = require('passport')
 const express = require('express')
 const next = require('next')
 const cors = require('cors')
+const _ = require('lodash')
 
 // App keys
 const keys = require('./config/keys')
 
 // Models
-const Post = require('./models/post')
 const User = require('./models/user')
 
 // Controllers
@@ -24,6 +24,7 @@ const PostRoutes = require('./controllers/postRoutes')
 const BlogRoutes = require('./controllers/blogRoutes')
 const CommentRoutes = require('./controllers/commentRoutes')
 const StoreRoutes = require('./controllers/storeRoutes')
+// const EventRoutes = require('./controllers/eventRoutes')
 
 // Mongo config
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
@@ -54,9 +55,23 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-// Set user and settings to res.locals
-const { configureSettings } = require('./utilities/middleware')
-server.use(configureSettings)
+// configure main app settings
+const { configureSettings } = require('./utilities/functions')
+server.use(async (req, res, next) => {
+
+  // Instantiate res.locals.settings
+  if (!res.locals.settings) {
+    res.locals.settings = {}
+  }
+
+  const defaultSettings = { enableMenu: false }
+  const settings = await configureSettings('app', defaultSettings)
+
+  _.map(settings, (optionValue, optionKey) => {
+    res.locals.settings[optionKey] = optionValue
+  })
+  next()
+})
 
 // Server config
 const dev = process.env.NODE_ENV !== 'production'
@@ -65,40 +80,31 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
 
-  // Root Route
-  server.get('/', async (req, res) => {
-    const actualPage = '/index'
-    const posts = await Post.find({ published: true }).sort({ created: -1 })
-    const queryParams = { posts, googleMapsKey: keys.googleMapsKey }
+  const UtilityRoutes = require('./utilities/routes')
+  new UtilityRoutes(server, app)
 
-    app.render(req, res, actualPage, queryParams)
-  })
+  // Instantiate Controllers
+  const controllers = [
+    new AdminRoutes(server, app),
+    new AuthRoutes(server, app),
+    new PostRoutes(server, app),
+    new CommentRoutes(server, app),
+    new ContactRoutes(server, app),
+    new PaymentRoutes(server, app),
+    new BlogRoutes(server, app),
+    // new StoreRoutes(server, app),
+    // new EventRoutes(server, app)
+  ]
 
-  server.post('/api/googleAnalyticsId', (req, res) => {
-    if (keys.rootURL.includes(req.get('host'))) {
-      res.send(keys.googleAnalyticsId)
-    } else {
-      res.send('nunya beezwax')
-    }
-  })
-
-  server.post('/api/googleMapsKey', (req, res) => {
-    if (keys.rootURL.includes(req.get('host'))) {
-      res.send(keys.googleMapsKey)
-    } else {
-      res.send('nunya beezwax')
-    }
+  // Register settings
+  controllers.forEach(controller => {
+    controller.registerSettings()
   })
 
   // Register Routes
-  new AdminRoutes(server, app)
-  new AuthRoutes(server, app)
-  new PostRoutes(server, app)
-  new CommentRoutes(server, app)
-  new ContactRoutes(server, app)
-  new PaymentRoutes(server, app)
-  new BlogRoutes(server, app)
-  // new StoreRoutes(server, app)
+  controllers.forEach(controller => {
+    controller.registerRoutes()
+  })
 
   // Anything without a specified route
   server.get('*', (req, res) => {

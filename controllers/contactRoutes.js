@@ -1,16 +1,26 @@
+const _ = require('lodash')
+const Controller = require('./abstractController')
 const MessageModel = require('../models/message')
 const Mailer = require('./mailer')
 const keys = require('../config/keys')
+const { configureSettings } = require('../utilities/functions')
 const { sanitizeRequestBody } = require('../utilities/middleware')
 
-class ContactRoutes {
+class ContactRoutes extends Controller {
 
-  constructor(server, app) {
+  registerSettings() {
 
-    this.server = server
-    this.app = app
+    // Middleware to configure email settings
+    this.server.use(async (req, res, next) => {
 
-    this.registerRoutes()
+      const defaultSettings = { enableEmailing: false }
+      const settings = await configureSettings('email', defaultSettings)
+
+      _.map(settings, (optionValue, optionKey) => {
+        res.locals.settings[optionKey] = optionValue
+      })
+      next()
+    })
   }
 
 

@@ -20,7 +20,7 @@ const LandingPage = props => (
         postTags: 'sample'
       }}
       componentProps={{
-        title: 'This is the Section Card component',
+        title: 'This is the 3 Card Section',
         contentLength: 200,
         readMore: true,
         perRow: 3
@@ -70,7 +70,7 @@ const LandingPage = props => (
         postTags: 'sample'
       }}
       componentProps={{
-        title: 'Another Card Section',
+        title: '4 Card Section',
         contentLength: 100,
         perRow: 4,
         readMore: true

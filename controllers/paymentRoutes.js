@@ -1,15 +1,26 @@
+const Controller = require('./abstractController')
 const keys = require('../config/keys')
 const stripe = require('stripe')(keys.stripeSecretTestKey)
 const { sanitizeRequestBody } = require('../utilities/middleware')
+const { configureSettings } = require('../utilities/functions')
+const _ = require('lodash')
 
-class PaymentRoutes {
 
-  constructor(server, app) {
+class PaymentRoutes extends Controller {
 
-    this.server = server
-    this.app = app
+  registerSettings() {
 
-    this.registerRoutes()
+    // Middleware to configure payment settings
+    this.server.use(async (req, res, next) => {
+
+      const defaultSettings = { enableDonations: false }
+      const settings = await configureSettings('payment', defaultSettings)
+
+      _.map(settings, (optionValue, optionKey) => {
+        res.locals.settings[optionKey] = optionValue
+      })
+      next()
+    })
   }
 
 

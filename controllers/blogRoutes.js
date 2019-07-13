@@ -1,17 +1,9 @@
+const Controller = require('./abstractController')
 const BlogModel = require('../models/blog')
 const CommentModel = require('../models/comment')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
-class BlogRoutes {
-
-  constructor(server, app) {
-
-    this.server = server
-    this.app = app
-
-    this.registerRoutes()
-  }
-
+class BlogRoutes extends Controller {
 
   registerRoutes() {
 

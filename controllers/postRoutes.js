@@ -1,3 +1,4 @@
+const Controller = require('./abstractController')
 const cloudinary = require('cloudinary')
 const multer = require('multer')
 const PostModel = require('../models/post')
@@ -5,12 +6,11 @@ const CommentModel = require('../models/comment')
 const keys = require('../config/keys')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
-class PostRoutes {
+class PostRoutes extends Controller {
 
   constructor(server, app) {
 
-    this.server = server
-    this.app = app
+    super(server, app)
 
     // Multer config
     const storage = multer.diskStorage({
@@ -35,8 +35,6 @@ class PostRoutes {
       api_key: keys.cloudinaryApiKey,
       api_secret: keys.cloudinaryApiSecret
     })
-
-    this.registerRoutes()
   }
 
 
