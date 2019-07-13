@@ -80,9 +80,6 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
 
-  const UtilityRoutes = require('./utilities/routes')
-  new UtilityRoutes(server, app)
-
   // Instantiate Controllers
   const controllers = [
     new AdminRoutes(server, app),
@@ -102,6 +99,9 @@ app.prepare().then(() => {
   })
 
   // Register Routes
+  const UtilityRoutes = require('./utilities/routes')
+  new UtilityRoutes(server, app)
+
   controllers.forEach(controller => {
     controller.registerRoutes()
   })
