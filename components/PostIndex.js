@@ -37,13 +37,23 @@ class PostIndex extends Component {
   }
 
 
+  renderPublishSection(published) {
+
+    if (!published) {
+      return <p><em>Not published</em></p>
+    }
+
+    return null
+  }
+
+
   renderPosts() {
 
     const { posts } = this.props
 
     if (!!posts && !!posts[0]) {
       return _.map(posts, post => {
-        const { _id, title, tags, mainMedia, content } = post
+        const { _id, title, tags, mainMedia, content, published } = post
 
         return (
           <div key={_id} className="post-item">
@@ -52,6 +62,7 @@ class PostIndex extends Component {
               <div className="post-item__top">
                 <h3 className="post-item__title heading-tertiary">{title}</h3>
                 {this.renderTagsSection(tags)}
+                {this.renderPublishSection(published)}
               </div>
               <div className="post-item__content">
                 {renderHTML(content.length >= 200 ? `${content.substring(0, 200).trim()} . . .` : content)}

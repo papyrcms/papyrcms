@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Link from 'next/link'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import _ from 'lodash'
@@ -160,7 +161,7 @@ class Comment extends Component {
     } else {
       return (
         <p className="comment-form__login">
-          <Link href="/login">Login</Link> to comment.
+          <Link href="/login"><a>Login</a></Link> to comment.
         </p>
       )
     }

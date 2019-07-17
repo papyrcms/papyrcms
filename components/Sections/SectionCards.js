@@ -53,6 +53,16 @@ class SectionCards extends Component {
   }
 
 
+  renderPublishSection(published) {
+
+    if (!published) {
+      return <p><em>Not published</em></p>
+    }
+
+    return null
+  }
+
+
   renderPosts() {
 
     const { posts, contentLength, emptyMessage } = this.props
@@ -68,6 +78,7 @@ class SectionCards extends Component {
         return (
           <li key={post._id} className="section-cards__card">
             <h3 className="section-cards__title">{post.title}</h3>
+            {this.renderPublishSection(post.published)}
             <Media className="section-cards__image" src={post.mainMedia} alt={post.title} />
             {this.renderInfoProps(post)}
             <div className="section-cards__content">{renderHTML(postContent)}</div>

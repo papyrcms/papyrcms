@@ -1,7 +1,10 @@
 .posts-show-page {
-  padding: 3rem 10vw;
+  padding: 3rem 3vw;
   background-color: $color-grey-light;
   min-height: 50rem;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .post {
@@ -60,9 +63,12 @@
   }
 
   &__content {
-    white-space: pre-wrap;
     padding-top: 1rem;
     letter-spacing: .1rem;
+
+    p {
+      margin-bottom: 3rem;
+    }
   }
 
   &__buttons {

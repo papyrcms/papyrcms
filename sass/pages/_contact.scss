@@ -5,11 +5,13 @@
   margin-top: -13rem;
 
   @include respond(tab-port) {
-    padding: 5rem 15vw;
+    padding: 5rem 10vw;
+    padding-bottom: 10rem;
   }
 
   @include respond(phone) {
-    padding: 5rem 10vw;
+    padding: 5rem 3vw;
+    padding-bottom: 10rem;
   }
 }
 
@@ -25,7 +27,7 @@
     grid-gap: 2.5rem;
 
     @include respond(tab-port) {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: 1fr;
     }
   }
 
@@ -39,7 +41,7 @@
     }
 
     @include respond(tab-port) {
-      grid-column: 1 / 2;
+      grid-column: span 2;
     }
   }
 

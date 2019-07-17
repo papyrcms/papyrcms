@@ -4,7 +4,6 @@ const OAuth2 = google.auth.OAuth2
 var handlebars = require('handlebars')
 var fs = require('fs')
 const keys = require('../config/keys')
-const _ = require('lodash')
 
 
 class Mailer {

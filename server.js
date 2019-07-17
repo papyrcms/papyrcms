@@ -16,15 +16,21 @@ const keys = require('./config/keys')
 const User = require('./models/user')
 
 // Controllers
-const ContactRoutes = require('./controllers/contactRoutes')
-const PaymentRoutes = require('./controllers/paymentRoutes')
-const AdminRoutes = require('./controllers/adminRoutes')
-const AuthRoutes = require('./controllers/authRoutes')
-const PostRoutes = require('./controllers/postRoutes')
-const BlogRoutes = require('./controllers/blogRoutes')
-const CommentRoutes = require('./controllers/commentRoutes')
-const StoreRoutes = require('./controllers/storeRoutes')
-// const EventRoutes = require('./controllers/eventRoutes')
+const controllers = [
+  'adminRoutes',
+  'authRoutes',
+  'postRoutes',
+  'blogRoutes',
+  'commentRoutes',
+  'contactRoutes',
+  'paymentRoutes',
+  // 'storeRoutes',
+  // 'eventRoutes',
+]
+// Require controllers
+controllers.forEach((controller, index) => {
+  controllers[index] = require(`./controllers/${controller}`)
+})
 
 // Mongo config
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
@@ -81,27 +87,20 @@ const handle = app.getRequestHandler()
 app.prepare().then(() => {
 
   // Instantiate Controllers
-  const controllers = [
-    new AdminRoutes(server, app),
-    new AuthRoutes(server, app),
-    new PostRoutes(server, app),
-    new CommentRoutes(server, app),
-    new ContactRoutes(server, app),
-    new PaymentRoutes(server, app),
-    new BlogRoutes(server, app),
-    // new StoreRoutes(server, app),
-    // new EventRoutes(server, app)
-  ]
+  controllers.forEach((Controller, index) => {
+    controllers[index] = new Controller(server, app)
+  })
 
   // Register settings
   controllers.forEach(controller => {
     controller.registerSettings()
   })
 
-  // Register Routes
+  // Register Utilitiy Routes
   const UtilityRoutes = require('./utilities/routes')
   new UtilityRoutes(server, app)
 
+  // Register Controller Routes
   controllers.forEach(controller => {
     controller.registerRoutes()
   })

@@ -88,14 +88,25 @@ class PostShow extends Component {
   }
 
 
+  renderPublishSection(published) {
+    
+    if (!published) {
+      return <p><em>Not published</em></p>
+    }
+
+    return null
+  }
+
+
   render() {
 
     const { post, enableCommenting, apiPath } = this.props
-    const { title, tags, mainMedia, content } = post
+    const { title, tags, mainMedia, content, published } = post
 
     return (
       <div className={`posts-show-page`}>
         <div className="post">
+          {this.renderPublishSection(published)}
           <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
           {this.renderTagsSection(tags)}
           {this.renderMainMedia(mainMedia)}

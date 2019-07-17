@@ -54,8 +54,20 @@ class PostsFilter extends Component {
         if (included) { numberPosts++ }
         return included
       })
+
     } else {
-      posts = props.posts
+      if (!postTags && !!maxPosts) {
+        posts = props.posts.filter(post => {
+          if (numberPosts < maxPosts) {
+            numberPosts++
+            return true
+          } else {
+            return false
+          }
+        })
+      } else {
+        posts = props.posts
+      }
     }
 
     this.state = { posts }

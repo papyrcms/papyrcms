@@ -184,11 +184,11 @@ class AdminPage extends Component {
 
         <div className="admin-page__links">
           <Link href="/posts_create" as="/posts/new">
-            <a className="admin-page__link">Add Post</a>
+            <a className="admin-page__link">Add Content</a>
           </Link>
 
           <Link href="/posts_all" as="/posts">
-            <a className="admin-page__link">My Posts</a>
+            <a className="admin-page__link">My Content</a>
           </Link>
 
           <Link href="/blog_create" as="/blog/new">

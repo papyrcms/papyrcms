@@ -1,6 +1,11 @@
 .comment-form {
   width: 100%;
 
+  &__text-editor {
+    padding: 2rem;
+    height: 15rem;
+  }
+
   &__login {
     text-align: center;
   }
@@ -16,6 +21,10 @@
     transform: translateZ(0);
     bottom: 1rem;
     right: 1rem;
+
+    @include respond(phone) {
+      width: 90%;
+    }
   }
 
   &.detached > &__label {
