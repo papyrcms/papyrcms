@@ -122,7 +122,7 @@ app.prepare().then(() => {
 })
 
 const Post = require('./models/post')
-const Blog = require('./models/Blog')
+const Blog = require('./models/blog')
 const migratePostsToBlogs = async () => {
   const blogs = await Post.find({ type: 'blog' })
 
@@ -151,4 +151,4 @@ const migratePostsToBlogs = async () => {
   })
 }
 
-// migratePostsToBlogs()
+migratePostsToBlogs()
