@@ -121,20 +121,6 @@ app.prepare().then(() => {
   process.exit(1)
 })
 
-const Blog = require('./models/blog')
-const migrateBlogs = async () => {
-  const blogs = await Blog.find()
-
-  blogs.forEach(async blog => {
-
-    if (blog.published) {
-      blog.publishDate = Date.now()
-
-      await Blog.findByIdAndUpdate(blog._id, blog)
-    }
-  })
-}
-
 const Post = require('./models/post')
 const Blog = require('./models/Blog')
 const migratePostsToBlogs = async () => {
