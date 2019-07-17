@@ -14,11 +14,13 @@
  *     after: String - Text to display after the property
  *   }
  *   posts: Array [Object - The post to be rendered as a card]
+ *   showDate: Boolean - If true, the publish or created date will show
  */
 
  
 import React, { Component } from 'react'
 import _ from 'lodash'
+import moment from 'moment'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
@@ -63,6 +65,23 @@ class SectionCards extends Component {
   }
 
 
+  renderDate(post) {
+
+    if (this.props.showDate) {
+
+      console.log(post)
+
+      const date = post.published && post.publishDate
+        ? post.publishDate
+        : post.created
+
+      return <p>{moment(date).format('MMMM Do, YYYY')}</p>
+    }
+
+    return null
+  }
+
+
   renderPosts() {
 
     const { posts, contentLength, emptyMessage } = this.props
@@ -78,6 +97,7 @@ class SectionCards extends Component {
         return (
           <li key={post._id} className="section-cards__card">
             <h3 className="section-cards__title">{post.title}</h3>
+            {this.renderDate(post)}
             {this.renderPublishSection(post.published)}
             <Media className="section-cards__image" src={post.mainMedia} alt={post.title} />
             {this.renderInfoProps(post)}

@@ -8,6 +8,7 @@
  *   contentLength: String - How many characters to show in the card content
  *   emptyMessage: String - Message to display if there are no posts
  *   posts: Array [Object - The post to be rendered as a card]
+ *   showDate: Boolean - If true, the publish or created date will show
  */
 
 
@@ -15,6 +16,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
+import moment from 'moment'
 import Media from '../Media'
 
 
@@ -84,6 +86,23 @@ class SectionStandard extends Component {
   }
 
 
+  renderDate(post) {
+
+    if (this.props.showDate) {
+
+      console.log(post)
+
+      const date = post.published && post.publishDate 
+        ? post.publishDate
+        : post.created
+
+      return <p>{moment(date).format('MMMM Do, YYYY')}</p>
+    }
+
+    return null
+  }
+
+
   renderPosts() {
 
     const { emptyMessage, posts } = this.props
@@ -97,6 +116,7 @@ class SectionStandard extends Component {
             {this.renderLeftMedia(post, i)}
             <div className={postTextClassName}>
               <h3 className="heading-tertiary">{post.title}</h3>
+              {this.renderDate(post)}
               {this.renderContent(post)}
             </div>
             {this.renderRightMedia(post, i)}

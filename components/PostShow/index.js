@@ -7,12 +7,14 @@
  *   path: String - The prefix for accessing the edit page
  *   apiPath: String - The api prefix for CRUD operations
  *   redirectRoute: String - The route to redirect to after deleting the post
+ *   showDate: Boolean - If true, the publish or created date will show
  */
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import _ from 'lodash'
+import moment from 'moment'
 import Link from 'next/link'
 import Router from 'next/router'
 import renderHTML from 'react-render-html'
@@ -98,6 +100,25 @@ class PostShow extends Component {
   }
 
 
+  renderDate() {
+
+    const { showDate, post } = this.props
+
+    if (showDate) {
+
+      console.log(post)
+
+      const date = post.published && post.publishDate
+        ? post.publishDate
+        : post.created
+
+      return <p>{moment(date).format('MMMM Do, YYYY')}</p>
+    }
+
+    return null
+  }
+
+
   render() {
 
     const { post, enableCommenting, apiPath } = this.props
@@ -108,6 +129,7 @@ class PostShow extends Component {
         <div className="post">
           {this.renderPublishSection(published)}
           <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
+          {this.renderDate()}
           {this.renderTagsSection(tags)}
           {this.renderMainMedia(mainMedia)}
           <div className="post__content">{renderHTML(content)}</div>

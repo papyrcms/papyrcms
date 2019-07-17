@@ -93,6 +93,10 @@ class BlogRoutes extends Controller {
     const blog = new BlogModel(req.body)
     blog.author = req.user
 
+    if ( blog.published ) {
+      blog.publishDate = Date.now()
+    }
+
     blog.save()
     res.send(blog)
   }
@@ -100,7 +104,7 @@ class BlogRoutes extends Controller {
 
   async sendAllBlogs(req, res) {
 
-    const foundBlogs = await BlogModel.find().sort({ created: -1 })
+    const foundBlogs = await BlogModel.find().sort({ publishDate: -1, created: -1 })
 
     res.send(foundBlogs)
   }
@@ -108,7 +112,7 @@ class BlogRoutes extends Controller {
 
   async sendPublishedBlogs(req, res) {
 
-    const foundBlogs = await BlogModel.find({ published: true }).sort({ created: -1 })
+    const foundBlogs = await BlogModel.find({ published: true }).sort({ publishDate: -1 })
 
     res.send(foundBlogs)
   }
@@ -126,6 +130,12 @@ class BlogRoutes extends Controller {
 
 
   async updateBlog(req, res) {
+
+    const oldBlog = await BlogModel.findById(req.params.id)
+
+    if ( !oldBlog.published && req.body.published ) {
+      req.body.publishDate = Date.now()
+    }
 
     const updatedBlog = await BlogModel.findOneAndUpdate({ _id: req.params.id }, req.body)
 

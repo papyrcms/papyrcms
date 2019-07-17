@@ -8,6 +8,7 @@ const blogSchema = new mongoose.Schema({
   mainMedia: String,
   subImages: [String],
   published: { type: Boolean, default: false },
+  publishDate: Date,
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'comment'

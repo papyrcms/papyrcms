@@ -11,6 +11,7 @@ const BlogShow = props => (
     path="blog"
     apiPath="/api/blogs"
     redirectRoute="/blog/all"
+    showDate
   />
 )
 

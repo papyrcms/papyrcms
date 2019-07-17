@@ -45,7 +45,8 @@ class BlogPage extends Component {
             mediaLeft: true,
             readMore: true,
             path: 'blog',
-            emptyMessage: 'There are no blogs yet.'
+            emptyMessage: 'There are no blogs yet.',
+            showDate: true
           }}
         />
 
