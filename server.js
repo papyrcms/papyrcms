@@ -134,4 +134,35 @@ const migrateBlogs = async () => {
     }
   })
 }
-migrateBlogs()
+
+const Post = require('./models/post')
+const Blog = require('./models/Blog')
+const migratePostsToBlogs = async () => {
+  const blogs = await Post.find({ type: 'blog' })
+
+  blogs.forEach(async blog => {
+
+    const newBlog = new Blog({
+      title: blog.title,
+      content: blog.content,
+      tags: blog.tags,
+      mainMedia: blog.mainMedia,
+      subImages: blog.subImages,
+      published: blog.published,
+      comments: blog.comments,
+      created: blog.created,
+      author: blog.author,
+      _id: blog._id
+    })
+
+    if (blog.published) {
+      newBlog.publishDate = blog.created
+    }
+
+    newBlog.save()
+
+    await Post.findByIdAndDelete(blog._id)
+  })
+}
+
+migratePostsToBlogs()
