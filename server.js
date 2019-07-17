@@ -151,4 +151,4 @@ const migratePostsToBlogs = async () => {
   })
 }
 
-migratePostsToBlogs()
+// migratePostsToBlogs()
