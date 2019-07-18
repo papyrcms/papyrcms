@@ -17,6 +17,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import Link from 'next/link'
 import Router from 'next/router'
+import Head from 'next/head'
 import renderHTML from 'react-render-html'
 import Comment from './Comment'
 import Media from '../Media'
@@ -124,6 +125,15 @@ class PostShow extends Component {
 
     return (
       <div className={`posts-show-page`}>
+
+        <Head>
+          <meta property="og:image" content={mainMedia || ''} />
+          <meta property="og:image:type" content="image/jpeg" />
+          <meta property="og:image:width" content="200" />
+          <meta property="og:image:height" content="200" />
+          <title>{title}</title>
+        </Head>
+
         <div className="post">
           {this.renderPublishSection(published)}
           <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
