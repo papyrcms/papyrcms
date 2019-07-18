@@ -10,7 +10,6 @@
  *   editing: Boolean - If the form is an edit form. This will use axios.put instead of axois.post
  *   additionalFields: Array[Component] - Additional form fields to render to the form
  *   additionalState: Object - Additional state data to accompany any additional fields
- *   additionalPostAttributes: Object - Additional data for the back end to accompany any additional fields
  */
 
 import React, { Component } from 'react'
@@ -75,7 +74,7 @@ class PostsForm extends Component {
     const { title, tags, mainMedia, content, publish } = this.state
     let tagArray = this.mapTagsToArray(tags)
 
-    const { additionalPostAttributes, apiEndpoint, redirectRoute, editing } = this.props
+    const { apiEndpoint, redirectRoute, editing, additionalState } = this.props
 
     const postObject = {
       title,
@@ -83,7 +82,12 @@ class PostsForm extends Component {
       mainMedia,
       content,
       published: publish,
-      ...additionalPostAttributes
+    }
+
+    if (additionalState) {
+      _.map(additionalState, (value, key) => {
+        postObject[key] = this.state[key]
+      })
     }
 
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
@@ -116,7 +120,12 @@ class PostsForm extends Component {
   render() {
 
     const { title, tags, mainMedia, content, publish } = this.state
-    const { pageTitle, additionalFields } = this.props
+    const { pageTitle, additionalFields, additionalState } = this.props
+
+    const additionalProps = {}
+    _.map(additionalState, (value, key) => {
+      additionalProps[key] = this.state[key]
+    })
 
     return (
       <div className="posts-create-page">
@@ -131,6 +140,7 @@ class PostsForm extends Component {
           publish={publish}
           handleSubmit={this.handleSubmit.bind(this)}
           additionalFields={additionalFields}
+          additionalState={additionalProps}
         />
       </div>
     )

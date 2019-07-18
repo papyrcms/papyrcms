@@ -2,10 +2,23 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
-import { setCurrentUser, setPosts, setPost, setBlogs, setBlog, setUsers, setSettings, setStripePubKey, setRoute, setGoogleMapsKey } from '../store'
 import Layout from '../components/Layout/'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
+import { 
+  setCurrentUser, 
+  setPosts, 
+  setPost, 
+  setBlogs, 
+  setBlog, 
+  setEvents,
+  setEvent,
+  setUsers, 
+  setSettings, 
+  setStripePubKey, 
+  setRoute, 
+  setGoogleMapsKey 
+} from '../store'
 
 class MyApp extends App {
 
@@ -48,6 +61,16 @@ class MyApp extends App {
     // If an array of blogs were recieved, send them to the redux store
     if (!!pageProps.blogs) {
       dispatch(setBlogs(pageProps.blogs))
+    }
+
+    // If an event was recieved, send it to the redux store
+    if (!!pageProps.event) {
+      dispatch(setEvent(pageProps.event))
+    }
+
+    // If an array of events were recieved, send them to the redux store
+    if (!!pageProps.events) {
+      dispatch(setEvents(pageProps.events))
     }
 
     // If an array of users was recieved, send them to the redux store

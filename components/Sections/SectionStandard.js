@@ -90,8 +90,6 @@ class SectionStandard extends Component {
 
     if (this.props.showDate) {
 
-      console.log(post)
-
       const date = post.published && post.publishDate 
         ? post.publishDate
         : post.created

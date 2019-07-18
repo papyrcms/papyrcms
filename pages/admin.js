@@ -173,6 +173,26 @@ class AdminPage extends Component {
   }
 
 
+  renderEventMenuItems() {
+
+    const { settings } = this.props
+
+    if (settings.enableEvents) {
+      return (
+        <Fragment>
+          <Link href="/events_create" as="/events/new">
+            <a className="admin-page__link">Add Event</a>
+          </Link>
+
+          <Link href="/events_all" as="/events/all">
+            <a className="admin-page__link">My Events</a>
+          </Link>
+        </Fragment>
+      )
+    }
+  }
+
+
   render() {
 
     const { appSettingsVerification } = this.state
@@ -199,6 +219,7 @@ class AdminPage extends Component {
             <a className="admin-page__link">My Blogs</a>
           </Link>
 
+          {this.renderEventMenuItems()}
           {this.renderStoreMenuItems()}
         </div>
 

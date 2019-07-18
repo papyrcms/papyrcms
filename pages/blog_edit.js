@@ -5,20 +5,6 @@ import PostsForm from '../components/PostsForm'
 import keys from '../config/keys'
 
 
-// const TestField = props => (
-//   <div className="post-form__field">
-//     <label className="post-form__label">Test</label>
-//     <input
-//       className="post-form__input"
-//       type="text"
-//       name="test"
-//       value={props.test}
-//       onChange={event => props.changeState(event.target.value, 'test')}
-//     />
-//   </div>
-// )
-
-
 const BlogEdit = props => (
   <PostsForm
     pageTitle="Edit Blog Post"

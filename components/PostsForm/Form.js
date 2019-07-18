@@ -130,11 +130,11 @@ class Form extends Component {
 
   renderAdditionalFields() {
 
-    const { additionalFields, changeState } = this.props
+    const { additionalFields, changeState, additionalState } = this.props
 
     if (additionalFields) {
       return _.map(additionalFields, Field => {
-        return <Field key="" changeState={changeState} />
+        return <Field key="" changeState={changeState} {...additionalState} />
       })
     } else {
       return null
@@ -198,10 +198,10 @@ class Form extends Component {
           </span>
         </div>
 
-        {this.renderAdditionalFields()}
-
         {this.renderMediaInput()}
         {this.renderMedia()}
+
+        {this.renderAdditionalFields()}
 
         <label className="post-form__label">Content</label>
         <RichTextEditor

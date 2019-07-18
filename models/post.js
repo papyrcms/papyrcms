@@ -8,11 +8,12 @@ const postSchema = new mongoose.Schema({
   mainMedia: String,
   subImages: [String],
   published: { type: Boolean, default: false },
+  created: { type: Date, default: Date.now },
+
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'comment'
   }],
-  created: { type: Date, default: Date.now },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'

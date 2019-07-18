@@ -47,7 +47,7 @@ class PostShow extends Component {
 
     const { post, currentUser, path } = this.props
 
-    if (!!currentUser && (currentUser._id === post.author._id || currentUser.isAdmin)) {
+    if (!!currentUser && (currentUser.isAdmin || currentUser._id === post.author._id)) {
       return (
         <div className="post__buttons">
           <button className="button button-secondary" onClick={() => this.onDeleteClick()}>Delete</button>
@@ -105,8 +105,6 @@ class PostShow extends Component {
     const { showDate, post } = this.props
 
     if (showDate) {
-
-      console.log(post)
 
       const date = post.published && post.publishDate
         ? post.publishDate

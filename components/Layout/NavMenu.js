@@ -11,6 +11,23 @@ import { connect } from 'react-redux'
 
 class NavMenu extends Component {
 
+  renderEventsItem() {
+
+    const { settings } = this.props
+
+    if (!!settings && settings.enableEvents) {
+
+      return (
+        <Link href="/events">
+          <li onClick={() => this.onClick()} className="nav-menu__item">
+            <a>Events</a>
+          </li>
+        </Link>
+      )
+    }
+  }
+
+
   renderStoreItem() {
 
     const { settings } = this.props
@@ -102,6 +119,7 @@ class NavMenu extends Component {
               </li>
             </Link>
 
+            {this.renderEventsItem()}
             {this.renderStoreItem()}
             {this.renderDonateItem()}
           </div>

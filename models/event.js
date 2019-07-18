@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const productSchema = new mongoose.Schema({
+const eventSchema = new mongoose.Schema({
 
   title: String,
   content: String,
@@ -10,8 +10,9 @@ const productSchema = new mongoose.Schema({
   published: { type: Boolean, default: false },
   created: { type: Date, default: Date.now },
 
-  price: { type: Number, required: true },
-  stock: { type: Number, default: 0 }
+  date: { type: Date, required: true },
+  latitude: { type: Number, required: true },
+  longitude: { type: Number, required: true }
 })
 
-module.exports = mongoose.model('product', productSchema)
+module.exports = mongoose.model('event', eventSchema)
