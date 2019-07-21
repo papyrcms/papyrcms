@@ -105,7 +105,7 @@ class PostsForm extends Component {
 
 
   changeState(value, stateItem) {
-console.log(value)
+
     this.setState({ [stateItem]: value })
   }
 
