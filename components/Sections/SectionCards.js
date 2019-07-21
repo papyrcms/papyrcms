@@ -20,7 +20,7 @@
  
 import React, { Component } from 'react'
 import _ from 'lodash'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
@@ -73,10 +73,20 @@ class SectionCards extends Component {
         ? post.publishDate
         : post.created
 
-      return <p>{moment(date).format('MMMM Do, YYYY')}</p>
+      return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
     }
 
     return null
+  }
+
+
+  renderMediaSection(post) {
+
+    if (!post.mainMedia) {
+      return null
+    }
+
+    return <Media className="section-cards__image" src={post.mainMedia} alt={post.title} />
   }
 
 
@@ -97,7 +107,7 @@ class SectionCards extends Component {
             <h3 className="section-cards__title">{post.title}</h3>
             {this.renderDate(post)}
             {this.renderPublishSection(post.published)}
-            <Media className="section-cards__image" src={post.mainMedia} alt={post.title} />
+            {this.renderMediaSection(post)}
             {this.renderInfoProps(post)}
             <div className="section-cards__content">{renderHTML(postContent)}</div>
             {this.renderReadMore(post)}
@@ -117,10 +127,12 @@ class SectionCards extends Component {
 
     return (
       <section className='section-cards'>
-        <h2 className='heading-secondary section-cards__header'>{title}</h2>
-        <ul className={`section-cards__list ${listCountClass}`}>
-          {this.renderPosts()}
-        </ul>
+        <div className="section-cards__container">
+          <h2 className='heading-secondary section-cards__header'>{title}</h2>
+          <ul className={`section-cards__list ${listCountClass}`}>
+            {this.renderPosts()}
+          </ul>
+        </div>
       </section>
     )
   }

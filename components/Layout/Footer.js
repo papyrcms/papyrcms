@@ -28,7 +28,7 @@ const Footer = props => {
         <div className="cta">
           <h2 className="cta__title u-margin-bottom-small">{props.ctaText}</h2>
           <Link href="/contact">
-            <button className="button button-primary">{props.ctaButtonText}</button>
+            <button className="button button-cta">{props.ctaButtonText}</button>
           </Link>
         </div>
 

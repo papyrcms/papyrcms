@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 class Controller {
 
   constructor(server, app) {
@@ -12,6 +14,10 @@ class Controller {
 
   registerSettings() {}
   registerRoutes() {}
+
+  configureDate(date) {
+    return moment(date).tz('America/Chicago').toISOString()
+  }
 }
 
 module.exports = Controller

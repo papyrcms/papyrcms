@@ -72,16 +72,18 @@ class SectionMaps extends Component {
   
     return (
       <section className="section-maps">
-        <h2 className={'heading-secondary section-maps__title'}>{title}</h2>
+        <div className="section-maps__container">
+          <h2 className={'heading-secondary section-maps__title'}>{title}</h2>
 
-        <div className="section-maps__content">
-          {mapLocation === 'start' ? this.renderMap(latitude, longitude) : null}
-    
-          <div className={'section-maps__text'}>
-            <div className={'section-maps__subtext'}>{renderHTML(content)}</div>
+          <div className="section-maps__content">
+            {mapLocation === 'start' ? this.renderMap(latitude, longitude) : null}
+      
+            <div className={'section-maps__text'}>
+              <div className={'section-maps__subtext'}>{renderHTML(content)}</div>
+            </div>
+
+            {mapLocation === 'end' ? this.renderMap(latitude, longitude) : null}
           </div>
-
-          {mapLocation === 'end' ? this.renderMap(latitude, longitude) : null}
         </div>
       </section>
     )

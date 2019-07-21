@@ -1,5 +1,6 @@
 const Controller = require('./abstractController')
 const EventModel = require('../models/event')
+const moment = require('moment-timezone')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 const keys = require('../config/keys')
@@ -94,6 +95,8 @@ class EventRoutes extends Controller {
 
   createEvent(req, res) {
 
+    req.body.date = this.configureDate(req.body.date)
+
     const event = new EventModel(req.body)
     event.author = req.user
 
@@ -104,7 +107,10 @@ class EventRoutes extends Controller {
 
   async sendPublishedEvents(req, res) {
 
-    const foundEvents = await EventModel.find({ published: true }).sort({ created: -1 })
+    const date = new Date(new Date().toISOString())
+    const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
+
+    const foundEvents = await EventModel.find({ published: true, date: { $gte: dateFilter } }).sort({ date: 1 })
 
     res.send(foundEvents)
   }
@@ -112,7 +118,7 @@ class EventRoutes extends Controller {
 
   async sendAllEvents(req, res) {
 
-    const foundEvents = await EventModel.find().sort({ created: -1 })
+    const foundEvents = await EventModel.find().sort({ date: 1 })
 
     res.send(foundEvents)
   }
@@ -128,6 +134,8 @@ class EventRoutes extends Controller {
 
 
   async updateEvent(req, res) {
+
+    req.body.date = this.configureDate(req.body.date)
 
     const updatedEvent = await EventModel.findOneAndUpdate({ _id: req.params.id }, req.body)
 

@@ -89,7 +89,7 @@
     }
 
     &--input:checked + * > &--span {
-      background-color: $color-primary-3;
+      background-color: $color-primary;
     }
   }
 }

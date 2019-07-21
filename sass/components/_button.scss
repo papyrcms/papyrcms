@@ -21,41 +21,80 @@
   }
 
   &-primary {
-    border: .2rem solid $color-primary-3;
+    border: .2rem solid $color-primary;
     color: $color-white;
-    background-color: $color-primary-3;
+    background-color: $color-primary;
     transition: all .3s;
 
     &:hover {
-      color: $color-primary-3;
+      color: $color-primary;
       background-color: transparent;
-      border: .2rem solid $color-primary-3;
+      border: .2rem solid $color-primary;
     }
   }
 
   &-secondary {
-    border: .2rem solid $color-secondary-0;
+    border: .2rem solid $color-secondary;
     color: $color-white;
-    background-color: $color-secondary-0;
+    background-color: $color-secondary;
     transition: all .3s;
 
     &:hover {
-      color: $color-secondary-0;
+      color: $color-secondary;
       background-color: transparent;
-      border: .2rem solid $color-secondary-0;
+      border: .2rem solid $color-secondary;
     }
   }
 
   &-tertiary {
-    border: .2rem solid $color-tertiary-0;
+    border: .2rem solid $color-tertiary;
     color: $color-white;
-    background-color: $color-tertiary-0;
+    background-color: $color-tertiary;
     transition: all .3s;
 
     &:hover {
-      color: $color-tertiary-0;
+      color: $color-tertiary;
       background-color: transparent;
-      border: .2rem solid $color-tertiary-0;
+      border: .2rem solid $color-tertiary;
+    }
+  }
+
+  &-cta {
+    border: .2rem solid $color-cta;
+    color: $color-white;
+    background-color: $color-cta;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-cta;
+      background-color: transparent;
+      border: .2rem solid $color-cta;
+    }
+  }
+
+  &-edit {
+    border: .2rem solid $color-edit;
+    color: $color-white;
+    background-color: $color-edit;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-edit;
+      background-color: transparent;
+      border: .2rem solid $color-edit;
+    }
+  }
+
+  &-delete {
+    border: .2rem solid $color-delete;
+    color: $color-white;
+    background-color: $color-delete;
+    transition: all .3s;
+
+    &:hover {
+      color: $color-delete;
+      background-color: transparent;
+      border: .2rem solid $color-delete;
     }
   }
 }

@@ -23,15 +23,16 @@ class EventsPage extends Component {
         <PostsFilter
           posts={this.props.events}
           settings={{
-            maxPosts: "9999"
+            maxPosts: 9999
           }}
           component={SectionStandard}
           componentProps={{
-            title: 'Event',
+            title: 'Events',
             mediaLeft: true,
             readMore: true,
             path: 'events',
             emptyMessage: 'There are no events yet.',
+            showDate: 'date'
           }}
         />
       </div>

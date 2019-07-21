@@ -49,8 +49,8 @@ export default () => (
     additionalFields={[coordinatesField, dateField]}
     additionalState={{
       date: null,
-      latitude: 0,
-      longitude: 0,
+      latitude: null,
+      longitude: null,
     }}
   />
 )

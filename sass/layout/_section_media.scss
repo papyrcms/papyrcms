@@ -7,7 +7,6 @@
 
   &--fixed {
     min-height: 80vh;
-    background: transparent;
     position: relative;
   }
 
@@ -50,14 +49,13 @@
     margin-bottom: -1rem;
 
     &--fixed {
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      background-color: transparent;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
+      min-height: 80vh;
+      min-width: 100%;
+      position: relative;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
   }
 }

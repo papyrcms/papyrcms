@@ -7,26 +7,18 @@ $color-grey-light: #eee;
 $color-grey-light-2: #ddd;
 $color-grey: #888;
 $color-grey-dark: #333;
+$color-grey-dark-2: #555;
 $color-black: #000;
 
 // palette
-$color-primary-0: #256E5D;	// Main Primary color
-$color-primary-1: #0F1F1B;
-$color-primary-2: #1C463D;
-$color-primary-3: #27957C;
-$color-primary-4: #28CCA7;
+$color-primary: #4EBDEC;	// Main Primary color
 
-$color-secondary-0: #7F2A68;	// Main Secondary color
-$color-secondary-1: #24111F;
-$color-secondary-2: #512144;
-$color-secondary-3: #AC2E89;
-$color-secondary-4: #DB2BAA;
+$color-secondary: #FFDB4D;	// Main Secondary color
+$color-edit: #FFDB4D;	// Main Secondary color
 
-$color-tertiary-0: #AA9239;	// Main tertiary color
-$color-tertiary-1: #302B17;
-$color-tertiary-2: #6D5F2C;
-$color-tertiary-3: #E7C43D;
-$color-tertiary-4: #FFD432;
+$color-tertiary: #FD4C61;	// Main tertiary color
+$color-delete: #FD4C61;	// Main tertiary color
+$color-cta: #FD4C61;
 
 // FONT
 $default-font-size: 1.6rem;
@@ -34,3 +26,4 @@ $default-font-size: 1.6rem;
 // COMMON STYLES
 $shadow-high: 0 .6rem 1.8rem rgba($color-black, .4);
 $shadow-low: 0 .3rem .9rem rgba($color-black, .6);
+$max-container-width: 90rem;

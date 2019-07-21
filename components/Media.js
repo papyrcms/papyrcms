@@ -12,9 +12,11 @@ import React from 'react'
 
 const Media = props => {
 
-  const { src, className, alt } = props
+  const { src, className, alt, parallax } = props
 
-  if (src.match(/\.(mp4|webm)$/i)) {
+  if (parallax) {
+    return <div className={className} style={{ backgroundImage: `url(${src}` }} />
+  } else if (src.match(/\.(mp4|webm)$/i)) {
     return (
       <video className={className} autoPlay muted loop>
         <source src={src} type="video/mp4" />

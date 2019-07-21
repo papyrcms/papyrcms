@@ -3,6 +3,11 @@
   padding-bottom: 10rem;
   background-color: $color-grey-light;
 
+  &__container {
+    max-width: $max-container-width;
+    margin: 0 auto;
+  }
+
   @include respond(tab-port) {
     padding: 5rem 5vw;
     padding-bottom: 10rem;

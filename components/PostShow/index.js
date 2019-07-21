@@ -14,7 +14,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import _ from 'lodash'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import Link from 'next/link'
 import Router from 'next/router'
 import Head from 'next/head'
@@ -51,9 +51,9 @@ class PostShow extends Component {
     if (!!currentUser && (currentUser.isAdmin || currentUser._id === post.author._id)) {
       return (
         <div className="post__buttons">
-          <button className="button button-secondary" onClick={() => this.onDeleteClick()}>Delete</button>
+          <button className="button button-delete" onClick={() => this.onDeleteClick()}>Delete</button>
           <Link href={`/${path}_edit?id=${post._id}`} as={`/${path}/${post._id}/edit`}>
-            <button className="button button-tertiary">Edit</button>
+            <button className="button button-edit">Edit</button>
           </Link>
         </div>
       )
@@ -111,7 +111,7 @@ class PostShow extends Component {
         ? post.publishDate
         : post.created
 
-      return <p>{moment(date).format('MMMM Do, YYYY')}</p>
+      return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
     }
 
     return null
@@ -132,6 +132,8 @@ class PostShow extends Component {
           <meta property="og:image:width" content="200" />
           <meta property="og:image:height" content="200" />
           <title>{title}</title>
+          <meta name="title" content={title} />
+          <meta name="keywords" content={tags} />
         </Head>
 
         <div className="post">

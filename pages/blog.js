@@ -45,7 +45,7 @@ class BlogPage extends Component {
             readMore: true,
             path: 'blog',
             emptyMessage: 'There are no blogs yet.',
-            showDate: true
+            showDate: 'publishDate'
           }}
         />
 

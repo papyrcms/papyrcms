@@ -90,6 +90,13 @@ class PostsForm extends Component {
       })
     }
 
+    // Remove unused properties
+    _.map(postObject, (value, key) => {
+      if (!value) {
+        delete(postObject[key])
+      }
+    })
+
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
     const redirect = redirectRoute ? redirectRoute : '/posts'
 

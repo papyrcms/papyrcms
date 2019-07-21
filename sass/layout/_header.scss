@@ -1,6 +1,6 @@
 .header {
   padding: 6rem;
-  background-color: $color-grey-dark;
+  background: linear-gradient(45deg, lighten($color-primary, 10%), darken($color-primary, 30%));
   height: 40rem;
 
   display: flex;

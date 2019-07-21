@@ -1,6 +1,5 @@
 .nav-menu {
-  background-color: $color-grey-light;
-  padding: 0 2vw;
+  background-color: $color-grey-dark-2;
   
   display: flex;
   justify-content: space-between;
@@ -10,12 +9,14 @@
   }
 
   &__logo {
-    max-width: 5rem;
-    max-height: 5rem;
+    max-width: 3rem;
+    max-height: 4rem;
     cursor: pointer;
+    margin: 1.5rem 3rem;
 
     img {
       width: 100%;
+      height: 100%;
     }
 
     @include respond(phone) {
@@ -28,6 +29,7 @@
     display: flex;
     justify-content: flex-end;
     position: relative;
+    font-size: 1.8rem;
 
     @include respond(phone) {
       flex-direction: column;
@@ -41,12 +43,13 @@
     text-decoration: none;
     letter-spacing: .1rem;
     transition: all .4s;
+    color: $color-grey-light-2;
 
     display: flex;
     align-items: center;
     
     &:not(:last-child) {
-      border-right: .1rem solid $color-grey-light-2;
+      border-right: .1rem solid $color-grey-light;
       
       @include respond(phone) {
         border-right: none;
@@ -61,6 +64,7 @@
     
     &:hover:not(.nav-menu__item--hamburger) {
       background-color: $color-grey-light-2;
+      color: $color-grey-dark-2;
     }
 
     &--hamburger {
@@ -73,7 +77,7 @@
         
         &, &::before, &::after {
           display: block;
-          border-bottom: .2rem solid $color-grey-dark;
+          border-bottom: .2rem solid $color-grey-light;
           width: 3rem;
           padding-bottom: 1rem;
         }

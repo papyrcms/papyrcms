@@ -11,8 +11,8 @@ const eventSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
 
   date: { type: Date, required: true },
-  latitude: { type: Number, required: true },
-  longitude: { type: Number, required: true }
+  latitude: Number,
+  longitude: Number
 })
 
 module.exports = mongoose.model('event', eventSchema)

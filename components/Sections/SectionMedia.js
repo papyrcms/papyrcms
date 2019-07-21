@@ -33,6 +33,7 @@ const SectionMedia = props => {
         className={`${className}__media${fixed ? '--fixed' : ''}`}
         src={mainMedia}
         alt={alt}
+        parallax={fixed}
       />
 
     </section>

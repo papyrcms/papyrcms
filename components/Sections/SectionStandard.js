@@ -8,7 +8,8 @@
  *   contentLength: String - How many characters to show in the card content
  *   emptyMessage: String - Message to display if there are no posts
  *   posts: Array [Object - The post to be rendered as a card]
- *   showDate: Boolean - If true, the publish or created date will show
+ *   showDate: String - The post date prop to show
+ *   
  */
 
 
@@ -16,13 +17,17 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import Media from '../Media'
 
 
 class SectionStandard extends Component {
 
   renderMedia(post) {
+
+    if (!post.mainMedia) {
+      return null
+    }
 
     return (
       <div className="section-standard__image">
@@ -88,13 +93,13 @@ class SectionStandard extends Component {
 
   renderDate(post) {
 
-    if (this.props.showDate) {
+    const { showDate } = this.props
 
-      const date = post.published && post.publishDate 
-        ? post.publishDate
-        : post.created
+    if (showDate) {
 
-      return <p>{moment(date).format('MMMM Do, YYYY')}</p>
+      const date = post[showDate] ? post[showDate] : post.created
+
+      return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
     }
 
     return null
@@ -132,11 +137,13 @@ class SectionStandard extends Component {
     const { className, title } = this.props
 
     return (
-      <div className={`${className} section-standard`}>
-        <h2 className="heading-secondary u-margin-bottom-medium">{title}</h2>
+      <section className={`${className || ''} section-standard`}>
+        <div className="section-standard__container">
+          <h2 className="heading-secondary u-margin-bottom-medium">{title}</h2>
 
-        {this.renderPosts()}
-      </div>
+          {this.renderPosts()}
+        </div>
+      </section>
     )
   }
 }

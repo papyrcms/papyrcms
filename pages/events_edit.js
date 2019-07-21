@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import PostsForm from '../components/PostsForm'
 import keys from '../config/keys'
 
@@ -56,7 +56,7 @@ const EventsEdit = props => (
     editing
     additionalFields={[coordinatesField, dateField]}
     additionalState={{
-      date: moment(props.event.date).format("YYYY-MM-DD"),
+      date: moment(props.event.date).tz('America/Chicago').format("YYYY-MM-DD"),
       latitude: props.event.latitude,
       longitude: props.event.longitude,
     }}

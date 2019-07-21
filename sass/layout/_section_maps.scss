@@ -3,6 +3,11 @@
   background-color: $color-grey-light;
   padding: 5rem 10rem;
 
+  &__container {
+    max-width: $max-container-width;
+    margin: 0 auto;
+  }
+
   &__content{
     white-space: pre-wrap;
   
