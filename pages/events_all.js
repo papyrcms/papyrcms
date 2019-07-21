@@ -18,7 +18,7 @@ const EventsAllPage = props => (
       readMore: true,
       path: 'events',
       contentLength: 200,
-      emptyMessage: 'There are no events yet.',
+      emptyMessage: 'There are no events coming up.',
     }}
   />
 )

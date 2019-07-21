@@ -31,7 +31,7 @@ class EventsPage extends Component {
             mediaLeft: true,
             readMore: true,
             path: 'events',
-            emptyMessage: 'There are no events yet.',
+            emptyMessage: 'There are no events coming up.',
             showDate: 'date'
           }}
         />
