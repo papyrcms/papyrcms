@@ -1,3 +1,10 @@
+/**
+ * ContactForm is the main contact form component
+ * 
+ * props include:
+ *   initialMessage: String - a suggested message to initially be displayed in the textarea
+ */
+
 import React, { Component } from 'react'
 import axios from 'axios'
 
@@ -10,7 +17,7 @@ class ContactForm extends Component {
     this.state = {
       contactName: '',
       contactEmail: '',
-      contactMessage: '',
+      contactMessage: props.initialMessage || '',
       formValidation: ''
     }
   }

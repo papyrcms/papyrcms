@@ -19,7 +19,7 @@ const TextEditor = props => {
       content={content}
       activeClass={className}
       events={{
-        "change": event => onChange(event.editor.getData())
+        "change": event => {onChange(event.editor.getData())}
       }}
     />
   )

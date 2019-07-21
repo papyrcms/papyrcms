@@ -54,31 +54,17 @@ class PostsForm extends Component {
   }
 
 
-  mapTagsToArray(tags) {
-
-    return _.map(tags.split(','), tag => {
-      let pendingTag = tag
-      pendingTag = pendingTag.trim()
-
-      if (!!pendingTag) {
-        return pendingTag
-      }
-    })
-  }
-
-
   handleSubmit(event) {
 
     event.preventDefault()
 
     const { title, tags, mainMedia, content, publish } = this.state
-    let tagArray = this.mapTagsToArray(tags)
 
     const { apiEndpoint, redirectRoute, editing, additionalState } = this.props
 
     const postObject = {
       title,
-      tags: tagArray,
+      tags,
       mainMedia,
       content,
       published: publish,
@@ -119,7 +105,7 @@ class PostsForm extends Component {
 
 
   changeState(value, stateItem) {
-
+console.log(value)
     this.setState({ [stateItem]: value })
   }
 

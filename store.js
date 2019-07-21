@@ -43,6 +43,8 @@ export const reducer = (state = initialState, action) => {
       return { ...state, stripePubKey: action.payload }
     case 'set_route':
       return { ...state, route: action.payload }
+    case 'set_url':
+      return { ...state, url: action.payload }
     case 'set_google_maps_key':
       return { ...state, googleMapsKey: action.payload }
     default:
@@ -94,6 +96,10 @@ export const setStripePubKey = key => {
 
 export const setRoute = route => {
   return { type: 'set_route', payload: route }
+}
+
+export const setUrl = url => {
+  return { type: 'set_url', payload: url }
 }
 
 export const setGoogleMapsKey = key => {

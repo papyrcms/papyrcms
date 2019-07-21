@@ -13,7 +13,10 @@ class ContactRoutes extends Controller {
     // Middleware to configure email settings
     this.server.use(async (req, res, next) => {
 
-      const defaultSettings = { enableEmailing: false }
+      const defaultSettings = { 
+        enableEmailingToAdmin: true,
+        enableEmailingToUsers: false
+      }
       const settings = await configureSettings('email', defaultSettings)
 
       _.map(settings, (optionValue, optionKey) => {
@@ -51,26 +54,29 @@ class ContactRoutes extends Controller {
 
   createMessage(req, res) {
 
-    const { contactName, contactEmail, contactMessage } = req.body
-    const messageObj = {
-      name: contactName,
-      email: contactEmail,
-      message: contactMessage,
+    if (res.locals.settings.enableEmailingToAdmin) {
+
+      const { contactName, contactEmail, contactMessage } = req.body
+      const messageObj = {
+        name: contactName,
+        email: contactEmail,
+        message: contactMessage,
+      }
+      const message = new MessageModel(messageObj)
+
+      const mailer = new Mailer()
+      const templatePath = 'emails/contact.html'
+      const subject = `New message from ${message.name}!`
+
+      const sent = mailer.sendEmail(message, templatePath, keys.adminEmail, subject)
+
+      if (sent) {
+        message.emailSent = true
+      }
+
+      message.save()
+      res.send(message)
     }
-    const message = new MessageModel(messageObj)
-
-    const mailer = new Mailer()
-    const templatePath = 'emails/contact.html'
-    const subject = `New message from ${message.name}!`
-
-    const sent = mailer.sendEmail(message, templatePath, keys.adminEmail, subject)
-
-    if (sent) {
-      message.emailSent = true
-    }
-
-    message.save()
-    res.send(message)
   }
 }
 

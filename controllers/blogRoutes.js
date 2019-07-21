@@ -1,7 +1,7 @@
 const Controller = require('./abstractController')
 const BlogModel = require('../models/blog')
 const CommentModel = require('../models/comment')
-const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
+const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 
 class BlogRoutes extends Controller {
 
@@ -36,6 +36,7 @@ class BlogRoutes extends Controller {
       '/api/blogs', 
       checkIfAdmin, 
       sanitizeRequestBody, 
+      mapTagsToArray,
       this.createBlog.bind(this)
     )
     this.server.get(
@@ -55,6 +56,7 @@ class BlogRoutes extends Controller {
       '/api/blogs/:id', 
       checkIfAdmin, 
       sanitizeRequestBody, 
+      mapTagsToArray,
       this.updateBlog.bind(this)
     )
     this.server.delete(

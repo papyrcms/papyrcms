@@ -16,7 +16,8 @@ import {
   setUsers, 
   setSettings, 
   setStripePubKey, 
-  setRoute, 
+  setRoute,
+  setUrl,
   setGoogleMapsKey 
 } from '../store'
 
@@ -87,6 +88,7 @@ class MyApp extends App {
     if (isServer) {
       dispatch(setSettings(res.locals.settings))
       dispatch(setCurrentUser(req.user))
+      dispatch(setUrl({ query: req.query }))
     }
 
     // Return nothing. Props are set by the redux store

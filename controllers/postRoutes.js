@@ -4,7 +4,7 @@ const multer = require('multer')
 const PostModel = require('../models/post')
 const CommentModel = require('../models/comment')
 const keys = require('../config/keys')
-const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
+const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 
 class PostRoutes extends Controller {
 
@@ -67,13 +67,14 @@ class PostRoutes extends Controller {
       '/api/upload', 
       checkIfAdmin, 
       this.upload.single('file'), 
-      sanitizeRequestBody, 
+      sanitizeRequestBody,
       this.uploadMedia.bind(this)
     )
     this.server.post(
       '/api/posts', 
       checkIfAdmin, 
-      sanitizeRequestBody, 
+      sanitizeRequestBody,
+      mapTagsToArray,
       this.createPost.bind(this)
     )
     this.server.get(
@@ -92,7 +93,8 @@ class PostRoutes extends Controller {
     this.server.put(
       '/api/posts/:id', 
       checkIfAdmin, 
-      sanitizeRequestBody, 
+      sanitizeRequestBody,
+      mapTagsToArray,
       this.updatePost.bind(this)
     )
     this.server.delete(

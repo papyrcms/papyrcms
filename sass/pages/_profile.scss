@@ -2,7 +2,7 @@
   padding: 5rem;
   background-color: $color-grey-light;
   min-height: calc(100vh - 30rem);
-
+  
   &__not-logged-in {
     font-weight: 400;
     font-size: 3rem;
@@ -14,6 +14,9 @@
   display: grid;
   grid-gap: 3rem;
   grid-template-columns: 1fr;
+
+  margin: 0 auto;
+  max-width: $max-container-width;
 
   & > *:not(:last-child) {
     border-bottom: .1rem solid $color-grey-dark;

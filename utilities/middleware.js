@@ -11,6 +11,22 @@ const checkIfAdmin = (req, res, next) => {
 }
 
 
+const mapTagsToArray = (req, res, next) => {
+
+  const newTags = _.map(req.body.tags.split(','), tag => {
+    let pendingTag = tag
+    pendingTag = pendingTag.trim()
+
+    if (!!pendingTag) {
+      return pendingTag
+    }
+  })
+
+  req.body.tags = newTags
+  next()
+}
+
+
 const sanitizeRequestBody = (req, res, next) => {
 
   // Santize inputs
@@ -21,4 +37,4 @@ const sanitizeRequestBody = (req, res, next) => {
   next()
 }
 
-module.exports = { checkIfAdmin, sanitizeRequestBody }
+module.exports = { checkIfAdmin, mapTagsToArray, sanitizeRequestBody }

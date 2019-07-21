@@ -1,7 +1,6 @@
 const Controller = require('./abstractController')
 const EventModel = require('../models/event')
-const moment = require('moment-timezone')
-const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
+const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 const keys = require('../config/keys')
 const _ = require('lodash')
@@ -54,6 +53,7 @@ class EventRoutes extends Controller {
       '/api/events',
       checkIfAdmin,
       sanitizeRequestBody,
+      mapTagsToArray,
       this.createEvent.bind(this)
     )
     this.server.get(
@@ -73,6 +73,7 @@ class EventRoutes extends Controller {
       '/api/events/:id',
       checkIfAdmin,
       sanitizeRequestBody,
+      mapTagsToArray,
       this.updateEvent.bind(this)
     )
     this.server.delete(

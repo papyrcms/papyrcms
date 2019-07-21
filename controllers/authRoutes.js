@@ -132,7 +132,7 @@ class AuthRoutes extends Controller {
         const templatePath = 'emails/welcome.html'
         const subject = `Welcome, ${newUser.firstName}!`
 
-        if (res.locals.settings.enableEmailing) {
+        if (res.locals.settings.enableEmailingToUsers) {
           mailer.sendEmail(newUser, templatePath, newUser.email, subject)
         }
 
