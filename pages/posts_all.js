@@ -72,7 +72,7 @@ class PostsAll extends Component {
     return (
       <div className="posts-all-page">
         <div className="posts-all-page__top">
-          <h2 className="heading-secondary posts-all-page__header">Posts</h2>
+          <h2 className="heading-secondary posts-all-page__header">My Content</h2>
           <div className="posts-all-page__search">
             <label htmlFor="posts-search" className="posts-all-page__search--label">Search Posts</label>
             <input
