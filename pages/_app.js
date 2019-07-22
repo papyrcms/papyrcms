@@ -19,7 +19,7 @@ import {
   setRoute,
   setUrl,
   setGoogleMapsKey 
-} from '../store'
+} from '../reduxStore'
 
 class MyApp extends App {
 

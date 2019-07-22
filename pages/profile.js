@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
-import { setCurrentUser } from '../store'
+import { setCurrentUser } from '../reduxStore'
 
 class ProfilePage extends Component {
 

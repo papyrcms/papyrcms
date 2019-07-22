@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
-import { setCurrentUser } from '../store'
+import { setCurrentUser } from '../reduxStore'
 
 class LoginForm extends Component {
 

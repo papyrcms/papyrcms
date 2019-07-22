@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import { setSettings } from '../store'
+import { setSettings } from '../reduxStore'
 import axios from 'axios'
 import Link from 'next/link'
 import keys from '../config/keys'

@@ -15,9 +15,9 @@ export default props => (
   <div className="app">
 
     <Head>
-      <title>Derek Garnett | Web Development and Design</title>
-      <meta name="title" content="Derek Garnett | Web Development and Design" />
-      <meta name="keywords" content="web, development, design, uniced" />
+      <title>Derek Garnett | Development and Design</title>
+      <meta name="title" content="Derek Garnett | Development and Design" />
+      <meta name="keywords" content="web, mobile, dev, development, design, webdev" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
@@ -31,7 +31,7 @@ export default props => (
 
     <Header
       mainTitle="Derek Garnett"
-      subTitle="Web Development and Design"
+      subTitle="Development and Design"
     />
 
     <main>
