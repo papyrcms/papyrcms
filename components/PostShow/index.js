@@ -128,13 +128,18 @@ class PostShow extends Component {
 
         <Head>
           <meta property="og:image" content={mainMedia || ''} />
+          <meta property="og:url" content={mainMedia || ''} />
           <meta property="og:image:type" content="image/jpeg" />
           <meta property="og:image:width" content="200" />
           <meta property="og:image:height" content="200" />
           <title>{`Derek Garnett | ${title}`}</title>
           <meta name="title" content={title} />
+          <meta property="twitter:title" content={title} />
+          <meta property="twitter:description" content={content.replace('<p>', '').replace('</p>', '')} />
+          <meta property="og:title" content={title} />
           <meta name="keywords" content={tags} />
           <meta name="description" content={content.replace('<p>', '').replace('</p>', '')} />
+          <meta property="og:description" content={content.replace('<p>', '').replace('</p>', '')} />
         </Head>
 
         <div className="post">

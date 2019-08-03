@@ -21,7 +21,8 @@ const PageLayout = props => {
       titleHeaderContent,
       footer,
       descriptionContent,
-      keywords = ''
+      keywords = '',
+      shareImage
 
   props.posts.forEach(post => {
 
@@ -31,6 +32,9 @@ const PageLayout = props => {
       titleHeaderContent = header.content
         .replace('<p>', '')
         .replace('</p>', '')
+      if (!shareImage) {
+        shareImage = header.mainMedia
+      }
 
     } else if (post.tags.includes('section-footer')) {
 
@@ -46,6 +50,9 @@ const PageLayout = props => {
           keywords = keywords.length === 0 ? tag : `${keywords}, ${tag}`
         }
       })
+      if (post.mainMedia) {
+        shareImage = post.mainMedia
+      }
     }
   })
   
@@ -56,17 +63,23 @@ const PageLayout = props => {
       <Head>
         <title>{header.title} | {titleHeaderContent}</title>
         <meta name="title" content={`${header.title} | ${titleHeaderContent}`} />
+        <meta property="og:title" content={`${header.title} | ${titleHeaderContent}`} />
+        <meta property="og:site_name" content={header.title} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <meta property="og:image" content={header ? header.mainMedia : ''} />
+        <meta property="og:image" content={shareImage} />
+        <meta property="og:url" content={shareImage} />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="200" />
         <meta property="og:image:height" content="200" />
+        <meta property="twitter:title" content={header.title} />
+        <meta property="twitter:description" content={descriptionContent} />
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://js.stripe.com/v3/"></script>
         <meta name="keywords" content={keywords} />
         <meta name="description" content={descriptionContent} />
+        <meta property="og:description" content={descriptionContent} />
       </Head>
 
       <NavMenu
