@@ -17,29 +17,38 @@ import PostsFilter from '../PostsFilter'
 
 const PageLayout = props => {
 
-  let header
-  let titleHeaderContent
-
-  let footer
-
-  let description
-  let descriptionContent
+  let header,
+      titleHeaderContent,
+      footer,
+      descriptionContent,
+      keywords = ''
 
   props.posts.forEach(post => {
+
     if (post.tags.includes('section-header')) {
+
       header = post
       titleHeaderContent = header.content
         .replace('<p>', '')
         .replace('</p>', '')
+
     } else if (post.tags.includes('section-footer')) {
+
       footer = post
+
     } else if (post.tags.includes('site-description')) {
-      description = post
-      descriptionContent = description.content
+
+      descriptionContent = post.content
         .replace('<p>', '')
         .replace('</p>', '')
-    }  
-  })  
+      post.tags.forEach(tag => {
+        if (tag !== 'site-description') {
+          keywords = keywords.length === 0 ? tag : `${keywords}, ${tag}`
+        }
+      })
+    }
+  })
+  
 
   return (
     <div className="app">
@@ -47,13 +56,13 @@ const PageLayout = props => {
       <Head>
         <title>{header.title} | {titleHeaderContent}</title>
         <meta name="title" content={`${header.title} | ${titleHeaderContent}`} />
-        <meta name="keywords" content="web, mobile, dev, development, design, webdev" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content={description ? descriptionContent : ''} />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://js.stripe.com/v3/"></script>
+        <meta name="keywords" content={keywords} />
+        <meta name="description" content={descriptionContent} />
       </Head>
 
       <NavMenu
@@ -84,11 +93,13 @@ const Layout = props => (
   <PostsFilter
     component={PageLayout}
     posts={props.posts}
-    settings={{ maxPosts: 3, postTags: [
-      'section-header', 
-      'section-footer',
-      'site-description'
-    ]}}
+    settings={{
+      maxPosts: 3, postTags: [
+        'section-header',
+        'section-footer',
+        'site-description'
+      ]
+    }}
     componentProps={{
       children: props.children
     }}
