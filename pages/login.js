@@ -5,7 +5,7 @@ import RegisterForm from '../components/RegisterForm'
 export default () => {
   return (
     <div className="login-page">
-      <LoginForm className="login-page__form" />
+      <LoginForm />
       <RegisterForm className="login-page__form" />
     </div>
   )

@@ -59,60 +59,60 @@ class RegisterForm extends Component {
 
     if (this.props.settings.enableRegistration) {
       return (
-        <form onSubmit={this.handleSubmit.bind(this)} className={this.props.className}>
+        <form onSubmit={this.handleSubmit.bind(this)} className="register-form">
           <h3 className="heading-tertiary u-margin-bottom-small">Register</h3>
 
-          <label className="login-page__label" htmlFor='first_name_register_input'>First Name</label>
+          <label className="register-form__label" htmlFor='first_name_register_input'>First Name</label>
           <input
             type='text'
             name='firstName'
             id='first_name_register_input'
-            className="login-page__input"
+            className="register-form__input"
             value={firstName}
             onChange={event => this.setState({ firstName: event.target.value })}
           />
 
-          <label className="login-page__label" htmlFor='last_name_register_input'>Last Name</label>
+          <label className="register-form__label" htmlFor='last_name_register_input'>Last Name</label>
           <input
             type='text'
             name='lastName'
             id='last_name_register_input'
-            className="login-page__input"
+            className="register-form__input"
             value={lastName}
             onChange={event => this.setState({ lastName: event.target.value })}
           />
 
-          <label className="login-page__label" htmlFor='email_register_input'>Email</label>
+          <label className="register-form__label" htmlFor='email_register_input'>Email</label>
           <input
             type='text'
             name='email'
             id='email_register_input'
-            className="login-page__input"
+            className="register-form__input"
             value={email}
             onChange={event => this.setState({ email: event.target.value })}
           />
 
-          <label className="login-page__label" htmlFor='password_register_input'>Password</label>
+          <label className="register-form__label" htmlFor='password_register_input'>Password</label>
           <input
             type='password'
             name='password'
-            className="login-page__input"
+            className="register-form__input"
             value={password}
             onChange={event => this.setState({ password: event.target.value })}
           />
 
-          <label className="login-page__label" htmlFor='password_confirm_register_input'>Confirm Password</label>
+          <label className="register-form__label" htmlFor='password_confirm_register_input'>Confirm Password</label>
           <input
             type='password'
             name='passwordConfirm'
-            className="login-page__input"
+            className="register-form__input"
             value={passwordConfirm}
             onChange={event => this.setState({ passwordConfirm: event.target.value })}
           />
 
-          <p className="login-page__validation">{validationMessage}</p>
+          <p className="register-form__validation">{validationMessage}</p>
 
-          <div className="login-page__submit">
+          <div className="register-form__submit">
             <input
               type='submit'
               value='Register'

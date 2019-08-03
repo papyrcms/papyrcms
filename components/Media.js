@@ -10,13 +10,17 @@
 
 import React from 'react'
 
+
 const Media = props => {
 
   const { src, className, alt, parallax } = props
 
   if (parallax) {
+
     return <div className={className} style={{ backgroundImage: `url(${src}` }} />
+
   } else if (src.match(/\.(mp4|webm)$/i)) {
+
     return (
       <video className={className} autoPlay muted loop>
         <source src={src} type="video/mp4" />
@@ -24,9 +28,13 @@ const Media = props => {
         Your browser is not supported.
       </video>
     )
+
   } else if (src === '' || !src) {
+
     return null
+
   } else {
+
     return (
       <img
         className={className}
@@ -36,5 +44,6 @@ const Media = props => {
     )
   }
 }
+
 
 export default Media

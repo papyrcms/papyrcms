@@ -42,33 +42,33 @@ class LoginForm extends Component {
     const { email, password, validationMessage } = this.state
 
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} className={this.props.className}>
+      <form onSubmit={this.handleSubmit.bind(this)} className="login-form">
 
         <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
 
-        <label className="login-page__label" htmlFor='email_login_input'>Email</label>
+        <label className="login-form__label" htmlFor='email_login_input'>Email</label>
         <input
           type='text'
           name='username'
           id='email_login_input'
-          className="login-page__input"
+          className="login-form__input"
           value={email}
           onChange={event => this.setState({ email: event.target.value })}
         />
 
-        <label className="login-page__label" htmlFor='password_login_input'>Password</label>
+        <label className="login-form__label" htmlFor='password_login_input'>Password</label>
         <input
           type='password'
           name='password'
           id='password_login_input'
-          className="login-page__input"
+          className="login-form__input"
           value={password}
           onChange={event => this.setState({ password: event.target.value })}
         />
 
-        <p className="login-page__validation">{validationMessage}</p>
+        <p className="login-form__validation">{validationMessage}</p>
 
-        <div className="login-page__submit">
+        <div className="login-form__submit">
           <input
             type='submit'
             value='Login'

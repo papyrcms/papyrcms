@@ -3,49 +3,4 @@
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-
-    margin: 5rem;
-    padding: 3rem 5rem;
-    width: 40rem;
-
-    background-color: $color-grey-light-2;
-    color: $color-grey-dark;
-    border-radius: .8rem;
-    box-shadow: $shadow-high;
-  }
-
-  &__label {
-    text-transform: uppercase;
-    font-size: 1.5rem;
-    letter-spacing: .2rem;
-    font-style: italic;
-  }
-
-  &__input {
-    height: 4rem;
-    width: 100%;
-    padding: 1rem;
-    margin: 1rem 0;
-    font-size: 2rem;
-    color: $color-grey-dark;
-    letter-spacing: .1rem;
-    border-radius: 1rem;
-  }
-
-  &__validation {
-    color: $color-tertiary;
-    letter-spacing: .1rem;
-    font-size: 1.4rem;
-    font-style: italic;
-  }
-
-  &__submit {
-    align-self: flex-end;
-    margin-top: auto;
-  }
 }

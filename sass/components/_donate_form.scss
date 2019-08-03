@@ -1,0 +1,77 @@
+.donate-form {
+  padding: 5rem 10vw;
+  padding-bottom: 10rem;
+  white-space: pre-wrap;
+  background-color: $color-grey-light;
+
+  &__card-section {
+    padding: 0 20rem;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+
+    @include respond(tab-land) {
+      padding: 0 15rem;
+    }
+
+    @include respond(tab-port) {
+      padding: 0 10rem;
+    }
+
+    @include respond(phone) {
+      padding: 0 5rem;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &--number {
+      grid-column: span 2;
+
+      @include respond(phone) {
+        grid-column: span 1;
+      }
+    }
+  }
+
+  &__label {
+    color: $color-grey;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-left: 1rem;
+  }
+
+  &__input {
+    border: .1rem solid $color-grey;
+    padding: 1rem;
+    border-radius: .5rem;
+    background-color: $color-white;
+  }
+
+  &__validation {
+    color: $color-tertiary;
+    letter-spacing: .1rem;
+    font-size: 1.4rem;
+    font-style: italic;
+    grid-column: span 2;
+
+    @include respond(phone) {
+      grid-column: span 1;
+    }
+  }
+
+  &__submit {
+    grid-column: span 2;
+    justify-self: end;
+
+    @include respond(phone) {
+      grid-column: span 1;
+    }
+  }
+}
