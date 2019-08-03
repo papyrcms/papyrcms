@@ -58,6 +58,10 @@ const PageLayout = props => {
         <meta name="title" content={`${header.title} | ${titleHeaderContent}`} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+        <meta property="og:image" content={header ? header.mainMedia : ''} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="200" />
+        <meta property="og:image:height" content="200" />
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://js.stripe.com/v3/"></script>
