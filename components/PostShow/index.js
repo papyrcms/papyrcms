@@ -134,6 +134,7 @@ class PostShow extends Component {
           <title>{`Derek Garnett | ${title}`}</title>
           <meta name="title" content={title} />
           <meta name="keywords" content={tags} />
+          <meta name="description" content={content.replace('<p>', '').replace('</p>', '')} />
         </Head>
 
         <div className="post">

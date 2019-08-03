@@ -27,13 +27,13 @@
 
   &__text {
     color: $color-grey;
-  }
-  
-  &__link {
-    &:link,
-    &:visited {
-      text-decoration: none;
-      color: $color-grey;
+
+    a {
+      &:link,
+      &:visited {
+        text-decoration: none;
+        color: $color-grey;
+      }
     }
   }
 }

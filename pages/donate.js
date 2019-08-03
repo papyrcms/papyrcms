@@ -12,9 +12,8 @@ class DonatePage extends Component {
 
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const stripePubKey = await axios.post(`${rootUrl}/api/stripePubKey`)
-    const posts = await axios.get(`${rootUrl}/api/published_posts`)
 
-    return { stripePubKey: stripePubKey.data, posts: posts.data }
+    return { stripePubKey: stripePubKey.data }
   }
 
 

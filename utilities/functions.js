@@ -1,5 +1,6 @@
 const Settings = require('../models/settings')
 
+
 const configureSettings = async (name, defaultOptions) => {
 
   // Search for the provided settings document
@@ -17,6 +18,7 @@ const configureSettings = async (name, defaultOptions) => {
   return appSettings.options
 }
 
+
 const compareKeys = (a, b) => {
 
   const aKeys = Object.keys(a).sort()
@@ -25,4 +27,7 @@ const compareKeys = (a, b) => {
   return JSON.stringify(aKeys) === JSON.stringify(bKeys)
 }
 
-module.exports = { configureSettings }
+
+module.exports = { 
+  configureSettings
+}

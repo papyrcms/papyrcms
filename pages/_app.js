@@ -2,7 +2,9 @@ import React from 'react'
 import App, { Container } from 'next/app'
 import withReduxStore from '../lib/with-redux-store'
 import { Provider } from 'react-redux'
+import axios from 'axios'
 import Layout from '../components/Layout/'
+import keys from '../config/keys'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 import { 
@@ -49,11 +51,6 @@ class MyApp extends App {
       dispatch(setPost(pageProps.post))
     }
 
-    // If an array of posts were recieved, send them to the redux store
-    if (!!pageProps.posts) {
-      dispatch(setPosts(pageProps.posts))
-    }
-
     // If a blog was recieved, send it to the redux store
     if (!!pageProps.blog) {
       dispatch(setBlog(pageProps.blog))
@@ -90,6 +87,12 @@ class MyApp extends App {
       dispatch(setCurrentUser(req.user))
       dispatch(setUrl({ query: req.query }))
     }
+
+    // Get all posts for page layout
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const posts = await axios.get(`${rootUrl}/api/published_posts`)
+
+    dispatch(setPosts(posts.data))
 
     // Return nothing. Props are set by the redux store
     return {}

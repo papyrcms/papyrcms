@@ -23,8 +23,7 @@ class UtilityRoutes {
   async renderLanding(req, res) {
 
     const actualPage = '/index'
-    const posts = await Post.find({ published: true }).sort({ created: -1 })
-    const queryParams = { posts, googleMapsKey: keys.googleMapsKey }
+    const queryParams = { googleMapsKey: keys.googleMapsKey }
 
     this.app.render(req, res, actualPage, queryParams)
   }

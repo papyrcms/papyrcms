@@ -9,12 +9,14 @@
 import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
+import renderHTML from 'react-render-html'
 
 const excludeFooterRoutes = [
   '/admin',
   '/posts_create',
   '/posts_all',
-  '/blog_create'
+  '/blog_create',
+  '/contact'
 ]
 
 const Footer = props => {
@@ -35,9 +37,7 @@ const Footer = props => {
         {/* Credit section */}
         <div className="credit">
           <p className="credit__text">
-            Website created by
-            <a className="credit__link" href="https://derekgarnett.com"> Derek Garnett </a>
-            &copy; 2019
+            {props.footerContent}
           </p>
         </div>
 

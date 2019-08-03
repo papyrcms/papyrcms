@@ -21,15 +21,6 @@ const ServicesPage = props => (
 )
 
 
-ServicesPage.getInitialProps = async () => {
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const posts = await axios.get(`${rootUrl}/api/published_posts`)
-
-  return { posts: posts.data }
-}
-
-
 const mapStateToProps = state => {
   return { posts: state.posts, settings: state.settings }
 }

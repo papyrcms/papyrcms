@@ -11,6 +11,7 @@
  *   posts: Array [Object - Any posts to run through the filter]
  *   component: Component/Function - The component to pass the filtered posts to as this.props.posts
  *   componentProps: Object - Any props required for the passed component
+ *   singular: Boolean - whether or not the child component expects the "posts" prop or "post"
  */
 
 
