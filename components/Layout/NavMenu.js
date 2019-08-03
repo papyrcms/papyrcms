@@ -19,9 +19,11 @@ class NavMenu extends Component {
 
       return (
         <Link href="/events">
-          <li onClick={() => this.onClick()} className="nav-menu__item">
-            <a>Events</a>
-          </li>
+          <a className="nav-menu__item">
+            <li onClick={() => this.onClick()}>
+              Events
+            </li>
+          </a>
         </Link>
       )
     }
@@ -36,9 +38,11 @@ class NavMenu extends Component {
 
       return (
         <Link href="/store">
-          <li onClick={() => this.onClick()} className="nav-menu__item">
-            <a>Store</a>
-          </li>
+          <a className="nav-menu__item">
+            <li onClick={() => this.onClick()} className="nav-menu__item">
+              Store
+            </li>
+          </a>
         </Link>
       )
     }
@@ -52,9 +56,11 @@ class NavMenu extends Component {
     if (!!settings && settings.enableDonations) {
       return (
         <Link href="/donate">
-          <li className="nav-menu__item" onClick={() => this.onClick()}>
-            <a>Donate</a>
-          </li>
+          <a className="nav-menu__item">
+            <li onClick={() => this.onClick()}>
+              Donate
+            </li>
+          </a>
         </Link>
       )
     }
@@ -75,11 +81,11 @@ class NavMenu extends Component {
       <nav>
         <ul className="nav-menu">
 
-          <Link href="/">
+          <Link href="/"><a>
             <div className="nav-menu__logo">
               <img src={this.props.logo} />
             </div>
-          </Link>
+          </a></Link>
 
           <div className="nav-menu__items">
 
@@ -90,33 +96,43 @@ class NavMenu extends Component {
             ></label>
 
             <Link href="/">
-              <li onClick={() => this.onClick()} className="nav-menu__item">
-                <a>Home</a>
-              </li>
+              <a className="nav-menu__item">
+                <li onClick={() => this.onClick()}>
+                  Home
+                </li>
+              </a>
             </Link>
 
             <Link href="/about">
-              <li onClick={() => this.onClick()} className="nav-menu__item">
-                <a>About</a>
-              </li>
+              <a className="nav-menu__item">
+                <li onClick={() => this.onClick()}>
+                  About
+                </li>
+              </a>
             </Link>
 
             <Link href="/services">
-              <li onClick={() => this.onClick()} className="nav-menu__item">
-                <a>Services</a>
-              </li>
+              <a className="nav-menu__item">
+                <li onClick={() => this.onClick()}>
+                  Services
+                </li>
+              </a>
             </Link>
 
             <Link href="/contact">
-              <li onClick={() => this.onClick()} className="nav-menu__item">
-                <a>Contact</a>
-              </li>
+              <a className="nav-menu__item">
+                <li onClick={() => this.onClick()}>
+                  Contact
+                </li>
+              </a>
             </Link>
 
             <Link href="/blog">
-              <li onClick={() => this.onClick()} className="nav-menu__item">
-                <a>Blog</a>
-              </li>
+              <a className="nav-menu__item">
+                <li onClick={() => this.onClick()}>
+                  Blog
+                </li>
+              </a>
             </Link>
 
             {this.renderEventsItem()}
