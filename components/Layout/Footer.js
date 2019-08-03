@@ -9,7 +9,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
-import renderHTML from 'react-render-html'
 
 const excludeFooterRoutes = [
   '/admin',
@@ -36,9 +35,9 @@ const Footer = props => {
 
         {/* Credit section */}
         <div className="credit">
-          <p className="credit__text">
+          <div className="credit__text">
             {props.footerContent}
-          </p>
+          </div>
         </div>
 
       </footer>

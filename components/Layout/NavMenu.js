@@ -9,6 +9,25 @@ import React, { Component } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 
+
+const onClick = () => {
+  const checkbox = document.getElementById('nav-menu-checkbox')
+
+  checkbox.classList.toggle('checked')
+}
+
+
+const NavLink = props => (
+  <Link href={props.href}>
+    <a className="nav-menu__item">
+      <li onClick={onClick}>
+        {props.children}
+      </li>
+    </a>
+  </Link>
+)
+
+
 class NavMenu extends Component {
 
   renderEventsItem() {
@@ -17,15 +36,7 @@ class NavMenu extends Component {
 
     if (!!settings && settings.enableEvents) {
 
-      return (
-        <Link href="/events">
-          <a className="nav-menu__item">
-            <li onClick={() => this.onClick()}>
-              Events
-            </li>
-          </a>
-        </Link>
-      )
+      return <NavLink href="/events">Events</NavLink>
     }
   }
 
@@ -35,16 +46,7 @@ class NavMenu extends Component {
     const { settings } = this.props
 
     if (!!settings && settings.enableStore) {
-
-      return (
-        <Link href="/store">
-          <a className="nav-menu__item">
-            <li onClick={() => this.onClick()} className="nav-menu__item">
-              Store
-            </li>
-          </a>
-        </Link>
-      )
+      return <NavLink href="/store">Store</NavLink>
     }
   }
 
@@ -54,24 +56,8 @@ class NavMenu extends Component {
     const { settings } = this.props
 
     if (!!settings && settings.enableDonations) {
-      return (
-        <Link href="/donate">
-          <a className="nav-menu__item">
-            <li onClick={() => this.onClick()}>
-              Donate
-            </li>
-          </a>
-        </Link>
-      )
+      return <NavLink href="/donate">Donate</NavLink>
     }
-  }
-
-
-  onClick() {
-
-    const checkbox = document.getElementById('nav-menu-checkbox')
-
-    checkbox.classList.toggle('checked')
   }
 
 
@@ -81,59 +67,27 @@ class NavMenu extends Component {
       <nav>
         <ul className="nav-menu">
 
-          <Link href="/"><a>
-            <div className="nav-menu__logo">
-              <img src={this.props.logo} />
-            </div>
-          </a></Link>
+          <Link href="/">
+            <a>
+              <div className="nav-menu__logo">
+                <img src={this.props.logo} />
+              </div>
+            </a>
+          </Link>
 
           <div className="nav-menu__items">
 
             <label
-              onClick={() => this.onClick()}
+              onClick={onClick}
               id="nav-menu-checkbox"
               className="nav-menu__item nav-menu__item--hamburger"
-            ></label>
+            />
 
-            <Link href="/">
-              <a className="nav-menu__item">
-                <li onClick={() => this.onClick()}>
-                  Home
-                </li>
-              </a>
-            </Link>
-
-            <Link href="/about">
-              <a className="nav-menu__item">
-                <li onClick={() => this.onClick()}>
-                  About
-                </li>
-              </a>
-            </Link>
-
-            <Link href="/services">
-              <a className="nav-menu__item">
-                <li onClick={() => this.onClick()}>
-                  Services
-                </li>
-              </a>
-            </Link>
-
-            <Link href="/contact">
-              <a className="nav-menu__item">
-                <li onClick={() => this.onClick()}>
-                  Contact
-                </li>
-              </a>
-            </Link>
-
-            <Link href="/blog">
-              <a className="nav-menu__item">
-                <li onClick={() => this.onClick()}>
-                  Blog
-                </li>
-              </a>
-            </Link>
+            <NavLink href="/">Home</NavLink>
+            <NavLink href="/about">About</NavLink>
+            <NavLink href="/services">Services</NavLink>
+            <NavLink href="/contact">Contact</NavLink>
+            <NavLink href="/blog">Blog</NavLink>
 
             {this.renderEventsItem()}
             {this.renderStoreItem()}
