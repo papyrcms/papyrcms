@@ -97,8 +97,6 @@ class AdminPage extends Component {
 
   renderSettingsInputs() {
 
-    console.log(this.props.settings)
-
     return _.map(this.props.settings, (value, key) => {
 
       // Format label

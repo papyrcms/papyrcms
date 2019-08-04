@@ -3,6 +3,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 import { setCurrentUser } from '../reduxStore'
+import Input from './Input'
 
 class LoginForm extends Component {
 
@@ -46,24 +47,21 @@ class LoginForm extends Component {
 
         <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
 
-        <label className="login-form__label" htmlFor='email_login_input'>Email</label>
-        <input
-          type='text'
-          name='username'
-          id='email_login_input'
-          className="login-form__input"
+        <Input
+          id="email_login_input"
+          label="Email"
+          name="username"
           value={email}
-          onChange={event => this.setState({ email: event.target.value })}
+          onChange={event => this.setState({ email: event.target.table })}
         />
 
-        <label className="login-form__label" htmlFor='password_login_input'>Password</label>
-        <input
-          type='password'
-          name='password'
-          id='password_login_input'
-          className="login-form__input"
+        <Input
+          id="password_login_input"
+          label="Password"
+          name="password"
           value={password}
           onChange={event => this.setState({ password: event.target.value })}
+          type="password"
         />
 
         <p className="login-form__validation">{validationMessage}</p>

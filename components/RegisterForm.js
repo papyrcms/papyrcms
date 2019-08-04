@@ -3,6 +3,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 import { setCurrentUser } from '../reduxStore'
+import Input from './Input'
 
 class RegisterForm extends Component {
 
@@ -62,52 +63,46 @@ class RegisterForm extends Component {
         <form onSubmit={this.handleSubmit.bind(this)} className="register-form">
           <h3 className="heading-tertiary u-margin-bottom-small">Register</h3>
 
-          <label className="register-form__label" htmlFor='first_name_register_input'>First Name</label>
-          <input
-            type='text'
-            name='firstName'
-            id='first_name_register_input'
-            className="register-form__input"
+          <Input
+            id="first_name_register_input"
+            label="First Name"
+            name="firstName"
             value={firstName}
             onChange={event => this.setState({ firstName: event.target.value })}
           />
 
-          <label className="register-form__label" htmlFor='last_name_register_input'>Last Name</label>
-          <input
-            type='text'
-            name='lastName'
-            id='last_name_register_input'
-            className="register-form__input"
+          <Input
+            id="last_name_register_input"
+            label="Last Name"
+            name="lastName"
             value={lastName}
             onChange={event => this.setState({ lastName: event.target.value })}
           />
 
-          <label className="register-form__label" htmlFor='email_register_input'>Email</label>
-          <input
-            type='text'
-            name='email'
-            id='email_register_input'
-            className="register-form__input"
+          <Input
+            id="email_register_input"
+            label="Email"
+            name="email"
             value={email}
             onChange={event => this.setState({ email: event.target.value })}
           />
 
-          <label className="register-form__label" htmlFor='password_register_input'>Password</label>
-          <input
-            type='password'
-            name='password'
-            className="register-form__input"
+          <Input
+            id="password_register_input"
+            label="Password"
+            name="password"
             value={password}
             onChange={event => this.setState({ password: event.target.value })}
+            type="password"
           />
 
-          <label className="register-form__label" htmlFor='password_confirm_register_input'>Confirm Password</label>
-          <input
-            type='password'
-            name='passwordConfirm'
-            className="register-form__input"
+          <Input
+            id="password_confirm_register_input"
+            label="Confirm Password"
+            name="passwordConfirm"
             value={passwordConfirm}
             onChange={event => this.setState({ passwordConfirm: event.target.value })}
+            type="password"
           />
 
           <p className="register-form__validation">{validationMessage}</p>

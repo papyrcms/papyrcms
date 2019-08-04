@@ -3,6 +3,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import RichTextEditor from '../RichTextEditor'
 import Media from '../Media'
+import Input from '../Input'
 
 class Form extends Component {
 
@@ -74,9 +75,7 @@ class Form extends Component {
       )
     } else {
       return (
-        <input
-          className="post-form__input"
-          type="text"
+        <Input
           name="image"
           value={mainMedia}
           onChange={event => changeState(event.target.value, 'mainMedia')}
@@ -150,30 +149,22 @@ class Form extends Component {
       <form encType="multipart/form-data" className="post-form" onSubmit={handleSubmit.bind(this)}>
 
         <div className='post-form__top'>
-          <div className="post-form__field">
-            <label className="post-form__label">Title</label>
-            <input
-              className="post-form__input"
-              type="text"
-              name="title"
-              value={title}
-              onChange={event => changeState(event.target.value, 'title')}
-            />
-          </div>
+          <Input
+            id="post_title"
+            label="Title"
+            name="title"
+            value={title}
+            onChange={event => changeState(event.target.value, 'title')}
+          />
 
-          <div className="post-form__field">
-            <label className="post-form__label">
-              Tags
-            </label>
-            <input
-              className="post-form__input"
-              placeholder="separated by a comma"
-              type="text"
-              name="tags"
-              value={tags}
-              onChange={event => changeState(event.target.value, 'tags')}
-            />
-          </div>
+          <Input
+            id="post_tags"
+            label="Tags"
+            name="tags"
+            placeholder="separated by a comma"
+            value={tags}
+            onChange={event => changeState(event.target.value, 'tags')}
+          />
         </div>
 
         <div className="post-form__label-section">
@@ -200,7 +191,6 @@ class Form extends Component {
 
         {this.renderMediaInput()}
         {this.renderMedia()}
-
         {this.renderAdditionalFields()}
 
         <label className="post-form__label">Content</label>

@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react'
 import axios from 'axios'
+import Input from './Input'
 
 class ContactForm extends Component {
 
@@ -65,29 +66,25 @@ class ContactForm extends Component {
 
         <form className="contact-form__form" onSubmit={this.handleSubmit.bind(this)}>
 
-          <div className="contact-form__field">
-            <label htmlFor="contact-name" className="contact-form__label">Name</label>
-            <input
+          <div className="contact-form__top">
+            <Input
               id="contact-name"
-              className="contact-form__input"
-              type="text"
+              label="Name"
+              name="name"
               value={contactName}
               onChange={event => this.setState({ contactName: event.target.value })}
             />
-          </div>
 
-          <div className="contact-form__field">
-            <label htmlFor="contact-email" className="contact-form__label">Email</label>
-            <input
+            <Input
               id="contact-email"
-              className="contact-form__input"
-              type="text"
+              label="Email"
+              name="email"
               value={contactEmail}
               onChange={event => this.setState({ contactEmail: event.target.value })}
             />
           </div>
 
-          <div className="contact-form__field contact-form__field--textarea">
+          <div className="contact-form__field--textarea">
             <label htmlFor="contact-message" className="contact-form__label">Message</label>
             <textarea
               id="contact-message"

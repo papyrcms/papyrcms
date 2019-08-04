@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {
-  injectStripe,
-  CardCVCElement,
-  CardExpiryElement,
-  CardNumberElement
-} from 'react-stripe-elements'
-import { SectionStandard } from '../components/Sections/'
 import axios from 'axios'
+import { injectStripe } from 'react-stripe-elements'
+import { SectionStandard } from '../components/Sections/'
+import CreditCardForm from './CreditCardForm'
+import Input from './Input'
 
 class DonateForm extends Component {
 
@@ -50,10 +47,13 @@ class DonateForm extends Component {
 
       default:
 
-        data.amount = amount
-        data.email = email
+        const donationData = {
+          ...data.source,
+          amount,
+          email,
+        }
 
-        axios.post('/api/donate', data)
+        axios.post('/api/donate', donationData)
           .then(response => {
             if (response.data.status === 'succeeded') {
               this.setState({ paid: true })
@@ -80,70 +80,30 @@ class DonateForm extends Component {
           <SectionStandard
             title={title}
             posts={posts}
+            className="u-padding-bottom-small"
           />
 
-          <div className="donate-form__card-section">
+          <div className="donate-form__form">
 
-            <div className="donate-form__section donate-form__section--email">
-              <label className="donate-form__label">Email</label>
-              <input
+            <div className="donate-form__form--top u-margin-bottom-small">
+              <Input
+                id="donation_email"
+                label="Email"
                 type="email"
                 value={email}
-                className="donate-form__input"
                 onChange={event => this.setState({ email: event.target.value })}
               />
-            </div>
 
-            <div className="donate-form__section donate-form__section--amount">
-              <label className="donate-form__label">Amount</label>
-              <input
+              <Input
+                id="donation_amount"
+                label="Amount"
                 type="number"
-                min="1"
-                step=".01"
                 value={amount}
-                className="donate-form__input"
                 onChange={event => this.setState({ amount: event.target.value })}
               />
             </div>
 
-            <div className="donate-form__section donate-form__section--number">
-              <label className="donate-form__label">Card Number</label>
-              <div className="donate-form__input">
-                <CardNumberElement
-                  style={{
-                    base: {
-                      color: '#333'
-                    }
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="donate-form__section donate-form__section--expiration">
-              <label className="donate-form__label">Card Expiration</label>
-              <div className="donate-form__input">
-                <CardExpiryElement
-                  style={{
-                    base: {
-                      color: '#333'
-                    }
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="donate-form__section donate-form__section--cvc">
-              <label className="donate-form__label">Card CVC</label>
-              <div className="donate-form__input">
-                <CardCVCElement
-                  style={{
-                    base: {
-                      color: '#333'
-                    }
-                  }}
-                />
-              </div>
-            </div>
+            <CreditCardForm className="u-margin-bottom-small" />
 
             <p className="donate-form__validation">{validation}</p>
 

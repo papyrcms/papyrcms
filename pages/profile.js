@@ -4,6 +4,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
 import { setCurrentUser } from '../reduxStore'
+import Input from '../components/Input'
 
 class ProfilePage extends Component {
 
@@ -135,28 +136,29 @@ class ProfilePage extends Component {
           </div>
 
           <div className="profile__info">
-            <p>Email: {currentUser.email}</p>
+            <p className="u-margin-bottom-small">Email: {currentUser.email}</p>
 
             {/* Personal Info Form */}
             <form className="profile__form" onSubmit={this.handleInfoSubmit.bind(this)}>
-              <label htmlFor="profile-first-name">First Name</label>
-              <input
-                id="profile-first-name"
-                type="text"
-                name="firstName"
-                value={firstName}
-                onChange={event => this.setState({ firstName: event.target.value })}
-                className="profile__input"
-              />
-              <label htmlFor="profile-last-name">Last Name</label>
-              <input
-                id="profile-last-name"
-                type="text"
-                name="lastName"
-                value={lastName}
-                onChange={event => this.setState({ lastName: event.target.value })}
-                className="profile__input"
-              />
+
+              <div className="profile__name-inputs">
+                <Input
+                  id="profile-first-name"
+                  label="First Name"
+                  name="firstName"
+                  value={firstName}
+                  onChange={event => this.setState({ firstName: event.target.value })}
+                />
+
+                <Input
+                  id="profile-last-name"
+                  label="Last Name"
+                  name="lastName"
+                  value={lastName}
+                  onChange={event => this.setState({ lastName: event.target.value })}
+                />
+              </div>
+
               <p className="profile__validation">{infoValidation}</p>
               <input
                 className="button button-primary"
@@ -169,33 +171,34 @@ class ProfilePage extends Component {
             {/* Change Password Form */}
             <h3>Reset Password</h3>
             <form className="profile__form" onSubmit={this.handlePasswordSubmit.bind(this)}>
-              <label htmlFor="profile-current-password">Current Password</label>
-              <input
-                id="profile-current-password"
-                type="password"
-                name="oldPassword"
-                value={oldPassword}
-                onChange={event => this.setState({ oldPassword: event.target.value })}
-                className="profile__input"
-              />
-              <label htmlFor="profile-new-password">New Password</label>
-              <input
-                id="profile-new-password"
-                type="password"
-                name="newPassword"
-                value={newPassword}
-                onChange={event => this.setState({ newPassword: event.target.value })}
-                className="profile__input"
-              />
-              <label htmlFor="profile-confirm-password">Confirm New Password</label>
-              <input
-                id="profile-confirm-password"
-                type="password"
-                name="newPasswordConfirm"
-                value={newPasswordConfirm}
-                onChange={event => this.setState({ newPasswordConfirm: event.target.value })}
-                className="profile__input"
-              />
+              <div className="profile__password-inputs">
+                <Input
+                  id="profile-current-password"
+                  label="Current Password"
+                  name="oldPassword"
+                  value={oldPassword}
+                  onChange={event => this.setState({ oldPassword: event.target.value })}
+                  type="password"
+                />
+
+                <Input
+                  id="profile-new-password"
+                  label="New Password"
+                  name="newPassword"
+                  value={newPassword}
+                  onChange={event => this.setState({ newPassword: event.target.value })}
+                  type="password"
+                />
+
+                <Input
+                  id="profile-confirm-password"
+                  label="New Password"
+                  name="newPasswordConfirm"
+                  value={newPasswordConfirm}
+                  onChange={event => this.setState({ newPasswordConfirm: event.target.value })}
+                  type="password"
+                />
+              </div>
               <p className="profile__validation">{passwordValidation}</p>
               <input
                 className="button button-primary"

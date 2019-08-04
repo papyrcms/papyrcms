@@ -61,9 +61,9 @@ class PaymentRoutes extends Controller {
 
   async createDonation(req, res) {
 
-    const { source, amount, email } = req.body
+    const { id, amount, email } = req.body
     const paymentDetails = {
-      source: source.id,
+      source: id,
       amount: amount * 100,
       receipt_email: email,
       currency: 'usd',

@@ -1,0 +1,39 @@
+.credit-card-form {
+
+  display: grid;
+  grid-gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    &--number {
+      grid-column: span 2;
+
+      @include respond(phone) {
+        grid-column: span 1;
+      }
+    }
+  }
+
+  &__label {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    letter-spacing: .2rem;
+    font-style: italic;
+    margin-left: 1rem;
+  }
+
+  &__input {
+    border-top: .2rem solid $color-grey;
+    border-left: .2rem solid $color-grey;
+    border-bottom: .2rem solid $color-grey-light;
+    border-right: .2rem solid $color-grey-light;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: $color-white;
+    margin-top: 1rem;
+  }
+}

@@ -36,12 +36,14 @@
   }
 
   &__top {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
     width: 100%;
 
     @include respond(phone) {
-      flex-direction: column;
+      grid-template-columns: 1fr;
+      grid-gap: 0;
     }
   }
 
@@ -50,12 +52,6 @@
     max-width: 100%;
     margin: 3rem;
     align-self: center;
-  }
-
-  &__field {
-    flex: 0 0 47%;
-    display: flex;
-    flex-direction: column;
   }
 
   &__text-editor {

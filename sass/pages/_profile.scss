@@ -45,15 +45,28 @@
     align-items: flex-start;
   }
 
-  &__input {
-    width: 30rem;
-    height: 4rem;
-    padding: 1rem;
-    font-size: 2rem;
-    letter-spacing: .1rem;
-    color: $color-grey-dark;
-    border-radius: 1rem;
-    margin-bottom: 1.5rem;
+  &__name-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+    width: 100%;
+
+    @include respond(phone) {
+      grid-template-columns: 1fr;
+      grid-gap: 0;
+    }
+  }
+
+  &__password-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2rem;
+    width: 100%;
+
+    @include respond(tab-port) {
+      grid-template-columns: 1fr;
+      grid-gap: 0;
+    }
   }
 
   &__validation {

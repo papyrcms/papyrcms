@@ -3,6 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../config/keys'
 import PostIndex from '../components/PostIndex'
+import Input from '../components/Input'
 
 class PostsAll extends Component {
 
@@ -73,18 +74,15 @@ class PostsAll extends Component {
       <div className="posts-all-page">
         <div className="posts-all-page__top">
           <h2 className="heading-secondary posts-all-page__header">My Content</h2>
-          <div className="posts-all-page__search">
-            <label htmlFor="posts-search" className="posts-all-page__search--label">Search Posts</label>
-            <input
-              id="posts-search"
-              placeholder="search tags here"
-              type="text"
-              name="search"
-              value={searchText}
-              onChange={event => this.onSearchTextChange(event)}
-              className="posts-all-page__search--input"
-            />
-          </div>
+          <Input
+            id="posts-search"
+            label="Search Posts"
+            placeholder="search tags here"
+            name="search"
+            value={searchText}
+            onChange={event => this.onSearchTextChange(event)}
+            className="posts-all-page__input"
+          />
         </div>
         <PostIndex posts={posts} />
       </div>
