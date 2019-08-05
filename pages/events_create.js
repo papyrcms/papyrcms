@@ -1,42 +1,35 @@
 import React from 'react'
 import PostsForm from '../components/PostsForm/'
+import Input from '../components/Input'
 
-const dateField = props => (
-  <div className="post-form__field">
-    <label className="post-form__label">Date</label>
-    <input
-      className="post-form__input"
-      type="date"
-      name="date"
-      value={props.date}
-      onChange={event => props.changeState(event.target.value, 'date')}
-    />
-  </div>
+const dateField = ({ date, changeState }) => (
+  <Input
+    id="event_date"
+    label="Date"
+    type="date"
+    name="date"
+    value={date || ''}
+    onChange={event => changeState(event.target.value, 'date')}
+  />
 )
 
-const coordinatesField = props => (
+const coordinatesField = ({ latitude, longitude, changeState }) => (
   <div className="post-form__top">
-    <div className="post-form__field">
-      <label className="post-form__label">Latitude</label>
-      <input
-        className="post-form__input"
-        type="text"
-        name="latitude"
-        value={props.latitude}
-        onChange={event => props.changeState(event.target.value, 'latitude')}
-      />
-    </div>
+    <Input
+      id="event_latitude"
+      label="Latitude"
+      name="latitude"
+      value={latitude || ''}
+      onChange={event => changeState(event.target.value, 'latitude')}
+    />
 
-    <div className="post-form__field">
-      <label className="post-form__label">Longitude</label>
-      <input
-        className="post-form__input"
-        type="text"
-        name="longitude"
-        value={props.longitude}
-        onChange={event => props.changeState(event.target.value, 'longitude')}
-      />
-    </div>
+    <Input
+      id="event_longitude"
+      label="Longitude"
+      name="longitude"
+      value={longitude || ''}
+      onChange={event => changeState(event.target.value, 'longitude')}
+    />
   </div>
 )
 

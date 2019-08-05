@@ -53,6 +53,7 @@ class EventRoutes extends Controller {
       '/api/events',
       checkIfAdmin,
       sanitizeRequestBody,
+      this.validateEvent,
       mapTagsToArray,
       this.createEvent.bind(this)
     )
@@ -73,6 +74,7 @@ class EventRoutes extends Controller {
       '/api/events/:id',
       checkIfAdmin,
       sanitizeRequestBody,
+      this.validateEvent,
       mapTagsToArray,
       this.updateEvent.bind(this)
     )
@@ -81,6 +83,18 @@ class EventRoutes extends Controller {
       checkIfAdmin,
       this.deleteEvent.bind(this)
     )
+  }
+
+
+  validateEvent(req, res, next) {
+
+    if (!req.body.title) {
+      res.status(401).send({ message: 'You need to include a title for your event.' })
+    } else if (!req.body.date) {
+      res.status(401).send({ message: 'You need to include a date for your event.' })
+    } else {
+      next()
+    }
   }
 
 

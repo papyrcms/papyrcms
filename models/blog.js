@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 const blogSchema = new mongoose.Schema({
 
-  title: String,
-  content: String,
+  title: { type: String, required: true },
+  content: { type: String, required: true },
   tags: [String],
   mainMedia: String,
   subImages: [String],

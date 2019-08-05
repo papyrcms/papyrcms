@@ -13,16 +13,19 @@ const checkIfAdmin = (req, res, next) => {
 
 const mapTagsToArray = (req, res, next) => {
 
-  const newTags = _.map(req.body.tags.split(','), tag => {
-    let pendingTag = tag
-    pendingTag = pendingTag.trim()
-
-    if (!!pendingTag) {
-      return pendingTag
-    }
-  })
-
-  req.body.tags = newTags
+  if (req.body.tags) {
+    const newTags = _.map(req.body.tags.split(','), tag => {
+      let pendingTag = tag
+      pendingTag = pendingTag.trim()
+  
+      if (!!pendingTag) {
+        return pendingTag
+      }
+    })
+  
+    req.body.tags = newTags
+  }
+  
   next()
 }
 

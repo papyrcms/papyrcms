@@ -14,11 +14,13 @@ $color-black: #000;
 $color-primary: #4EBDEC;	// Main Primary color
 
 $color-secondary: #FFDB4D;	// Main Secondary color
-$color-edit: #FFDB4D;	// Main Secondary color
+$color-edit: #FFDB4D;	// Main Edit color
+$color-warning: #FFDB4D;	// Main Warning color
 
 $color-tertiary: #FD4C61;	// Main tertiary color
-$color-delete: #FD4C61;	// Main tertiary color
-$color-cta: #FD4C61;
+$color-delete: #FD4C61;	// Main delete color
+$color-error: #FD4C61;	// Main error color
+$color-cta: #FD4C61; // Main cta color
 
 // FONT
 $default-font-size: 1.6rem;

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const eventSchema = new mongoose.Schema({
 
-  title: String,
+  title: { type: String, required: true },
   content: String,
   tags: [String],
   mainMedia: String,

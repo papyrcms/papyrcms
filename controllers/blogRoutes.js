@@ -36,6 +36,7 @@ class BlogRoutes extends Controller {
       '/api/blogs', 
       checkIfAdmin, 
       sanitizeRequestBody, 
+      this.validateBlog,
       mapTagsToArray,
       this.createBlog.bind(this)
     )
@@ -56,6 +57,7 @@ class BlogRoutes extends Controller {
       '/api/blogs/:id', 
       checkIfAdmin, 
       sanitizeRequestBody, 
+      this.validateBlog,
       mapTagsToArray,
       this.updateBlog.bind(this)
     )
@@ -64,6 +66,18 @@ class BlogRoutes extends Controller {
       checkIfAdmin, 
       this.deleteBlog.bind(this)
     )
+  }
+
+
+  validateBlog(req, res, next) {
+
+    if (!req.body.title) {
+      res.status(401).send({ message: 'You need to include a title for your blog post.' })
+    } else if (!req.body.content) {
+      res.status(401).send({ message: 'You need to include content for your blog post.' })
+    } else {
+      next()
+    }
   }
 
 

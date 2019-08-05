@@ -125,6 +125,8 @@ class PostRoutes extends Controller {
 
   createPost(req, res) {
 
+    console.log(req.body)
+
     const post = new PostModel(req.body)
     post.author = req.user
 

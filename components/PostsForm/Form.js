@@ -132,8 +132,8 @@ class Form extends Component {
     const { additionalFields, changeState, additionalState } = this.props
 
     if (additionalFields) {
-      return _.map(additionalFields, Field => {
-        return <Field key="" changeState={changeState} {...additionalState} />
+      return _.map(additionalFields, (Field, i) => {
+        return <Field key={`field-${i}`} changeState={changeState} {...additionalState} />
       })
     } else {
       return null
@@ -143,7 +143,7 @@ class Form extends Component {
 
   render() {
 
-    const { title, tags, content, changeState, handleSubmit } = this.props
+    const { title, tags, content, changeState, handleSubmit, validationMessage } = this.props
 
     return (
       <form encType="multipart/form-data" className="post-form" onSubmit={handleSubmit.bind(this)}>
@@ -199,6 +199,8 @@ class Form extends Component {
           content={content}
           onChange={newContent => changeState(newContent, 'content')}
         />
+
+        <p className="post-form__validation">{validationMessage}</p>
 
         <div className="post-form__bottom">
           {this.renderPublish()}

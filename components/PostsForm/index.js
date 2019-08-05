@@ -33,7 +33,8 @@ class PostsForm extends Component {
       tags: post ? this.mapTagsToString(post.tags) : '',
       mainMedia: post ? post.mainMedia || '' : '',
       content: post ? post.content || '' : '',
-      publish: post ? post.published || false : false
+      publish: post ? post.published || false : false,
+      validationMessage: ''
     }
   }
 
@@ -91,14 +92,14 @@ class PostsForm extends Component {
         .then(response => {
           Router.push(redirect)
         }).catch(error => {
-          console.error(error)
+          this.setState({ validationMessage: error.response.data.message })
         })
     } else {
       axios.post(postRoute, postObject)
         .then(response => {
           Router.push(redirect)
         }).catch(error => {
-          console.error(error)
+          this.setState({ validationMessage: error.response.data.message })
         })
     }
   }
@@ -112,7 +113,7 @@ class PostsForm extends Component {
 
   render() {
 
-    const { title, tags, mainMedia, content, publish } = this.state
+    const { title, tags, mainMedia, content, publish, validationMessage } = this.state
     const { pageTitle, additionalFields, additionalState } = this.props
 
     const additionalProps = {}
@@ -134,6 +135,7 @@ class PostsForm extends Component {
           handleSubmit={this.handleSubmit.bind(this)}
           additionalFields={additionalFields}
           additionalState={additionalProps}
+          validationMessage={validationMessage}
         />
       </div>
     )
