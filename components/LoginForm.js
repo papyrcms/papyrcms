@@ -52,7 +52,7 @@ class LoginForm extends Component {
           label="Email"
           name="username"
           value={email}
-          onChange={event => this.setState({ email: event.target.table })}
+          onChange={event => this.setState({ email: event.target.value })}
         />
 
         <Input
