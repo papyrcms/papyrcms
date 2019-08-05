@@ -173,6 +173,26 @@ class AdminPage extends Component {
   }
 
 
+  renderBlogMenuItems() {
+
+    const { settings } = this.props
+
+    if (settings.enableBlog) {
+      return (
+        <Fragment>
+          <Link href="/blog_create" as="/blog/new">
+            <a className="admin-page__link">Add Blog</a>
+          </Link>
+
+          <Link href="/blog_all" as="/blog/all">
+            <a className="admin-page__link">My Blogs</a>
+          </Link>
+        </Fragment>
+      )
+    }  
+  }
+
+
   renderEventMenuItems() {
 
     const { settings } = this.props
@@ -211,14 +231,7 @@ class AdminPage extends Component {
             <a className="admin-page__link">My Content</a>
           </Link>
 
-          <Link href="/blog_create" as="/blog/new">
-            <a className="admin-page__link">Add Blog</a>
-          </Link>
-
-          <Link href="/blog_all" as="/blog/all">
-            <a className="admin-page__link">My Blogs</a>
-          </Link>
-
+          {this.renderBlogMenuItems()}
           {this.renderEventMenuItems()}
           {this.renderStoreMenuItems()}
         </div>

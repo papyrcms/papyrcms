@@ -1,9 +1,9 @@
+const _ = require('lodash')
 const Controller = require('./abstractController')
 const EventModel = require('../models/event')
 const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 const keys = require('../config/keys')
-const _ = require('lodash')
 
 class EventRoutes extends Controller {
 
@@ -27,23 +27,28 @@ class EventRoutes extends Controller {
     // Views
     this.server.get(
       '/events',
+      this.eventsEnabled,
       this.renderPage.bind(this, '')
     )
     this.server.get(
       '/events/all',
+      this.eventsEnabled,
       this.renderPage.bind(this, '_all')
     )
     this.server.get(
       '/events/new',
+      this.eventsEnabled,
       checkIfAdmin,
       this.renderPage.bind(this, '_create')
     )
     this.server.get(
       '/events/:id',
+      this.eventsEnabled,
       this.renderPage.bind(this, '_show')
     )
     this.server.get(
       '/events/:id/edit',
+      this.eventsEnabled,
       checkIfAdmin,
       this.renderPage.bind(this, '_edit')
     )
@@ -51,6 +56,7 @@ class EventRoutes extends Controller {
     // Event API
     this.server.post(
       '/api/events',
+      this.eventsEnabled,
       checkIfAdmin,
       sanitizeRequestBody,
       this.validateEvent,
@@ -59,19 +65,23 @@ class EventRoutes extends Controller {
     )
     this.server.get(
       '/api/events',
+      this.eventsEnabled,
       checkIfAdmin,
       this.sendAllEvents.bind(this)
     )
     this.server.get(
       '/api/published_events',
+      this.eventsEnabled,
       this.sendPublishedEvents.bind(this)
     )
     this.server.get(
       '/api/events/:id',
+      this.eventsEnabled,
       this.sendOneEvent.bind(this)
     )
     this.server.put(
       '/api/events/:id',
+      this.eventsEnabled,
       checkIfAdmin,
       sanitizeRequestBody,
       this.validateEvent,
@@ -80,9 +90,20 @@ class EventRoutes extends Controller {
     )
     this.server.delete(
       '/api/events/:id',
+      this.eventsEnabled,
       checkIfAdmin,
       this.deleteEvent.bind(this)
     )
+  }
+
+
+  eventsEnabled(req, res, next) {
+
+    if (res.locals.settings.enableEvents || req.user && req.user.isAdmin) {
+      next()
+    } else {
+      res.status(401).send({ message: 'You are not allowed to do that' })
+    }
   }
 
 

@@ -30,6 +30,17 @@ const NavLink = props => (
 
 class NavMenu extends Component {
 
+  renderBlogItem() {
+
+    const { settings } = this.props
+
+    if (!!settings && settings.enableBlog) {
+
+      return <NavLink href="/blog">Blog</NavLink>
+    }  
+  }
+
+
   renderEventsItem() {
 
     const { settings } = this.props
@@ -86,12 +97,13 @@ class NavMenu extends Component {
             <NavLink href="/">Home</NavLink>
             <NavLink href="/about">About</NavLink>
             <NavLink href="/services">Services</NavLink>
-            <NavLink href="/contact">Contact</NavLink>
-            <NavLink href="/blog">Blog</NavLink>
 
+            {this.renderBlogItem()}
             {this.renderEventsItem()}
             {this.renderStoreItem()}
             {this.renderDonateItem()}
+
+            <NavLink href="/contact">Contact</NavLink>
           </div>
 
         </ul>

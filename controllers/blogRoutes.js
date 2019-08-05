@@ -1,32 +1,55 @@
+const _ = require('lodash')
 const Controller = require('./abstractController')
 const BlogModel = require('../models/blog')
 const CommentModel = require('../models/comment')
+const { configureSettings } = require('../utilities/functions')
 const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 
 class BlogRoutes extends Controller {
+
+  registerSettings() {
+
+    // Middleware to configure comment settings
+    this.server.use(async (req, res, next) => {
+
+      const defaultSettings = { enableBlog: false }
+      const settings = await configureSettings('blog', defaultSettings)
+
+      _.map(settings, (optionValue, optionKey) => {
+        res.locals.settings[optionKey] = optionValue
+      })
+      next()
+    })
+  }
+
 
   registerRoutes() {
 
     // Views
     this.server.get(
       '/blog', 
+      this.blogEnabled,
       this.renderPage.bind(this, '')
     )
     this.server.get(
       '/blog/all', 
+      this.blogEnabled,
       this.renderPage.bind(this, '_all')
     )
     this.server.get(
       '/blog/new', 
+      this.blogEnabled,
       checkIfAdmin, 
       this.renderPage.bind(this, '_create')
     )
     this.server.get(
       '/blog/:id', 
+      this.blogEnabled,
       this.renderPage.bind(this, '_show')
     )
     this.server.get(
       '/blog/:id/edit', 
+      this.blogEnabled,
       checkIfAdmin, 
       this.renderPage.bind(this, '_edit')
     )
@@ -34,6 +57,7 @@ class BlogRoutes extends Controller {
     // Blog API
     this.server.post(
       '/api/blogs', 
+      this.blogEnabled,
       checkIfAdmin, 
       sanitizeRequestBody, 
       this.validateBlog,
@@ -42,19 +66,23 @@ class BlogRoutes extends Controller {
     )
     this.server.get(
       '/api/blogs',
+      this.blogEnabled,
       checkIfAdmin,
       this.sendAllBlogs.bind(this)
     )
     this.server.get(
       '/api/published_blogs', 
+      this.blogEnabled,
       this.sendPublishedBlogs.bind(this)
     )
     this.server.get(
       '/api/blogs/:id', 
+      this.blogEnabled,
       this.sendOneBlog.bind(this)
     )
     this.server.put(
       '/api/blogs/:id', 
+      this.blogEnabled,
       checkIfAdmin, 
       sanitizeRequestBody, 
       this.validateBlog,
@@ -63,9 +91,20 @@ class BlogRoutes extends Controller {
     )
     this.server.delete(
       '/api/blogs/:id', 
+      this.blogEnabled,
       checkIfAdmin, 
       this.deleteBlog.bind(this)
     )
+  }
+
+
+  blogEnabled(req, res, next) {
+
+    if (res.locals.settings.enableBlog || req.user && req.user.isAdmin) {
+      next()
+    } else {
+      res.status(401).send({ message: 'You are not allowed to do that' })
+    }
   }
 
 
