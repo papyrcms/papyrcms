@@ -13,6 +13,22 @@
   transform: translate(-50%, -50%);
 }
 
+@mixin inputLabelStyle {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: .2rem;
+  font-style: italic;
+  margin-left: 1rem;
+}
+
+@mixin inputBorderStyle {
+  border-top: .2rem solid $color-grey;
+  border-left: .2rem solid $color-grey;
+  border-bottom: .2rem solid $color-grey-light;
+  border-right: .2rem solid $color-grey-light;
+  border-radius: 1rem;
+}
+
 // max-width: px / 16
 @mixin respond($breakpoint) {
   @if $breakpoint == phone {

@@ -21,6 +21,7 @@
 
   &__input {
     max-width: 40rem;
+    @include inputBorderStyle();
   }
 
   &__header {

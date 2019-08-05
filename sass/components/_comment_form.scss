@@ -4,6 +4,9 @@
   &__text-editor {
     padding: 2rem;
     height: 15rem;
+    width: 100%;
+    margin: 3rem 0;
+    @include inputBorderStyle();
   }
 
   &__login {
@@ -45,16 +48,7 @@
   }
 
   &__label {
-    text-transform: uppercase;
-    font-size: 2rem;
-    letter-spacing: .4rem;
-    font-style: italic;
-    margin: 1rem;
-  }
-
-  &__text-editor {
-    width: 100%;
-    margin: 3rem 0;
+    @include inputLabelStyle();
   }
 
   &__bottom {

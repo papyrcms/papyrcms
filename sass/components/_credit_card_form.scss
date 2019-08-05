@@ -19,20 +19,12 @@
   }
 
   &__label {
-    text-transform: uppercase;
-    font-size: 1.5rem;
-    letter-spacing: .2rem;
-    font-style: italic;
-    margin-left: 1rem;
+    @include inputLabelStyle();
   }
 
   &__input {
-    border-top: .2rem solid $color-grey;
-    border-left: .2rem solid $color-grey;
-    border-bottom: .2rem solid $color-grey-light;
-    border-right: .2rem solid $color-grey-light;
+    @include inputBorderStyle();
     padding: 1rem;
-    border-radius: 1rem;
     background-color: $color-white;
     margin-top: 1rem;
   }

@@ -3,11 +3,7 @@
   width: 100%;
 
   &__label {
-    text-transform: uppercase;
-    font-size: 1.5rem;
-    letter-spacing: .2rem;
-    font-style: italic;
-    margin-left: 1rem;
+    @include inputLabelStyle();
   }
 
   &__input {
@@ -18,6 +14,6 @@
     font-size: 2rem;
     color: $color-grey-dark;
     letter-spacing: .1rem;
-    border-radius: 1rem;
+    @include inputBorderStyle();
   }
 }

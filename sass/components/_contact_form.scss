@@ -38,27 +38,13 @@
     }
   }
 
-  // &__label {
-  //   text-transform: uppercase;
-  //   font-size: 1.5rem;
-  //   letter-spacing: .2rem;
-  //   font-style: italic;
-  //   margin-left: 1rem;
-  // }
-
-  // &__input {
-  //   height: 5rem;
-  //   border-radius: 1rem;
-  //   padding: 1rem;
-  //   margin: 1rem 0;
-  //   font-size: 2rem;
-  //   color: $color-grey-dark;
-  //   letter-spacing: .1rem;
-  // }
+  &__label {
+    @include inputLabelStyle();
+  }
 
   &__textarea {
+    @include inputBorderStyle();
     height: 25rem;
-    border-radius: 1rem;
     resize: vertical;
     padding: 1rem;
     margin: 1rem 0;
