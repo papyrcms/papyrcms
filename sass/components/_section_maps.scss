@@ -9,11 +9,11 @@
   }
 
   &__content{
-    white-space: pre-wrap;
-  
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include contentStyle();
     
     & > * {
       margin: 2rem;

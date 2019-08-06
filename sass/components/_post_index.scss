@@ -72,9 +72,8 @@
   &__content {
     border-left: .1rem solid $color-grey-dark;
     margin: 2rem 0;
-    padding-bottom: 1rem;
     padding-left: 3rem;
-    letter-spacing: .1rem;
+    @include contentStyle();
 
     @include respond(phone) {
       border-left: none;

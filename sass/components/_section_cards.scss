@@ -83,7 +83,7 @@
   }
 
   &__content {
-    letter-spacing: .1rem;
+    @include contentStyle();
   }
 
   &__link {

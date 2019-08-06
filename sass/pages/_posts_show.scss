@@ -1,15 +1,18 @@
 .posts-show-page {
-  padding: 3rem 3vw;
+  padding: 5rem 10vw;
+  padding-bottom: 10rem;
   background-color: $color-grey-light;
-  // min-height: 50rem;
 
   display: flex;
   flex-direction: column;
+
+  &__container {
+    max-width: $max-container-width;
+    margin: 0 auto;
+  }
 }
 
 .post {
-  padding: 2rem 7vw;
-  border-radius: 1rem;
 
   @include respond(tab-port) {
     padding: 2rem 4vw;
@@ -20,7 +23,7 @@
   }
 
   &__title {
-    border-bottom: .1rem solid $color-grey-dark;
+    // border-bottom: .1rem solid $color-grey-dark;
 
     @include respond(tab-port) {
       letter-spacing: .4rem;
@@ -47,7 +50,7 @@
     padding-right: 4rem;
     padding-top: 2rem;
 
-    @include respond(tab-land) {
+    @include respond(tab-port) {
       max-width: calc(60% - 2rem);
     }
 
@@ -63,12 +66,7 @@
   }
 
   &__content {
-    padding-top: 1rem;
-    letter-spacing: .1rem;
-
-    p {
-      margin-bottom: 3rem;
-    }
+    @include contentStyle();
   }
 
   &__buttons {
@@ -113,9 +111,8 @@
   border-bottom: .1rem solid $color-grey-dark;
 
   &__content {
-    white-space: pre-wrap;
     padding-top: 1rem;
-    letter-spacing: .1rem;
+    @include contentStyle();
   }
 
   &__author {

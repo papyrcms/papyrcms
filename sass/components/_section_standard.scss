@@ -42,6 +42,8 @@
   &__text {
     grid-column: span 2;
 
+    @include contentStyle();
+
     @include respond(tab-port) {
       grid-column: span 1;
     }

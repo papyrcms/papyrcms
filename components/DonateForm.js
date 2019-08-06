@@ -83,36 +83,40 @@ class DonateForm extends Component {
             className="u-padding-bottom-small"
           />
 
-          <div className="donate-form__form">
+          <div className="donate-form__container">
 
-            <div className="donate-form__form--top u-margin-bottom-small">
-              <Input
-                id="donation_email"
-                label="Email"
-                type="email"
-                value={email}
-                onChange={event => this.setState({ email: event.target.value })}
+            <div className="donate-form__form">
+
+              <div className="donate-form__form--top u-margin-bottom-small">
+                <Input
+                  id="donation_email"
+                  label="Email"
+                  type="email"
+                  value={email}
+                  onChange={event => this.setState({ email: event.target.value })}
+                />
+
+                <Input
+                  id="donation_amount"
+                  label="Amount"
+                  type="number"
+                  value={amount}
+                  onChange={event => this.setState({ amount: event.target.value })}
+                />
+              </div>
+
+              <CreditCardForm className="u-margin-bottom-small" />
+
+              <p className="donate-form__validation">{validation}</p>
+
+              <input
+                type="submit"
+                className="button button-primary donate-form__submit"
+                value={processing ? 'Processing' : 'Submit'}
+                disabled={processing ? true : false}
               />
 
-              <Input
-                id="donation_amount"
-                label="Amount"
-                type="number"
-                value={amount}
-                onChange={event => this.setState({ amount: event.target.value })}
-              />
             </div>
-
-            <CreditCardForm className="u-margin-bottom-small" />
-
-            <p className="donate-form__validation">{validation}</p>
-
-            <input
-              type="submit"
-              className="button button-primary donate-form__submit"
-              value={processing ? 'Processing' : 'Submit'}
-              disabled={processing ? true : false}
-            />
 
           </div>
 

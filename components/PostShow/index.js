@@ -8,6 +8,7 @@
  *   apiPath: String - The api prefix for CRUD operations
  *   redirectRoute: String - The route to redirect to after deleting the post
  *   showDate: Boolean - If true, the publish or created date will show
+ *   className: String - Any additional classes to wrap the component
  */
 
 import React, { Component } from 'react'
@@ -120,11 +121,11 @@ class PostShow extends Component {
 
   render() {
 
-    const { post, enableCommenting, apiPath } = this.props
+    const { post, enableCommenting, apiPath, className } = this.props
     const { title, tags, mainMedia, content, published } = post
 
     return (
-      <div className={`posts-show-page`}>
+      <div className={`posts-show-page ${className || ''}`}>
 
         <Head>
           <meta property="og:image" content={mainMedia || ''} />
@@ -142,22 +143,25 @@ class PostShow extends Component {
           <meta property="og:description" content={content.replace('<p>', '').replace('</p>', '')} />
         </Head>
 
-        <div className="post">
-          {this.renderPublishSection(published)}
-          <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
-          {this.renderDate()}
-          {this.renderTagsSection(tags)}
-          {this.renderMainMedia(mainMedia)}
-          <div className="post__content">{renderHTML(content)}</div>
-          {this.renderAuthOptions()}
+        <div className="posts-show-page__container">
+
+          <div className="post">
+            {this.renderPublishSection(published)}
+            <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
+            {this.renderDate()}
+            {this.renderTagsSection(tags)}
+            {this.renderMainMedia(mainMedia)}
+            <div className="post__content">{renderHTML(content)}</div>
+            {this.renderAuthOptions()}
+          </div>
+          
+          <Comment 
+            post={post}
+            comments={post.comments}
+            enableCommenting={enableCommenting}
+            apiPath={apiPath}
+          /> 
         </div>
-        
-        <Comment 
-          post={post}
-          comments={post.comments}
-          enableCommenting={enableCommenting}
-          apiPath={apiPath}
-        /> 
       </div>
     )
   }

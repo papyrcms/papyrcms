@@ -29,6 +29,15 @@
   border-radius: 1rem;
 }
 
+@mixin contentStyle {
+  padding-top: 1rem;
+  letter-spacing: .1rem;
+
+  p {
+    margin-bottom: 3rem;
+  }
+}
+
 // max-width: px / 16
 @mixin respond($breakpoint) {
   @if $breakpoint == phone {
