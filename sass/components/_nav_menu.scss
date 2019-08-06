@@ -1,5 +1,8 @@
 .nav-menu {
-  background-color: $color-grey-dark-2;
+  // background-color: $color-grey-dark-2;
+  background: transparent;
+  position: absolute;
+  width: 100%;
   
   display: flex;
   justify-content: space-between;
