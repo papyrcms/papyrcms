@@ -1,5 +1,4 @@
 .nav-menu {
-  // background-color: $color-grey-dark-2;
   background: transparent;
   position: absolute;
   width: 100%;
@@ -9,6 +8,9 @@
   
   @include respond(phone) {
     justify-content: center;
+    position: relative;
+    background: linear-gradient(169deg, lighten($color-primary, 10%), darken($color-primary, 30%));
+    margin-bottom: -.1rem;
   }
 
   &__logo {
