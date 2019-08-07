@@ -17,28 +17,37 @@ import PostsFilter from '../PostsFilter'
 
 const PageLayout = props => {
 
-  let header,
-      titleHeaderContent,
-      footer,
-      descriptionContent,
-      keywords = '',
-      shareImage
+  let headerTitle = '',
+    headerSubTitle = '',
+    titleHeaderContent = '',
+    footerTitle = '',
+    footerContent = '',
+    logo = '',
+    descriptionContent = '',
+    keywords = '',
+    shareImage = ''
 
   props.posts.forEach(post => {
 
     if (post.tags.includes('section-header')) {
 
-      header = post
-      titleHeaderContent = header.content
-        .replace('<p>', '')
-        .replace('</p>', '')
+      headerTitle = post.title || ''
+      headerSubTitle = post.content || ''
+      logo = post.mainMedia || ''
+      titleHeaderContent = ''
+      if (post.content) {
+        titleHeaderContent = post.content
+          .replace('<p>', '')
+          .replace('</p>', '')
+      }
       if (!shareImage) {
-        shareImage = header.mainMedia
+        shareImage = post.mainMedia
       }
 
     } else if (post.tags.includes('section-footer')) {
 
-      footer = post
+      footerTitle = post.title
+      footerContent = post.content
 
     } else if (post.tags.includes('site-description')) {
 
@@ -55,16 +64,16 @@ const PageLayout = props => {
       }
     }
   })
-  
+
 
   return (
     <div className="app">
 
       <Head>
-        <title>{header.title} | {titleHeaderContent}</title>
-        <meta name="title" content={`${header.title} | ${titleHeaderContent}`} />
-        <meta property="og:title" content={`${header.title} | ${titleHeaderContent}`} />
-        <meta property="og:site_name" content={header.title} />
+        <title>{headerTitle} | {titleHeaderContent}</title>
+        <meta name="title" content={`${headerTitle} | ${titleHeaderContent}`} />
+        <meta property="og:title" content={`${headerTitle} | ${titleHeaderContent}`} />
+        <meta property="og:site_name" content={headerTitle} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <meta property="og:image" content={shareImage} />
@@ -72,7 +81,7 @@ const PageLayout = props => {
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="200" />
         <meta property="og:image:height" content="200" />
-        <meta property="twitter:title" content={header.title} />
+        <meta property="twitter:title" content={headerTitle} />
         <meta property="twitter:description" content={descriptionContent} />
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
@@ -83,12 +92,12 @@ const PageLayout = props => {
       </Head>
 
       <NavMenu
-        logo={header ? header.mainMedia : ''}
+        logo={logo}
       />
 
       <Header
-        mainTitle={header ? header.title : ''}
-        subTitle={header ? renderHTML(header.content) : ''}
+        mainTitle={headerTitle}
+        subTitle={renderHTML(headerSubTitle)}
       />
 
       <main>
@@ -96,9 +105,9 @@ const PageLayout = props => {
       </main>
 
       <Footer
-        ctaText={footer ? footer.title : ''}
+        ctaText={footerTitle}
         ctaButtonText="contact"
-        footerContent={footer ? renderHTML(footer.content) : ''}
+        footerContent={renderHTML(footerContent)}
       />
 
     </div>

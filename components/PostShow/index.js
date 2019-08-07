@@ -93,7 +93,7 @@ class PostShow extends Component {
 
 
   renderPublishSection(published) {
-    
+
     if (!published) {
       return <p><em>Not published</em></p>
     }
@@ -124,6 +124,8 @@ class PostShow extends Component {
     const { post, enableCommenting, apiPath, className } = this.props
     const { title, tags, mainMedia, content, published } = post
 
+    let postContent = content || ''
+
     return (
       <div className={`posts-show-page ${className || ''}`}>
 
@@ -133,14 +135,14 @@ class PostShow extends Component {
           <meta property="og:image:type" content="image/jpeg" />
           <meta property="og:image:width" content="200" />
           <meta property="og:image:height" content="200" />
-          <title>{`Derek Garnett | ${title}`}</title>
-          <meta name="title" content={title} />
-          <meta property="twitter:title" content={title} />
-          <meta property="twitter:description" content={content.replace('<p>', '').replace('</p>', '')} />
-          <meta property="og:title" content={title} />
-          <meta name="keywords" content={tags} />
-          <meta name="description" content={content.replace('<p>', '').replace('</p>', '')} />
-          <meta property="og:description" content={content.replace('<p>', '').replace('</p>', '')} />
+          <title>{`Derek Garnett | ${title || ''}`}</title>
+          <meta name="title" content={title || ''} />
+          <meta property="twitter:title" content={title || ''} />
+          <meta property="twitter:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+          <meta property="og:title" content={title || ''} />
+          <meta name="keywords" content={tags || ''} />
+          <meta name="description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+          <meta property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
         </Head>
 
         <div className="posts-show-page__container">
@@ -151,16 +153,16 @@ class PostShow extends Component {
             {this.renderDate()}
             {this.renderTagsSection(tags)}
             {this.renderMainMedia(mainMedia)}
-            <div className="post__content">{renderHTML(content)}</div>
+            <div className="post__content">{renderHTML(postContent)}</div>
             {this.renderAuthOptions()}
           </div>
-          
-          <Comment 
+
+          <Comment
             post={post}
             comments={post.comments}
             enableCommenting={enableCommenting}
             apiPath={apiPath}
-          /> 
+          />
         </div>
       </div>
     )

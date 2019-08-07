@@ -86,11 +86,10 @@ class NavMenu extends Component {
             </a>
           </Link>
 
-          <div className="nav-menu__items">
+          <div className="nav-menu__items" id="nav-menu-checkbox">
 
-            <label
+            <span
               onClick={onClick}
-              id="nav-menu-checkbox"
               className="nav-menu__item nav-menu__item--hamburger"
             />
 

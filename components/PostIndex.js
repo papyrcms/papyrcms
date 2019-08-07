@@ -55,6 +55,11 @@ class PostIndex extends Component {
       return _.map(posts, post => {
         const { _id, title, tags, mainMedia, content, published } = post
 
+        let postContent = ''
+        if (content) {
+          postContent = content.length >= 200 ? `${content.substring(0, 200).trim()} . . .` : content
+        }
+
         return (
           <div key={_id} className="post-item">
             {this.renderMediaSection(mainMedia)}
@@ -65,7 +70,7 @@ class PostIndex extends Component {
                 {this.renderPublishSection(published)}
               </div>
               <div className="post-item__content">
-                {renderHTML(content.length >= 200 ? `${content.substring(0, 200).trim()} . . .` : content)}
+                {renderHTML(postContent)}
               </div>
               <div className="post-item__link">
                 <Link href={`/posts_show?id=${_id}`} as={`/posts/${_id}`}>
