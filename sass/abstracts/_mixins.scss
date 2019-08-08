@@ -36,6 +36,38 @@
   p {
     margin-bottom: 3rem;
   }
+
+  img {
+    max-width: 80%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  ul, ol {
+    margin-left: 4rem;
+
+    li {
+
+    }
+  }
+
+  table {
+    margin: 0 auto;
+    min-width: 90%;
+
+    tbody tr td {
+      
+    }
+  }
+
+  pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+  }
 }
 
 // max-width: px / 16

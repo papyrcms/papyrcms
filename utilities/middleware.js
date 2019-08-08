@@ -32,9 +32,26 @@ const mapTagsToArray = (req, res, next) => {
 
 const sanitizeRequestBody = (req, res, next) => {
 
+  const sanitizeRules = {
+    allowedTags: [
+      'h1', 'h2', 'h3', 
+      'div', 'p', 'pre', 'em', 'strong',
+      'ol', 'ul', 'li',
+      'blockquote', 'hr', 
+      'table', 'thead', 'tbody', 
+      'th', 'tr', 'td', 'img'
+    ],
+    allowedAttributes: {
+      '*': ['style'],
+      a: ['style', 'href', 'target'],
+      table: ['style', 'align'],
+      img: ['style', 'alt', 'src'],
+    }
+  }
+
   // Santize inputs
   _.map(req.body, (value, key) => {
-    req.body[key] = sanitizeHTML(value)
+    req.body[key] = sanitizeHTML(value, sanitizeRules)
   })
 
   next()

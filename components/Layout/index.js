@@ -13,6 +13,7 @@ import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PostsFilter from '../PostsFilter'
+import sanitizeHTML from 'sanitize-html'
 
 
 const PageLayout = props => {
@@ -36,9 +37,7 @@ const PageLayout = props => {
       logo = post.mainMedia || ''
       titleHeaderContent = ''
       if (post.content) {
-        titleHeaderContent = post.content
-          .replace('<p>', '')
-          .replace('</p>', '')
+        titleHeaderContent = ` | ${sanitizeHTML(post.content, { allowedTags: [] })}`
       }
       if (!shareImage) {
         shareImage = post.mainMedia
@@ -51,9 +50,7 @@ const PageLayout = props => {
 
     } else if (post.tags.includes('site-description')) {
 
-      descriptionContent = post.content
-        .replace('<p>', '')
-        .replace('</p>', '')
+      descriptionContent = sanitizeHTML(post.content, { allowedTags: [] })
       post.tags.forEach(tag => {
         if (tag !== 'site-description') {
           keywords = keywords.length === 0 ? tag : `${keywords}, ${tag}`
@@ -70,9 +67,9 @@ const PageLayout = props => {
     <div className="app">
 
       <Head>
-        <title>{headerTitle} | {titleHeaderContent}</title>
-        <meta name="title" content={`${headerTitle} | ${titleHeaderContent}`} />
-        <meta property="og:title" content={`${headerTitle} | ${titleHeaderContent}`} />
+        <title>{headerTitle}{titleHeaderContent}</title>
+        <meta name="title" content={`${headerTitle}${titleHeaderContent}`} />
+        <meta property="og:title" content={`${headerTitle}${titleHeaderContent}`} />
         <meta property="og:site_name" content={headerTitle} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />

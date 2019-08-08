@@ -2,11 +2,7 @@
   padding: 5rem 10vw;
   padding-bottom: 10rem;
   background-color: $color-grey-light;
-
-  &__container {
-    max-width: $max-container-width;
-    margin: 0 auto;
-  }
+  width: 100%;
 
   @include respond(tab-port) {
     padding: 5rem 5vw;
@@ -16,6 +12,11 @@
   @include respond(phone) {
     padding: 5rem 3vw;
     padding-bottom: 10rem;
+  }
+
+  &__container {
+    max-width: $max-container-width;
+    margin: 0 auto;
   }
 
   p {
