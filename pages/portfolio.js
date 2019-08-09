@@ -3,17 +3,19 @@ import { connect } from 'react-redux'
 import PostsFilter from '../components/PostsFilter'
 import { SectionStandard } from '../components/Sections/'
 
-const ServicesPage = props => (
+const Portfolio = props => (
   <PostsFilter
     component={SectionStandard}
     posts={props.posts}
     settings={{
-      postTags: 'services',
-      maxPosts: 9999
+      postTags: ['web', 'portfolio'],
+      maxPosts: 9999,
+      strictTags: true,
+      ordered: true
     }}
     componentProps={{
-      title: 'Services',
-      className: 'services-page'
+      title: 'My Work',
+      className: 'portfolio-page',
     }}
   />
 )
@@ -24,4 +26,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(ServicesPage)
+export default connect(mapStateToProps)(Portfolio)

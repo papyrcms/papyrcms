@@ -3,10 +3,11 @@
  * to provide for a component
  * 
  * props include:
- *   settings: Object{
+ *   settings: Object {
  *     maxPosts: Integer - The maximum number of posts to render in the passed component
  *     postTags: Array [String - Any accepted tags to use in the passed component]
  *     strictTags: Array [String - Any required tags to use in the passed component]
+ *     ordered: Boolean - whether or not to use the ordered tags to order the posts
  *   }
  *   posts: Array [Object - Any posts to run through the filter]
  *   component: Component/Function - The component to pass the filtered posts to as this.props.posts
@@ -16,7 +17,6 @@
 
 
 import React, { Component } from 'react'
-import _ from 'lodash'
 
 class PostsFilter extends Component {
 
@@ -26,7 +26,7 @@ class PostsFilter extends Component {
 
     let posts = []
     let numberPosts = 0
-    const { maxPosts, postTags, strictTags } = props.settings
+    const { maxPosts, postTags, strictTags, ordered } = props.settings
 
     // Filter posts by postTags and maxPosts
     if (!!postTags && postTags.length > 0) {
@@ -40,16 +40,18 @@ class PostsFilter extends Component {
         ) {
           included = true
         } else {
-          _.map(postTags, tag => {
-            if (post.tags.includes(tag) && numberPosts < maxPosts) {
 
+          for (const tag of postTags) {
+
+            if (post.tags.includes(tag) && numberPosts < maxPosts) {
               included = true
             }
             
             if (strictTags && !post.tags.includes(tag)) {
               included = false
+              break
             }
-          })
+          }
         }
 
         if (included) { numberPosts++ }
@@ -69,6 +71,33 @@ class PostsFilter extends Component {
       } else {
         posts = props.posts
       }
+    }
+
+    if (ordered) {
+
+      const orderedPosts = []
+      const unorderedPosts = []
+
+      for (const post of posts) {
+        let found = false
+
+        for (const tag of post.tags) {
+          if (tag.includes('order-')) {
+            // use index of a tag such as order-2 to be index 2
+            orderedPosts[parseInt(tag.split('-')[1])] = post
+            found = true
+            break
+          }
+        }
+
+        if (found) {
+          continue
+        } else {
+          unorderedPosts.push(post)
+        }
+      }
+
+      posts = [...orderedPosts, ...unorderedPosts].filter(post => !!post)
     }
 
     this.state = { posts }

@@ -36,7 +36,7 @@ const sanitizeRequestBody = (req, res, next) => {
     allowedTags: [
       'h1', 'h2', 'h3', 
       'div', 'p', 'pre', 'em', 'strong',
-      'ol', 'ul', 'li',
+      'ol', 'ul', 'li', 'a',
       'blockquote', 'hr', 
       'table', 'thead', 'tbody', 
       'th', 'tr', 'td', 'img'

@@ -112,6 +112,7 @@ class SectionStandard extends Component {
 
     if (posts.length !== 0) {
       return _.map(posts, (post, i) => {
+
         const postTextClassName = !!post.mainMedia ? 'section-standard__text' : 'section-standard__text--wide'
 
         return (
