@@ -10,8 +10,7 @@ const Portfolio = props => (
     settings={{
       postTags: ['web', 'portfolio'],
       maxPosts: 9999,
-      strictTags: true,
-      ordered: true
+      strictTags: true
     }}
     componentProps={{
       title: 'My Work',

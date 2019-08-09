@@ -7,7 +7,6 @@
  *     maxPosts: Integer - The maximum number of posts to render in the passed component
  *     postTags: Array [String - Any accepted tags to use in the passed component]
  *     strictTags: Array [String - Any required tags to use in the passed component]
- *     ordered: Boolean - whether or not to use the ordered tags to order the posts
  *   }
  *   posts: Array [Object - Any posts to run through the filter]
  *   component: Component/Function - The component to pass the filtered posts to as this.props.posts
@@ -73,32 +72,29 @@ class PostsFilter extends Component {
       }
     }
 
-    // if (ordered) {
+    const orderedPosts = []
+    const unorderedPosts = []
 
-      const orderedPosts = []
-      const unorderedPosts = []
+    for (const post of posts) {
+      let found = false
 
-      for (const post of posts) {
-        let found = false
-
-        for (const tag of post.tags) {
-          if (tag.includes('order-')) {
-            // use index of a tag such as order-2 to be index 2
-            orderedPosts[parseInt(tag.split('-')[1])] = post
-            found = true
-            break
-          }
-        }
-
-        if (found) {
-          continue
-        } else {
-          unorderedPosts.push(post)
+      for (const tag of post.tags) {
+        if (tag.includes('order-')) {
+          // use index of a tag such as order-2 to be index 2
+          orderedPosts[parseInt(tag.split('-')[1])] = post
+          found = true
+          break
         }
       }
 
-      posts = [...orderedPosts, ...unorderedPosts].filter(post => !!post)
-    // }
+      if (found) {
+        continue
+      } else {
+        unorderedPosts.push(post)
+      }
+    }
+
+    posts = [...orderedPosts, ...unorderedPosts].filter(post => !!post)
 
     this.state = { posts }
   }
