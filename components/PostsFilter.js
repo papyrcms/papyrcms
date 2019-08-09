@@ -73,7 +73,7 @@ class PostsFilter extends Component {
       }
     }
 
-    if (ordered) {
+    // if (ordered) {
 
       const orderedPosts = []
       const unorderedPosts = []
@@ -98,7 +98,7 @@ class PostsFilter extends Component {
       }
 
       posts = [...orderedPosts, ...unorderedPosts].filter(post => !!post)
-    }
+    // }
 
     this.state = { posts }
   }
