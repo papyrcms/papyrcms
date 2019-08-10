@@ -42,7 +42,7 @@ const LandingPage = props => (
       component={SectionStandard}
       posts={props.posts}
       settings={{
-        postTags: 'services',
+        postTags: 'sample',
         maxPosts: 2
       }}
       componentProps={{
