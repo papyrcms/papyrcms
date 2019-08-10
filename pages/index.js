@@ -43,10 +43,11 @@ const LandingPage = props => (
       posts={props.posts}
       settings={{
         postTags: 'sample',
-        maxPosts: 2
+        maxPosts: 2,
       }}
       componentProps={{
         title: 'This is the Standard Section',
+        readMore: true
       }}
     />
     <PostsFilter

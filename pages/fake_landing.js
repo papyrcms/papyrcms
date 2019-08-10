@@ -44,10 +44,12 @@ const LandingPage = props => (
       posts={props.posts}
       settings={{
         postTags: 'services',
-        maxPosts: 2
+        maxPosts: 2,
       }}
       componentProps={{
         title: 'What can I do for you?',
+        contentLength: 300,
+        readMore: true,
       }}
     />
     
