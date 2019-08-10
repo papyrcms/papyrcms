@@ -56,6 +56,10 @@
   &__forms {
     justify-self: center;
     grid-column: span 2;
+
+    & > * {
+      margin-bottom: 5rem;
+    }
   }
 }
 

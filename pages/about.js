@@ -1,7 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
-import keys from '../config/keys'
 import PostsFilter from '../components/PostsFilter'
 import PostShow from '../components/PostShow/'
 

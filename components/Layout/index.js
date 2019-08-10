@@ -23,6 +23,7 @@ const PageLayout = props => {
     titleHeaderContent = '',
     footerTitle = '',
     footerContent = '',
+    footerCopyrightContent = '',
     logo = '',
     descriptionContent = '',
     keywords = '',
@@ -48,6 +49,10 @@ const PageLayout = props => {
 
       footerTitle = post.title
       footerContent = post.content
+
+    } else if (post.tags.includes('copyright')) {
+
+      footerCopyrightContent = post.content
 
     } else if (post.tags.includes('site-description')) {
 
@@ -103,9 +108,10 @@ const PageLayout = props => {
       </main>
 
       <Footer
-        ctaText={footerTitle}
-        ctaButtonText="contact"
+        footerTitle={footerTitle}
         footerContent={renderHTML(footerContent)}
+        ctaButtonText="contact"
+        footerCopyrightContent={renderHTML(footerCopyrightContent)}
       />
 
     </div>
@@ -118,11 +124,12 @@ const Layout = props => (
     component={PageLayout}
     posts={props.posts}
     settings={{
-      maxPosts: 3, 
+      maxPosts: 4, 
       postTags: [
         'section-header',
         'section-footer',
-        'site-description'
+        'site-description',
+        'copyright'
       ]
     }}
     componentProps={{

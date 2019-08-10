@@ -27,7 +27,8 @@ const Footer = props => {
 
         {/* Footer contact form */}
         <div className="cta">
-          <h2 className="cta__title u-margin-bottom-small">{props.ctaText}</h2>
+          <h2 className="cta__title u-margin-bottom-small">{props.footerTitle}</h2>
+          <div className="cta__content">{props.footerContent}</div>
           <Link href="/contact">
             <button className="button button-cta">{props.ctaButtonText}</button>
           </Link>
@@ -36,7 +37,7 @@ const Footer = props => {
         {/* Credit section */}
         <div className="credit">
           <div className="credit__text">
-            {props.footerContent}
+            {props.footerCopyrightContent}
           </div>
         </div>
 

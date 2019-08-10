@@ -84,10 +84,11 @@ class AdminPage extends Component {
 
     const { users } = this.state
 
-    Object.keys(users).map(key => {
+    return users.map(user => {
+
       return (
-        <li key={users[key]._id}>
-          {users[key].email}
+        <li key={user._id}>
+          {user.email}
         </li>
       )
     })
@@ -249,7 +250,7 @@ class AdminPage extends Component {
 
           <div className="admin-page__forms">
             {this.renderAppSettingsForm()}
-            {/* {this.renderUsersForm()} */}
+            {this.renderUsersForm()}
 
             <p className="admin-page__verification">{appSettingsVerification}</p>
           </div>
