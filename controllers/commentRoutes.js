@@ -2,7 +2,6 @@ const Controller = require('./abstractController')
 const CommentModel = require('../models/comment')
 const { sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
-const _ = require('lodash')
 
 
 class CommentRoutes extends Controller {
@@ -15,7 +14,9 @@ class CommentRoutes extends Controller {
       const defaultSettings = { enableCommenting: false }
       const settings = await configureSettings('comment', defaultSettings)
 
-      _.map(settings, (optionValue, optionKey) => {
+      Object.keys(settings).forEach(optionKey => {
+        const optionValue = settings[optionKey]
+
         res.locals.settings[optionKey] = optionValue
       })
       next()

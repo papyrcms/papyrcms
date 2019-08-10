@@ -46,6 +46,8 @@ const Media = props => {
       )
     }
   }
+
+  return null
 }
 
 

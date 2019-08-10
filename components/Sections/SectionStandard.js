@@ -14,7 +14,6 @@
 
 
 import React, { Component } from 'react'
-import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import moment from 'moment-timezone'
@@ -111,7 +110,8 @@ class SectionStandard extends Component {
     const { emptyMessage, posts } = this.props
 
     if (posts.length !== 0) {
-      return _.map(posts, (post, i) => {
+
+      return posts.map((post, i) => {
 
         const postTextClassName = !!post.mainMedia ? 'section-standard__text' : 'section-standard__text--wide'
 

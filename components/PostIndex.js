@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from './Media'
@@ -8,7 +7,7 @@ class PostIndex extends Component {
 
   renderTags(tags) {
 
-    return _.map(tags, (tag, i) => {
+    return tags.map((tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
       } else {
@@ -52,7 +51,9 @@ class PostIndex extends Component {
     const { posts } = this.props
 
     if (!!posts && !!posts[0]) {
-      return _.map(posts, post => {
+
+      return Object.keys(posts).map(key => {
+        const post = posts[key]
         const { _id, title, tags, mainMedia, content, published } = post
 
         let postContent = ''

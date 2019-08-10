@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import CommentForm from './CommentForm'
 
@@ -39,7 +38,7 @@ class Comment extends Component {
     } else {
       axios.put(`${apiPath}/${post._id}/comments/${editing}`, commentObject)
         .then(res => {
-          _.map(comments, (sComment, i) => {
+          comments.forEach((sComment, i) => {
             if (sComment._id === editing) {
               let newCommentState = [...comments]
               newCommentState[i].content = formContent
@@ -65,7 +64,7 @@ class Comment extends Component {
 
       axios.delete(`${apiPath}/${post._id}/comments/${comment._id}`)
         .then(res => {
-          _.map(comments, (sComment, i) => {
+          comments.forEach((sComment, i) => {
             if (sComment._id === res.data) {
               let newCommentState = [...comments]
               newCommentState.splice(i, 1)
@@ -106,7 +105,7 @@ class Comment extends Component {
     const { comments } = this.state
 
     if (!!comments[0]) {
-      return _.map(comments, comment => {
+      return comments.map(comment => {
         const { content, author, _id } = comment
 
         return (

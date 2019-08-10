@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const Controller = require('./abstractController')
 const SettingsModel = require('../models/settings')
 const UserModel = require('../models/user')
@@ -59,9 +58,12 @@ class AdminRoutes extends Controller {
 
     const settings = await SettingsModel.find()
 
-    settings.forEach(setting => {
+    for (const setting of settings) {
 
-      _.map(req.body, async (value, key) => {
+      for (const key in req.body) {
+        
+        let value = req.body[key]
+
         if (typeof setting.options[key] !== 'undefined') {
           switch (value) {
             case 'true':
@@ -75,8 +77,8 @@ class AdminRoutes extends Controller {
           setting.options[key] = value
           await SettingsModel.findOneAndUpdate({ _id: setting._id }, setting)
         }
-      })
-    })
+      }
+    }
 
     res.send(req.body)
   }

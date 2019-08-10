@@ -15,7 +15,6 @@
 import React, { Component } from 'react'
 import Router from 'next/router'
 import axios from 'axios'
-import _ from 'lodash'
 import { connect } from 'react-redux'
 import Form from './Form'
 
@@ -43,7 +42,7 @@ class PostsForm extends Component {
 
     let newTags = ''
 
-    _.map(tags, (tag, i) => {
+    tags.forEach((tag, i) => {
       if (i < tags.length - 1) {
         newTags = `${newTags}${tag}, `
       } else {
@@ -72,7 +71,7 @@ class PostsForm extends Component {
     }
 
     if (additionalState) {
-      _.map(additionalState, (value, key) => {
+      Object.keys(additionalState).forEach(key => {
         postObject[key] = this.state[key]
       })
     }
@@ -110,7 +109,8 @@ class PostsForm extends Component {
     const { pageTitle, additionalFields, additionalState } = this.props
 
     const additionalProps = {}
-    _.map(additionalState, (value, key) => {
+
+    Object.keys(additionalState).forEach(key => {
       additionalProps[key] = this.state[key]
     })
 

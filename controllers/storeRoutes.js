@@ -2,7 +2,6 @@ const Controller = require('./abstractController')
 const ProductModel = require('../models/product')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
-const _ = require('lodash')
 
 
 class StoreRoutes extends Controller {
@@ -15,7 +14,9 @@ class StoreRoutes extends Controller {
       const defaultSettings = { enableStore: false }
       const settings = await configureSettings('store', defaultSettings)
 
-      _.map(settings, (optionValue, optionKey) => {
+      Object.keys(settings).forEach(optionKey => {
+        const optionValue = settings[optionKey]
+
         res.locals.settings[optionKey] = optionValue
       })
       next()

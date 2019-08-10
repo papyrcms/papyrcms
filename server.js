@@ -7,7 +7,6 @@ const passport = require('passport')
 const express = require('express')
 const next = require('next')
 const cors = require('cors')
-const _ = require('lodash')
 
 // App keys
 const keys = require('./config/keys')
@@ -73,7 +72,9 @@ server.use(async (req, res, next) => {
   const defaultSettings = { enableMenu: false }
   const settings = await configureSettings('app', defaultSettings)
 
-  _.map(settings, (optionValue, optionKey) => {
+  Object.keys(settings).forEach(optionKey => {
+    const optionValue = settings[optionKey]
+
     res.locals.settings[optionKey] = optionValue
   })
   next()

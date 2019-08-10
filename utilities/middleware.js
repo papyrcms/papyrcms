@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const sanitizeHTML = require('sanitize-html')
 
 const checkIfAdmin = (req, res, next) => {
@@ -14,7 +13,8 @@ const checkIfAdmin = (req, res, next) => {
 const mapTagsToArray = (req, res, next) => {
 
   if (req.body.tags) {
-    const newTags = _.map(req.body.tags.split(','), tag => {
+    const newTags = req.body.tags.split(',').map(tag => {
+
       let pendingTag = tag
       pendingTag = pendingTag.trim()
   
@@ -50,8 +50,9 @@ const sanitizeRequestBody = (req, res, next) => {
   }
 
   // Santize inputs
-  _.map(req.body, (value, key) => {
-    req.body[key] = sanitizeHTML(value, sanitizeRules)
+  Object.keys(req.body).forEach(key => {
+
+    req.body[key] = sanitizeHTML(req.body[key], sanitizeRules)
   })
 
   next()

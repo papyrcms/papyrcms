@@ -8,7 +8,6 @@
 
 
 import React, { Component } from 'react'
-import _ from 'lodash'
 import SectionMedia from './SectionMedia'
 
 
@@ -44,7 +43,9 @@ class SectionSlideshow extends Component {
 
   renderSlides() {
 
-    return _.map(this.props.posts, (post, i) => {
+    const { posts } = this.props
+
+    return posts.map((post, i) => {
       return (
         <SectionMedia
           key={post._id}
@@ -59,7 +60,9 @@ class SectionSlideshow extends Component {
 
   renderButtons() {
 
-    return _.map(this.props.posts, (post, i) => {
+    const { posts } = this.props
+
+    return posts.map((post, i) => {
       return (
         <input
           onClick={() => this.setState({ selected: i, counter: i })}

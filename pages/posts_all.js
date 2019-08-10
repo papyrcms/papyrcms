@@ -43,13 +43,13 @@ class PostsAll extends Component {
     let foundPosts = []
 
     // Go through each post
-    _.map(this.props.posts, post => {
+    this.props.posts.forEach(post => {
 
       // Go through each post's tag
-      _.map(post.tags, tag => {
+      post.tags.forEach(tag => {
         let isFound = false
 
-        _.map(foundPosts, foundPost => {
+        foundPosts.forEach(foundPost => {
           if (foundPost._id === post._id) {
             isFound = true
           }

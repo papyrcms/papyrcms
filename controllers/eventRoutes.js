@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const Controller = require('./abstractController')
 const EventModel = require('../models/event')
 const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
@@ -15,7 +14,9 @@ class EventRoutes extends Controller {
       const defaultSettings = { enableEvents: false }
       const settings = await configureSettings('event', defaultSettings)
 
-      _.map(settings, (optionValue, optionKey) => {
+      Object.keys(settings).forEach(optionKey => {
+        const optionValue = settings[optionKey]
+
         res.locals.settings[optionKey] = optionValue
       })
       next()

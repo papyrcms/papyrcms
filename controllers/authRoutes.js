@@ -4,7 +4,6 @@ const Mailer = require('./mailer')
 const passport = require('passport')
 const { sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
-const _ = require('lodash')
 
 
 class AuthRoutes extends Controller {
@@ -17,7 +16,9 @@ class AuthRoutes extends Controller {
       const defaultSettings = { enableRegistration: true }
       const settings = await configureSettings('auth', defaultSettings)
 
-      _.map(settings, (optionValue, optionKey) => {
+      Object.keys(settings).forEach(optionKey => {
+        const optionValue = settings[optionKey]
+
         res.locals.settings[optionKey] = optionValue
       })
       next()

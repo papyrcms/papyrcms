@@ -14,7 +14,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import _ from 'lodash'
 import moment from 'moment-timezone'
 import Link from 'next/link'
 import Router from 'next/router'
@@ -64,7 +63,7 @@ class PostShow extends Component {
 
   renderTags(tags) {
 
-    return _.map(tags, (tag, i) => {
+    return tags.map((tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
       } else {

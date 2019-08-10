@@ -19,7 +19,6 @@
 
  
 import React, { Component } from 'react'
-import _ from 'lodash'
 import moment from 'moment-timezone'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
@@ -43,15 +42,23 @@ class SectionCards extends Component {
 
   renderInfoProps(post) {
 
-    return _.map(this.props.infoProps, prop => {
-      return (
-        <div key={`${post._id}-${prop.property}`} className="section-cards__info">
-          <span className="section-cards__info--before">{prop.before}</span>
-          <span className="section-cards__info--prop">{post[prop.property]}</span>
-          <span className="section-cards__info--after">{prop.after}</span>
-        </div>
-      )
-    })
+    const { infoProps } = this.props
+
+    if (infoProps) {
+      return Object.keys(infoProps).map(key => {
+        const prop = infoProps[key]
+
+        return (
+          <div key={`${post._id}-${prop.property}`} className="section-cards__info">
+            <span className="section-cards__info--before">{prop.before}</span>
+            <span className="section-cards__info--prop">{post[prop.property]}</span>
+            <span className="section-cards__info--after">{prop.after}</span>
+          </div>
+        )
+      })
+    }
+
+    return null
   }
 
 
@@ -99,7 +106,7 @@ class SectionCards extends Component {
       // Set defaults for characterCount
       const characterCount = contentLength || 300
 
-      return _.map(posts, post => {
+      return posts.map(post => {
         let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
 
         return (

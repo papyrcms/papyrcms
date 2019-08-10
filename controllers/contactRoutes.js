@@ -1,4 +1,3 @@
-const _ = require('lodash')
 const Controller = require('./abstractController')
 const MessageModel = require('../models/message')
 const Mailer = require('./mailer')
@@ -19,7 +18,9 @@ class ContactRoutes extends Controller {
       }
       const settings = await configureSettings('email', defaultSettings)
 
-      _.map(settings, (optionValue, optionKey) => {
+      Object.keys(settings).forEach(optionKey => {
+        const optionValue = settings[optionKey]
+
         res.locals.settings[optionKey] = optionValue
       })
       next()

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import { connect } from 'react-redux'
 import Router from 'next/router'
 import ProductsForm from '../components/ProductsForm'
@@ -30,7 +29,7 @@ class StoreCreate extends Component {
     const { title, price, quantity, tags, mainMedia, description, publish } = this.state
     let tagArray = []
 
-    _.map(tags.split(','), tag => {
+    tags.split(',').forEach(tag => {
       let pendingTag = tag
       pendingTag = pendingTag.trim()
 

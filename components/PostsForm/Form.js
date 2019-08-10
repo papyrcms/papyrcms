@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import RichTextEditor from '../RichTextEditor'
 import Media from '../Media'
 import Input from '../Input'
@@ -132,7 +131,7 @@ class Form extends Component {
     const { additionalFields, changeState, additionalState } = this.props
 
     if (additionalFields) {
-      return _.map(additionalFields, (Field, i) => {
+      return additionalFields.map((Field, i) => {
         return <Field key={`field-${i}`} changeState={changeState} {...additionalState} />
       })
     } else {

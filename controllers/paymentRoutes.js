@@ -3,7 +3,6 @@ const keys = require('../config/keys')
 const stripe = require('stripe')(keys.stripeSecretTestKey)
 const { sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
-const _ = require('lodash')
 
 
 class PaymentRoutes extends Controller {
@@ -16,7 +15,9 @@ class PaymentRoutes extends Controller {
       const defaultSettings = { enableDonations: false }
       const settings = await configureSettings('payment', defaultSettings)
 
-      _.map(settings, (optionValue, optionKey) => {
+      Object.keys(settings).forEach(optionKey => {
+        const optionValue = settings[optionKey]
+
         res.locals.settings[optionKey] = optionValue
       })
       next()
