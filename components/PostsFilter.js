@@ -23,29 +23,62 @@ class PostsFilter extends Component {
 
     super(props)
 
-    let posts = []
-    let numberPosts = 0
-    const { maxPosts, postTags, strictTags, ordered } = props.settings
+    let posts = props.posts
 
-    // Filter posts by postTags and maxPosts
+    posts = this.filterPostsByPostTags(posts)
+    posts = this.orderPosts(posts)
+    posts = this.filterPostsByMaxPosts(posts)
+
+    this.state = { posts }
+  }
+
+
+  filterPostsByMaxPosts(posts) {
+
+    const { maxPosts } = this.props.settings
+
+    if (maxPosts) {
+
+      let count = 0
+
+      return posts.filter(post => {
+
+        count++
+
+        if (count <= maxPosts) { return post }
+      })
+    }
+
+    return posts
+  }
+
+
+  filterPostsByPostTags(posts) {
+
+    const { postTags, strictTags } = this.props.settings
+
+    // Filter posts by postTags
     if (!!postTags && postTags.length > 0) {
-      posts = props.posts.filter(post => {
+
+      return posts.filter(post => {
+
         let included = false
 
         if (
           typeof postTags === 'string' &&
-          post.tags.includes(postTags) &&
-          numberPosts < maxPosts
+          post.tags.includes(postTags)
         ) {
+
           included = true
-        } else {
+
+        } else if (Array.isArray(postTags)) {
 
           for (const tag of postTags) {
 
-            if (post.tags.includes(tag) && numberPosts < maxPosts) {
+            if (post.tags.includes(tag)) {
               included = true
             }
-            
+
             if (strictTags && !post.tags.includes(tag)) {
               included = false
               break
@@ -53,24 +86,15 @@ class PostsFilter extends Component {
           }
         }
 
-        if (included) { numberPosts++ }
         return included
       })
-
-    } else {
-      if (!postTags && !!maxPosts) {
-        posts = props.posts.filter(post => {
-          if (numberPosts < maxPosts) {
-            numberPosts++
-            return true
-          } else {
-            return false
-          }
-        })
-      } else {
-        posts = props.posts
-      }
     }
+
+    return posts
+  }
+
+
+  orderPosts(posts) {
 
     const orderedPosts = []
     const unorderedPosts = []
@@ -94,9 +118,7 @@ class PostsFilter extends Component {
       }
     }
 
-    posts = [...orderedPosts, ...unorderedPosts].filter(post => !!post)
-
-    this.state = { posts }
+    return [...orderedPosts, ...unorderedPosts].filter(post => !!post)
   }
 
 

@@ -15,33 +15,36 @@ const Media = props => {
 
   const { src, className, alt, parallax } = props
 
-  if (parallax) {
+  if (src) {
 
-    return <div className={className} style={{ backgroundImage: `url(${src}` }} />
+    if (parallax) {
 
-  } else if (src.match(/\.(mp4|webm)$/i)) {
+      return <div className={className || ''} style={{ backgroundImage: `url(${src}` }} />
 
-    return (
-      <video className={className} autoPlay muted loop>
-        <source src={src} type="video/mp4" />
-        <source src={src} type="video/webm" />
-        Your browser is not supported.
-      </video>
-    )
+    } else if (src.match(/\.(mp4|webm)$/i)) {
 
-  } else if (src === '' || !src) {
+      return (
+        <video className={className || ''} autoPlay muted loop>
+          <source src={src} type="video/mp4" />
+          <source src={src} type="video/webm" />
+          Your browser is not supported.
+        </video>
+      )
 
-    return null
+    } else if (src === '' || !src) {
 
-  } else {
+      return null
 
-    return (
-      <img
-        className={className}
-        src={src}
-        alt={alt}
-      />
-    )
+    } else {
+
+      return (
+        <img
+          className={className || ''}
+          src={src}
+          alt={alt || ''}
+        />
+      )
+    }
   }
 }
 

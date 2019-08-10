@@ -36,6 +36,7 @@ const PageLayout = props => {
       headerSubTitle = post.content || ''
       logo = post.mainMedia || ''
       titleHeaderContent = ''
+
       if (post.content) {
         titleHeaderContent = ` | ${sanitizeHTML(post.content, { allowedTags: [] })}`
       }
@@ -117,7 +118,8 @@ const Layout = props => (
     component={PageLayout}
     posts={props.posts}
     settings={{
-      maxPosts: 3, postTags: [
+      maxPosts: 3, 
+      postTags: [
         'section-header',
         'section-footer',
         'site-description'
