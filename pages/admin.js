@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 import { setSettings } from '../reduxStore'
 import axios from 'axios'
 import Link from 'next/link'
@@ -34,8 +33,8 @@ class AdminPage extends Component {
       users: props.users,
     }
 
-    _.map(props.settings, (value, key) => {
-      this.state[key] = value
+    Object.keys(props.settings).forEach(key => {
+      this.state[key] = props.settings[key]
     })
   }
 
@@ -50,7 +49,7 @@ class AdminPage extends Component {
 
       const settings = {}
   
-      _.map(this.props.settings, (value, key) => {
+      Object.keys(this.props.settings).forEach(key => {
         settings[key] = this.state[key]
       })
 
@@ -60,8 +59,8 @@ class AdminPage extends Component {
 
           const newSettings = {}
 
-          _.map(response.data, (value, key) => {
-            switch (value) {
+          Object.keys(response.data).forEach(key => {
+            switch (response.data[key]) {
               case 'true':
                 newSettings[key] = true
                 break
@@ -85,10 +84,10 @@ class AdminPage extends Component {
 
     const { users } = this.state
 
-    return _.map(users, user => {
+    Object.keys(users).map(key => {
       return (
-        <li key={user._id}>
-          {user.email}
+        <li key={users[key]._id}>
+          {users[key].email}
         </li>
       )
     })
@@ -97,7 +96,7 @@ class AdminPage extends Component {
 
   renderSettingsInputs() {
 
-    return _.map(this.props.settings, (value, key) => {
+    return Object.keys(this.props.settings).map(key => {
 
       // Format label
       const result = key.replace(/([A-Z])/g, " $1")
@@ -213,6 +212,26 @@ class AdminPage extends Component {
   }
 
 
+  renderAdminMenu() {
+
+    return (
+      <Fragment>
+        <Link href="/posts_create" as="/posts/new">
+          <a className="admin-page__link">Add Content</a>
+        </Link>
+
+        <Link href="/posts_all" as="/posts">
+          <a className="admin-page__link">My Content</a>
+        </Link>
+
+        {this.renderBlogMenuItems()}
+        {this.renderEventMenuItems()}
+        {this.renderStoreMenuItems()}
+      </Fragment>
+    )
+  }
+
+
   render() {
 
     const { appSettingsVerification } = this.state
@@ -222,25 +241,19 @@ class AdminPage extends Component {
 
         <h2 className="heading-secondary admin-page__title">Admin Dashboard</h2>
 
-        <div className="admin-page__links">
-          <Link href="/posts_create" as="/posts/new">
-            <a className="admin-page__link">Add Content</a>
-          </Link>
+        <div className="admin-page__dashboard">
 
-          <Link href="/posts_all" as="/posts">
-            <a className="admin-page__link">My Content</a>
-          </Link>
+          <div className="admin-page__links">
+            {this.renderAdminMenu()}
+          </div>
 
-          {this.renderBlogMenuItems()}
-          {this.renderEventMenuItems()}
-          {this.renderStoreMenuItems()}
-        </div>
+          <div className="admin-page__forms">
+            {this.renderAppSettingsForm()}
+            {/* {this.renderUsersForm()} */}
 
-        <p className="admin-page__verification">{appSettingsVerification}</p>
+            <p className="admin-page__verification">{appSettingsVerification}</p>
+          </div>
 
-        <div className="admin-page__forms">
-          {this.renderAppSettingsForm()}
-          {/* {this.renderUsersForm()} */}
         </div>
 
       </div>

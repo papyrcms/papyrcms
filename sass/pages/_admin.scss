@@ -1,15 +1,35 @@
 .admin-page {
   background-color: $color-grey-light;
-  padding: 3rem 15vw;
+  padding: 5rem 15vw;
+
+  @include respond(tab-port) {
+    padding: 5rem 5vw;
+    padding-bottom: 10rem;
+  }
+
+  @include respond(phone) {
+    padding: 5rem 3vw;
+    padding-bottom: 10rem;
+  }
 
   &__title {
     border-bottom: .1rem solid $color-grey;
   }
 
+  &__dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    @include respond(phone) {
+      grid-template-columns: 1fr;
+    }
+  }
+
   &__links {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 
     border-bottom: .1rem solid $color-grey;
     padding-bottom: .1rem;
@@ -19,6 +39,8 @@
   &__link {
     &:link,
     &:visited {
+      width: 100%;
+      text-align: center;
       padding: 1.2rem 2rem;
       text-decoration: none;
       color: $color-grey-dark;
@@ -30,13 +52,10 @@
       background-color: $color-grey-light;
     }
   }
- 
-  &__forms {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
 
-    margin-top: 2rem;
+  &__forms {
+    justify-self: center;
+    grid-column: span 2;
   }
 }
 
