@@ -110,9 +110,11 @@ class PostsForm extends Component {
 
     const additionalProps = {}
 
-    Object.keys(additionalState).forEach(key => {
-      additionalProps[key] = this.state[key]
-    })
+    if (additionalState) {
+      Object.keys(additionalState).forEach(key => {
+        additionalProps[key] = this.state[key]
+      })
+    }
 
     return (
       <div className="posts-create-page">

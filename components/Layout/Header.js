@@ -17,16 +17,30 @@ class Header extends Component {
     if (!!this.props.currentUser) {
       return (
         <Link href="/profile">
-          <a className="header__menu-item header__menu-item--4"><li>Profile</li></a>
+          <a className="header__menu-item header__menu-item--1"><li>Profile</li></a>
         </Link>
       )
     }
 
     return (
       <Link href="/login">
-        <a className="header__menu-item header__menu-item--2"><li>Login</li></a>
+        <a className="header__menu-item header__menu-item--1"><li>Login</li></a>
       </Link>
     )
+  }
+
+
+  renderAdminItems() {
+
+    const { currentUser } = this.props
+
+    if (currentUser && currentUser.isAdmin) {
+      return (
+        <Link href="/posts/new">
+          <a className="header__menu-item header__menu-item--2"><li>Add Content</li></a>
+        </Link>
+      )
+    }
   }
 
 
@@ -38,6 +52,7 @@ class Header extends Component {
       return (
         <ul className="header__menu">
           {this.renderAuthenticator()}
+          {this.renderAdminItems()}
         </ul>
       )
     }
