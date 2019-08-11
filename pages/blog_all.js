@@ -17,7 +17,7 @@ const BlogAllPage = props => (
       perRow: 4,
       readMore: true,
       path: 'blog',
-      contentLength: 200,
+      contentLength: 100,
       emptyMessage: 'There are no blogs yet.',
       showDate: true
     }}
