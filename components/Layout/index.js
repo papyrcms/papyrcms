@@ -74,24 +74,24 @@ const PageLayout = props => {
 
       <Head>
         <title>{headerTitle}{titleHeaderContent}</title>
-        <meta name="title" content={`${headerTitle}${titleHeaderContent}`} />
-        <meta property="og:title" content={`${headerTitle}${titleHeaderContent}`} />
-        <meta property="og:site_name" content={headerTitle} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <meta property="og:image" content={shareImage} />
-        <meta property="og:url" content={shareImage} />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:width" content="200" />
-        <meta property="og:image:height" content="200" />
-        <meta property="twitter:title" content={headerTitle} />
-        <meta property="twitter:description" content={descriptionContent} />
+        <meta key="title" name="title" content={`${headerTitle}${titleHeaderContent}`} />
+        <meta key="og-title" property="og:title" content={`${headerTitle}${titleHeaderContent}`} />
+        <meta key="og-site-name" property="og:site_name" content={headerTitle} />
+        <meta key="og-image" property="og:image" content={shareImage} />
+        <meta key="og-url" property="og:url" content={shareImage} />
+        <meta key="og-image-type" property="og:image:type" content="image/jpeg" />
+        <meta key="og-image-width" property="og:image:width" content="200" />
+        <meta key="og-image-height" property="og:image:height" content="200" />
+        <meta key="twitter-title" property="twitter:title" content={headerTitle} />
+        <meta key="twitter-description" property="twitter:description" content={descriptionContent} />
+        <meta key="keywords" name="keywords" content={keywords} />
+        <meta key="description" name="description" content={descriptionContent} />
+        <meta key="og-description" property="og:description" content={descriptionContent} />
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://js.stripe.com/v3/"></script>
-        <meta name="keywords" content={keywords} />
-        <meta name="description" content={descriptionContent} />
-        <meta property="og:description" content={descriptionContent} />
       </Head>
 
       <NavMenu

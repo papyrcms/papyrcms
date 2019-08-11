@@ -5,7 +5,6 @@ import {
   SectionCards,
   SectionMedia,
   SectionStandard,
-  SectionSlideshow,
 } from '../components/Sections/'
 
 const LandingPage = props => (
