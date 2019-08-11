@@ -160,7 +160,7 @@ class Comment extends Component {
     } else {
       return (
         <p className="comment-form__login">
-          <Link href="/login"><a>Login</a></Link> to comment.
+          <Link href="/login"><a title="Login">Login</a></Link> to comment.
         </p>
       )
     }

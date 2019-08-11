@@ -43,7 +43,7 @@ const sanitizeRequestBody = (req, res, next) => {
     ],
     allowedAttributes: {
       '*': ['style'],
-      a: ['style', 'href', 'target'],
+      a: ['style', 'href', 'target', 'title'],
       table: ['style', 'align'],
       img: ['style', 'alt', 'src'],
     }

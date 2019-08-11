@@ -17,14 +17,14 @@ class Header extends Component {
     if (!!this.props.currentUser) {
       return (
         <Link href="/profile">
-          <a className="header__menu-item header__menu-item--1"><li>Profile</li></a>
+          <a title="Profile" className="header__menu-item header__menu-item--1"><li>Profile</li></a>
         </Link>
       )
     }
 
     return (
       <Link href="/login">
-        <a className="header__menu-item header__menu-item--1"><li>Login</li></a>
+        <a title="Login" className="header__menu-item header__menu-item--1"><li>Login</li></a>
       </Link>
     )
   }
@@ -37,7 +37,7 @@ class Header extends Component {
     if (currentUser && currentUser.isAdmin) {
       return (
         <Link href="/posts/new">
-          <a className="header__menu-item header__menu-item--2"><li>Add Content</li></a>
+          <a title="Content" className="header__menu-item header__menu-item--2"><li>Add Content</li></a>
         </Link>
       )
     }

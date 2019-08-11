@@ -30,7 +30,9 @@ const Footer = props => {
           <h2 className="cta__title u-margin-bottom-small">{props.footerTitle}</h2>
           <div className="cta__content">{props.footerContent}</div>
           <Link href="/contact">
-            <button className="button button-cta">{props.ctaButtonText}</button>
+            <a title="Contact">
+              <button className="button button-cta">{props.ctaButtonText}</button>
+            </a>
           </Link>
         </div>
 

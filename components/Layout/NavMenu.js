@@ -19,7 +19,7 @@ const onClick = () => {
 
 const NavLink = props => (
   <Link href={props.href}>
-    <a className="nav-menu__item">
+    <a className="nav-menu__item" title={props.title || props.children}>
       <li onClick={onClick}>
         {props.children}
       </li>
@@ -79,9 +79,9 @@ class NavMenu extends Component {
         <ul className="nav-menu">
 
           <Link href="/">
-            <a>
+            <a title="Home">
               <div className="nav-menu__logo">
-                <img src={this.props.logo} />
+                <img src={this.props.logo} alt="site logo" />
               </div>
             </a>
           </Link>
