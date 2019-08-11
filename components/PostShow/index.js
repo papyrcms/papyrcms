@@ -83,10 +83,10 @@ class PostShow extends Component {
   }
 
 
-  renderMainMedia(media) {
+  renderMainMedia(media, alt) {
 
     if (!!media) {
-      return <div className="post__image"><Media src={media} /></div>
+      return <div className="post__image"><Media src={media} alt={alt} /></div>
     }
   }
 
@@ -148,7 +148,7 @@ class PostShow extends Component {
             <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
             {this.renderDate()}
             {this.renderTagsSection(tags)}
-            {this.renderMainMedia(mainMedia)}
+            {this.renderMainMedia(mainMedia, title)}
             <div className="post__content">{renderHTML(postContent)}</div>
             {this.renderAuthOptions()}
           </div>
