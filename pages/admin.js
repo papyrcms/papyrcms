@@ -1,25 +1,36 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { setSettings } from '../reduxStore'
+import { setSettings, setMessages } from '../reduxStore'
 import axios from 'axios'
+import moment from 'moment-timezone'
 import Link from 'next/link'
 import keys from '../config/keys'
 
 class AdminPage extends Component {
 
-  static async getInitialProps(context) {
+  static async getInitialProps({ req }) {
 
-    let users = []
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
 
-    if (!!context.res) {
-      users = context.query.users
-    } else {
-      const rootUrl = keys.rootURL ? keys.rootURL : ''
-      const response = await axios.get(`${rootUrl}/api/admin/users`)
-      users = response.data
+    let axiosConfig = {}
+
+    // Depending on if we are doing a client or server render
+    if (!!req) {
+      axiosConfig = {
+        withCredentials: true,
+        headers: {
+          Cookie: req.headers.cookie
+        }
+      }
     }
 
-    return { users }
+    const userRes = await axios.get(`${rootUrl}/api/users`, axiosConfig)
+    const users = userRes.data
+
+    const messageRes = await axios.get(`${rootUrl}/api/messages`, axiosConfig)
+    const messages = messageRes.data
+
+    return { users, messages }
   }
 
 
@@ -137,18 +148,18 @@ class AdminPage extends Component {
   }
 
 
-  renderUsersForm() {
+  renderUsersSection() {
 
     return (
-      <form className="users-form">
+      <div className="users-section">
 
         <h3 className="heading-tertiary">Users</h3>
 
-        <ul className="users-form__list">
+        <ul className="users-section__list">
           {this.renderUsers()}
         </ul>
 
-      </form>
+      </div>
     )
   }
 
@@ -233,6 +244,66 @@ class AdminPage extends Component {
   }
 
 
+  deleteMessage(id) {
+
+    const confirm = window.confirm("Are you sure you want to delete this message?")
+
+    if (confirm) {
+
+      const { messages, setMessages } = this.props
+
+      axios.delete(`/api/messages/${id}`)
+        .then(res => {
+          messages.forEach((message, i) => {
+
+            if (message._id === id) {
+              let newMessages = [...messages]
+              newMessages.splice(i, 1)
+
+              setMessages(newMessages)
+            }
+          })
+
+        }).catch(err => {
+          console.error(err)
+        })
+    }
+  }
+
+
+  renderMessagesSection() {
+
+    const { messages } = this.props
+
+    return messages.map(mess => {
+
+      const { name, email, message, created, _id } = mess
+
+      return (
+        <div key={_id} className="message-section__message">
+          <p className="message-section__date">Sent: {moment(created).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+
+          <div className="message-section__info">
+            <span className="message-section__info--name">From: {name}</span>
+            <span className="message-section__info--email">Email: {email}</span>
+          </div>
+
+          <div className="message-section__content">
+            {message}
+          </div>
+
+          <button 
+            className="button button-tertiary button-small"
+            onClick={() => this.deleteMessage(_id)}
+          >
+            Delete
+          </button>
+        </div>
+      )
+    })
+  }
+
+
   render() {
 
     const { appSettingsVerification } = this.state
@@ -249,10 +320,14 @@ class AdminPage extends Component {
           </div>
 
           <div className="admin-page__forms">
-            {this.renderAppSettingsForm()}
-            {this.renderUsersForm()}
-
             <p className="admin-page__verification">{appSettingsVerification}</p>
+
+            {this.renderAppSettingsForm()}
+            {this.renderUsersSection()}
+            <div className="messages-section">
+              <h3 className="heading-tertiary">Messages</h3>
+              {this.renderMessagesSection()}
+            </div>
           </div>
 
         </div>
@@ -264,8 +339,8 @@ class AdminPage extends Component {
 
 
 const mapStateToProps = state => {
-  return { settings: state.settings, users: state.users }
+  return { settings: state.settings, users: state.users, messages: state.messages }
 }
 
 
-export default connect(mapStateToProps, { setSettings })(AdminPage)
+export default connect(mapStateToProps, { setSettings, setMessages })(AdminPage)

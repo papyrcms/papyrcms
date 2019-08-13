@@ -16,6 +16,7 @@ import {
   setEvents,
   setEvent,
   setUsers, 
+  setMessages, 
   setSettings, 
   setStripePubKey, 
   setRoute,
@@ -74,6 +75,11 @@ class MyApp extends App {
     // If an array of users was recieved, send them to the redux store
     if (!!pageProps.users) {
       dispatch(setUsers(pageProps.users))
+    }
+
+    // If an array of messages was recieved, send them to the redux store
+    if (!!pageProps.messages) {
+      dispatch(setMessages(pageProps.messages))
     }
 
     // If a stripe publishable key was receieved, send it to the redux store

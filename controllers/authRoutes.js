@@ -2,7 +2,7 @@ const Controller = require('./abstractController')
 const UserModel = require('../models/user')
 const Mailer = require('./mailer')
 const passport = require('passport')
-const { sanitizeRequestBody } = require('../utilities/middleware')
+const { sanitizeRequestBody, checkIfAdmin } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 
 
@@ -68,6 +68,11 @@ class AuthRoutes extends Controller {
       '/api/logout', 
       this.logoutUser.bind(this)
     )
+    this.server.get(
+      '/api/users',
+      checkIfAdmin,
+      this.sendAllUsers.bind(this)
+    )
   }
 
 
@@ -84,6 +89,14 @@ class AuthRoutes extends Controller {
   renderPage(req, res) {
 
     this.app.render(req, res, req.url)
+  }
+
+
+  async sendAllUsers(req, res) {
+
+    const users = await UserModel.find()
+
+    res.send(users)
   }
 
 

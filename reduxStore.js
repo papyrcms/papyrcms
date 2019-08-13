@@ -11,6 +11,7 @@ const initialState = {
   blogs: [],
   blog: {},
   users: [],
+  messages: [],
   settings: {},
   stripePubKey: '',
   route: '',
@@ -37,6 +38,8 @@ export const reducer = (state = initialState, action) => {
       return { ...state, event: action.payload }
     case 'set_users':
       return { ...state, users: action.payload }
+    case 'set_messages':
+      return { ...state, messages: action.payload }
     case 'set_settings':
       return { ...state, settings: action.payload }
     case 'set_pub_key':
@@ -53,7 +56,7 @@ export const reducer = (state = initialState, action) => {
 }
 
 
-// Actions
+// Action creators
 export const setCurrentUser = currentUser => {
   return { type: 'set_current_user', payload: currentUser }
 }
@@ -84,6 +87,10 @@ export const setEvent = event => {
 
 export const setUsers = users => {
   return { type: 'set_users', payload: users }
+}
+
+export const setMessages = messages => {
+  return { type: 'set_messages', payload: messages }
 }
 
 export const setSettings = settings => {

@@ -29,7 +29,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
 
     border-bottom: .1rem solid $color-grey;
     padding-bottom: .1rem;
@@ -56,6 +55,7 @@
   &__forms {
     justify-self: center;
     grid-column: span 2;
+    margin-left: 2rem;
 
     & > * {
       margin-bottom: 5rem;
@@ -92,10 +92,41 @@
   }
 }
 
-.users-form {
+.users-section {
 
   &__list {
     list-style-type: none;
+  }
+}
+
+.message-section {
+  
+  &__message {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: .1rem solid $color-grey;
+  }
+
+  &__date {
+
+  }
+
+  &__info {
+
+    display: flex;
+    justify-content: space-between;
+
+    &--name {
+
+    }
+
+    &--email {
+
+    }
+  }
+
+  &__content {
+    margin-top: 1rem;
   }
 }
 
