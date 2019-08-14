@@ -31,6 +31,18 @@
     border-radius: .5rem;
     z-index: 100;
     overflow-y: auto;
+
+    @include respond(tab-land) {
+      width: 65%;
+    }
+
+    @include respond(tab-port) {
+      width: 80%;
+    }
+
+    @include respond(phone) {
+      width: 90%;
+    }
   }
 
   &__close {
