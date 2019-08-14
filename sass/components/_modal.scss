@@ -7,6 +7,8 @@
   overflow: auto;
   background-color: $color-grey-dark;
   background-color: rgba($color-grey-dark, 0.7);
+  z-index: 10;
+  transition: .3s;
 
   display: flex;
   justify-content: center;
@@ -14,7 +16,8 @@
 
   &--hidden {
     opacity: 0;
-    transition: .5s;
+    z-index: -10;
+    transition: .3s;
   }
   
   &__box {
@@ -23,9 +26,11 @@
     padding: 2rem;
     border: .1rem solid $color-grey;
     width: 50%;
-    height: 50%;
+    min-height: 50%;
+    max-height: calc(100vh - 21rem);
     border-radius: .5rem;
     z-index: 100;
+    overflow-y: auto;
   }
 
   &__close {

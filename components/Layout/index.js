@@ -14,7 +14,6 @@ import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PostsFilter from '../PostsFilter'
-import Modal from '../Modal'
 
 
 const PageLayout = props => {
@@ -106,8 +105,6 @@ const PageLayout = props => {
         mainTitle={headerTitle}
         subTitle={renderHTML(headerSubTitle)}
       />
-
-      <Modal />
 
       <main>
         {props.children}

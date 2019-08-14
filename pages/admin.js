@@ -5,6 +5,7 @@ import axios from 'axios'
 import moment from 'moment-timezone'
 import Link from 'next/link'
 import keys from '../config/keys'
+import Modal from '../components/Modal'
 
 class AdminPage extends Component {
 
@@ -41,7 +42,8 @@ class AdminPage extends Component {
     this.state = {
       appSettingsVerification: '',
 
-      users: props.users,
+      hideUserModal: true,
+      hideMessageModal: true
     }
 
     Object.keys(props.settings).forEach(key => {
@@ -93,7 +95,7 @@ class AdminPage extends Component {
 
   renderUsers() {
 
-    const { users } = this.state
+    const { users } = this.props
 
     return users.map(user => {
 
@@ -151,14 +153,27 @@ class AdminPage extends Component {
   renderUsersSection() {
 
     return (
-      <div className="users-section">
+      <div>
+        <button
+          className="button button-primary"
+          onClick={() => this.setState({ hideUserModal: false })}
+        >
+          View Users ({this.props.users.length})
+        </button>
+        <Modal 
+          hidden={this.state.hideUserModal}
+          hideModal={() => this.setState({ hideUserModal: true })}
+        >
+          <div className="users-section">
 
-        <h3 className="heading-tertiary">Users</h3>
+            <h3 className="heading-tertiary">Users</h3>
 
-        <ul className="users-section__list">
-          {this.renderUsers()}
-        </ul>
+            <ul className="users-section__list">
+              {this.renderUsers()}
+            </ul>
 
+          </div>
+        </Modal>
       </div>
     )
   }
@@ -271,7 +286,7 @@ class AdminPage extends Component {
   }
 
 
-  renderMessagesSection() {
+  renderMessages() {
 
     const { messages } = this.props
 
@@ -304,6 +319,30 @@ class AdminPage extends Component {
   }
 
 
+  renderMessagesSection() {
+
+    return (
+      <div>
+        <button
+          className="button button-primary"
+          onClick={() => this.setState({ hideMessageModal: false })}
+        >
+          View Messages ({this.props.messages.length})
+        </button>
+        <Modal
+          hidden={this.state.hideMessageModal}
+          hideModal={() => this.setState({ hideMessageModal: true })}
+        >
+          <div className="messages-section">
+            <h3 className="heading-tertiary">Messages</h3>
+            {this.renderMessages()}
+          </div>
+        </Modal>
+      </div>
+    )
+  }
+
+
   render() {
 
     const { appSettingsVerification } = this.state
@@ -324,10 +363,7 @@ class AdminPage extends Component {
 
             {this.renderAppSettingsForm()}
             {this.renderUsersSection()}
-            <div className="messages-section">
-              <h3 className="heading-tertiary">Messages</h3>
-              {this.renderMessagesSection()}
-            </div>
+            {this.renderMessagesSection()}
           </div>
 
         </div>

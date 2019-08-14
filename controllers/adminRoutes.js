@@ -1,7 +1,5 @@
 const Controller = require('./abstractController')
 const SettingsModel = require('../models/settings')
-const UserModel = require('../models/user')
-const MessageModel = require('../models/message')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
 class AdminRoutes extends Controller {
