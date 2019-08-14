@@ -8,12 +8,13 @@
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
+import sanitizeHTML from 'sanitize-html'
 import renderHTML from 'react-render-html'
 import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PostsFilter from '../PostsFilter'
-import sanitizeHTML from 'sanitize-html'
+import Modal from '../Modal'
 
 
 const PageLayout = props => {
@@ -105,6 +106,8 @@ const PageLayout = props => {
         mainTitle={headerTitle}
         subTitle={renderHTML(headerSubTitle)}
       />
+
+      <Modal />
 
       <main>
         {props.children}

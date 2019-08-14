@@ -1,0 +1,37 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: $color-grey-dark;
+  background-color: rgba($color-grey-dark, 0.7);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--hidden {
+    opacity: 0;
+    transition: .5s;
+  }
+  
+  &__box {
+    position: fixed;
+    background-color: $color-grey-light;
+    padding: 2rem;
+    border: .1rem solid $color-grey;
+    width: 50%;
+    height: 50%;
+    border-radius: .5rem;
+    z-index: 100;
+  }
+
+  &__close {
+    float: right;
+    font-size: 2.5rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+}
