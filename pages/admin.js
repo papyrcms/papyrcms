@@ -40,10 +40,7 @@ class AdminPage extends Component {
     super(props)
 
     this.state = {
-      appSettingsVerification: '',
-
-      hideUserModal: true,
-      hideMessageModal: true
+      appSettingsVerification: ''
     }
 
     Object.keys(props.settings).forEach(key => {
@@ -153,28 +150,20 @@ class AdminPage extends Component {
   renderUsersSection() {
 
     return (
-      <div>
-        <button
-          className="button button-primary"
-          onClick={() => this.setState({ hideUserModal: false })}
-        >
-          View Users ({this.props.users.length})
-        </button>
-        <Modal 
-          hidden={this.state.hideUserModal}
-          hideModal={() => this.setState({ hideUserModal: true })}
-        >
-          <div className="users-section">
+      <Modal 
+        buttonClasses="button button-primary"
+        buttonText={`View Users (${this.props.users.length})`}
+      >
+        <div className="users-section">
 
-            <h3 className="heading-tertiary">Users</h3>
+          <h3 className="heading-tertiary">Users</h3>
 
-            <ul className="users-section__list">
-              {this.renderUsers()}
-            </ul>
+          <ul className="users-section__list">
+            {this.renderUsers()}
+          </ul>
 
-          </div>
-        </Modal>
-      </div>
+        </div>
+      </Modal>
     )
   }
 
@@ -322,23 +311,15 @@ class AdminPage extends Component {
   renderMessagesSection() {
 
     return (
-      <div>
-        <button
-          className="button button-primary"
-          onClick={() => this.setState({ hideMessageModal: false })}
-        >
-          View Messages ({this.props.messages.length})
-        </button>
-        <Modal
-          hidden={this.state.hideMessageModal}
-          hideModal={() => this.setState({ hideMessageModal: true })}
-        >
-          <div className="messages-section">
-            <h3 className="heading-tertiary">Messages</h3>
-            {this.renderMessages()}
-          </div>
-        </Modal>
-      </div>
+      <Modal
+        buttonClasses="button button-primary"
+        buttonText={`View Messages (${this.props.messages.length})`}
+      >
+        <div className="messages-section">
+          <h3 className="heading-tertiary">Messages</h3>
+          {this.renderMessages()}
+        </div>
+      </Modal>
     )
   }
 
