@@ -6,6 +6,7 @@ import { SectionStandard } from '../components/Sections/'
 import CreditCardForm from './CreditCardForm'
 import Input from './Input'
 
+
 class DonateForm extends Component {
 
   constructor(props) {
@@ -125,8 +126,10 @@ class DonateForm extends Component {
     } else {
       return (
         <div className="donate-form">
-          <h3 className="heading-tertiary">Thank you for your donation!</h3>
-          <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
+          <div className="donate-form__thanks">
+            <h3 className="heading-tertiary">Thank you for your donation!</h3>
+            <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
+          </div>
         </div>
       )
     }

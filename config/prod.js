@@ -21,5 +21,6 @@ module.exports = {
   mongoURI: process.env.MONGO_URI,
   cookieKey: process.env.COOKIE_KEY,
   rootURL: process.env.ROOT_URL,
+  jwtSecret: process.env.JWT_SECRET,
   port: process.env.PORT
 }

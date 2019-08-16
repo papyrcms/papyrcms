@@ -1,9 +1,11 @@
+const jwt = require('jsonwebtoken')
 const Controller = require('./abstractController')
 const UserModel = require('../models/user')
 const Mailer = require('./mailer')
 const passport = require('passport')
 const { sanitizeRequestBody, checkIfAdmin } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
+const keys = require('../config/keys')
 
 
 class AuthRoutes extends Controller {
@@ -37,6 +39,11 @@ class AuthRoutes extends Controller {
       '/profile', 
       this.renderPage.bind(this)
     )
+    this.server.get(
+      '/forgot_password',
+      this.verifyJWT,
+      this.renderPage.bind(this)
+    )
 
     // API
     this.server.post(
@@ -64,6 +71,16 @@ class AuthRoutes extends Controller {
       sanitizeRequestBody, 
       this.changeUserPassword.bind(this)
     )
+    this.server.post(
+      '/api/changeForgottenPassword',
+      sanitizeRequestBody,
+      this.changeForgottenPassword.bind(this)
+    )
+    this.server.post(
+      '/api/forgotPassword',
+      sanitizeRequestBody,
+      this.sendForgotPasswordEmail.bind(this)
+    )
     this.server.get(
       '/api/logout', 
       this.logoutUser.bind(this)
@@ -73,6 +90,20 @@ class AuthRoutes extends Controller {
       checkIfAdmin,
       this.sendAllUsers.bind(this)
     )
+  }
+
+
+  verifyJWT(req, res, next) {
+
+    try {
+      if (jwt.verify(req.query.token, keys.jwtSecret)) {
+        next()
+      } else {
+        res.status(400).send({ message: 'You\'re not allowed to do that.' })
+      }
+    } catch(exception) {
+      res.status(400).send({ message: 'You\'re not allowed to do that.' })
+    }
   }
 
 
@@ -88,7 +119,7 @@ class AuthRoutes extends Controller {
 
   renderPage(req, res) {
 
-    this.app.render(req, res, req.url)
+    this.app.render(req, res, req.route.path)
   }
 
 
@@ -209,6 +240,51 @@ class AuthRoutes extends Controller {
         res.status(400).send(err)
       }
     })
+  }
+
+
+  async changeForgottenPassword(req, res) {
+
+    try {
+
+      const { token, password, confirmPassword } = req.body
+
+      const data = jwt.verify(token, keys.jwtSecret)
+
+      if (password !== confirmPassword) {
+        res.status(400).send({ message: 'The new password fields do not match.' })
+      }
+
+      const foundUser = await UserModel.findOne({ email: data.email })
+
+      // Set the new password
+      foundUser.setPassword(password, () => {
+        foundUser.save()
+        res.send({ message: 'Your password has been saved!' })
+      })
+
+    } catch (e) {
+      res.status(400).send(err)
+    }
+  }
+
+
+  sendForgotPasswordEmail(req, res) {
+
+    const mailer = new Mailer()
+    const templatePath = 'emails/forgotPassword.html'
+    const subject = "Forgot your password?"
+    const variables = {
+      website: keys.rootURL,
+      token: jwt.sign({ email: req.body.email }, keys.jwtSecret)
+    }
+
+    if (res.locals.settings.enableEmailingToUsers) {
+      mailer.sendEmail(variables, templatePath, req.body.email, subject)
+      res.send('Your email is on its way!')
+    } else {
+      res.send('Looks like emailing is disabled. Please contact a site administrator to reset your password.')
+    }
   }
 
 

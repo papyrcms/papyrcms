@@ -1,6 +1,11 @@
 .donate-form {
   padding-bottom: 10rem;
   background-color: $color-grey-light;
+
+  &__thanks {
+    text-align: center;
+    padding-top: 10rem;
+  }
   
   &__container {
     max-width: $max-container-width;
