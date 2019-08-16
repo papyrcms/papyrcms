@@ -56,9 +56,12 @@ class LoginForm extends Component {
     // Send password reset email
     axios.post('/api/forgotPassword', params)
       .then(response => {
-        this.setState({ forgotPasswordValidation: response.data })
+        this.setState({ forgotPasswordValidation: response.data.message })
       })
-      .catch(error => console.error(error))
+      .catch(error => {
+        console.error(error)
+        this.setState({ forgotPasswordValidation: error.response.data.message })
+      })
   }
 
 
@@ -67,7 +70,7 @@ class LoginForm extends Component {
     const { forgotPasswordEmail, forgotPasswordValidation } = this.state
 
     return (
-      <div className="forgot-password">
+      <form className="forgot-password">
         <h3 className="heading-tertiary forgot-password__title">Forgot your password?</h3>
 
         <p className="forgot-password__content">Nothing to worry about! Just enter your email in the field below, and we'll send you a link so you can reset it.</p>
@@ -89,7 +92,7 @@ class LoginForm extends Component {
         >
           Send
         </button>
-      </div>
+      </form>
     )
   }
 
@@ -99,7 +102,7 @@ class LoginForm extends Component {
     const { email, password, validationMessage } = this.state
 
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} className="login-form">
+      <form className="login-form">
 
         <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
 
@@ -134,11 +137,12 @@ class LoginForm extends Component {
           </Modal>
 
           <div className="login-form__submit">
-            <input
-              type='submit'
-              value='Login'
+            <button
               className='button button-primary'
-            />
+              onClick={event => this.handleSubmit(event)} 
+            >
+              Login
+            </button>
           </div>
         </div>
 

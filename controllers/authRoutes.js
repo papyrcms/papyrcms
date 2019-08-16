@@ -137,9 +137,15 @@ class AuthRoutes extends Controller {
   }
 
 
-  registerUser(req, res) {
+  verifyEmailSyntax(email) {
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return regex.test(String(email).toLowerCase())
+  }
+
+
+  registerUser(req, res) {
+
     const { firstName, lastName, username, password, passwordConfirm } = req.body
 
     if (!firstName || firstName === '') {
@@ -151,7 +157,7 @@ class AuthRoutes extends Controller {
     }
 
     // Make sure "username" is in email format
-    if (!regex.test(String(username).toLowerCase())) {
+    if (!this.verifyEmailSyntax(username)) {
       res.status(400).send({ message: 'Please use a valid email address' })
     }
 
@@ -270,20 +276,25 @@ class AuthRoutes extends Controller {
 
 
   sendForgotPasswordEmail(req, res) {
-
-    const mailer = new Mailer()
-    const templatePath = 'emails/forgotPassword.html'
-    const subject = "Forgot your password?"
-    const variables = {
-      website: keys.rootURL,
-      token: jwt.sign({ email: req.body.email }, keys.jwtSecret)
-    }
-
+    
     if (res.locals.settings.enableEmailingToUsers) {
+
+      if (!this.verifyEmailSyntax(req.body.email)) {
+        res.status(400).send({ message: 'Please enter your email address.' })
+      }
+
+      const mailer = new Mailer()
+      const templatePath = 'emails/forgotPassword.html'
+      const subject = "Forgot your password?"
+      const variables = {
+        website: keys.rootURL,
+        token: jwt.sign({ email: req.body.email }, keys.jwtSecret)
+      }
+
       mailer.sendEmail(variables, templatePath, req.body.email, subject)
-      res.send('Your email is on its way!')
+      res.send({ message: 'Your email is on its way!' })
     } else {
-      res.send('Looks like emailing is disabled. Please contact a site administrator to reset your password.')
+      res.status(400).send({ message: 'Looks like emailing is disabled. Please contact a site administrator to reset your password.' })
     }
   }
 

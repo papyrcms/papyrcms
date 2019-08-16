@@ -46,7 +46,7 @@ class ForgotPasswordPage extends Component {
 
     return (
       <div className="forgot-password-page">
-        <h3 className="heading-tertiary u-margin-bottom-small">Reset Password for {data.email}</h3>
+        <h3 className="heading-tertiary u-margin-bottom-small forgot-password-page__title">Reset Password for {data.email}</h3>
 
         <form 
           onSubmit={event => this.handleSubmit(event)}

@@ -20,7 +20,10 @@ class Modal extends Component {
       <div>
         <button
           className={buttonClasses}
-          onClick={() => this.setState({ hidden: false })}
+          onClick={event => {
+            event.preventDefault()
+            this.setState({ hidden: false })}
+          }
         >
           {buttonText}
         </button>
