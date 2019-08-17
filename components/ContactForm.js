@@ -37,7 +37,7 @@ class ContactForm extends Component {
       contactEmail === '' ||
       contactMessage === ''
     ) {
-      message = 'Please complete all the fields'
+      message = 'Please complete all the fields.'
 
       this.setState({ formValidation: message })
     } else {

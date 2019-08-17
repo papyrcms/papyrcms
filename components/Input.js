@@ -7,6 +7,8 @@
  *   name: String - The name attribute for the input
  *   value: String - The value attribute for the input
  *   onChange: Function - The onChange attribute for the input
+ *   onFocus: Function - The onFocus attribute for the input
+ *   onBlur: Function - The onBlur attribute for the input
  *   placeholder: String - The placeholder attribute for the input
  *   children: Any - Anything additional to add under the input
  *   className: String - Wrapper class
@@ -29,7 +31,7 @@ class Input extends Component {
 
   render() {
 
-    const { className, type, placeholder, name, id, value, onChange, children } = this.props
+    const { className, type, placeholder, name, id, value, onChange, onFocus, onBlur, children } = this.props
 
     return (
       <div className={`input ${className || ''}`}>
@@ -41,7 +43,9 @@ class Input extends Component {
           id={id || ''}
           className="input__input"
           value={value}
-          onChange={event => onChange(event)}
+          onChange={event => { if (onChange) { onChange(event) } }}
+          onBlur={event => { if (onBlur) { onBlur(event) } }}
+          onFocus={event => { if (onFocus) { onFocus(event) } }}
         />
         {children || null}
       </div>

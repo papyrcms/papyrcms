@@ -275,12 +275,26 @@ class AuthRoutes extends Controller {
   }
 
 
-  sendForgotPasswordEmail(req, res) {
+  async sendForgotPasswordEmail(req, res) {
     
     if (res.locals.settings.enableEmailingToUsers) {
 
+      const { email } = req.body
+
       if (!this.verifyEmailSyntax(req.body.email)) {
         res.status(400).send({ message: 'Please enter your email address.' })
+      }
+
+      const userExists = await UserModel.findOne({ email })
+      if (!userExists) {
+
+        let message = 'That email does not exist in our system.'
+
+        if (res.locals.settings.enableRegistration) {
+          message = message + ' Try filling out the "Register" form.'
+        }
+
+        return res.status(400).send({ message })
       }
 
       const mailer = new Mailer()
@@ -288,10 +302,10 @@ class AuthRoutes extends Controller {
       const subject = "Forgot your password?"
       const variables = {
         website: keys.rootURL,
-        token: jwt.sign({ email: req.body.email }, keys.jwtSecret)
+        token: jwt.sign({ email }, keys.jwtSecret)
       }
 
-      mailer.sendEmail(variables, templatePath, req.body.email, subject)
+      mailer.sendEmail(variables, templatePath, email, subject)
       res.send({ message: 'Your email is on its way!' })
     } else {
       res.status(400).send({ message: 'Looks like emailing is disabled. Please contact a site administrator to reset your password.' })

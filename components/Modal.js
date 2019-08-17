@@ -1,3 +1,13 @@
+/**
+ * Modal renders a button which, when clicked, displays a modal
+ * 
+ * props includes:
+ *   children: Component - The content inside the modal
+ *   buttonClasses: String - The classes to give the button
+ *   buttonText: String - The text inside the button
+ */
+
+
 import React, { Component } from 'react'
 
 

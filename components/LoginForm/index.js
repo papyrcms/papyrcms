@@ -2,19 +2,19 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
-import { setCurrentUser } from '../reduxStore'
-import Input from './Input'
-import Modal from './Modal'
+import { setCurrentUser } from '../../reduxStore'
+import Input from '../Input'
+import Modal from '../Modal'
+import ForgotPasswordForm from './ForgotPasswordForm'
 
 class LoginForm extends Component {
 
   constructor(props) {
+
     super(props)
 
     this.state = { 
       email: '', 
-      forgotPasswordEmail: '',
-      forgotPasswordValidation: '',
       password: '', 
       validationMessage: '' 
     }
@@ -45,58 +45,6 @@ class LoginForm extends Component {
   }
 
 
-  handleForgotPasswordSubmit(event) {
-
-    event.preventDefault()
-
-    const params = {
-      email: this.state.forgotPasswordEmail
-    }
-
-    // Send password reset email
-    axios.post('/api/forgotPassword', params)
-      .then(response => {
-        this.setState({ forgotPasswordValidation: response.data.message })
-      })
-      .catch(error => {
-        console.error(error)
-        this.setState({ forgotPasswordValidation: error.response.data.message })
-      })
-  }
-
-
-  renderForgotPassword() {
-
-    const { forgotPasswordEmail, forgotPasswordValidation } = this.state
-
-    return (
-      <form className="forgot-password">
-        <h3 className="heading-tertiary forgot-password__title">Forgot your password?</h3>
-
-        <p className="forgot-password__content">Nothing to worry about! Just enter your email in the field below, and we'll send you a link so you can reset it.</p>
-
-        <Input
-          className="forgot-password__input"
-          id="email_forgot_password"
-          label="Email"
-          name="email"
-          value={forgotPasswordEmail}
-          onChange = {event => this.setState({forgotPasswordEmail: event.target.value })}
-        />
-
-        <p className="forgot-password__validation">{forgotPasswordValidation}</p>
-
-        <button
-          className="button button-primary forgot-password__submit"
-          onClick={event => this.handleForgotPasswordSubmit(event)}
-        >
-          Send
-        </button>
-      </form>
-    )
-  }
-
-
   render() {
 
     const { email, password, validationMessage } = this.state
@@ -113,7 +61,7 @@ class LoginForm extends Component {
           value={email}
           onChange={event => {
             this.setState({ email: event.target.value })
-            this.setState({ forgotPasswordEmail: event.target.value })
+            // this.setState({ forgotPasswordEmail: event.target.value })
           }}
         />
 
@@ -133,7 +81,7 @@ class LoginForm extends Component {
             buttonClasses="login-form__forgot-password"
             buttonText="Forgot Password?"
           >
-            {this.renderForgotPassword()}
+            <ForgotPasswordForm email={email} />
           </Modal>
 
           <div className="login-form__submit">
