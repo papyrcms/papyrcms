@@ -28,7 +28,7 @@ class Mailer {
   }
 
 
-  async sendEmail(model, templatePath, recipient, subject) {
+  async sendEmail(variables, templatePath, recipient, subject) {
 
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -53,7 +53,7 @@ class Mailer {
       }
 
       const template = handlebars.compile(html)
-      const htmlToSend = template(model)
+      const htmlToSend = template(variables)
 
       const mailOptions = {
         from: keys.siteEmail,
