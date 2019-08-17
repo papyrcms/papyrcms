@@ -8,9 +8,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js",
+    "deploy": "npm run heroku-config && git push heroku master",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "deploy": "npm run heroku-config && git push heroku master",
     "heroku-config": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.19.1"
   }
 }
