@@ -32,7 +32,7 @@ class SectionCards extends Component {
       const path = this.props.path ? this.props.path : 'posts'
 
       return (
-        <Link href={`/${path}_show?id=${post._id}`} as={`/${path}/${post._id}`}>
+        <Link href={`/${path || 'posts'}_show?id=${post._id}`} as={`/${path || 'posts'}/${post._id}`}>
           <a className="section-cards__link">Read More</a>
         </Link>
       )
