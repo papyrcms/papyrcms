@@ -5,11 +5,18 @@
  *   content: String - The text content inside the editor
  *   className: String - The class applied to the editor wrapper
  *   onChange: Function - The event handler when the content is changed
+ * 
+ * TODO:
+ *   - react-ckeditor-component is a third-party module. I would rather
+ *     use a module made by the people at CKEditor. One is available;
+ *     however, it does not play nicely with SSR. If it ever does, or if
+ *     a better editor comes out, it may be beneficial to switch.
  */
 
 
 import React from 'react'
 import CKEditor from 'react-ckeditor-component'
+
 
 const TextEditor = props => {
   const { content, className, onChange } = props
@@ -19,7 +26,7 @@ const TextEditor = props => {
       content={content}
       activeClass={className}
       events={{
-        "change": event => {onChange(event.editor.getData())}
+        "change": event => onChange(event.editor.getData())
       }}
     />
   )
