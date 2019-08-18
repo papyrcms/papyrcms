@@ -6,13 +6,13 @@ import MessageList from './MessageList'
 
 
 export default () => (
-  <div className="admin-page__dashboard">
+  <div className="admin-dashboard">
 
-    <div className="admin-page__left">
+    <div className="admin-dashboard__left">
       <AdminLinks />
     </div>
 
-    <div className="admin-page__right">
+    <div className="admin-dashboard__right">
       <AppSettingsForm />
       <UserList />
       <MessageList />

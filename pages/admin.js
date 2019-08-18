@@ -14,6 +14,7 @@ const AdminPage = () => (
   </div>
 )
 
+
 AdminPage.getInitialProps = async ({ req }) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
