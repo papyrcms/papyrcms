@@ -3,4 +3,31 @@
   &__list {
     list-style-type: none;
   }
+
+  &__user {
+    border-bottom: .1rem solid $color-grey;
+    padding: .5rem;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__check-info {
+    
+  }
+
+  &__info {
+    margin-left: 3rem;
+    overflow: hidden;
+
+    height: 0;
+    z-index: -10;
+    transition: .3s;
+    
+    &--visible {
+      height: 11rem;
+    }
+  }
 }
