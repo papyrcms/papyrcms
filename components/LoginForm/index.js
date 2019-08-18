@@ -77,21 +77,21 @@ class LoginForm extends Component {
         <p className="login-form__validation">{validationMessage}</p>
 
         <div className="login-form__bottom">
+          <div className="login-form__submit">
+            <button
+              className='button button-primary'
+              onClick={event => this.handleSubmit(event)}
+            >
+              Login
+            </button>
+          </div>
+          
           <Modal
             buttonClasses="login-form__forgot-password"
             buttonText="Forgot Password?"
           >
             <ForgotPasswordForm email={email} />
           </Modal>
-
-          <div className="login-form__submit">
-            <button
-              className='button button-primary'
-              onClick={event => this.handleSubmit(event)} 
-            >
-              Login
-            </button>
-          </div>
         </div>
 
       </form>

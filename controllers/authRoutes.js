@@ -281,7 +281,7 @@ class AuthRoutes extends Controller {
 
       const { email } = req.body
 
-      if (!this.verifyEmailSyntax(req.body.email)) {
+      if (!this.verifyEmailSyntax(email)) {
         res.status(400).send({ message: 'Please enter your email address.' })
       }
 
