@@ -28,11 +28,11 @@ class UserList extends Component {
         buttonClasses="button button-primary"
         buttonText={`View Users (${this.props.users.length})`}
       >
-        <div className="users-section">
+        <div className="user-list">
 
           <h3 className="heading-tertiary">Users</h3>
 
-          <ul className="users-section__list">
+          <ul className="user-list__list">
             {this.renderUsers()}
           </ul>
 

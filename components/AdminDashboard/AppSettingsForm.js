@@ -68,15 +68,15 @@ class AppSettingsForm extends Component {
       const label = result.charAt(0).toUpperCase() + result.slice(1)
 
       return (
-        <div className="settings-form__field" key={key}>
+        <div className="app-settings-form__field" key={key}>
           <input
-            className="settings-form__checkbox"
+            className="app-settings-form__checkbox"
             type="checkbox"
             id={key}
             checked={this.state[key] ? true : false}
             onChange={() => this.setState({ [key]: !this.state[key] })}
           />
-          <label className="settings-form__label" htmlFor={key}>{label}</label>
+          <label className="app-settings-form__label" htmlFor={key}>{label}</label>
         </div>
       )
     })
@@ -88,15 +88,15 @@ class AppSettingsForm extends Component {
     const { appSettingsVerification } = this.state
 
     return (
-      <form className="settings-form" onSubmit={event => this.handleSubmit(event)}>
+      <form className="app-settings-form" onSubmit={event => this.handleSubmit(event)}>
 
-        <h3 className="heading-tertiary settings-form__title">App Settings</h3>
+        <h3 className="heading-tertiary app-settings-form__title">App Settings</h3>
 
-        <p className="settings-form__verification">{appSettingsVerification}</p>
+        <p className="app-settings-form__verification">{appSettingsVerification}</p>
 
         {this.renderSettingsInputs()}
 
-        <div className="settings-form__submit">
+        <div className="app-settings-form__submit">
           <input type="submit" className="button button-primary" />
         </div>
 

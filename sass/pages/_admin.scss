@@ -25,7 +25,7 @@
     }
   }
 
-  &__links {
+  &__left {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,24 +35,7 @@
     background-color: $color-grey-light-2;
   }
 
-  &__link {
-    &:link,
-    &:visited {
-      width: 100%;
-      text-align: center;
-      padding: 1.2rem 2rem;
-      text-decoration: none;
-      color: $color-grey-dark;
-      transition: all .4s;
-      font-size: 2rem;
-    }
-
-    &:hover {
-      background-color: $color-grey-light;
-    }
-  }
-
-  &__forms {
+  &__right {
     justify-self: center;
     grid-column: span 2;
     margin-left: 2rem;

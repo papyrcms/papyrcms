@@ -44,15 +44,15 @@ class MessageList extends Component {
       const { name, email, message, created, _id } = mess
 
       return (
-        <div key={_id} className="message-section__message">
-          <p className="message-section__date">Sent: {moment(created).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+        <div key={_id} className="message-list__message">
+          <p className="message-list__date">Sent: {moment(created).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
 
-          <div className="message-section__info">
-            <span className="message-section__info--name">From: {name}</span>
-            <span className="message-section__info--email">Email: {email}</span>
+          <div className="message-list__info">
+            <span className="message-list__info--name">From: {name}</span>
+            <span className="message-list__info--email">Email: {email}</span>
           </div>
 
-          <div className="message-section__content">
+          <div className="message-list__content">
             {message}
           </div>
 
@@ -75,7 +75,7 @@ class MessageList extends Component {
         buttonClasses="button button-primary"
         buttonText={`View Messages (${this.props.messages.length})`}
       >
-        <div className="messages-section">
+        <div className="message-list">
           <h3 className="heading-tertiary">Messages</h3>
           {this.renderMessages()}
         </div>
