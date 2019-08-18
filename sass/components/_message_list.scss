@@ -1,0 +1,30 @@
+.message-section {
+  
+  &__message {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: .1rem solid $color-grey;
+  }
+
+  &__date {
+
+  }
+
+  &__info {
+
+    display: flex;
+    justify-content: space-between;
+
+    &--name {
+
+    }
+
+    &--email {
+
+    }
+  }
+
+  &__content {
+    margin-top: 1rem;
+  }
+}

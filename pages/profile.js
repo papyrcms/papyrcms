@@ -12,14 +12,17 @@ class ProfilePage extends Component {
 
     super(props)
 
-    if (!!props.currentUser) {
+    if (props.currentUser) {
+
+      const { firstName, lastName } = props.currentUser
+
       this.state = {
         oldPassword: '',
         newPassword: '',
         newPasswordConfirm: '',
         passwordValidation: '',
-        firstName: props.currentUser.firstName || '',
-        lastName: props.currentUser.lastName || '',
+        firstName: firstName || '',
+        lastName: lastName || '',
         infoValidation: ''
       }
     } else {

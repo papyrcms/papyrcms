@@ -1,0 +1,70 @@
+.page-settings-form {
+  grid-column: span 2;
+
+  @include respond(phone) {
+    grid-column: span 1;
+  }
+
+  &__content{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2rem;
+
+    margin-bottom: 2rem;
+
+    @include respond(tab-port) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond(phone) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__group {
+    margin-bottom: 1rem;
+  }
+
+  &__field {
+    margin-left: 1rem;
+  }
+
+  &__label {
+    letter-spacing: .1rem;
+  }
+}
+
+
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+
+  }
+
+  &__verification {
+    color: $color-tertiary;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+  }
+
+  &__checkbox {
+    margin-right: 1rem;
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &__label {
+    letter-spacing: .1rem;
+  }
+
+  &__submit {
+    margin-top: 2rem;
+  }
+}

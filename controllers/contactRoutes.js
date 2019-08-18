@@ -82,15 +82,15 @@ class ContactRoutes extends Controller {
 
   createMessage(req, res) {
 
-    if (res.locals.settings.enableEmailingToAdmin) {
+    const { contactName, contactEmail, contactMessage } = req.body
+    const messageObj = {
+      name: contactName,
+      email: contactEmail,
+      message: contactMessage
+    }
+    const message = new MessageModel(messageObj)
 
-      const { contactName, contactEmail, contactMessage } = req.body
-      const messageObj = {
-        name: contactName,
-        email: contactEmail,
-        message: contactMessage,
-      }
-      const message = new MessageModel(messageObj)
+    if (res.locals.settings.enableEmailingToAdmin) {
 
       const mailer = new Mailer()
       const templatePath = 'emails/contact.html'
@@ -101,10 +101,10 @@ class ContactRoutes extends Controller {
       if (sent) {
         message.emailSent = true
       }
-
-      message.save()
-      res.send(message)
     }
+
+    message.save()
+    res.send(message)
   }
 }
 

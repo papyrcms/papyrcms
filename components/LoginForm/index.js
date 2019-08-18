@@ -59,10 +59,7 @@ class LoginForm extends Component {
           label="Email"
           name="username"
           value={email}
-          onChange={event => {
-            this.setState({ email: event.target.value })
-            // this.setState({ forgotPasswordEmail: event.target.value })
-          }}
+          onChange={event => this.setState({ email: event.target.value })}
         />
 
         <Input
@@ -85,7 +82,7 @@ class LoginForm extends Component {
               Login
             </button>
           </div>
-          
+
           <Modal
             buttonClasses="login-form__forgot-password"
             buttonText="Forgot Password?"
