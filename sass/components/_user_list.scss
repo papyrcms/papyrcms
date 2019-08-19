@@ -22,12 +22,16 @@
     margin-left: 3rem;
     overflow: hidden;
 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
     height: 0;
     z-index: -10;
     transition: .3s;
     
     &--visible {
-      height: 11rem;
+      height: 8rem;
     }
   }
 }

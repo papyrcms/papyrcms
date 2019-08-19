@@ -90,6 +90,11 @@ class AuthRoutes extends Controller {
       checkIfAdmin,
       this.sendAllUsers.bind(this)
     )
+    this.server.delete(
+      '/api/user/:id',
+      checkIfAdmin,
+      this.deleteUser.bind(this)
+    )
   }
 
 
@@ -104,6 +109,20 @@ class AuthRoutes extends Controller {
     } catch(exception) {
       res.status(400).send({ message: 'You\'re not allowed to do that.' })
     }
+  }
+
+
+  async deleteUser(req, res) {
+
+    const { id } = req.params
+
+    if (id === req.user._id) {
+      return res.status(400).send({ message: 'You cannot delete yourself.' })
+    }
+
+    await UserModel.findOneAndDelete({ _id: id })
+
+    res.send({ message: 'User deleted' })
   }
 
 

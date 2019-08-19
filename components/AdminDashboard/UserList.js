@@ -1,5 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { setUsers } from '../../reduxStore'
 import Modal from '../Modal'
 
@@ -7,9 +8,40 @@ import Modal from '../Modal'
 class UserList extends Component {
 
   constructor(props) {
+
     super(props)
 
     this.state = { selectedUser: '' }
+  }
+
+
+  deleteUser(user) {
+
+    const confirm = window.confirm(`Are you sure you want to delete ${user.email}`)
+
+    if (confirm) {
+      const { currentUser, users, setUsers } = this.props
+
+      if (user._id !== currentUser._id) {
+
+        axios.delete(`/api/user/${user._id}`)
+          .then(response => {
+
+            users.forEach((foundUser, i) => {
+
+              if (foundUser._id === user._id) {
+                let newUsers = [...users]
+                newUsers.splice(i, 1)
+
+                setUsers(newUsers)
+              }
+            })
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
+    }
   }
 
 
@@ -18,12 +50,22 @@ class UserList extends Component {
     const visible = user._id === this.state.selectedUser ? true : false
 
     return (
-      <ul className={`user-list__info${visible ? ' user-list__info--visible' : ''}`}>
-        <li>Email: {user.email}</li>
-        <li>First Name: {user.firstName}</li>
-        <li>Last Name: {user.lastName}</li>
-        <li>Admin: {user.isAdmin.toString()}</li>
-      </ul>
+      <div className={`user-list__info${visible ? ' user-list__info--visible' : ''}`}>
+        <ul className="user-list__details">
+          <li>First Name: {user.firstName}</li>
+          <li>Last Name: {user.lastName}</li>
+          <li>Admin: {user.isAdmin.toString()}</li>
+        </ul>
+
+        <div className="user-list__options">
+          <button 
+            className="button button-small button-delete"
+            onClick={() => this.deleteUser(user)}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
     )
   }
 
@@ -75,7 +117,7 @@ class UserList extends Component {
 
 
 const mapStateToProps = state => {
-  return { users: state.users }
+  return { users: state.users, currentUser: state.currentUser }
 }
 
 
