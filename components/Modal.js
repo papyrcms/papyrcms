@@ -39,7 +39,7 @@ class Modal extends Component {
         </button>
         <div className={`modal${hidden ? ' modal--hidden' : ''}`} onClick={() => this.setState({ hidden: true })}>
           <div className="modal__box" onClick={event => event.stopPropagation()}>
-            <a className="modal__close" onClick={() => this.setState({ hidden: true })}>&#10005;</a>
+            <button className="modal__close" onClick={() => this.setState({ hidden: true })}>&#10005;</button>
             <div className="modal__content">
               {children}
             </div>
