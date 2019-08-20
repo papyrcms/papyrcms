@@ -6,15 +6,19 @@ const userSchema = new mongoose.Schema({
   // Authentication info
   username: String,
   password: String,
-  isAdmin: { type: Boolean, default: false },
-
+  
   // Personal Info
   email: String,
   firstName: String,
   lastName: String,
 
   // Account creation date
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now },
+  
+  // Etc
+  isAdmin: { type: Boolean, default: false },
+  isSubscribed: { type: Boolean, default: true },
+  isBanned: { type: Boolean, default: false }
 })
 
 userSchema.plugin(passportLocalMongoose)

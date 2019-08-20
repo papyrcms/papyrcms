@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import Input from './Input'
 
 class ContactForm extends Component {
@@ -15,9 +16,22 @@ class ContactForm extends Component {
 
     super(props)
 
+    const { firstName, lastName, email } = props.currentUser
+
+    let contactName = ''
+    if (firstName && !lastName) {
+      contactName = firstName
+    } else if (!firstName && lastName) {
+      contactName = lastName
+    } else if (firstName && lastName) {
+      contactName = `${firstName} ${lastName}`
+    }
+
+    const contactEmail = email ? email : ''
+
     this.state = {
-      contactName: '',
-      contactEmail: '',
+      contactName,
+      contactEmail,
       contactMessage: props.initialMessage || '',
       formValidation: ''
     }
@@ -108,4 +122,9 @@ class ContactForm extends Component {
 }
 
 
-export default ContactForm
+const mapStateToProps = state => {
+  return { currentUser: state.currentUser }
+}
+
+
+export default connect(mapStateToProps)(ContactForm)
