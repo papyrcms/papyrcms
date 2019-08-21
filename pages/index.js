@@ -56,9 +56,10 @@ const LandingPage = props => (
     <PostsFilter
       component={SectionMedia}
       posts={props.posts}
+      singular
       settings={{
         postTags: 'parallax-section',
-        maxPosts: 1
+        maxPosts: 1,
       }}
       componentProps={{
         fixed: true,

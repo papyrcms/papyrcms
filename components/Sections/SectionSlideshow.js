@@ -49,7 +49,7 @@ class SectionSlideshow extends Component {
       return (
         <SectionMedia
           key={post._id}
-          posts={[post]}
+          post={post}
           className={`${this.state.counter !== i ? 'slide--hidden' : ''} slide`}
           alt={post.title}
         />
