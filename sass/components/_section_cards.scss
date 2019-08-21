@@ -99,4 +99,8 @@
   &__link {
     font-size: 2rem;
   }
+
+  &__empty-message {
+    grid-column: span 4;
+  }
 }

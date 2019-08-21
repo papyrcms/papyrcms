@@ -79,14 +79,29 @@ class SectionSlideshow extends Component {
 
   render() {
 
-    return (
-      <div className="section-slideshow">
-        {this.renderSlides()}
-        <div className="section-slideshow__buttons">
-          {this.renderButtons()}
-        </div>
-      </div>
-    )
+    if ( this.props.posts.length !== 0) {
+
+      return (
+        <section className="section-slideshow">
+          {this.renderSlides()}
+          <div className="section-slideshow__buttons">
+            {this.renderButtons()}
+          </div>
+        </section>
+      )
+    } else {
+
+      const { emptyTitle, emptyMessage } = this.props
+
+      return (
+        <section className="section-slideshow">
+          <div className="section-slideshow__empty">
+            <h2 className="heading-secondary">{emptyTitle}</h2>
+            <h3 className="heading-tertiary">{emptyMessage}</h3>
+          </div>
+        </section>
+      )
+    }
   }
 }
 

@@ -16,28 +16,41 @@ import Media from '../Media'
 
 const SectionMedia = props => {
 
-  const { title, content, mainMedia } = props.posts[0]
-  const { fixed, alt } = props
-  let { className } = props;
-  className = className ? className : 'media'
+  if (props.post) {
 
-  return (
-    <section className={`${className}${fixed ? '--fixed' : ''}`}>
+    const { title, content, mainMedia } = props.post
+    const { fixed, alt } = props
+  
+    return (
+      <section className={`section-media${fixed ? '--fixed' : ''}`}>
+  
+        <div className='section-media__text'>
+          <h2 className='section-media__title'>{title}</h2>
+          <div className='section-media__subtext'>{renderHTML(content)}</div>
+        </div>
+  
+        <Media
+          className={`section-media__media${fixed ? '--fixed' : ''}`}
+          src={mainMedia}
+          alt={alt}
+          parallax={fixed}
+        />
+  
+      </section>
+    )
+  } else {
 
-      <div className={`${className}__text`}>
-        <h2 className={`${className}__title`}>{title}</h2>
-        <div className={`${className}__subtext`}>{renderHTML(content)}</div>
-      </div>
+    const { emptyTitle, emptyMessage } = props
 
-      <Media
-        className={`${className}__media${fixed ? '--fixed' : ''}`}
-        src={mainMedia}
-        alt={alt}
-        parallax={fixed}
-      />
-
-    </section>
-  )
+    return (
+      <section className='section-media'>
+        <div className='section-media__empty'>
+          <h2 className='heading-secondary'>{emptyTitle}</h2>
+          <h3 className='heading-tertiary'>{emptyMessage}</h3>
+        </div>
+      </section>
+    )
+  }
 }
 
 export default SectionMedia

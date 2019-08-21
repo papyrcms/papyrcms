@@ -61,32 +61,43 @@ class SectionMaps extends Component {
       }
     })
 
-    if (!contentPost || !longitudePost || !latitudePost) {
-      return null
-    }
+    if (contentPost && longitudePost && latitudePost) {
   
-    const { title, content } = contentPost
-    const latitude = parseFloat(latitudePost.title)
-    const longitude = parseFloat(longitudePost.title)
-    const mapLocation = this.props.mapLocation ? this.props.mapLocation : 'start'
-  
-    return (
-      <section className="section-maps">
-        <div className="section-maps__container">
-          <h2 className={'heading-secondary section-maps__title'}>{title}</h2>
+      const { title, content } = contentPost
+      const latitude = parseFloat(latitudePost.title)
+      const longitude = parseFloat(longitudePost.title)
+      const mapLocation = this.props.mapLocation ? this.props.mapLocation : 'start'
+    
+      return (
+        <section className="section-maps">
+          <div className="section-maps__container">
+            <h2 className='heading-secondary section-maps__title'>{title}</h2>
 
-          <div className="section-maps__content">
-            {mapLocation === 'start' ? this.renderMap(latitude, longitude) : null}
-      
-            <div className={'section-maps__text'}>
-              <div className={'section-maps__subtext'}>{renderHTML(content)}</div>
+            <div className="section-maps__content">
+              {mapLocation === 'start' ? this.renderMap(latitude, longitude) : null}
+        
+              <div className={'section-maps__text'}>
+                <div className={'section-maps__subtext'}>{renderHTML(content)}</div>
+              </div>
+
+              {mapLocation === 'end' ? this.renderMap(latitude, longitude) : null}
             </div>
-
-            {mapLocation === 'end' ? this.renderMap(latitude, longitude) : null}
           </div>
-        </div>
-      </section>
-    )
+        </section>
+      )
+    } else {
+       
+      const { emptyTitle, emptyMessage } = this.props
+
+      return (
+        <section className="section-maps">
+          <div className="section-maps__container">
+            <h2 className="heading-secondary">{emptyTitle}</h2>
+            <h3 className="heading-tertiary">{emptyMessage}</h3>
+          </div>
+        </section>
+      )
+    }
   }
 }
 

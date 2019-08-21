@@ -13,7 +13,8 @@ const ServicesPage = props => (
     }}
     componentProps={{
       title: 'Services',
-      className: 'services-page'
+      className: 'services-page',
+      emptyMessage: 'Create content with the "services" tag.'
     }}
   />
 )

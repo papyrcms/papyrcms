@@ -120,48 +120,63 @@ class PostShow extends Component {
 
   render() {
 
-    const { post, enableCommenting, apiPath, className } = this.props
-    const { title, tags, mainMedia, content, published } = post
+    if (this.props.post) {
 
-    let postContent = content || ''
+      const { post, enableCommenting, apiPath, className } = this.props
+      const { title, tags, mainMedia, content, published } = post
 
-    return (
-      <div className={`posts-show-page ${className || ''}`}>
+      let postContent = content || ''
 
-        <Head>
-          <title>{`Derek Garnett | ${title || ''}`}</title>
-          <meta key="og-image" property="og:image" content={mainMedia || ''} />
-          <meta key="og-url" property="og:url" content={mainMedia || ''} />
-          <meta key="title" name="title" content={title || ''} />
-          <meta key="twitter-title" property="twitter:title" content={title || ''} />
-          <meta key="twitter-description" property="twitter:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-          <meta key="og-title" property="og:title" content={title || ''} />
-          <meta key="keywords" name="keywords" content={tags || ''} />
-          <meta key="description" name="description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-          <meta key="og-description" property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-        </Head>
+      return (
+        <div className={`posts-show-page ${className || ''}`}>
 
-        <div className="posts-show-page__container">
+          <Head>
+            <title>{`Derek Garnett | ${title || ''}`}</title>
+            <meta key="og-image" property="og:image" content={mainMedia || ''} />
+            <meta key="og-url" property="og:url" content={mainMedia || ''} />
+            <meta key="title" name="title" content={title || ''} />
+            <meta key="twitter-title" property="twitter:title" content={title || ''} />
+            <meta key="twitter-description" property="twitter:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+            <meta key="og-title" property="og:title" content={title || ''} />
+            <meta key="keywords" name="keywords" content={tags || ''} />
+            <meta key="description" name="description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+            <meta key="og-description" property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+          </Head>
 
-          <div className="post">
-            {this.renderPublishSection(published)}
-            <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
-            {this.renderDate()}
-            {this.renderTagsSection(tags)}
-            {this.renderMainMedia(mainMedia, title)}
-            <div className="post__content">{renderHTML(postContent)}</div>
-            {this.renderAuthOptions()}
+          <div className="posts-show-page__container">
+
+            <div className="post">
+              {this.renderPublishSection(published)}
+              <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
+              {this.renderDate()}
+              {this.renderTagsSection(tags)}
+              {this.renderMainMedia(mainMedia, title)}
+              <div className="post__content">{renderHTML(postContent)}</div>
+              {this.renderAuthOptions()}
+            </div>
+
+            <Comment
+              post={post}
+              comments={post.comments}
+              enableCommenting={enableCommenting}
+              apiPath={apiPath}
+            />
           </div>
-
-          <Comment
-            post={post}
-            comments={post.comments}
-            enableCommenting={enableCommenting}
-            apiPath={apiPath}
-          />
         </div>
-      </div>
-    )
+      )
+    } else {
+      
+      const { className, emptyTitle, emptyMessage } = this.props
+
+      return (
+        <div className={`posts-show-page ${className || ''}`}>
+          <div className="posts-show-page__container">
+          <h2 className="heading-secondary">{emptyTitle}</h2>
+            <h3 className="heading-tertiary">{emptyMessage}</h3>
+          </div>
+        </div>
+      )
+    }
   }
 }
 

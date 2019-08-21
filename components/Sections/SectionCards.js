@@ -122,7 +122,11 @@ class SectionCards extends Component {
         )
       })
     } else {
-      return <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
+      return (
+        <div className="section-cards__empty-message">
+          <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
+        </div>
+      )
     }
   }
 

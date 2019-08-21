@@ -16,18 +16,22 @@ class ContactForm extends Component {
 
     super(props)
 
-    const { firstName, lastName, email } = props.currentUser
-
     let contactName = ''
-    if (firstName && !lastName) {
-      contactName = firstName
-    } else if (!firstName && lastName) {
-      contactName = lastName
-    } else if (firstName && lastName) {
-      contactName = `${firstName} ${lastName}`
-    }
+    let contactEmail = ''
 
-    const contactEmail = email ? email : ''
+    if (props.currentUser) {
+      const { firstName, lastName, email } = props.currentUser
+      
+      if (firstName && !lastName) {
+        contactName = firstName
+      } else if (!firstName && lastName) {
+        contactName = lastName
+      } else if (firstName && lastName) {
+        contactName = `${firstName} ${lastName}`
+      }
+      
+      contactEmail = email ? email : ''
+    }
 
     this.state = {
       contactName,

@@ -17,6 +17,22 @@
     transform: translateX(-50%);
     opacity: .6;
   }
+
+  &__empty {
+    padding: 5rem 10vw;
+    padding-bottom: 10rem;
+    background-color: $color-grey-light;
+
+    @include respond(tab-port) {
+      padding: 5rem 5vw;
+      padding-bottom: 10rem;
+    }
+
+    @include respond(phone) {
+      padding: 5rem 3vw;
+      padding-bottom: 10rem;
+    }
+  }
 }
 
 .slide {

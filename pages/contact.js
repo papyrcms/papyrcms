@@ -1,15 +1,14 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import ContactForm from '../components/ContactForm'
 import PostsFilter from '../components/PostsFilter'
 import { SectionStandard } from '../components/Sections/'
-import keys from '../config/keys'
 
 const ContactPage = props => {
 
   let message
 
+  // This is a custom message for a query param
   if (props.url && props.url.query && props.url.query.reason) {
     switch (props.url.query.reason) {
       case 'tutoring':
@@ -17,6 +16,8 @@ const ContactPage = props => {
         break
       default: null
     }
+    
+    // This is an actual feature
   } else if (props.url && props.url.query && props.url.query.initialMessage) {
     message = decodeURIComponent(props.url.query.initialMessage)
   }

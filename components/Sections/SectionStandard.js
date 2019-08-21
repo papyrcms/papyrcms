@@ -128,7 +128,7 @@ class SectionStandard extends Component {
         )
       })
     } else {
-      return <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
+      return  <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
     }
   }
 

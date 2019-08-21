@@ -11,7 +11,8 @@ const AboutPage = props => (
     singular
     componentProps={{ 
       className: 'about-page',
-      emptyMessage: 'Coming soon',
+      emptyTitle: 'About Page',
+      emptyMessage: 'Create content with the "about" tag.',
       path: "posts",
       apiPath: "/api/posts",
       redirectRoute: "/about"

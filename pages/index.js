@@ -23,7 +23,8 @@ const LandingPage = props => (
         title: 'This is the 3 Card Section',
         contentLength: 200,
         readMore: true,
-        perRow: 3
+        perRow: 3,
+        emptyMessage: 'Create content with the "sample" tag.'
       }}
     />
     <PostsFilter
@@ -33,9 +34,10 @@ const LandingPage = props => (
         maxPosts: 1,
         postTags: 'video-section'
       }}
+      singular
       componentProps={{
-        className: "section-video",
-        // fixed: true
+        emptyTitle: 'Video Section',
+        emptyMessage: 'Create content with the "video-section" tag'
       }}
     />
     <PostsFilter
@@ -47,20 +49,22 @@ const LandingPage = props => (
       }}
       componentProps={{
         title: 'This is the Standard Section',
-        readMore: true
+        readMore: true,
+        emptyMessage: 'Create content with the "sample" tag.'
       }}
     />
     <PostsFilter
       component={SectionMedia}
       posts={props.posts}
       settings={{
-        postTags: 'books',
+        postTags: 'parallax-section',
         maxPosts: 1
       }}
       componentProps={{
-        className: 'section-image',
         fixed: true,
-        alt: 'Some books'
+        alt: 'Parallax Image',
+        emptyTitle: 'This is the parallax section',
+        emptyMessage: 'Create content with the "parallax-section" tag.'
       }}
     />
     <PostsFilter
@@ -74,7 +78,8 @@ const LandingPage = props => (
         title: '4 Card Section',
         contentLength: 100,
         perRow: 4,
-        readMore: true
+        readMore: true,
+        emptyMessage: 'Create content with the "sample" tag.'
       }}
     />
     <PostsFilter
@@ -85,7 +90,9 @@ const LandingPage = props => (
         postTags: 'slideshow-section'
       }}
       componentProps={{
-        timer: 5000
+        timer: 5000,
+        emptyTitle: 'This is the slideshow section',
+        emptyMessage: 'Create content with the "slideshow-section" tag.'
       }}
     />
     <PostsFilter
@@ -97,7 +104,9 @@ const LandingPage = props => (
         strictTags: true
       }}
       componentProps={{
-        mapLocation: 'end'
+        mapLocation: 'end',
+        emptyTitle: 'This is the maps section',
+        emptyMessage: 'Create content with the "maps-section" and "main" tags. Be sure to include a post with the "latitude" tag and "logintude" tag as well.'
       }}
     />
   </div>
