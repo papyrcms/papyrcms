@@ -66,6 +66,12 @@ class AuthRoutes extends Controller {
       sanitizeRequestBody,
       this.updateCurrentUser.bind(this)
     )
+    this.server.put(
+      '/api/user/makeAdmin',
+      sanitizeRequestBody,
+      checkIfAdmin,
+      this.makeAdmin.bind(this)
+    )
     this.server.post(
       '/api/changePassword',
       sanitizeRequestBody, 
@@ -329,6 +335,16 @@ class AuthRoutes extends Controller {
     } else {
       res.status(400).send({ message: 'Looks like emailing is disabled. Please contact a site administrator to reset your password.' })
     }
+  }
+
+
+  async makeAdmin(req, res) {
+
+    const { userId, isAdmin } = req.body
+
+    await UserModel.findByIdAndUpdate(userId, { isAdmin })
+
+    res.send({ message: 'Success' })
   }
 
 

@@ -45,6 +45,31 @@ class UserList extends Component {
   }
 
 
+  changeAdminStatus(user) {
+
+    const { currentUser, users, setUsers } = this.props
+
+    if (user._id !== currentUser._id) {
+
+      axios.put('/api/user/makeAdmin', { userId: user._id, isAdmin: !user.isAdmin })
+        .then(response => {
+          users.forEach((foundUser, i) => {
+
+            if (foundUser._id === user._id) {
+              let newUsers = [...users]
+              newUsers[i].isAdmin = !user.isAdmin
+
+              setUsers(newUsers)
+            }
+          })
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  }
+
+
   renderUserInfo(user) {
 
     const visible = user._id === this.state.selectedUser ? true : false
@@ -58,6 +83,13 @@ class UserList extends Component {
         </ul>
 
         <div className="user-list__options">
+          <button
+            className="button button-small button-edit"
+            onClick={() => this.changeAdminStatus(user)}
+          >
+            {user.isAdmin ? 'Revoke' : 'Make'} Admin
+          </button>
+
           <button 
             className="button button-small button-delete"
             onClick={() => this.deleteUser(user)}
