@@ -3,7 +3,7 @@ const Controller = require('./abstractController')
 const UserModel = require('../models/user')
 const Mailer = require('./mailer')
 const passport = require('passport')
-const { sanitizeRequestBody, checkIfAdmin } = require('../utilities/middleware')
+const { sanitizeRequestBody, checkIfAdmin, checkIfBanned } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 const keys = require('../config/keys')
 
@@ -55,6 +55,7 @@ class AuthRoutes extends Controller {
       '/api/login', 
       sanitizeRequestBody,
       passport.authenticate('local', {}), 
+      checkIfBanned,
       this.sendCurrentUser.bind(this)
     )
     this.server.get(
@@ -71,6 +72,12 @@ class AuthRoutes extends Controller {
       sanitizeRequestBody,
       checkIfAdmin,
       this.makeAdmin.bind(this)
+    )
+    this.server.put(
+      '/api/user/ban',
+      sanitizeRequestBody,
+      checkIfAdmin,
+      this.banUser.bind(this)
     )
     this.server.post(
       '/api/changePassword',
@@ -343,6 +350,16 @@ class AuthRoutes extends Controller {
     const { userId, isAdmin } = req.body
 
     await UserModel.findByIdAndUpdate(userId, { isAdmin })
+
+    res.send({ message: 'Success' })
+  }
+
+
+  async banUser(req, res) {
+
+    const { userId, isBanned } = req.body
+
+    await UserModel.findByIdAndUpdate(userId, { isBanned })
 
     res.send({ message: 'Success' })
   }

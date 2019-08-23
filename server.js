@@ -80,6 +80,10 @@ server.use(async (req, res, next) => {
   next()
 })
 
+// Check if the user is banned
+const middleware = require('./utilities/middleware')
+server.use(middleware.checkIfBanned)
+
 // Server config
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })

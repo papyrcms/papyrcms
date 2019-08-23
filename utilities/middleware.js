@@ -10,6 +10,17 @@ const checkIfAdmin = (req, res, next) => {
 }
 
 
+const checkIfBanned = (req, res, next) => {
+
+  if (req.user && req.user.isBanned) {
+    req.logout()
+    res.status(401).send({ message: 'Your account has been banned.' })
+  } else {
+    next()
+  }
+}
+
+
 const mapTagsToArray = (req, res, next) => {
 
   if (req.body.tags) {
@@ -58,4 +69,9 @@ const sanitizeRequestBody = (req, res, next) => {
   next()
 }
 
-module.exports = { checkIfAdmin, mapTagsToArray, sanitizeRequestBody }
+module.exports = { 
+  checkIfAdmin,
+  mapTagsToArray,
+  sanitizeRequestBody,
+  checkIfBanned
+}

@@ -22,6 +22,10 @@
     margin-left: 3rem;
     overflow: hidden;
 
+    @include respond(phone) {
+      margin-left: 0;
+    }
+
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -31,13 +35,24 @@
     transition: .3s;
     
     &--visible {
-      height: 8rem;
+      height: 11rem;
     }
   }
 
   &__options {
     .button {
       margin-left: .5rem;
+    }
+
+    @include respond(phone) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      .button {
+        margin-left: 0;
+        margin-bottom: 0.5rem;
+      }
     }
   }
 }

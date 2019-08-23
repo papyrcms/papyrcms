@@ -38,7 +38,11 @@ class LoginForm extends Component {
           })
       }).catch(err => {
         console.error(err)
-        const message = 'Something went wrong. Please try again.'
+        let message = 'Something went wrong. Please try again.'
+
+        if (err.response.data.message) {
+          message = err.response.data.message
+        }
 
         this.setState({ validationMessage: message })
       })

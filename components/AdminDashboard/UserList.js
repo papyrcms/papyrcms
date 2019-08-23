@@ -70,6 +70,63 @@ class UserList extends Component {
   }
 
 
+  changeBannedStatus(user) {
+
+    const { currentUser, users, setUsers } = this.props
+
+    if (user._id !== currentUser._id) {
+
+      axios.put('/api/user/ban', { userId: user._id, isBanned: !user.isBanned })
+        .then(response => {
+          users.forEach((foundUser, i) => {
+
+            if (foundUser._id === user._id) {
+              let newUsers = [...users]
+              newUsers[i].isBanned = !user.isBanned
+
+              setUsers(newUsers)
+            }
+          })
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    }
+  }
+
+
+  renderUserOptions(user) {
+
+    if (user._id !== this.props.currentUser._id) {
+
+      return (
+        <div className="user-list__options">
+          <button
+            className="button button-small button-edit"
+            onClick={() => this.changeAdminStatus(user)}
+          >
+            {user.isAdmin ? 'Revoke' : 'Make'} Admin
+          </button>
+
+          <button
+            className="button button-small button-delete"
+            onClick={() => this.changeBannedStatus(user)}
+          >
+            {user.isBanned ? 'Unban' : 'Ban'}
+          </button>
+
+          <button
+            className="button button-small button-delete"
+            onClick={() => this.deleteUser(user)}
+          >
+            Delete
+          </button>
+        </div>
+      )
+    }
+  }
+
+
   renderUserInfo(user) {
 
     const visible = user._id === this.state.selectedUser ? true : false
@@ -80,23 +137,10 @@ class UserList extends Component {
           <li>First Name: {user.firstName}</li>
           <li>Last Name: {user.lastName}</li>
           <li>Admin: {user.isAdmin.toString()}</li>
+          <li>Banned: {user.isBanned.toString()}</li>
         </ul>
 
-        <div className="user-list__options">
-          <button
-            className="button button-small button-edit"
-            onClick={() => this.changeAdminStatus(user)}
-          >
-            {user.isAdmin ? 'Revoke' : 'Make'} Admin
-          </button>
-
-          <button 
-            className="button button-small button-delete"
-            onClick={() => this.deleteUser(user)}
-          >
-            Delete
-          </button>
-        </div>
+        {this.renderUserOptions(user)}
       </div>
     )
   }
