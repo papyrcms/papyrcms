@@ -107,6 +107,7 @@ class SectionCards extends Component {
       const characterCount = contentLength || 300
 
       return posts.map(post => {
+        
         let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
 
         return (
