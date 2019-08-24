@@ -1,8 +1,9 @@
-const Controller = require('./abstractController')
 const cloudinary = require('cloudinary')
 const multer = require('multer')
+const Controller = require('./abstractController')
 const PostModel = require('../models/post')
 const CommentModel = require('../models/comment')
+const Mailer = require('./mailer')
 const keys = require('../config/keys')
 const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 
@@ -123,14 +124,23 @@ class PostRoutes extends Controller {
   }
 
 
-  createPost(req, res) {
+  async createPost(req, res) {
 
-    console.log(req.body)
-
-    const post = new PostModel(req.body)
+    let post = new PostModel(req.body)
     post.author = req.user
+    post = await post.save()
 
-    post.save()
+    // If a bulk-email post was published, send it
+    const mailer = new Mailer()
+    if (
+      res.locals.settings.enableEmailingToUsers &&
+      post.tags.includes(mailer.templateTag) &&
+      post.tags.includes('bulk-email') &&
+      post.published
+    ) {
+      await mailer.sendBulkEmail(post)
+    }
+
     res.send(post)
   }
 
@@ -166,6 +176,18 @@ class PostRoutes extends Controller {
 
     const postDocument = { _id: req.params.id }
     const updatedPost = await PostModel.findOneAndUpdate(postDocument, req.body)
+
+    // If a bulk-email post was published, send it
+    const mailer = new Mailer()
+    const post = await PostModel.findOne(postDocument)
+    if (
+      res.locals.settings.enableEmailingToUsers &&
+      post.tags.includes(mailer.templateTag) &&
+      post.tags.includes('bulk-email') &&
+      post.published
+    ) {
+      await mailer.sendBulkEmail(post)
+    }
 
     res.send(updatedPost)
   }

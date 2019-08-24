@@ -94,11 +94,15 @@ class MyApp extends App {
       dispatch(setUrl({ query: req.query }))
     }
 
-    // Get all posts for page layout
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const posts = await axios.get(`${rootUrl}/api/published_posts`)
+    if (pageProps.posts) {
+      dispatch(setPosts(pageProps.posts))
+    } else {
 
-    dispatch(setPosts(posts.data))
+      // Get all posts for page layout
+      const rootUrl = keys.rootURL ? keys.rootURL : ''
+      const response = await axios.get(`${rootUrl}/api/published_posts`)
+      dispatch(setPosts(response.data))
+    }
 
     // Return nothing. Props are set by the redux store
     return {}

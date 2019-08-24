@@ -4,6 +4,7 @@ const OAuth2 = google.auth.OAuth2
 var handlebars = require('handlebars')
 var fs = require('fs')
 const PostModel = require('../models/post')
+const UserModel = require('../models/user')
 const keys = require('../config/keys')
 
 
@@ -68,7 +69,31 @@ class Mailer {
   }
 
 
-  async sendEmail(variables, templateName, recipient, subject) {
+  async sendBulkEmail(post) {
+
+    const subscribedUsers = await UserModel.find({ isSubscribed: true })
+    
+    // Create an email transporter
+    const transporter = this.createTransporter()
+
+    for (const user of subscribedUsers) {
+
+      const mailOptions = {
+        from: keys.siteEmail,
+        to: user.email,
+        subject: post.title,
+        generateTextFromHTML: true,
+        html: post.content
+      }
+
+      await transporter.sendMail(mailOptions)
+    }
+
+    transporter.close()
+  }
+
+
+  async sendEmail(variables, templateName, recipient, subject = null) {
 
     // Instantiate sent. This will change when the email gets sent
     let sent = false

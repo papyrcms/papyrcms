@@ -89,7 +89,8 @@ class PostsForm extends Component {
     } else {
       axios.post(postRoute, postObject)
         .then(response => {
-          Router.push(redirect)
+          console.log(response)
+          // Router.push(redirect)
         }).catch(error => {
           this.setState({ validationMessage: error.response.data.message })
         })

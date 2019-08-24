@@ -136,6 +136,7 @@ class UserList extends Component {
         <ul className="user-list__details">
           <li>First Name: {user.firstName}</li>
           <li>Last Name: {user.lastName}</li>
+          <li>Subscribed: {user.isSubscribed.toString()}</li>
           <li>Admin: {user.isAdmin.toString()}</li>
           <li>Banned: {user.isBanned.toString()}</li>
         </ul>
