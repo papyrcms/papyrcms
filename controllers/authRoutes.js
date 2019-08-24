@@ -209,14 +209,13 @@ class AuthRoutes extends Controller {
         res.send({ error: err })
       }
 
-      passport.authenticate('local')(req, res, () => {
+      passport.authenticate('local')(req, res, async () => {
 
         const mailer = new Mailer()
-        const templatePath = 'emails/welcome.html'
         const subject = `Welcome, ${newUser.firstName}!`
 
         if (res.locals.settings.enableEmailingToUsers) {
-          mailer.sendEmail(newUser, templatePath, newUser.email, subject)
+          await mailer.sendEmail(newUser, 'welcome', newUser.email, subject)
         }
 
         res.send('success')
@@ -330,14 +329,13 @@ class AuthRoutes extends Controller {
       }
 
       const mailer = new Mailer()
-      const templatePath = 'emails/forgotPassword.html'
       const subject = "Forgot your password?"
       const variables = {
         website: keys.rootURL,
         token: jwt.sign({ email }, keys.jwtSecret)
       }
 
-      mailer.sendEmail(variables, templatePath, email, subject)
+      mailer.sendEmail(variables, 'forgot-password', email, subject)
       res.send({ message: 'Your email is on its way!' })
     } else {
       res.status(400).send({ message: 'Looks like emailing is disabled. Please contact a site administrator to reset your password.' })

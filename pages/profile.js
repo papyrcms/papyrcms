@@ -195,7 +195,7 @@ class ProfilePage extends Component {
 
                 <Input
                   id="profile-confirm-password"
-                  label="New Password"
+                  label="Confirm Password"
                   name="newPasswordConfirm"
                   value={newPasswordConfirm}
                   onChange={event => this.setState({ newPasswordConfirm: event.target.value })}

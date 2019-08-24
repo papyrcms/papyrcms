@@ -83,20 +83,19 @@ class ContactRoutes extends Controller {
   createMessage(req, res) {
 
     const { contactName, contactEmail, contactMessage } = req.body
-    const messageObj = {
+
+    const message = new MessageModel({
       name: contactName,
       email: contactEmail,
       message: contactMessage
-    }
-    const message = new MessageModel(messageObj)
+    })
 
     if (res.locals.settings.enableEmailingToAdmin) {
 
       const mailer = new Mailer()
-      const templatePath = 'emails/contact.html'
       const subject = `New message from ${message.name}!`
 
-      const sent = mailer.sendEmail(message, templatePath, keys.adminEmail, subject)
+      const sent = mailer.sendEmail(message, 'contact', keys.adminEmail, subject)
 
       if (sent) {
         message.emailSent = true
