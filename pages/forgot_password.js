@@ -33,7 +33,7 @@ class ForgotPasswordPage extends Component {
         Router.push('/login')
       })
       .catch(error => {
-        console.log(error)
+        console.error(error)
         this.setState({ validation: error.response.data.message })
       })
   }
