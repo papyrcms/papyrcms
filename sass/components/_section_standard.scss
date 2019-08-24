@@ -61,23 +61,21 @@
   &__image {
     grid-column: span 1;
 
+    width: 100%;
+    box-shadow: $shadow-low;
+    backface-visibility: hidden;
+    transition: all .2s ease-in-out;
+    
+    &:hover {
+      transform: scale(1.008) translate(.2rem, -.3rem);
+      box-shadow: $shadow-high;
+    }
+
     @include respond(phone) {
       order: 2;
       width: 70vw;
       justify-self: center;
       margin-bottom: 5rem;
-    }
-    
-    img, video {
-      width: 100%;
-      box-shadow: $shadow-low;
-      backface-visibility: hidden;
-      transition: all .2s ease-in-out;
-    
-      &:hover {
-        transform: scale(1.008) translate(.2rem, -.3rem);
-        box-shadow: $shadow-high;
-      }
     }
   }
 }

@@ -15,6 +15,7 @@
  *   }
  *   posts: Array [Object - The post to be rendered as a card]
  *   showDate: Boolean - If true, the publish or created date will show
+ *   clickableMedia: Boolean - If true, the media will display as a modal when clicked
  */
 
  
@@ -93,7 +94,12 @@ class SectionCards extends Component {
       return null
     }
 
-    return <Media className="section-cards__image" src={post.mainMedia} alt={post.title} />
+    return <Media 
+      className="section-cards__image" 
+      src={post.mainMedia} 
+      alt={post.title} 
+      clickable={this.props.clickableMedia}
+    />
   }
 
 
@@ -107,7 +113,7 @@ class SectionCards extends Component {
       const characterCount = contentLength || 300
 
       return posts.map(post => {
-        
+
         let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
 
         return (

@@ -19,6 +19,48 @@
     z-index: -10;
     transition: .3s;
   }
+
+  &__image {
+
+    &--content {
+      position: fixed;
+      min-width: 50%;
+      max-width: calc(100vw - 21rem);
+      min-height: 50%;
+      max-height: calc(100vh - 21rem);
+      overflow-y: auto;
+      z-index: 100;
+
+      // Remove scrollbars
+      overflow: -moz-scrollbars-none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+
+      img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+      }
+
+      @include respond(tab-land) {
+        width: 65%;
+      }
+
+      @include respond(tab-port) {
+        width: 80%;
+      }
+
+      @include respond(phone) {
+        width: 90%;
+      }
+    }
+
+    &--clickable {
+      cursor: pointer;
+    }
+  }
   
   &__box {
     position: fixed;
@@ -56,5 +98,10 @@
     font-size: 2.5rem;
     font-weight: 700;
     cursor: pointer;
+    z-index: 100;
+
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
   }
 }

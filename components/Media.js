@@ -9,20 +9,25 @@
 
 
 import React from 'react'
+import Modal from './Modal'
 
 
 const Media = props => {
 
-  const { src, className, alt, parallax } = props
+  const { src, className, alt, parallax, clickable } = props
 
-  if (src) {
+  switch (true) {
 
-    if (parallax) {
+    // If there is no src, return nothing
+    case (src === '' || !src):
+      return null
 
+    // If it's a parallax image, we need the image in the style
+    case parallax:
       return <div className={className || ''} style={{ backgroundImage: `url(${src}` }} />
 
-    } else if (src.match(/\.(mp4|webm)$/i)) {
-
+    // If the src is a video, make it a video
+    case !!src.match(/\.(mp4|webm)$/i):
       return (
         <video className={className || ''} autoPlay muted loop>
           <source src={src} type="video/mp4" />
@@ -31,11 +36,20 @@ const Media = props => {
         </video>
       )
 
-    } else if (src === '' || !src) {
+    // By default, return it as an image
+    default:
 
-      return null
+      if (clickable) {
+        return (
 
-    } else {
+          <Modal
+            image
+            className={className || ''}
+            src={src}
+            alt={alt || ''}
+          />
+        )
+      }
 
       return (
         <img
@@ -44,7 +58,6 @@ const Media = props => {
           alt={alt || ''}
         />
       )
-    }
   }
 
   return null

@@ -24,7 +24,8 @@ const LandingPage = props => (
         contentLength: 200,
         readMore: true,
         perRow: 3,
-        emptyMessage: 'Create content with the "sample" tag.'
+        emptyMessage: 'Create content with the "sample" tag.',
+        clickableMedia: true
       }}
     />
     <PostsFilter
@@ -50,7 +51,8 @@ const LandingPage = props => (
       componentProps={{
         title: 'This is the Standard Section',
         readMore: true,
-        emptyMessage: 'Create content with the "sample" tag.'
+        emptyMessage: 'Create content with the "sample" tag.',
+        clickableMedia: true
       }}
     />
     <PostsFilter
@@ -80,7 +82,8 @@ const LandingPage = props => (
         contentLength: 100,
         perRow: 4,
         readMore: true,
-        emptyMessage: 'Create content with the "sample" tag.'
+        emptyMessage: 'Create content with the "sample" tag.',
+        clickableMedia: true
       }}
     />
     <PostsFilter

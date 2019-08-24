@@ -9,7 +9,7 @@
  *   emptyMessage: String - Message to display if there are no posts
  *   posts: Array [Object - The post to be rendered as a card]
  *   showDate: String - The post date prop to show
- *   
+ *   clickableMedia: Boolean - If true, the media will display as a modal when clicked
  */
 
 
@@ -28,11 +28,12 @@ class SectionStandard extends Component {
       return null
     }
 
-    return (
-      <div className="section-standard__image">
-        <Media src={post.mainMedia} alt={post.title} />
-      </div>
-    )
+    return <Media 
+      className="section-standard__image"
+      src={post.mainMedia} 
+      alt={post.title} 
+      clickable={this.props.clickableMedia}
+    />
   }
 
 
