@@ -1,30 +1,28 @@
-/**
- * SectionCards will display a section of card-like components
- * 
- * props include:
- *   title: String - The title to display above the cards
- *   perRow: Integer - How many cards will fit on one row at full width - must be 3 or 4
- *   readMore: Boolean - If true, a link to the full post will render at the bottom of each card
- *   path: String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
- *   contentLength: String - How many characters to show in the card content
- *   emptyMessage: String - Message to display if there are no posts
- *   infoProps: Object {
- *     before: String - Text to display before the property
- *     property: String - The property of the post to render
- *     after: String - Text to display after the property
- *   }
- *   posts: Array [Object - The post to be rendered as a card]
- *   showDate: Boolean - If true, the publish or created date will show
- *   clickableMedia: Boolean - If true, the media will display as a modal when clicked
- */
-
- 
 import React, { Component } from 'react'
 import moment from 'moment-timezone'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
 
+
+/**
+ * SectionCards will display a section of card-like components
+ * 
+ * @prop title - String - The title to display above the cards
+ * @prop perRow - Integer - How many cards will fit on one row at full width - must be 3 or 4
+ * @prop readMore - Boolean - If true, a link to the full post will render at the bottom of each card
+ * @prop path - String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
+ * @prop contentLength - String - How many characters to show in the card content
+ * @prop emptyMessage - String - Message to display if there are no posts
+ * @prop posts - Array [Object - The post to be rendered as a card]
+ * @prop showDate - Boolean - If true, the publish or created date will show
+ * @prop clickableMedia - Boolean - If true, the media will display as a modal when clicked
+ * @prop infoProps - Object {
+ *   before - String - Text to display before the property
+ *   property - String - The property of the post to render
+ *   after - String - Text to display after the property
+ * }
+ */
 class SectionCards extends Component {
 
   renderReadMore(post) {

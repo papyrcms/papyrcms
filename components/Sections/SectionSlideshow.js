@@ -1,16 +1,13 @@
-/**
- * SectionSlideshow will render a media slideshow across the width of the screen
- * 
- * props include:
- *   timer: Integer - Milliseconds between media changes
- *   posts: Array[Object - Posts to be switched between]
- */
-
-
 import React, { Component } from 'react'
 import SectionMedia from './SectionMedia'
 
 
+/**
+ * SectionSlideshow will render a media slideshow across the width of the screen
+ * 
+ * @prop timer - Integer - Milliseconds between media changes
+ * @prop posts - Array[Object - Posts to be switched between]
+ */
 class SectionSlideshow extends Component {
 
   constructor(props) {

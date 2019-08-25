@@ -1,18 +1,3 @@
-/**
- * SectionStandard will render Posts in a more horizontal style
- * 
- * props include:
- *   title: String - The title to display above the cards
- *   readMore: Boolean - If true, a link to the full post will render at the bottom of each card
- *   path: String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
- *   contentLength: String - How many characters to show in the card content
- *   emptyMessage: String - Message to display if there are no posts
- *   posts: Array [Object - The post to be rendered as a card]
- *   showDate: String - The post date prop to show
- *   clickableMedia: Boolean - If true, the media will display as a modal when clicked
- */
-
-
 import React, { Component } from 'react'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
@@ -20,6 +5,18 @@ import moment from 'moment-timezone'
 import Media from '../Media'
 
 
+/**
+ * SectionStandard will render Posts in a more horizontal style
+ * 
+ * @prop title - String - The title to display above the cards
+ * @prop readMore - Boolean - If true, a link to the full post will render at the bottom of each card
+ * @prop path - String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
+ * @prop contentLength - String - How many characters to show in the card content
+ * @prop emptyMessage - String - Message to display if there are no posts
+ * @prop posts - Array [Object - The post to be rendered as a card]
+ * @prop showDate - String - The post date prop to show
+ * @prop clickableMedia - Boolean - If true, the media will display as a modal when clicked
+ */
 class SectionStandard extends Component {
 
   renderMedia(post) {

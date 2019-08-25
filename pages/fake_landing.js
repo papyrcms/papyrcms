@@ -7,6 +7,7 @@ import {
   SectionStandard,
 } from '../components/Sections/'
 
+
 const LandingPage = props => (
   <div className="landing">
     <PostsFilter
@@ -27,14 +28,16 @@ const LandingPage = props => (
     <PostsFilter
       component={SectionMedia}
       posts={props.posts}
+      singular
       settings={{
         postTags: 'parallax',
         maxPosts: 1
       }}
       componentProps={{
-        className: 'section-image',
         fixed: true,
-        alt: 'code'
+        alt: 'code',
+        emptyTitle: 'This is the parallax section',
+        emptyMessage: 'Create content with the "parallax" tag.'
       }}
     />
 
