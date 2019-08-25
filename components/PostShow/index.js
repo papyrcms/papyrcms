@@ -1,16 +1,3 @@
-/**
- * PostShow is the main component to show the details of a particular post
- * 
- * props include:
- *   post: Object - The post that will be displayed on the page
- *   enableCommenting: Boolean - Whether or not users can comment on this post
- *   path: String - The prefix for accessing the edit page
- *   apiPath: String - The api prefix for CRUD operations
- *   redirectRoute: String - The route to redirect to after deleting the post
- *   showDate: Boolean - If true, the publish or created date will show
- *   className: String - Any additional classes to wrap the component
- */
-
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -22,6 +9,18 @@ import renderHTML from 'react-render-html'
 import Comment from './Comment'
 import Media from '../Media'
 
+
+/**
+ * PostShow is the main component to show the details of a particular post
+ * 
+ * @prop post - Object - The post that will be displayed on the page
+ * @prop enableCommenting - Boolean - Whether or not users can comment on this post
+ * @prop path - String - The prefix for accessing the edit page
+ * @prop apiPath - String - The api prefix for CRUD operations
+ * @prop redirectRoute - String - The route to redirect to after deleting the post
+ * @prop showDate - Boolean - If true, the publish or created date will show
+ * @prop className - String - Any additional classes to wrap the component
+ */
 class PostShow extends Component {
 
   onDeleteClick() {

@@ -1,15 +1,14 @@
-/**
- * ContactForm is the main contact form component
- * 
- * props include:
- *   initialMessage: String - a suggested message to initially be displayed in the textarea
- */
-
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import Input from './Input'
 
+
+/**
+ * ContactForm is the main contact form component
+ * 
+ * @prop initialMessage - String - a suggested message to initially be displayed in the textarea
+ */
 class ContactForm extends Component {
 
   constructor(props) {

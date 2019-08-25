@@ -1,10 +1,3 @@
-/**
- * NavMenu displayed at the top of every view.
- * 
- * props include:
- *   logo: String - The source for the logo image displayed at the top right
- */
-
 import React, { Component } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
@@ -28,6 +21,11 @@ const NavLink = props => (
 )
 
 
+/**
+ * NavMenu displayed at the top of every view.
+ * 
+ * @prop logo - String - The source for the logo image displayed at the top right
+ */
 class NavMenu extends Component {
 
   renderBlogItem() {

@@ -1,20 +1,17 @@
-/**
- * Modal renders a button which, when clicked, displays a modal
- * 
- * props includes:
- *   children: Component - The content inside the modal
- *   buttonClasses: String - The classes to give the button
- *   buttonText: String - The text inside the button
- *   image: Boolean - Whether or not this should display an image or content
- *   className: String - The className given to the non-modal image
- *   alt: String - The alt given to the image 
- *   src: String - the src of the image
- */
-
-
 import React, { Component, Fragment } from 'react'
 
 
+/**
+ * Modal renders a button which, when clicked, displays a modal
+ * 
+ * @prop children - Component - The content inside the modal
+ * @prop buttonClasses - String - The classes to give the button
+ * @prop buttonText - String - The text inside the button
+ * @prop image - Boolean - Whether or not this should display an image or content
+ * @prop className - String - The className given to the non-modal image
+ * @prop alt - String - The alt given to the image 
+ * @prop src - String - the src of the image
+ */
 class Modal extends Component {
 
   constructor(props) {

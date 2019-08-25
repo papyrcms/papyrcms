@@ -1,22 +1,20 @@
+import React, { Component } from 'react'
+
+
 /**
  * PostsFilter filters an array of posts by tags and number of posts
  * to provide for a component
  * 
- * props include:
- *   settings: Object {
- *     maxPosts: Integer - The maximum number of posts to render in the passed component
- *     postTags: Array [String - Any accepted tags to use in the passed component]
- *     strictTags: Array [String - Any required tags to use in the passed component]
- *   }
- *   posts: Array [Object - Any posts to run through the filter]
- *   component: Component/Function - The component to pass the filtered posts to as this.props.posts
- *   componentProps: Object - Any props required for the passed component
- *   singular: Boolean - whether or not the child component expects the "posts" prop or "post"
+ * @prop posts - Array [Object - Any posts to run through the filter]
+ * @prop component - Component/Function - The component to pass the filtered posts to as this.props.posts
+ * @prop componentProps - Object - Any props required for the passed component
+ * @prop singular - Boolean - whether or not the child component expects the "posts" prop or "post"
+ * @prop settings - Object {
+ *   maxPosts - Integer - The maximum number of posts to render in the passed component
+ *   postTags - Array [String - Any accepted tags to use in the passed component]
+ *   strictTags - Array [String - Any required tags to use in the passed component]
+ * }
  */
-
-
-import React, { Component } from 'react'
-
 class PostsFilter extends Component {
 
   constructor(props) {

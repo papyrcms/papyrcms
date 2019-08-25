@@ -1,22 +1,21 @@
+import React, { Component } from 'react'
+
+
 /**
  * Input is a default text-type input component
  * 
- * props include:
- *   id: String - The id and for attributes for the input and label respectively
- *   label: String - The label text
- *   name: String - The name attribute for the input
- *   value: String - The value attribute for the input
- *   onChange: Function - The onChange attribute for the input
- *   onFocus: Function - The onFocus attribute for the input
- *   onBlur: Function - The onBlur attribute for the input
- *   placeholder: String - The placeholder attribute for the input
- *   children: Any - Anything additional to add under the input
- *   className: String - Wrapper class
- *   type: String - The type attribute for the input
+ * @prop id - String - The id and for attributes for the input and label respectively
+ * @prop label - String - The label text
+ * @prop name - String - The name attribute for the input
+ * @prop value - String - The value attribute for the input
+ * @prop onChange - Function - The onChange attribute for the input
+ * @prop onFocus - Function - The onFocus attribute for the input
+ * @prop onBlur - Function - The onBlur attribute for the input
+ * @prop placeholder - String - The placeholder attribute for the input
+ * @prop children - Any - Anything additional to add under the input
+ * @prop className - String - Wrapper class
+ * @prop type - String - The type attribute for the input
  */
-
-import React, { Component } from 'react'
-
 class Input extends Component {
 
   renderLabel() {

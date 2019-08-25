@@ -1,11 +1,3 @@
-/**
- * Footer for every view except those listed in excludeFooterRoutes
- * 
- * props include:
- *   ctaText: String - Heading text over the CTA button
- *   ctaButtonText: String - Text inside the CTA button
- */
-
 import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
@@ -18,6 +10,13 @@ const excludeFooterRoutes = [
   '/contact'
 ]
 
+
+/**
+ * Footer for every view except those listed in excludeFooterRoutes
+ * 
+ * @prop ctaText - String - Heading text over the CTA button
+ * @prop ctaButtonText - String - Text inside the CTA button
+ */
 const Footer = props => {
 
   // Only include the footer if the current route is not in the array

@@ -1,17 +1,14 @@
-/**
- * Media dynamically renders video/img elements
- * 
- * props includes:
- *   src: String - The course of the media
- *   className: String - The class name of the video/img element
- *   alt: String - The alt property for a passed image
- */
-
-
 import React from 'react'
 import Modal from './Modal'
 
 
+/**
+ * Media dynamically renders video/img elements
+ * 
+ * @prop src - String - The course of the media
+ * @prop className - String - The class name of the video/img element
+ * @prop alt - String - The alt property for a passed image
+ */
 const Media = props => {
 
   const { src, className, alt, parallax, clickable } = props

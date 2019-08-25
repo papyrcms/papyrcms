@@ -1,10 +1,3 @@
-/**
- * Layout wrapping all views
- * 
- * props include:
- *   children: Component - The page rendered
- */
-
 import React from 'react'
 import Head from 'next/head'
 import { connect } from 'react-redux'
@@ -16,6 +9,11 @@ import NavMenu from './NavMenu'
 import PostsFilter from '../PostsFilter'
 
 
+/**
+ * Layout wrapping all views
+ * 
+ * @prop children - Component - The page rendered
+ */
 const PageLayout = props => {
 
   let headerTitle = '',

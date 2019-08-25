@@ -1,15 +1,14 @@
-/**
- * Header displayed in every view
- * 
- * props include:
- *   mainTitle: String - Text displayed in big letters
- *   subTitle: String - Smaller text displayed under the main Title
- */
-
 import React, { Component } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 
+
+/**
+ * Header displayed in every view
+ * 
+ * @prop mainTitle - String - Text displayed in big letters
+ * @prop subTitle - String - Smaller text displayed under the main Title
+ */
 class Header extends Component {
 
   renderAuthenticator() {
