@@ -12,7 +12,7 @@
  */
 
 
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 
 class Modal extends Component {
@@ -63,7 +63,7 @@ class Modal extends Component {
     const { hidden } = this.state
 
     return (
-      <div>
+      <Fragment>
 
         <img
           className={`${className || ''} modal__image--clickable`}
@@ -85,7 +85,7 @@ class Modal extends Component {
           </div>
         </div>
 
-      </div>
+      </Fragment>
     )
   }
 

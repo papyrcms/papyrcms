@@ -46,15 +46,15 @@
       }
 
       @include respond(tab-land) {
-        width: 65%;
+        max-width: 65%;
       }
 
       @include respond(tab-port) {
-        width: 80%;
+        max-width: 80%;
       }
 
       @include respond(phone) {
-        width: 90%;
+        max-width: 90%;
       }
     }
 

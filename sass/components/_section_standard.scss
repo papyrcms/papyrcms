@@ -72,10 +72,10 @@
     }
 
     @include respond(phone) {
-      order: 2;
-      width: 70vw;
-      justify-self: center;
-      margin-bottom: 5rem;
+      // order: 2;
+      // width: 70vw;
+      // justify-self: center;
+      // margin-bottom: 5rem;
     }
   }
 }

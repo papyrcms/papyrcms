@@ -41,6 +41,15 @@ class MyApp extends App {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
+    
+    // Get posts for page layout
+    if (pageProps.posts) {
+      dispatch(setPosts(pageProps.posts))
+    } else {
+      const rootUrl = keys.rootURL ? keys.rootURL : ''
+      const response = await axios.get(`${rootUrl}/api/published_posts`)
+      dispatch(setPosts(response.data))
+    }
 
     // If a google maps key was recieved, send it to the redux store
     if (!!pageProps.googleMapsKey) {
@@ -92,16 +101,6 @@ class MyApp extends App {
       dispatch(setSettings(res.locals.settings))
       dispatch(setCurrentUser(req.user))
       dispatch(setUrl({ query: req.query }))
-    }
-
-    if (pageProps.posts) {
-      dispatch(setPosts(pageProps.posts))
-    } else {
-
-      // Get all posts for page layout
-      const rootUrl = keys.rootURL ? keys.rootURL : ''
-      const response = await axios.get(`${rootUrl}/api/published_posts`)
-      dispatch(setPosts(response.data))
     }
 
     // Return nothing. Props are set by the redux store
