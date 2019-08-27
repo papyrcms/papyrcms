@@ -75,7 +75,7 @@ class StoreRoutes extends Controller {
       this.sendOneProduct.bind(this)
     )
     this.server.put(
-      '/api/products/:id', 
+      '/api/products/:id',
       checkIfAdmin, 
       sanitizeRequestBody, 
       this.updateProduct.bind(this)
@@ -121,7 +121,7 @@ class StoreRoutes extends Controller {
       published,
       created,
       price,
-      stock
+      quantity
     } = req.body
 
     const product = new ProductModel({
@@ -133,7 +133,7 @@ class StoreRoutes extends Controller {
       published,
       created,
       price,
-      stock
+      quantity
     })
 
     product.save()

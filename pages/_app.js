@@ -15,6 +15,8 @@ import {
   setBlog, 
   setEvents,
   setEvent,
+  setProducts,
+  setProduct,
   setUsers, 
   setMessages, 
   setSettings, 
@@ -79,6 +81,16 @@ class MyApp extends App {
     // If an array of events were recieved, send them to the redux store
     if (!!pageProps.events) {
       dispatch(setEvents(pageProps.events))
+    }
+
+    // If an product was recieved, send it to the redux store
+    if (!!pageProps.product) {
+      dispatch(setProduct(pageProps.product))
+    }
+
+    // If an array of products were recieved, send them to the redux store
+    if (!!pageProps.products) {
+      dispatch(setProducts(pageProps.products))
     }
 
     // If an array of users was recieved, send them to the redux store

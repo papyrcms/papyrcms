@@ -10,32 +10,28 @@ class StoreShow extends Component {
 
     const { id } = context.query
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const post = await axios.get(`${rootUrl}/api/posts/${id}`)
+    const product = await axios.get(`${rootUrl}/api/products/${id}`)
 
-    return { post: post.data }
+    return { product: product.data }
   }
 
 
   render() {
 
-    const { currentUser, post, settings } = this.props
+    const { product } = this.props
 
-    return (
-      <PostShow
-        currentUser={currentUser}
-        post={post}
-        settings={settings}
-        enableCommenting={false}
-      />
-    )
+    return <PostShow
+      post={product}
+      path="store"
+      apiPath="/api/products"
+      redirectRoute="/store"
+    />
   }
 }
 
 
 const mapStateToProps = state => {
-  const { currentUser, post, settings } = state
-
-  return { currentUser, post, settings }
+  return { product: state.product }
 }
 
 

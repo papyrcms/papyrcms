@@ -78,7 +78,7 @@ class PostsForm extends Component {
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
     const redirect = redirectRoute ? redirectRoute : '/posts'
 
-    if ( editing ) {
+    if (editing) {
       axios.put(postRoute, postObject)
         .then(response => {
           Router.push(redirect)

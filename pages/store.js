@@ -5,10 +5,11 @@ import keys from '../config/keys'
 import { SectionCards } from '../components/Sections/'
 
 const StorePage = props => (
-  <div>
+  <div className="store-page">
     <SectionCards
       posts={props.products}
       title='Store'
+      clickableMedia
       perRow={4}
       readMore={true}
       path='store'
@@ -16,7 +17,7 @@ const StorePage = props => (
       emptyMessage='There are no products yet.'
       infoProps={[
         { before: '$', property: 'price' },
-        { property: 'stock', after: ' in stock'}
+        { property: 'quantity', after: ' in stock'}
       ]}
     />
   </div>
@@ -28,12 +29,12 @@ StorePage.getInitialProps = async () => {
   const rootUrl = keys.rootURL ? keys.rootURL : ''
   const products = await axios.get(`${rootUrl}/api/products`)
 
-  return { posts: products.data }
+  return { products: products.data }
 }
 
 
 const mapStateToProps = state => {
-  return { products: state.posts }
+  return { products: state.products }
 }
 
 

@@ -1,102 +1,40 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import { connect } from 'react-redux'
-import Router from 'next/router'
-import ProductsForm from '../components/ProductsForm'
+import React from 'react'
+import PostsForm from '../components/PostsForm'
+import Input from '../components/Input'
 
-class StoreCreate extends Component {
+const ProductFields = ({ price, quantity, changeState }) => (
+  <div className="post-form__top">
+    <Input
+      id="price"
+      label="Price"
+      name="price"
+      value={price || 0.00}
+      onChange={event => changeState(event.target.value, 'price')}
+      type="number"
+    />
 
-  constructor(props) {
+    <Input
+      id="quantity"
+      label="Stock Quantity"
+      name="quantity"
+      value={quantity || 0}
+      onChange={event => changeState(event.target.value, 'quantity')}
+      type="number"
+    />
+  </div>
+)
 
-    super(props)
-
-    this.state = {
-      title: '',
-      price: 0.00,
-      stock: 0,
-      tags: '',
-      mainMedia: '',
-      description: '',
-      publish: false
-    }
-  }
-
-
-  handleSubmit(event) {
-
-    event.preventDefault()
-
-    const { title, price, quantity, tags, mainMedia, description, publish } = this.state
-    let tagArray = []
-
-    tags.split(',').forEach(tag => {
-      let pendingTag = tag
-      pendingTag = pendingTag.trim()
-
-      if (!!pendingTag) {
-        tagArray.push(pendingTag)
-      }
-    })
-
-    const productObject = {
-      title,
-      price,
-      quantity,
-      tags: tagArray,
-      mainMedia,
-      description,
-      published: publish
-    }
-
-    axios.post('/api/products', productObject)
-      .then(response => {
-        Router.push('/store')
-      }).catch(error => {
-        console.error(error)
-      })
-  }
-
-
-  renderForm() {
-
-    const { title, tags, price, quantity, mainMedia, description, publish } = this.state
-
-    return (
-      <div className="products-create-page">
-        <h2 className="heading-secondary">New Product</h2>
-        <ProductsForm
-          isAdminUser={this.props.currentUser.isAdmin}
-          title={title}
-          onTitleChange={event => this.setState({ title: event.target.value })}
-          price={price}
-          onPriceChange={event => this.setState({ price: event.target.value })}
-          quantity={quantity}
-          onQuantityChange={event => this.setState({ quantity: event.target.value })}
-          tags={tags}
-          onTagsChange={event => this.setState({ tags: event.target.value })}
-          mainMedia={mainMedia}
-          onMainMediaChange={event => this.setState({ mainMedia: event.target.value })}
-          description={description}
-          onDescriptionChange={newDescription => this.setState({ description: newDescription })}
-          publish={publish}
-          onPublishChange={() => this.setState({ publish: !publish })}
-          handleSubmit={event => this.handleSubmit(event)}
-        />
-      </div>
-    )
-  }
-
-
-  render() {
-
-    return this.renderForm()
-  }
+export default () => {
+  return (
+    <PostsForm
+      pageTitle="New Product"
+      apiEndpoint="/api/products"
+      redirectRoute="/store"
+      additionalFields={[ProductFields]}
+      additionalState={{
+        price: 0.00,
+        quantity: 0
+      }}
+    />
+  )
 }
-
-
-const mapStateToProps = state => {
-  return { settings: state.settings, currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps)(StoreCreate)

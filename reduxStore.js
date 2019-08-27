@@ -10,6 +10,10 @@ const initialState = {
   post: {},
   blogs: [],
   blog: {},
+  events: [],
+  event: {},
+  products: [],
+  product: {},
   users: [],
   messages: [],
   settings: {},
@@ -36,6 +40,10 @@ export const reducer = (state = initialState, action) => {
       return { ...state, events: action.payload }
     case 'set_event':
       return { ...state, event: action.payload }
+    case 'set_products':
+      return { ...state, products: action.payload }
+    case 'set_product':
+      return { ...state, product: action.payload }
     case 'set_users':
       return { ...state, users: action.payload }
     case 'set_messages':
@@ -83,6 +91,14 @@ export const setEvents = events => {
 
 export const setEvent = event => {
   return { type: 'set_event', payload: event }
+}
+
+export const setProducts = products => {
+  return { type: 'set_products', payload: products }
+}
+
+export const setProduct = product => {
+  return { type: 'set_product', payload: product }
 }
 
 export const setUsers = users => {

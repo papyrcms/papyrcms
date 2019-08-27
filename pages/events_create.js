@@ -43,7 +43,7 @@ export default () => (
     additionalState={{
       date: null,
       latitude: null,
-      longitude: null,
+      longitude: null
     }}
   />
 )

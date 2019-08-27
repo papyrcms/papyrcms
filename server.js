@@ -24,7 +24,7 @@ const controllers = [
   'contactRoutes',
   'paymentRoutes',
   'eventRoutes',
-  // 'storeRoutes',
+  'storeRoutes',
 ]
 // Require controllers
 controllers.forEach((controller, index) => {

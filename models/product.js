@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
 
   price: { type: Number, required: true },
-  stock: { type: Number, default: 0 }
+  quantity: { type: Number, default: 0 }
 })
 
 module.exports = mongoose.model('product', productSchema)
