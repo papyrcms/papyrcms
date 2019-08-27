@@ -1,5 +1,5 @@
 node_modules
 .next
 config/dev.js
-config/devPersonal.js
+config/devLocal.js
 .env

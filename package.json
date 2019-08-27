@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "dev-personal": "NODE_ENV=personal nodemon server.js",
+    "local": "NODE_ENV=local nodemon server.js",
     "deploy": "npm run heroku-config && git push heroku master",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",

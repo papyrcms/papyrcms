@@ -170,7 +170,7 @@ class PostShow extends Component {
       return (
         <div className={`posts-show-page ${className || ''}`}>
           <div className="posts-show-page__container">
-          <h2 className="heading-secondary">{emptyTitle}</h2>
+            <h2 className="heading-secondary">{emptyTitle}</h2>
             <h3 className="heading-tertiary">{emptyMessage}</h3>
           </div>
         </div>
