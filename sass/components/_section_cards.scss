@@ -61,18 +61,12 @@
   }
 
   &__card {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 2vh;
 
-    @include respond(phone) {
-      grid-gap: 4vh;
-    }
   }
 
   &__title {
     letter-spacing: .1rem;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 500;
   }
 
