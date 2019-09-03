@@ -33,7 +33,7 @@
   padding-top: 1rem;
   letter-spacing: .1rem;
 
-  p {
+  p:not(:last-of-type) {
     margin-bottom: 3rem;
   }
 

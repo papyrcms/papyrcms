@@ -20,7 +20,6 @@
   }
 
   &__list {
-    margin-top: 3vw;
     list-style-type: none;
 
     display: grid;
@@ -61,7 +60,9 @@
   }
 
   &__card {
-
+    display: grid;
+    grid-gap: .3rem;
+    align-content: start;
   }
 
   &__title {
@@ -93,9 +94,15 @@
 
   &__link {
     font-size: 2rem;
+    align-self: end;
   }
 
   &__empty-message {
     grid-column: span 4;
+  }
+
+  &__info {
+    font-weight: 700;
+    line-height: 1.6rem;
   }
 }

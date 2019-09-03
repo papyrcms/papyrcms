@@ -1,5 +1,7 @@
 .contact-form {
 
+  margin-top: -13rem;
+
   &__header {
     margin-bottom: 3rem;
   }
@@ -9,7 +11,7 @@
     flex-direction: column;
     align-items: center;
 
-    max-width: 80rem;
+    max-width: $max-text-width;
     margin: 0 auto;
 
     & > * {
@@ -47,7 +49,7 @@
 
   &__textarea {
     @include inputBorderStyle();
-    height: 25rem;
+    height: 15rem;
     resize: vertical;
     padding: 1rem;
     margin: 1rem 0;
@@ -58,12 +60,11 @@
   }
 
   &__submit {
-    grid-column: 1 / 3;
-    justify-self: center;
+    align-self: flex-start;
   }
 
   &__validation {
-    grid-column: 1 / 3;
-    justify-self: center;
+    align-self: flex-start;
+    color: $color-error;
   }
 }

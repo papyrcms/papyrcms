@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import ContactForm from '../components/ContactForm'
 import PostsFilter from '../components/PostsFilter'
@@ -23,21 +23,22 @@ const ContactPage = props => {
   }
 
   return (
-    <Fragment>
+    <div className="contact-page">
       <PostsFilter
         component={SectionStandard}
         posts={props.posts}
         settings={{ maxPosts: 1, postTags: ['contact'] }}
         componentProps={{
-          title: 'Contact',
+          title: "Contact",
+          className: "contact-section-standard"
         }}
       />
-      <div className="contact-page">
+      <div className="contact-page__container">
         <ContactForm 
           initialMessage={message}
         />
       </div>
-    </Fragment>
+    </div>
   )
 }
 

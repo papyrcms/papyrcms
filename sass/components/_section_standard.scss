@@ -23,6 +23,17 @@
     margin-bottom: 3rem;
   }
 
+  &__header {
+    @include respond(tab-port) {
+      letter-spacing: .5rem;
+    }
+
+    @include respond(phone) {
+      font-size: 3rem;
+      letter-spacing: .3rem;
+    }
+  }
+
   &__post {
     margin-bottom: 3rem;
 

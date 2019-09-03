@@ -16,8 +16,8 @@ const StorePage = props => (
       contentLength={200}
       emptyMessage='There are no products yet.'
       infoProps={[
-        { before: '$', property: 'price' },
-        { property: 'quantity', after: ' in stock'}
+        { property: 'quantity', after: ' in stock' },
+        { before: '$', property: 'price' }
       ]}
     />
   </div>

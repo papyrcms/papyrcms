@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../config/keys'
@@ -16,16 +16,27 @@ class StoreShow extends Component {
   }
 
 
+  renderAddToCardSection() {
+
+    return <h1>Oh Snap.</h1>
+  }
+
+
   render() {
 
     const { product } = this.props
 
-    return <PostShow
-      post={product}
-      path="store"
-      apiPath="/api/products"
-      redirectRoute="/store"
-    />
+    return (
+      <Fragment>
+        <PostShow
+          post={product}
+          path="store"
+          apiPath="/api/products"
+          redirectRoute="/store"
+        />
+        {this.renderAddToCardSection()}
+      </Fragment>
+    )
   }
 }
 
