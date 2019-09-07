@@ -1,0 +1,17 @@
+.page-builder {
+  background-color: $color-grey-light;
+  padding: 10rem;
+
+  &__section-select {
+    display: flex;
+    justify-content: space-around;
+
+    &--select {
+
+    }
+
+    &--submit {
+
+    }
+  }
+}

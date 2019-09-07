@@ -69,6 +69,10 @@ class AdminLinks extends Component {
 
     return (
       <Fragment>
+        <Link href="/page-builder">
+          <a className="admin-links__link">Page Builder</a>
+        </Link>
+
         <Link href="/posts_create" as="/posts/new">
           <a className="admin-links__link">Add Content</a>
         </Link>
