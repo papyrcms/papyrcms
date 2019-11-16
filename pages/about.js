@@ -9,7 +9,7 @@ const AboutPage = props => (
     posts={props.posts}
     settings={{ maxPosts: 1, postTags: ['about'] }}
     singular
-    componentProps={{ 
+    componentProps={{
       className: 'about-page',
       emptyTitle: 'About Page',
       emptyMessage: 'Create content with the "about" tag.',

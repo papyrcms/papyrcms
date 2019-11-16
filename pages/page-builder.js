@@ -1,111 +1,196 @@
 import React, { Component } from 'react'
 import Input from '../components/Input'
 
+
+const PostDisplaySection = props => {
+
+  const {
+    index,
+    removeSection,
+    changeState,
+    requiredTags,
+    wrapperClass
+  } = props
+
+  return (
+    <div className="post-display page-builder__section">
+      <h3 className="heading-tertiary post-display__title">Post Display</h3>
+      <p className="post-display__description">This is the simplest component. It will only take one post with the required tags. You can additionally insert a wrapper class to wrap the section.</p>
+      <div className="post-display__inputs">
+        <Input
+          id={`post-display-${index}--required-tags-${index}`}
+          label="Required Post Tags"
+          name="required-tags"
+          value={requiredTags}
+          onChange={event => changeState({ requiredTags: event.target.value })}
+        />
+        <Input
+          id={`post-display-${index}--wrapper-class-${index}`}
+          label="Component Wrapper Class"
+          name="wrapper-class"
+          value={wrapperClass}
+          onChange={event => changeState({ wrapperClass: event.target.value })}
+        />
+      </div>
+      <button
+        className="button button-delete"
+        onClick={() => removeSection()}
+      >
+        Remove Section
+      </button>
+    </div>
+  )
+}
+
+
 class PageBuilder extends Component {
 
   constructor(props) {
+
     super(props)
 
     this.state = {
-      sectionSelectOptions: {
-        'postDisplay': { title: 'Post Display', postLimit: 1 }
-      },
       sectionSelect: 'postDisplay',
-      sections: []
+      sections: [],
+      url: '',
+      sectionOptions: {
+        'postDisplay': {
+          title: 'Post Display',
+          component: PostDisplaySection,
+          initialState: {
+            wrapperClass: '',
+            requiredTags: ''
+          }
+        }
+      },
     }
   }
 
 
-  renderTagsFields(section, sectionIndex) {
+  removeSection(index) {
 
-    const { sectionSelectOptions, sections } = this.state
+    this.setState(prevState => {
 
-    for (let i = 0; i < sectionSelectOptions[section.sectionKey].postLimit; i++) {
+      const newSections = prevState.sections.splice(index)
 
-      return <Input
-        id={`${section.sectionKey}-${i}`}
-        label="Required Tags (comma-separated)"
-        name={`${section.sectionKey}-${i}`}
-        value={sections.sectionKey}
-        onChange={event => {
-          const newSection = {
-            sectionKey: section.sectionKey,
-            [`tags-${i}`]: event.target.value
+      return { sections: newSections }
+    })
+  }
+
+
+  changeSectionState(index, newState) {
+
+    this.setState(prevState => {
+
+      const newSectionState = []
+
+      prevState.sections.forEach((section, i) => {
+
+        newSectionState[i] = {}
+
+        for (const key in section) {
+          newSectionState[i][key] = section[key]
+        }
+
+        if (index === i) {
+          for (const key in newState) {
+            newSectionState[i].state[key] = newState[key]
           }
+        }
+      })
 
-          const newSectionState = sections.map((sectionState, index) => {
-            if (index === sectionIndex) {
-              return newSection
-            }
-
-            return sectionState
-          })
-
-          this.setState({ sections: [...sections, newSectionState]})
-        }}
-      />
-    }
+      return { sections: newSectionState }
+    })
   }
 
 
   renderSections() {
 
-    const { sections, sectionSelectOptions } = this.state
+    return this.state.sections.map((section, i) => {
 
-    return sections.map((section, sectionIndex) => {
+      if (section) {
+        const { Component, title, state } = section
 
-      return (
-        <div className="page-builder__section">
-          <h3 className="heading-tertiary">{sectionSelectOptions[section.sectionKey].title}</h3>
-
-          {this.renderTagsFields(section, sectionIndex)}
-        </div>
-      )
+        return <Component
+          key={`${title}-${i}`}
+          index={i}
+          removeSection={() => this.removeSection(i)}
+          changeState={newState => this.changeSectionState(i, newState)}
+          {...state}
+        />
+      }
     })
   }
 
 
   renderSelectOptions() {
 
-    const { sectionSelectOptions } = this.state
+    const { sectionOptions } = this.state
 
-    return Object.keys(sectionSelectOptions).map(key => {
-      return <option value={key}>{sectionSelectOptions[key].title}</option>
+    return Object.keys(sectionOptions).map(key => {
+      return <option key={key} value={key}>{sectionOptions[key].title}</option>
+    })
+  }
+
+
+  addSection() {
+
+    this.setState(prevState => {
+
+      const { sectionOptions, sectionSelect, sections } = prevState
+
+      const newSection = {
+        title: sectionOptions[sectionSelect].title,
+        Component: sectionOptions[sectionSelect].component,
+        state: Object.assign({}, sectionOptions[sectionSelect].initialState)
+      }
+
+      return { sections: [...sections, newSection] }
     })
   }
 
 
   render() {
-console.log(this.state)
-    const { sectionSelect, sections, sectionSelectOptions } = this.state
 
     return (
       <div className="page-builder">
+        <h2 className="heading-secondary">Page Builder</h2>
+
+        <Input
+          id="url-input"
+          label="Page URL"
+          placeholder="about"
+          name="url"
+          value={this.state.url}
+          onChange={event => this.setState({ url: event.target.value })}
+        />
+
+        {this.renderSections()}
 
         <div className="page-builder__section-select">
+
           <select
             className="button button-secondary page-builder__section-select--select"
             onChange={event => this.setState({ sectionSelect: event.target.value })}
           >
             {this.renderSelectOptions()}
           </select>
+
           <button
             className="button button-primary page-builder__section-select--submit"
-            onClick={() => {
-              const newSection = { sectionKey: sectionSelect }
-              for (let i = 0; i < sectionSelectOptions[sectionSelect].postLimit; i++) {
-                newSection[`tags-${i}`] = ''
-              }
-
-              this.setState({ sections: [...sections, newSection] })
-            }}
+            onClick={() => this.addSection() }
           >
             Add Section
           </button>
+
+          <button
+            className="button button-primary"
+            onClick={() => console.log(this.state)}
+          >
+            Submit
+          </button>
+
         </div>
-
-        {this.renderSections()}
-
       </div>
     )
   }

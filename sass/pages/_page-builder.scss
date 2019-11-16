@@ -1,10 +1,10 @@
 .page-builder {
   background-color: $color-grey-light;
-  padding: 10rem;
+  padding: 10rem 30rem;
 
   &__section-select {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     &--select {
 
@@ -14,4 +14,12 @@
 
     }
   }
+
+  &__section {
+    margin: 2rem 0;
+  }
+}
+
+.post-display {
+
 }

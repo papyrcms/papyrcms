@@ -11,7 +11,7 @@ const keys = require('../config/keys')
 class AuthRoutes extends Controller {
 
   registerSettings() {
-    
+
     // Middleware to configure auth settings
     this.server.use(async (req, res, next) => {
 
