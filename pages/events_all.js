@@ -1,25 +1,18 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../config/keys'
-import PostsFilter from '../components/PostsFilter'
+import filterPosts from '../components/filterPosts'
 import { SectionCards } from '../components/Sections/'
 
 const EventsAllPage = props => (
-  <PostsFilter
-    component={SectionCards}
-    posts={props.events}
-    settings={{
-      maxPosts: "9999"
-    }}
-    componentProps={{
-      title: 'Events',
-      perRow: 4,
-      readMore: true,
-      path: 'events',
-      contentLength: 200,
-      emptyMessage: 'There are no events coming up.',
-    }}
+  <SectionCards
+    posts={props.posts}
+    title="Events"
+    perRow={4}
+    readMore
+    path="events"
+    contentLength={200}
+    emptyMessage="There are no events coming up."
   />
 )
 
@@ -50,9 +43,9 @@ EventsAllPage.getInitialProps = async ({ req, query, reduxStore }) => {
 }
 
 
-const mapStateToProps = state => {
-  return { events: state.events, settings: state.settings }
+const settings = {
+  postType: 'events'
 }
 
 
-export default connect(mapStateToProps)(EventsAllPage)
+export default filterPosts(EventsAllPage, settings)

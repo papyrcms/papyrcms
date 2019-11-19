@@ -1,26 +1,20 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../config/keys'
-import PostsFilter from '../components/PostsFilter'
 import { SectionCards } from '../components/Sections/'
+import filterPosts from '../components/filterPosts'
+
 
 const BlogAllPage = props => (
-  <PostsFilter
-    component={SectionCards}
-    posts={props.blogs}
-    settings={{
-      maxPosts: "9999"
-    }}
-    componentProps={{
-      title: 'Blog',
-      perRow: 4,
-      readMore: true,
-      path: 'blog',
-      contentLength: 100,
-      emptyMessage: 'There are no blogs yet.',
-      showDate: true
-    }}
+  <SectionCards
+    title="Blog"
+    perRow={4}
+    path="blog"
+    contentLength={100}
+    emptyMessage="There are no blogs yet."
+    readMore
+    showDate
+    posts={props.posts}
   />
 )
 
@@ -51,9 +45,9 @@ BlogAllPage.getInitialProps = async ({ req, query, reduxStore }) => {
 }
 
 
-const mapStateToProps = state => {
-  return { blogs: state.blogs, settings: state.settings }
+const settings = {
+  postType: 'blogs'
 }
 
 
-export default connect(mapStateToProps)(BlogAllPage)
+export default filterPosts(BlogAllPage, settings)

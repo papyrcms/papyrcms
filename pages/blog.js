@@ -1,64 +1,53 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import keys from '../config/keys'
-import PostsFilter from '../components/PostsFilter'
+import filterPosts from '../components/filterPosts'
 import { SectionStandard } from '../components/Sections/'
 
-class BlogPage extends Component {
 
-  static async getInitialProps() {
-
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const blogs = await axios.get(`${rootUrl}/api/published_blogs`)
-
-    return { blogs: blogs.data }
-  }
-
-
-  renderAllBlogsLink() {
-
-    if (this.props.blogs.length > 5) {
-      return (
-        <Link href="/blog_all" as="/blog/all">
-          <a className="blog-page__button button button-secondary u-margin-bottom-small">See all blog posts</a>
-        </Link>
-      )
-    }
-  }
-
-
-  render() {
-
+const renderAllBlogsLink = posts => {
+  if (posts.length > 5) {
     return (
-      <div className="blog-page">
-        <PostsFilter
-          posts={this.props.blogs}
-          settings={{
-            maxPosts: "5"
-          }}
-          component={SectionStandard}
-          componentProps={{
-            title: 'Blog',
-            mediaLeft: true,
-            readMore: true,
-            path: 'blog',
-            emptyMessage: 'There are no blogs yet.',
-            showDate: 'publishDate'
-          }}
-        />
-
-        {this.renderAllBlogsLink()}
-      </div>
+      <Link href="/blog_all" as="/blog/all">
+        <a className="blog-page__button button button-secondary u-margin-bottom-small">See all blog posts</a>
+      </Link>
     )
   }
 }
 
 
-const mapStateToProps = state => {
-  return { blogs: state.blogs }
+const BlogPage = ({ posts }) => (
+  <div className="blog-page">
+
+    <SectionStandard
+      posts={posts}
+      title="Blog"
+      mediaLeft
+      readMore
+      path="blog"
+      emptyMessage="There are no blogs yet."
+      showDate="publishDate"
+    />
+
+    {renderAllBlogsLink(posts)}
+  </div>
+)
+
+
+BlogPage.getInitialProps = async () => {
+
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const blogs = await axios.get(`${rootUrl}/api/published_blogs`)
+
+  return { blogs: blogs.data }
 }
 
 
-export default connect(mapStateToProps)(BlogPage)
+const settings = {
+  postType: 'blogs',
+  maxPosts: 5
+}
+
+
+export default filterPosts(BlogPage, settings)

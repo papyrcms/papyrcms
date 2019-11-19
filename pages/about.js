@@ -1,29 +1,25 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PostsFilter from '../components/PostsFilter'
-import PostShow from '../components/PostShow/'
+import PostShow from '../components/PostShow'
+import filterPosts from '../components/filterPosts'
+
 
 const AboutPage = props => (
-  <PostsFilter
-    component={PostShow}
-    posts={props.posts}
-    settings={{ maxPosts: 1, postTags: ['about'] }}
-    singular
-    componentProps={{ 
-      className: 'about-page',
-      emptyTitle: 'About Page',
-      emptyMessage: 'Create content with the "about" tag.',
-      path: "posts",
-      apiPath: "/api/posts",
-      redirectRoute: "/about"
-    }}
+  <PostShow
+    className="about-page"
+    emptyTitle="About Page"
+    emptyMessage="Create content with the 'about' tag."
+    path="posts"
+    apiPath="/api/posts"
+    redirectRoute="/about"
+    post={props.posts[0]}
   />
 )
 
 
-const mapStateToProps = state => {
-  return { posts: state.posts }
+const settings = {
+  maxPosts: 1,
+  postTags: 'about',
 }
 
 
-export default connect(mapStateToProps)(AboutPage)
+export default filterPosts(AboutPage, settings)
