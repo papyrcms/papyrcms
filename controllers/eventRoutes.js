@@ -136,6 +136,7 @@ class EventRoutes extends Controller {
 
     const event = new EventModel(req.body)
     event.author = req.user
+    event.slug = event.title.replace(/\s+/g, '-').toLowerCase()
 
     event.save()
     res.send(event)
@@ -147,7 +148,7 @@ class EventRoutes extends Controller {
     const date = new Date(new Date().toISOString())
     const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
 
-    const foundEvents = await EventModel.find({ published: true, date: { $gte: dateFilter } }).sort({ date: 1 })
+    const foundEvents = await EventModel.find({ published: true, date: { $gte: dateFilter } }).sort({ date: 1 }).lean()
 
     res.send(foundEvents)
   }
@@ -155,7 +156,7 @@ class EventRoutes extends Controller {
 
   async sendAllEvents(req, res) {
 
-    const foundEvents = await EventModel.find().sort({ date: 1 })
+    const foundEvents = await EventModel.find().sort({ date: 1 }).lean()
 
     res.send(foundEvents)
   }
@@ -163,8 +164,14 @@ class EventRoutes extends Controller {
 
   async sendOneEvent(req, res) {
 
-    const foundEvent = await EventModel.findById(req.params.id)
-      .populate('author')
+    let foundEvent
+    try {
+      foundEvent = await EventModel.findById(req.params.id)
+        .populate('author').lean()
+    } catch(e) {
+      foundEvent = await EventModel.findOne({ slug: req.params.id })
+        .populate('author').lean()
+    }
 
     res.send(foundEvent)
   }
@@ -173,6 +180,7 @@ class EventRoutes extends Controller {
   async updateEvent(req, res) {
 
     req.body.date = this.configureDate(req.body.date)
+    req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
 
     const updatedEvent = await EventModel.findOneAndUpdate({ _id: req.params.id }, req.body)
 

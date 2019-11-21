@@ -77,7 +77,7 @@ class SectionStandard extends Component {
       return (
         <div>
           {renderHTML(postContent)}
-          <Link href={`/${path || 'posts'}_show?id=${post._id}`} as={`/${path || 'posts'}/${post._id}`}>
+          <Link href={`/${path || 'posts'}_show?id=${post._id}`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
             <a>Read More</a>
           </Link>
         </div>

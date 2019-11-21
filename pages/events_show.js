@@ -70,7 +70,6 @@ class EventsShow extends Component {
 
 
 const mapStateToProps = state => {
-
   return { event: state.event, googleMapsKey: state.googleMapsKey }
 }
 

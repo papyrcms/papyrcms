@@ -24,7 +24,6 @@ PostsShow.getInitialProps = async context => {
 
 
 const mapStateToProps = state => {
-  
   return { post: state.post }
 }
 
