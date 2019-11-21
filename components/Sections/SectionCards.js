@@ -26,7 +26,7 @@ import Media from '../Media'
 class SectionCards extends Component {
 
   renderReadMore(post) {
-console.log(post.slug)
+
     if (this.props.readMore) {
       const path = this.props.path ? this.props.path : 'posts'
 

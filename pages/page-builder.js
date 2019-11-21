@@ -158,7 +158,7 @@ class PageBuilder extends Component {
 
         <Input
           id="url-input"
-          label="Page URL"
+          label="Page route"
           placeholder="about"
           name="url"
           value={this.state.url}
@@ -178,7 +178,7 @@ class PageBuilder extends Component {
 
           <button
             className="button button-primary page-builder__section-select--submit"
-            onClick={() => this.addSection() }
+            onClick={() => this.addSection()}
           >
             Add Section
           </button>
