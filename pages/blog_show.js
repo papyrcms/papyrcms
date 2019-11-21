@@ -27,7 +27,6 @@ BlogShow.getInitialProps = async context => {
 
 
 const mapStateToProps = state => {
-
   return { blog: state.blog }
 }
 

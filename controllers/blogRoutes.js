@@ -28,39 +28,39 @@ class BlogRoutes extends Controller {
 
     // Views
     this.server.get(
-      '/blog', 
+      '/blog',
       this.blogEnabled,
       this.renderPage.bind(this, '')
     )
     this.server.get(
-      '/blog/all', 
+      '/blog/all',
       this.blogEnabled,
       this.renderPage.bind(this, '_all')
     )
     this.server.get(
-      '/blog/new', 
+      '/blog/new',
       this.blogEnabled,
-      checkIfAdmin, 
+      checkIfAdmin,
       this.renderPage.bind(this, '_create')
     )
     this.server.get(
-      '/blog/:id', 
+      '/blog/:id',
       this.blogEnabled,
       this.renderPage.bind(this, '_show')
     )
     this.server.get(
-      '/blog/:id/edit', 
+      '/blog/:id/edit',
       this.blogEnabled,
-      checkIfAdmin, 
+      checkIfAdmin,
       this.renderPage.bind(this, '_edit')
     )
 
     // Blog API
     this.server.post(
-      '/api/blogs', 
+      '/api/blogs',
       this.blogEnabled,
-      checkIfAdmin, 
-      sanitizeRequestBody, 
+      checkIfAdmin,
+      sanitizeRequestBody,
       this.validateBlog,
       mapTagsToArray,
       this.createBlog.bind(this)
@@ -72,28 +72,28 @@ class BlogRoutes extends Controller {
       this.sendAllBlogs.bind(this)
     )
     this.server.get(
-      '/api/published_blogs', 
+      '/api/published_blogs',
       this.blogEnabled,
       this.sendPublishedBlogs.bind(this)
     )
     this.server.get(
-      '/api/blogs/:id', 
+      '/api/blogs/:id',
       this.blogEnabled,
       this.sendOneBlog.bind(this)
     )
     this.server.put(
-      '/api/blogs/:id', 
+      '/api/blogs/:id',
       this.blogEnabled,
-      checkIfAdmin, 
-      sanitizeRequestBody, 
+      checkIfAdmin,
+      sanitizeRequestBody,
       this.validateBlog,
       mapTagsToArray,
       this.updateBlog.bind(this)
     )
     this.server.delete(
-      '/api/blogs/:id', 
+      '/api/blogs/:id',
       this.blogEnabled,
-      checkIfAdmin, 
+      checkIfAdmin,
       this.deleteBlog.bind(this)
     )
   }
@@ -148,6 +148,7 @@ class BlogRoutes extends Controller {
 
     const blog = new BlogModel(req.body)
     blog.author = req.user
+    blog.slug = blog.title.replace(/\s+/g, '-').toLowerCase()
 
     if ( blog.published ) {
       blog.publishDate = Date.now()
@@ -160,7 +161,7 @@ class BlogRoutes extends Controller {
 
   async sendAllBlogs(req, res) {
 
-    const foundBlogs = await BlogModel.find().sort({ publishDate: -1, created: -1 })
+    const foundBlogs = await BlogModel.find().sort({ publishDate: -1, created: -1 }).lean()
 
     res.send(foundBlogs)
   }
@@ -168,7 +169,7 @@ class BlogRoutes extends Controller {
 
   async sendPublishedBlogs(req, res) {
 
-    const foundBlogs = await BlogModel.find({ published: true }).sort({ publishDate: -1 })
+    const foundBlogs = await BlogModel.find({ published: true }).sort({ publishDate: -1 }).lean()
 
     res.send(foundBlogs)
   }
@@ -176,10 +177,20 @@ class BlogRoutes extends Controller {
 
   async sendOneBlog(req, res) {
 
-    const foundBlog = await BlogModel.findById(req.params.id)
-      .populate('author')
-      .populate('comments')
-      .populate({ path: 'comments', populate: { path: 'author' } })
+    let foundBlog
+    try {
+      foundBlog = await BlogModel.findById(req.params.id)
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    } catch(e) {
+      foundBlog = await BlogModel.findOne({ slug: req.params.id })
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    }
 
     res.send(foundBlog)
   }
@@ -192,6 +203,8 @@ class BlogRoutes extends Controller {
     if ( !oldBlog.published && req.body.published ) {
       req.body.publishDate = Date.now()
     }
+
+    req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
 
     const updatedBlog = await BlogModel.findOneAndUpdate({ _id: req.params.id }, req.body)
 

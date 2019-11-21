@@ -26,12 +26,12 @@ import Media from '../Media'
 class SectionCards extends Component {
 
   renderReadMore(post) {
-
+console.log(post.slug)
     if (this.props.readMore) {
       const path = this.props.path ? this.props.path : 'posts'
 
       return (
-        <Link href={`/${path || 'posts'}_show?id=${post._id}`} as={`/${path || 'posts'}/${post._id}`}>
+        <Link href={`/${path || 'posts'}_show?id=${post._id}`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
           <a className="section-cards__link">Read More</a>
         </Link>
       )

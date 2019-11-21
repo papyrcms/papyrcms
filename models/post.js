@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const postSchema = new mongoose.Schema({
 
   title: String,
+  slug: String,
   content: String,
   tags: [String],
   mainMedia: String,

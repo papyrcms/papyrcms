@@ -28,61 +28,61 @@ class StoreRoutes extends Controller {
 
     // Views
     this.server.get(
-      '/store', 
-      this.checkIfStoreEnabled, 
+      '/store',
+      this.checkIfStoreEnabled,
       this.renderPage.bind(this, '')
     )
     this.server.get(
-      '/store/new', 
-      this.checkIfStoreEnabled, 
-      checkIfAdmin, 
+      '/store/new',
+      this.checkIfStoreEnabled,
+      checkIfAdmin,
       this.renderPage.bind(this, '_create')
     )
     this.server.get(
-      '/store/checkout', 
-      this.checkIfStoreEnabled, 
+      '/store/checkout',
+      this.checkIfStoreEnabled,
       this.renderPage.bind(this, '_checkout')
     )
     this.server.get(
-      '/store/:id', 
-      this.checkIfStoreEnabled, 
+      '/store/:id',
+      this.checkIfStoreEnabled,
       this.renderPage.bind(this, '_show')
     )
     this.server.get(
-      '/store/:id/edit', 
-      this.checkIfStoreEnabled, 
-      checkIfAdmin, 
+      '/store/:id/edit',
+      this.checkIfStoreEnabled,
+      checkIfAdmin,
       this.renderPage.bind(this, '_edit')
     )
 
     // Store API
     this.server.post(
-      '/api/products', 
-      checkIfAdmin, 
-      sanitizeRequestBody, 
+      '/api/products',
+      checkIfAdmin,
+      sanitizeRequestBody,
       this.createProduct.bind(this)
     )
     this.server.get(
-      '/api/products', 
+      '/api/products',
       this.sendAllProducts.bind(this)
     )
     this.server.get(
-      '/api/published_products', 
+      '/api/published_products',
       this.sendPublishedProducts.bind(this)
     )
     this.server.get(
-      '/api/products/:id', 
+      '/api/products/:id',
       this.sendOneProduct.bind(this)
     )
     this.server.put(
       '/api/products/:id',
-      checkIfAdmin, 
-      sanitizeRequestBody, 
+      checkIfAdmin,
+      sanitizeRequestBody,
       this.updateProduct.bind(this)
     )
     this.server.delete(
-      '/api/products/:id', 
-      checkIfAdmin, 
+      '/api/products/:id',
+      checkIfAdmin,
       this.deleteProduct.bind(this)
     )
   }
@@ -135,6 +135,7 @@ class StoreRoutes extends Controller {
       price,
       quantity
     })
+    product.slug = title.replace(/\s+/g, '-').toLowerCase()
 
     product.save()
     res.send(product)
@@ -143,7 +144,7 @@ class StoreRoutes extends Controller {
 
   async sendAllProducts(req, res) {
 
-    const foundProducts = await ProductModel.find().sort({ created: -1 })
+    const foundProducts = await ProductModel.find().sort({ created: -1 }).lean()
 
     res.send(foundProducts)
   }
@@ -151,7 +152,7 @@ class StoreRoutes extends Controller {
 
   async sendPublishedProducts(req, res) {
 
-    const foundProducts = await ProductModel.find({ published: true }).sort({ created: -1 })
+    const foundProducts = await ProductModel.find({ published: true }).sort({ created: -1 }).lean()
 
     res.send(foundProducts)
   }
@@ -159,10 +160,20 @@ class StoreRoutes extends Controller {
 
   async sendOneProduct(req, res) {
 
-    const foundProduct = await ProductModel.findById(req.params.id)
-      .populate('author')
-      .populate('comments')
-      .populate({ path: 'comments', populate: { path: 'author' } })
+    let foundProduct
+    try {
+      foundProduct = await ProductModel.findById(req.params.id)
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    } catch(e) {
+      foundProduct = await ProductModel.findOne({ slug: req.params.id })
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    }
 
     res.send(foundProduct)
   }
@@ -171,6 +182,7 @@ class StoreRoutes extends Controller {
   async updateProduct(req, res) {
 
     const productDocument = { _id: req.params.id }
+    req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
     const updatedProduct = await ProductModel.findOneAndUpdate(productDocument, req.body)
 
     res.send(updatedProduct)

@@ -43,64 +43,64 @@ class PostRoutes extends Controller {
 
     // Views
     this.server.get(
-      '/posts', 
-      checkIfAdmin, 
+      '/posts',
+      checkIfAdmin,
       this.renderPage.bind(this, '_all')
     )
     this.server.get(
-      '/posts/new', 
-      checkIfAdmin, 
+      '/posts/new',
+      checkIfAdmin,
       this.renderPage.bind(this, '_create')
     )
     this.server.get(
-      '/posts/:id', 
-      checkIfAdmin, 
+      '/posts/:id',
+      checkIfAdmin,
       this.renderPage.bind(this, '_show')
     )
     this.server.get(
-      '/posts/:id/edit', 
-      checkIfAdmin, 
+      '/posts/:id/edit',
+      checkIfAdmin,
       this.renderPage.bind(this, '_edit')
     )
 
     // Post API
     this.server.post(
-      '/api/upload', 
-      checkIfAdmin, 
-      this.upload.single('file'), 
+      '/api/upload',
+      checkIfAdmin,
+      this.upload.single('file'),
       sanitizeRequestBody,
       this.uploadMedia.bind(this)
     )
     this.server.post(
-      '/api/posts', 
-      checkIfAdmin, 
+      '/api/posts',
+      checkIfAdmin,
       sanitizeRequestBody,
       mapTagsToArray,
       this.createPost.bind(this)
     )
     this.server.get(
-      '/api/posts', 
-      checkIfAdmin, 
+      '/api/posts',
+      checkIfAdmin,
       this.sendAllPosts.bind(this)
     )
     this.server.get(
-      '/api/published_posts', 
+      '/api/published_posts',
       this.sendPublishedPosts.bind(this)
     )
     this.server.get(
-      '/api/posts/:id', 
+      '/api/posts/:id',
       this.sendOnePost.bind(this)
     )
     this.server.put(
-      '/api/posts/:id', 
-      checkIfAdmin, 
+      '/api/posts/:id',
+      checkIfAdmin,
       sanitizeRequestBody,
       mapTagsToArray,
       this.updatePost.bind(this)
     )
     this.server.delete(
-      '/api/posts/:id', 
-      checkIfAdmin, 
+      '/api/posts/:id',
+      checkIfAdmin,
       this.deletePost.bind(this)
     )
   }
@@ -128,6 +128,7 @@ class PostRoutes extends Controller {
 
     let post = new PostModel(req.body)
     post.author = req.user
+    post.slug = post.title.replace(/\s+/g, '-').toLowerCase()
     post = await post.save()
 
     // If a bulk-email post was published, send it
@@ -147,7 +148,7 @@ class PostRoutes extends Controller {
 
   async sendAllPosts(req, res) {
 
-    const foundPosts = await PostModel.find().sort({ created: -1 })
+    const foundPosts = await PostModel.find().sort({ created: -1 }).lean()
 
     res.send(foundPosts)
   }
@@ -155,7 +156,7 @@ class PostRoutes extends Controller {
 
   async sendPublishedPosts(req, res) {
 
-    const foundPosts = await PostModel.find({ published: true }).sort({ created: -1 })
+    const foundPosts = await PostModel.find({ published: true }).sort({ created: -1 }).lean()
 
     res.send(foundPosts)
   }
@@ -163,10 +164,20 @@ class PostRoutes extends Controller {
 
   async sendOnePost(req, res) {
 
-    const foundPost = await PostModel.findById(req.params.id)
-      .populate('author')
-      .populate('comments')
-      .populate({ path: 'comments', populate: { path: 'author' } })
+    let foundPost
+    try {
+      foundPost = await PostModel.findById(req.params.id)
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    } catch(e) {
+      foundPost = await PostModel.findOne({ slug: req.params.id })
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    }
 
     res.send(foundPost)
   }
@@ -175,6 +186,7 @@ class PostRoutes extends Controller {
   async updatePost(req, res) {
 
     const postDocument = { _id: req.params.id }
+    req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
     const updatedPost = await PostModel.findOneAndUpdate(postDocument, req.body)
 
     // If a bulk-email post was published, send it
