@@ -52,9 +52,17 @@
   }
 
   &__text {
-    grid-column: span 2;
 
     @include contentStyle();
+
+    grid-column: span 2;
+    height: 100%;
+    padding-top: 0;
+
+    h3 {
+      line-height: 1;
+      padding-bottom: 2rem;
+    }
 
     @include respond(tab-port) {
       grid-column: span 1;
@@ -78,17 +86,10 @@
     box-shadow: $shadow-low;
     backface-visibility: hidden;
     transition: all .2s ease-in-out;
-    
+
     &:hover {
       transform: scale(1.008) translate(.2rem, -.3rem);
       box-shadow: $shadow-high;
-    }
-
-    @include respond(phone) {
-      // order: 2;
-      // width: 70vw;
-      // justify-self: center;
-      // margin-bottom: 5rem;
     }
   }
 }

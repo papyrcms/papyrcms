@@ -1,20 +1,19 @@
 import React from 'react'
 import Head from 'next/head'
-import { connect } from 'react-redux'
 import sanitizeHTML from 'sanitize-html'
 import renderHTML from 'react-render-html'
 import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
-import PostsFilter from '../PostsFilter'
+import filterPosts from '../filterPosts'
 
 
 /**
  * Layout wrapping all views
- * 
+ *
  * @prop children - Component - The page rendered
  */
-const PageLayout = props => {
+const Layout = props => {
 
   let headerTitle = '',
     headerSubTitle = '',
@@ -120,29 +119,15 @@ const PageLayout = props => {
 }
 
 
-const Layout = props => (
-  <PostsFilter
-    component={PageLayout}
-    posts={props.posts}
-    settings={{
-      maxPosts: 4, 
-      postTags: [
-        'section-header',
-        'section-footer',
-        'site-description',
-        'copyright'
-      ]
-    }}
-    componentProps={{
-      children: props.children
-    }}
-  />
-)
-
-
-const mapStateToProps = state => {
-  return { posts: state.posts }
+const settings = {
+  maxPosts: 4,
+  postTags: [
+    'section-header',
+    'section-footer',
+    'site-description',
+    'copyright'
+  ]
 }
 
 
-export default connect(mapStateToProps)(Layout)
+export default filterPosts(Layout, settings)

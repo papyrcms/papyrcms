@@ -1,28 +1,23 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PostsFilter from '../components/PostsFilter'
+import filterPosts from '../components/filterPosts'
 import { SectionStandard } from '../components/Sections/'
 
+
 const ServicesPage = props => (
-  <PostsFilter
-    component={SectionStandard}
+  <SectionStandard
+    readMore
+    contentLength={300}
     posts={props.posts}
-    settings={{
-      postTags: 'services',
-      maxPosts: 9999
-    }}
-    componentProps={{
-      title: 'Services',
-      className: 'services-page',
-      emptyMessage: 'Create content with the "services" tag.'
-    }}
+    title="Services"
+    className="services-page"
+    emptyMessage="Create content with the 'services' tag."
   />
 )
 
 
-const mapStateToProps = state => {
-  return { posts: state.posts, settings: state.settings }
+const settings = {
+  postTags: 'services'
 }
 
 
-export default connect(mapStateToProps)(ServicesPage)
+export default filterPosts(ServicesPage, settings)

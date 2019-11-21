@@ -1,4 +1,3 @@
-const Post = require('../models/post')
 const keys = require('../config/keys')
 
 class UtilityRoutes {
@@ -30,22 +29,12 @@ class UtilityRoutes {
 
 
   sendGoogleAnalyticsId(req, res) {
-
-    if (keys.rootURL.includes(req.get('host'))) {
-      res.send(keys.googleAnalyticsId)
-    } else {
-      res.send('nunya beezwax')
-    }
+    res.send(keys.googleAnalyticsId)
   }
 
 
   sendGoogleMapsKey(req, res) {
-
-    if (keys.rootURL.includes(req.get('host'))) {
-      res.send(keys.googleMapsKey)
-    } else {
-      res.send('nunya beezwax')
-    }
+    res.send(keys.googleMapsKey)
   }
 }
 

@@ -1,49 +1,36 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import axios from 'axios'
 import keys from '../config/keys'
-import PostsFilter from '../components/PostsFilter'
+import filterPosts from '../components/filterPosts'
 import { SectionStandard } from '../components/Sections/'
 
-class EventsPage extends Component {
+const EventsPage = props => (
+  <div className="events-page">
+    <SectionStandard
+      posts={props.posts}
+      title="Events"
+      mediaLeft
+      readMore
+      path="events"
+      emptyMessage="There are no events coming up."
+      showDate="date"
+    />
+  </div>
+)
 
-  static async getInitialProps() {
 
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const events = await axios.get(`${rootUrl}/api/published_events`)
+EventsPage.getInitialProps = async () => {
 
-    return { events: events.data }
-  }
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const events = await axios.get(`${rootUrl}/api/published_events`)
 
-
-  render() {
-
-    return (
-      <div className="events-page">
-        <PostsFilter
-          posts={this.props.events}
-          settings={{
-            maxPosts: 9999
-          }}
-          component={SectionStandard}
-          componentProps={{
-            title: 'Events',
-            mediaLeft: true,
-            readMore: true,
-            path: 'events',
-            emptyMessage: 'There are no events coming up.',
-            showDate: 'date'
-          }}
-        />
-      </div>
-    )
-  }
+  return { events: events.data }
 }
 
 
-const mapStateToProps = state => {
-  return { events: state.events }
+const settings = {
+  postType: 'events'
 }
 
 
-export default connect(mapStateToProps)(EventsPage)
+export default filterPosts(EventsPage, settings)

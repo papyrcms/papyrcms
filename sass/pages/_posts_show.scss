@@ -55,21 +55,11 @@
   }
 
   &__image {
-    max-width: calc(50% - 2rem);
-    float: left;
-    padding-right: 4rem;
-    padding-top: 2rem;
-
-    @include respond(tab-port) {
-      max-width: calc(60% - 2rem);
-    }
-
-    @include respond(phone) {
-      max-width: 100%;
-      width: 100%;
-      padding-right: 0;
-      padding-bottom: 2rem;
-    }
+    max-width: 100%;
+    width: 100%;
+    padding-bottom: 2rem;
+    max-height: 50rem;
+    text-align: center;
 
     img, video {
       max-width: 100%;

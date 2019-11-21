@@ -7,23 +7,23 @@ import Layout from '../components/Layout/'
 import keys from '../config/keys'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
-import { 
-  setCurrentUser, 
-  setPosts, 
-  setPost, 
-  setBlogs, 
-  setBlog, 
+import {
+  setCurrentUser,
+  setPosts,
+  setPost,
+  setBlogs,
+  setBlog,
   setEvents,
   setEvent,
   setProducts,
   setProduct,
-  setUsers, 
-  setMessages, 
-  setSettings, 
-  setStripePubKey, 
+  setUsers,
+  setMessages,
+  setSettings,
+  setStripePubKey,
   setRoute,
   setUrl,
-  setGoogleMapsKey 
+  setGoogleMapsKey
 } from '../reduxStore'
 
 class MyApp extends App {
@@ -43,7 +43,7 @@ class MyApp extends App {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
-    
+
     // Get posts for page layout
     if (pageProps.posts) {
       dispatch(setPosts(pageProps.posts))

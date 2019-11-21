@@ -21,7 +21,7 @@ const Media = props => {
 
     // If it's a parallax image, we need the image in the style
     case parallax:
-      return <div className={className || ''} style={{ backgroundImage: `url(${src}` }} />
+      return <div className={className || ''} style={{ backgroundImage: `url(${src})` }} />
 
     // If the src is a video, make it a video
     case !!src.match(/\.(mp4|webm)$/i):

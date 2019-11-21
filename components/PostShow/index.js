@@ -12,7 +12,7 @@ import Media from '../Media'
 
 /**
  * PostShow is the main component to show the details of a particular post
- * 
+ *
  * @prop post - Object - The post that will be displayed on the page
  * @prop enableCommenting - Boolean - Whether or not users can comment on this post
  * @prop path - String - The prefix for accessing the edit page
@@ -164,7 +164,7 @@ class PostShow extends Component {
         </div>
       )
     } else {
-      
+
       const { className, emptyTitle, emptyMessage } = this.props
 
       return (

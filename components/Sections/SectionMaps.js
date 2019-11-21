@@ -9,7 +9,7 @@ const Position = () => <div className="section-maps__position" />
 /**
  * SectionMaps will render a section with some text and a
  * google map at a particular location
- * 
+ *
  * @prop mapLocation - String('start' or 'end') - renders the map before or after the content
  * @prop posts - Array[Object - latitude, longitude, and content posts]
  */
@@ -29,7 +29,7 @@ class SectionMaps extends Component {
           defaultCenter={center}
           defaultZoom={zoom}
         >
-          <Position 
+          <Position
             lat={latitude}
             lng={longitude}
           />
@@ -60,12 +60,12 @@ class SectionMaps extends Component {
     })
 
     if (contentPost && longitudePost && latitudePost) {
-  
+
       const { title, content } = contentPost
       const latitude = parseFloat(latitudePost.title)
       const longitude = parseFloat(longitudePost.title)
       const mapLocation = this.props.mapLocation ? this.props.mapLocation : 'start'
-    
+
       return (
         <section className="section-maps">
           <div className="section-maps__container">
@@ -73,7 +73,7 @@ class SectionMaps extends Component {
 
             <div className="section-maps__content">
               {mapLocation === 'start' ? this.renderMap(latitude, longitude) : null}
-        
+
               <div className={'section-maps__text'}>
                 <div className={'section-maps__subtext'}>{renderHTML(content)}</div>
               </div>
@@ -84,7 +84,7 @@ class SectionMaps extends Component {
         </section>
       )
     } else {
-       
+
       const { emptyTitle, emptyMessage } = this.props
 
       return (

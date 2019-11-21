@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ContactForm from '../components/ContactForm'
-import PostsFilter from '../components/PostsFilter'
+import filterPosts from '../components/filterPosts'
 import { SectionStandard } from '../components/Sections/'
 
 const ContactPage = props => {
@@ -16,7 +16,7 @@ const ContactPage = props => {
         break
       default: null
     }
-    
+
     // This is an actual feature
   } else if (props.url && props.url.query && props.url.query.initialMessage) {
     message = decodeURIComponent(props.url.query.initialMessage)
@@ -24,14 +24,10 @@ const ContactPage = props => {
 
   return (
     <div className="contact-page">
-      <PostsFilter
-        component={SectionStandard}
+      <SectionStandard
+        title="Contact"
+        className="contact-section-standard"
         posts={props.posts}
-        settings={{ maxPosts: 1, postTags: ['contact'] }}
-        componentProps={{
-          title: "Contact",
-          className: "contact-section-standard"
-        }}
       />
       <div className="contact-page__container">
         <ContactForm 
@@ -43,9 +39,15 @@ const ContactPage = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { posts: state.posts, url: state.url }
+const settings = {
+  maxPosts: 1,
+  postTags: 'contact'
 }
 
 
-export default connect(mapStateToProps)(ContactPage)
+const mapStateToProps = state => {
+  return { url: state.url }
+}
+
+
+export default connect(mapStateToProps)(filterPosts(ContactPage, settings))

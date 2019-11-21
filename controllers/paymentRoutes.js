@@ -29,22 +29,22 @@ class PaymentRoutes extends Controller {
 
     // Views
     this.server.get(
-      '/donate', 
-      this.donationEnabled, 
+      '/donate',
+      this.donationEnabled,
       this.renderPage.bind(this)
     )
 
     // Message API
     this.server.post(
-      '/api/donate', 
-      this.donationEnabled, 
-      sanitizeRequestBody, 
+      '/api/donate',
+      this.donationEnabled,
+      sanitizeRequestBody,
       this.createDonation.bind(this)
     )
     this.server.post(
-      '/api/stripePubKey', 
-      this.donationEnabled, 
-      sanitizeRequestBody, 
+      '/api/stripePubKey',
+      this.donationEnabled,
+      sanitizeRequestBody,
       this.sendStripePubKey.bind(this)
     )
   }
@@ -94,12 +94,7 @@ class PaymentRoutes extends Controller {
 
 
   sendStripePubKey(req, res) {
-
-    if (keys.rootURL.includes(req.get('host'))) {
-      res.send(keys.stripePublishableTestKey)
-    } else {
-      res.send('nunya beezwax')
-    }
+    res.send(keys.stripePublishableTestKey)
   }
 }
 
