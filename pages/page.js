@@ -14,8 +14,7 @@ import filterPosts from '../components/filterPosts'
 
 // const page = {
 //   className: 'about-page',
-//   title: 'About',
-//   url: 'about',
+//   route: 'about',
 //   sections: [{
 //     type: 'PostShow',
 //     tags: ['about'],
@@ -26,8 +25,7 @@ import filterPosts from '../components/filterPosts'
 // }
 const page = {
   className: 'example-page',
-  title: 'Example',
-  url: 'example',
+  route: 'example',
   sections: [{
     type: 'Parallax',
     tags: ['parallax-section'],
