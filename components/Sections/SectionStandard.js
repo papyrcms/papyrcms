@@ -7,7 +7,7 @@ import Media from '../Media'
 
 /**
  * SectionStandard will render Posts in a more horizontal style
- * 
+ *
  * @prop title - String - The title to display above the cards
  * @prop readMore - Boolean - If true, a link to the full post will render at the bottom of each card
  * @prop path - String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
@@ -16,6 +16,8 @@ import Media from '../Media'
  * @prop posts - Array [Object - The post to be rendered as a card]
  * @prop showDate - String - The post date prop to show
  * @prop clickableMedia - Boolean - If true, the media will display as a modal when clicked
+ * @prop mediaRight - Boolean - If true, the media will render on the right side
+ * @prop mediaLeft - Boolean - If true, the media will render on the left side
  */
 class SectionStandard extends Component {
 

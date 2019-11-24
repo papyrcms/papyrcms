@@ -28,15 +28,15 @@ const mapTagsToArray = (req, res, next) => {
 
       let pendingTag = tag
       pendingTag = pendingTag.trim()
-  
+
       if (!!pendingTag) {
         return pendingTag
       }
     })
-  
+
     req.body.tags = newTags
   }
-  
+
   next()
 }
 
@@ -62,14 +62,13 @@ const sanitizeRequestBody = (req, res, next) => {
 
   // Santize inputs
   Object.keys(req.body).forEach(key => {
-
     req.body[key] = sanitizeHTML(req.body[key], sanitizeRules)
   })
 
   next()
 }
 
-module.exports = { 
+module.exports = {
   checkIfAdmin,
   mapTagsToArray,
   sanitizeRequestBody,

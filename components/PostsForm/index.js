@@ -8,7 +8,7 @@ import Form from './Form'
 /**
  * PostsForm is an extendable form to be able to save and edit
  * posts of varying types
- * 
+ *
  * @prop pageTitle: String - The title displayed above the form
  * @prop post: Object - The post being edited if editing
  * @prop apiEndpoint: String - The api endpoint to post/put the request to

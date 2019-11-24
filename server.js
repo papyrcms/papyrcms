@@ -16,6 +16,7 @@ const User = require('./models/user')
 
 // Controllers
 const controllers = [
+  'pageRoutes',
   'adminRoutes',
   'authRoutes',
   'postRoutes',

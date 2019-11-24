@@ -6,6 +6,7 @@ import reduxThunk from 'redux-thunk'
 // Initial State
 const initialState = {
   currentUser: null,
+  page: {},
   posts: [],
   post: {},
   blogs: [],
@@ -28,6 +29,8 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'set_current_user':
       return { ...state, currentUser: action.payload }
+    case 'set_page':
+      return { ...state, page: action.payload }
     case 'set_posts':
       return { ...state, posts: action.payload }
     case 'set_post':
@@ -67,6 +70,10 @@ export const reducer = (state = initialState, action) => {
 // Action creators
 export const setCurrentUser = currentUser => {
   return { type: 'set_current_user', payload: currentUser }
+}
+
+export const setPage = page => {
+  return { type: 'set_page', payload: page }
 }
 
 export const setPosts = posts => {

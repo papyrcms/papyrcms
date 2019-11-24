@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
+import Router from 'next/router'
+import { connect } from 'react-redux'
 import axios from 'axios'
-import keys from '../config/keys'
 import {
   SectionStandard,
   SectionCards,
@@ -12,154 +13,166 @@ import PostShow from '../components/PostShow/'
 import filterPosts from '../components/filterPosts'
 
 
-// const page = {
-//   className: 'about-page',
-//   route: 'about',
-//   sections: [{
-//     type: 'PostShow',
-//     tags: ['about'],
-//     title: null,
-//     maxPosts: 1,
-//     className: 'about-page'
-//   }],
-// }
-const page = {
-  className: 'example-page',
-  route: 'example',
-  sections: [{
-    type: 'Parallax',
-    tags: ['parallax-section'],
-    title: 'Parallax',
-    maxPosts: 1,
-    className: 'parallax'
-  },
-  {
-    type: 'Standard',
-    tags: ['services'],
-    title: 'Services',
-    maxPosts: 2,
-    className: 'services'
-  },
-  {
-    type: 'Slideshow',
-    tags: ['slideshow-section'],
-    title: 'Slideshow Section',
-    maxPosts: 4,
-    className: 'slideshow'
-  },
-  {
-    type: 'Cards',
-    tags: ['sample'],
-    title: 'Samples',
-    maxPosts: 3,
-    className: 'cards'
-  },
-  {
-    type: 'Media',
-    tags: ['video-section'],
-    title: 'Video',
-    maxPosts: 1,
-    className: 'video'
-  },
-  {
-    type: 'Map',
-    tags: ['maps-section', 'main'],
-    title: 'Mapssss',
-    maxPosts: 3,
-    className: 'mapp'
-  }],
-}
+const renderSections = props => {
 
+  return props.page.sections.map((section, i) => {
+    switch (section.type) {
 
-class Page extends Component {
+      case 'Map':
+        return <SectionMaps
+          key={`${section.type}-${i}`}
+          posts={props[section.className]}
+          emptyTitle={section.title}
+          emptyMessage={`Create content with the ${section.tags} tags.`}
+        />
 
-  renderSections() {
-    return page.sections.map(section => {
-      switch (section.type) {
-        case 'Map':
-          return <SectionMaps
-            key={section.className}
-            posts={this.props[section.className]}
-            emptyTitle={section.title}
-            emptyMessage={`Create content with the ${section.tags} tags.`}
-          />
-        case 'Media':
-          return <SectionMedia
-            key={section.className}
-            post={this.props[section.className][0]}
-            alt={section.title}
-            emptyTitle={section.title}
-            emptyMessage={`Create content with the ${section.tags} tags.`}
-          />
-        case 'Parallax':
-          return <SectionMedia
-            key={section.className}
-            post={this.props[section.className][0]}
-            alt={section.title}
-            emptyTitle={section.title}
-            emptyMessage={`Create content with the ${section.tags} tags.`}
-            fixed
-          />
-        case 'Slideshow':
-          return <SectionSlideshow
-            key={section.className}
-            posts={this.props[section.className]}
-            timer={5000}
-            emptyTitle={section.title}
-            emptyMessage={`Create content with the ${section.tags} tags.`}
-          />
-        case 'Cards':
-          return <SectionCards
-            key={section.className}
-            posts={this.props[section.className]}
-            title={section.title}
-            contentLength={120}
-            readMore
-            perRow={3}
-            emptyMessage={`Create content with the ${section.tags} tags.`}
-          />
-        case 'Standard':
-          return <SectionStandard
-            key={section.className}
-            readMore
-            contentLength={300}
-            posts={this.props[section.className]}
-            title={section.title}
-            className={section.className}
-            emptyMessage={`Create content with the ${section.tags} tag.`}
-          />
-        default:
-          return <PostShow
-            key={section.className}
-            post={this.props[section.className][0]}
-            path="post"
-            apiPath="/api/posts"
-            redirectRoute="/post/all"
-            showDate
-          />
-      }
-    })
-  }
+      case 'Media':
+        return <SectionMedia
+          key={`${section.type}-${i}`}
+          post={props[section.className][0]}
+          alt={section.title}
+          emptyTitle={section.title}
+          emptyMessage={`Create content with the ${section.tags} tags.`}
+        />
 
+      case 'Parallax':
+        return <SectionMedia
+          key={`${section.type}-${i}`}
+          post={props[section.className][0]}
+          alt={section.title}
+          emptyTitle={section.title}
+          emptyMessage={`Create content with the ${section.tags} tags.`}
+          fixed
+        />
 
-  render() {
-    return (
-      <div className={page.className}>
-        {this.renderSections()}
-      </div>
-    )
-  }
-}
+      case 'Slideshow':
+        return <SectionSlideshow
+          key={`${section.type}-${i}`}
+          posts={props[section.className]}
+          timer={5000}
+          emptyTitle={section.title}
+          emptyMessage={`Create content with the ${section.tags} tags.`}
+        />
 
+      case 'ThreeCards':
+        return <SectionCards
+          key={`${section.type}-${i}`}
+          posts={props[section.className]}
+          title={section.title}
+          contentLength={120}
+          readMore
+          perRow={3}
+          emptyMessage={`Create content with the ${section.tags} tags.`}
+        />
 
-const settings = []
-for (const section of page.sections) {
-  settings.push({
-    propName: section.className,
-    maxPosts: section.maxPosts,
-    postTags: section.tags,
-    strictTags: true
+      case 'FourCards':
+        return <SectionCards
+          key={`${section.type}-${i}`}
+          posts={props[section.className]}
+          title={section.title}
+          contentLength={120}
+          readMore
+          perRow={4}
+          emptyMessage={`Create content with the ${section.tags} tags.`}
+        />
+
+      case 'Standard':
+        return <SectionStandard
+          key={`${section.type}-${i}`}
+          readMore
+          contentLength={300}
+          posts={props[section.className]}
+          title={section.title}
+          className={section.className}
+          emptyMessage={`Create content with the ${section.tags} tag.`}
+        />
+
+      case 'LeftStandard':
+        return <SectionStandard
+          key={`${section.type}-${i}`}
+          readMore
+          mediaLeft
+          contentLength={300}
+          posts={props[section.className]}
+          title={section.title}
+          className={section.className}
+          emptyMessage={`Create content with the ${section.tags} tag.`}
+        />
+
+      case 'RightStandard':
+        return <SectionStandard
+          key={`${section.type}-${i}`}
+          readMore
+          mediaRight
+          contentLength={300}
+          posts={props[section.className]}
+          title={section.title}
+          className={section.className}
+          emptyMessage={`Create content with the ${section.tags} tag.`}
+        />
+
+      default:
+        return <PostShow
+          key={`${section.type}-${i}`}
+          post={props[section.className][0]}
+          path="post"
+          apiPath="/api/posts"
+          redirectRoute="/post/all"
+        />
+    }
   })
 }
 
-export default filterPosts(Page, settings)
+
+const PageContent = props => (
+  <div className={props.page.className}>
+    {renderSections(props)}
+  </div>
+)
+
+
+const Page = props => {
+
+  const settings = []
+  // for (let section of props.page.sections) {
+  for (let i = 0; i < props.page.sections.length; i++) {
+    const section = JSON.parse(props.page.sections[i])
+    settings.push({
+      // propName: section.type,
+      maxPosts: section.maxPosts,
+      postTags: section.tags,
+      strictTags: true
+    })
+  }
+
+  const PageComponent = filterPosts(PageContent, settings)
+  return <PageComponent />
+}
+
+Page.getInitialProps = async ({ req, query }) => {
+
+  let page
+
+  if (!!req) {
+    page = query.page
+  } else {
+    try {
+      const res = await axios.get(`/api/page/${query.page}`)
+      page = res.data
+
+      // If we did not find a page, push to the page template file
+    } catch(e) {
+      Router.push(`/${query.page}`)
+    }
+  }
+
+  return { page }
+}
+
+
+const mapStateToProps = state => {
+  return { page: state.page }
+}
+
+
+export default connect(mapStateToProps)(Page)

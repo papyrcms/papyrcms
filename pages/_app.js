@@ -9,6 +9,7 @@ import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 import {
   setCurrentUser,
+  setPage,
   setPosts,
   setPost,
   setBlogs,
@@ -51,6 +52,11 @@ class MyApp extends App {
       const rootUrl = keys.rootURL ? keys.rootURL : ''
       const response = await axios.get(`${rootUrl}/api/published_posts`)
       dispatch(setPosts(response.data))
+    }
+
+    // If a page was recieved, send it to the redux store
+    if (!!pageProps.page) {
+      dispatch(setPage(pageProps.page))
     }
 
     // If a google maps key was recieved, send it to the redux store
@@ -121,13 +127,11 @@ class MyApp extends App {
 
 
   componentDidMount() {
-
     initGA()
   }
 
 
   componentDidUpdate() {
-
     logPageView()
   }
 

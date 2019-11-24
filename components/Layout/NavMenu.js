@@ -23,7 +23,7 @@ const NavLink = props => (
 
 /**
  * NavMenu displayed at the top of every view.
- * 
+ *
  * @prop logo - String - The source for the logo image displayed at the top right
  */
 class NavMenu extends Component {
@@ -35,7 +35,7 @@ class NavMenu extends Component {
     if (!!settings && settings.enableBlog) {
 
       return <NavLink href="/blog">Blog</NavLink>
-    }  
+    }
   }
 
 
@@ -92,8 +92,21 @@ class NavMenu extends Component {
             />
 
             <NavLink href="/">Home</NavLink>
-            <NavLink href="/about">About</NavLink>
-            <NavLink href="/services">Services</NavLink>
+            <Link href='/page?page=about' as="/about">
+              <a className="nav-menu__item" title="About">
+                <li onClick={onClick}>
+                  About
+                </li>
+              </a>
+            </Link>
+            {/* <NavLink href="/services">Services</NavLink> */}
+            <Link href='/page?page=services' as="/services">
+              <a className="nav-menu__item" title="Services">
+                <li onClick={onClick}>
+                  Services
+                </li>
+              </a>
+            </Link>
 
             {this.renderBlogItem()}
             {this.renderEventsItem()}

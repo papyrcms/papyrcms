@@ -1,18 +1,13 @@
-const { Schema, model } = require('mongoose')
+const mongoose = require('mongoose')
 
-const pageSchema = new Schema({
+const pageSchema = new mongoose.Schema({
 
   className: String,
   route: { type: String, required: true },
-  sections: [{
-    type: String,
-    tags: [String],
-    title: String,
-    maxPosts: Number,
-    className: String
-  }],
+  // This will be JSON
+  sections: [String],
 
   created: { type: Date, default: Date.now },
 })
 
-module.exports = model('page', pageSchema)
+module.exports = mongoose.model('page', pageSchema)

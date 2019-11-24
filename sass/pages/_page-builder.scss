@@ -1,13 +1,29 @@
 .page-builder {
+  padding: 5rem 20vw;
+  padding-bottom: 10rem;
   background-color: $color-grey-light;
-  padding: 10rem 30rem;
+
+  @include respond(tab-port) {
+    padding: 5rem 5vw;
+    padding-bottom: 10rem;
+  }
+
+  @include respond(phone) {
+    padding: 5rem 3vw;
+    padding-bottom: 10rem;
+  }
 
   &__section-select {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 1rem;
 
-    &--select {
+    @include respond(phone) {
+      display: block;
 
+      &--select {
+        margin-bottom: 1rem;
+      }
     }
 
     &--submit {
@@ -18,8 +34,4 @@
   &__section {
     margin: 2rem 0;
   }
-}
-
-.post-display {
-
 }

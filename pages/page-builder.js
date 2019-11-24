@@ -1,68 +1,78 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import Input from '../components/Input'
 
 
-const PostDisplaySection = props => {
-
-  const {
-    index,
-    removeSection,
-    changeState,
-    requiredTags,
-    wrapperClass
-  } = props
-
-  return (
-    <div className="post-display page-builder__section">
-      <h3 className="heading-tertiary post-display__title">Post Display</h3>
-      <p className="post-display__description">This is the simplest component. It will only take one post with the required tags. You can additionally insert a wrapper class to wrap the section.</p>
-      <div className="post-display__inputs">
-        <Input
-          id={`post-display-${index}--required-tags-${index}`}
-          label="Required Post Tags"
-          name="required-tags"
-          value={requiredTags}
-          onChange={event => changeState({ requiredTags: event.target.value })}
-        />
-        <Input
-          id={`post-display-${index}--wrapper-class-${index}`}
-          label="Component Wrapper Class"
-          name="wrapper-class"
-          value={wrapperClass}
-          onChange={event => changeState({ wrapperClass: event.target.value })}
-        />
-      </div>
-      <button
-        className="button button-delete"
-        onClick={() => removeSection()}
-      >
-        Remove Section
-      </button>
-    </div>
-  )
-}
-
-
 class PageBuilder extends Component {
+
+  // Static object of sections for the builder
+  sectionOptions = {
+    PostShow: {
+      name: 'Post Page',
+      description: 'This is the simplest component. It will only take one post with the required tags.',
+      inputs: ['className', 'tags'],
+      maxPosts: 1
+    },
+    Standard: {
+      name: 'Standard Section',
+      description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
+      inputs: ['className', 'maxPosts', 'tags', 'title'],
+    },
+    LeftStandard: {
+      name: 'Left Standard Section',
+      description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
+      inputs: ['className', 'maxPosts', 'tags', 'title'],
+    },
+    RightStandard: {
+      name: 'Right Standard Section',
+      description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
+      inputs: ['className', 'maxPosts', 'tags', 'title'],
+    },
+    ThreeCards: {
+      name: 'Three Cards Section',
+      description: 'This section will display each post in a vertical style with three posts per row.',
+      inputs: ['className', 'maxPosts', 'tags', 'title'],
+    },
+    FourCards: {
+      name: 'Four Cards Section',
+      description: 'This section will display each post in a vertical style with four posts per row.',
+      inputs: ['className', 'maxPosts', 'tags', 'title'],
+    },
+    Slideshow: {
+      name: 'Slideshow Section',
+      description: 'This section will display a slideshow of each post at 5 second intervals.',
+      inputs: ['className', 'maxPosts', 'tags', 'title'],
+    },
+    Parallax: {
+      name: 'Parallax Section',
+      description: 'This section will display a post with the parallax effect on the media.',
+      inputs: ['className', 'tags', 'title'],
+      maxPosts: 1,
+    },
+    Media: {
+      name: 'Media Section',
+      description: 'This section will display a post media normally.',
+      inputs: ['className', 'tags', 'title'],
+      maxPosts: 1,
+    },
+    Map: {
+      name: 'Map Section',
+      description: 'This section will display a google map at the location specified by the latitude and longitude posts, along with the content of the main post.',
+      inputs: ['className', 'tags', 'title'],
+      maxPosts: 3
+    }
+  }
+
 
   constructor(props) {
 
     super(props)
 
     this.state = {
-      sectionSelect: 'postDisplay',
-      sections: [],
       url: '',
-      sectionOptions: {
-        'postDisplay': {
-          title: 'Post Display',
-          component: PostDisplaySection,
-          initialState: {
-            wrapperClass: '',
-            requiredTags: ''
-          }
-        }
-      },
+      className: '',
+      sectionSelect: 'PostShow',
+      sections: []
     }
   }
 
@@ -71,36 +81,94 @@ class PageBuilder extends Component {
 
     this.setState(prevState => {
 
-      const newSections = prevState.sections.splice(index)
+      const newSections = prevState.sections.filter((_, i) => i !== index)
 
       return { sections: newSections }
     })
   }
 
 
-  changeSectionState(index, newState) {
+  changeSectionState(index, key, value) {
 
     this.setState(prevState => {
 
-      const newSectionState = []
-
-      prevState.sections.forEach((section, i) => {
-
-        newSectionState[i] = {}
-
-        for (const key in section) {
-          newSectionState[i][key] = section[key]
-        }
-
+      const newSections = prevState.sections.map((section, i) => {
         if (index === i) {
-          for (const key in newState) {
-            newSectionState[i].state[key] = newState[key]
-          }
+          section[key] = value
         }
+        return section
       })
-
-      return { sections: newSectionState }
+      return { sections: newSections }
     })
+  }
+
+
+  renderTitleInput(i, section) {
+
+    const { type, title } = section
+
+    if (this.sectionOptions[type].inputs.includes('title')) {
+
+      return <Input
+        id={`${type}-${i}--title-${i}`}
+        label="Component Title"
+        name={`title-${i}`}
+        value={title}
+        onChange={event => this.changeSectionState(i, 'title', event.target.value)}
+      />
+    }
+  }
+
+
+  renderClassNameInput(i, section) {
+
+    const { type, className } = section
+
+    if (this.sectionOptions[type].inputs.includes('className')) {
+
+      return <Input
+        id={`${type}-${i}--class-name-${i}`}
+        label="Component Wrapper Class"
+        name={`class-name-${i}`}
+        value={className}
+        onChange={event => this.changeSectionState(i, 'className', event.target.value)}
+      />
+    }
+  }
+
+
+  renderTagsInput(i, section) {
+
+    const { type, tags } = section
+
+    if (this.sectionOptions[type].inputs.includes('tags')) {
+
+      return <Input
+        id={`${type}-${i}--tags-${i}`}
+        label="Required Post Tags"
+        name={`tags-${i}`}
+        value={tags}
+        onChange={event => this.changeSectionState(i, 'tags', event.target.value)}
+      />
+    }
+  }
+
+
+  renderMaxPostsInput(i, section) {
+
+    const { type, maxPosts } = section
+
+    if (this.sectionOptions[type].inputs.includes('maxPosts')) {
+
+      return <Input
+        id={`${type}-${i}--max-posts-${i}`}
+        type="number"
+        label="Maximum number of posts in this component"
+        name={`max-posts-${i}`}
+        value={maxPosts}
+        onChange={event => this.changeSectionState(i, 'maxPosts', event.target.value)}
+      />
+    }
   }
 
 
@@ -109,15 +177,32 @@ class PageBuilder extends Component {
     return this.state.sections.map((section, i) => {
 
       if (section) {
-        const { Component, title, state } = section
 
-        return <Component
-          key={`${title}-${i}`}
-          index={i}
-          removeSection={() => this.removeSection(i)}
-          changeState={newState => this.changeSectionState(i, newState)}
-          {...state}
-        />
+        const { type } = section
+        const { name, description } = this.sectionOptions[type]
+
+        return (
+          <div key={`${type}-${i}`}>
+            <div className={`${type} page-builder__section`}>
+              <h3 className={`heading-tertiary ${type}__title`}>{name}</h3>
+              <p className={`${type}__description`}>{description}</p>
+              <div className={`${type}__inputs`}>
+
+                {this.renderTitleInput(i, section)}
+                {this.renderClassNameInput(i, section)}
+                {this.renderTagsInput(i, section)}
+                {this.renderMaxPostsInput(i, section)}
+
+              </div>
+              <button
+                className="button button-delete"
+                onClick={() => this.removeSection(i)}
+              >
+                Remove Section
+              </button>
+            </div>
+          </div>
+        )
       }
     })
   }
@@ -125,10 +210,14 @@ class PageBuilder extends Component {
 
   renderSelectOptions() {
 
-    const { sectionOptions } = this.state
+    return Object.keys(this.sectionOptions).map(key => {
 
-    return Object.keys(sectionOptions).map(key => {
-      return <option key={key} value={key}>{sectionOptions[key].title}</option>
+      return <option
+        key={key}
+        value={key}
+      >
+        {this.sectionOptions[key].name}
+      </option>
     })
   }
 
@@ -136,16 +225,31 @@ class PageBuilder extends Component {
   addSection() {
 
     this.setState(prevState => {
-
-      const { sectionOptions, sectionSelect, sections } = prevState
+      const { sections, sectionSelect } = prevState
 
       const newSection = {
-        title: sectionOptions[sectionSelect].title,
-        Component: sectionOptions[sectionSelect].component,
-        state: Object.assign({}, sectionOptions[sectionSelect].initialState)
+        type: sectionSelect,
+        tags: '',
+        title: '',
+        maxPosts: this.sectionOptions[sectionSelect].maxPosts || 0,
+        className: ''
       }
 
       return { sections: [...sections, newSection] }
+    })
+  }
+
+
+  handleSubmit() {
+
+    const { url, className, sections } = this.state
+
+    axios.post("/api/page", {
+      route: url,
+      className,
+      sections
+    }).then(response => {
+      console.log(response.data)
     })
   }
 
@@ -163,6 +267,15 @@ class PageBuilder extends Component {
           name="url"
           value={this.state.url}
           onChange={event => this.setState({ url: event.target.value })}
+        />
+
+        <Input
+          id="class-name-input"
+          label="Page Wrapper Class Name"
+          placeholder="about-page"
+          name="wrapper-class"
+          value={this.state.className}
+          onChange={event => this.setState({ className: event.target.value })}
         />
 
         {this.renderSections()}
@@ -183,14 +296,14 @@ class PageBuilder extends Component {
             Add Section
           </button>
 
-          <button
-            className="button button-primary"
-            onClick={() => console.log(this.state)}
-          >
-            Submit
-          </button>
-
         </div>
+
+        <button
+          className="button button-primary"
+          onClick={() => this.handleSubmit()}
+        >
+          Submit
+        </button>
       </div>
     )
   }
