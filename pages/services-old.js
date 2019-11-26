@@ -1,6 +1,6 @@
 import React from 'react'
 import filterPosts from '../components/filterPosts'
-import { SectionStandard } from '../components/Sections/'
+import { SectionStandard } from '../components/Sections'
 
 
 const ServicesPage = props => (

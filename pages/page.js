@@ -16,12 +16,14 @@ import filterPosts from '../components/filterPosts'
 const renderSections = props => {
 
   return props.page.sections.map((section, i) => {
+
+    section = JSON.parse(section)
     switch (section.type) {
 
       case 'Map':
         return <SectionMaps
           key={`${section.type}-${i}`}
-          posts={props[section.className]}
+          posts={props[`${section.type}-${i}`]}
           emptyTitle={section.title}
           emptyMessage={`Create content with the ${section.tags} tags.`}
         />
@@ -29,7 +31,7 @@ const renderSections = props => {
       case 'Media':
         return <SectionMedia
           key={`${section.type}-${i}`}
-          post={props[section.className][0]}
+          post={props[`${section.type}-${i}`][0]}
           alt={section.title}
           emptyTitle={section.title}
           emptyMessage={`Create content with the ${section.tags} tags.`}
@@ -38,7 +40,7 @@ const renderSections = props => {
       case 'Parallax':
         return <SectionMedia
           key={`${section.type}-${i}`}
-          post={props[section.className][0]}
+          post={props[`${section.type}-${i}`][0]}
           alt={section.title}
           emptyTitle={section.title}
           emptyMessage={`Create content with the ${section.tags} tags.`}
@@ -48,7 +50,7 @@ const renderSections = props => {
       case 'Slideshow':
         return <SectionSlideshow
           key={`${section.type}-${i}`}
-          posts={props[section.className]}
+          posts={props[`${section.type}-${i}`]}
           timer={5000}
           emptyTitle={section.title}
           emptyMessage={`Create content with the ${section.tags} tags.`}
@@ -57,7 +59,7 @@ const renderSections = props => {
       case 'ThreeCards':
         return <SectionCards
           key={`${section.type}-${i}`}
-          posts={props[section.className]}
+          posts={props[`${section.type}-${i}`]}
           title={section.title}
           contentLength={120}
           readMore
@@ -68,7 +70,7 @@ const renderSections = props => {
       case 'FourCards':
         return <SectionCards
           key={`${section.type}-${i}`}
-          posts={props[section.className]}
+          posts={props[`${section.type}-${i}`]}
           title={section.title}
           contentLength={120}
           readMore
@@ -81,7 +83,7 @@ const renderSections = props => {
           key={`${section.type}-${i}`}
           readMore
           contentLength={300}
-          posts={props[section.className]}
+          posts={props[`${section.type}-${i}`]}
           title={section.title}
           className={section.className}
           emptyMessage={`Create content with the ${section.tags} tag.`}
@@ -93,7 +95,7 @@ const renderSections = props => {
           readMore
           mediaLeft
           contentLength={300}
-          posts={props[section.className]}
+          posts={props[`${section.type}-${i}`]}
           title={section.title}
           className={section.className}
           emptyMessage={`Create content with the ${section.tags} tag.`}
@@ -105,7 +107,7 @@ const renderSections = props => {
           readMore
           mediaRight
           contentLength={300}
-          posts={props[section.className]}
+          posts={props[`${section.type}-${i}`]}
           title={section.title}
           className={section.className}
           emptyMessage={`Create content with the ${section.tags} tag.`}
@@ -114,7 +116,7 @@ const renderSections = props => {
       default:
         return <PostShow
           key={`${section.type}-${i}`}
-          post={props[section.className][0]}
+          post={props[`${section.type}-${i}`][0]}
           path="post"
           apiPath="/api/posts"
           redirectRoute="/post/all"
@@ -134,11 +136,16 @@ const PageContent = props => (
 const Page = props => {
 
   const settings = []
-  // for (let section of props.page.sections) {
+
   for (let i = 0; i < props.page.sections.length; i++) {
+
+    // const section = typeof props.page.sections[i] === 'object'
+    //   ? props.page.sections[i]
+    //   : JSON.parse(props.page.sections[i])
     const section = JSON.parse(props.page.sections[i])
+
     settings.push({
-      // propName: section.type,
+      propName: `${section.type}-${i}`,
       maxPosts: section.maxPosts,
       postTags: section.tags,
       strictTags: true
@@ -154,7 +161,7 @@ Page.getInitialProps = async ({ req, query }) => {
   let page
 
   if (!!req) {
-    page = query.page
+    page = query.pageObject
   } else {
     try {
       const res = await axios.get(`/api/page/${query.page}`)

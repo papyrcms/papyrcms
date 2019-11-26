@@ -9,6 +9,7 @@ import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 import {
   setCurrentUser,
+  setPages,
   setPage,
   setPosts,
   setPost,
@@ -52,6 +53,11 @@ class MyApp extends App {
       const rootUrl = keys.rootURL ? keys.rootURL : ''
       const response = await axios.get(`${rootUrl}/api/published_posts`)
       dispatch(setPosts(response.data))
+    }
+
+    // If pages were recieved, send it to the redux store
+    if (!!pageProps.pages) {
+      dispatch(setPages(pageProps.pages))
     }
 
     // If a page was recieved, send it to the redux store

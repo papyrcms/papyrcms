@@ -73,6 +73,10 @@ class AdminLinks extends Component {
           <a className="admin-links__link">Page Builder</a>
         </Link>
 
+        <Link href="/pages">
+          <a className="admin-links__link">My Pages</a>
+        </Link>
+
         <Link href="/posts_create" as="/posts/new">
           <a className="admin-links__link">Add Content</a>
         </Link>

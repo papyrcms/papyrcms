@@ -1,0 +1,39 @@
+.pages-page {
+  padding: 5rem 20vw;
+  padding-bottom: 10rem;
+  background-color: $color-grey-light;
+
+  @include respond(tab-port) {
+    padding: 5rem 5vw;
+    padding-bottom: 10rem;
+  }
+
+  @include respond(phone) {
+    padding: 5rem 3vw;
+    padding-bottom: 10rem;
+  }
+}
+
+.pages {
+
+  &__page {
+    list-style: none;
+    display: flex;
+
+    @include respond(phone) {
+      flex-direction: column;
+      border-bottom: .1rem solid $color-grey;
+      padding: 1rem 0;
+    }
+  }
+
+  &__link {
+    &-divider {
+      margin: 0 1rem;
+
+      @include respond(phone) {
+        display: none;
+      }
+    }
+  }
+}

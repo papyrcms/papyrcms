@@ -25,9 +25,19 @@
         margin-bottom: 1rem;
       }
     }
+  }
 
-    &--submit {
+  &__section-bottom {
+    display: flex;
+    justify-content: space-between;
 
+    @include respond(phone) {
+      flex-direction: column;
+      align-items: flex-start;
+
+      &--delete {
+        margin-top: 1rem;
+      }
     }
   }
 

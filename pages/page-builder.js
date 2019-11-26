@@ -1,66 +1,85 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import Router from 'next/router'
 import Input from '../components/Input'
+
+
+// Static object of sections for the builder
+const sectionOptions = {
+  PostShow: {
+    name: 'Post Page',
+    description: 'This is the simplest component. It will only take one post with the required tags.',
+    inputs: ['className', 'tags'],
+    maxPosts: 1
+  },
+  Standard: {
+    name: 'Standard Section',
+    description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+  },
+  LeftStandard: {
+    name: 'Left Standard Section',
+    description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+  },
+  RightStandard: {
+    name: 'Right Standard Section',
+    description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+  },
+  ThreeCards: {
+    name: 'Three Cards Section',
+    description: 'This section will display each post in a vertical style with three posts per row.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+  },
+  FourCards: {
+    name: 'Four Cards Section',
+    description: 'This section will display each post in a vertical style with four posts per row.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+  },
+  Slideshow: {
+    name: 'Slideshow Section',
+    description: 'This section will display a slideshow of each post at 5 second intervals.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+  },
+  Parallax: {
+    name: 'Parallax Section',
+    description: 'This section will display a post with the parallax effect on the media.',
+    inputs: ['className', 'tags', 'title'],
+    maxPosts: 1,
+  },
+  Media: {
+    name: 'Media Section',
+    description: 'This section will display a post media normally.',
+    inputs: ['className', 'tags', 'title'],
+    maxPosts: 1,
+  },
+  Map: {
+    name: 'Map Section',
+    description: 'This section will display a google map at the location specified by the latitude and longitude posts, along with the content of the main post.',
+    inputs: ['className', 'tags', 'title'],
+    maxPosts: 3
+  }
+}
 
 
 class PageBuilder extends Component {
 
-  // Static object of sections for the builder
-  sectionOptions = {
-    PostShow: {
-      name: 'Post Page',
-      description: 'This is the simplest component. It will only take one post with the required tags.',
-      inputs: ['className', 'tags'],
-      maxPosts: 1
-    },
-    Standard: {
-      name: 'Standard Section',
-      description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
-      inputs: ['className', 'maxPosts', 'tags', 'title'],
-    },
-    LeftStandard: {
-      name: 'Left Standard Section',
-      description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
-      inputs: ['className', 'maxPosts', 'tags', 'title'],
-    },
-    RightStandard: {
-      name: 'Right Standard Section',
-      description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
-      inputs: ['className', 'maxPosts', 'tags', 'title'],
-    },
-    ThreeCards: {
-      name: 'Three Cards Section',
-      description: 'This section will display each post in a vertical style with three posts per row.',
-      inputs: ['className', 'maxPosts', 'tags', 'title'],
-    },
-    FourCards: {
-      name: 'Four Cards Section',
-      description: 'This section will display each post in a vertical style with four posts per row.',
-      inputs: ['className', 'maxPosts', 'tags', 'title'],
-    },
-    Slideshow: {
-      name: 'Slideshow Section',
-      description: 'This section will display a slideshow of each post at 5 second intervals.',
-      inputs: ['className', 'maxPosts', 'tags', 'title'],
-    },
-    Parallax: {
-      name: 'Parallax Section',
-      description: 'This section will display a post with the parallax effect on the media.',
-      inputs: ['className', 'tags', 'title'],
-      maxPosts: 1,
-    },
-    Media: {
-      name: 'Media Section',
-      description: 'This section will display a post media normally.',
-      inputs: ['className', 'tags', 'title'],
-      maxPosts: 1,
-    },
-    Map: {
-      name: 'Map Section',
-      description: 'This section will display a google map at the location specified by the latitude and longitude posts, along with the content of the main post.',
-      inputs: ['className', 'tags', 'title'],
-      maxPosts: 3
+  static async getInitialProps({ req, query }) {
+
+    let page = {}
+
+    if (!!req) {
+      page = query.pageObject
+    } else {
+      if (query.page) {
+        const res = await axios.get(`/api/page/${query.page}`)
+        page = res.data
+      }
     }
+
+    return { page }
   }
 
 
@@ -68,12 +87,27 @@ class PageBuilder extends Component {
 
     super(props)
 
-    this.state = {
+    const state = {
+      id: '',
       url: '',
       className: '',
       sectionSelect: 'PostShow',
       sections: []
     }
+
+    const { page } = props
+    if (page._id) {
+      state.id = page._id
+      state.url = page.route
+      state.className = page.className
+      state.sections = page.sections.map(section => {
+        const parsedSection = JSON.parse(section)
+        parsedSection.tags = parsedSection.tags.join(', ')
+        return parsedSection
+      })
+    }
+
+    this.state = state
   }
 
 
@@ -107,7 +141,7 @@ class PageBuilder extends Component {
 
     const { type, title } = section
 
-    if (this.sectionOptions[type].inputs.includes('title')) {
+    if (sectionOptions[type].inputs.includes('title')) {
 
       return <Input
         id={`${type}-${i}--title-${i}`}
@@ -124,7 +158,7 @@ class PageBuilder extends Component {
 
     const { type, className } = section
 
-    if (this.sectionOptions[type].inputs.includes('className')) {
+    if (sectionOptions[type].inputs.includes('className')) {
 
       return <Input
         id={`${type}-${i}--class-name-${i}`}
@@ -141,7 +175,7 @@ class PageBuilder extends Component {
 
     const { type, tags } = section
 
-    if (this.sectionOptions[type].inputs.includes('tags')) {
+    if (sectionOptions[type].inputs.includes('tags')) {
 
       return <Input
         id={`${type}-${i}--tags-${i}`}
@@ -158,7 +192,7 @@ class PageBuilder extends Component {
 
     const { type, maxPosts } = section
 
-    if (this.sectionOptions[type].inputs.includes('maxPosts')) {
+    if (sectionOptions[type].inputs.includes('maxPosts')) {
 
       return <Input
         id={`${type}-${i}--max-posts-${i}`}
@@ -179,7 +213,7 @@ class PageBuilder extends Component {
       if (section) {
 
         const { type } = section
-        const { name, description } = this.sectionOptions[type]
+        const { name, description } = sectionOptions[type]
 
         return (
           <div key={`${type}-${i}`}>
@@ -210,13 +244,13 @@ class PageBuilder extends Component {
 
   renderSelectOptions() {
 
-    return Object.keys(this.sectionOptions).map(key => {
+    return Object.keys(sectionOptions).map(key => {
 
       return <option
         key={key}
         value={key}
       >
-        {this.sectionOptions[key].name}
+        {sectionOptions[key].name}
       </option>
     })
   }
@@ -231,7 +265,7 @@ class PageBuilder extends Component {
         type: sectionSelect,
         tags: '',
         title: '',
-        maxPosts: this.sectionOptions[sectionSelect].maxPosts || 0,
+        maxPosts: sectionOptions[sectionSelect].maxPosts || 0,
         className: ''
       }
 
@@ -242,19 +276,63 @@ class PageBuilder extends Component {
 
   handleSubmit() {
 
-    const { url, className, sections } = this.state
-
-    axios.post("/api/page", {
+    const { url, className, sections, id } = this.state
+    const postObject = {
       route: url,
       className,
       sections
-    }).then(response => {
-      console.log(response.data)
-    })
+    }
+
+    console.log(postObject)
+
+    if (id) {
+
+      axios.put(`/api/page/${id}`, postObject).then(response => {
+        Router.push('/pages')
+      })
+
+    } else {
+
+      axios.post("/api/page", postObject).then(response => {
+        Router.push('/pages')
+      })
+    }
+  }
+
+
+  deletePage() {
+
+    const confirm = window.confirm('Are you sure you want to delete this page?')
+
+    if (confirm) {
+      axios.delete(`/api/page/${this.state.id}`).then(response => {
+        Router.push('/pages')
+      })
+    }
+  }
+
+
+  renderDelete() {
+
+    if (this.state.id) {
+      return <button
+        className="button button-delete page-builder__section-bottom--delete"
+        onClick={() => this.deletePage()}
+      >
+        Delete Page
+      </button>
+    }
   }
 
 
   render() {
+
+    const { url, className } = this.state
+    const { currentUser } = this.props
+
+    if (!currentUser || !currentUser.isAdmin) {
+      return <div />
+    }
 
     return (
       <div className="page-builder">
@@ -265,7 +343,7 @@ class PageBuilder extends Component {
           label="Page route"
           placeholder="about"
           name="url"
-          value={this.state.url}
+          value={url}
           onChange={event => this.setState({ url: event.target.value })}
         />
 
@@ -274,7 +352,7 @@ class PageBuilder extends Component {
           label="Page Wrapper Class Name"
           placeholder="about-page"
           name="wrapper-class"
-          value={this.state.className}
+          value={className}
           onChange={event => this.setState({ className: event.target.value })}
         />
 
@@ -298,15 +376,25 @@ class PageBuilder extends Component {
 
         </div>
 
-        <button
-          className="button button-primary"
-          onClick={() => this.handleSubmit()}
-        >
-          Submit
-        </button>
+        <div className="page-builder__section-bottom">
+          <button
+            className="button button-primary"
+            onClick={() => this.handleSubmit()}
+          >
+            Submit
+          </button>
+
+          {this.renderDelete()}
+        </div>
       </div>
     )
   }
 }
 
-export default PageBuilder
+
+const mapStateToProps = state => {
+  return { page: state.page, currentUser: state.currentUser }
+}
+
+
+export default connect(mapStateToProps)(PageBuilder)
