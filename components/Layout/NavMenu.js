@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 
@@ -28,93 +28,77 @@ const NavLink = props => {
 }
 
 
+const renderBlogItem = settings => {
+
+  if (!!settings && settings.enableBlog) {
+    return <NavLink href="/blog">Blog</NavLink>
+  }
+}
+
+
+const renderEventsItem = settings => {
+
+  if (!!settings && settings.enableEvents) {
+    return <NavLink href="/events">Events</NavLink>
+  }
+}
+
+
+const renderStoreItem = settings => {
+
+  if (!!settings && settings.enableStore) {
+    return <NavLink href="/store">Store</NavLink>
+  }
+}
+
+
+const renderDonateItem = settings => {
+
+  if (!!settings && settings.enableDonations) {
+    return <NavLink href="/donate">Donate</NavLink>
+  }
+}
+
+
 /**
  * NavMenu displayed at the top of every view.
  *
  * @prop logo - String - The source for the logo image displayed at the top right
  */
-class NavMenu extends Component {
+const NavMenu = props => (
+  <nav>
+    <ul className="nav-menu">
 
-  renderBlogItem() {
-
-    const { settings } = this.props
-
-    if (!!settings && settings.enableBlog) {
-
-      return <NavLink href="/blog">Blog</NavLink>
-    }
-  }
-
-
-  renderEventsItem() {
-
-    const { settings } = this.props
-
-    if (!!settings && settings.enableEvents) {
-
-      return <NavLink href="/events">Events</NavLink>
-    }
-  }
-
-
-  renderStoreItem() {
-
-    const { settings } = this.props
-
-    if (!!settings && settings.enableStore) {
-      return <NavLink href="/store">Store</NavLink>
-    }
-  }
-
-
-  renderDonateItem() {
-
-    const { settings } = this.props
-
-    if (!!settings && settings.enableDonations) {
-      return <NavLink href="/donate">Donate</NavLink>
-    }
-  }
-
-
-  render() {
-
-    return (
-      <nav>
-        <ul className="nav-menu">
-
-          <Link href="/">
-            <a title="Home">
-              <div className="nav-menu__logo">
-                <img src={this.props.logo} alt="site logo" />
-              </div>
-            </a>
-          </Link>
-
-          <div className="nav-menu__items" id="nav-menu-checkbox">
-
-            <span
-              onClick={onClick}
-              className="nav-menu__item nav-menu__item--hamburger"
-            />
-
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="/about">About</NavLink>
-            <NavLink href="/services">Services</NavLink>
-
-            {this.renderBlogItem()}
-            {this.renderEventsItem()}
-            {this.renderStoreItem()}
-            {this.renderDonateItem()}
-
-            <NavLink href="/contact">Contact</NavLink>
+      <Link href="/">
+        <a title="Home">
+          <div className="nav-menu__logo">
+            <img src={props.logo} alt="site logo" />
           </div>
+        </a>
+      </Link>
 
-        </ul>
-      </nav>
-    )
-  }
-}
+      <div className="nav-menu__items" id="nav-menu-checkbox">
+
+        <span
+          onClick={onClick}
+          className="nav-menu__item nav-menu__item--hamburger"
+        />
+
+        <NavLink href="/">Home</NavLink>
+        <NavLink href="/about">About</NavLink>
+        <NavLink href="/services">Services</NavLink>
+
+        {renderBlogItem(props.settings)}
+        {renderEventsItem(props.settings)}
+        {renderStoreItem(props.settings)}
+        {renderDonateItem(props.settings)}
+
+        <NavLink href="/contact">Contact</NavLink>
+      </div>
+
+    </ul>
+  </nav>
+)
 
 
 const mapStateToProps = state => {
