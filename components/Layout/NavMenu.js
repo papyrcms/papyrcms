@@ -10,15 +10,22 @@ const onClick = () => {
 }
 
 
-const NavLink = props => (
-  <Link href={props.href}>
-    <a className="nav-menu__item" title={props.title || props.children}>
-      <li onClick={onClick}>
-        {props.children}
-      </li>
-    </a>
-  </Link>
-)
+const NavLink = props => {
+
+  const href = props.href === '/'
+    ? `/page?page=home`
+    : `/page?page=${props.href.substr(1)}`
+
+  return (
+    <Link href={href} as={props.href}>
+      <a className="nav-menu__item" title={props.title || props.children}>
+        <li onClick={onClick}>
+          {props.children}
+        </li>
+      </a>
+    </Link>
+  )
+}
 
 
 /**
@@ -92,21 +99,8 @@ class NavMenu extends Component {
             />
 
             <NavLink href="/">Home</NavLink>
-            <Link href='/page?page=about' as="/about">
-              <a className="nav-menu__item" title="About">
-                <li onClick={onClick}>
-                  About
-                </li>
-              </a>
-            </Link>
-            {/* <NavLink href="/services">Services</NavLink> */}
-            <Link href='/page?page=services' as="/services">
-              <a className="nav-menu__item" title="Services">
-                <li onClick={onClick}>
-                  Services
-                </li>
-              </a>
-            </Link>
+            <NavLink href="/about">About</NavLink>
+            <NavLink href="/services">Services</NavLink>
 
             {this.renderBlogItem()}
             {this.renderEventsItem()}

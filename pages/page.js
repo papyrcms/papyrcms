@@ -169,7 +169,7 @@ Page.getInitialProps = async ({ req, query }) => {
 
       // If we did not find a page, push to the page template file
     } catch(e) {
-      Router.push(`/${query.page}`)
+      Router.push(`/${query.page === 'home' ? '' : query.page}`)
     }
   }
 
