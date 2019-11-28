@@ -3,7 +3,7 @@ const PageModel = require('../models/page')
 const { checkIfAdmin } = require('../utilities/middleware')
 
 
-class PageRoutes extends Controller {
+class PageController extends Controller {
 
   registerRoutes() {
 
@@ -125,34 +125,94 @@ class PageRoutes extends Controller {
       sections: []
     })
 
+    // Make sure the page has a route
+    if (!page.route) {
+      res.status(401).send({ message: 'Please choose a page route.' })
+    }
+
     // Map tags string to an array
     for (const section of req.body.sections) {
+
+      // Make sure the section has tags
+      if (!section.tags) {
+        res.status(401).send({ message: 'Please add at least one required tag to each section.' })
+      }
+
+      // Make sure the section has a valid maxPosts
+      if (section.maxPosts < 1 || section.maxPosts % 1 !== 0) {
+        res.status(401).send({ message: 'You can only choose positive integers for max posts.' })
+      }
+
       section.tags = this.mapSectionTagsToArray(section.tags)
       page.sections.push(JSON.stringify(section))
     }
 
-    await page.save()
-    res.send(page)
+    // Make sure the page has at least one section
+    if (page.sections.length === 0) {
+      res.status(401).send({ message: 'Please add at least one section.' })
+    }
+
+    try {
+      await page.save()
+      res.send(page)
+    } catch (e) {
+
+      let message = 'There was a problem. Try again later.'
+      if (e.code === 11000) {
+        message = 'You have already saved a page with this route. Go change that one or choose another route.'
+      }
+
+      res.status(401).send({ message })
+    }
   }
 
 
   async updatePage(req, res) {
 
-    const updatedPage = {
+    const page = {
       className: req.body.className,
       route: req.body.route,
       sections: []
     }
 
-    // Map tags string to an array
-    for (const section of req.body.sections) {
-      section.tags = this.mapSectionTagsToArray(section.tags)
-      updatedPage.sections.push(JSON.stringify(section))
+    if (!page.route) {
+      res.status(401).send({ message: 'Please choose a page route.' })
     }
 
-    await PageModel.findOneAndUpdate({ _id: req.params.id }, updatedPage)
+    // Map tags string to an array
+    for (const section of req.body.sections) {
 
-    res.send(updatedPage)
+      // Make sure the section has tags
+      if (!section.tags) {
+        res.status(401).send({ message: 'Please add at least one required tag to each section.' })
+      }
+
+      // Make sure the section has a valid maxPosts
+      if (section.maxPosts < 1 || section.maxPosts % 1 !== 0) {
+        res.status(401).send({ message: 'You can only choose positive integers for max posts.' })
+      }
+
+      section.tags = this.mapSectionTagsToArray(section.tags)
+      page.sections.push(JSON.stringify(section))
+    }
+
+    // Make sure the page has at least one section
+    if (page.sections.length === 0) {
+      res.status(401).send({ message: 'Please add at least one section.' })
+    }
+
+    try {
+      await PageModel.findOneAndUpdate({ _id: req.params.id }, page)
+      res.send(page)
+    } catch (e) {
+
+      let message = 'There was a problem. Try again later.'
+      if (e.code === 11000) {
+        message = 'You have already saved a page with this route. Go change that one or choose another route.'
+      }
+
+      res.status(401).send({ message })
+    }
   }
 
 
@@ -163,4 +223,4 @@ class PageRoutes extends Controller {
   }
 }
 
-module.exports = PageRoutes
+module.exports = PageController

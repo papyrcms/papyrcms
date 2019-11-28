@@ -91,8 +91,9 @@ class PageBuilder extends Component {
       id: '',
       url: '',
       className: '',
+      sections: [],
       sectionSelect: 'PostShow',
-      sections: []
+      validation: ''
     }
 
     const { page } = props
@@ -265,7 +266,7 @@ class PageBuilder extends Component {
         type: sectionSelect,
         tags: '',
         title: '',
-        maxPosts: sectionOptions[sectionSelect].maxPosts || 0,
+        maxPosts: sectionOptions[sectionSelect].maxPosts || 1,
         className: ''
       }
 
@@ -283,18 +284,20 @@ class PageBuilder extends Component {
       sections
     }
 
-    console.log(postObject)
-
     if (id) {
 
       axios.put(`/api/page/${id}`, postObject).then(response => {
         Router.push('/pages')
+      }).catch(err => {
+        this.setState({ validation: err.response.data.message })
       })
 
     } else {
 
       axios.post("/api/page", postObject).then(response => {
         Router.push('/pages')
+      }).catch(err => {
+        this.setState({ validation: err.response.data.message })
       })
     }
   }
@@ -327,7 +330,7 @@ class PageBuilder extends Component {
 
   render() {
 
-    const { url, className } = this.state
+    const { url, className, validation } = this.state
     const { currentUser } = this.props
 
     if (!currentUser || !currentUser.isAdmin) {
@@ -386,6 +389,7 @@ class PageBuilder extends Component {
 
           {this.renderDelete()}
         </div>
+        <p className="page-builder__validation">{validation}</p>
       </div>
     )
   }

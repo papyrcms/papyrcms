@@ -3,11 +3,11 @@ const multer = require('multer')
 const Controller = require('./abstractController')
 const PostModel = require('../models/post')
 const CommentModel = require('../models/comment')
-const Mailer = require('./mailer')
+const Mailer = require('../utilities/mailer')
 const keys = require('../config/keys')
 const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 
-class PostRoutes extends Controller {
+class PostController extends Controller {
 
   constructor(server, app) {
 
@@ -220,4 +220,4 @@ class PostRoutes extends Controller {
 }
 
 
-module.exports = PostRoutes
+module.exports = PostController

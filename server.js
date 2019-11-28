@@ -16,16 +16,16 @@ const User = require('./models/user')
 
 // Controllers
 const controllers = [
-  'pageRoutes',
-  'adminRoutes',
-  'authRoutes',
-  'postRoutes',
-  'blogRoutes',
-  'commentRoutes',
-  'contactRoutes',
-  'paymentRoutes',
-  'eventRoutes',
-  'storeRoutes',
+  'pageController',
+  'adminController',
+  'authController',
+  'postController',
+  'blogController',
+  'commentController',
+  'contactController',
+  'paymentController',
+  'eventController',
+  'storeController',
 ]
 // Require controllers
 controllers.forEach((controller, index) => {
@@ -33,7 +33,7 @@ controllers.forEach((controller, index) => {
 })
 
 // Mongo config
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true })
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.set('useFindAndModify', false)
 mongoose.plugin(schema => { schema.options.usePushEach = true })
 mongoose.Promise = global.Promise
@@ -102,14 +102,14 @@ app.prepare().then(() => {
     controller.registerSettings()
   })
 
-  // Register Utilitiy Routes
-  const UtilityRoutes = require('./utilities/routes')
-  new UtilityRoutes(server, app)
-
   // Register Controller Routes
   controllers.forEach(controller => {
     controller.registerRoutes()
   })
+
+  // Register Utilitiy Routes
+  const UtilityRoutes = require('./utilities/routes')
+  new UtilityRoutes(server, app)
 
   // Anything without a specified route
   server.get('*', (req, res) => {

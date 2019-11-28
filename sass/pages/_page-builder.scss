@@ -44,4 +44,12 @@
   &__section {
     margin: 2rem 0;
   }
+
+  &__validation {
+    text-align: center;
+    color: red;
+    font-style: italic;
+    max-width: 40rem;
+    margin: 0 auto;
+  }
 }

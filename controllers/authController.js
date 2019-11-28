@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken')
 const Controller = require('./abstractController')
 const UserModel = require('../models/user')
-const Mailer = require('./mailer')
+const Mailer = require('../utilities/mailer')
 const passport = require('passport')
 const { sanitizeRequestBody, checkIfAdmin, checkIfBanned } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 const keys = require('../config/keys')
 
 
-class AuthRoutes extends Controller {
+class AuthController extends Controller {
 
   registerSettings() {
 
@@ -372,4 +372,4 @@ class AuthRoutes extends Controller {
 }
 
 
-module.exports = AuthRoutes
+module.exports = AuthController

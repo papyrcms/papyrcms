@@ -4,7 +4,7 @@ const CommentModel = require('../models/comment')
 const { configureSettings } = require('../utilities/functions')
 const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
 
-class BlogRoutes extends Controller {
+class BlogController extends Controller {
 
   registerSettings() {
 
@@ -228,4 +228,4 @@ class BlogRoutes extends Controller {
 }
 
 
-module.exports = BlogRoutes
+module.exports = BlogController

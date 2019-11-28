@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const pageSchema = new mongoose.Schema({
 
   className: String,
-  route: { type: String, required: true },
+  route: { type: String, required: true, unique: true },
   // This will be JSON
   sections: [String],
 

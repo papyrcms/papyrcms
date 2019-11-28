@@ -2,22 +2,22 @@ const Controller = require('./abstractController')
 const SettingsModel = require('../models/settings')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 
-class AdminRoutes extends Controller {
+class AdminController extends Controller {
 
   registerRoutes() {
 
     // Views
     this.server.get(
-      '/admin', 
-      checkIfAdmin, 
+      '/admin',
+      checkIfAdmin,
       this.renderPage.bind(this)
     )
 
     // API
     this.server.post(
-      '/api/admin/settings', 
-      checkIfAdmin, 
-      sanitizeRequestBody, 
+      '/api/admin/settings',
+      checkIfAdmin,
+      sanitizeRequestBody,
       this.changeSettings.bind(this)
     )
   }
@@ -36,7 +36,7 @@ class AdminRoutes extends Controller {
     for (const setting of settings) {
 
       for (const key in req.body) {
-        
+
         let value = req.body[key]
 
         if (typeof setting.options[key] !== 'undefined') {
@@ -60,4 +60,4 @@ class AdminRoutes extends Controller {
 }
 
 
-module.exports = AdminRoutes
+module.exports = AdminController

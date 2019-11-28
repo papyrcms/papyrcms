@@ -4,7 +4,7 @@ const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilit
 const { configureSettings } = require('../utilities/functions')
 const keys = require('../config/keys')
 
-class EventRoutes extends Controller {
+class EventController extends Controller {
 
   registerSettings() {
 
@@ -196,4 +196,4 @@ class EventRoutes extends Controller {
   }
 }
 
-module.exports = EventRoutes
+module.exports = EventController

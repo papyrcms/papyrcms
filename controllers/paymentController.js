@@ -5,7 +5,7 @@ const { sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 
 
-class PaymentRoutes extends Controller {
+class PaymentController extends Controller {
 
   registerSettings() {
 
@@ -98,4 +98,4 @@ class PaymentRoutes extends Controller {
   }
 }
 
-module.exports = PaymentRoutes
+module.exports = PaymentController

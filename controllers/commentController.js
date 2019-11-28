@@ -4,7 +4,7 @@ const { sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 
 
-class CommentRoutes extends Controller {
+class CommentController extends Controller {
 
   registerSettings() {
 
@@ -118,4 +118,4 @@ class CommentRoutes extends Controller {
 }
 
 
-module.exports = CommentRoutes
+module.exports = CommentController

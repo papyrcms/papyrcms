@@ -4,7 +4,7 @@ const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 
 
-class StoreRoutes extends Controller {
+class StoreController extends Controller {
 
   registerSettings() {
 
@@ -199,4 +199,4 @@ class StoreRoutes extends Controller {
   }
 }
 
-module.exports = StoreRoutes
+module.exports = StoreController

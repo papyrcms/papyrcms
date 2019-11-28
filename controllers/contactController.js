@@ -1,11 +1,11 @@
 const Controller = require('./abstractController')
 const MessageModel = require('../models/message')
-const Mailer = require('./mailer')
+const Mailer = require('../utilities/mailer')
 const keys = require('../config/keys')
 const { configureSettings } = require('../utilities/functions')
 const { sanitizeRequestBody, checkIfAdmin } = require('../utilities/middleware')
 
-class ContactRoutes extends Controller {
+class ContactController extends Controller {
 
   registerSettings() {
 
@@ -108,4 +108,4 @@ class ContactRoutes extends Controller {
 }
 
 
-module.exports = ContactRoutes
+module.exports = ContactController
