@@ -1,6 +1,7 @@
 const Controller = require('./abstractController')
 const PageModel = require('../models/page')
 const { checkIfAdmin } = require('../utilities/middleware')
+const keys = require('../config/keys')
 
 
 class PageController extends Controller {
@@ -53,7 +54,11 @@ class PageController extends Controller {
     const foundPage = await PageModel.findOne({ route: req.params.page }).lean()
     if (foundPage) {
 
-      const queryParams = { page: req.params.page, pageObject: foundPage }
+      const queryParams = {
+        page: req.params.page,
+        pageObject: foundPage,
+        googleMapsKey: keys.googleMapsKey
+      }
       const actualPage = '/page'
 
       this.app.render(req, res, actualPage, queryParams)

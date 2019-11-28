@@ -24,6 +24,7 @@ const renderSections = props => {
         return <SectionMaps
           key={`${section.type}-${i}`}
           posts={props[`${section.type}-${i}`]}
+          mapLocation="end"
           emptyTitle={section.title}
           emptyMessage={`Create content with the ${section.tags} tags.`}
         />
@@ -159,13 +160,18 @@ const Page = props => {
 Page.getInitialProps = async ({ req, query }) => {
 
   let page
+  let googleMapsKey
 
   if (!!req) {
     page = query.pageObject
+    googleMapsKey = query.googleMapsKey
   } else {
     try {
-      const res = await axios.get(`/api/page/${query.page}`)
-      page = res.data
+      const pageRes = await axios.get(`/api/page/${query.page}`)
+      page = pageRes.data
+
+      const mapsRes = await axios.post('/api/googleMapsKey')
+      googleMapsKey = mapsRes.data
 
       // If we did not find a page, push to the page template file
     } catch(e) {
@@ -173,7 +179,7 @@ Page.getInitialProps = async ({ req, query }) => {
     }
   }
 
-  return { page }
+  return { page, googleMapsKey }
 }
 
 
