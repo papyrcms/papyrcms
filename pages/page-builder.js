@@ -143,7 +143,20 @@ class PageBuilder extends Component {
         return section
       })
 
-      prevState.page.sections = newSections.map(section => JSON.stringify(section))
+      // prevState.page.sections = newSections.map(section => JSON.stringify(section))
+      prevState.page.sections = prevState.page.sections.map((section, i) => {
+        section = JSON.parse(section)
+
+        if (index === i) {
+          section[key] = value
+        }
+
+        if (typeof section.tags === 'string') {
+          section.tags = section.tags.split(',').map(tag => tag.trim())
+        }
+
+        return JSON.stringify(section)
+      })
 
       return { sections: newSections, page: prevState.page }
     })
