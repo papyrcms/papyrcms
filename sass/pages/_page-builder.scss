@@ -46,7 +46,22 @@
   }
 
   &__section {
-    margin: 2rem 0;
+    margin: 3rem 0;
+
+    &--description {
+      margin-bottom: 2rem;
+    }
+
+    &--inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 1rem;
+      align-items: end;
+
+      @include respond(phone) {
+        grid-template-columns: 1fr;
+      }
+    }
   }
 
   &__validation {

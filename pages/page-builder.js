@@ -245,8 +245,8 @@ class PageBuilder extends Component {
           <div key={`${type}-${i}`}>
             <div className={`${type} page-builder__section`}>
               <h3 className={`heading-tertiary ${type}__title`}>{name}</h3>
-              <p className={`${type}__description`}>{description}</p>
-              <div className={`${type}__inputs`}>
+              <p className={`${type}__description page-builder__section--description`}>{description}</p>
+              <div className={`${type}__inputs page-builder__section--inputs`}>
 
                 {this.renderTitleInput(i, section)}
                 {this.renderClassNameInput(i, section)}
