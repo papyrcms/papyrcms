@@ -137,13 +137,11 @@ const PageContent = props => (
 const Page = props => {
 
   const settings = []
+  const page = props.previewPage ? props.previewPage : props.page
 
-  for (let i = 0; i < props.page.sections.length; i++) {
+  for (let i = 0; i < page.sections.length; i++) {
 
-    // const section = typeof props.page.sections[i] === 'object'
-    //   ? props.page.sections[i]
-    //   : JSON.parse(props.page.sections[i])
-    const section = JSON.parse(props.page.sections[i])
+    const section = JSON.parse(page.sections[i])
 
     settings.push({
       propName: `${section.type}-${i}`,
@@ -154,8 +152,9 @@ const Page = props => {
   }
 
   const PageComponent = filterPosts(PageContent, settings)
-  return <PageComponent />
+  return <PageComponent page={page} />
 }
+
 
 Page.getInitialProps = async ({ req, query }) => {
 

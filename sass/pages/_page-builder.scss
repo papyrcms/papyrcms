@@ -30,6 +30,10 @@
   &__section-bottom {
     display: flex;
     justify-content: space-between;
+    border-top: .1rem solid $color-grey;
+    border-bottom: .1rem solid $color-grey;
+    padding: 2rem 0;
+    margin: 2rem 0;
 
     @include respond(phone) {
       flex-direction: column;
@@ -51,5 +55,13 @@
     font-style: italic;
     max-width: 40rem;
     margin: 0 auto;
+  }
+
+  &__preview {
+    &--title {
+      background-color: $color-grey-light;
+      text-align: center;
+      border-bottom: .1rem solid $color-grey;
+    }
   }
 }

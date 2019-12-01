@@ -47,7 +47,7 @@ class MyApp extends App {
     }
 
     // Get posts for page layout
-    if (pageProps.posts) {
+    if (!!pageProps.posts) {
       dispatch(setPosts(pageProps.posts))
     } else {
       const rootUrl = keys.rootURL ? keys.rootURL : ''
@@ -55,9 +55,13 @@ class MyApp extends App {
       dispatch(setPosts(response.data))
     }
 
-    // If pages were recieved, send it to the redux store
+    // Get pages for navmenu
     if (!!pageProps.pages) {
       dispatch(setPages(pageProps.pages))
+    } else {
+      const rootUrl = keys.rootURL ? keys.rootURL : ''
+      const response = await axios.get(`${rootUrl}/api/page`)
+      dispatch(setPages(response.data))
     }
 
     // If a page was recieved, send it to the redux store

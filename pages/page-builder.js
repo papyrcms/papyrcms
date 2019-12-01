@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import Router from 'next/router'
 import Input from '../components/Input'
+import Page from './page'
 
 
 // Static object of sections for the builder
@@ -93,7 +94,13 @@ class PageBuilder extends Component {
       className: '',
       sections: [],
       sectionSelect: 'PostShow',
-      validation: ''
+      validation: '',
+      page: {
+        className: '',
+        url: '',
+        sections: []
+      },
+      pageTrigger: false
     }
 
     const { page } = props
@@ -106,6 +113,7 @@ class PageBuilder extends Component {
         parsedSection.tags = parsedSection.tags.join(', ')
         return parsedSection
       })
+      state.page = page
     }
 
     this.state = state
@@ -117,8 +125,9 @@ class PageBuilder extends Component {
     this.setState(prevState => {
 
       const newSections = prevState.sections.filter((_, i) => i !== index)
+      prevState.page.sections = newSections.map(section => JSON.stringify(section))
 
-      return { sections: newSections }
+      return { sections: newSections, page: prevState.page }
     })
   }
 
@@ -133,7 +142,10 @@ class PageBuilder extends Component {
         }
         return section
       })
-      return { sections: newSections }
+
+      prevState.page.sections = newSections.map(section => JSON.stringify(section))
+
+      return { sections: newSections, page: prevState.page }
     })
   }
 
@@ -270,7 +282,9 @@ class PageBuilder extends Component {
         className: ''
       }
 
-      return { sections: [...sections, newSection] }
+      prevState.page.sections.push(JSON.stringify(newSection));
+
+      return { sections: [...sections, newSection], page: prevState.page }
     })
   }
 
@@ -328,9 +342,18 @@ class PageBuilder extends Component {
   }
 
 
+  // Whenever we change our state, we need to change a prop being sent
+  // to our page preview component so it will rerender
+  componentDidUpdate(_, prevState) {
+    if (prevState.pageTrigger === this.state.pageTrigger) {
+      this.setState({ pageTrigger: !this.state.pageTrigger })
+    }
+  }
+
+
   render() {
 
-    const { url, className, validation } = this.state
+    const { url, className, validation, page, pageTrigger } = this.state
     const { currentUser } = this.props
 
     if (!currentUser || !currentUser.isAdmin) {
@@ -338,59 +361,67 @@ class PageBuilder extends Component {
     }
 
     return (
-      <div className="page-builder">
-        <h2 className="heading-secondary">Page Builder</h2>
+      <Fragment>
+        <div className="page-builder">
+          <h2 className="heading-secondary">Page Builder</h2>
 
-        <Input
-          id="url-input"
-          label="Page route"
-          placeholder="about"
-          name="url"
-          value={url}
-          onChange={event => this.setState({ url: event.target.value })}
-        />
+          <Input
+            id="url-input"
+            label="Page route"
+            placeholder="about"
+            name="url"
+            value={url}
+            onChange={event => this.setState({ url: event.target.value })}
+          />
 
-        <Input
-          id="class-name-input"
-          label="Page Wrapper Class Name"
-          placeholder="about-page"
-          name="wrapper-class"
-          value={className}
-          onChange={event => this.setState({ className: event.target.value })}
-        />
+          <Input
+            id="class-name-input"
+            label="Page Wrapper Class Name"
+            placeholder="about-page"
+            name="wrapper-class"
+            value={className}
+            onChange={event => this.setState({ className: event.target.value })}
+          />
 
-        {this.renderSections()}
+          {this.renderSections()}
 
-        <div className="page-builder__section-select">
+          <div className="page-builder__section-select">
 
-          <select
-            className="button button-secondary page-builder__section-select--select"
-            onChange={event => this.setState({ sectionSelect: event.target.value })}
-          >
-            {this.renderSelectOptions()}
-          </select>
+            <select
+              className="button button-secondary page-builder__section-select--select"
+              onChange={event => this.setState({ sectionSelect: event.target.value })}
+            >
+              {this.renderSelectOptions()}
+            </select>
 
-          <button
-            className="button button-primary page-builder__section-select--submit"
-            onClick={() => this.addSection()}
-          >
-            Add Section
-          </button>
+            <button
+              className="button button-primary page-builder__section-select--submit"
+              onClick={() => this.addSection()}
+            >
+              Add Section
+            </button>
+
+          </div>
+
+          <div className="page-builder__section-bottom">
+            <button
+              className="button button-primary"
+              onClick={() => this.handleSubmit()}
+            >
+              Submit
+            </button>
+
+            {this.renderDelete()}
+          </div>
+          <p className="page-builder__validation">{validation}</p>
 
         </div>
 
-        <div className="page-builder__section-bottom">
-          <button
-            className="button button-primary"
-            onClick={() => this.handleSubmit()}
-          >
-            Submit
-          </button>
-
-          {this.renderDelete()}
+        <h3 className="heading-tertiary page-builder__preview--title">Page Preview</h3>
+        <div className="page-builder__preview">
+          <Page previewPage={page} trigger={pageTrigger} />
         </div>
-        <p className="page-builder__validation">{validation}</p>
-      </div>
+      </Fragment>
     )
   }
 }

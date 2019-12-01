@@ -21,7 +21,6 @@ class PageController extends Controller {
     )
     this.server.get(
       '/api/page',
-      checkIfAdmin,
       this.sendPages.bind(this)
     )
     this.server.get(

@@ -116,7 +116,7 @@ class SectionCards extends Component {
 
         return (
           <li key={post._id} className="section-cards__card">
-            <h3 className="section-cards__title">{post.title}</h3>
+            <h3 className="section-cards__title heading-tertiary">{post.title}</h3>
             {this.renderDate(post)}
             {this.renderPublishSection(post.published)}
             {this.renderMediaSection(post)}

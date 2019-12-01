@@ -146,8 +146,8 @@ const filterPosts = (WrappedComponent, settings) => {
 }
 
 
-const mapStateToProps = ({ posts, blogs, events, page }) => {
-  return { posts, blogs, events, page }
+const mapStateToProps = ({ posts, blogs, events }) => {
+  return { posts, blogs, events }
 }
 
 
