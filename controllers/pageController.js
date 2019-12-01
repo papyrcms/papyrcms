@@ -128,6 +128,7 @@ class PageController extends Controller {
     const page = new PageModel({
       className: req.body.className,
       route: req.body.route,
+      css: req.body.css,
       sections: []
     })
 
@@ -178,6 +179,7 @@ class PageController extends Controller {
     const page = {
       className: req.body.className,
       route: req.body.route,
+      css: req.body.css,
       sections: []
     }
 

@@ -93,12 +93,14 @@ class PageBuilder extends Component {
       url: '',
       className: '',
       sections: [],
+      css: '',
       sectionSelect: 'PostShow',
       validation: '',
       page: {
         className: '',
         url: '',
-        sections: []
+        sections: [],
+        css: ''
       },
       pageTrigger: false
     }
@@ -108,6 +110,7 @@ class PageBuilder extends Component {
       state.id = page._id
       state.url = page.route
       state.className = page.className
+      state.css = page.css
       state.sections = page.sections.map(section => {
         const parsedSection = JSON.parse(section)
         parsedSection.tags = parsedSection.tags.join(', ')
@@ -304,11 +307,12 @@ class PageBuilder extends Component {
 
   handleSubmit() {
 
-    const { url, className, sections, id } = this.state
+    const { url, className, sections, id, css } = this.state
     const postObject = {
       route: url,
       className,
-      sections
+      sections,
+      css
     }
 
     if (id) {
@@ -364,9 +368,19 @@ class PageBuilder extends Component {
   }
 
 
+  setPageState(key, value) {
+
+    return this.setState(prevState => {
+
+      prevState.page[key] = value
+      return { [key]: value, page: prevState.page }
+    })
+  }
+
+
   render() {
 
-    const { url, className, validation, page, pageTrigger } = this.state
+    const { url, className, validation, page, pageTrigger, css } = this.state
     const { currentUser } = this.props
 
     if (!currentUser || !currentUser.isAdmin) {
@@ -384,7 +398,7 @@ class PageBuilder extends Component {
             placeholder="about"
             name="url"
             value={url}
-            onChange={event => this.setState({ url: event.target.value })}
+            onChange={event => this.setPageState('url', event.target.value)}
           />
 
           <Input
@@ -393,7 +407,7 @@ class PageBuilder extends Component {
             placeholder="about-page"
             name="wrapper-class"
             value={className}
-            onChange={event => this.setState({ className: event.target.value })}
+            onChange={event => this.setPageState('className', event.target.value)}
           />
 
           {this.renderSections()}
@@ -414,6 +428,22 @@ class PageBuilder extends Component {
               Add Section
             </button>
 
+          </div>
+
+          <div className="page-builder__css">
+            <label
+              className="page-builder__css--label"
+              htmlFor="page-builder__css"
+            >
+              Custom CSS
+            </label>
+            <textarea
+              id="page-builder__css"
+              className="page-builder__css--textarea"
+              onChange={event => this.setPageState('css', event.target.value)}
+            >
+              {css}
+            </textarea>
           </div>
 
           <div className="page-builder__section-bottom">

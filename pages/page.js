@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import Head from 'next/head'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -119,6 +120,7 @@ const renderSections = props => {
           key={`${section.type}-${i}`}
           post={props[`${section.type}-${i}`][0]}
           path="post"
+          className={section.className}
           apiPath="/api/posts"
           redirectRoute="/post/all"
         />
@@ -128,9 +130,14 @@ const renderSections = props => {
 
 
 const PageContent = props => (
-  <div className={props.page.className}>
-    {renderSections(props)}
-  </div>
+  <Fragment>
+    <Head>
+      <style>{props.page.css}</style>
+    </Head>
+    <div className={props.page.className}>
+      {renderSections(props)}
+    </div>
+  </Fragment>
 )
 
 

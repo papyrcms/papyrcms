@@ -6,6 +6,7 @@ const pageSchema = new mongoose.Schema({
   route: { type: String, required: true, unique: true },
   // This will be JSON
   sections: [String],
+  css: String,
 
   created: { type: Date, default: Date.now },
 })
