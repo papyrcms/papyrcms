@@ -77,6 +77,8 @@ class PageController extends Controller {
     const actualPage = '/page-builder'
 
     if (req.params.page) {
+      queryParams.page = req.params.page
+
       const foundPage = await PageModel.findOne({ route: req.params.page }).lean()
       if (foundPage) {
         queryParams.pageObject = foundPage
