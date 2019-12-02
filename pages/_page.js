@@ -20,109 +20,117 @@ const renderSections = props => {
   return props.page.sections.map((section, i) => {
 
     section = JSON.parse(section)
+
+    const key = `${section.type}-${i}`
+    const posts = props[key]
+    const emptyMessage = `Create content with the ${section.tags} tags.`
+
     switch (section.type) {
 
       case 'Map':
         return <SectionMaps
-          key={`${section.type}-${i}`}
-          posts={props[`${section.type}-${i}`]}
+          key={key}
+          posts={posts}
           mapLocation="end"
           emptyTitle={section.title}
-          emptyMessage={`Create content with the ${section.tags} tags.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'Media':
         return <SectionMedia
-          key={`${section.type}-${i}`}
-          post={props[`${section.type}-${i}`][0]}
+          key={key}
+          post={posts[0]}
           alt={section.title}
           emptyTitle={section.title}
-          emptyMessage={`Create content with the ${section.tags} tags.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'Parallax':
         return <SectionMedia
-          key={`${section.type}-${i}`}
-          post={props[`${section.type}-${i}`][0]}
+          key={key}
+          post={posts[0]}
           alt={section.title}
           emptyTitle={section.title}
-          emptyMessage={`Create content with the ${section.tags} tags.`}
+          emptyMessage={emptyMessage}
           fixed
         />
 
       case 'Slideshow':
         return <SectionSlideshow
-          key={`${section.type}-${i}`}
-          posts={props[`${section.type}-${i}`]}
+          key={key}
+          posts={posts}
           timer={5000}
           emptyTitle={section.title}
-          emptyMessage={`Create content with the ${section.tags} tags.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'ThreeCards':
         return <SectionCards
-          key={`${section.type}-${i}`}
-          posts={props[`${section.type}-${i}`]}
+          key={key}
+          posts={posts}
           title={section.title}
           contentLength={120}
           readMore
           perRow={3}
-          emptyMessage={`Create content with the ${section.tags} tags.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'FourCards':
         return <SectionCards
-          key={`${section.type}-${i}`}
-          posts={props[`${section.type}-${i}`]}
+          key={key}
+          posts={posts}
           title={section.title}
           contentLength={120}
           readMore
           perRow={4}
-          emptyMessage={`Create content with the ${section.tags} tags.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'Standard':
         return <SectionStandard
-          key={`${section.type}-${i}`}
+          key={key}
           readMore
           contentLength={300}
-          posts={props[`${section.type}-${i}`]}
+          posts={posts}
           title={section.title}
           className={section.className}
-          emptyMessage={`Create content with the ${section.tags} tag.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'LeftStandard':
         return <SectionStandard
-          key={`${section.type}-${i}`}
+          key={key}
           readMore
           mediaLeft
           contentLength={300}
-          posts={props[`${section.type}-${i}`]}
+          posts={posts}
           title={section.title}
           className={section.className}
-          emptyMessage={`Create content with the ${section.tags} tag.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'RightStandard':
         return <SectionStandard
-          key={`${section.type}-${i}`}
+          key={key}
           readMore
           mediaRight
           contentLength={300}
-          posts={props[`${section.type}-${i}`]}
+          posts={posts}
           title={section.title}
           className={section.className}
-          emptyMessage={`Create content with the ${section.tags} tag.`}
+          emptyMessage={emptyMessage}
         />
 
       case 'ContactForm':
-        return <ContactForm className={section.className} />
+        return <ContactForm
+          className={section.className}
+          key={key}
+        />
 
       default:
         return <PostShow
-          key={`${section.type}-${i}`}
-          post={props[`${section.type}-${i}`][0]}
+          key={key}
+          post={posts[0]}
           path="posts"
           className={section.className}
           apiPath="/api/posts"

@@ -76,10 +76,10 @@ class ContactForm extends Component {
 
   render() {
 
-    const { contactName, contactEmail, contactMessage, formValidation } = this.state
+    const { className, contactName, contactEmail, contactMessage, formValidation } = this.state
 
     return (
-      <div className="contact-form">
+      <div className={`${className} contact-form`}>
 
         <form className="contact-form__form" onSubmit={this.handleSubmit.bind(this)}>
 
