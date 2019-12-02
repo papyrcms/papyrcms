@@ -7,6 +7,7 @@ const passport = require('passport')
 const express = require('express')
 const next = require('next')
 const cors = require('cors')
+const fs = require('fs')
 
 // App keys
 const keys = require('./config/keys')
@@ -14,19 +15,9 @@ const keys = require('./config/keys')
 // Models
 const User = require('./models/user')
 
-// Controllers
-const controllers = [
-  'pageController',
-  'adminController',
-  'authController',
-  'postController',
-  'blogController',
-  'commentController',
-  'contactController',
-  'paymentController',
-  'eventController',
-  'storeController',
-]
+// Controllers, filtering out the abstract controller
+const controllers = fs.readdirSync('./controllers').filter(controller => controller !== 'abstractController.js')
+
 // Require controllers
 controllers.forEach((controller, index) => {
   controllers[index] = require(`./controllers/${controller}`)
