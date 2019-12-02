@@ -12,7 +12,7 @@ class ContactController extends Controller {
     // Middleware to configure email settings
     this.server.use(async (req, res, next) => {
 
-      const defaultSettings = { 
+      const defaultSettings = {
         enableEmailingToAdmin: true,
         enableEmailingToUsers: false
       }
@@ -30,16 +30,10 @@ class ContactController extends Controller {
 
   registerRoutes() {
 
-    // Views
-    this.server.get(
-      '/contact', 
-      this.renderPage.bind(this)
-    )
-
     // Message API
     this.server.post(
-      '/api/contact', 
-      sanitizeRequestBody, 
+      '/api/contact',
+      sanitizeRequestBody,
       this.createMessage.bind(this)
     )
     this.server.get(
@@ -52,14 +46,6 @@ class ContactController extends Controller {
       checkIfAdmin,
       this.deleteMessage.bind(this)
     )
-  }
-
-
-  renderPage(req, res) {
-
-    const actualPage = '/contact'
-
-    this.app.render(req, res, actualPage)
   }
 
 

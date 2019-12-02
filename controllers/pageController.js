@@ -11,7 +11,6 @@ class PageController extends Controller {
     this.server.get('/', this.renderPage.bind(this))
     this.server.get('/:page', this.renderPage.bind(this))
 
-    // this.server.get('/admin/page-builder', this.renderPageBuilder.bind(this))
     this.server.get('/admin/pages/:page', this.renderPageBuilder.bind(this))
 
     this.server.post(
