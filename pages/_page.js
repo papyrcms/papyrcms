@@ -11,6 +11,7 @@ import {
   SectionMaps
 } from '../components/Sections/'
 import PostShow from '../components/PostShow/'
+import ContactForm from '../components/ContactForm'
 import filterPosts from '../components/filterPosts'
 
 
@@ -114,6 +115,9 @@ const renderSections = props => {
           className={section.className}
           emptyMessage={`Create content with the ${section.tags} tag.`}
         />
+
+      case 'ContactForm':
+        return <ContactForm className={section.className} />
 
       default:
         return <PostShow

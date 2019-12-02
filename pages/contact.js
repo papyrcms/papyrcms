@@ -29,11 +29,9 @@ const ContactPage = props => {
         className="contact-section-standard"
         posts={props.posts}
       />
-      <div className="contact-page__container">
-        <ContactForm 
-          initialMessage={message}
-        />
-      </div>
+      <ContactForm
+        initialMessage={message}
+      />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import Router from 'next/router'
 import Input from '../../components/Input'
-import Page from '../page'
+import Page from '../_page'
 
 
 // Static object of sections for the builder
@@ -61,6 +61,11 @@ const sectionOptions = {
     description: 'This section will display a google map at the location specified by the latitude and longitude posts, along with the content of the main post.',
     inputs: ['className', 'tags', 'title'],
     maxPosts: 3
+  },
+  ContactForm: {
+    name: 'Contact Form',
+    description: 'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
+    inputs: ['className']
   }
 }
 

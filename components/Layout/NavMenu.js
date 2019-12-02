@@ -13,8 +13,8 @@ const onClick = () => {
 const NavLink = props => {
 
   const href = props.href === '/'
-    ? `/page?page=home`
-    : `/page?page=${props.href.substr(1)}`
+    ? `/_page?page=home`
+    : `/_page?page=${props.href.substr(1)}`
 
   return (
     <Link href={href} as={props.href}>

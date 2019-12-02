@@ -11,7 +11,7 @@ const renderPages = pages => {
 
       <div className="pages__link--visit">
         Visit page{' - '}
-        <Link href={`/page?page=${page.route}`} as={`/${page.route}`}>
+        <Link href={`/_page?page=${page.route}`} as={`/${page.route}`}>
           <a>/{page.route}</a>
         </Link>
       </div>

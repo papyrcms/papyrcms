@@ -58,7 +58,7 @@ class PageController extends Controller {
         pageObject: foundPage,
         googleMapsKey: keys.googleMapsKey
       }
-      const actualPage = '/page'
+      const actualPage = '/_page'
 
       this.app.render(req, res, actualPage, queryParams)
     } else {
@@ -141,7 +141,7 @@ class PageController extends Controller {
     for (const section of req.body.sections) {
 
       // Make sure the section has tags
-      if (!section.tags) {
+      if (!section.tags && section.type !== 'ContactForm') {
         res.status(401).send({ message: 'Please add at least one required tag to each section.' })
       }
 
@@ -191,7 +191,7 @@ class PageController extends Controller {
     for (const section of req.body.sections) {
 
       // Make sure the section has tags
-      if (!section.tags) {
+      if (!section.tags && section.type !== 'ContactForm') {
         res.status(401).send({ message: 'Please add at least one required tag to each section.' })
       }
 
