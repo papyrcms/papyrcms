@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import keys from '../config/keys'
-import PostsForm from '../components/PostsForm'
-import Input from '../components/Input'
+import keys from '../../config/keys'
+import PostsForm from '../../components/PostsForm'
+import Input from '../../components/Input'
 
 
 const ProductFields = ({ price, quantity, changeState }) => {
@@ -48,24 +48,17 @@ const StoreEdit = props => {
 }
 
 
-StoreEdit.getInitialProps = async ({ query, req }) => {
+StoreEdit.getInitialProps = async context => {
 
-  let axiosConfig
+  let { id, product } = context.query
 
-  // Depending on if we are doing a client or server render
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie
-      }
-    }
+  if (!product) {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const res = await axios.get(`${rootUrl}/api/products/${id}`)
+    product = res.data
   }
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const product = await axios.get(`${rootUrl}/api/products/${query.id}`, axiosConfig)
-
-  return { product: product.data }
+  return { product }
 }
 
 

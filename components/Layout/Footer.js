@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 const excludeFooterRoutes = [
   '/admin',
-  '/posts_create',
-  '/posts_all',
+  '/posts/create',
+  '/posts',
   '/blog_create',
   '/contact'
 ]

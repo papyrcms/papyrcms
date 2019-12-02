@@ -28,31 +28,15 @@ class BlogController extends Controller {
 
     // Views
     this.server.get(
-      '/blog',
-      this.blogEnabled,
-      this.renderPage.bind(this, '')
-    )
-    this.server.get(
-      '/blog/all',
-      this.blogEnabled,
-      this.renderPage.bind(this, '_all')
-    )
-    this.server.get(
-      '/blog/new',
-      this.blogEnabled,
-      checkIfAdmin,
-      this.renderPage.bind(this, '_create')
-    )
-    this.server.get(
       '/blog/:id',
       this.blogEnabled,
-      this.renderPage.bind(this, '_show')
+      this.renderPage.bind(this, 'show')
     )
     this.server.get(
       '/blog/:id/edit',
       this.blogEnabled,
       checkIfAdmin,
-      this.renderPage.bind(this, '_edit')
+      this.renderPage.bind(this, 'edit')
     )
 
     // Blog API
@@ -72,7 +56,7 @@ class BlogController extends Controller {
       this.sendAllBlogs.bind(this)
     )
     this.server.get(
-      '/api/published_blogs',
+      '/api/publishedBlogs',
       this.blogEnabled,
       this.sendPublishedBlogs.bind(this)
     )
@@ -133,14 +117,30 @@ class BlogController extends Controller {
   }
 
 
-  renderPage(pageExtension, req, res) {
+  async renderPage(pageExtension, req, res, next) {
 
-    const actualPage = `/blog${pageExtension}`
-    const id = !!req.params ? req.params.id : null
+    let blog
+    try {
+      blog = await BlogModel.findById(req.params.id)
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    } catch (e) {
+      blog = await BlogModel.findOne({ slug: req.params.id })
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    }
 
-    const queryParams = { id, currentUser: req.user }
-
-    this.app.render(req, res, actualPage, queryParams)
+    if (blog) {
+      const actualPage = `/blog/${pageExtension}`
+      const queryParams = { id: req.params.id, blog, currentUser: req.user }
+      this.app.render(req, res, actualPage, queryParams)
+    } else {
+      next()
+    }
   }
 
 

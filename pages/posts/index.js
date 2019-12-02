@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import keys from '../config/keys'
-import PostIndex from '../components/PostIndex'
-import Input from '../components/Input'
+import keys from '../../config/keys'
+import PostIndex from '../../components/PostIndex'
+import Input from '../../components/Input'
 
-class PostsAll extends Component {
+
+class Posts extends Component {
 
   static async getInitialProps({ req }) {
 
@@ -96,4 +97,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(PostsAll)
+export default connect(mapStateToProps)(Posts)

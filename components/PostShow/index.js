@@ -51,7 +51,7 @@ class PostShow extends Component {
       return (
         <div className="post__buttons">
           <button className="button button-delete" onClick={() => this.onDeleteClick()}>Delete</button>
-          <Link href={`/${path}_edit?id=${post._id}`} as={`/${path}/${post._id}/edit`}>
+          <Link href={`/${path}/edit?id=${post._id}`} as={`/${path}/${post._id}/edit`}>
             <button className="button button-edit">Edit</button>
           </Link>
         </div>
@@ -119,9 +119,10 @@ class PostShow extends Component {
 
   render() {
 
-    if (this.props.post) {
+    const { post, enableCommenting, apiPath, className } = this.props
 
-      const { post, enableCommenting, apiPath, className } = this.props
+    if (post && Object.keys(post).length !== 0) {
+
       const { title, tags, mainMedia, content, published } = post
 
       let postContent = content || ''

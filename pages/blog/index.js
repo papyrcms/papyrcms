@@ -1,15 +1,15 @@
 import React from 'react'
 import axios from 'axios'
 import Link from 'next/link'
-import keys from '../config/keys'
-import filterPosts from '../components/filterPosts'
-import { SectionStandard } from '../components/Sections/'
+import keys from '../../config/keys'
+import filterPosts from '../../components/filterPosts'
+import { SectionStandard } from '../../components/Sections/'
 
 
 const renderAllBlogsLink = posts => {
   if (posts.length > 5) {
     return (
-      <Link href="/blog_all" as="/blog/all">
+      <Link href="/blog/all">
         <a className="blog-page__button button button-secondary u-margin-bottom-small">See all blog posts</a>
       </Link>
     )
@@ -38,7 +38,7 @@ const BlogPage = ({ posts }) => (
 BlogPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const blogs = await axios.get(`${rootUrl}/api/published_blogs`)
+  const blogs = await axios.get(`${rootUrl}/api/publishedBlogs`)
 
   return { blogs: blogs.data }
 }

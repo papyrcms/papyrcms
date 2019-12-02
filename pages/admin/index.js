@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
-import keys from '../config/keys'
-import AdminDashboard from '../components/AdminDashboard'
+import keys from '../../config/keys'
+import AdminDashboard from '../../components/AdminDashboard'
 
 
 const AdminPage = () => (

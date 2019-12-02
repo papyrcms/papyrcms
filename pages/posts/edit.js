@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import PostsForm from '../components/PostsForm/'
-import keys from '../config/keys'
+import PostsForm from '../../components/PostsForm/'
+import keys from '../../config/keys'
 
 
 const PostsEdit = props => (
@@ -17,11 +17,15 @@ const PostsEdit = props => (
 
 PostsEdit.getInitialProps = async context => {
 
-  const { id } = context.query
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const post = await axios.get(`${rootUrl}/api/posts/${id}`)
+  let { id, post } = context.query
 
-  return { post: post.data }
+  if (!post) {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const res = await axios.get(`${rootUrl}/api/posts/${id}`)
+    post = res.data
+  }
+
+  return { post }
 }
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import keys from '../config/keys'
-import filterPosts from '../components/filterPosts'
-import { SectionCards } from '../components/Sections/'
+import keys from '../../config/keys'
+import filterPosts from '../../components/filterPosts'
+import { SectionCards } from '../../components/Sections/'
 
 const EventsAllPage = props => (
   <SectionCards
@@ -17,14 +17,14 @@ const EventsAllPage = props => (
 )
 
 
-EventsAllPage.getInitialProps = async ({ req, query, reduxStore }) => {
+EventsAllPage.getInitialProps = async ({ req, reduxStore }) => {
 
   let currentUser
   let axiosConfig = {}
 
   // Depending on if we are doing a client or server render
   if (!!req) {
-    currentUser = query.currentUser
+    currentUser = req.user
     axiosConfig = {
       withCredentials: true,
       headers: {
@@ -36,7 +36,7 @@ EventsAllPage.getInitialProps = async ({ req, query, reduxStore }) => {
   }
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const eventRequest = currentUser && currentUser.isAdmin ? 'events' : 'published_events'
+  const eventRequest = currentUser && currentUser.isAdmin ? 'events' : 'publishedEvents'
   const events = await axios.get(`${rootUrl}/api/${eventRequest}`, axiosConfig)
 
   return { events: events.data }

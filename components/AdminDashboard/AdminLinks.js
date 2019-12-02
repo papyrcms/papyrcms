@@ -3,94 +3,87 @@ import Link from 'next/link'
 import { connect } from 'react-redux'
 
 
-class AdminLinks extends Component {
+const renderStoreMenuItems = enableStore => {
 
-  renderStoreMenuItems() {
-
-    const { settings } = this.props
-
-    if (settings.enableStore) {
-      return (
-        <Fragment>
-          <Link href="/store_create" as="/store/new">
-            <a className="admin-links__link">Add Product</a>
-          </Link>
-
-          <Link href="/store_all" as="/store">
-            <a className="admin-links__link">My Products</a>
-          </Link>
-        </Fragment>
-      )
-    }
-  }
-
-
-  renderBlogMenuItems() {
-
-    const { settings } = this.props
-
-    if (settings.enableBlog) {
-      return (
-        <Fragment>
-          <Link href="/blog_create" as="/blog/new">
-            <a className="admin-links__link">Add Blog</a>
-          </Link>
-
-          <Link href="/blog_all" as="/blog/all">
-            <a className="admin-links__link">My Blogs</a>
-          </Link>
-        </Fragment>
-      )
-    }
-  }
-
-
-  renderEventMenuItems() {
-
-    const { settings } = this.props
-
-    if (settings.enableEvents) {
-      return (
-        <Fragment>
-          <Link href="/events_create" as="/events/new">
-            <a className="admin-links__link">Add Event</a>
-          </Link>
-
-          <Link href="/events_all" as="/events/all">
-            <a className="admin-links__link">My Events</a>
-          </Link>
-        </Fragment>
-      )
-    }
-  }
-
-
-  render() {
-
+  if (enableStore) {
     return (
       <Fragment>
-        <Link href="/page-builder">
-          <a className="admin-links__link">Page Builder</a>
+        <Link href="/store/new">
+          <a className="admin-links__link">Add Product</a>
         </Link>
 
-        <Link href="/pages">
-          <a className="admin-links__link">My Pages</a>
+        <Link href="/store">
+          <a className="admin-links__link">My Products</a>
         </Link>
-
-        <Link href="/posts_create" as="/posts/new">
-          <a className="admin-links__link">Add Content</a>
-        </Link>
-
-        <Link href="/posts_all" as="/posts">
-          <a className="admin-links__link">My Content</a>
-        </Link>
-
-        {this.renderBlogMenuItems()}
-        {this.renderEventMenuItems()}
-        {this.renderStoreMenuItems()}
       </Fragment>
     )
   }
+}
+
+
+const renderBlogMenuItems = enableBlog => {
+
+  if (enableBlog) {
+    return (
+      <Fragment>
+        <Link href="/blog/new">
+          <a className="admin-links__link">Add Blog</a>
+        </Link>
+
+        <Link href="/blog/all">
+          <a className="admin-links__link">My Blogs</a>
+        </Link>
+      </Fragment>
+    )
+  }
+}
+
+
+const renderEventMenuItems = enableEvents => {
+
+  if (enableEvents) {
+    return (
+      <Fragment>
+        <Link href="/events/new">
+          <a className="admin-links__link">Add Event</a>
+        </Link>
+
+        <Link href="/events/all">
+          <a className="admin-links__link">My Events</a>
+        </Link>
+      </Fragment>
+    )
+  }
+}
+
+
+const AdminLinks = props => {
+
+  const { enableEvents, enableBlog, enableStore } = props.settings
+
+  return (
+    <Fragment>
+      <Link href="/admin/page-builder">
+        <a className="admin-links__link">Page Builder</a>
+      </Link>
+
+      <Link href="/admin/pages">
+        <a className="admin-links__link">My Pages</a>
+      </Link>
+
+      <Link href="/posts/new">
+        <a className="admin-links__link">Add Content</a>
+      </Link>
+
+      <Link href="/posts">
+        <a className="admin-links__link">My Content</a>
+      </Link>
+
+      {renderBlogMenuItems(enableBlog)}
+      {renderEventMenuItems(enableEvents)}
+      {renderStoreMenuItems(enableStore)}
+    </Fragment>
+  )
 }
 
 

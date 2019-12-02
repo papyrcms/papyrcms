@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import Router from 'next/router'
-import Input from '../components/Input'
-import Page from './page'
+import Input from '../../components/Input'
+import Page from '../page'
 
 
 // Static object of sections for the builder
@@ -318,7 +318,7 @@ class PageBuilder extends Component {
     if (id) {
 
       axios.put(`/api/page/${id}`, postObject).then(response => {
-        Router.push('/pages')
+        Router.push('/admin/pages')
       }).catch(err => {
         this.setState({ validation: err.response.data.message })
       })
@@ -326,7 +326,7 @@ class PageBuilder extends Component {
     } else {
 
       axios.post("/api/page", postObject).then(response => {
-        Router.push('/pages')
+        Router.push('/admin/pages')
       }).catch(err => {
         this.setState({ validation: err.response.data.message })
       })
@@ -340,7 +340,7 @@ class PageBuilder extends Component {
 
     if (confirm) {
       axios.delete(`/api/page/${this.state.id}`).then(response => {
-        Router.push('/pages')
+        Router.push('/admin/pages')
       })
     }
   }
@@ -441,9 +441,8 @@ class PageBuilder extends Component {
               id="page-builder__css"
               className="page-builder__css--textarea"
               onChange={event => this.setPageState('css', event.target.value)}
-            >
-              {css}
-            </textarea>
+              value={css}
+            />
           </div>
 
           <div className="page-builder__section-bottom">

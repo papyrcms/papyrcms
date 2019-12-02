@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import keys from '../config/keys'
-import filterPosts from '../components/filterPosts'
-import { SectionStandard } from '../components/Sections/'
+import keys from '../../config/keys'
+import filterPosts from '../../components/filterPosts'
+import { SectionStandard } from '../../components/Sections/'
 
 const EventsPage = props => (
   <div className="events-page">
@@ -22,7 +22,7 @@ const EventsPage = props => (
 EventsPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const events = await axios.get(`${rootUrl}/api/published_events`)
+  const events = await axios.get(`${rootUrl}/api/publishedEvents`)
 
   return { events: events.data }
 }

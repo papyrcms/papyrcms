@@ -1,6 +1,6 @@
 import React from 'react'
-import PostsForm from '../components/PostsForm/'
-import Input from '../components/Input'
+import PostsForm from '../../components/PostsForm/'
+import Input from '../../components/Input'
 
 const dateField = ({ date, changeState }) => (
   <Input

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import keys from '../config/keys'
+import keys from '../../config/keys'
 
 
 const renderPages = pages => {
@@ -20,8 +20,8 @@ const renderPages = pages => {
 
       <div className="pages__link--edit">
         Edit page{' - '}
-        <Link href={`/page-builder?page=${page.route}`} as={`/pages/${page.route}`}>
-          <a>/pages/{page.route}</a>
+        <Link href={`/admin/page-builder?page=${page.route}`} as={`/admin/pages/${page.route}`}>
+          <a>/admin/pages/{page.route}</a>
         </Link>
       </div>
 

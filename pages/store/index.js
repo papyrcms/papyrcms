@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import keys from '../config/keys'
-import { SectionCards } from '../components/Sections/'
+import keys from '../../config/keys'
+import { SectionCards } from '../../components/Sections/'
 
 const StorePage = props => (
   <div className="store-page">

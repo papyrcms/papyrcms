@@ -28,31 +28,15 @@ class StoreController extends Controller {
 
     // Views
     this.server.get(
-      '/store',
-      this.checkIfStoreEnabled,
-      this.renderPage.bind(this, '')
-    )
-    this.server.get(
-      '/store/new',
-      this.checkIfStoreEnabled,
-      checkIfAdmin,
-      this.renderPage.bind(this, '_create')
-    )
-    this.server.get(
-      '/store/checkout',
-      this.checkIfStoreEnabled,
-      this.renderPage.bind(this, '_checkout')
-    )
-    this.server.get(
       '/store/:id',
       this.checkIfStoreEnabled,
-      this.renderPage.bind(this, '_show')
+      this.renderPage.bind(this, 'show')
     )
     this.server.get(
       '/store/:id/edit',
       this.checkIfStoreEnabled,
       checkIfAdmin,
-      this.renderPage.bind(this, '_edit')
+      this.renderPage.bind(this, 'edit')
     )
 
     // Store API
@@ -67,7 +51,7 @@ class StoreController extends Controller {
       this.sendAllProducts.bind(this)
     )
     this.server.get(
-      '/api/published_products',
+      '/api/publishedProducts',
       this.sendPublishedProducts.bind(this)
     )
     this.server.get(
@@ -100,13 +84,34 @@ class StoreController extends Controller {
   }
 
 
-  renderPage(pageExtension, req, res) {
+  async renderPage(pageExtension, req, res, next) {
 
-    const actualPage = `/store${pageExtension}`
-    const id = !!req.params ? req.params.id : null
-    const queryParams = { id }
+    let product
+    try {
+      product = await ProductModel.findById(req.params.id)
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    } catch (e) {
+      product = await ProductModel.findOne({ slug: req.params.id })
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    }
 
-    this.app.render(req, res, actualPage, queryParams)
+    if (product) {
+      const actualPage = `/store/${pageExtension}`
+      const queryParams = { id: req.params.id, product }
+
+      this.app.render(req, res, actualPage, queryParams)
+
+    } else {
+
+      next()
+    }
+
   }
 
 

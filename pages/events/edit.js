@@ -2,9 +2,9 @@ import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import moment from 'moment-timezone'
-import PostsForm from '../components/PostsForm'
-import keys from '../config/keys'
-import Input from '../components/Input'
+import PostsForm from '../../components/PostsForm'
+import keys from '../../config/keys'
+import Input from '../../components/Input'
 
 
 const dateField = ({ date, changeState }) => (
@@ -56,24 +56,17 @@ const EventsEdit = props => (
 )
 
 
-EventsEdit.getInitialProps = async ({ query, req }) => {
+EventsEdit.getInitialProps = async context => {
 
-  let axiosConfig
+  let { id, event } = context.query
 
-  // Depending on if we are doing a client or server render
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie
-      }
-    }
+  if (!event) {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const res = await axios.get(`${rootUrl}/api/events/${id}`)
+    event = res.data
   }
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const event = await axios.get(`${rootUrl}/api/events/${query.id}`, axiosConfig)
-
-  return { event: event.data }
+  return { event }
 }
 
 

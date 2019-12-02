@@ -31,7 +31,7 @@ class SectionCards extends Component {
       const path = this.props.path ? this.props.path : 'posts'
 
       return (
-        <Link href={`/${path || 'posts'}_show?id=${post._id}`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
+        <Link href={`/${path || 'posts'}/show?id=${post._id}`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
           <a className="section-cards__link">Read More</a>
         </Link>
       )
@@ -92,10 +92,10 @@ class SectionCards extends Component {
       return null
     }
 
-    return <Media 
-      className="section-cards__image" 
-      src={post.mainMedia} 
-      alt={post.title} 
+    return <Media
+      className="section-cards__image"
+      src={post.mainMedia}
+      alt={post.title}
       clickable={this.props.clickableMedia}
     />
   }

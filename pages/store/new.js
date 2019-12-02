@@ -1,6 +1,6 @@
 import React from 'react'
-import PostsForm from '../components/PostsForm'
-import Input from '../components/Input'
+import PostsForm from '../../components/PostsForm'
+import Input from '../../components/Input'
 
 const ProductFields = ({ price, quantity, changeState }) => (
   <div className="post-form__top">
@@ -24,17 +24,15 @@ const ProductFields = ({ price, quantity, changeState }) => (
   </div>
 )
 
-export default () => {
-  return (
-    <PostsForm
-      pageTitle="New Product"
-      apiEndpoint="/api/products"
-      redirectRoute="/store"
-      additionalFields={[ProductFields]}
-      additionalState={{
-        price: 0.00,
-        quantity: 0
-      }}
-    />
-  )
-}
+export default () => (
+  <PostsForm
+    pageTitle="New Product"
+    apiEndpoint="/api/products"
+    redirectRoute="/store"
+    additionalFields={[ProductFields]}
+    additionalState={{
+      price: 0.00,
+      quantity: 0
+    }}
+  />
+)

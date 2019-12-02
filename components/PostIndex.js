@@ -74,7 +74,7 @@ class PostIndex extends Component {
                 {renderHTML(postContent)}
               </div>
               <div className="post-item__link">
-                <Link href={`/posts_show?id=${_id}`} as={`/posts/${_id}`}>
+                <Link href={`/posts/show?id=${_id}`} as={`/posts/${_id}`}>
                   <button className="button button-primary">Read More</button>
                 </Link>
               </div>

@@ -27,31 +27,15 @@ class EventController extends Controller {
 
     // Views
     this.server.get(
-      '/events',
-      this.eventsEnabled,
-      this.renderPage.bind(this, '')
-    )
-    this.server.get(
-      '/events/all',
-      this.eventsEnabled,
-      this.renderPage.bind(this, '_all')
-    )
-    this.server.get(
-      '/events/new',
-      this.eventsEnabled,
-      checkIfAdmin,
-      this.renderPage.bind(this, '_create')
-    )
-    this.server.get(
       '/events/:id',
       this.eventsEnabled,
-      this.renderPage.bind(this, '_show')
+      this.renderPage.bind(this, 'show')
     )
     this.server.get(
       '/events/:id/edit',
       this.eventsEnabled,
       checkIfAdmin,
-      this.renderPage.bind(this, '_edit')
+      this.renderPage.bind(this, 'edit')
     )
 
     // Event API
@@ -71,7 +55,7 @@ class EventController extends Controller {
       this.sendAllEvents.bind(this)
     )
     this.server.get(
-      '/api/published_events',
+      '/api/publishedEvents',
       this.eventsEnabled,
       this.sendPublishedEvents.bind(this)
     )
@@ -120,13 +104,27 @@ class EventController extends Controller {
   }
 
 
-  renderPage(pageExtension, req, res) {
+  async renderPage(pageExtension, req, res, next) {
 
-    const actualPage = `/events${pageExtension}`
-    const id = !!req.params ? req.params.id : null
-    const queryParams = { id, currentUser: req.user, googleMapsKey: keys.googleMapsKey }
+    let event
+    try {
+      event = await EventModel.findById(req.params.id)
+        .populate('author').lean()
+    } catch (e) {
+      event = await EventModel.findOne({ slug: req.params.id })
+        .populate('author').lean()
+    }
 
-    this.app.render(req, res, actualPage, queryParams)
+    if (event) {
+
+      const actualPage = `/events/${pageExtension}`
+      const queryParams = { id: req.params.id, event, googleMapsKey: keys.googleMapsKey }
+      this.app.render(req, res, actualPage, queryParams)
+
+    } else {
+
+      next()
+    }
   }
 
 

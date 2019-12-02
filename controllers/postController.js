@@ -43,24 +43,14 @@ class PostController extends Controller {
 
     // Views
     this.server.get(
-      '/posts',
-      checkIfAdmin,
-      this.renderPage.bind(this, '_all')
-    )
-    this.server.get(
-      '/posts/new',
-      checkIfAdmin,
-      this.renderPage.bind(this, '_create')
-    )
-    this.server.get(
       '/posts/:id',
       checkIfAdmin,
-      this.renderPage.bind(this, '_show')
+      this.renderPage.bind(this, 'show')
     )
     this.server.get(
       '/posts/:id/edit',
       checkIfAdmin,
-      this.renderPage.bind(this, '_edit')
+      this.renderPage.bind(this, 'edit')
     )
 
     // Post API
@@ -106,11 +96,26 @@ class PostController extends Controller {
   }
 
 
-  renderPage(pageExtension, req, res) {
+  async renderPage(pageExtension, req, res) {
 
-    const actualPage = `/posts${pageExtension}`
-    const id = !!req.params ? req.params.id : null
-    const queryParams = { id }
+    const actualPage = `/posts/${pageExtension}`
+
+    let post
+    try {
+      post = await PostModel.findById(req.params.id)
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    } catch (e) {
+      post = await PostModel.findOne({ slug: req.params.id })
+        .populate('author')
+        .populate('comments')
+        .populate({ path: 'comments', populate: { path: 'author' } })
+        .lean()
+    }
+
+    const queryParams = { id: req.params.id, post }
 
     this.app.render(req, res, actualPage, queryParams)
   }

@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import keys from '../config/keys'
-import PostShow from '../components/PostShow/'
+import keys from '../../config/keys'
+import PostShow from '../../components/PostShow/'
 
 const PostsShow = props => (
   <PostShow
@@ -15,11 +15,15 @@ const PostsShow = props => (
 
 PostsShow.getInitialProps = async context => {
 
-  const { id } = context.query
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const post = await axios.get(`${rootUrl}/api/posts/${id}`)
+  let { id, post } = context.query
 
-  return { post: post.data }
+  if (!post) {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const res = await axios.get(`${rootUrl}/api/posts/${id}`)
+    post = res.data
+  }
+
+  return { post }
 }
 
 

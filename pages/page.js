@@ -119,10 +119,10 @@ const renderSections = props => {
         return <PostShow
           key={`${section.type}-${i}`}
           post={props[`${section.type}-${i}`][0]}
-          path="post"
+          path="posts"
           className={section.className}
           apiPath="/api/posts"
-          redirectRoute="/post/all"
+          redirectRoute="/posts"
         />
     }
   })
