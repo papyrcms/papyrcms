@@ -25,7 +25,7 @@ class UtilityRoutes {
   }
 
 
-  async renderLanding(req, res) {
+  renderLanding(req, res) {
 
     const actualPage = '/index'
     const queryParams = { googleMapsKey: keys.googleMapsKey }
