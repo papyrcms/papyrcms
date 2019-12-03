@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import GoogleMapReact from 'google-map-react'
 import keys from '../../config/keys'
-import PostShow from '../../components/PostShow/'
+import { PostShow } from '../../components/sections/'
 
 const Position = () => <div className="section-maps__position" />
 

@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../../config/keys'
-import PostShow from '../../components/PostShow'
+import { PostShow } from '../../components/sections'
 
 const renderAddToCardSection = () => {
 

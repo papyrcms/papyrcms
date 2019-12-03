@@ -8,10 +8,10 @@ import {
   SectionCards,
   SectionSlideshow,
   SectionMedia,
-  SectionMaps
+  SectionMaps,
+  PostShow,
+  ContactForm
 } from '../components/Sections/'
-import PostShow from '../components/PostShow/'
-import ContactForm from '../components/ContactForm'
 import filterPosts from '../components/filterPosts'
 
 
