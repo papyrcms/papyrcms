@@ -168,7 +168,7 @@ class Comment extends Component {
 
 
   render() {
-    
+
     const { settings, enableCommenting } = this.props
 
     if (settings.enableCommenting && enableCommenting) {

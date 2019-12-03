@@ -12,7 +12,6 @@
 @import 'components/app_settings_form';
 @import 'components/button';
 @import 'components/comment_form';
-@import 'components/contact_form';
 @import 'components/credit_card_form';
 @import 'components/donate_form';
 @import 'components/footer';
@@ -26,11 +25,6 @@
 @import 'components/post_index';
 @import 'components/posts_form';
 @import 'components/register_form';
-@import 'components/section_cards';
-@import 'components/section_slideshow';
-@import 'components/section_standard';
-@import 'components/section_maps';
-@import 'components/section_media';
 @import 'components/user_list';
 
 @import 'pages/admin';
@@ -43,5 +37,12 @@
 @import 'pages/posts_all';
 @import 'pages/posts_create';
 @import 'pages/posts_edit';
-@import 'pages/posts_show';
 @import 'pages/profile';
+
+@import 'sections/contact_form';
+@import 'sections/posts_show';
+@import 'sections/section_cards';
+@import 'sections/section_slideshow';
+@import 'sections/section_standard';
+@import 'sections/section_maps';
+@import 'sections/section_media';

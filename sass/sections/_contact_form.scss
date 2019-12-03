@@ -1,6 +1,6 @@
 .contact-form {
 
-  background-color: $color-grey-light;
+  @include sectionStyle();
 
   &__header {
     margin-bottom: 3rem;

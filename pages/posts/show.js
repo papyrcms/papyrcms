@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../../config/keys'
-import { PostShow } from '../../components/sections/'
+import { PostShow } from '../../components/Sections/'
 
 const PostsShow = props => (
   <PostShow

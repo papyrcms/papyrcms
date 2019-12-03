@@ -143,12 +143,10 @@ class SectionCards extends Component {
 
     return (
       <section className='section-cards'>
-        <div className="section-cards__container">
-          <h2 className='heading-secondary section-cards__header'>{title}</h2>
-          <ul className={`section-cards__list ${listCountClass}`}>
-            {this.renderPosts()}
-          </ul>
-        </div>
+        <h2 className='heading-secondary section-cards__header'>{title}</h2>
+        <ul className={`section-cards__list ${listCountClass}`}>
+          {this.renderPosts()}
+        </ul>
       </section>
     )
   }

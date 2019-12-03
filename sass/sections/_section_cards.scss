@@ -1,27 +1,10 @@
-.section-cards { 
+.section-cards {
 
-  padding: 5rem 10vw;
-  padding-bottom: 10rem;
-  background-color: $color-grey-light;
-
-  @include respond(tab-port) {
-    padding: 5rem 5vw;
-    padding-bottom: 10rem;
-  }
-
-  @include respond(phone) {
-    padding: 5rem 3vw;
-    padding-bottom: 10rem;
-  }
-
-  &__container {
-    max-width: $max-container-width;
-    margin: 0 auto;
-  }
+  @include sectionStyle();
 
   &__list {
-    list-style-type: none;
 
+    list-style-type: none;
     display: grid;
 
     &--3 {
@@ -49,12 +32,13 @@
   }
 
   &__header {
+    margin-bottom: 2rem;
+
     @include respond(tab-port) {
       letter-spacing: .5rem;
     }
 
     @include respond(phone) {
-      font-size: 3rem;
       letter-spacing: .3rem;
     }
   }
@@ -69,6 +53,11 @@
     letter-spacing: .1rem;
     font-size: 2rem;
     font-weight: 500;
+
+    @include respond(phone) {
+      font-size: 3rem;
+      font-weight: 400;
+    }
   }
 
   &__image {
@@ -82,10 +71,6 @@
       transform: scale(1.008) translate(.2rem, -.3rem);
       box-shadow: $shadow-high;
     }
-
-    @include respond(phone) {
-      // width: 70vw;
-    }
   }
 
   &__content {
@@ -93,7 +78,6 @@
   }
 
   &__link {
-    // font-size: 2rem;
     align-self: end;
   }
 

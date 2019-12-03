@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import Input from './Input'
+import Input from '../Input'
 
 
 /**
  * ContactForm is the main contact form component
- * 
+ *
  * @prop initialMessage - String - a suggested message to initially be displayed in the textarea
  */
 class ContactForm extends Component {
@@ -20,7 +20,7 @@ class ContactForm extends Component {
 
     if (props.currentUser) {
       const { firstName, lastName, email } = props.currentUser
-      
+
       if (firstName && !lastName) {
         contactName = firstName
       } else if (!firstName && lastName) {
@@ -28,7 +28,7 @@ class ContactForm extends Component {
       } else if (firstName && lastName) {
         contactName = `${firstName} ${lastName}`
       }
-      
+
       contactEmail = email ? email : ''
     }
 
@@ -76,10 +76,11 @@ class ContactForm extends Component {
 
   render() {
 
-    const { className, contactName, contactEmail, contactMessage, formValidation } = this.state
+    const { contactName, contactEmail, contactMessage, formValidation } = this.state
+    const { className } = this.props
 
     return (
-      <div className={`${className} contact-form`}>
+      <section className={`${className} contact-form`}>
 
         <form className="contact-form__form" onSubmit={this.handleSubmit.bind(this)}>
 
@@ -119,7 +120,7 @@ class ContactForm extends Component {
           <p className="contact-form__validation">{formValidation}</p>
 
         </form>
-      </div>
+      </section>
     )
   }
 }

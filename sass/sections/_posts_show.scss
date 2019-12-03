@@ -1,40 +1,14 @@
-.posts-show-page {
-  padding: 5rem 10vw;
-  padding-bottom: 10rem;
-  background-color: $color-grey-light;
+.posts-show {
 
-  display: flex;
-  flex-direction: column;
-
-  @include respond(tab-port) {
-    padding: 5rem 5vw;
-    padding-bottom: 10rem;
-  }
-
-  @include respond(phone) {
-    padding: 5rem 3vw;
-    padding-bottom: 10rem;
-  }
-
-  &__container {
-    max-width: $max-text-width;
-    margin: 0 auto;
-  }
+  @include sectionStyle();
 }
 
 .post {
 
-  @include respond(tab-port) {
-    padding: 2rem 4vw;
-  }
-
-  @include respond(phone) {
-    padding: 2rem 1vw;
-  }
+  max-width: $max-text-width;
+  margin: 0 auto;
 
   &__title {
-    // border-bottom: .1rem solid $color-grey-dark;
-
     @include respond(tab-port) {
       letter-spacing: .4rem;
     }
@@ -91,15 +65,6 @@
 }
 
 .comments {
-  padding: 2rem 7rem;
-
-  @include respond(tab-port) {
-    padding: 2rem 4rem;
-  }
-
-  @include respond(phone) {
-    padding: 2rem 0;
-  }
 
   &__title {
     color: $color-grey-dark;
@@ -118,7 +83,6 @@
   border-bottom: .1rem solid $color-grey-dark;
 
   &__content {
-    padding-top: 1rem;
     @include contentStyle();
   }
 
@@ -139,16 +103,6 @@
   &__form {
     display: flex;
     flex-direction: column;
-    padding: 2rem 7rem;
-
-    @include respond(tab-port) {
-      padding: 2rem 4rem;
-    }
-
-    @include respond(phone) {
-      padding: 2rem 0;
-    }
-
   }
 
   &__editing {

@@ -1,37 +1,25 @@
 .section-standard {
-  padding: 5rem 10vw;
-  padding-bottom: 10rem;
-  background-color: $color-grey-light;
-  width: 100%;
 
-  @include respond(tab-port) {
-    padding: 5rem 5vw;
-    padding-bottom: 10rem;
-  }
-
-  @include respond(phone) {
-    padding: 5rem 3vw;
-    padding-bottom: 10rem;
-  }
-
-  &__container {
-    max-width: $max-container-width;
-    margin: 0 auto;
-  }
+  @include sectionStyle();
 
   p {
     margin-bottom: 3rem;
   }
 
   &__header {
+    margin-bottom: 3rem;
+
     @include respond(tab-port) {
       letter-spacing: .5rem;
     }
 
     @include respond(phone) {
-      font-size: 3rem;
       letter-spacing: .3rem;
     }
+  }
+
+  &__title {
+
   }
 
   &__post {

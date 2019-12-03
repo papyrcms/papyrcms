@@ -7,7 +7,7 @@ import Router from 'next/router'
 import Head from 'next/head'
 import renderHTML from 'react-render-html'
 import Comment from './Comment'
-import Media from '../Media'
+import Media from '../../Media'
 
 
 /**
@@ -128,7 +128,7 @@ class PostShow extends Component {
       let postContent = content || ''
 
       return (
-        <div className={`posts-show-page ${className || ''}`}>
+        <div className={`posts-show ${className || ''}`}>
 
           <Head>
             <title>{`Derek Garnett | ${title || ''}`}</title>
@@ -143,17 +143,14 @@ class PostShow extends Component {
             <meta key="og-description" property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
           </Head>
 
-          <div className="posts-show-page__container">
-
-            <div className="post">
-              {this.renderPublishSection(published)}
-              <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
-              {this.renderDate()}
-              {this.renderTagsSection(tags)}
-              {this.renderMainMedia(mainMedia, title)}
-              <div className="post__content">{renderHTML(postContent)}</div>
-              {this.renderAuthOptions()}
-            </div>
+          <div className="post">
+            {this.renderPublishSection(published)}
+            <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
+            {this.renderDate()}
+            {this.renderTagsSection(tags)}
+            {this.renderMainMedia(mainMedia, title)}
+            <div className="post__content">{renderHTML(postContent)}</div>
+            {this.renderAuthOptions()}
 
             <Comment
               post={post}
@@ -169,11 +166,9 @@ class PostShow extends Component {
       const { className, emptyTitle, emptyMessage } = this.props
 
       return (
-        <div className={`posts-show-page ${className || ''}`}>
-          <div className="posts-show-page__container">
-            <h2 className="heading-secondary">{emptyTitle}</h2>
-            <h3 className="heading-tertiary">{emptyMessage}</h3>
-          </div>
+        <div className={`posts-show ${className || ''}`}>
+          <h2 className="heading-secondary">{emptyTitle}</h2>
+          <h3 className="heading-tertiary">{emptyMessage}</h3>
         </div>
       )
     }

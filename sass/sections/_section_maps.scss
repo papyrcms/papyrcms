@@ -1,0 +1,42 @@
+.section-maps {
+
+  @include sectionStyle();
+
+  &__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+    align-items: center;
+
+    @include respond(tab-port) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__text {
+    @include contentStyle();
+    padding: 0;
+  }
+
+  &__title {
+    margin-bottom: 3rem;
+  }
+
+  &__subtext {
+
+  }
+
+  &__map {
+    width: 100%;
+    height: 98%;
+    min-height: 60vh;
+  }
+
+  &__position {
+    background-color: red;
+    width: 1.3rem;
+    height: 1.3rem;
+    border: .1rem solid $color-black;
+    border-radius: 50%;
+  }
+}

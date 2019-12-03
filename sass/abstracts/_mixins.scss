@@ -6,6 +6,24 @@
   }
 }
 
+@mixin sectionStyle {
+
+  padding: 10rem 10rem;
+  background-color: $color-grey-light;
+
+  @include respond(tab-land) {
+    padding: 7rem 5rem;
+  }
+
+  @include respond(tab-port) {
+    padding: 5rem 3rem;
+  }
+
+  @include respond(phone) {
+    padding: 5rem 2rem;
+  }
+}
+
 @mixin absCenter {
   position: absolute;
   top: 50%;

@@ -36,8 +36,8 @@ const filterPosts = (WrappedComponent, settings) => {
     filterPosts(posts, filters) {
 
       posts = this.filterPostsByPostTags(posts, filters)
-      posts = this.filterPostsByMaxPosts(posts, filters)
       posts = this.orderPosts(posts)
+      posts = this.filterPostsByMaxPosts(posts, filters)
 
       return posts
     }

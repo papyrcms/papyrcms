@@ -16,7 +16,7 @@
   grid-template-columns: 1fr;
 
   margin: 0 auto;
-  max-width: $max-container-width;
+  max-width: $max-section-width;
 
   & > *:not(:last-child) {
     border-bottom: .1rem solid $color-grey-dark;

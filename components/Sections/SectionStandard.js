@@ -139,11 +139,9 @@ class SectionStandard extends Component {
 
     return (
       <section className={`${className || ''} section-standard`}>
-        <div className="section-standard__container">
-          <h2 className="heading-secondary section-standard__header">{title}</h2>
+        <h2 className="heading-secondary section-standard__header">{title}</h2>
 
-          {this.renderPosts()}
-        </div>
+        {this.renderPosts()}
       </section>
     )
   }
