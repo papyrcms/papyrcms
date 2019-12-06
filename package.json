@@ -52,7 +52,7 @@
     "stripe": "^7.14.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.4",
+    "@babel/core": "^7.7.5",
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.1"
   }
