@@ -79,18 +79,35 @@ class PageBuilder extends Component {
 
   static async getInitialProps({ req, query }) {
 
-    let page = {}
+    let page
+    let googleMapsKey
+    let stripePubKey
 
     if (!!req) {
+
       page = query.pageObject
+      googleMapsKey = query.googleMapsKey
+      stripePubKey = query.stripePubKey
+
     } else {
-      if (query.page) {
-        const res = await axios.get(`/api/page/${query.page}`)
-        page = res.data
+
+      try {
+        const pageRes = await axios.get(`/api/page/${query.page}`)
+        page = pageRes.data
+
+        const mapsRes = await axios.post('/api/googleMapsKey')
+        googleMapsKey = mapsRes.data
+
+        const stripePubKeyRes = await axios.post('/api/stripePubKey')
+        stripePubKey = stripePubKeyRes.data
+
+        // If we did not find a page, push to the page template file
+      } catch (e) {
+        Router.push(`/${query.page === 'home' ? '' : query.page}`)
       }
     }
-
-    return { page }
+console.log(stripePubKey)
+    return { page, googleMapsKey, stripePubKey }
   }
 
 

@@ -59,11 +59,12 @@ class DonateForm extends Component {
 
   render() {
 
+    const { className } = this.props
     const { amount, email, paid } = this.state
 
     if (paid) {
       return (
-        <div className="donate-form">
+        <div className={`donate-form ${className}`}>
           <div className="donate-form__thanks">
             <h3 className="heading-tertiary">Thank you for your donation!</h3>
             <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
@@ -73,7 +74,7 @@ class DonateForm extends Component {
     }
 
     return (
-      <form className="donate-form">
+      <form className={`donate-form ${className}`}>
         <div className="donate-form__form">
           <div className="donate-form__form--top u-margin-bottom-small">
             <Input

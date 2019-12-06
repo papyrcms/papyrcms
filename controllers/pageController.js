@@ -78,6 +78,8 @@ class PageController extends Controller {
 
     if (req.params.page) {
       queryParams.page = req.params.page
+      queryParams.googleMapsKey = keys.googleMapsKey,
+      queryParams.stripePubKey = keys.stripePublishableTestKey
 
       const foundPage = await PageModel.findOne({ route: req.params.page }).lean()
       if (foundPage) {
