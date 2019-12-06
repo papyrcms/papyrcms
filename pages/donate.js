@@ -8,9 +8,13 @@ import filterPosts from '../components/filterPosts'
 
 class DonatePage extends Component {
 
-  static async getInitialProps() {
+  static async getInitialProps({ query }) {
 
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    if (query.stripePubKey) {
+      return { stripePubKey: query.stripePubKey }
+    }
+
+    const rootUrl = keys.rootURL ? keys.rootURL : "";
     const stripePubKey = await axios.post(`${rootUrl}/api/stripePubKey`)
 
     return { stripePubKey: stripePubKey.data }

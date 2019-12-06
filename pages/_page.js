@@ -181,9 +181,12 @@ Page.getInitialProps = async ({ req, query }) => {
   let googleMapsKey
 
   if (!!req) {
+
     page = query.pageObject
     googleMapsKey = query.googleMapsKey
+
   } else {
+
     try {
       const pageRes = await axios.get(`/api/page/${query.page}`)
       page = pageRes.data

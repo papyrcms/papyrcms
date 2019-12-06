@@ -88,8 +88,9 @@ class PaymentController extends Controller {
   renderPage(req, res) {
 
     const actualPage = '/donate'
+    const queryParams = { stripePubKey: keys.stripePublishableTestKey }
 
-    this.app.render(req, res, actualPage)
+    this.app.render(req, res, actualPage, queryParams)
   }
 
 
