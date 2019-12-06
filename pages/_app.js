@@ -151,13 +151,13 @@ class MyApp extends App {
     const { Component, reduxStore } = this.props
 
     return (
-      <Container>
+      // <Container>
         <Provider store={reduxStore}>
           <Layout>
             <Component />
           </Layout>
         </Provider>
-      </Container>
+      // </Container>
     )
   }
 }

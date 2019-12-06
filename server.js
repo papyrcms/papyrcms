@@ -24,10 +24,14 @@ controllers.forEach((controller, index) => {
 })
 
 // Mongo config
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.set('useFindAndModify', false)
+const mongooseConfig = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+}
+mongoose.connect(keys.mongoURI, mongooseConfig)
 mongoose.plugin(schema => { schema.options.usePushEach = true })
-mongoose.Promise = global.Promise
 
 const server = express()
 
