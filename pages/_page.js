@@ -171,6 +171,8 @@ const Page = props => {
   }
 
   const PageComponent = filterPosts(PageContent, settings)
+  console.log(PageComponent)
+
   return <PageComponent page={page} />
 }
 
