@@ -73,9 +73,9 @@ const Layout = props => {
         <title>{headerTitle}{titleHeaderContent}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="shortcut icon" type="image/x-icon" href="/public/static/cup.png" />
-        <link rel="apple-touch-icon" sizes="57x57" href="/public/static/cup.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/public/static/cup.png" />
+        <link rel="shortcut icon" type="image/x-icon" href="/static/cup.png" />
+        <link rel="apple-touch-icon" sizes="57x57" href="/static/cup.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/cup.png" />
         <meta key="title" name="title" content={`${headerTitle}${titleHeaderContent}`} />
         <meta key="og-title" property="og:title" content={`${headerTitle}${titleHeaderContent}`} />
         <meta key="og-site-name" property="og:site_name" content={headerTitle} />
