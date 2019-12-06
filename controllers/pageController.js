@@ -55,7 +55,8 @@ class PageController extends Controller {
       const queryParams = {
         page: req.params.page,
         pageObject: foundPage,
-        googleMapsKey: keys.googleMapsKey
+        googleMapsKey: keys.googleMapsKey,
+        stripePubKey: keys.stripePublishableTestKey
       }
       const actualPage = '/_page'
 
@@ -140,7 +141,11 @@ class PageController extends Controller {
     for (const section of req.body.sections) {
 
       // Make sure the section has tags
-      if (!section.tags && section.type !== 'ContactForm') {
+      if (
+        !section.tags &&
+        section.type !== 'ContactForm' &&
+        section.type !== 'DonateForm'
+      ) {
         res.status(401).send({ message: 'Please add at least one required tag to each section.' })
       }
 
@@ -190,7 +195,11 @@ class PageController extends Controller {
     for (const section of req.body.sections) {
 
       // Make sure the section has tags
-      if (!section.tags && section.type !== 'ContactForm') {
+      if (
+        !section.tags &&
+        section.type !== 'ContactForm' &&
+        section.type !== 'DonateForm'
+      ) {
         res.status(401).send({ message: 'Please add at least one required tag to each section.' })
       }
 

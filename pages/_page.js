@@ -10,7 +10,8 @@ import {
   SectionMedia,
   SectionMaps,
   PostShow,
-  ContactForm
+  ContactForm,
+  DonateForm
 } from '../components/Sections/'
 import filterPosts from '../components/filterPosts'
 
@@ -127,6 +128,12 @@ const renderSections = props => {
           key={key}
         />
 
+      case 'DonateForm':
+        return <DonateForm
+          className={section.className}
+          key={key}
+        />
+
       default:
         return <PostShow
           key={key}
@@ -179,11 +186,13 @@ Page.getInitialProps = async ({ req, query }) => {
 
   let page
   let googleMapsKey
+  let stripePubKey
 
   if (!!req) {
 
     page = query.pageObject
     googleMapsKey = query.googleMapsKey
+    stripePubKey = query.stripePubKey
 
   } else {
 
@@ -194,13 +203,16 @@ Page.getInitialProps = async ({ req, query }) => {
       const mapsRes = await axios.post('/api/googleMapsKey')
       googleMapsKey = mapsRes.data
 
+      const stripePubKeyRes = await axios.post('/api/stripePubKey')
+      stripePubKey = stripePubKeyRes.data
+
       // If we did not find a page, push to the page template file
     } catch(e) {
       Router.push(`/${query.page === 'home' ? '' : query.page}`)
     }
   }
 
-  return { page, googleMapsKey }
+  return { page, googleMapsKey, stripePubKey }
 }
 
 

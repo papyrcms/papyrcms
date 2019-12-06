@@ -5,6 +5,7 @@ import SectionSlideshow from './SectionSlideshow'
 import SectionStandard from './SectionStandard'
 import PostShow from './PostShow/'
 import ContactForm from './ContactForm'
+import DonateForm from './DonateForm'
 
 export {
   SectionCards,
@@ -13,5 +14,6 @@ export {
   SectionSlideshow,
   SectionStandard,
   PostShow,
-  ContactForm
+  ContactForm,
+  DonateForm
 }

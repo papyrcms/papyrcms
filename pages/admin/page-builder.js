@@ -66,6 +66,11 @@ const sectionOptions = {
     name: 'Contact Form',
     description: 'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
     inputs: ['className']
+  },
+  DonateForm: {
+    name: 'Donate Form',
+    description: 'This is a simple donation form where people can donate money to you.',
+    inputs: ['className']
   }
 }
 

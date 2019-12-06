@@ -13,7 +13,6 @@
 @import 'components/button';
 @import 'components/comment_form';
 @import 'components/credit_card_form';
-@import 'components/donate_form';
 @import 'components/footer';
 @import 'components/forgot_password_form';
 @import 'components/header';
@@ -29,7 +28,6 @@
 
 @import 'pages/admin';
 @import 'pages/blog';
-@import 'pages/donate';
 @import 'pages/forgot_password';
 @import 'pages/login';
 @import 'pages/page-builder';
@@ -41,6 +39,7 @@
 @import 'pages/profile';
 
 @import 'sections/contact_form';
+@import 'sections/donate_form';
 @import 'sections/posts_show';
 @import 'sections/section_cards';
 @import 'sections/section_slideshow';

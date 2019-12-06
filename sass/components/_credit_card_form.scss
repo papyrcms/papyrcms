@@ -1,14 +1,16 @@
 .credit-card-form {
 
-  width: 100%;
   display: grid;
   grid-gap: 2rem;
   grid-template-columns: 1fr 1fr;
 
+  @include respond(phone) {
+    grid-template-columns: 1fr;
+  }
+
   &__section {
     display: flex;
     flex-direction: column;
-    width: 100%;
 
     &--number {
       grid-column: span 2;
@@ -28,5 +30,26 @@
     padding: 1rem;
     background-color: $color-white;
     margin-top: 1rem;
+  }
+
+  &__validation {
+    color: $color-tertiary;
+    letter-spacing: .1rem;
+    font-size: 1.4rem;
+    font-style: italic;
+    grid-column: span 2;
+
+    @include respond(phone) {
+      grid-column: span 1;
+    }
+  }
+
+  &__submit {
+    grid-column: span 2;
+    justify-self: end;
+
+    @include respond(phone) {
+      grid-column: span 1;
+    }
   }
 }

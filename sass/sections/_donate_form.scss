@@ -1,0 +1,24 @@
+.donate-form {
+
+  @include sectionStyle();
+
+  &__thanks {
+    text-align: center;
+  }
+
+  &__form {
+
+    max-width: $max-text-width;
+    margin: 0 auto;
+
+    &--top {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 2rem;
+
+      @include respond(phone) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
