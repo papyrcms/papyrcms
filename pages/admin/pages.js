@@ -5,44 +5,45 @@ import { connect } from 'react-redux'
 import keys from '../../config/keys'
 
 
-const renderPages = pages => {
-  return pages.map(page => (
-    <li className="pages__page" key={page._id}>
-
-      <div className="pages__link--visit">
-        Visit page{' - '}
-        <Link href={`/_page?page=${page.route}`} as={`/${page.route}`}>
-          <a>/{page.route}</a>
-        </Link>
-      </div>
-
-      <div className="pages__link-divider">|</div>
-
-      <div className="pages__link--edit">
-        Edit page{' - '}
-        <Link href={`/admin/page-builder?page=${page.route}`} as={`/admin/pages/${page.route}`}>
-          <a>/admin/pages/{page.route}</a>
-        </Link>
-      </div>
-
-    </li>
-  ))
-}
-
-
 const Pages = props => {
 
-  const { currentUser } = props
+  const { currentUser, pages } = props
 
   if (!currentUser || !currentUser.isAdmin) {
     return <div />
   }
 
+  const renderPages = () => {
+
+    return pages.map(page => (
+      <li className="pages__page" key={page._id}>
+
+        <div className="pages__link--visit">
+          Visit page{' - '}
+          <Link href={`/_page?page=${page.route}`} as={`/${page.route}`}>
+            <a>/{page.route}</a>
+          </Link>
+        </div>
+
+        <div className="pages__link-divider">|</div>
+
+        <div className="pages__link--edit">
+          Edit page{' - '}
+          <Link href={`/admin/page-builder?page=${page.route}`} as={`/admin/pages/${page.route}`}>
+            <a>/admin/pages/{page.route}</a>
+          </Link>
+        </div>
+
+      </li>
+    ))
+  }
+
+
   return (
     <div className="pages-page">
       <h2 className="heading-secondary">Pages</h2>
       <ul className="pages">
-        {renderPages(props.pages)}
+        {renderPages()}
       </ul>
     </div>
   )

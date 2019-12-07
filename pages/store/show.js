@@ -1,17 +1,18 @@
-import React, { Fragment, Component } from 'react'
+import React, { Fragment } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import keys from '../../config/keys'
 import { PostShow } from '../../components/Sections'
 
-const renderAddToCardSection = () => {
-
-  return <h1>Oh Snap.</h1>
-}
-
 
 
 const StoreShow = props => {
+
+
+  const renderAddToCartSection = () => {
+    return <h1>Oh Snap.</h1>
+  }
+
 
   const { product } = props
 
@@ -23,7 +24,7 @@ const StoreShow = props => {
         apiPath="/api/products"
         redirectRoute="/store"
       />
-      {renderAddToCardSection()}
+      {renderAddToCartSection()}
     </Fragment>
   )
 }

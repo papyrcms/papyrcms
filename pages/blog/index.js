@@ -6,33 +6,37 @@ import filterPosts from '../../components/filterPosts'
 import { SectionStandard } from '../../components/Sections/'
 
 
-const renderAllBlogsLink = posts => {
-  if (posts.length > 5) {
-    return (
-      <Link href="/blog/all">
-        <a className="blog-page__button button button-secondary u-margin-bottom-small">See all blog posts</a>
-      </Link>
-    )
+const BlogPage = ({ posts }) => {
+
+
+  const renderAllBlogsLink = () => {
+    if (posts.length > 5) {
+      return (
+        <Link href="/blog/all">
+          <a className="blog-page__button button button-secondary u-margin-bottom-small">See all blog posts</a>
+        </Link>
+      )
+    }
   }
+
+
+  return (
+    <div className="blog-page">
+
+      <SectionStandard
+        posts={posts}
+        title="Blog"
+        mediaLeft
+        readMore
+        path="blog"
+        emptyMessage="There are no blogs yet."
+        showDate="publishDate"
+      />
+
+      {renderAllBlogsLink()}
+    </div>
+  )
 }
-
-
-const BlogPage = ({ posts }) => (
-  <div className="blog-page">
-
-    <SectionStandard
-      posts={posts}
-      title="Blog"
-      mediaLeft
-      readMore
-      path="blog"
-      emptyMessage="There are no blogs yet."
-      showDate="publishDate"
-    />
-
-    {renderAllBlogsLink(posts)}
-  </div>
-)
 
 
 BlogPage.getInitialProps = async () => {
