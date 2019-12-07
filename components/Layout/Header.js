@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 /**
  * Header displayed in every view
- * 
+ *
  * @prop mainTitle - String - Text displayed in big letters
  * @prop subTitle - String - Smaller text displayed under the main Title
  */

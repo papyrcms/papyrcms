@@ -1,32 +1,48 @@
-import React from 'react'
-import CKEditor from 'react-ckeditor-component'
+import React, { useState, useEffect } from 'react'
+import TinyMCE from 'react-tinymce'
 
 
 /**
- * RichTextEditor is a react-wrapped component using CK Editor
+ * RichTextEditor is a react-wrapped component using Tiny MCE
  *
  * @prop content - String - The text content inside the editor
  * @prop className - String - The class applied to the editor wrapper
  * @prop onChange - Function - The event handler when the content is changed
- *
- * TODO:
- *   - react-ckeditor-component is a third-party module. I would rather
- *     use a module made by the people at CKEditor. One is available;
- *     however, it does not play nicely with SSR. If it ever does, or if
- *     a better editor comes out, it may be beneficial to switch.
  */
 const TextEditor = props => {
 
+  const [useEditor, setUseEditor] = useState(false)
+  useEffect(() => setUseEditor(true), [])
+
+  if (!useEditor) {
+    return null
+  }
+
   const { content, className, onChange } = props
 
+  // NOT a fan of this
+  const contentStyle = `
+    body {
+      font-family: 'Montserrat', 'Lato', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 400 !important;
+      line-height: 1.3 !important;
+    }
+  `
+
   return (
-    <CKEditor
-      content={content}
-      activeClass={className}
-      events={{
-        "change": event => onChange(event.editor.getData())
-      }}
-    />
+    <div className={className}>
+      <TinyMCE
+        content={content}
+        config={{
+          plugins: 'autolink link image lists code',
+          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+          height: 250,
+          content_style: contentStyle
+        }}
+        onChange={event => onChange(event.target.getContent())}
+      />
+    </div>
   )
 }
 

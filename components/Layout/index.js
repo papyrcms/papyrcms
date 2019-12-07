@@ -92,6 +92,7 @@ const Layout = props => {
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://js.stripe.com/v3/"></script>
+        <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
       </Head>
 
       <NavMenu

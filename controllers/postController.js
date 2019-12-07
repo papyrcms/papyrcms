@@ -96,9 +96,7 @@ class PostController extends Controller {
   }
 
 
-  async renderPage(pageExtension, req, res) {
-
-    const actualPage = `/posts/${pageExtension}`
+  async renderPage(pageExtension, req, res, next) {
 
     let post
     try {
@@ -115,9 +113,14 @@ class PostController extends Controller {
         .lean()
     }
 
-    const queryParams = { id: req.params.id, post }
+    if (post) {
+      const queryParams = { id: req.params.id, post }
+      const actualPage = `/posts/${pageExtension}`
 
-    this.app.render(req, res, actualPage, queryParams)
+      this.app.render(req, res, actualPage, queryParams)
+    } else {
+      next()
+    }
   }
 
 
