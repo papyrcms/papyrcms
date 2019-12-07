@@ -1,23 +1,22 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import RichTextEditor from '../RichTextEditor'
 import Media from '../Media'
 import Input from '../Input'
 
-class Form extends Component {
+const Form = props => {
 
-  constructor(props) {
+  const {
+    isAdminUser, publish, additionalFields,
+    changeState, additionalState, mainMedia,
+    title, tags, content, handleSubmit, validationMessage
+  } = props
+  const [mediaUpload, setMediaUpload] = useState(false)
+  const [uploadedMedia, setUploadedMedia] = useState(false)
+  const [dots, setDots] = useState('')
 
-    super(props)
 
-    this.state = { mediaUpload: false, uploadedMedia: false, dots: '' }
-  }
-
-
-  renderPublish() {
-
-    const { isAdminUser, publish, changeState } = this.props
-
+  const renderPublish = () => {
     if (isAdminUser) {
       return (
         <div className="post-form__publish">
@@ -36,15 +35,12 @@ class Form extends Component {
   }
 
 
-  handleFileInputChange(event) {
-
-    const { changeState } = this.props
+  const handleFileInputChange = event => {
 
     changeState('', 'mainMedia')
-    this.setState({ uploadedMedia: true })
+    setUploadedMedia(true)
 
     let formData = new FormData
-
     formData.append('file', event.target.files[0])
 
     axios.post('/api/upload', formData)
@@ -56,11 +52,8 @@ class Form extends Component {
   }
 
 
-  renderMediaInput() {
-
-    const { mainMedia, changeState } = this.props
-
-    if (this.state.mediaUpload) {
+  const renderMediaInput = () => {
+    if (mediaUpload) {
       return (
         <div>
           <p>Please wait to submit the form until you see the media you uploaded to ensure it uploads properly.</p>
@@ -68,7 +61,7 @@ class Form extends Component {
             className="post-form__input"
             type="file"
             name="file"
-            onChange={event => this.handleFileInputChange(event)}
+            onChange={handleFileInputChange}
           />
         </div>
       )
@@ -84,21 +77,18 @@ class Form extends Component {
   }
 
 
-  renderDots() {
-
-    const { uploadedMedia, dots } = this.state
-
-    if (uploadedMedia && this.props.mainMedia === '') {
+  const renderDots = () => {
+    if (uploadedMedia && mainMedia === '') {
       setTimeout(() => {
         switch (dots) {
           case ' .':
-            this.setState({ dots: ' . .' })
+            setDots(' . .')
             break
           case ' . .':
-            this.setState({ dots: ' . . .' })
+            setDots(' . . .')
             break
           default:
-            this.setState({ dots: ' .' })
+            setDots(' .')
             break
         }
       }, 700)
@@ -108,13 +98,9 @@ class Form extends Component {
   }
 
 
-  renderMedia() {
-
-    const { mainMedia } = this.props
-
-
-    if (this.state.uploadedMedia && mainMedia === '') {
-      return <h3 className="heading-tertiary">Loading{this.renderDots()}</h3>
+  const renderMedia = () => {
+    if (uploadedMedia && mainMedia === '') {
+      return <h3 className="heading-tertiary">Loading{renderDots()}</h3>
     } else {
       return (
         <Media
@@ -126,89 +112,79 @@ class Form extends Component {
   }
 
 
-  renderAdditionalFields() {
-
-    const { additionalFields, changeState, additionalState } = this.props
-
+  const renderAdditionalFields = () => {
     if (additionalFields) {
       return additionalFields.map((Field, i) => {
         return <Field key={`field-${i}`} changeState={changeState} {...additionalState} />
       })
-    } else {
-      return null
     }
   }
 
 
-  render() {
+  return (
+    <form encType="multipart/form-data" className="post-form" onSubmit={handleSubmit}>
 
-    const { title, tags, content, changeState, handleSubmit, validationMessage } = this.props
-
-    return (
-      <form encType="multipart/form-data" className="post-form" onSubmit={handleSubmit.bind(this)}>
-
-        <div className='post-form__top'>
-          <Input
-            id="post_title"
-            label="Title"
-            name="title"
-            value={title}
-            onChange={event => changeState(event.target.value, 'title')}
-          />
-
-          <Input
-            id="post_tags"
-            label="Tags"
-            name="tags"
-            placeholder="separated by a comma"
-            value={tags}
-            onChange={event => changeState(event.target.value, 'tags')}
-          />
-        </div>
-
-        <div className="post-form__label-section">
-          <label className="post-form__label">Media</label>
-          <span>
-            <input
-              type="radio"
-              name="image"
-              checked={this.state.mediaUpload ? false : true}
-              onChange={() => this.setState({ mediaUpload: false })}
-            />
-            <label htmlFor="image-url">URL</label>
-          </span>
-          <span>
-            <input
-              type="radio"
-              name="image"
-              checked={this.state.mediaUpload ? true : false}
-              onChange={() => this.setState({ mediaUpload: true })}
-            />
-            <label htmlFor="image-upload">Upload</label>
-          </span>
-        </div>
-
-        {this.renderMediaInput()}
-        {this.renderMedia()}
-        {this.renderAdditionalFields()}
-
-        <label className="post-form__label">Content</label>
-        <RichTextEditor
-          className="post-form__text-editor"
-          content={content}
-          onChange={newContent => changeState(newContent, 'content')}
+      <div className='post-form__top'>
+        <Input
+          id="post_title"
+          label="Title"
+          name="title"
+          value={title}
+          onChange={event => changeState(event.target.value, 'title')}
         />
 
-        <p className="post-form__validation">{validationMessage}</p>
+        <Input
+          id="post_tags"
+          label="Tags"
+          name="tags"
+          placeholder="separated by a comma"
+          value={tags}
+          onChange={event => changeState(event.target.value, 'tags')}
+        />
+      </div>
 
-        <div className="post-form__bottom">
-          {this.renderPublish()}
-          <input className="button button-primary post-form__submit" type="submit" />
-        </div>
+      <div className="post-form__label-section">
+        <label className="post-form__label">Media</label>
+        <span>
+          <input
+            type="radio"
+            name="image"
+            checked={mediaUpload ? false : true}
+            onChange={() => setMediaUpload(false)}
+          />
+          <label htmlFor="image-url">URL</label>
+        </span>
+        <span>
+          <input
+            type="radio"
+            name="image"
+            checked={mediaUpload ? true : false}
+            onChange={() => setMediaUpload(true)}
+          />
+          <label htmlFor="image-upload">Upload</label>
+        </span>
+      </div>
 
-      </form>
-    )
-  }
+      {renderMediaInput()}
+      {renderMedia()}
+      {renderAdditionalFields()}
+
+      <label className="post-form__label">Content</label>
+      <RichTextEditor
+        className="post-form__text-editor"
+        content={content}
+        onChange={newContent => changeState(newContent, 'content')}
+      />
+
+      <p className="post-form__validation">{validationMessage}</p>
+
+      <div className="post-form__bottom">
+        {renderPublish()}
+        <input className="button button-primary post-form__submit" type="submit" />
+      </div>
+
+    </form>
+  )
 }
 
 

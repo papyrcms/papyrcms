@@ -1,27 +1,20 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import CreditCardForm from '../CreditCardForm'
 import Input from '../Input'
 
 
-class DonateForm extends Component {
-
-  constructor(props) {
-
-    super(props)
-
-    this.state = {
-      email: props.currentUser ? props.currentUser.email : '',
-      amount: 1.00,
-      paid: false,
-    }
-  }
+const DonateForm = props => {
 
 
-  async handleSubmit(stripeSource, setProcessing, setValidation) {
+  const { currentUser, className } = props
+  const [email, setEmail] = useState(currentUser ? currentUser.email : '')
+  const [amount, setAmount] = useState(1.00)
+  const [paid, setPaid] = useState(false)
 
-    const { amount, email } = this.state
+
+  const handleSubmit = (stripeSource, setProcessing, setValidation) => {
 
     switch (true) {
 
@@ -42,10 +35,10 @@ class DonateForm extends Component {
           email,
         }
 
-        await axios.post('/api/donate', donationData)
+        axios.post('/api/donate', donationData)
           .then(response => {
             if (response.data.status === 'succeeded') {
-              this.setState({ paid: true })
+              setPaid(true)
             }
           })
           .catch(error => {
@@ -56,51 +49,42 @@ class DonateForm extends Component {
     }
   }
 
-
-  render() {
-
-    const { className } = this.props
-    const { amount, email, paid } = this.state
-
-    if (paid) {
-      return (
-        <div className={`donate-form ${className}`}>
-          <div className="donate-form__thanks">
-            <h3 className="heading-tertiary">Thank you for your donation!</h3>
-            <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
-          </div>
-        </div>
-      )
-    }
-
+  if (paid) {
     return (
-      <form className={`donate-form ${className}`}>
-        <div className="donate-form__form">
-          <div className="donate-form__form--top u-margin-bottom-small">
-            <Input
-              id="donation_email"
-              label="Email"
-              type="email"
-              value={email}
-              onChange={event => this.setState({ email: event.target.value })}
-            />
-
-            <Input
-              id="donation_amount"
-              label="Amount"
-              type="number"
-              value={amount}
-              onChange={event => this.setState({ amount: event.target.value })}
-            />
-          </div>
-
-          <CreditCardForm
-            onSubmit={this.handleSubmit.bind(this)}
-          />
+      <div className={`donate-form ${className}`}>
+        <div className="donate-form__thanks">
+          <h3 className="heading-tertiary">Thank you for your donation!</h3>
+          <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
         </div>
-      </form>
+      </div>
     )
   }
+
+  return (
+    <section className={`donate-form ${className}`}>
+      <form className="donate-form__form">
+        <div className="donate-form__form--top u-margin-bottom-small">
+          <Input
+            id="donation_email"
+            label="Email"
+            type="email"
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+
+          <Input
+            id="donation_amount"
+            label="Amount"
+            type="number"
+            value={amount}
+            onChange={event => setAmount(event.target.value)}
+          />
+        </div>
+
+        <CreditCardForm onSubmit={handleSubmit} />
+      </form>
+    </section>
+  )
 }
 
 

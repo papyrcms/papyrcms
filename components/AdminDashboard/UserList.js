@@ -1,67 +1,53 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { setUsers } from '../../reduxStore'
 import Modal from '../Modal'
 
 
-class UserList extends Component {
-
-  constructor(props) {
-
-    super(props)
-
-    this.state = { selectedUser: '' }
-  }
+const UserList = props => {
 
 
-  deleteUser(user) {
+  const { currentUser, users, setUsers } = props
+  const [selectedUser, setSelectedUser] = useState('')
+
+
+  const deleteUser = user => {
 
     const confirm = window.confirm(`Are you sure you want to delete ${user.email}`)
 
-    if (confirm) {
-      const { currentUser, users, setUsers } = this.props
+    if (
+      confirm &&
+      user._id !== currentUser._id
+    ) {
 
-      if (user._id !== currentUser._id) {
+      axios.delete(`/api/user/${user._id}`)
+        .then(response => {
 
-        axios.delete(`/api/user/${user._id}`)
-          .then(response => {
-
-            users.forEach((foundUser, i) => {
-
-              if (foundUser._id === user._id) {
-                let newUsers = [...users]
-                newUsers.splice(i, 1)
-
-                setUsers(newUsers)
-              }
-            })
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      }
+          const newUsers = users.filter(foundUser => user._id !== foundUser._id)
+          setUsers(newUsers)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }
 
 
-  changeAdminStatus(user) {
-
-    const { currentUser, users, setUsers } = this.props
+  const changeAdminStatus = user => {
 
     if (user._id !== currentUser._id) {
 
       axios.put('/api/user/makeAdmin', { userId: user._id, isAdmin: !user.isAdmin })
         .then(response => {
-          users.forEach((foundUser, i) => {
 
-            if (foundUser._id === user._id) {
-              let newUsers = [...users]
-              newUsers[i].isAdmin = !user.isAdmin
-
-              setUsers(newUsers)
+          const newUsers = users.map(foundUser => {
+            if (user._id === foundUser._id) {
+              foundUser.isAdmin = !user.isAdmin
             }
+            return foundUser
           })
+          setUsers(newUsers)
         })
         .catch(error => {
           console.error(error)
@@ -70,23 +56,20 @@ class UserList extends Component {
   }
 
 
-  changeBannedStatus(user) {
-
-    const { currentUser, users, setUsers } = this.props
+  const changeBannedStatus = user => {
 
     if (user._id !== currentUser._id) {
 
       axios.put('/api/user/ban', { userId: user._id, isBanned: !user.isBanned })
         .then(response => {
-          users.forEach((foundUser, i) => {
 
-            if (foundUser._id === user._id) {
-              let newUsers = [...users]
-              newUsers[i].isBanned = !user.isBanned
-
-              setUsers(newUsers)
+          const newUsers = users.map(foundUser => {
+            if (user._id === foundUser._id) {
+              foundUser.isBanned = !user.isBanned
             }
+            return foundUser
           })
+          setUsers(newUsers)
         })
         .catch(error => {
           console.error(error)
@@ -95,29 +78,27 @@ class UserList extends Component {
   }
 
 
-  renderUserOptions(user) {
-
-    if (user._id !== this.props.currentUser._id) {
-
+  const renderUserOptions = user => {
+    if (user._id !== currentUser._id) {
       return (
         <div className="user-list__options">
           <button
             className="button button-small button-edit"
-            onClick={() => this.changeAdminStatus(user)}
+            onClick={() => changeAdminStatus(user)}
           >
             {user.isAdmin ? 'Revoke' : 'Make'} Admin
           </button>
 
           <button
             className="button button-small button-delete"
-            onClick={() => this.changeBannedStatus(user)}
+            onClick={() => changeBannedStatus(user)}
           >
             {user.isBanned ? 'Unban' : 'Ban'}
           </button>
 
           <button
             className="button button-small button-delete"
-            onClick={() => this.deleteUser(user)}
+            onClick={() => deleteUser(user)}
           >
             Delete
           </button>
@@ -127,9 +108,9 @@ class UserList extends Component {
   }
 
 
-  renderUserInfo(user) {
+  const renderUserInfo = user => {
 
-    const visible = user._id === this.state.selectedUser ? true : false
+    const visible = user._id === selectedUser ? true : false
 
     return (
       <div className={`user-list__info${visible ? ' user-list__info--visible' : ''}`}>
@@ -141,55 +122,48 @@ class UserList extends Component {
           <li>Banned: {user.isBanned.toString()}</li>
         </ul>
 
-        {this.renderUserOptions(user)}
+        {renderUserOptions(user)}
       </div>
     )
   }
 
 
-  renderUsers() {
-
-    const { users } = this.props
-
+  const renderUsers = () => {
     return users.map(user => {
-
       return (
         <li key={user._id} className="user-list__user">
           <div className="user-list__item">
             <span className="user-list__email">{user.email}</span>
             <button
-              onClick={() => this.setState({ selectedUser: user._id })}
+              onClick={() => setSelectedUser(user._id)}
               className="user-list__check-info button button-small button-secondary"
             >
               Info
             </button>
           </div>
-          {this.renderUserInfo(user)}
+          {renderUserInfo(user)}
         </li>
       )
     })
   }
 
 
-  render() {
+  return (
+    <Modal
+      buttonClasses="button button-primary"
+      buttonText={`View Users (${users.length})`}
+    >
+      <div className="user-list">
 
-    return (
-      <Modal
-        buttonClasses="button button-primary"
-        buttonText={`View Users (${this.props.users.length})`}
-      >
-        <div className="user-list">
+        <h3 className="heading-tertiary">Users</h3>
 
-          <h3 className="heading-tertiary">Users</h3>
+        <ul className="user-list__list">
+          {renderUsers()}
+        </ul>
 
-          <ul className="user-list__list">
-            {this.renderUsers()}
-          </ul>
-
-        </div>
-      </Modal>
-    )
-  }
+      </div>
+    </Modal>
+  )
 }
 
 

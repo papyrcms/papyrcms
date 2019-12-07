@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from './Media'
 
-class PostIndex extends Component {
+const PostIndex = props => {
 
-  renderTags(tags) {
-
+  const renderTags = tags => {
     return tags.map((tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
@@ -17,16 +16,15 @@ class PostIndex extends Component {
   }
 
 
-  renderTagsSection(tags) {
-
-    if (!!tags[0]) {
-      return <p className="post-item__tags">Tags: <em>{this.renderTags(tags)}</em></p>
+  const renderTagsSection = tags => {
+    if (tags[0]) {
+      return <p className="post-item__tags">Tags: <em>{renderTags(tags)}</em></p>
     }
   }
 
 
-  renderMediaSection(media) {
-    if (!!media) {
+  const renderMediaSection = media => {
+    if (media) {
       return (
         <div className="post-item__image">
           <Media src={media} />
@@ -36,62 +34,56 @@ class PostIndex extends Component {
   }
 
 
-  renderPublishSection(published) {
-
+  const renderPublishSection = published => {
     if (!published) {
       return <p><em>Not published</em></p>
     }
-
-    return null
   }
 
 
-  renderPosts() {
+  const renderPosts = () => {
 
-    const { posts } = this.props
+    const { posts } = props
 
-    if (!!posts && !!posts[0]) {
-
-      return Object.keys(posts).map(key => {
-        const post = posts[key]
-        const { _id, title, tags, mainMedia, content, published } = post
-
-        let postContent = ''
-        if (content) {
-          postContent = content.length >= 200 ? `${content.substring(0, 200).trim()} . . .` : content
-        }
-
-        return (
-          <div key={_id} className="post-item">
-            {this.renderMediaSection(mainMedia)}
-            <div className="post-item__details">
-              <div className="post-item__top">
-                <h3 className="post-item__title heading-tertiary">{title}</h3>
-                {this.renderTagsSection(tags)}
-                {this.renderPublishSection(published)}
-              </div>
-              <div className="post-item__content">
-                {renderHTML(postContent)}
-              </div>
-              <div className="post-item__link">
-                <Link href={`/posts/show?id=${_id}`} as={`/posts/${_id}`}>
-                  <button className="button button-primary">Read More</button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )
-      })
-    } else {
+    if (!posts || !posts[0]) {
       return <h3 className="heading-tertiary">Nothing published yet</h3>
     }
+
+    return Object.keys(posts).map(key => {
+
+      const post = posts[key]
+      const { _id, title, tags, mainMedia, content, published } = post
+
+      let postContent = ''
+      if (content) {
+        postContent = content.length >= 200 ? `${content.substring(0, 200).trim()} . . .` : content
+      }
+
+      return (
+        <div key={_id} className="post-item">
+          {renderMediaSection(mainMedia)}
+          <div className="post-item__details">
+            <div className="post-item__top">
+              <h3 className="post-item__title heading-tertiary">{title}</h3>
+              {renderTagsSection(tags)}
+              {renderPublishSection(published)}
+            </div>
+            <div className="post-item__content">
+              {renderHTML(postContent)}
+            </div>
+            <div className="post-item__link">
+              <Link href={`/posts/show?id=${_id}`} as={`/posts/${_id}`}>
+                <button className="button button-primary">Read More</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )
+    })
   }
 
 
-  render() {
-
-    return <div className="post-index">{this.renderPosts()}</div>
-  }
+  return <div className="post-index">{renderPosts()}</div>
 }
 
 

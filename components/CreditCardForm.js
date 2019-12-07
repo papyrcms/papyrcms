@@ -95,7 +95,7 @@ const StripeForm = props => {
   const { stripePubKey, className, onSubmit } = props
   const [stripe, setStripe] = useState(null)
 
-  useEffect(() => setStripe(window.Stripe(stripePubKey)), [])
+  useEffect(() => {setStripe(window.Stripe(stripePubKey))}, [])
 
   return (
     <StripeProvider stripe={stripe}>

@@ -1,53 +1,52 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import SectionMedia from './SectionMedia'
 
 
 /**
  * SectionSlideshow will render a media slideshow across the width of the screen
- * 
+ *
  * @prop timer - Integer - Milliseconds between media changes
  * @prop posts - Array[Object - Posts to be switched between]
  */
-class SectionSlideshow extends Component {
+const SectionSlideshow = props => {
 
-  constructor(props) {
 
-    super(props)
+  const { timer, posts, emptyTitle, emptyMessage } = props
 
-    this.state = { counter: 0, selected: null }
+  if (posts.length === 0) {
+    return (
+      <section className="section-slideshow">
+        <div className="section-slideshow__empty">
+          <h2 className="heading-secondary">{emptyTitle}</h2>
+          <h3 className="heading-tertiary">{emptyMessage}</h3>
+        </div>
+      </section>
+    )
+  }
+
+  const [counter, setCounter] = useState(0)
+  const [ticker, setTicker] = useState(null)
+
+  useEffect(() => {
+    setTicker(setInterval(incrimentCounter, timer || 5000))
+    return () => clearInterval(ticker)
+  }, [])
+
+
+  const incrimentCounter = () => {
+    setCounter(prevCounter =>
+      prevCounter === posts.length - 1 ? 0 : prevCounter + 1
+    )
   }
 
 
-  componentDidMount() {
-
-    setInterval(this.incrimentCounter.bind(this), this.props.timer || 5000)
-  }
-
-
-  incrimentCounter() {
-
-    const { counter, selected } = this.state
-
-    if (selected === null) {
-      if (counter === this.props.posts.length - 1) {
-        this.setState({ counter: 0 })
-      } else {
-        this.setState({ counter: counter + 1 })
-      }
-    }
-  }
-
-
-  renderSlides() {
-
-    const { posts } = this.props
-
+  const renderSlides = () => {
     return posts.map((post, i) => {
       return (
         <SectionMedia
           key={post._id}
           post={post}
-          className={`${this.state.counter !== i ? 'slide--hidden' : ''} slide`}
+          className={`${counter !== i ? 'slide--hidden' : ''} slide`}
           alt={post.title}
         />
       )
@@ -55,18 +54,18 @@ class SectionSlideshow extends Component {
   }
 
 
-  renderButtons() {
-
-    const { posts } = this.props
-
+  const renderButtons = () => {
     return posts.map((post, i) => {
       return (
         <input
-          onClick={() => this.setState({ selected: i, counter: i })}
+          onClick={() => {
+            clearInterval(ticker)
+            setCounter(i)
+          }}
           className="section-slideshow__button"
           type="radio"
-          checked={this.state.counter === i ? true : false}
-          onChange={() => { }}
+          checked={counter === i ? true : false}
+          onChange={() => {}}
           key={post._id}
         />
       )
@@ -74,32 +73,14 @@ class SectionSlideshow extends Component {
   }
 
 
-  render() {
-
-    if ( this.props.posts.length !== 0) {
-
-      return (
-        <section className="section-slideshow">
-          {this.renderSlides()}
-          <div className="section-slideshow__buttons">
-            {this.renderButtons()}
-          </div>
-        </section>
-      )
-    } else {
-
-      const { emptyTitle, emptyMessage } = this.props
-
-      return (
-        <section className="section-slideshow">
-          <div className="section-slideshow__empty">
-            <h2 className="heading-secondary">{emptyTitle}</h2>
-            <h3 className="heading-tertiary">{emptyMessage}</h3>
-          </div>
-        </section>
-      )
-    }
-  }
+  return (
+    <section className="section-slideshow">
+      {renderSlides()}
+      <div className="section-slideshow__buttons">
+        {renderButtons()}
+      </div>
+    </section>
+  )
 }
 
 export default SectionSlideshow

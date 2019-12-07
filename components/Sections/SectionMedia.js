@@ -14,31 +14,7 @@ import Media from '../Media'
  */
 const SectionMedia = props => {
 
-  if (props.post) {
-
-    const { title, content, mainMedia } = props.post
-    const { fixed, alt } = props
-    const className = props.className ? props.className : 'section-media'
-
-    return (
-      <section className={`${className}${fixed ? '--fixed' : ''}`}>
-
-        <div className={`${className}__text`}>
-          <h2 className={`${className}__title`}>{title}</h2>
-          <div className={`${className}__subtext`}>{renderHTML(content)}</div>
-        </div>
-
-        <Media
-          className={`${className}__media${fixed ? '--fixed' : ''}`}
-          src={mainMedia}
-          alt={alt}
-          parallax={fixed}
-        />
-
-      </section>
-    )
-  } else {
-
+  if (!props.post) {
     const { emptyTitle, emptyMessage } = props
 
     return (
@@ -50,6 +26,28 @@ const SectionMedia = props => {
       </section>
     )
   }
+
+  const { title, content, mainMedia } = props.post
+  const { fixed, alt } = props
+  let className = props.className || 'section-media'
+
+  return (
+    <section className={`${className}${fixed ? '--fixed' : ''}`}>
+
+      <div className={`${className}__text`}>
+        <h2 className={`${className}__title`}>{title}</h2>
+        <div className={`${className}__subtext`}>{renderHTML(content)}</div>
+      </div>
+
+      <Media
+        className={`${className}__media${fixed ? '--fixed' : ''}`}
+        src={mainMedia}
+        alt={alt}
+        parallax={fixed}
+      />
+
+    </section>
+  )
 }
 
 export default SectionMedia

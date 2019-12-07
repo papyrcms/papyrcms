@@ -2,6 +2,7 @@ import React from 'react'
 import RichTextEditor from '../../RichTextEditor'
 
 const CommentForm = props => {
+
   const { content, onChange, onSubmit, detached, onDetachClick } = props
 
   return (

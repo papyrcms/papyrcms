@@ -12,7 +12,7 @@ import TinyMCE from 'react-tinymce'
 const TextEditor = props => {
 
   const [useEditor, setUseEditor] = useState(false)
-  useEffect(() => setUseEditor(true), [])
+  useEffect(() => {setUseEditor(true)}, [])
 
   if (!useEditor) {
     return null

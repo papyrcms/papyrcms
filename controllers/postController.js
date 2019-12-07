@@ -101,13 +101,11 @@ class PostController extends Controller {
     let post
     try {
       post = await PostModel.findById(req.params.id)
-        .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch (e) {
       post = await PostModel.findOne({ slug: req.params.id })
-        .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
@@ -135,7 +133,6 @@ class PostController extends Controller {
   async createPost(req, res) {
 
     let post = new PostModel(req.body)
-    post.author = req.user
     post.slug = post.title.replace(/\s+/g, '-').toLowerCase()
     post = await post.save()
 
@@ -175,13 +172,11 @@ class PostController extends Controller {
     let foundPost
     try {
       foundPost = await PostModel.findById(req.params.id)
-        .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch(e) {
       foundPost = await PostModel.findOne({ slug: req.params.id })
-        .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()

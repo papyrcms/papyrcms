@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import moment from 'moment-timezone'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
@@ -7,7 +7,7 @@ import Media from '../Media'
 
 /**
  * SectionCards will display a section of card-like components
- * 
+ *
  * @prop title - String - The title to display above the cards
  * @prop perRow - Integer - How many cards will fit on one row at full width - must be 3 or 4
  * @prop readMore - Boolean - If true, a link to the full post will render at the bottom of each card
@@ -23,15 +23,21 @@ import Media from '../Media'
  *   after - String - Text to display after the property
  * }
  */
-class SectionCards extends Component {
+const SectionCards = props => {
 
-  renderReadMore(post) {
+  const {
+    posts, contentLength, emptyMessage,
+    perRow, title, path, readMore,
+    infoProps, showDate, clickableMedia
+  } = props
 
-    if (this.props.readMore) {
-      const path = this.props.path ? this.props.path : 'posts'
+
+  const renderReadMore = post => {
+    if (readMore) {
+      const readMorePath = path ? path : 'posts'
 
       return (
-        <Link href={`/${path || 'posts'}/show?id=${post._id}`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
+        <Link href={`/${readMorePath || 'posts'}/show?id=${post._id}`} as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}>
           <a className="section-cards__link">Read More</a>
         </Link>
       )
@@ -39,10 +45,7 @@ class SectionCards extends Component {
   }
 
 
-  renderInfoProps(post) {
-
-    const { infoProps } = this.props
-
+  const renderInfoProps = post => {
     if (infoProps) {
       return Object.keys(infoProps).map(key => {
         const prop = infoProps[key]
@@ -56,24 +59,18 @@ class SectionCards extends Component {
         )
       })
     }
-
-    return null
   }
 
 
-  renderPublishSection(published) {
-
+  const renderPublishSection = published => {
     if (!published) {
       return <p><em>Not published</em></p>
     }
-
-    return null
   }
 
 
-  renderDate(post) {
-
-    if (this.props.showDate) {
+  const renderDate = post => {
+    if (showDate) {
 
       const date = post.published && post.publishDate
         ? post.publishDate
@@ -81,75 +78,63 @@ class SectionCards extends Component {
 
       return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
     }
-
-    return null
   }
 
 
-  renderMediaSection(post) {
-
-    if (!post.mainMedia) {
-      return null
+  const renderMediaSection = post => {
+    if (post.mainMedia) {
+      return <Media
+        className="section-cards__image"
+        src={post.mainMedia}
+        alt={post.title}
+        clickable={clickableMedia}
+      />
     }
-
-    return <Media
-      className="section-cards__image"
-      src={post.mainMedia}
-      alt={post.title}
-      clickable={this.props.clickableMedia}
-    />
   }
 
 
-  renderPosts() {
+  const renderPosts = () => {
 
-    const { posts, contentLength, emptyMessage } = this.props
-
-    if (posts.length !== 0) {
-
-      // Set defaults for characterCount
-      const characterCount = contentLength || 300
-
-      return posts.map(post => {
-
-        let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
-
-        return (
-          <li key={post._id} className="section-cards__card">
-            <h3 className="section-cards__title heading-tertiary">{post.title}</h3>
-            {this.renderDate(post)}
-            {this.renderPublishSection(post.published)}
-            {this.renderMediaSection(post)}
-            {this.renderInfoProps(post)}
-            <div className="section-cards__content">{renderHTML(postContent)}</div>
-            {this.renderReadMore(post)}
-          </li>
-        )
-      })
-    } else {
+    if (posts.length === 0) {
       return (
         <div className="section-cards__empty-message">
           <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
         </div>
       )
     }
+
+    // Set defaults for characterCount
+    const characterCount = contentLength || 300
+
+    return posts.map(post => {
+
+      let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
+
+      return (
+        <li key={post._id} className="section-cards__card">
+          <h3 className="section-cards__title heading-tertiary">{post.title}</h3>
+          {renderDate(post)}
+          {renderPublishSection(post.published)}
+          {renderMediaSection(post)}
+          {renderInfoProps(post)}
+          <div className="section-cards__content">{renderHTML(postContent)}</div>
+          {renderReadMore(post)}
+        </li>
+      )
+    })
   }
 
 
-  render() {
+  const listCountClass = perRow ? `section-cards__list--${perRow}` : 'section-cards__list--3'
 
-    const { perRow, title } = this.props
-    const listCountClass = perRow ? `section-cards__list--${perRow}` : 'section-cards__list--3'
-
-    return (
-      <section className='section-cards'>
-        <h2 className='heading-secondary section-cards__header'>{title}</h2>
-        <ul className={`section-cards__list ${listCountClass}`}>
-          {this.renderPosts()}
-        </ul>
-      </section>
-    )
-  }
+  return (
+    <section className='section-cards'>
+      <h2 className='heading-secondary section-cards__header'>{title}</h2>
+      <ul className={`section-cards__list ${listCountClass}`}>
+        {renderPosts()}
+      </ul>
+    </section>
+  )
 }
 
 

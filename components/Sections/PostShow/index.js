@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import moment from 'moment-timezone'
@@ -21,21 +21,28 @@ import Media from '../../Media'
  * @prop showDate - Boolean - If true, the publish or created date will show
  * @prop className - String - Any additional classes to wrap the component
  */
-class PostShow extends Component {
+const PostShow = props => {
 
-  onDeleteClick() {
+  const {
+    post, showDate, enableCommenting,
+    apiPath, className, redirectRoute,
+    currentUser, path, emptyTitle, emptyMessage
+  } = props
+  const { title, tags, mainMedia, content, published, comments } = post
+  let postContent = content || ''
+
+
+  const onDeleteClick = () => {
 
     const confirm = window.confirm('Are you sure you want to delete this post?')
 
     if (confirm) {
+      const deletePath = apiPath ? apiPath : '/api/posts'
+      const deleteRedirect = redirectRoute ? redirectRoute : '/posts'
 
-      let { apiPath, redirectRoute } = this.props
-      apiPath = apiPath ? apiPath : '/api/posts'
-      redirectRoute = redirectRoute ? redirectRoute : '/posts'
-
-      axios.delete(`${apiPath}/${this.props.post._id}`)
+      axios.delete(`${deletePath}/${post._id}`)
         .then(res => {
-          Router.push(redirectRoute)
+          Router.push(deleteRedirect)
         }).catch(error => {
           console.error(error)
         })
@@ -43,14 +50,15 @@ class PostShow extends Component {
   }
 
 
-  renderAuthOptions() {
+  const renderAuthOptions = () => {
 
-    const { post, currentUser, path } = this.props
-
-    if (!!currentUser && (currentUser.isAdmin || currentUser._id === post.author._id)) {
+    if (
+      currentUser &&
+      currentUser.isAdmin
+    ) {
       return (
         <div className="post__buttons">
-          <button className="button button-delete" onClick={() => this.onDeleteClick()}>Delete</button>
+          <button className="button button-delete" onClick={onDeleteClick}>Delete</button>
           <Link href={`/${path}/edit?id=${post._id}`} as={`/${path}/${post._id}/edit`}>
             <button className="button button-edit">Edit</button>
           </Link>
@@ -60,8 +68,7 @@ class PostShow extends Component {
   }
 
 
-  renderTags(tags) {
-
+  const renderTags = () => {
     return tags.map((tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
@@ -72,38 +79,36 @@ class PostShow extends Component {
   }
 
 
-  renderTagsSection(tags) {
-
-    const { currentUser } = this.props
-
-    if (!!tags[0] && !!currentUser && currentUser.isAdmin) {
-      return <p className="post__tags">Tags: <em>{this.renderTags(tags)}</em></p>
+  const renderTagsSection = () => {
+    if (
+      tags[0] &&
+      currentUser &&
+      currentUser.isAdmin
+    ) {
+      return <p className="post__tags">Tags: <em>{renderTags(tags)}</em></p>
     }
   }
 
 
-  renderMainMedia(media, alt) {
-
-    if (!!media) {
-      return <div className="post__image"><Media src={media} alt={alt} /></div>
+  const renderMainMedia = () => {
+    if (mainMedia) {
+      return (
+        <div className="post__image">
+          <Media src={mainMedia} alt={title} />
+        </div>
+      )
     }
   }
 
 
-  renderPublishSection(published) {
-
+  const renderPublishSection = () => {
     if (!published) {
       return <p><em>Not published</em></p>
     }
-
-    return null
   }
 
 
-  renderDate() {
-
-    const { showDate, post } = this.props
-
+  const renderDate = () => {
     if (showDate) {
 
       const date = post.published && post.publishDate
@@ -112,75 +117,60 @@ class PostShow extends Component {
 
       return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
     }
-
-    return null
   }
 
 
-  render() {
-
-    const { post, enableCommenting, apiPath, className } = this.props
-
-    if (post && Object.keys(post).length !== 0) {
-
-      const { title, tags, mainMedia, content, published } = post
-
-      let postContent = content || ''
-
-      return (
-        <div className={`posts-show ${className || ''}`}>
-
-          <Head>
-            <title>{`Derek Garnett | ${title || ''}`}</title>
-            <meta key="og-image" property="og:image" content={mainMedia || ''} />
-            <meta key="og-url" property="og:url" content={mainMedia || ''} />
-            <meta key="title" name="title" content={title || ''} />
-            <meta key="twitter-title" property="twitter:title" content={title || ''} />
-            <meta key="twitter-description" property="twitter:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-            <meta key="og-title" property="og:title" content={title || ''} />
-            <meta key="keywords" name="keywords" content={tags || ''} />
-            <meta key="description" name="description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-            <meta key="og-description" property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-          </Head>
-
-          <div className="post">
-            {this.renderPublishSection(published)}
-            <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
-            {this.renderDate()}
-            {this.renderTagsSection(tags)}
-            {this.renderMainMedia(mainMedia, title)}
-            <div className="post__content">{renderHTML(postContent)}</div>
-            {this.renderAuthOptions()}
-
-            <Comment
-              post={post}
-              comments={post.comments}
-              enableCommenting={enableCommenting}
-              apiPath={apiPath}
-            />
-          </div>
-        </div>
-      )
-    } else {
-
-      const { className, emptyTitle, emptyMessage } = this.props
-
-      return (
-        <div className={`posts-show ${className || ''}`}>
-          <h2 className="heading-secondary">{emptyTitle}</h2>
-          <h3 className="heading-tertiary">{emptyMessage}</h3>
-        </div>
-      )
-    }
+  if (
+    !post ||
+    Object.keys(post).length == 0
+  ) {
+    return (
+      <div className={`posts-show ${className || ''}`}>
+        <h2 className="heading-secondary">{emptyTitle}</h2>
+        <h3 className="heading-tertiary">{emptyMessage}</h3>
+      </div>
+    )
   }
+
+  return (
+    <div className={`posts-show ${className || ''}`}>
+
+      <Head>
+        <title>{`Derek Garnett | ${title || ''}`}</title>
+        <meta key="og-image" property="og:image" content={mainMedia || ''} />
+        <meta key="og-url" property="og:url" content={mainMedia || ''} />
+        <meta key="title" name="title" content={title || ''} />
+        <meta key="twitter-title" property="twitter:title" content={title || ''} />
+        <meta key="twitter-description" property="twitter:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+        <meta key="og-title" property="og:title" content={title || ''} />
+        <meta key="keywords" name="keywords" content={tags || ''} />
+        <meta key="description" name="description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+        <meta key="og-description" property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
+      </Head>
+
+      <div className="post">
+        {renderPublishSection()}
+        <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
+        {renderDate()}
+        {renderTagsSection()}
+        {renderMainMedia()}
+        <div className="post__content">{renderHTML(postContent)}</div>
+        {renderAuthOptions()}
+
+        <Comment
+          post={post}
+          comments={comments}
+          enableCommenting={enableCommenting}
+          apiPath={apiPath}
+        />
+      </div>
+    </div>
+  )
 }
 
 
 const mapStateToProps = state => {
-
-  const { currentUser, settings } = state
-
-  return { currentUser, settings }
+  return { currentUser: state.currentUser }
 }
 
 

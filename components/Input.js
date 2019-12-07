@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 
 /**
@@ -16,40 +16,37 @@ import React, { Component } from 'react'
  * @prop className - String - Wrapper class
  * @prop type - String - The type attribute for the input
  */
-class Input extends Component {
+const Input = props => {
 
-  renderLabel() {
+  const {
+    className, type, placeholder, name,
+    id, label, value, onChange,
+    onFocus, onBlur, children
+  } = props
 
-    const { label, id } = this.props
-
+  const renderLabel = () => {
     if (label) {
       return <label className="input__label" htmlFor={id || ''}>{label}</label>
     }
   }
 
-
-  render() {
-
-    const { className, type, placeholder, name, id, value, onChange, onFocus, onBlur, children } = this.props
-
-    return (
-      <div className={`input ${className || ''}`}>
-        {this.renderLabel()}
-        <input
-          type={type || 'text'}
-          placeholder={placeholder || ''}
-          name={name}
-          id={id || ''}
-          className="input__input"
-          value={value}
-          onChange={event => { if (onChange) { onChange(event) } }}
-          onBlur={event => { if (onBlur) { onBlur(event) } }}
-          onFocus={event => { if (onFocus) { onFocus(event) } }}
-        />
-        {children || null}
-      </div>
-    )
-  }
+  return (
+    <div className={`input ${className || ''}`}>
+      {renderLabel()}
+      <input
+        type={type || 'text'}
+        placeholder={placeholder || ''}
+        name={name}
+        id={id || ''}
+        className="input__input"
+        value={value}
+        onChange={event => { if (onChange) { onChange(event) } }}
+        onBlur={event => { if (onBlur) { onBlur(event) } }}
+        onFocus={event => { if (onFocus) { onFocus(event) } }}
+      />
+      {children || null}
+    </div>
+  )
 }
 
 

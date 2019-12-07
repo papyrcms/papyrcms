@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 
 const filterPosts = (WrappedComponent, settings) => {
 
-  return class extends Component {
+  class FilteredComponent extends Component {
 
     static getInitialProps = WrappedComponent.getInitialProps
 
@@ -143,6 +143,8 @@ const filterPosts = (WrappedComponent, settings) => {
       )
     }
   }
+
+  return FilteredComponent
 }
 
 

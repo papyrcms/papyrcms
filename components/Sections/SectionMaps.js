@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import renderHTML from 'react-render-html'
 import GoogleMapReact from 'google-map-react'
 import { connect } from 'react-redux'
@@ -13,9 +13,44 @@ const Position = () => <div className="section-maps__position" />
  * @prop mapLocation - String('start' or 'end') - renders the map before or after the content
  * @prop posts - Array[Object - latitude, longitude, and content posts]
  */
-class SectionMaps extends Component {
+const SectionMaps = props => {
 
-  renderMap(latitude, longitude, zoom = 15) {
+  const { posts, emptyTitle, emptyMessage, mapLocation, googleMapsKey } = props
+
+  let latitudePost
+  let longitudePost
+  let contentPost
+
+  // Pick out the text, latitude, and logitude posts
+  posts.forEach(post => {
+    switch (true) {
+      case post.tags.includes('latitude'):
+        latitudePost = post
+        break
+      case post.tags.includes('longitude'):
+        longitudePost = post
+        break
+      default:
+        contentPost = post
+    }
+  })
+
+  // If we don't have all the info we need
+  if (!contentPost || !longitudePost || !latitudePost) {
+    return (
+      <section className="section-maps">
+        <h2 className="heading-secondary">{emptyTitle}</h2>
+        <h3 className="heading-tertiary">{emptyMessage}</h3>
+      </section>
+    )
+  }
+
+  // Get our coordinates
+  const latitude = parseFloat(latitudePost.title)
+  const longitude = parseFloat(longitudePost.title)
+
+
+  const renderMap = (zoom = 15) => {
 
     const center = {
       lat: latitude,
@@ -25,7 +60,7 @@ class SectionMaps extends Component {
     return (
       <div className="section-maps__map">
         <GoogleMapReact
-          bootstrapURLKeys={{ key: this.props.googleMapsKey }}
+          bootstrapURLKeys={{ key: googleMapsKey }}
           defaultCenter={center}
           defaultZoom={zoom}
         >
@@ -39,60 +74,23 @@ class SectionMaps extends Component {
   }
 
 
-  render() {
+  const { title, content } = contentPost
 
-    let latitudePost
-    let longitudePost
-    let contentPost
+  return (
+    <section className="section-maps">
+      <h2 className='heading-secondary section-maps__title'>{title}</h2>
 
-    // Pick out the text, latitude, and logitude posts
-    this.props.posts.forEach(post => {
-      switch (true) {
-        case post.tags.includes('latitude'):
-          latitudePost = post
-          break
-        case post.tags.includes('longitude'):
-          longitudePost = post
-          break
-        default:
-          contentPost = post
-      }
-    })
+      <div className="section-maps__content">
+        {mapLocation !== 'end' ? renderMap() : null}
 
-    if (contentPost && longitudePost && latitudePost) {
+        <div className='section-maps__text'>
+          <div className='section-maps__subtext'>{renderHTML(content)}</div>
+        </div>
 
-      const { title, content } = contentPost
-      const latitude = parseFloat(latitudePost.title)
-      const longitude = parseFloat(longitudePost.title)
-      const mapLocation = this.props.mapLocation ? this.props.mapLocation : 'start'
-
-      return (
-        <section className="section-maps">
-          <h2 className='heading-secondary section-maps__title'>{title}</h2>
-
-          <div className="section-maps__content">
-            {mapLocation === 'start' ? this.renderMap(latitude, longitude) : null}
-
-            <div className='section-maps__text'>
-              <div className='section-maps__subtext'>{renderHTML(content)}</div>
-            </div>
-
-            {mapLocation === 'end' ? this.renderMap(latitude, longitude) : null}
-          </div>
-        </section>
-      )
-    } else {
-
-      const { emptyTitle, emptyMessage } = this.props
-
-      return (
-        <section className="section-maps">
-          <h2 className="heading-secondary">{emptyTitle}</h2>
-          <h3 className="heading-tertiary">{emptyMessage}</h3>
-        </section>
-      )
-    }
-  }
+        {mapLocation === 'end' ? renderMap() : null}
+      </div>
+    </section>
+  )
 }
 
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import moment from 'moment-timezone'
@@ -6,27 +6,21 @@ import { setMessages } from '../../reduxStore'
 import Modal from '../Modal'
 
 
-class MessageList extends Component {
+const MessageList = props => {
 
-  deleteMessage(id) {
+  const { messages, setMessages } = props
+
+  const deleteMessage = id => {
 
     const confirm = window.confirm("Are you sure you want to delete this message?")
 
     if (confirm) {
 
-      const { messages, setMessages } = this.props
-
       axios.delete(`/api/messages/${id}`)
         .then(res => {
-          messages.forEach((message, i) => {
 
-            if (message._id === id) {
-              let newMessages = [...messages]
-              newMessages.splice(i, 1)
-
-              setMessages(newMessages)
-            }
-          })
+          const newMessages = messages.filter(message => message._id !== id)
+          setMessages(newMessages)
 
         }).catch(err => {
           console.error(err)
@@ -35,9 +29,7 @@ class MessageList extends Component {
   }
 
 
-  renderMessages() {
-
-    const { messages } = this.props
+  const renderMessages = () => {
 
     return messages.map(mess => {
 
@@ -58,7 +50,7 @@ class MessageList extends Component {
 
           <button
             className="button button-tertiary button-small"
-            onClick={() => this.deleteMessage(_id)}
+            onClick={() => deleteMessage(_id)}
           >
             Delete
           </button>
@@ -68,20 +60,17 @@ class MessageList extends Component {
   }
 
 
-  render() {
-
-    return (
-      <Modal
-        buttonClasses="button button-primary"
-        buttonText={`View Messages (${this.props.messages.length})`}
-      >
-        <div className="message-list">
-          <h3 className="heading-tertiary">Messages</h3>
-          {this.renderMessages()}
-        </div>
-      </Modal>
-    )
-  }
+  return (
+    <Modal
+      buttonClasses="button button-primary"
+      buttonText={`View Messages (${messages.length})`}
+    >
+      <div className="message-list">
+        <h3 className="heading-tertiary">Messages</h3>
+        {renderMessages()}
+      </div>
+    </Modal>
+  )
 }
 
 
