@@ -1,11 +1,19 @@
 import React from 'react'
 import axios from 'axios'
+import moment from 'moment-timezone'
 import keys from '../../config/keys'
 import filterPosts from '../../components/filterPosts'
 import { SectionCards } from '../../components/Sections/'
 
-const EventsAllPage = props => (
-  <SectionCards
+const EventsAllPage = props => {
+
+
+  const renderDate = (sectionProps, post) => (
+    <p>{moment(post.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+  )
+
+
+  return <SectionCards
     posts={props.posts}
     title="Events"
     perRow={4}
@@ -13,8 +21,9 @@ const EventsAllPage = props => (
     path="events"
     contentLength={200}
     emptyMessage="There are no events coming up."
+    afterPostTitle={renderDate}
   />
-)
+}
 
 
 EventsAllPage.getInitialProps = async ({ req, reduxStore }) => {

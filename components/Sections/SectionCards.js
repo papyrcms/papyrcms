@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment-timezone'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
@@ -15,21 +14,51 @@ import Media from '../Media'
  * @prop contentLength - String - How many characters to show in the card content
  * @prop emptyMessage - String - Message to display if there are no posts
  * @prop posts - Array [Object - The post to be rendered as a card]
- * @prop showDate - Boolean - If true, the publish or created date will show
  * @prop clickableMedia - Boolean - If true, the media will display as a modal when clicked
- * @prop infoProps - Object {
- *   before - String - Text to display before the property
- *   property - String - The property of the post to render
- *   after - String - Text to display after the property
- * }
+ *
+ * Section Hooks
+ * @prop beforeTitle - Function - Rendered before the section title
+ * @prop afterTitle - Function - Rendered after the section title
+ * @prop beforePostList - Function - Rendered before the section card list
+ * @prop beforePostList - Function - Rendered before the section card list
+ * @prop beforePosts - Function - Rendered before the section cards
+ * @prop beforePosts - Function - Rendered before the section cards
+ *
+ * Post Hooks
+ * @prop beforePostTitle - Function - Rendered before the card title
+ * @prop afterPostTitle - Function - Rendered after the card title
+ * @prop beforePostMedia - Function - Rendered before the card media
+ * @prop afterPostMedia - Function - Rendered after the card media
+ * @prop beforePostContent - Function - Rendered before the card content
+ * @prop afterPostContent - Function - Rendered after the card content
+ * @prop beforePostLink - Function - Rendered before the card link
+ * @prop afterPostLink - Function - Rendered after the card link
  */
 const SectionCards = props => {
 
   const {
     posts, contentLength, emptyMessage,
-    perRow, title, path, readMore,
-    infoProps, showDate, clickableMedia
+    perRow, title, path, readMore, clickableMedia,
   } = props
+
+
+  // Section hooks
+  const beforeTitle = () => props.beforeTitle ? props.beforeTitle(props) : null
+  const afterTitle = () => props.afterTitle ? props.afterTitle(props) : null
+  const beforePostList = () => props.beforePostList ? props.beforePostList(props) : null
+  const afterPostList = () => props.afterPostList ? props.afterPostList(props) : null
+  const beforePosts = () => props.beforePosts ? props.beforePosts(props) : null
+  const afterPosts = () => props.afterPosts ? props.afterPosts(props) : null
+
+  // Post hooks
+  const beforePostTitle = post => props.beforePostTitle ? props.beforePostTitle(props, post) : null
+  const afterPostTitle = post => props.afterPostTitle ? props.afterPostTitle(props, post) : null
+  const beforePostMedia = post => props.beforePostMedia ? props.beforePostMedia(props, post) : null
+  const afterPostMedia = post => props.afterPostMedia ? props.afterPostMedia(props, post) : null
+  const beforePostContent = post => props.beforePostContent ? props.beforePostContent(props, post) : null
+  const afterPostContent = post => props.afterPostContent ? props.afterPostContent(props, post) : null
+  const beforePostLink = post => props.beforePostLink ? props.beforePostLink(props, post) : null
+  const afterPostLink = post => props.afterPostLink ? props.afterPostLink(props, post) : null
 
 
   const renderReadMore = post => {
@@ -45,38 +74,9 @@ const SectionCards = props => {
   }
 
 
-  const renderInfoProps = post => {
-    if (infoProps) {
-      return Object.keys(infoProps).map(key => {
-        const prop = infoProps[key]
-
-        return (
-          <div key={`${post._id}-${prop.property}`} className="section-cards__info">
-            <span className="section-cards__info--before">{prop.before}</span>
-            <span className="section-cards__info--prop">{post[prop.property]}</span>
-            <span className="section-cards__info--after">{prop.after}</span>
-          </div>
-        )
-      })
-    }
-  }
-
-
   const renderPublishSection = published => {
     if (!published) {
       return <p><em>Not published</em></p>
-    }
-  }
-
-
-  const renderDate = post => {
-    if (showDate) {
-
-      const date = post.published && post.publishDate
-        ? post.publishDate
-        : post.created
-
-      return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
     }
   }
 
@@ -112,13 +112,25 @@ const SectionCards = props => {
 
       return (
         <li key={post._id} className="section-cards__card">
+
+          {beforePostTitle(post)}
           <h3 className="section-cards__title heading-tertiary">{post.title}</h3>
-          {renderDate(post)}
+          {afterPostTitle(post)}
+
           {renderPublishSection(post.published)}
+
+          {beforePostMedia(post)}
           {renderMediaSection(post)}
-          {renderInfoProps(post)}
+          {afterPostMedia(post)}
+
+          {beforePostContent(post)}
           <div className="section-cards__content">{renderHTML(postContent)}</div>
+          {afterPostContent(post)}
+
+          {beforePostLink(post)}
           {renderReadMore(post)}
+          {afterPostLink(post)}
+
         </li>
       )
     })
@@ -129,10 +141,21 @@ const SectionCards = props => {
 
   return (
     <section className='section-cards'>
+
+      {beforeTitle()}
       <h2 className='heading-secondary section-cards__header'>{title}</h2>
+      {afterTitle()}
+
+      {beforePostList()}
       <ul className={`section-cards__list ${listCountClass}`}>
+
+        {beforePosts()}
         {renderPosts()}
+        {afterPosts()}
+
       </ul>
+      {afterPostList()}
+
     </section>
   )
 }

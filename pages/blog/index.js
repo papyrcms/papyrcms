@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import moment from 'moment-timezone'
 import Link from 'next/link'
 import keys from '../../config/keys'
 import filterPosts from '../../components/filterPosts'
@@ -9,33 +10,37 @@ import { SectionStandard } from '../../components/Sections/'
 const BlogPage = ({ posts }) => {
 
 
-  const renderAllBlogsLink = () => {
-    if (posts.length > 5) {
+  const renderAllBlogsLink = sectionProps => {
+    if (sectionProps.posts.length === 5) {
       return (
         <Link href="/blog/all">
-          <a className="blog-page__button button button-secondary u-margin-bottom-small">See all blog posts</a>
+          <button className="button button-secondary">See all blog posts</button>
         </Link>
       )
     }
   }
 
 
-  return (
-    <div className="blog-page">
+  const renderDate = (sectionProps, post) => {
 
-      <SectionStandard
-        posts={posts}
-        title="Blog"
-        mediaLeft
-        readMore
-        path="blog"
-        emptyMessage="There are no blogs yet."
-        showDate="publishDate"
-      />
+    const date = post.published && post.publishDate
+      ? post.publishDate
+      : post.created
 
-      {renderAllBlogsLink()}
-    </div>
-  )
+    return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+  }
+
+
+  return <SectionStandard
+    posts={posts}
+    title="Blog"
+    mediaLeft
+    readMore
+    path="blog"
+    emptyMessage="There are no blogs yet."
+    beforePostContent={renderDate}
+    afterPosts={renderAllBlogsLink}
+  />
 }
 
 

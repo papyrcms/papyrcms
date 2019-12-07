@@ -15,10 +15,6 @@ const StorePage = props => (
       path='store'
       contentLength={200}
       emptyMessage='There are no products yet.'
-      infoProps={[
-        { property: 'quantity', after: ' in stock' },
-        { before: '$', property: 'price' }
-      ]}
     />
   </div>
 )
