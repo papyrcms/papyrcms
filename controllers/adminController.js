@@ -6,13 +6,6 @@ class AdminController extends Controller {
 
   registerRoutes() {
 
-    // Views
-    this.server.get(
-      '/admin',
-      checkIfAdmin,
-      this.renderPage.bind(this)
-    )
-
     // API
     this.server.post(
       '/api/admin/settings',
@@ -20,12 +13,6 @@ class AdminController extends Controller {
       sanitizeRequestBody,
       this.changeSettings.bind(this)
     )
-  }
-
-
-  async renderPage(req, res) {
-
-    this.app.render(req, res, req.url)
   }
 
 

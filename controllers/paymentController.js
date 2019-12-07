@@ -27,13 +27,6 @@ class PaymentController extends Controller {
 
   registerRoutes() {
 
-    // Views
-    this.server.get(
-      '/donate',
-      this.donationEnabled,
-      this.renderPage.bind(this)
-    )
-
     // Message API
     this.server.post(
       '/api/donate',
@@ -43,7 +36,7 @@ class PaymentController extends Controller {
     )
     this.server.post(
       '/api/stripePubKey',
-      this.donationEnabled,
+      // this.donationEnabled,
       sanitizeRequestBody,
       this.sendStripePubKey.bind(this)
     )
@@ -82,15 +75,6 @@ class PaymentController extends Controller {
     const charge = await stripe.charges.create(paymentDetails)
 
     return charge
-  }
-
-
-  renderPage(req, res) {
-
-    const actualPage = '/donate'
-    const queryParams = { stripePubKey: keys.stripePublishableTestKey }
-
-    this.app.render(req, res, actualPage, queryParams)
   }
 
 

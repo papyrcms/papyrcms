@@ -92,21 +92,23 @@ class PageBuilder extends Component {
     } else {
 
       try {
-        const pageRes = await axios.get(`/api/page/${query.page}`)
-        page = pageRes.data
-
         const mapsRes = await axios.post('/api/googleMapsKey')
         googleMapsKey = mapsRes.data
 
         const stripePubKeyRes = await axios.post('/api/stripePubKey')
         stripePubKey = stripePubKeyRes.data
 
+        if (query.page) {
+          const pageRes = await axios.get(`/api/page/${query.page}`)
+          page = pageRes.data
+        }
+
         // If we did not find a page, push to the page template file
       } catch (e) {
         Router.push(`/${query.page === 'home' ? '' : query.page}`)
       }
     }
-console.log(stripePubKey)
+
     return { page, googleMapsKey, stripePubKey }
   }
 
@@ -133,7 +135,7 @@ console.log(stripePubKey)
     }
 
     const { page } = props
-    if (page._id) {
+    if (page) {
       state.id = page._id
       state.url = page.route
       state.className = page.className
