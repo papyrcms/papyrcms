@@ -6,14 +6,14 @@ const excludeFooterRoutes = [
   '/admin',
   '/posts/create',
   '/posts',
-  '/blog_create',
+  '/blog/create',
   '/contact'
 ]
 
 
 /**
  * Footer for every view except those listed in excludeFooterRoutes
- * 
+ *
  * @prop ctaText - String - Heading text over the CTA button
  * @prop ctaButtonText - String - Text inside the CTA button
  */

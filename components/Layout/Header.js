@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
 
@@ -9,11 +9,12 @@ import { connect } from 'react-redux'
  * @prop mainTitle - String - Text displayed in big letters
  * @prop subTitle - String - Smaller text displayed under the main Title
  */
-class Header extends Component {
+const Header = props => {
 
-  renderAuthenticator() {
+  const { currentUser, settings, mainTitle, subTitle, page } = props
 
-    if (!!this.props.currentUser) {
+  const renderAuthenticator = () => {
+    if (currentUser) {
       return (
         <Link href="/profile">
           <a title="Profile" className="header__menu-item header__menu-item--1"><li>Profile</li></a>
@@ -29,10 +30,7 @@ class Header extends Component {
   }
 
 
-  renderAdminItems() {
-
-    const { currentUser } = this.props
-
+  const renderAdminItems = () => {
     if (currentUser && currentUser.isAdmin) {
       return (
         <Link href="/posts/new">
@@ -43,40 +41,52 @@ class Header extends Component {
   }
 
 
-  renderNav() {
-
-    const { settings, currentUser } = this.props
-
-    if ((settings && settings.enableMenu) || (currentUser && currentUser.isAdmin)) {
+  const renderNav = () => {
+    if (
+      (settings && settings.enableMenu) ||
+      (currentUser && currentUser.isAdmin)
+    ) {
       return (
         <ul className="header__menu">
-          {this.renderAuthenticator()}
-          {this.renderAdminItems()}
+          {renderAuthenticator()}
+          {renderAdminItems()}
         </ul>
       )
     }
   }
 
 
-  render() {
-
-    const { mainTitle, subTitle } = this.props
+  const renderTitle = () => {
+    // if (page.title) {
+    //   return <span className="heading-primary--main">{page.title}</span>
+    // }
 
     return (
-      <header className="header">
-        <h1 className="heading-primary">
-          <span className="heading-primary--main">{mainTitle}</span>
-          <span className="heading-primary--sub">{subTitle}</span>
-        </h1>
-        {this.renderNav()}
-      </header>
+      <Fragment>
+        <span className="heading-primary--main">{mainTitle}</span>
+        <span className="heading-primary--sub">{subTitle}</span>
+      </Fragment>
     )
   }
+
+
+  return (
+    <header className="header">
+      <h1 className="heading-primary">
+        {renderTitle()}
+      </h1>
+      {renderNav()}
+    </header>
+  )
 }
 
 
 const mapStateToProps = state => {
-  return { currentUser: state.currentUser, settings: state.settings }
+  return {
+    currentUser: state.currentUser,
+    settings: state.settings,
+    page: state.page
+  }
 }
 
 

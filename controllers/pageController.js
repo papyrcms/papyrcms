@@ -132,8 +132,10 @@ class PageController extends Controller {
   async savePage(req, res) {
 
     const page = new PageModel({
+      title: req.body.title,
       className: req.body.className,
       route: req.body.route,
+      navOrder: req.body.navOrder,
       css: req.body.css,
       sections: []
     })
@@ -187,8 +189,10 @@ class PageController extends Controller {
   async updatePage(req, res) {
 
     const page = {
+      title: req.body.title,
       className: req.body.className,
       route: req.body.route,
+      navOrder: req.body.navOrder,
       css: req.body.css,
       sections: []
     }

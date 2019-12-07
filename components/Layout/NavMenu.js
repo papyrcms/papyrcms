@@ -28,81 +28,111 @@ const NavLink = props => {
 }
 
 
-const renderBlogItem = settings => {
-
-  if (!!settings && settings.enableBlog) {
-    return <NavLink href="/blog">Blog</NavLink>
-  }
-}
-
-
-const renderEventsItem = settings => {
-
-  if (!!settings && settings.enableEvents) {
-    return <NavLink href="/events">Events</NavLink>
-  }
-}
-
-
-const renderStoreItem = settings => {
-
-  if (!!settings && settings.enableStore) {
-    return <NavLink href="/store">Store</NavLink>
-  }
-}
-
-
-const renderDonateItem = settings => {
-
-  if (!!settings && settings.enableDonations) {
-    return <NavLink href="/donate">Donate</NavLink>
-  }
-}
-
-
 /**
  * NavMenu displayed at the top of every view.
  *
  * @prop logo - String - The source for the logo image displayed at the top right
  */
-const NavMenu = props => (
-  <nav>
-    <ul className="nav-menu">
+const NavMenu = props => {
 
-      <Link href="/">
-        <a title="Home">
-          <div className="nav-menu__logo">
-            <img src={props.logo} alt="site logo" />
-          </div>
-        </a>
-      </Link>
+  const { settings, pages } = props
+  const { enableBlog, enableEvents, enableStore } = settings
 
-      <div className="nav-menu__items" id="nav-menu-checkbox">
 
-        <span
-          onClick={onClick}
-          className="nav-menu__item nav-menu__item--hamburger"
-        />
+  const renderBlogItem = () => {
+    if (enableBlog) {
+      return <NavLink href="/blog">Blog</NavLink>
+    }
+  }
 
-        <NavLink href="/">Home</NavLink>
-        <NavLink href="/about">About</NavLink>
-        <NavLink href="/services">Services</NavLink>
 
-        {renderBlogItem(props.settings)}
-        {renderEventsItem(props.settings)}
-        {renderStoreItem(props.settings)}
-        {renderDonateItem(props.settings)}
+  const renderEventsItem = () => {
+    if (enableEvents) {
+      return <NavLink href="/events">Events</NavLink>
+    }
+  }
 
-        <NavLink href="/contact">Contact</NavLink>
-      </div>
 
-    </ul>
-  </nav>
-)
+  const renderStoreItem = () => {
+    if (enableStore) {
+      return <NavLink href="/store">Store</NavLink>
+    }
+  }
+
+
+  const renderFirstMenuItems = () => {
+
+    const navPages = pages.filter(page => {
+      return (
+        page.navOrder &&
+        page.navOrder !== 0 &&
+        page.navOrder <= 5 &&
+        page.title
+      )
+    }).sort((a, b) => a.navOrder > b.navOrder ? 1 : -1)
+
+    return navPages.map(page => {
+      const href = page.route === 'home' ? '/' : `/${page.route}`
+      return <NavLink href={href} key={page._id}>{page.title}</NavLink>
+    })
+  }
+
+
+  const renderLastMenuItems = () => {
+
+    const navPages = pages.filter(page => {
+      return (
+        page.navOrder &&
+        page.navOrder > 5 &&
+        page.title
+      )
+    }).sort((a, b) => a.navOrder > b.navOrder ? 1 : -1)
+
+    return navPages.map(page => {
+      const href = page.route === 'home' ? '/' : `/${page.route}`
+      return <NavLink href={href} key={page._id}>{page.title}</NavLink>
+    })
+  }
+
+
+  return (
+    <nav>
+      <ul className="nav-menu">
+
+        <Link href="/">
+          <a title="Home">
+            <div className="nav-menu__logo">
+              <img src={props.logo} alt="site logo" />
+            </div>
+          </a>
+        </Link>
+
+        <div className="nav-menu__items" id="nav-menu-checkbox">
+
+          <span
+            onClick={onClick}
+            className="nav-menu__item nav-menu__item--hamburger"
+          />
+
+          {renderFirstMenuItems()}
+          {renderBlogItem()}
+          {renderEventsItem()}
+          {renderStoreItem()}
+          {renderLastMenuItems()}
+
+        </div>
+
+      </ul>
+    </nav>
+  )
+}
 
 
 const mapStateToProps = state => {
-  return { settings: state.settings }
+  return {
+    settings: state.settings,
+    pages: state.pages
+  }
 }
 
 

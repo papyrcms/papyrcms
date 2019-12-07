@@ -13,6 +13,17 @@
     padding-bottom: 10rem;
   }
 
+  &__info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    align-items: end;
+
+    @include respond(phone) {
+      grid-template-columns: 1fr;
+    }
+  }
+
   &__section-select {
     display: flex;
     justify-content: space-between;

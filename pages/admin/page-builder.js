@@ -119,8 +119,10 @@ class PageBuilder extends Component {
 
     const state = {
       id: '',
+      title: '',
       url: '',
       className: '',
+      navOrder: 0,
       sections: [],
       css: '',
       sectionSelect: 'PostShow',
@@ -137,7 +139,9 @@ class PageBuilder extends Component {
     const { page } = props
     if (page) {
       state.id = page._id
+      state.title = page.title
       state.url = page.route
+      state.navOrder = page.navOrder
       state.className = page.className
       state.css = page.css
       state.sections = page.sections.map(section => {
@@ -336,10 +340,12 @@ class PageBuilder extends Component {
 
   handleSubmit() {
 
-    const { url, className, sections, id, css } = this.state
+    const { title, url, className, navOrder, sections, id, css } = this.state
     const postObject = {
+      title,
       route: url,
       className,
+      navOrder,
       sections,
       css
     }
@@ -409,7 +415,7 @@ class PageBuilder extends Component {
 
   render() {
 
-    const { url, className, validation, page, pageTrigger, css } = this.state
+    const { title, url, className, navOrder, validation, page, pageTrigger, css } = this.state
     const { currentUser } = this.props
 
     if (!currentUser || !currentUser.isAdmin) {
@@ -421,23 +427,43 @@ class PageBuilder extends Component {
         <div className="page-builder">
           <h2 className="heading-secondary">Page Builder</h2>
 
-          <Input
-            id="url-input"
-            label="Page route"
-            placeholder="about"
-            name="url"
-            value={url}
-            onChange={event => this.setPageState('url', event.target.value)}
-          />
+          <div className="page-builder__info">
+            <Input
+              id="title-input"
+              label="Page Title"
+              placeholder="About"
+              name="title"
+              value={title}
+              onChange={event => this.setPageState('title', event.target.value)}
+            />
 
-          <Input
-            id="class-name-input"
-            label="Page Wrapper Class Name"
-            placeholder="about-page"
-            name="wrapper-class"
-            value={className}
-            onChange={event => this.setPageState('className', event.target.value)}
-          />
+            <Input
+              id="url-input"
+              label="Page route"
+              placeholder="about"
+              name="url"
+              value={url}
+              onChange={event => this.setPageState('url', event.target.value)}
+            />
+
+            <Input
+              id="nav-order-input"
+              label="Nav menu order (0 to exclude)"
+              name="nav-order"
+              value={navOrder}
+              type="number"
+              onChange={event => this.setPageState('navOrder', event.target.value)}
+            />
+
+            <Input
+              id="class-name-input"
+              label="Page Wrapper Class Name"
+              placeholder="about-page"
+              name="wrapper-class"
+              value={className}
+              onChange={event => this.setPageState('className', event.target.value)}
+            />
+          </div>
 
           {this.renderSections()}
 
