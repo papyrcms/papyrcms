@@ -1,109 +1,85 @@
-import React, { Component, Fragment } from 'react'
+import React, { useState, Fragment } from 'react'
 
 
 /**
  * Modal renders a button which, when clicked, displays a modal
- * 
+ *
  * @prop children - Component - The content inside the modal
  * @prop buttonClasses - String - The classes to give the button
  * @prop buttonText - String - The text inside the button
  * @prop image - Boolean - Whether or not this should display an image or content
  * @prop className - String - The className given to the non-modal image
- * @prop alt - String - The alt given to the image 
+ * @prop alt - String - The alt given to the image
  * @prop src - String - the src of the image
  */
-class Modal extends Component {
+const Modal = props => {
 
-  constructor(props) {
+  const { children, buttonClasses, buttonText, className, alt, src, image } = props
+  const [hidden, setHidden] = useState(true)
 
-    super(props)
+  const renderStandardModal = () => (
+    <div>
+      <button
+        className={buttonClasses}
+        onClick={event => {
+          event.preventDefault()
+          setHidden(false)
+        }}
+      >
+        {buttonText}
+      </button>
 
-    this.state = { hidden: true }
-  }
-
-
-  renderStandardModal() {
-
-    const { children, buttonClasses, buttonText } = this.props
-    const { hidden } = this.state
-
-    return (
-      <div>
-
-        <button
-          className={buttonClasses}
-          onClick={event => {
-            event.preventDefault()
-            this.setState({ hidden: false })
-          }}
-        >
-          {buttonText}
-        </button>
-
-        <div className={`modal${hidden ? ' modal--hidden' : ''}`} onClick={() => this.setState({ hidden: true })}>
-          <div className="modal__box" onClick={event => event.stopPropagation()}>
-            <button 
-              className="modal__close" 
-              onClick={event => {
-                event.preventDefault()
-                this.setState({ hidden: true })
-              }}
-            >
-              &#10005;
-            </button>
-            <div className="modal__content">
-              {children}
-            </div>
+      <div className={`modal${hidden ? ' modal--hidden' : ''}`} onClick={() => setHidden(true)}>
+        <div className="modal__box" onClick={event => event.stopPropagation()}>
+          <button
+            className="modal__close"
+            onClick={event => {
+              event.preventDefault()
+              setHidden(true)
+            }}
+          >
+            &#10005;
+          </button>
+          <div className="modal__content">
+            {children}
           </div>
         </div>
-
       </div>
-    )
-  }
+    </div>
+  )
 
 
-  renderImageModal() {
+  const renderImageModal = () => (
+    <Fragment>
+      <img
+        className={`${className || ''} modal__image--clickable`}
+        src={src}
+        alt={alt || ''}
+        onClick={event => {
+          event.preventDefault()
+          setHidden(false)
+        }}
+      />
 
-    const { className, alt, src } = this.props
-    const { hidden } = this.state
-
-    return (
-      <Fragment>
-
-        <img
-          className={`${className || ''} modal__image--clickable`}
-          src={src}
-          alt={alt || ''}
-          onClick={event => {
-            event.preventDefault()
-            this.setState({ hidden: false })
-          }}
-        />
-
-        <div className={`modal${hidden ? ' modal--hidden' : ''}`} onClick={() => this.setState({ hidden: true })}>
-          <div className="modal__image--content" onClick={event => event.stopPropagation()}>
-            <button className="modal__close" onClick={() => this.setState({ hidden: true })}>&#10005;</button>
-            <img
-              src={src}
-              alt={alt || ''}
-            />
-          </div>
+      <div className={`modal${hidden ? ' modal--hidden' : ''}`} onClick={() => setHidden(true)}>
+        <div className="modal__image--content" onClick={event => event.stopPropagation()}>
+          <button className="modal__close" onClick={() => setHidden(true)}>&#10005;</button>
+          <img
+            src={src}
+            alt={alt || ''}
+          />
         </div>
+      </div>
+    </Fragment>
+  )
 
-      </Fragment>
-    )
+
+  if (image) {
+    return renderImageModal()
+  } else {
+    return renderStandardModal()
   }
-
-
-  render() {
-
-    if (this.props.image) {
-      return this.renderImageModal()
-    } else {
-      return this.renderStandardModal()
-    }
-  }
-} 
+}
 
 
 export default Modal

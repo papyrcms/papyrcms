@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
@@ -7,97 +7,85 @@ import Input from '../Input'
 import Modal from '../Modal'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
-class LoginForm extends Component {
 
-  constructor(props) {
+const LoginForm = props => {
 
-    super(props)
-
-    this.state = {
-      email: '',
-      password: '',
-      validationMessage: ''
-    }
-  }
+  const { setCurrentUser } = props
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [validation, setValidation] = useState('')
 
 
-  handleSubmit(event) {
+  const handleSubmit = event => {
 
     event.preventDefault()
 
-    const { email, password } = this.state
-
     axios.post('/api/login', { username: email, password })
       .then(res => {
+
         axios.get('/api/currentUser')
           .then(res => {
-            this.props.setCurrentUser(res.data)
+            setCurrentUser(res.data)
             Router.push('/profile')
           }).catch(err => {
             console.error(err)
           })
       }).catch(err => {
+
         console.error(err)
-        let message = 'Something went wrong. Please try again.'
 
         if (err.response.data.message) {
-          message = err.response.data.message
+          setValidation(err.response.data.message)
+        } else {
+          setValidation('Something went wrong. Please try again.')
         }
-
-        this.setState({ validationMessage: message })
       })
   }
 
 
-  render() {
+  return (
+    <form className="login-form" onSubmit={handleSubmit}>
 
-    const { email, password, validationMessage } = this.state
+      <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
 
-    return (
-      <form className="login-form">
+      <Input
+        id="email_login_input"
+        label="Email"
+        name="email"
+        value={email}
+        onChange={event => setEmail(event.target.value)}
+      />
 
-        <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
+      <Input
+        id="password_login_input"
+        label="Password"
+        name="password"
+        value={password}
+        onChange={event => setPassword(event.target.value)}
+        type="password"
+      />
 
-        <Input
-          id="email_login_input"
-          label="Email"
-          name="username"
-          value={email}
-          onChange={event => this.setState({ email: event.target.value })}
-        />
+      <p className="login-form__validation">{validation}</p>
 
-        <Input
-          id="password_login_input"
-          label="Password"
-          name="password"
-          value={password}
-          onChange={event => this.setState({ password: event.target.value })}
-          type="password"
-        />
-
-        <p className="login-form__validation">{validationMessage}</p>
-
-        <div className="login-form__bottom">
-          <div className="login-form__submit">
-            <button
-              className='button button-primary'
-              onClick={event => this.handleSubmit(event)}
-            >
-              Login
-            </button>
-          </div>
-
-          <Modal
-            buttonClasses="login-form__forgot-password"
-            buttonText="Forgot Password?"
-          >
-            <ForgotPasswordForm email={email} />
-          </Modal>
+      <div className="login-form__bottom">
+        <div className="login-form__submit">
+          <input
+            type="submit"
+            className='button button-primary'
+            value="Login"
+          />
         </div>
 
-      </form>
-    )
-  }
+        <Modal
+          buttonClasses="login-form__forgot-password"
+          buttonText="Forgot Password?"
+        >
+          <ForgotPasswordForm email={email} />
+        </Modal>
+      </div>
+
+    </form>
+  )
 }
 
 export default connect(null, { setCurrentUser })(LoginForm)

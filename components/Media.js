@@ -4,7 +4,7 @@ import Modal from './Modal'
 
 /**
  * Media dynamically renders video/img elements
- * 
+ *
  * @prop src - String - The course of the media
  * @prop className - String - The class name of the video/img element
  * @prop alt - String - The alt property for a passed image

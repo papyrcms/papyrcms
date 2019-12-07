@@ -10,28 +10,27 @@ import {
 } from 'react-stripe-elements'
 
 
-const handleSubmit = async (event, stripe, setProcessing, setValidation, onSubmit) => {
-
-  event.preventDefault()
-
-  setProcessing(true)
-
-  const data = await stripe.createSource({ type: "card" })
-
-  if (data.error) {
-    setValidation(data.error.message)
-    setProcessing(false)
-    return
-  }
-
-  onSubmit(data.source, setProcessing, setValidation)
-}
-
-
 const CreditCardForm = injectStripe(({ className = "", stripe, onSubmit }) => {
 
   const [validation, setValidation] = useState('')
   const [processing, setProcessing] = useState(false)
+
+  const handleSubmit = async event => {
+
+    event.preventDefault()
+
+    setProcessing(true)
+
+    const data = await stripe.createSource({ type: "card" })
+
+    if (data.error) {
+      setValidation(data.error.message)
+      setProcessing(false)
+      return
+    }
+
+    onSubmit(data.source, setProcessing, setValidation)
+  }
 
   return (
     <div className={`credit-card-form ${className}`}>
@@ -91,9 +90,11 @@ const CreditCardForm = injectStripe(({ className = "", stripe, onSubmit }) => {
 })
 
 
-const StripeForm = ({ stripePubKey, className, onSubmit }) => {
+const StripeForm = props => {
 
+  const { stripePubKey, className, onSubmit } = props
   const [stripe, setStripe] = useState(null)
+
   useEffect(() => setStripe(window.Stripe(stripePubKey)), [])
 
   return (
@@ -106,8 +107,8 @@ const StripeForm = ({ stripePubKey, className, onSubmit }) => {
 }
 
 
-const mapStateToProps = ({ stripePubKey }) => {
-  return { stripePubKey }
+const mapStateToProps = state => {
+  return { stripePubKey: state.stripePubKey }
 }
 
 

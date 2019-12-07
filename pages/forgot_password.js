@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Router from 'next/router'
@@ -6,82 +6,73 @@ import jwt from 'jsonwebtoken'
 import Input from '../components/Input'
 
 
-class ForgotPasswordPage extends Component {
+const ForgotPasswordPage = props => {
 
-  constructor(props) {
-    super(props)
+  const { token } = props.url.query
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [validation, setValidation] = useState('')
 
-    this.state = { password: '', confirmPassword: '', validation: '' }
-  }
 
-
-  handleSubmit(event) {
+  const handleSubmit = event => {
 
     event.preventDefault()
-
-    const { password, confirmPassword } = this.state
 
     const params = {
       password,
       confirmPassword,
-      token: this.props.url.query.token
+      token
     }
 
     axios.post('/api/changeForgottenPassword', params)
       .then(response => {
-        this.setState({ validation: response.data.message })
+        setValidation(response.data.message)
         Router.push('/login')
       })
       .catch(error => {
         console.error(error)
-        this.setState({ validation: error.response.data.message })
+        setValidation(error.response.data.message)
       })
   }
 
 
-  render() {
+  const data = jwt.decode(token)
 
-    const { password, confirmPassword, validation } = this.state
-    const data = jwt.decode(this.props.url.query.token)
+  return (
+    <div className="forgot-password-page">
+      <h3 className="heading-tertiary u-margin-bottom-small forgot-password-page__title">Reset Password for {data.email}</h3>
 
-    return (
-      <div className="forgot-password-page">
-        <h3 className="heading-tertiary u-margin-bottom-small forgot-password-page__title">Reset Password for {data.email}</h3>
+      <form
+        onSubmit={handleSubmit}
+        className="forgot-password-page__form"
+      >
+        <Input
+          id="password"
+          label="New Password"
+          name="password"
+          type="password"
+          value={password}
+          onChange={event => setPassword(event.target.value)}
+        />
 
-        <form 
-          onSubmit={event => this.handleSubmit(event)}
-          className="forgot-password-page__form"
-        >
-          <Input
-            id="password"
-            label="New Password"
-            name="password"
-            type="password"
-            value={password}
-            onChange={event => this.setState({ password: event.target.value })}
-          />
+        <Input
+          id="confirm_password"
+          label="Confirm New Password"
+          name="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={event => setConfirmPassword(event.target.value)}
+        />
 
-          <Input
-            id="confirm_password"
-            label="Confirm New Password"
-            name="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            onChange={event => this.setState({ confirmPassword: event.target.value })}
-          />
+        <p className="forgot-password-page__validation">{validation}</p>
 
-          <p className="forgot-password-page__validation">{validation}</p>
-
-          <button
-            className="button button-primary"
-            type="submit"
-          >
-            Submit
-          </button>
-        </form>
-      </div>
-    )
-  }
+        <input
+          className="button button-primary"
+          type="submit"
+        />
+      </form>
+    </div>
+  )
 }
 
 

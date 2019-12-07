@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 
 /**
  * Input is a default text-type input component
- * 
+ *
  * @prop id - String - The id and for attributes for the input and label respectively
  * @prop label - String - The label text
  * @prop name - String - The name attribute for the input

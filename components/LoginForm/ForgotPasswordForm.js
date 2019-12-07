@@ -1,85 +1,69 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Input from '../Input'
 
 
-class ForgotPasswordForm extends Component {
+const ForgotPasswordForm = props => {
 
-  constructor(props) {
+  const [email, setEmail] = useState(props.email || '')
+  const [validation, setValidation] = useState('')
+  const [editing, setEditing] = useState(false)
 
-    super(props)
 
-    this.state = {
-      email: props.email ? props.email : '',
-      validation: '',
-      editing: false
+  useEffect(() => {
+    if (
+      !editing &&
+      props.email &&
+      email !== props.email
+    ) {
+      setEmail(props.email)
     }
-  }
+  })
 
 
-  componentDidUpdate() {
-
-    const { email } = this.props
-
-    if (!this.state.editing && email && email !== this.state.email) {
-      this.setState({ email })
-    }
-  }
-
-
-  handleSubmit(event) {
+  const handleSubmit = event => {
 
     event.preventDefault()
 
-    const params = {
-      email: this.state.email
-    }
-
     // Send password reset email
-    axios.post('/api/forgotPassword', params)
+    axios.post('/api/forgotPassword', { email })
       .then(response => {
-        this.setState({ validation: response.data.message })
+        setValidation(response.data.message)
       })
       .catch(error => {
         console.error(error)
-        this.setState({ validation: error.response.data.message })
+        setValidation(error.response.data.message)
       })
   }
 
 
-  render() {
+  return (
+    <div className="forgot-password">
+      <h3 className="heading-tertiary forgot-password__title">Forgot your password?</h3>
 
-    const { email, validation, editing } = this.state
+      <p className="forgot-password__content">Nothing to worry about! Just enter your email in the field below, and we'll send you a link so you can reset it.</p>
 
-    return (
+      <Input
+        className="forgot-password__input"
+        id="email_forgot_password"
+        label="Email"
+        name="email"
+        value={email}
+        onChange={event => setEmail(event.target.value)}
+        onFocus={() => { if (!editing) setEditing(true) }}
+        onBlur={() => { if (editing) setEditing(false) }}
+      />
 
-      <div className="forgot-password">
-        <h3 className="heading-tertiary forgot-password__title">Forgot your password?</h3>
+      <p className="forgot-password__validation">{validation}</p>
 
-        <p className="forgot-password__content">Nothing to worry about! Just enter your email in the field below, and we'll send you a link so you can reset it.</p>
-
-        <Input
-          className="forgot-password__input"
-          id="email_forgot_password"
-          label="Email"
-          name="email"
-          value={email}
-          onChange={event => this.setState({ email: event.target.value })}
-          onFocus={() => { if (!editing) { this.setState({ editing: true }) } }}
-          onBlur={() => { if (editing) { this.setState({ editing: false }) } }}
-        />
-
-        <p className="forgot-password__validation">{validation}</p>
-
-        <button
-          className="button button-primary forgot-password__submit"
-          onClick={event => this.handleSubmit(event)}
-        >
-          Send
-        </button>
-      </div>
-    )
-  }
+      <button
+        className="button button-primary forgot-password__submit"
+        onClick={handleSubmit}
+      >
+        Send
+      </button>
+    </div>
+  )
 }
 
 

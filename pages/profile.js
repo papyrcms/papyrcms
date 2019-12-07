@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Router from 'next/router'
@@ -6,46 +6,24 @@ import Link from 'next/link'
 import { setCurrentUser } from '../reduxStore'
 import Input from '../components/Input'
 
-class ProfilePage extends Component {
+const ProfilePage = props => {
 
-  constructor(props) {
-
-    super(props)
-
-    if (props.currentUser) {
-
-      const { firstName, lastName } = props.currentUser
-
-      this.state = {
-        oldPassword: '',
-        newPassword: '',
-        newPasswordConfirm: '',
-        passwordValidation: '',
-        firstName: firstName || '',
-        lastName: lastName || '',
-        infoValidation: ''
-      }
-    } else {
-      this.state = {
-        oldPassword: '',
-        newPassword: '',
-        newPasswordConfirm: '',
-        passwordValidation: '',
-        firstName: '',
-        lastName: '',
-        infoValidation: ''
-      }
-    }
-  }
+  const { currentUser, setCurrentUser } = props
+  const [firstName, setFirstName] = useState(currentUser ? currentUser.firstName : '')
+  const [lastName, setLastName] = useState(currentUser ? currentUser.lastName : '')
+  const [infoValidation, setInfoValidation] = useState('')
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState('')
+  const [passwordValidation, setPasswordValidation] = useState('')
 
 
-  onLogoutClick() {
-
+  const onLogoutClick = () => {
     axios.get('/api/logout')
       .then(res => {
         if (res.data === 'logged out') {
           Router.push('/')
-          this.props.setCurrentUser(null)
+          setCurrentUser(null)
         }
       }).catch(err => {
         console.error(err)
@@ -53,22 +31,21 @@ class ProfilePage extends Component {
   }
 
 
-  handleInfoSubmit(event) {
+  const handleInfoSubmit = event => {
 
     event.preventDefault()
 
-    const { firstName, lastName } = this.state
-    const infoData = { firstName, lastName, userId: this.props.currentUser._id }
+    const infoData = { firstName, lastName, userId: currentUser._id }
 
     axios.put('/api/currentUser', infoData)
       .then(res => {
         if (!!res.data.error) {
-          return this.setState({ infoValidation: res.data.error })
+          setInfoValidation(res.data.error)
         } else {
           axios.get('/api/currentUser')
             .then(res => {
-              this.props.setCurrentUser(res.data)
-              this.setState({ infoValidation: 'User info updated.' })
+              setCurrentUser(res.data)
+              setInfoValidation('User info updated.')
             }).catch(err => {
               console.error(err)
             })
@@ -79,30 +56,27 @@ class ProfilePage extends Component {
   }
 
 
-  handlePasswordSubmit(event) {
+  const handlePasswordSubmit = event => {
 
     event.preventDefault()
 
-    const { oldPassword, newPassword, newPasswordConfirm } = this.state
-    const passwordData = { oldPassword, newPassword, newPasswordConfirm, userId: this.props.currentUser._id }
+    const passwordData = { oldPassword, newPassword, newPasswordConfirm, userId: currentUser._id }
 
     axios.post('/api/changePassword', passwordData)
       .then(res => {
-        this.setState({
-          passwordValidation: res.data.message,
-          oldPassword: '',
-          newPassword: '',
-          newPasswordConfirm: ''
-        })
+        setPasswordValidation(res.data.message)
+        setOldPassword('')
+        setNewPassword('')
+        setNewPasswordConfirm('')
       }).catch(err => {
-        this.setState({ passwordValidation: err.response.data.message })
+        console.error(err)
+        setPasswordValidation(err.response.data.message)
       })
   }
 
 
-  renderAdmin() {
-
-    if (this.props.currentUser.isAdmin) {
+  const renderAdmin = () => {
+    if (currentUser.isAdmin) {
       return (
         <div>
           <p>You are an admin.</p>
@@ -115,118 +89,111 @@ class ProfilePage extends Component {
   }
 
 
-  renderProfilePage() {
+  const renderProfilePage = () => {
 
-    const { currentUser } = this.props
-    const { firstName, lastName, infoValidation, oldPassword, newPassword, newPasswordConfirm, passwordValidation } = this.state
-
-    if (!!currentUser) {
-      return (
-        <div className="profile">
-          <h1 className="heading-secondary">Profile</h1>
-
-          <div className="profile__credentials">
-            <div className="profile__logout">
-              <span>Not {!!currentUser.firstName ? currentUser.firstName : currentUser.email}?</span>
-              <button
-                onClick={() => this.onLogoutClick()}
-                className="button button-primary"
-              >
-                Log Out
-              </button>
-            </div>
-            {this.renderAdmin()}
-          </div>
-
-          <div className="profile__info">
-            <p className="u-margin-bottom-small">Email: {currentUser.email}</p>
-
-            {/* Personal Info Form */}
-            <form className="profile__form" onSubmit={this.handleInfoSubmit.bind(this)}>
-
-              <div className="profile__name-inputs">
-                <Input
-                  id="profile-first-name"
-                  label="First Name"
-                  name="firstName"
-                  value={firstName}
-                  onChange={event => this.setState({ firstName: event.target.value })}
-                />
-
-                <Input
-                  id="profile-last-name"
-                  label="Last Name"
-                  name="lastName"
-                  value={lastName}
-                  onChange={event => this.setState({ lastName: event.target.value })}
-                />
-              </div>
-
-              <p className="profile__validation">{infoValidation}</p>
-              <input
-                className="button button-primary"
-                type="submit"
-              />
-            </form>
-          </div>
-
-          <div className="profile__password">
-            {/* Change Password Form */}
-            <h3>Reset Password</h3>
-            <form className="profile__form" onSubmit={this.handlePasswordSubmit.bind(this)}>
-              <div className="profile__password-inputs">
-                <Input
-                  id="profile-current-password"
-                  label="Current Password"
-                  name="oldPassword"
-                  value={oldPassword}
-                  onChange={event => this.setState({ oldPassword: event.target.value })}
-                  type="password"
-                />
-
-                <Input
-                  id="profile-new-password"
-                  label="New Password"
-                  name="newPassword"
-                  value={newPassword}
-                  onChange={event => this.setState({ newPassword: event.target.value })}
-                  type="password"
-                />
-
-                <Input
-                  id="profile-confirm-password"
-                  label="Confirm Password"
-                  name="newPasswordConfirm"
-                  value={newPasswordConfirm}
-                  onChange={event => this.setState({ newPasswordConfirm: event.target.value })}
-                  type="password"
-                />
-              </div>
-              <p className="profile__validation">{passwordValidation}</p>
-              <input
-                className="button button-primary"
-                type="submit"
-                value="Reset"
-              />
-            </form>
-          </div>
-        </div>
-      ) // End profile
-
-    } else { // If not logged in
+    if (!currentUser) {
       return <h3 className="profile-page__not-logged-in">You need to be logged in to view this page.</h3>
     }
-  }
-
-
-  render() {
 
     return (
-      <div className="profile-page">
-        {this.renderProfilePage()}
+      <div className="profile">
+        <h1 className="heading-secondary">Profile</h1>
+
+        <div className="profile__credentials">
+          <div className="profile__logout">
+            <span>Not {!!currentUser.firstName ? currentUser.firstName : currentUser.email}?</span>
+            <button
+              onClick={onLogoutClick}
+              className="button button-primary"
+            >
+              Log Out
+            </button>
+          </div>
+          {renderAdmin()}
+        </div>
+
+        <div className="profile__info">
+          <p className="u-margin-bottom-small">Email: {currentUser.email}</p>
+
+          {/* Personal Info Form */}
+          <form className="profile__form" onSubmit={handleInfoSubmit}>
+
+            <div className="profile__name-inputs">
+              <Input
+                id="profile-first-name"
+                label="First Name"
+                name="firstName"
+                value={firstName}
+                onChange={event => setFirstName(event.target.value)}
+              />
+
+              <Input
+                id="profile-last-name"
+                label="Last Name"
+                name="lastName"
+                value={lastName}
+                onChange={event => setLastName(event.target.value)}
+              />
+            </div>
+
+            <p className="profile__validation">{infoValidation}</p>
+            <input
+              className="button button-primary"
+              type="submit"
+            />
+          </form>
+        </div>
+
+        <div className="profile__password">
+          {/* Change Password Form */}
+          <h3>Reset Password</h3>
+          <form className="profile__form" onSubmit={handlePasswordSubmit}>
+            <div className="profile__password-inputs">
+              <Input
+                id="profile-current-password"
+                label="Current Password"
+                name="oldPassword"
+                value={oldPassword}
+                onChange={event => setOldPassword(event.target.value)}
+                type="password"
+              />
+
+              <Input
+                id="profile-new-password"
+                label="New Password"
+                name="newPassword"
+                value={newPassword}
+                onChange={event => setNewPassword(event.target.value)}
+                type="password"
+              />
+
+              <Input
+                id="profile-confirm-password"
+                label="Confirm Password"
+                name="newPasswordConfirm"
+                value={newPasswordConfirm}
+                onChange={event => setNewPasswordConfirm(event.target.value)}
+                type="password"
+              />
+            </div>
+            <p className="profile__validation">{passwordValidation}</p>
+            <input
+              className="button button-primary"
+              type="submit"
+              value="Reset"
+            />
+          </form>
+        </div>
       </div>
     )
   }
+
+
+  return (
+    <div className="profile-page">
+      {renderProfilePage()}
+    </div>
+  )
 }
 
 
