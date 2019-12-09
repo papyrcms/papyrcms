@@ -14,20 +14,11 @@ body {
 
   &--main {
     font-size: 6.5rem;
-    letter-spacing: 1rem;
+    letter-spacing: .7rem;
     font-weight: 600;
     display: block;
-    margin-bottom: 2rem;
 
     animation: moveInLeft 1s ease-out;
-
-    @include respond(tab-land) {
-      margin-bottom: 1rem;
-    }
-
-    @include respond(tab-port) {
-      margin-bottom: 0;
-    }
 
     @include respond(phone) {
       font-size: 4.5rem;
@@ -41,7 +32,7 @@ body {
     font-weight: 500;
     display: block;
 
-    animation: moveInLeft 1s ease-out .5s;
+    animation: moveInLeft 1s ease-out .4s;
     animation-fill-mode: backwards;
 
     @include respond(tab-land) {

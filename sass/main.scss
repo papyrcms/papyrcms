@@ -26,6 +26,15 @@
 @import 'components/register_form';
 @import 'components/user_list';
 
+@import 'components/sections/contact_form';
+@import 'components/sections/donate_form';
+@import 'components/sections/posts_show';
+@import 'components/sections/section_cards';
+@import 'components/sections/section_slideshow';
+@import 'components/sections/section_standard';
+@import 'components/sections/section_maps';
+@import 'components/sections/section_media';
+
 @import 'pages/admin';
 @import 'pages/forgot_password';
 @import 'pages/login';
@@ -34,12 +43,3 @@
 @import 'pages/pages';
 @import 'pages/posts_all';
 @import 'pages/profile';
-
-@import 'sections/contact_form';
-@import 'sections/donate_form';
-@import 'sections/posts_show';
-@import 'sections/section_cards';
-@import 'sections/section_slideshow';
-@import 'sections/section_standard';
-@import 'sections/section_maps';
-@import 'sections/section_media';
