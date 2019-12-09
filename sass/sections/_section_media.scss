@@ -4,7 +4,6 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  background-color: $color-grey-light;
 
   &--fixed {
     min-height: 80vh;
@@ -87,7 +86,6 @@
   &__empty {
     padding: 5rem 10vw;
     padding-bottom: 10rem;
-    background-color: $color-grey-light;
 
     @include respond(tab-port) {
       padding: 5rem 5vw;

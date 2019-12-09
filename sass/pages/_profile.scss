@@ -1,8 +1,7 @@
 .profile-page {
-  padding: 5rem;
-  background-color: $color-grey-light;
-  min-height: calc(100vh - 30rem);
-  
+
+  @include sectionStyle();
+
   &__not-logged-in {
     font-weight: 400;
     font-size: 3rem;

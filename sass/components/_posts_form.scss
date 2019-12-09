@@ -1,9 +1,13 @@
 .post-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 
-  padding: 3rem 0;
+  @include sectionStyle();
+
+  &__form {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   &__label {
     @include inputLabelStyle();

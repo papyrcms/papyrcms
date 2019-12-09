@@ -4,7 +4,6 @@
   height: 100%;
   width: 100%;
   min-height: 65vh;
-  background-color: $color-grey-light;
   display: block;
 
   &__button {
@@ -22,7 +21,6 @@
   &__empty {
     padding: 5rem 10vw;
     padding-bottom: 10rem;
-    background-color: $color-grey-light;
 
     @include respond(tab-port) {
       padding: 5rem 5vw;
@@ -38,7 +36,6 @@
 
 .slide {
   position: absolute;
-  background-color: $color-grey-light;
   height: 100%;
   width: 100%;
   overflow: hidden;

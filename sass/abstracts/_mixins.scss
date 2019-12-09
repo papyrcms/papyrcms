@@ -11,6 +11,7 @@
   padding: 10rem 10rem;
   max-width: $max-section-width;
   margin: 0 auto;
+  background-color: $color-grey-light;
 
   @include respond(tab-land) {
     padding: 7rem 5rem;

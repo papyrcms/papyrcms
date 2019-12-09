@@ -1,16 +1,5 @@
-.post-index {
-  padding: 3rem 8vw;
-
-  @include respond(tab-port) {
-    padding: 2rem 5vw;
-  }
-
-  @include respond(phone) {
-    padding: 1rem 2vw;
-  }
-}
-
 .post-item {
+
   display: flex;
   justify-content: center;
   align-items: flex-start;

@@ -116,7 +116,7 @@ class PostsForm extends Component {
     }
 
     return (
-      <div className="posts-create-page">
+      <div className="post-form">
         <h2 className="heading-secondary">{pageTitle ? pageTitle : 'New Post'}</h2>
         <Form
           changeState={this.changeState.bind(this)}

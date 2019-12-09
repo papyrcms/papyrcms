@@ -1,7 +1,6 @@
 .posts-all-page {
-  min-height: calc(100vh - 30rem);
-  background-color: $color-grey-light;
-  padding: 5rem;
+
+  @include sectionStyle();
   padding-top: 0;
 
   &__top {
