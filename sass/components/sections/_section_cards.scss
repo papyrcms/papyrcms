@@ -9,12 +9,12 @@
 
     &--3 {
       grid-template-columns: repeat(3, 1fr);
-      grid-gap: 3vw;
+      grid-gap: 2.3vw;
     }
 
     &--4 {
       grid-template-columns: repeat(4, 1fr);
-      grid-gap: 3vw;
+      grid-gap: 1.7vw;
 
       @include respond(tab-land) {
         grid-template-columns: repeat(3, 1fr);

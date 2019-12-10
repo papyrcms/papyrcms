@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import Head from 'next/head'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 import axios from 'axios'
@@ -13,151 +12,175 @@ import {
   ContactForm,
   DonateForm
 } from '../components/Sections/'
+import PageHead from '../components/PageHead'
 import filterPosts from '../components/filterPosts'
 
 
-const renderSections = props => {
+const PageContent = props => {
 
-  return props.page.sections.map((section, i) => {
+  const renderSections = () => {
 
-    section = JSON.parse(section)
+    return props.page.sections.map((section, i) => {
 
-    const key = `${section.type}-${i}`
-    const posts = props[key]
-    const emptyMessage = `Create content with the ${section.tags} tags.`
+      section = JSON.parse(section)
 
-    switch (section.type) {
+      const key = `${section.type}-${i}`
+      const posts = props[key]
+      const emptyMessage = `Create content with the ${section.tags} tags.`
 
-      case 'Map':
-        return <SectionMaps
-          key={key}
-          posts={posts}
-          mapLocation="end"
-          emptyTitle={section.title}
-          emptyMessage={emptyMessage}
-        />
+      switch (section.type) {
 
-      case 'Media':
-        return <SectionMedia
-          key={key}
-          post={posts[0]}
-          alt={section.title}
-          emptyTitle={section.title}
-          emptyMessage={emptyMessage}
-        />
+        case 'Map':
+          return <SectionMaps
+            key={key}
+            posts={posts}
+            mapLocation="end"
+            emptyTitle={section.title}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'Parallax':
-        return <SectionMedia
-          key={key}
-          post={posts[0]}
-          alt={section.title}
-          emptyTitle={section.title}
-          emptyMessage={emptyMessage}
-          fixed
-        />
+        case 'Media':
+          return <SectionMedia
+            key={key}
+            post={posts[0]}
+            alt={section.title}
+            emptyTitle={section.title}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'Slideshow':
-        return <SectionSlideshow
-          key={key}
-          posts={posts}
-          timer={5000}
-          emptyTitle={section.title}
-          emptyMessage={emptyMessage}
-        />
+        case 'Parallax':
+          return <SectionMedia
+            key={key}
+            post={posts[0]}
+            alt={section.title}
+            emptyTitle={section.title}
+            emptyMessage={emptyMessage}
+            fixed
+          />
 
-      case 'ThreeCards':
-        return <SectionCards
-          key={key}
-          posts={posts}
-          title={section.title}
-          contentLength={120}
-          readMore
-          perRow={3}
-          emptyMessage={emptyMessage}
-        />
+        case 'Slideshow':
+          return <SectionSlideshow
+            key={key}
+            posts={posts}
+            timer={5000}
+            emptyTitle={section.title}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'FourCards':
-        return <SectionCards
-          key={key}
-          posts={posts}
-          title={section.title}
-          contentLength={120}
-          readMore
-          perRow={4}
-          emptyMessage={emptyMessage}
-        />
+        case 'ThreeCards':
+          return <SectionCards
+            key={key}
+            posts={posts}
+            title={section.title}
+            contentLength={120}
+            readMore
+            perRow={3}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'Standard':
-        return <SectionStandard
-          key={key}
-          readMore
-          contentLength={300}
-          posts={posts}
-          title={section.title}
-          className={section.className}
-          emptyMessage={emptyMessage}
-        />
+        case 'FourCards':
+          return <SectionCards
+            key={key}
+            posts={posts}
+            title={section.title}
+            contentLength={120}
+            readMore
+            perRow={4}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'LeftStandard':
-        return <SectionStandard
-          key={key}
-          readMore
-          mediaLeft
-          contentLength={300}
-          posts={posts}
-          title={section.title}
-          className={section.className}
-          emptyMessage={emptyMessage}
-        />
+        case 'Standard':
+          return <SectionStandard
+            key={key}
+            readMore
+            contentLength={300}
+            posts={posts}
+            title={section.title}
+            className={section.className}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'RightStandard':
-        return <SectionStandard
-          key={key}
-          readMore
-          mediaRight
-          contentLength={300}
-          posts={posts}
-          title={section.title}
-          className={section.className}
-          emptyMessage={emptyMessage}
-        />
+        case 'LeftStandard':
+          return <SectionStandard
+            key={key}
+            readMore
+            mediaLeft
+            contentLength={300}
+            posts={posts}
+            title={section.title}
+            className={section.className}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'ContactForm':
-        return <ContactForm
-          className={section.className}
-          key={key}
-        />
+        case 'RightStandard':
+          return <SectionStandard
+            key={key}
+            readMore
+            mediaRight
+            contentLength={300}
+            posts={posts}
+            title={section.title}
+            className={section.className}
+            emptyMessage={emptyMessage}
+          />
 
-      case 'DonateForm':
-        return <DonateForm
-          className={section.className}
-          key={key}
-        />
+        case 'ContactForm':
+          return <ContactForm
+            className={section.className}
+            key={key}
+          />
 
-      default:
-        return <PostShow
-          key={key}
-          post={posts[0]}
-          path="posts"
-          className={section.className}
-          apiPath="/api/posts"
-          redirectRoute="/posts"
-        />
+        case 'DonateForm':
+          return <DonateForm
+            className={section.className}
+            key={key}
+          />
+
+        default:
+          return <PostShow
+            key={key}
+            post={posts[0]}
+            path="posts"
+            className={section.className}
+            apiPath="/api/posts"
+            redirectRoute="/posts"
+          />
+      }
+    })
+  }
+
+
+  const renderPageHead = () => {
+
+    let postShow = false
+    for (let section of props.page.sections) {
+      section = JSON.parse(section)
+      if (section.type === 'PostShow') {
+        postShow = true
+      }
     }
-  })
+
+    let title
+    if (!postShow && props.page.route !== 'home') {
+      title = `Derek Garnett | ${props.page.title}`
+    }
+
+    return (
+      <PageHead title={title} keywords={title}>
+        <style>{props.page.css}</style>
+      </PageHead>
+    )
+  }
+
+  return (
+    <Fragment>
+      {renderPageHead()}
+      <div className={`${props.page.className} page`}>
+        {renderSections(props)}
+      </div>
+    </Fragment>
+  )
 }
-
-
-const PageContent = props => (
-  <Fragment>
-    <Head>
-      <style>{props.page.css}</style>
-    </Head>
-    <div className={`${props.page.className} page`}>
-      {renderSections(props)}
-    </div>
-  </Fragment>
-)
 
 
 const Page = props => {

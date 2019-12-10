@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import Link from 'next/link'
 import Router from 'next/router'
-import Head from 'next/head'
 import renderHTML from 'react-render-html'
 import Comment from './Comment'
 import Media from '../../Media'
+import PageHead from '../../PageHead'
 
 
 /**
@@ -151,18 +151,12 @@ const PostShow = props => {
   return (
     <div className={`posts-show ${className || ''}`}>
 
-      <Head>
-        <title>{`Derek Garnett | ${title || ''}`}</title>
-        <meta key="og-image" property="og:image" content={mainMedia || ''} />
-        <meta key="og-url" property="og:url" content={mainMedia || ''} />
-        <meta key="title" name="title" content={title || ''} />
-        <meta key="twitter-title" property="twitter:title" content={title || ''} />
-        <meta key="twitter-description" property="twitter:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-        <meta key="og-title" property="og:title" content={title || ''} />
-        <meta key="keywords" name="keywords" content={tags || ''} />
-        <meta key="description" name="description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-        <meta key="og-description" property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
-      </Head>
+      <PageHead
+        title={`Derek Garnett | ${title || ''}`}
+        image={mainMedia}
+        description={postContent.replace('<p>', '').replace('</p>', '')}
+        keywords={tags}
+      />
 
       {beforePost()}
 
@@ -191,6 +185,7 @@ const PostShow = props => {
           comments={comments}
           enableCommenting={enableCommenting}
           apiPath={apiPath}
+
           beforeCommentForm={beforeCommentForm}
           afterCommentForm={afterCommentForm}
         />
