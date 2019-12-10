@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
-import moment from 'moment-timezone'
 import Link from 'next/link'
 import Router from 'next/router'
 import Head from 'next/head'
@@ -19,6 +18,22 @@ import Media from '../../Media'
  * @prop apiPath - String - The api prefix for CRUD operations
  * @prop redirectRoute - String - The route to redirect to after deleting the post
  * @prop className - String - Any additional classes to wrap the component
+ * @prop emptyTitle - String - A title to display when there is no post passed
+ * @prop emptyMessage - String - A message to display when there is no post passed
+ *
+ * Post Hooks
+ * @prop beforePost - Function - Rendered before the post
+ * @prop afterPost - Function - Rendered after the post
+ * @prop beforeTitle - Function - Rendered before the post title
+ * @prop afterTitle - Function - Rendered after the post title
+ * @prop beforeMainMedia - Function - Rendered before the post main media
+ * @prop afterMainMedia - Function - Rendered after the post main media
+ * @prop beforeContent - Function - Rendered before the post content
+ * @prop afterContent - Function - Rendered after the post content
+ * @prop beforeComments - Function - Rendered before the post comments
+ * @prop afterComments - Function - Rendered after the post comments
+ * @prop beforeCommentForm - Function - Rendered before the post comment form
+ * @prop afterCommentForm - Function - Rendered after the post comment form
  */
 const PostShow = props => {
 
