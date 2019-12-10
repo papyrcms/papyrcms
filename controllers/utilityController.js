@@ -8,7 +8,7 @@ class UtilityController extends Controller {
   registerSettings() {
 
     // configure main app settings
-    server.use(async (req, res, next) => {
+    this.server.use(async (req, res, next) => {
 
       const defaultSettings = { enableMenu: false }
       const settings = await configureSettings('app', defaultSettings)
