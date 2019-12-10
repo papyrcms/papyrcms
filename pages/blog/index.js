@@ -10,8 +10,8 @@ import { SectionStandard } from '../../components/Sections/'
 const BlogPage = ({ posts }) => {
 
 
-  const renderAllBlogsLink = sectionProps => {
-    if (sectionProps.posts.length === 5) {
+  const renderAllBlogsLink = () => {
+    if (posts.length === 5) {
       return (
         <Link href="/blog/all">
           <button className="button button-secondary">See all blog posts</button>
@@ -21,7 +21,7 @@ const BlogPage = ({ posts }) => {
   }
 
 
-  const renderDate = (sectionProps, post) => {
+  const renderDate = post => {
 
     const date = post.published && post.publishDate
       ? post.publishDate

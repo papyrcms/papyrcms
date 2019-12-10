@@ -7,7 +7,10 @@ import CommentForm from './CommentForm'
 
 const Comment = props => {
 
-  const { currentUser, settings, enableCommenting, post, apiPath } = props
+  const {
+    currentUser, settings, enableCommenting,
+    post, apiPath, beforeCommentForm, afterCommentForm
+  } = props
 
   if (!settings.enableCommenting || !enableCommenting) {
     return null
@@ -170,7 +173,10 @@ const Comment = props => {
         <h3 className="heading-tertiary comments__title">Comments</h3>
         {renderComments()}
       </div>
+
+      {beforeCommentForm()}
       {renderCommentForm()}
+      {afterCommentForm()}
     </div>
   )
 }

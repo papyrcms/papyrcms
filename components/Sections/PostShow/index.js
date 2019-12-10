@@ -18,15 +18,28 @@ import Media from '../../Media'
  * @prop path - String - The prefix for accessing the edit page
  * @prop apiPath - String - The api prefix for CRUD operations
  * @prop redirectRoute - String - The route to redirect to after deleting the post
- * @prop showDate - Boolean - If true, the publish or created date will show
  * @prop className - String - Any additional classes to wrap the component
  */
 const PostShow = props => {
 
   const {
-    post, showDate, enableCommenting,
+    post, enableCommenting,
     apiPath, className, redirectRoute,
-    currentUser, path, emptyTitle, emptyMessage
+    currentUser, path, emptyTitle, emptyMessage,
+
+    // Hook functions
+    beforePost = () => null,
+    afterPost = () => null,
+    beforeTitle = () => null,
+    afterTitle = () => null,
+    beforeMainMedia = () => null,
+    afterMainMedia = () => null,
+    beforeContent = () => null,
+    afterContent = () => null,
+    beforeComments = () => null,
+    afterComments = () => null,
+    beforeCommentForm = () => null,
+    afterCommentForm = () => null
   } = props
   const { title, tags, mainMedia, content, published, comments } = post
   let postContent = content || ''
@@ -108,18 +121,6 @@ const PostShow = props => {
   }
 
 
-  const renderDate = () => {
-    if (showDate) {
-
-      const date = post.published && post.publishDate
-        ? post.publishDate
-        : post.created
-
-      return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
-    }
-  }
-
-
   if (
     !post ||
     Object.keys(post).length == 0
@@ -148,22 +149,40 @@ const PostShow = props => {
         <meta key="og-description" property="og:description" content={postContent.replace('<p>', '').replace('</p>', '')} />
       </Head>
 
+      {beforePost()}
+
       <div className="post">
         {renderPublishSection()}
+
+        {beforeTitle()}
         <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
-        {renderDate()}
+        {afterTitle()}
+
         {renderTagsSection()}
+
+        {beforeMainMedia()}
         {renderMainMedia()}
+        {afterMainMedia()}
+
+        {beforeContent()}
         <div className="post__content">{renderHTML(postContent)}</div>
+        {afterContent()}
+
         {renderAuthOptions()}
 
+        {beforeComments()}
         <Comment
           post={post}
           comments={comments}
           enableCommenting={enableCommenting}
           apiPath={apiPath}
+          beforeCommentForm={beforeCommentForm}
+          afterCommentForm={afterCommentForm}
         />
+        {afterComments()}
       </div>
+
+      {afterPost()}
     </div>
   )
 }

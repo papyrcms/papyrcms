@@ -39,26 +39,25 @@ const SectionCards = props => {
   const {
     posts, contentLength, emptyMessage,
     perRow, title, path, readMore, clickableMedia,
+
+    // Section hooks
+    beforeTitle = () => null,
+    afterTitle = () => null,
+    beforePostList = () => null,
+    afterPostList = () => null,
+    beforePosts = () => null,
+    afterPosts = () => null,
+
+    // Post hooks
+    beforePostTitle = () => null,
+    afterPostTitle = () => null,
+    beforePostMedia = () => null,
+    afterPostMedia = () => null,
+    beforePostContent = () => null,
+    afterPostContent = () => null,
+    beforePostLink = () => null,
+    afterPostLink = () => null
   } = props
-
-
-  // Section hooks
-  const beforeTitle = () => props.beforeTitle ? props.beforeTitle(props) : null
-  const afterTitle = () => props.afterTitle ? props.afterTitle(props) : null
-  const beforePostList = () => props.beforePostList ? props.beforePostList(props) : null
-  const afterPostList = () => props.afterPostList ? props.afterPostList(props) : null
-  const beforePosts = () => props.beforePosts ? props.beforePosts(props) : null
-  const afterPosts = () => props.afterPosts ? props.afterPosts(props) : null
-
-  // Post hooks
-  const beforePostTitle = post => props.beforePostTitle ? props.beforePostTitle(props, post) : null
-  const afterPostTitle = post => props.afterPostTitle ? props.afterPostTitle(props, post) : null
-  const beforePostMedia = post => props.beforePostMedia ? props.beforePostMedia(props, post) : null
-  const afterPostMedia = post => props.afterPostMedia ? props.afterPostMedia(props, post) : null
-  const beforePostContent = post => props.beforePostContent ? props.beforePostContent(props, post) : null
-  const afterPostContent = post => props.afterPostContent ? props.afterPostContent(props, post) : null
-  const beforePostLink = post => props.beforePostLink ? props.beforePostLink(props, post) : null
-  const afterPostLink = post => props.afterPostLink ? props.afterPostLink(props, post) : null
 
 
   const renderReadMore = post => {

@@ -1,10 +1,6 @@
 import React from 'react'
 import renderHTML from 'react-render-html'
-import GoogleMapReact from 'google-map-react'
-import { connect } from 'react-redux'
-
-const Position = () => <div className="section-maps__position" />
-
+import Map from '../Map'
 
 /**
  * SectionMaps will render a section with some text and a
@@ -15,7 +11,7 @@ const Position = () => <div className="section-maps__position" />
  */
 const SectionMaps = props => {
 
-  const { posts, emptyTitle, emptyMessage, mapLocation, googleMapsKey } = props
+  const { posts, emptyTitle, emptyMessage, mapLocation = start } = props
 
   let latitudePost
   let longitudePost
@@ -50,26 +46,14 @@ const SectionMaps = props => {
   const longitude = parseFloat(longitudePost.title)
 
 
-  const renderMap = (zoom = 15) => {
-
-    const center = {
-      lat: latitude,
-      lng: longitude
-    }
+  const renderMap = () => {
 
     return (
-      <div className="section-maps__map">
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: googleMapsKey }}
-          defaultCenter={center}
-          defaultZoom={zoom}
-        >
-          <Position
-            lat={latitude}
-            lng={longitude}
-          />
-        </GoogleMapReact>
-      </div>
+      <Map
+        latitude={latitude}
+        longitude={longitude}
+        zoom={15}
+      />
     )
   }
 
@@ -81,7 +65,7 @@ const SectionMaps = props => {
       <h2 className='heading-secondary section-maps__title'>{title}</h2>
 
       <div className="section-maps__content">
-        {mapLocation !== 'end' ? renderMap() : null}
+        {mapLocation === 'start' ? renderMap() : null}
 
         <div className='section-maps__text'>
           <div className='section-maps__subtext'>{renderHTML(content)}</div>
@@ -94,9 +78,4 @@ const SectionMaps = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { googleMapsKey: state.googleMapsKey }
-}
-
-
-export default connect(mapStateToProps)(SectionMaps)
+export default SectionMaps

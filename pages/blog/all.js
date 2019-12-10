@@ -8,7 +8,7 @@ import filterPosts from '../../components/filterPosts'
 
 const BlogAllPage = props => {
 
-  const renderDate = (sectionProps, post) => {
+  const renderDate = post => {
 
     const date = post.published && post.publishDate
       ? post.publishDate

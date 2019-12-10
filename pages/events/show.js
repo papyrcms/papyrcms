@@ -1,53 +1,36 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import axios from 'axios'
+import moment from 'moment-timezone'
 import { connect } from 'react-redux'
-import GoogleMapReact from 'google-map-react'
 import keys from '../../config/keys'
+import Map from '../../components/Map'
 import { PostShow } from '../../components/Sections/'
 
-const Position = () => <div className="section-maps__position" />
 
-const Map = props => {
+const EventsShow = props => {
 
-  const { googleMapsKey, event } = props
-  const { latitude, longitude } = event
-
-  if (latitude && longitude) {
-
-    return (
-      <div className="section-maps__map">
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: googleMapsKey }}
-          defaultCenter={{ lat: latitude, lng: longitude }}
-          defaultZoom={16}
-        >
-          <Position
-            lat={latitude}
-            lng={longitude}
-          />
-        </GoogleMapReact>
-      </div>
-    )
-  } else {
-    return null
-  }
-}
-
-
-const EventsShow = props => (
-  <Fragment>
-    <PostShow
-      post={props.event}
-      path="events"
-      apiPath="/api/events"
-      redirectRoute="/events/all"
-    />
+  const renderMap = () => (
     <Map
-      event={props.event}
-      googleMapsKey={props.googleMapsKey}
+      className="u-padding-top-medium"
+      latitude={props.event.latitude}
+      longitude={props.event.longitude}
+      zoom={16}
     />
-  </Fragment>
-)
+  )
+
+  const renderDate = () => (
+    <p>{moment(props.event.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+  )
+
+  return <PostShow
+    post={props.event}
+    path="events"
+    apiPath="/api/events"
+    redirectRoute="/events/all"
+    afterPost={renderMap}
+    afterTitle={renderDate}
+  />
+}
 
 
 EventsShow.getInitialProps = async context => {
@@ -73,7 +56,7 @@ EventsShow.getInitialProps = async context => {
 
 
 const mapStateToProps = state => {
-  return { event: state.event, googleMapsKey: state.googleMapsKey }
+  return { event: state.event }
 }
 
 

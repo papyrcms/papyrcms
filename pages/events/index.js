@@ -8,7 +8,7 @@ import { SectionStandard } from '../../components/Sections/'
 const EventsPage = props => {
 
 
-  const renderDate = (sectionProps, post) => (
+  const renderDate = post => (
     <p>{moment(post.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
   )
 
@@ -20,7 +20,6 @@ const EventsPage = props => {
     readMore
     path="events"
     emptyMessage="There are no events coming up."
-    showDate="date"
     beforePostContent={renderDate}
   />
 }
