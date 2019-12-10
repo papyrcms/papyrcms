@@ -56,29 +56,20 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-// configure main app settings
-const { configureSettings } = require('./utilities/functions')
-server.use(async (req, res, next) => {
 
-  // Instantiate res.locals.settings
+// Instantiate res.locals.settings
+server.use(async (req, res, next) => {
   if (!res.locals.settings) {
     res.locals.settings = {}
   }
-
-  const defaultSettings = { enableMenu: false }
-  const settings = await configureSettings('app', defaultSettings)
-
-  Object.keys(settings).forEach(optionKey => {
-    const optionValue = settings[optionKey]
-
-    res.locals.settings[optionKey] = optionValue
-  })
   next()
 })
+
 
 // Check if the user is banned
 const middleware = require('./utilities/middleware')
 server.use(middleware.checkIfBanned)
+
 
 // Server config
 const dev = process.env.NODE_ENV !== 'production'
@@ -101,10 +92,6 @@ app.prepare().then(() => {
   controllers.forEach(controller => {
     controller.registerRoutes()
   })
-
-  // Register Utilitiy Routes
-  const UtilityRoutes = require('./utilities/routes')
-  new UtilityRoutes(server, app)
 
   // Anything without a specified route
   server.get('*', (req, res) => {

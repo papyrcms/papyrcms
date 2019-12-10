@@ -1,13 +1,25 @@
+const Controller = require('./abstractController')
 const keys = require('../config/keys')
+const { configureSettings } = require('../utilities/functions')
 
-class UtilityRoutes {
 
-  constructor(server, app) {
+class UtilityController extends Controller {
 
-    this.server = server
-    this.app = app
+  registerSettings() {
 
-    this.registerRoutes()
+    // configure main app settings
+    server.use(async (req, res, next) => {
+
+      const defaultSettings = { enableMenu: false }
+      const settings = await configureSettings('app', defaultSettings)
+
+      Object.keys(settings).forEach(optionKey => {
+        const optionValue = settings[optionKey]
+
+        res.locals.settings[optionKey] = optionValue
+      })
+      next()
+    })
   }
 
 
@@ -34,4 +46,4 @@ class UtilityRoutes {
   }
 }
 
-module.exports = UtilityRoutes
+module.exports = UtilityController

@@ -72,7 +72,7 @@ class Mailer {
   async sendBulkEmail(post) {
 
     const subscribedUsers = await UserModel.find({ isSubscribed: true })
-    
+
     // Create an email transporter
     const transporter = this.createTransporter()
 
@@ -128,7 +128,7 @@ class Mailer {
 
     // Create an email transporter
     const transporter = this.createTransporter()
-    
+
     const mailOptions = {
       from: keys.siteEmail,
       to: recipient,
