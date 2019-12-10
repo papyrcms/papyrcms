@@ -5,27 +5,25 @@ import keys from '../../config/keys'
 import { PostShow } from '../../components/Sections'
 
 
-
 const StoreShow = props => {
 
-
-  const renderAddToCartSection = () => {
-    return <h1>Oh Snap.</h1>
+  const renderProductDetails = () => {
+    return (
+      <Fragment>
+        <p>${props.product.price.toFixed(2)}</p>
+        <p>{props.product.quantity} in stock</p>
+      </Fragment>
+    )
   }
 
-
-  const { product } = props
-
   return (
-    <Fragment>
-      <PostShow
-        post={product}
-        path="store"
-        apiPath="/api/products"
-        redirectRoute="/store"
-      />
-      {renderAddToCartSection()}
-    </Fragment>
+    <PostShow
+      post={props.product}
+      path="store"
+      apiPath="/api/products"
+      redirectRoute="/store"
+      afterContent={renderProductDetails}
+    />
   )
 }
 
