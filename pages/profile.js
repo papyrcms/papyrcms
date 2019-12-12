@@ -5,17 +5,20 @@ import Router from 'next/router'
 import Link from 'next/link'
 import { setCurrentUser } from '../reduxStore'
 import Input from '../components/Input'
+import useForm from '../hooks/useForm'
 
 const ProfilePage = props => {
 
   const { currentUser, setCurrentUser } = props
-  const [firstName, setFirstName] = useState(currentUser ? currentUser.firstName : '')
-  const [lastName, setLastName] = useState(currentUser ? currentUser.lastName : '')
-  const [infoValidation, setInfoValidation] = useState('')
-  const [oldPassword, setOldPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState('')
-  const [passwordValidation, setPasswordValidation] = useState('')
+  // const [firstName, setFirstName] = useState(currentUser ? currentUser.firstName : '')
+  // const [lastName, setLastName] = useState(currentUser ? currentUser.lastName : '')
+  // const [infoValidation, setInfoValidation] = useState('')
+  // const [oldPassPassword, setOldPassword] = useState('')
+  // const [newPassPassword, setNewPassword] = useState('')
+  // const [newPassPasswordConfirm, setNewPasswordConfirm] = useState('')
+  // const [passwordValidation, setPasswordValidation] = useState('')
+  const info = useForm({ firstName: currentUser.firstName, lastName: currentUser.lastName, validation: '', userId: currentUser._id })
+  const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '', userId: currentUser._id })
 
 
   const onLogoutClick = () => {
@@ -33,45 +36,28 @@ const ProfilePage = props => {
 
   const handleInfoSubmit = event => {
 
-    event.preventDefault()
+    const success = (response, setValidation) => {
+      axios.get('/api/currentUser')
+        .then(res => {
+          setCurrentUser(res.data)
+          setValidation('User info updated.')
+        }).catch(err => {
+          setValidation('Uh oh, something went wrong!')
+          console.error(err)
+        })
+    }
 
-    const infoData = { firstName, lastName, userId: currentUser._id }
-
-    axios.put('/api/currentUser', infoData)
-      .then(res => {
-        if (!!res.data.error) {
-          setInfoValidation(res.data.error)
-        } else {
-          axios.get('/api/currentUser')
-            .then(res => {
-              setCurrentUser(res.data)
-              setInfoValidation('User info updated.')
-            }).catch(err => {
-              console.error(err)
-            })
-        }
-      }).catch(err => {
-        console.error(err)
-      })
+    info.submitForm(event, '/api/currentUser', { success }, true)
   }
 
 
   const handlePasswordSubmit = event => {
 
-    event.preventDefault()
+    const success = (response, setValidation) => {
+      setValidation('Your password has been changed.')
+    }
 
-    const passwordData = { oldPassword, newPassword, newPasswordConfirm, userId: currentUser._id }
-
-    axios.post('/api/changePassword', passwordData)
-      .then(res => {
-        setPasswordValidation(res.data.message)
-        setOldPassword('')
-        setNewPassword('')
-        setNewPasswordConfirm('')
-      }).catch(err => {
-        console.error(err)
-        setPasswordValidation(err.response.data.message)
-      })
+    password.submitForm(event, '/api/changePassword', { success })
   }
 
 
@@ -123,20 +109,26 @@ const ProfilePage = props => {
                 id="profile-first-name"
                 label="First Name"
                 name="firstName"
-                value={firstName}
-                onChange={event => setFirstName(event.target.value)}
+                value={info.values.firstName}
+                validation = {info.errors.firstName}
+                onChange={info.handleChange}
+                onBlur={info.validateField}
+                required
               />
 
               <Input
                 id="profile-last-name"
                 label="Last Name"
                 name="lastName"
-                value={lastName}
-                onChange={event => setLastName(event.target.value)}
+                value={info.values.lastName}
+                validation={info.errors.lastName}
+                onChange={info.handleChange}
+                onBlur={info.validateField}
+                required
               />
             </div>
 
-            <p className="profile__validation">{infoValidation}</p>
+            <p className="profile__validation">{info.values.validation}</p>
             <input
               className="button button-primary"
               type="submit"
@@ -152,31 +144,40 @@ const ProfilePage = props => {
               <Input
                 id="profile-current-password"
                 label="Current Password"
-                name="oldPassword"
-                value={oldPassword}
-                onChange={event => setOldPassword(event.target.value)}
+                name="oldPass"
+                value={password.values.oldPass}
+                validation={password.errors.oldPass}
+                onChange={password.handleChange}
+                onBlur={password.validateField}
                 type="password"
+                required
               />
 
               <Input
                 id="profile-new-password"
                 label="New Password"
-                name="newPassword"
-                value={newPassword}
-                onChange={event => setNewPassword(event.target.value)}
+                name="newPass"
+                value={password.values.newPass}
+                validation={password.errors.newPass}
+                onChange={password.handleChange}
+                onBlur={password.validateField}
                 type="password"
+                required
               />
 
               <Input
                 id="profile-confirm-password"
                 label="Confirm Password"
-                name="newPasswordConfirm"
-                value={newPasswordConfirm}
-                onChange={event => setNewPasswordConfirm(event.target.value)}
+                name="confirmPass"
+                value={password.values.confirmPass}
+                validation={password.errors.confirmPass}
+                onChange={password.handleChange}
+                onBlur={password.validateField}
                 type="password"
+                required
               />
             </div>
-            <p className="profile__validation">{passwordValidation}</p>
+            <p className="profile__validation">{password.values.validation}</p>
             <input
               className="button button-primary"
               type="submit"

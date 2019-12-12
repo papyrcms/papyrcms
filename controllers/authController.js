@@ -244,26 +244,26 @@ class AuthController extends Controller {
 
   changeUserPassword(req, res) {
 
-    const { oldPassword, newPassword, newPasswordConfirm, userId } = req.body
+    const { oldPass, newPass, confirmPass, userId } = req.body
 
     // Make sure password fields are filled out
-    if (!oldPassword) {
+    if (!oldPass) {
       res.status(400).send({ message: 'You need to fill in your current password.' })
-    } else if (!newPassword) {
+    } else if (!newPass) {
       res.status(400).send({ message: 'You need to fill in your new password.' })
     }
 
     UserModel.findById(userId, (err, foundUser) => {
       if (!!foundUser) {
         // Make sure the entered password is the user's password
-        foundUser.authenticate(oldPassword, (err, user, passwordError) => {
+        foundUser.authenticate(oldPass, (err, user, passwordError) => {
           if (!!user) {
             // Check to see new password fields match
-            if (newPassword !== newPasswordConfirm) {
+            if (newPass !== confirmPass) {
               res.status(400).send({ message: 'The new password fields do not match.' })
             } else {
               // Set the new password
-              foundUser.setPassword(newPassword, () => {
+              foundUser.setPassword(newPass, () => {
                 foundUser.save()
                 res.send({ message: 'Your password has been saved!' })
               })
