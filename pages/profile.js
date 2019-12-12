@@ -190,7 +190,7 @@ const ProfilePage = props => {
 
 
   return (
-    <div className="profile-page">
+    <div className="page profile-page">
       {renderProfilePage()}
     </div>
   )

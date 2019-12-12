@@ -1,7 +1,4 @@
 .profile-page {
-
-  @include sectionStyle();
-
   &__not-logged-in {
     font-weight: 400;
     font-size: 3rem;
@@ -14,8 +11,10 @@
   grid-gap: 3rem;
   grid-template-columns: 1fr;
 
-  margin: 0 auto;
-  max-width: $max-section-width;
+  @include sectionStyle();
+
+  // margin: 0 auto;
+  // max-width: $max-section-width;
 
   & > *:not(:last-child) {
     border-bottom: .1rem solid $color-grey-dark;
