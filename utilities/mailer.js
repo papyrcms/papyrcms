@@ -33,6 +33,23 @@ class Mailer {
 
   createTransporter() {
 
+    const { gmailClientId, gmailClientSecret, gmailRefreshToken } = keys
+
+    // If we don't have our smtp stuff
+    if (
+      !gmailClientId ||
+      !gmailClientSecret ||
+      !gmailRefreshToken ||
+      true
+    ) {
+      console.log('Sending other type of email.')
+      return nodemailer.createTransport({
+        sendmail: true,
+        // newline: 'unix',
+        // path: './sendmail'
+      })
+    }
+
     return nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -130,7 +147,7 @@ class Mailer {
     const transporter = this.createTransporter()
 
     const mailOptions = {
-      from: keys.siteEmail,
+      from: `<Derek> ${keys.siteEmail}`,
       to: recipient,
       subject: emailSubject,
       generateTextFromHTML: true,
