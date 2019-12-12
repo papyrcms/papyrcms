@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
+import useForm from '../hooks/useForm'
 import { setCurrentUser } from '../reduxStore'
 import Input from './Input'
 
@@ -9,41 +10,41 @@ import Input from './Input'
 const RegisterForm = props => {
 
   const { settings, setCurrentUser } = props
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
-  const [validation, setValidation] = useState('')
+
+  if (!settings.enableRegistration) {
+    return null
+  }
+
+  const INITIAL_STATE = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    validation: ''
+  }
+  const {
+    values,
+    validateField,
+    errors,
+    handleChange,
+    submitForm
+  } = useForm(INITIAL_STATE)
 
 
   const handleSubmit = event => {
 
-    event.preventDefault()
-
-    axios.post('/api/register', { firstName, lastName, username: email, password, passwordConfirm })
+    const success = () => {
+      axios.get('/api/currentUser')
       .then(res => {
-
-        if (res.data.error) {
-          setValidation(res.data.error.message)
-        } else if (res.data === 'success') {
-
-          axios.get('/api/currentUser')
-            .then(res => {
-              setCurrentUser(res.data)
-              Router.push('/profile')
-            }).catch(err => {
-              setValidation(err.response.data.message)
-            })
-        }
+        setCurrentUser(res.data)
+        Router.push('/profile')
       }).catch(err => {
-        setValidation(err.response.data.message)
+        console.error(err)
       })
-  }
+    }
 
-
-  if (!settings.enableRegistration) {
-    return null
+    submitForm(event, '/api/register', { success })
   }
 
 
@@ -55,45 +56,61 @@ const RegisterForm = props => {
         id="first_name_register_input"
         label="First Name"
         name="firstName"
-        value={firstName}
-        onChange={event => setFirstName(event.target.value)}
+        value={values.firstName}
+        onChange={handleChange}
+        onBlur={validateField}
+        validation={errors.firstName}
+        required
       />
 
       <Input
         id="last_name_register_input"
         label="Last Name"
         name="lastName"
-        value={lastName}
-        onChange={event => setLastName(event.target.value)}
+        value={values.lastName}
+        onChange={handleChange}
+        onBlur={validateField}
+        validation={errors.lastName}
+        required
       />
 
       <Input
         id="email_register_input"
         label="Email"
         name="email"
-        value={email}
-        onChange={event => setEmail(event.target.value)}
+        type="email"
+        value={values.email}
+        onChange={handleChange}
+        onBlur={validateField}
+        validation={errors.email}
+        required
       />
 
       <Input
         id="password_register_input"
         label="Password"
         name="password"
-        value={password}
-        onChange={event => setPassword(event.target.value)}
+        value={values.password}
+        onChange={handleChange}
         type="password"
+        onBlur={validateField}
+        validation={errors.password}
+        required
       />
 
       <Input
         id="password_confirm_register_input"
         label="Confirm Password"
         name="passwordConfirm"
-        value={passwordConfirm}
-        onChange={event => setPasswordConfirm(event.target.value)}
+        value={values.passwordConfirm}
+        onChange={handleChange}
         type="password"
+        onBlur={validateField}
+        validation={errors.passwordConfirm}
+        required
       />
 
-      <p className="register-form__validation">{validation}</p>
+      <p className="register-form__validation">{values.validation}</p>
 
       <div className="register-form__submit">
         <input

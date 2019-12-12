@@ -15,5 +15,16 @@
     color: $color-grey-dark;
     letter-spacing: .1rem;
     @include inputBorderStyle();
+
+    &--invalid {
+      border: .2rem solid $color-error;
+    }
+  }
+
+  &__validation {
+    font-size: 1.4rem;
+    color: $color-error;
+    margin-bottom: 1rem;
+    font-style: italic
   }
 }

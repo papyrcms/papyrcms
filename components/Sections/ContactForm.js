@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { connect } from 'react-redux'
 import Input from '../Input'
+import useForm from '../../hooks/useForm'
 
 
 /**
@@ -29,36 +29,22 @@ const ContactForm = props => {
     email = currentUser.email ? currentUser.email : ''
   }
 
-  const [contactName, setContactName] = useState(name)
-  const [contactEmail, setContactEmail] = useState(email)
-  const [contactMessage, setContactMessage] = useState(initialMessage || '')
-  const [validation, setValidation] = useState('')
+  const {
+    values,
+    handleChange,
+    errors,
+    validateField,
+    submitForm
+  } = useForm({ name, email, message: '', validation: '' })
 
 
   const handleSubmit = event => {
 
-    event.preventDefault()
-
-    if (
-      contactName === '' ||
-      contactEmail === '' ||
-      contactMessage === ''
-    ) {
-      setValidation('Please complete all the fields.')
-    } else {
-
-      const contactObject = { contactName, contactEmail, contactMessage }
-
-      axios.post('/api/contact', contactObject)
-        .then(response => {
-          setContactName('')
-          setContactEmail('')
-          setContactMessage('')
-          setValidation('Thanks for reaching out! I\'ll be in touch.')
-        }).catch(error => {
-          console.error(error)
-        })
+    const success = (response, setValidation) => {
+      setValidation('Thanks for reaching out! I\'ll be in touch.')
     }
+
+    submitForm(event, '/api/contact', { success })
   }
 
 
@@ -72,16 +58,23 @@ const ContactForm = props => {
             id="contact-name"
             label="Name"
             name="name"
-            value={contactName}
-            onChange={event => setContactName(event.target.value)}
+            value={values.name}
+            validation={errors.name}
+            onChange={handleChange}
+            onBlur={validateField}
+            required
           />
 
           <Input
             id="contact-email"
             label="Email"
             name="email"
-            value={contactEmail}
-            onChange={event => setContactEmail(event.target.value)}
+            type="email"
+            value={values.email}
+            validation={errors.email}
+            onChange={handleChange}
+            onBlur={validateField}
+            required
           />
         </div>
 
@@ -90,9 +83,13 @@ const ContactForm = props => {
           <textarea
             id="contact-message"
             className="contact-form__textarea"
-            value={contactMessage}
-            onChange={event => setContactMessage(event.target.value)}
+            name="message"
+            value={values.message}
+            onBlur={validateField}
+            onChange={handleChange}
+            required
           />
+          <p className="contact-form__validation">{errors.message}</p>
         </div>
 
         <input
@@ -101,7 +98,7 @@ const ContactForm = props => {
           value="Send"
         />
 
-        <p className="contact-form__validation">{validation}</p>
+        <p className="contact-form__validation">{values.validation}</p>
 
       </form>
     </section>

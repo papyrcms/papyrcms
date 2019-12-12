@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 import { setCurrentUser } from '../../reduxStore'
+import useForm from '../../hooks/useForm'
 import Input from '../Input'
 import Modal from '../Modal'
 import ForgotPasswordForm from './ForgotPasswordForm'
@@ -11,35 +12,33 @@ import ForgotPasswordForm from './ForgotPasswordForm'
 const LoginForm = props => {
 
   const { setCurrentUser } = props
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [validation, setValidation] = useState('')
+  const INITIAL_STATE = {
+    username: '',
+    password: '',
+    validation: ''
+  }
+  const {
+    values,
+    validateField,
+    errors,
+    handleChange,
+    submitForm
+  } = useForm(INITIAL_STATE)
 
 
   const handleSubmit = event => {
 
-    event.preventDefault()
+    const success = () => {
+      axios.get('/api/currentUser')
+        .then(res => {
+          setCurrentUser(res.data)
+          Router.push('/profile')
+        }).catch(err => {
+          console.error(err)
+        })
+    }
 
-    axios.post('/api/login', { username: email, password })
-      .then(res => {
-
-        axios.get('/api/currentUser')
-          .then(res => {
-            setCurrentUser(res.data)
-            Router.push('/profile')
-          }).catch(err => {
-            console.error(err)
-          })
-      }).catch(err => {
-
-        console.error(err)
-
-        if (err.response.data.message) {
-          setValidation(err.response.data.message)
-        } else {
-          setValidation('Something went wrong. Please try again.')
-        }
-      })
+    submitForm(event, '/api/login', { success })
   }
 
 
@@ -51,21 +50,28 @@ const LoginForm = props => {
       <Input
         id="email_login_input"
         label="Email"
-        name="email"
-        value={email}
-        onChange={event => setEmail(event.target.value)}
+        name="username"
+        type="email"
+        value={values.email}
+        onChange={handleChange}
+        onBlur={validateField}
+        required
+        validation={errors.email}
       />
 
       <Input
         id="password_login_input"
         label="Password"
         name="password"
-        value={password}
-        onChange={event => setPassword(event.target.value)}
+        value={values.password}
+        onChange={handleChange}
+        onBlur={validateField}
+        required
+        validation={errors.password}
         type="password"
       />
 
-      <p className="login-form__validation">{validation}</p>
+      <p className="login-form__validation">{values.validation}</p>
 
       <div className="login-form__bottom">
         <div className="login-form__submit">
@@ -80,7 +86,7 @@ const LoginForm = props => {
           buttonClasses="login-form__forgot-password"
           buttonText="Forgot Password?"
         >
-          <ForgotPasswordForm email={email} />
+          <ForgotPasswordForm email={values.email} />
         </Modal>
       </div>
 

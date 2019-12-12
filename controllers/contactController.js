@@ -68,12 +68,10 @@ class ContactController extends Controller {
 
   createMessage(req, res) {
 
-    const { contactName, contactEmail, contactMessage } = req.body
-
     const message = new MessageModel({
-      name: contactName,
-      email: contactEmail,
-      message: contactMessage
+      name: req.body.name,
+      email: req.body.email,
+      message: req.body.message
     })
 
     if (res.locals.settings.enableEmailingToAdmin) {

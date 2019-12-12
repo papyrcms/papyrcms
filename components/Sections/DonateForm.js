@@ -68,6 +68,7 @@ const DonateForm = props => {
             id="donation_email"
             label="Email"
             type="email"
+            required
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
@@ -76,6 +77,7 @@ const DonateForm = props => {
             id="donation_amount"
             label="Amount"
             type="number"
+            required
             value={amount}
             onChange={event => setAmount(event.target.value)}
           />

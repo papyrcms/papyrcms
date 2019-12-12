@@ -20,8 +20,8 @@ const Input = props => {
 
   const {
     className, type, placeholder, name,
-    id, label, value, onChange,
-    onFocus, onBlur, children
+    id, label, value, onChange, required,
+    onFocus, onBlur, children, validation
   } = props
 
   const renderLabel = () => {
@@ -38,12 +38,14 @@ const Input = props => {
         placeholder={placeholder || ''}
         name={name}
         id={id || ''}
-        className="input__input"
+        className={`input__input ${!!validation && 'input__input--invalid'}`}
         value={value}
+        required={!!required}
         onChange={event => { if (onChange) { onChange(event) } }}
         onBlur={event => { if (onBlur) { onBlur(event) } }}
         onFocus={event => { if (onFocus) { onFocus(event) } }}
       />
+      <p className="input__validation">{validation}</p>
       {children || null}
     </div>
   )

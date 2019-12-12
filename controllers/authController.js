@@ -32,11 +32,11 @@ class AuthController extends Controller {
 
     // Views
     this.server.get(
-      '/login', 
+      '/login',
       this.renderPage.bind(this)
     )
     this.server.get(
-      '/profile', 
+      '/profile',
       this.renderPage.bind(this)
     )
     this.server.get(
@@ -47,23 +47,23 @@ class AuthController extends Controller {
 
     // API
     this.server.post(
-      '/api/register', 
-      this.allowRegisterUser, 
+      '/api/register',
+      this.allowRegisterUser,
       this.registerUser.bind(this)
     )
     this.server.post(
-      '/api/login', 
+      '/api/login',
       sanitizeRequestBody,
-      passport.authenticate('local', {}), 
+      passport.authenticate('local', {}),
       checkIfBanned,
       this.sendCurrentUser.bind(this)
     )
     this.server.get(
-      '/api/currentUser', 
+      '/api/currentUser',
       this.sendCurrentUser.bind(this)
     )
     this.server.put(
-      '/api/currentUser', 
+      '/api/currentUser',
       sanitizeRequestBody,
       this.updateCurrentUser.bind(this)
     )
@@ -81,7 +81,7 @@ class AuthController extends Controller {
     )
     this.server.post(
       '/api/changePassword',
-      sanitizeRequestBody, 
+      sanitizeRequestBody,
       this.changeUserPassword.bind(this)
     )
     this.server.post(
@@ -95,7 +95,7 @@ class AuthController extends Controller {
       this.sendForgotPasswordEmail.bind(this)
     )
     this.server.get(
-      '/api/logout', 
+      '/api/logout',
       this.logoutUser.bind(this)
     )
     this.server.get(
@@ -178,7 +178,7 @@ class AuthController extends Controller {
 
   registerUser(req, res) {
 
-    const { firstName, lastName, username, password, passwordConfirm } = req.body
+    const { firstName, lastName, email, password, passwordConfirm } = req.body
 
     if (!firstName || firstName === '') {
       res.status(400).send({ message: 'Please enter your first name' })
@@ -188,8 +188,8 @@ class AuthController extends Controller {
       res.status(400).send({ message: 'Please enter your last name' })
     }
 
-    // Make sure "username" is in email format
-    if (!this.verifyEmailSyntax(username)) {
+    // Make sure email is in email format
+    if (!this.verifyEmailSyntax(email)) {
       res.status(400).send({ message: 'Please use a valid email address' })
     }
 
@@ -201,11 +201,12 @@ class AuthController extends Controller {
     // The LocalStrategy module requires a username
     // Set username and email as the user's email
     const newUser = new UserModel({
-      username, email: username, firstName, lastName
+      username: email, email, firstName, lastName
     })
 
     UserModel.register(newUser, password, err => {
       if (err) {
+        err.message = err.message.replace('username', 'email')
         res.send({ error: err })
       }
 
