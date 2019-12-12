@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Router from 'next/router'
@@ -10,13 +10,6 @@ import useForm from '../hooks/useForm'
 const ProfilePage = props => {
 
   const { currentUser, setCurrentUser } = props
-  // const [firstName, setFirstName] = useState(currentUser ? currentUser.firstName : '')
-  // const [lastName, setLastName] = useState(currentUser ? currentUser.lastName : '')
-  // const [infoValidation, setInfoValidation] = useState('')
-  // const [oldPassPassword, setOldPassword] = useState('')
-  // const [newPassPassword, setNewPassword] = useState('')
-  // const [newPassPasswordConfirm, setNewPasswordConfirm] = useState('')
-  // const [passwordValidation, setPasswordValidation] = useState('')
   const info = useForm({ firstName: currentUser.firstName, lastName: currentUser.lastName, validation: '', userId: currentUser._id })
   const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '', userId: currentUser._id })
 
