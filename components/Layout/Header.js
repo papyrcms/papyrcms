@@ -72,10 +72,12 @@ const Header = props => {
 
   return (
     <header className="header">
-      <h1 className="heading-primary">
-        {renderTitle()}
-      </h1>
-      {renderNav()}
+      <div className="header__container">
+        <h1 className="heading-primary">
+          {renderTitle()}
+        </h1>
+        {renderNav()}
+      </div>
     </header>
   )
 }

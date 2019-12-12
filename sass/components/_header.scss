@@ -1,22 +1,28 @@
 .header {
 
-  @include sectionStyle();
   background: linear-gradient(45deg, lighten($color-primary, 10%), darken($color-primary, 30%));
   height: 40rem;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 
-  @include respond(tab-land) {
-    text-align: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+    max-width: $max-section-width;
+    margin: 0 auto;
+    padding: 0 10rem;
+    height: 100%;
 
-  @include respond(phone) {
-    padding: 6rem 0;
+    @include respond(tab-land) {
+      text-align: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    @include respond(phone) {
+      padding: 6rem 0;
+    }
   }
 
   &__menu-item {
