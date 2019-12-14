@@ -3,8 +3,8 @@ import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 
 export default () => (
-  <div className="page login-page">
+  <div className="login-page">
     <LoginForm />
-    <RegisterForm className="login-page__form" />
+    <RegisterForm />
   </div>
 )

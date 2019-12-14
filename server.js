@@ -93,6 +93,8 @@ app.prepare().then(() => {
     controller.registerRoutes()
   })
 
+  // Get plugin pages
+
   // Anything without a specified route
   server.get('*', (req, res) => {
     return handle(req, res)

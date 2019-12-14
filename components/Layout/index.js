@@ -96,7 +96,7 @@ const Layout = props => {
         subTitle={renderHTML(headerSubTitle)}
       />
 
-      <main>
+      <main className="page">
         {props.children}
       </main>
 

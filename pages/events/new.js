@@ -2,33 +2,40 @@ import React from 'react'
 import PostsForm from '../../components/PostsForm/'
 import Input from '../../components/Input'
 
-const dateField = ({ date, changeState }) => (
+const dateField = ({ values, errors, handleChange, validateField }) => (
   <Input
     id="event_date"
     label="Date"
     type="date"
     name="date"
-    value={date || ''}
-    onChange={event => changeState(event.target.value, 'date')}
+    value={values.date || ''}
+    validation={errors.date}
+    onBlur={validateField}
+    onChange={handleChange}
+    required
   />
 )
 
-const coordinatesField = ({ latitude, longitude, changeState }) => (
+const coordinatesField = ({ values, errors, handleChange, validateField }) => (
   <div className="post-form__top">
     <Input
       id="event_latitude"
       label="Latitude"
       name="latitude"
-      value={latitude || ''}
-      onChange={event => changeState(event.target.value, 'latitude')}
+      value={values.latitude || ''}
+      validation={errors.latitude}
+      onBlur={validateField}
+      onChange={handleChange}
     />
 
     <Input
       id="event_longitude"
       label="Longitude"
       name="longitude"
-      value={longitude || ''}
-      onChange={event => changeState(event.target.value, 'longitude')}
+      value={values.longitude || ''}
+      validation={errors.longitude}
+      onBlur={validateField}
+      onChange={handleChange}
     />
   </div>
 )

@@ -6,7 +6,7 @@ import PostsForm from '../../components/PostsForm'
 import Input from '../../components/Input'
 
 
-const ProductFields = ({ price, quantity, changeState }) => {
+const ProductFields = ({ values, errors, validateField, handleChange }) => {
 
   return(
     <div className="post-form__top">
@@ -14,35 +14,44 @@ const ProductFields = ({ price, quantity, changeState }) => {
         id="price"
         label="Price"
         name="price"
-        value={price || 0.00}
-        onChange={event => changeState(event.target.value, 'price')}
+        value={values.price || 0.00}
+        validation={errors.price}
+        onBlur={validateField}
+        onChange={handleChange}
         type="number"
+        required
       />
 
       <Input
         id="quantity"
         label="Stock Quantity"
         name="quantity"
-        value={quantity || 0}
-        onChange={event => changeState(event.target.value, 'quantity')}
+        value={values.quantity || 0}
+        validation={errors.quantity}
+        onBlur={validateField}
+        onChange={handleChange}
         type="number"
+        required
       />
     </div>
   )
 }
 
 const StoreEdit = props => {
+
+  const { product } = props
+
   return (
     <PostsForm
       pageTitle="Edit Product"
-      post={props.product}
-      apiEndpoint={`/api/products/${props.product._id}`}
+      post={product}
+      apiEndpoint={`/api/products/${product._id}`}
       redirectRoute="/store"
       editing
       additionalFields={[ProductFields]}
       additionalState={{
-        price: props.product.price,
-        quantity: props.product.quantity
+        price: product.price,
+        quantity: product.quantity
       }}
     />
   )

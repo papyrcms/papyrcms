@@ -12,13 +12,11 @@ import TinyMCE from 'react-tinymce'
 const TextEditor = props => {
 
   const [useEditor, setUseEditor] = useState(false)
-  useEffect(() => {setUseEditor(true)}, [])
+  useEffect(() => {
+    setUseEditor(true)
+  }, [])
 
-  if (!useEditor) {
-    return null
-  }
-
-  const { content, className, onChange } = props
+  if (!useEditor) return null
 
   // NOT a fan of this
   const contentStyle = `
@@ -30,17 +28,24 @@ const TextEditor = props => {
     }
   `
 
+  const { name, content, className, onChange } = props
+
   return (
     <div className={className}>
       <TinyMCE
         content={content}
+        id={name}
         config={{
           plugins: 'autolink link image lists code',
           toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
           height: 250,
           content_style: contentStyle
         }}
-        onChange={event => onChange(event.target.getContent())}
+        onChange={event => {
+          event.target.value = event.target.getContent()
+          event.target.name = name
+          onChange(event)
+        }}
       />
     </div>
   )

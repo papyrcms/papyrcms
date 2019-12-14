@@ -175,7 +175,7 @@ const PageContent = props => {
   return (
     <Fragment>
       {renderPageHead()}
-      <div className={`${props.page.className} page`}>
+      <div className={props.page.className}>
         {renderSections(props)}
       </div>
     </Fragment>

@@ -7,37 +7,32 @@ import Input from '../Input'
 const Form = props => {
 
   const {
-    isAdminUser, publish, additionalFields,
-    changeState, additionalState, mainMedia,
-    title, tags, content, handleSubmit, validationMessage
+    values, handleChange, errors,
+    validateField, additionalFields, handleSubmit
   } = props
   const [mediaUpload, setMediaUpload] = useState(false)
   const [uploadedMedia, setUploadedMedia] = useState(false)
   const [dots, setDots] = useState('')
 
 
-  const renderPublish = () => {
-    if (isAdminUser) {
-      return (
-        <div className="post-form__publish">
-          <input
-            id="publish-checkbox"
-            className="post-form__checkbox--input"
-            type="checkbox"
-            name="published"
-            checked={publish}
-            onChange={() => changeState(!publish, 'publish')}
-          />
-          <label htmlFor="publish-checkbox" className="post-form__label">Publish Post <span className="post-form__checkbox--span"></span></label>
-        </div>
-      )
-    }
-  }
+  const renderPublish = () => (
+    <div className="post-form__publish">
+      <input
+        id="publish-checkbox"
+        className="post-form__checkbox--input"
+        type="checkbox"
+        name="published"
+        checked={values.published}
+        onChange={event => handleChange({ target: { name: 'published', value: !values.published } })}
+      />
+      <label htmlFor="publish-checkbox" className="post-form__label">Publish Post <span className="post-form__checkbox--span"></span></label>
+    </div>
+  )
 
 
   const handleFileInputChange = event => {
 
-    changeState('', 'mainMedia')
+    handleChange({ target: { value: '', name: 'mainMedia' } })
     setUploadedMedia(true)
 
     let formData = new FormData
@@ -45,7 +40,8 @@ const Form = props => {
 
     axios.post('/api/upload', formData)
       .then(res => {
-        changeState(res.data, 'mainMedia')
+        const event = { target: { value: res.data, name: 'mainMedia' } }
+        handleChange(event)
       }).catch(err => {
         console.error(err.response)
       })
@@ -68,9 +64,9 @@ const Form = props => {
     } else {
       return (
         <Input
-          name="image"
-          value={mainMedia}
-          onChange={event => changeState(event.target.value, 'mainMedia')}
+          name="mainMedia"
+          value={values.mainMedia}
+          onChange={handleChange}
         />
       )
     }
@@ -78,7 +74,7 @@ const Form = props => {
 
 
   const renderDots = () => {
-    if (uploadedMedia && mainMedia === '') {
+    if (uploadedMedia && !values.mainMedia) {
       setTimeout(() => {
         switch (dots) {
           case ' .':
@@ -99,13 +95,13 @@ const Form = props => {
 
 
   const renderMedia = () => {
-    if (uploadedMedia && mainMedia === '') {
+    if (uploadedMedia && !values.mainMedia) {
       return <h3 className="heading-tertiary">Loading{renderDots()}</h3>
     } else {
       return (
         <Media
           className="post-form__image"
-          src={mainMedia}
+          src={values.mainMedia}
         />
       )
     }
@@ -115,7 +111,13 @@ const Form = props => {
   const renderAdditionalFields = () => {
     if (additionalFields) {
       return additionalFields.map((Field, i) => {
-        return <Field key={`field-${i}`} changeState={changeState} {...additionalState} />
+        return <Field
+          key={`field-${i}`}
+          handleChange={handleChange}
+          values={values}
+          validateField={validateField}
+          errors={errors}
+        />
       })
     }
   }
@@ -129,8 +131,8 @@ const Form = props => {
           id="post_title"
           label="Title"
           name="title"
-          value={title}
-          onChange={event => changeState(event.target.value, 'title')}
+          value={values.title}
+          onChange={handleChange}
         />
 
         <Input
@@ -138,8 +140,8 @@ const Form = props => {
           label="Tags"
           name="tags"
           placeholder="separated by a comma"
-          value={tags}
-          onChange={event => changeState(event.target.value, 'tags')}
+          value={values.tags}
+          onChange={handleChange}
         />
       </div>
 
@@ -148,7 +150,7 @@ const Form = props => {
         <span>
           <input
             type="radio"
-            name="image"
+            name="mediaUpload"
             checked={mediaUpload ? false : true}
             onChange={() => setMediaUpload(false)}
           />
@@ -157,7 +159,7 @@ const Form = props => {
         <span>
           <input
             type="radio"
-            name="image"
+            name="mediaUpload"
             checked={mediaUpload ? true : false}
             onChange={() => setMediaUpload(true)}
           />
@@ -172,11 +174,12 @@ const Form = props => {
       <label className="post-form__label">Content</label>
       <RichTextEditor
         className="post-form__text-editor"
-        content={content}
-        onChange={newContent => changeState(newContent, 'content')}
+        content={values.content}
+        name="content"
+        onChange={handleChange}
       />
 
-      <p className="post-form__validation">{validationMessage}</p>
+      <p className="post-form__validation">{values.validation}</p>
 
       <div className="post-form__bottom">
         {renderPublish()}
