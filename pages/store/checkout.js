@@ -4,84 +4,80 @@ import axios from 'axios'
 import keys from '../../config/keys'
 import CreditCardForm from '../../components/CreditCardForm'
 import Input from '../../components/Input'
-
-
-const useForm = initialState => {
-
-  const [values, setValues] = useState(initialState)
-
-  const handleChange = event => {
-    const { name, value } = event.target
-    setValues(prevValues => ({ ...prevValues, [name]: value }))
-  }
-
-  const handleSubmit = (stripeSource, setProcessing, setValidation) => {
-    console.log(stripeSource)
-  }
-
-  return { values, handleChange, handleSubmit }
-}
+import UserInfoForm from '../../components/UserInfoForm'
 
 
 const Checkout = props => {
 
-  const INITIAL_STATE = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    address1: '',
-    address2: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
+  const { product } = props
 
-    shippingFirstName: '',
-    shippingLastName: '',
-    shippingEmail: '',
-    shippingAddress1: '',
-    shippingAddress2: '',
-    shippingCity: '',
-    shippingState: '',
-    shippingZip: '',
-    shippingCountry: '',
+  const [orderNotes, setOrderNotes] = useState("")
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(() => null)
+  const [handleSubmitError, setHandleSubmitError] = useState(() => null)
 
-    shipToBilling: true,
-    orderNotes: ''
+  const handleCardSubmit = (source, setProcessing, setValidation) => {
+
+    const errorFunction = () => {
+      setProcessing(false)
+      setValidation('Something went wrong.')
+    }
+    setHandleSubmitError(() => errorFunction)
+
+
+    const successFunction = formState => {
+      const additionalValues = {
+        source,
+        notes: orderNotes,
+        products: [product]
+      }
+
+      const success = () => {
+        setProcessing(false)
+        setValidation('Your order has been sent!')
+      }
+
+      const error = err => {
+        setProcessing(false)
+        setValidation(err.response.data.message)
+      }
+
+      formState.submitForm(
+        '/api/checkout',
+        { success, error },
+        false,
+        additionalValues
+      )
+    }
+    setHandleSubmitSuccess(() => successFunction)
+
+    document.getElementById('userInfoForm').dispatchEvent(new Event('submit'))
   }
-
-  const { product, currentUser } = props
-
-  const { values, handleChange, handleSubmit } = useForm(INITIAL_STATE);
 
   return (
     <section className="checkout">
-      <Input
-        id="firstName"
-        name="firstName"
-        label="First Name"
-        value={values.firstName}
-        onChange={handleChange}
-      />
+      <div className="checkout__container">
 
-      <Input
-        id="lastName"
-        name="lastName"
-        label="Last Name"
-        value={values.lastName}
-        onChange={handleChange}
-      />
+        <h2 className="heading-secondary">Checkout</h2>
 
-      <Input
-        id="email"
-        name="email"
-        label="Email"
-        type="email"
-        value={values.email}
-        onChange={handleChange}
-      />
+        <UserInfoForm
+          useSubmit={false}
+          onSubmitSuccess={handleSubmitSuccess}
+          onSubmitError={handleSubmitError}
+        >
+          <Input
+            type="textarea"
+            label="Additional notes about the order"
+            name="orderNotes"
+            value={orderNotes}
+            onChange={event => setOrderNotes(event.target.value)}
+          />
 
-      <CreditCardForm onSubmit={handleSubmit} />
+          <p>{product.title}: ${product.price.toFixed(2)}</p>
+
+          <CreditCardForm onSubmit={handleCardSubmit} />
+        </UserInfoForm>
+
+      </div>
     </section>
   )
 }

@@ -19,7 +19,7 @@ const dateField = ({ date, changeState }) => (
 )
 
 const coordinatesField = ({ latitude, longitude, changeState }) => (
-  <div className="post-form__top">
+  <div className="u-form-row">
     <Input
       id="event_latitude"
       label="Latitude"

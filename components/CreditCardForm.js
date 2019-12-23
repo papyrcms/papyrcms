@@ -16,7 +16,6 @@ const CreditCardForm = injectStripe(({ className = "", stripe, onSubmit }) => {
   const [processing, setProcessing] = useState(false)
 
   const handleSubmit = async event => {
-
     event.preventDefault()
 
     setProcessing(true)
@@ -32,47 +31,35 @@ const CreditCardForm = injectStripe(({ className = "", stripe, onSubmit }) => {
     onSubmit(data.source, setProcessing, setValidation)
   }
 
+  const fieldStyle = {
+    base: {
+      color: "#333",
+      fontSize: "16px",
+      lineHeight: 1,
+      letterSpacing: "1px",
+    }
+  }
+
   return (
     <div className={`credit-card-form ${className}`}>
       <div className="credit-card-form__section credit-card-form__section--number">
-        <label className="credit-card-form__label">Card Number</label>
+        <label className="credit-card-form__label">Card Number *</label>
         <div className="credit-card-form__input">
-          <CardNumberElement
-            style={{
-              base: {
-                color: "#333",
-                fontSize: "16px"
-              }
-            }}
-          />
+          <CardNumberElement style={fieldStyle} />
         </div>
       </div>
 
       <div className="credit-card-form__section credit-card-form__section--expiration">
-        <label className="credit-card-form__label">Card Expiration</label>
+        <label className="credit-card-form__label">Card Expiration *</label>
         <div className="credit-card-form__input">
-          <CardExpiryElement
-            style={{
-              base: {
-                color: "#333",
-                fontSize: "16px"
-              }
-            }}
-          />
+          <CardExpiryElement style={fieldStyle} />
         </div>
       </div>
 
       <div className="credit-card-form__section credit-card-form__section--cvc">
-        <label className="credit-card-form__label">Card CVC</label>
+        <label className="credit-card-form__label">Card CVC *</label>
         <div className="credit-card-form__input">
-          <CardCVCElement
-            style={{
-              base: {
-                color: "#333",
-                fontSize: "16px"
-              }
-            }}
-          />
+          <CardCVCElement style={fieldStyle} />
         </div>
       </div>
 
@@ -81,7 +68,7 @@ const CreditCardForm = injectStripe(({ className = "", stripe, onSubmit }) => {
       <button
         className="button button-primary credit-card-form__submit"
         disabled={processing ? true : false}
-        onClick={event => handleSubmit(event, stripe, setProcessing, setValidation, onSubmit)}
+        onClick={event => handleSubmit(event)}
       >
         {processing ? "Processing" : "Submit"}
       </button>

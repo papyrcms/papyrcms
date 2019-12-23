@@ -1,11 +1,11 @@
 const Controller = require('./abstractController')
 const keys = require('../config/keys')
-const stripe = require('stripe')(keys.stripeSecretTestKey)
+const Payments = require('../utilities/payments')
 const { sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 
 
-class PaymentController extends Controller {
+class DonationController extends Controller {
 
   registerSettings() {
 
@@ -30,14 +30,10 @@ class PaymentController extends Controller {
     // Message API
     this.server.post(
       '/api/donate',
-      this.donationEnabled,
-      sanitizeRequestBody,
       this.createDonation.bind(this)
     )
     this.server.post(
       '/api/stripePubKey',
-      // this.donationEnabled,
-      sanitizeRequestBody,
       this.sendStripePubKey.bind(this)
     )
   }
@@ -55,26 +51,17 @@ class PaymentController extends Controller {
 
   async createDonation(req, res) {
 
-    const { id, amount, email } = req.body
-    const paymentDetails = {
-      source: id,
-      amount: amount * 100,
-      receipt_email: email,
-      currency: 'usd',
-      description: 'Single donation'
+    const chargeInfo = {
+      email: req.body.email,
+      amount: req.body.amount,
+      source: req.body.source,
+      description: "Single Donation"
     }
 
-    const charge = await this.makePayment(paymentDetails)
+    const payments = new Payments()
+    const charge = await payments.makePayment(chargeInfo)
 
     res.send(charge)
-  }
-
-
-  async makePayment(paymentDetails) {
-
-    const charge = await stripe.charges.create(paymentDetails)
-
-    return charge
   }
 
 
@@ -83,4 +70,4 @@ class PaymentController extends Controller {
   }
 }
 
-module.exports = PaymentController
+module.exports = DonationController

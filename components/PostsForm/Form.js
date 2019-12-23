@@ -126,7 +126,7 @@ const Form = props => {
   return (
     <form encType="multipart/form-data" className="post-form__form" onSubmit={handleSubmit}>
 
-      <div className='post-form__top'>
+      <div className="u-form-row">
         <Input
           id="post_title"
           label="Title"

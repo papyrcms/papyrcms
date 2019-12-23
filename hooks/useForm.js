@@ -9,9 +9,13 @@ const useForm = initialState => {
 
 
   const handleChange = event => {
-    const { name, value } = event.target
+    const { type, checked, name, value } = event.target
 
-    setValues({ ...values, [name]: value })
+    if (type && type === 'checkbox') {
+      setValues({ ...values, [name]: checked })
+    } else {
+      setValues({ ...values, [name]: value })
+    }
   }
 
 
@@ -32,17 +36,18 @@ const useForm = initialState => {
   }
 
 
-  const submitForm = async (event, url, callbacks = {}, update = false) => {
-    event.preventDefault()
+  const submitForm = async (url, callbacks = {}, update = false, additionalValues = {}) => {
 
     const success = callbacks.success ? callbacks.success : () => null
     const error = callbacks.error ? callbacks.error : () => null
 
     try {
 
+      const postValues = { ...values, ...additionalValues }
+
       const response = update
-        ? await axios.put(url, values)
-        : await axios.post(url, values)
+        ? await axios.put(url, postValues)
+        : await axios.post(url, postValues)
 
       if (response.data.error) {
         throw response

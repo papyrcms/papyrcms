@@ -1,0 +1,24 @@
+.orders {
+  @include sectionStyle();
+}
+
+.order {
+
+  list-style: none;
+  border-bottom: .1rem solid $color-grey;
+
+  &__info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    justify-items: start;
+  }
+
+  &__actions {
+    margin: 2rem 0;
+  }
+
+  &__ship {
+    margin-right: 1rem;
+  }
+}

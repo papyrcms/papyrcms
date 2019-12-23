@@ -16,6 +16,7 @@ const initialState = {
   event: {},
   products: [],
   product: {},
+  orders: [],
   users: [],
   messages: [],
   settings: {},
@@ -50,6 +51,8 @@ export const reducer = (state = initialState, action) => {
       return { ...state, products: action.payload }
     case 'set_product':
       return { ...state, product: action.payload }
+    case 'set_orders':
+      return { ...state, orders: action.payload }
     case 'set_users':
       return { ...state, users: action.payload }
     case 'set_messages':
@@ -113,6 +116,10 @@ export const setProducts = products => {
 
 export const setProduct = product => {
   return { type: 'set_product', payload: product }
+}
+
+export const setOrders = orders => {
+  return { type: 'set_orders', payload: orders }
 }
 
 export const setUsers = users => {

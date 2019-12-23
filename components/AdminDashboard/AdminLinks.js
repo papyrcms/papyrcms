@@ -18,6 +18,10 @@ const AdminLinks = props => {
           <Link href="/store">
             <a className="admin-links__link">My Products</a>
           </Link>
+
+          <Link href="/store/orders">
+            <a className="admin-links__link">Orders</a>
+          </Link>
         </Fragment>
       )
     }

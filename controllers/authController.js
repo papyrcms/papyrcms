@@ -181,21 +181,21 @@ class AuthController extends Controller {
     const { firstName, lastName, email, password, passwordConfirm } = req.body
 
     if (!firstName || firstName === '') {
-      res.status(400).send({ message: 'Please enter your first name' })
+      return res.status(400).send({ message: 'Please enter your first name' })
     }
 
     if (!lastName || lastName === '') {
-      res.status(400).send({ message: 'Please enter your last name' })
+      return res.status(400).send({ message: 'Please enter your last name' })
     }
 
     // Make sure email is in email format
     if (!this.verifyEmailSyntax(email)) {
-      res.status(400).send({ message: 'Please use a valid email address' })
+      return res.status(400).send({ message: 'Please use a valid email address' })
     }
 
     // Make sure password fields match
     if (password !== passwordConfirm) {
-      res.status(400).send({ message: 'The password fields need to match' })
+      return res.status(400).send({ message: 'The password fields need to match' })
     }
 
     // The LocalStrategy module requires a username
@@ -216,7 +216,7 @@ class AuthController extends Controller {
         const subject = `Welcome, ${newUser.firstName}!`
 
         if (res.locals.settings.enableEmailingToUsers) {
-          await mailer.sendEmail(newUser, 'welcome', newUser.email, subject)
+          await mailer.sendEmail(newUser, newUser.email, 'welcome', subject)
         }
 
         res.send('success')
@@ -227,15 +227,35 @@ class AuthController extends Controller {
 
   async updateCurrentUser(req, res) {
 
-    const { userId, firstName, lastName } = req.body
+    const {
+      userId, firstName, lastName, email,
+      address1, address2, city, state, zip, country,
+      shippingFirstName, shippingLastName, shippingEmail,
+      shippingAddress1, shippingAddress2, shippingCity,
+      shippingState, shippingZip, shippingCountry
+    } = req.body
 
     // Make sure the user submitting the form is the logged in on the server
     if (userId.toString() !== req.user._id.toString()) {
       const message = 'There\'s a problem with your session. Try logging out and logging back in'
-      res.status(400).send({ message })
+      return res.status(400).send({ message })
     }
 
-    const newUserData = { firstName, lastName }
+    // Make sure a user with the email does not already exist
+    const existingUser = await UserModel.findOne({ email })
+    if (existingUser && !existingUser._id.equals(req.user._id)) {
+      const message = 'Someone is already using this email.'
+      return res.status(400).send({ message })
+    }
+
+    // Update user data
+    const newUserData = {
+      firstName, lastName, email, address1,
+      address2, city, state, zip, country,
+      shippingFirstName, shippingLastName, shippingEmail,
+      shippingAddress1, shippingAddress2, shippingCity,
+      shippingState, shippingZip, shippingCountry
+    }
     const updatedUser = await UserModel.findOneAndUpdate({ _id: userId }, newUserData)
 
     res.send(updatedUser)
@@ -248,9 +268,9 @@ class AuthController extends Controller {
 
     // Make sure password fields are filled out
     if (!oldPass) {
-      res.status(400).send({ message: 'You need to fill in your current password.' })
+      return res.status(400).send({ message: 'You need to fill in your current password.' })
     } else if (!newPass) {
-      res.status(400).send({ message: 'You need to fill in your new password.' })
+      return res.status(400).send({ message: 'You need to fill in your new password.' })
     }
 
     UserModel.findById(userId, (err, foundUser) => {
@@ -260,7 +280,7 @@ class AuthController extends Controller {
           if (!!user) {
             // Check to see new password fields match
             if (newPass !== confirmPass) {
-              res.status(400).send({ message: 'The new password fields do not match.' })
+              return res.status(400).send({ message: 'The new password fields do not match.' })
             } else {
               // Set the new password
               foundUser.setPassword(newPass, () => {
@@ -269,13 +289,13 @@ class AuthController extends Controller {
               })
             }
           } else if (!!err) {
-            res.status(400).send(err)
+            return res.status(400).send(err)
           } else if (!!passwordError) {
-            res.status(400).send({ message: 'You have entered the wrong current password.' })
+            return res.status(400).send({ message: 'You have entered the wrong current password.' })
           }
         })
       } else {
-        res.status(400).send(err)
+        return res.status(400).send(err)
       }
     })
   }
@@ -308,7 +328,7 @@ class AuthController extends Controller {
 
 
   async sendForgotPasswordEmail(req, res) {
-    
+
     if (res.locals.settings.enableEmailingToUsers) {
 
       const { email } = req.body
@@ -336,7 +356,7 @@ class AuthController extends Controller {
         token: jwt.sign({ email }, keys.jwtSecret)
       }
 
-      mailer.sendEmail(variables, 'forgot-password', email, subject)
+      mailer.sendEmail(variables, email, 'forgot-password', subject)
       res.send({ message: 'Your email is on its way!' })
     } else {
       res.status(400).send({ message: 'Looks like emailing is disabled. Please contact a site administrator to reset your password.' })

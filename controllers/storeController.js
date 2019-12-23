@@ -1,5 +1,9 @@
 const Controller = require('./abstractController')
 const ProductModel = require('../models/product')
+const OrderModel = require('../models/order')
+const Payments = require('../utilities/payments')
+const Mailer = require('../utilities/mailer')
+const keys = require('../config/keys')
 const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
 const { configureSettings } = require('../utilities/functions')
 
@@ -68,6 +72,26 @@ class StoreController extends Controller {
       '/api/products/:id',
       checkIfAdmin,
       this.deleteProduct.bind(this)
+    )
+
+    this.server.post(
+      '/api/checkout',
+      this.checkout.bind(this)
+    )
+    this.server.get(
+      '/api/orders',
+      checkIfAdmin,
+      this.sendOrders.bind(this)
+    )
+    this.server.put(
+      '/api/orders/:id',
+      checkIfAdmin,
+      this.updateOrder.bind(this)
+    )
+    this.server.delete(
+      '/api/orders/:id',
+      checkIfAdmin,
+      this.deleteOrder.bind(this)
     )
   }
 
@@ -150,7 +174,6 @@ class StoreController extends Controller {
   async sendAllProducts(req, res) {
 
     const foundProducts = await ProductModel.find().sort({ created: -1 }).lean()
-
     res.send(foundProducts)
   }
 
@@ -158,7 +181,6 @@ class StoreController extends Controller {
   async sendPublishedProducts(req, res) {
 
     const foundProducts = await ProductModel.find({ published: true }).sort({ created: -1 }).lean()
-
     res.send(foundProducts)
   }
 
@@ -196,11 +218,100 @@ class StoreController extends Controller {
 
   async deleteProduct(req, res) {
 
-    const product = await ProductModel.findById(req.params.id)
-
     await ProductModel.findByIdAndDelete(req.params.id)
 
     res.send('product deleted')
+  }
+
+
+  async checkout(req, res) {
+
+    // Set dynamic amount and description
+    let amount = 0
+    let description = 'Payment for '
+    for (const product of req.body.products) {
+
+      // If there is no stock left, error
+      if (product.quantity < 1) {
+        return res.status(400).send({ message: `${product.title} is out of stock.` })
+      }
+
+      amount += product.price
+      description = description + product.title + ', '
+    }
+    description = description.substring(0, description.length-2) + '.'
+
+    const info = {
+      email: req.body.email,
+      amount,
+      description,
+      source: req.body.source,
+    }
+
+    const payments = new Payments()
+    const charge = await payments.makePayment(info)
+
+    // If a charge was successfully created
+    if (charge) {
+
+      // Create an order
+      const order = new OrderModel({
+        user: req.user,
+        notes: req.body.notes,
+        products: []
+      })
+
+      // Start the email message
+      let message = 'A new order has been placed for the following items:\n\n'
+
+      // Save the updated products and put in the order
+      for (const product of req.body.products) {
+        const found = await ProductModel.findById(product._id)
+        found.quantity--
+        found.save()
+        order.products.push(found)
+
+        message += `- ${product.title}\n`
+      }
+
+      // Add order notes to the email
+      if (req.body.notes) {
+        message += `\nThese are the customer\'s order notes:\n${req.body.notes}`
+      }
+
+      message += '\nMake sure you send it as soon as possible!'
+
+      // Save and send the order
+      order.save()
+      const mailer = new Mailer()
+      mailer.sendEmail({ message }, keys.adminEmail, 'plain', 'New Order!')
+
+      res.send('All items purchased')
+    } else {
+      res.status(400).send({ message: 'Something went wrong. Please contact us directly to order.' })
+    }
+  }
+
+
+  async sendOrders(req, res) {
+
+    const orders = await OrderModel.find().sort({ created: -1 })
+      .populate('user').populate('products').lean()
+
+    res.send(orders)
+  }
+
+
+  async updateOrder(req, res) {
+
+    await OrderModel.findOneAndUpdate({ _id: req.params.id }, { shipped: req.body.shipped })
+    res.send('updated')
+  }
+
+  async deleteOrder(req, res) {
+
+    await OrderModel.findByIdAndDelete(req.params.id)
+    res.send('deleted')
   }
 }
 

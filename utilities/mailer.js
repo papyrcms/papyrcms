@@ -93,7 +93,7 @@ class Mailer {
   }
 
 
-  async sendEmail(variables, templateName, recipient, subject = null) {
+  async sendEmail(variables, recipient, templateName, subject = null) {
 
     // Instantiate sent. This will change when the email gets sent
     let sent = false
@@ -130,7 +130,7 @@ class Mailer {
     const transporter = this.createTransporter()
 
     const mailOptions = {
-      from: `<Derek> ${keys.siteEmail}`,
+      from: keys.siteEmail,
       to: recipient,
       subject: emailSubject,
       generateTextFromHTML: true,

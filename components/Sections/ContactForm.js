@@ -39,12 +39,13 @@ const ContactForm = props => {
 
 
   const handleSubmit = event => {
+    event.preventDefault()
 
     const success = (response, setValidation) => {
       setValidation('Thanks for reaching out! I\'ll be in touch.')
     }
 
-    submitForm(event, '/api/contact', { success })
+    submitForm('/api/contact', { success })
   }
 
 
@@ -53,7 +54,7 @@ const ContactForm = props => {
 
       <form className="contact-form__form" onSubmit={handleSubmit}>
 
-        <div className="contact-form__top">
+        <div className="u-form-row">
           <Input
             id="contact-name"
             label="Name"

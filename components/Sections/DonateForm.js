@@ -14,7 +14,7 @@ const DonateForm = props => {
   const [paid, setPaid] = useState(false)
 
 
-  const handleSubmit = (stripeSource, setProcessing, setValidation) => {
+  const handleSubmit = (source, setProcessing, setValidation) => {
 
     switch (true) {
 
@@ -30,7 +30,7 @@ const DonateForm = props => {
 
       default:
         const donationData = {
-          ...stripeSource,
+          source,
           amount,
           email,
         }
@@ -63,7 +63,7 @@ const DonateForm = props => {
   return (
     <section className={`donate-form ${className}`}>
       <form className="donate-form__form">
-        <div className="donate-form__form--top u-margin-bottom-small">
+        <div className="u-form-row">
           <Input
             id="donation_email"
             label="Email"

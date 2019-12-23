@@ -27,6 +27,7 @@ const LoginForm = props => {
 
 
   const handleSubmit = event => {
+    event.preventDefault()
 
     const success = () => {
       axios.get('/api/currentUser')
@@ -38,7 +39,7 @@ const LoginForm = props => {
         })
     }
 
-    submitForm(event, '/api/login', { success })
+    submitForm('/api/login', { success })
   }
 
 

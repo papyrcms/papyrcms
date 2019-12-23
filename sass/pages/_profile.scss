@@ -11,9 +11,6 @@
 
   @include sectionStyle();
 
-  // margin: 0 auto;
-  // max-width: $max-section-width;
-
   & > *:not(:last-child) {
     border-bottom: .1rem solid $color-grey-dark;
   }
@@ -41,35 +38,11 @@
     align-items: flex-start;
   }
 
-  &__name-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
-    width: 100%;
-
-    @include respond(phone) {
-      grid-template-columns: 1fr;
-      grid-gap: 0;
-    }
-  }
-
-  &__password-inputs {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-gap: 2rem;
-    width: 100%;
-
-    @include respond(tab-port) {
-      grid-template-columns: 1fr;
-      grid-gap: 0;
-    }
-  }
-
   &__validation {
-    color: $color-tertiary;
+    color: $color-error;
     letter-spacing: .1rem;
     font-size: 1.4rem;
     font-style: italic;
-    margin-bottom: 1.5rem;
+    margin-top: 1rem;
   }
 }

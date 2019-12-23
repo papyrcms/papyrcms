@@ -11,17 +11,30 @@ const StorePage = props => {
     return (
       <Fragment>
         <p>${product.price.toFixed(2)}</p>
-        <p>{product.quantity} in stock</p>
+        <p>{
+          product.quantity > 0
+            ? `${product.quantity} in stock`
+            : 'Sold out'
+        }</p>
       </Fragment>
     )
   }
 
+  const addToCart = product => {
+    
+  }
+
   const renderCheckout = product => {
-    return (
-      <Link href={`/store/checkout?id=${product._id}`}>
-        <a>Buy it now</a>
-      </Link>
-    )
+    if (product.quantity > 0) {
+      return (
+        <Fragment>
+          <a onClick={() => addToCart(product)} href="#">Add to cart</a>
+          <Link href={`/store/checkout?id=${product._id}`}>
+            <a>Buy it now</a>
+          </Link>
+        </Fragment>
+      )
+    }
   }
 
   return <SectionCards
@@ -49,7 +62,7 @@ StorePage.getInitialProps = async () => {
 
 
 const mapStateToProps = state => {
-  return { products: state.products }
+  return { currentUser: state.currentUser, products: state.products }
 }
 
 

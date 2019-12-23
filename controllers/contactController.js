@@ -79,7 +79,7 @@ class ContactController extends Controller {
       const mailer = new Mailer()
       const subject = `New message from ${message.name}!`
 
-      const sent = mailer.sendEmail(message, 'contact', keys.adminEmail, subject)
+      const sent = mailer.sendEmail(message, keys.adminEmail, 'contact', subject)
 
       if (sent) {
         message.emailSent = true

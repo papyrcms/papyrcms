@@ -33,6 +33,7 @@ const RegisterForm = props => {
 
 
   const handleSubmit = event => {
+    event.preventDefault()
 
     const success = () => {
       axios.get('/api/currentUser')
@@ -44,7 +45,7 @@ const RegisterForm = props => {
       })
     }
 
-    submitForm(event, '/api/register', { success })
+    submitForm('/api/register', { success })
   }
 
 

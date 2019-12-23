@@ -3,7 +3,7 @@ import PostsForm from '../../components/PostsForm'
 import Input from '../../components/Input'
 
 const ProductFields = ({ values, errors, validateField, handleChange }) => (
-  <div className="post-form__top">
+  <div className="u-form-row">
     <Input
       id="price"
       label="Price"

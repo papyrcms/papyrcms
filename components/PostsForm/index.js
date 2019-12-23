@@ -53,6 +53,7 @@ const PostsForm = props => {
 
 
   const handleSubmit = event => {
+    event.preventDefault()
 
     const { apiEndpoint, redirectRoute, editing } = props
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
@@ -62,7 +63,7 @@ const PostsForm = props => {
       Router.push(redirect)
     }
 
-    submitForm(event, postRoute, { success }, editing)
+    submitForm(postRoute, { success }, editing)
   }
 
 
