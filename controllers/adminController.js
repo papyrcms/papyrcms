@@ -1,6 +1,6 @@
-const Controller = require('./abstractController')
-const SettingsModel = require('../models/settings')
-const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
+import Controller from './abstractController'
+import Settings from '../models/settings'
+import { checkIfAdmin, sanitizeRequestBody } from '../utilities/middleware'
 
 class AdminController extends Controller {
 
@@ -18,7 +18,7 @@ class AdminController extends Controller {
 
   async changeSettings(req, res) {
 
-    const settings = await SettingsModel.find()
+    const settings = await Settings.find()
 
     for (const setting of settings) {
 
@@ -37,7 +37,7 @@ class AdminController extends Controller {
             default: value
           }
           setting.options[key] = value
-          await SettingsModel.findOneAndUpdate({ _id: setting._id }, setting)
+          await Settings.findOneAndUpdate({ _id: setting._id }, setting)
         }
       }
     }
@@ -47,4 +47,4 @@ class AdminController extends Controller {
 }
 
 
-module.exports = AdminController
+export default AdminController

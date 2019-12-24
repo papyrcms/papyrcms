@@ -1,11 +1,11 @@
-const Controller = require('./abstractController')
-const ProductModel = require('../models/product')
-const OrderModel = require('../models/order')
-const Payments = require('../utilities/payments')
-const Mailer = require('../utilities/mailer')
-const keys = require('../config/keys')
-const { checkIfAdmin, sanitizeRequestBody } = require('../utilities/middleware')
-const { configureSettings } = require('../utilities/functions')
+import Controller from './abstractController'
+import Product from '../models/product'
+import Order from '../models/order'
+import Payments from '../utilities/payments'
+import Mailer from '../utilities/mailer'
+import keys from '../config/keys'
+import { checkIfAdmin, sanitizeRequestBody } from '../utilities/middleware'
+import { configureSettings } from '../utilities/functions'
 
 
 class StoreController extends Controller {
@@ -112,13 +112,13 @@ class StoreController extends Controller {
 
     let product
     try {
-      product = await ProductModel.findById(req.params.id)
+      product = await Product.findById(req.params.id)
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch (e) {
-      product = await ProductModel.findOne({ slug: req.params.id })
+      product = await Product.findOne({ slug: req.params.id })
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
@@ -153,7 +153,7 @@ class StoreController extends Controller {
       quantity
     } = req.body
 
-    const product = new ProductModel({
+    const product = new Product({
       title,
       content,
       tags,
@@ -173,14 +173,14 @@ class StoreController extends Controller {
 
   async sendAllProducts(req, res) {
 
-    const foundProducts = await ProductModel.find().sort({ created: -1 }).lean()
+    const foundProducts = await Product.find().sort({ created: -1 }).lean()
     res.send(foundProducts)
   }
 
 
   async sendPublishedProducts(req, res) {
 
-    const foundProducts = await ProductModel.find({ published: true }).sort({ created: -1 }).lean()
+    const foundProducts = await Product.find({ published: true }).sort({ created: -1 }).lean()
     res.send(foundProducts)
   }
 
@@ -189,13 +189,13 @@ class StoreController extends Controller {
 
     let foundProduct
     try {
-      foundProduct = await ProductModel.findById(req.params.id)
+      foundProduct = await Product.findById(req.params.id)
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch(e) {
-      foundProduct = await ProductModel.findOne({ slug: req.params.id })
+      foundProduct = await Product.findOne({ slug: req.params.id })
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
@@ -210,7 +210,7 @@ class StoreController extends Controller {
 
     const productDocument = { _id: req.params.id }
     req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
-    const updatedProduct = await ProductModel.findOneAndUpdate(productDocument, req.body)
+    const updatedProduct = await Product.findOneAndUpdate(productDocument, req.body)
 
     res.send(updatedProduct)
   }
@@ -218,7 +218,7 @@ class StoreController extends Controller {
 
   async deleteProduct(req, res) {
 
-    await ProductModel.findByIdAndDelete(req.params.id)
+    await Product.findByIdAndDelete(req.params.id)
 
     res.send('product deleted')
   }
@@ -255,7 +255,7 @@ class StoreController extends Controller {
     if (charge) {
 
       // Create an order
-      const order = new OrderModel({
+      const order = new Order({
         user: req.user,
         notes: req.body.notes,
         products: []
@@ -266,7 +266,7 @@ class StoreController extends Controller {
 
       // Save the updated products and put in the order
       for (const product of req.body.products) {
-        const found = await ProductModel.findById(product._id)
+        const found = await Product.findById(product._id)
         found.quantity--
         found.save()
         order.products.push(found)
@@ -295,7 +295,7 @@ class StoreController extends Controller {
 
   async sendOrders(req, res) {
 
-    const orders = await OrderModel.find().sort({ created: -1 })
+    const orders = await Order.find().sort({ created: -1 })
       .populate('user').populate('products').lean()
 
     res.send(orders)
@@ -304,15 +304,15 @@ class StoreController extends Controller {
 
   async updateOrder(req, res) {
 
-    await OrderModel.findOneAndUpdate({ _id: req.params.id }, { shipped: req.body.shipped })
+    await Order.findOneAndUpdate({ _id: req.params.id }, { shipped: req.body.shipped })
     res.send('updated')
   }
 
   async deleteOrder(req, res) {
 
-    await OrderModel.findByIdAndDelete(req.params.id)
+    await Order.findByIdAndDelete(req.params.id)
     res.send('deleted')
   }
 }
 
-module.exports = StoreController
+export default StoreController

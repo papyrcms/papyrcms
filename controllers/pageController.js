@@ -1,7 +1,7 @@
-const Controller = require('./abstractController')
-const PageModel = require('../models/page')
-const { checkIfAdmin } = require('../utilities/middleware')
-const keys = require('../config/keys')
+import Controller from './abstractController'
+import Page from '../models/page'
+import { checkIfAdmin } from '../utilities/middleware'
+import keys from '../config/keys'
 
 
 class PageController extends Controller {
@@ -53,7 +53,7 @@ class PageController extends Controller {
       return this.app.render(req, res, '/pages')
     }
 
-    const foundPage = await PageModel.findOne({ route: req.params.page }).lean()
+    const foundPage = await Page.findOne({ route: req.params.page }).lean()
     if (foundPage) {
 
       const queryParams = {
@@ -85,7 +85,7 @@ class PageController extends Controller {
       queryParams.googleMapsKey = keys.googleMapsKey,
       queryParams.stripePubKey = keys.stripePublishableTestKey
 
-      const foundPage = await PageModel.findOne({ route: req.params.page }).lean()
+      const foundPage = await Page.findOne({ route: req.params.page }).lean()
       if (foundPage) {
         queryParams.pageObject = foundPage
       }
@@ -113,7 +113,7 @@ class PageController extends Controller {
 
   async sendPage(req, res) {
 
-    const page = await PageModel.findOne({ route: req.params.page }).lean()
+    const page = await Page.findOne({ route: req.params.page }).lean()
     if (page) {
       res.send(page)
     } else {
@@ -124,14 +124,14 @@ class PageController extends Controller {
 
   async sendPages(req, res) {
 
-    const pages = await PageModel.find().sort({ created: -1 }).lean()
+    const pages = await Page.find().sort({ created: -1 }).lean()
     res.send(pages)
   }
 
 
   async savePage(req, res) {
 
-    const page = new PageModel({
+    const page = new Page({
       title: req.body.title,
       className: req.body.className,
       route: req.body.route,
@@ -228,7 +228,7 @@ class PageController extends Controller {
     }
 
     try {
-      await PageModel.findOneAndUpdate({ _id: req.params.id }, page)
+      await Page.findOneAndUpdate({ _id: req.params.id }, page)
       res.send(page)
     } catch (e) {
 
@@ -244,9 +244,9 @@ class PageController extends Controller {
 
   async deletePage(req, res) {
 
-    await PageModel.findByIdAndDelete(req.params.id)
+    await Page.findByIdAndDelete(req.params.id)
     res.send('Page deleted.')
   }
 }
 
-module.exports = PageController
+export default PageController

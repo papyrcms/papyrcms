@@ -1,8 +1,8 @@
-const Controller = require('./abstractController')
-const EventModel = require('../models/event')
-const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
-const { configureSettings } = require('../utilities/functions')
-const keys = require('../config/keys')
+import Controller from './abstractController'
+import Event from '../models/event'
+import { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } from '../utilities/middleware'
+import { configureSettings } from '../utilities/functions'
+import keys from '../config/keys'
 
 class EventController extends Controller {
 
@@ -108,10 +108,10 @@ class EventController extends Controller {
 
     let event
     try {
-      event = await EventModel.findById(req.params.id)
+      event = await Event.findById(req.params.id)
         .populate('author').lean()
     } catch (e) {
-      event = await EventModel.findOne({ slug: req.params.id })
+      event = await Event.findOne({ slug: req.params.id })
         .populate('author').lean()
     }
 
@@ -132,7 +132,7 @@ class EventController extends Controller {
 
     req.body.date = this.configureDate(req.body.date)
 
-    const event = new EventModel(req.body)
+    const event = new Event(req.body)
     event.author = req.user
     event.slug = event.title.replace(/\s+/g, '-').toLowerCase()
 
@@ -146,7 +146,7 @@ class EventController extends Controller {
     const date = new Date(new Date().toISOString())
     const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
 
-    const foundEvents = await EventModel.find({ published: true, date: { $gte: dateFilter } }).sort({ date: 1 }).lean()
+    const foundEvents = await Event.find({ published: true, date: { $gte: dateFilter } }).sort({ date: 1 }).lean()
 
     res.send(foundEvents)
   }
@@ -154,7 +154,7 @@ class EventController extends Controller {
 
   async sendAllEvents(req, res) {
 
-    const foundEvents = await EventModel.find().sort({ date: 1 }).lean()
+    const foundEvents = await Event.find().sort({ date: 1 }).lean()
 
     res.send(foundEvents)
   }
@@ -164,10 +164,10 @@ class EventController extends Controller {
 
     let foundEvent
     try {
-      foundEvent = await EventModel.findById(req.params.id)
+      foundEvent = await Event.findById(req.params.id)
         .populate('author').lean()
     } catch(e) {
-      foundEvent = await EventModel.findOne({ slug: req.params.id })
+      foundEvent = await Event.findOne({ slug: req.params.id })
         .populate('author').lean()
     }
 
@@ -180,7 +180,7 @@ class EventController extends Controller {
     req.body.date = this.configureDate(req.body.date)
     req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
 
-    const updatedEvent = await EventModel.findOneAndUpdate({ _id: req.params.id }, req.body)
+    const updatedEvent = await Event.findOneAndUpdate({ _id: req.params.id }, req.body)
 
     res.send(updatedEvent)
   }
@@ -188,10 +188,10 @@ class EventController extends Controller {
 
   async deleteEvent(req, res) {
 
-    await EventModel.findByIdAndDelete(req.params.id)
+    await Event.findByIdAndDelete(req.params.id)
 
     res.send('event deleted')
   }
 }
 
-module.exports = EventController
+export default EventController

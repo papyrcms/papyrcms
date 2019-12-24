@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const messageSchema = new mongoose.Schema({
 
@@ -9,4 +9,4 @@ const messageSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
 })
 
-module.exports = mongoose.model('message', messageSchema)
+export default mongoose.model('message', messageSchema)

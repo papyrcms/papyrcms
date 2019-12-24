@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const pageSchema = new mongoose.Schema({
 
@@ -14,4 +14,4 @@ const pageSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
 })
 
-module.exports = mongoose.model('page', pageSchema)
+export default mongoose.model('page', pageSchema)

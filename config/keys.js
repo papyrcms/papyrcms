@@ -1,5 +1,9 @@
+let config
+
 if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./prod')
+  config = require('./prod')
 } else {
-  module.exports = require('./dev')
+  config = require('./dev')
 }
+
+export default config

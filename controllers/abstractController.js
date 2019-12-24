@@ -1,4 +1,4 @@
-const moment = require('moment-timezone')
+import moment from 'moment-timezone'
 
 class Controller {
 
@@ -20,4 +20,4 @@ class Controller {
   }
 }
 
-module.exports = Controller
+export default Controller

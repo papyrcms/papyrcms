@@ -1,27 +1,19 @@
-// Node Modules
-const cookieSession = require('cookie-session')
-const LocalStrategy = require('passport-local')
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
-const passport = require('passport')
-const express = require('express')
-const next = require('next')
-const cors = require('cors')
-const fs = require('fs')
+import cookieSession from 'cookie-session'
+import LocalStrategy from 'passport-local'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import passport from 'passport'
+import express from 'express'
+import next from 'next'
+import cors from 'cors'
+import fs from 'fs'
 
 // App keys
-const keys = require('./config/keys')
+import keys from './config/keys'
+const { mongoURI, cookieKey, port, rootURL } = keys
 
 // Models
-const User = require('./models/user')
-
-// Controllers, filtering out the abstract controller
-const controllers = fs.readdirSync('./controllers').filter(controller => controller !== 'abstractController.js')
-
-// Require controllers
-controllers.forEach((controller, index) => {
-  controllers[index] = require(`./controllers/${controller}`)
-})
+import User from './models/user'
 
 // Mongo config
 const mongooseConfig = {
@@ -30,7 +22,7 @@ const mongooseConfig = {
   useFindAndModify: false,
   useCreateIndex: true
 }
-mongoose.connect(keys.mongoURI, mongooseConfig)
+mongoose.connect(mongoURI, mongooseConfig)
 mongoose.plugin(schema => { schema.options.usePushEach = true })
 
 const server = express()
@@ -46,7 +38,7 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(cookieSession({
   maxAge: 30 * 24 * 60 * 60 * 1000,
-  keys: [keys.cookieKey]
+  keys: [cookieKey]
 }))
 
 // Passport config
@@ -76,12 +68,16 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-app.prepare().then(() => {
+app.prepare().then(async () => {
 
-  // Instantiate Controllers
-  controllers.forEach((Controller, index) => {
-    controllers[index] = new Controller(server, app)
-  })
+  // Controllers, filtering out the abstract controller
+  const controllers = fs.readdirSync('./controllers').filter(controller => controller !== 'abstractController.js')
+
+  // import and instantiate controllers
+  for (let i = 0; i < controllers.length; i++) {
+    const Controller = await import(`./controllers/${controllers[i]}`)
+    controllers[i] = new Controller.default(server, app)
+  }
 
   // Register settings
   controllers.forEach(controller => {
@@ -93,18 +89,16 @@ app.prepare().then(() => {
     controller.registerRoutes()
   })
 
-  // Get plugin pages
-
   // Anything without a specified route
   server.get('*', (req, res) => {
     return handle(req, res)
   })
 
-  server.listen(keys.port, err => {
+  server.listen(port, err => {
     if (err) {
       throw err
     }
-    console.log(`> Ready on ${keys.rootURL}`)
+    console.log(`> Ready on ${rootURL}`)
   })
 }).catch(ex => {
   console.error(ex.stack)

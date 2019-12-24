@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken')
-const Controller = require('./abstractController')
-const UserModel = require('../models/user')
-const Mailer = require('../utilities/mailer')
-const passport = require('passport')
-const { sanitizeRequestBody, checkIfAdmin, checkIfBanned } = require('../utilities/middleware')
-const { configureSettings } = require('../utilities/functions')
-const keys = require('../config/keys')
+import jwt from 'jsonwebtoken'
+import Controller from './abstractController'
+import User from '../models/user'
+import Mailer from '../utilities/mailer'
+import passport from 'passport'
+import { sanitizeRequestBody, checkIfAdmin, checkIfBanned } from '../utilities/middleware'
+import { configureSettings } from '../utilities/functions'
+import keys from '../config/keys'
 
 
 class AuthController extends Controller {
@@ -133,7 +133,7 @@ class AuthController extends Controller {
       return res.status(400).send({ message: 'You cannot delete yourself.' })
     }
 
-    await UserModel.findOneAndDelete({ _id: id })
+    await User.findOneAndDelete({ _id: id })
 
     res.send({ message: 'User deleted' })
   }
@@ -157,7 +157,7 @@ class AuthController extends Controller {
 
   async sendAllUsers(req, res) {
 
-    const users = await UserModel.find()
+    const users = await User.find()
 
     res.send(users)
   }
@@ -200,11 +200,11 @@ class AuthController extends Controller {
 
     // The LocalStrategy module requires a username
     // Set username and email as the user's email
-    const newUser = new UserModel({
+    const newUser = new User({
       username: email, email, firstName, lastName
     })
 
-    UserModel.register(newUser, password, err => {
+    User.register(newUser, password, err => {
       if (err) {
         err.message = err.message.replace('username', 'email')
         res.send({ error: err })
@@ -242,7 +242,7 @@ class AuthController extends Controller {
     }
 
     // Make sure a user with the email does not already exist
-    const existingUser = await UserModel.findOne({ email })
+    const existingUser = await User.findOne({ email })
     if (existingUser && !existingUser._id.equals(req.user._id)) {
       const message = 'Someone is already using this email.'
       return res.status(400).send({ message })
@@ -256,7 +256,7 @@ class AuthController extends Controller {
       shippingAddress1, shippingAddress2, shippingCity,
       shippingState, shippingZip, shippingCountry
     }
-    const updatedUser = await UserModel.findOneAndUpdate({ _id: userId }, newUserData)
+    const updatedUser = await User.findOneAndUpdate({ _id: userId }, newUserData)
 
     res.send(updatedUser)
   }
@@ -273,7 +273,7 @@ class AuthController extends Controller {
       return res.status(400).send({ message: 'You need to fill in your new password.' })
     }
 
-    UserModel.findById(userId, (err, foundUser) => {
+    User.findById(userId, (err, foundUser) => {
       if (!!foundUser) {
         // Make sure the entered password is the user's password
         foundUser.authenticate(oldPass, (err, user, passwordError) => {
@@ -313,7 +313,7 @@ class AuthController extends Controller {
         res.status(400).send({ message: 'The new password fields do not match.' })
       }
 
-      const foundUser = await UserModel.findOne({ email: data.email })
+      const foundUser = await User.findOne({ email: data.email })
 
       // Set the new password
       foundUser.setPassword(password, () => {
@@ -337,7 +337,7 @@ class AuthController extends Controller {
         res.status(400).send({ message: 'Please enter your email address.' })
       }
 
-      const userExists = await UserModel.findOne({ email })
+      const userExists = await User.findOne({ email })
       if (!userExists) {
 
         let message = 'That email does not exist in our system.'
@@ -368,7 +368,7 @@ class AuthController extends Controller {
 
     const { userId, isAdmin } = req.body
 
-    await UserModel.findByIdAndUpdate(userId, { isAdmin })
+    await User.findByIdAndUpdate(userId, { isAdmin })
 
     res.send({ message: 'Success' })
   }
@@ -378,7 +378,7 @@ class AuthController extends Controller {
 
     const { userId, isBanned } = req.body
 
-    await UserModel.findByIdAndUpdate(userId, { isBanned })
+    await User.findByIdAndUpdate(userId, { isBanned })
 
     res.send({ message: 'Success' })
   }
@@ -393,4 +393,4 @@ class AuthController extends Controller {
 }
 
 
-module.exports = AuthController
+export default AuthController

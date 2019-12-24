@@ -1,6 +1,6 @@
-const Controller = require('./abstractController')
-const keys = require('../config/keys')
-const { configureSettings } = require('../utilities/functions')
+import Controller from './abstractController'
+import keys from '../config/keys'
+import { configureSettings } from '../utilities/functions'
 
 
 class UtilityController extends Controller {
@@ -46,4 +46,4 @@ class UtilityController extends Controller {
   }
 }
 
-module.exports = UtilityController
+export default UtilityController

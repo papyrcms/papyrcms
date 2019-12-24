@@ -1,9 +1,9 @@
-const Controller = require('./abstractController')
-const MessageModel = require('../models/message')
-const Mailer = require('../utilities/mailer')
-const keys = require('../config/keys')
-const { configureSettings } = require('../utilities/functions')
-const { sanitizeRequestBody, checkIfAdmin } = require('../utilities/middleware')
+import Controller from './abstractController'
+import Message from '../models/message'
+import Mailer from '../utilities/mailer'
+import keys from '../config/keys'
+import { configureSettings } from '../utilities/functions'
+import { sanitizeRequestBody, checkIfAdmin } from '../utilities/middleware'
 
 class ContactController extends Controller {
 
@@ -51,7 +51,7 @@ class ContactController extends Controller {
 
   async sendAllMessages(req, res) {
 
-    const messages = await MessageModel.find().sort({ created: -1 })
+    const messages = await Message.find().sort({ created: -1 })
 
     res.send(messages)
   }
@@ -60,7 +60,7 @@ class ContactController extends Controller {
   async deleteMessage(req, res) {
 
     const { id } = req.params
-    await MessageModel.findByIdAndDelete(id)
+    await Message.findByIdAndDelete(id)
 
     res.send('message deleted')
   }
@@ -68,7 +68,7 @@ class ContactController extends Controller {
 
   createMessage(req, res) {
 
-    const message = new MessageModel({
+    const message = new Message({
       name: req.body.name,
       email: req.body.email,
       message: req.body.message
@@ -92,4 +92,4 @@ class ContactController extends Controller {
 }
 
 
-module.exports = ContactController
+export default ContactController

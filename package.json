@@ -7,9 +7,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
+    "dev": "nodemon --inspect index.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV=production node index.js",
     "heroku-config": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
@@ -23,6 +23,7 @@
     "cloudinary": "^1.18.0",
     "cookie-session": "^1.3.3",
     "cors": "^2.8.5",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "google-map-react": "^1.1.5",
     "googleapis": "^45.0.0",

@@ -1,8 +1,8 @@
-const Controller = require('./abstractController')
-const keys = require('../config/keys')
-const Payments = require('../utilities/payments')
-const { sanitizeRequestBody } = require('../utilities/middleware')
-const { configureSettings } = require('../utilities/functions')
+import Controller from './abstractController'
+import keys from '../config/keys'
+import Payments from '../utilities/payments'
+import { sanitizeRequestBody } from '../utilities/middleware'
+import { configureSettings } from '../utilities/functions'
 
 
 class DonationController extends Controller {
@@ -70,4 +70,4 @@ class DonationController extends Controller {
   }
 }
 
-module.exports = DonationController
+export default DonationController

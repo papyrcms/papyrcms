@@ -1,4 +1,4 @@
-const sanitizeHTML = require('sanitize-html')
+import sanitizeHTML from 'sanitize-html'
 
 const checkIfAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
@@ -73,7 +73,7 @@ const sanitizeRequestBody = (req, res, next) => {
   next()
 }
 
-module.exports = {
+export {
   checkIfAdmin,
   checkIfLoggedIn,
   mapTagsToArray,

@@ -1,11 +1,10 @@
-const keys = require('../config/keys')
-const stripe = require('stripe')
+import keys from '../config/keys'
+import stripe from 'stripe'
 
 
 class Payments {
 
   constructor() {
-
     this.stripe = stripe(keys.stripeSecretTestKey)
   }
 
@@ -32,4 +31,4 @@ class Payments {
   }
 }
 
-module.exports = Payments
+export default Payments

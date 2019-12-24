@@ -1,11 +1,11 @@
-const cloudinary = require('cloudinary')
-const multer = require('multer')
-const Controller = require('./abstractController')
-const PostModel = require('../models/post')
-const CommentModel = require('../models/comment')
-const Mailer = require('../utilities/mailer')
-const keys = require('../config/keys')
-const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
+import cloudinary from 'cloudinary'
+import multer from 'multer'
+import Controller from './abstractController'
+import Post from '../models/post'
+import Comment from '../models/comment'
+import Mailer from '../utilities/mailer'
+import keys from '../config/keys'
+import { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } from '../utilities/middleware'
 
 class PostController extends Controller {
 
@@ -30,11 +30,13 @@ class PostController extends Controller {
 
     this.upload = multer({ storage, fileFilter })
 
+    const { cloudinaryCloudName, cloudinaryApiKey, cloudinaryApiSecret } = keys
+
     // Cloudinary config
     cloudinary.config({
-      cloud_name: keys.cloudinaryCloudName,
-      api_key: keys.cloudinaryApiKey,
-      api_secret: keys.cloudinaryApiSecret
+      cloud_name: cloudinaryCloudName,
+      api_key: cloudinaryApiKey,
+      api_secret: cloudinaryApiSecret
     })
   }
 
@@ -100,12 +102,12 @@ class PostController extends Controller {
 
     let post
     try {
-      post = await PostModel.findById(req.params.id)
+      post = await Post.findById(req.params.id)
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch (e) {
-      post = await PostModel.findOne({ slug: req.params.id })
+      post = await Post.findOne({ slug: req.params.id })
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
@@ -132,7 +134,7 @@ class PostController extends Controller {
 
   async createPost(req, res) {
 
-    let post = new PostModel(req.body)
+    let post = new Post(req.body)
     post.slug = post.title.replace(/\s+/g, '-').toLowerCase()
     post = await post.save()
 
@@ -153,7 +155,7 @@ class PostController extends Controller {
 
   async sendAllPosts(req, res) {
 
-    const foundPosts = await PostModel.find().sort({ created: -1 }).lean()
+    const foundPosts = await Post.find().sort({ created: -1 }).lean()
 
     res.send(foundPosts)
   }
@@ -161,7 +163,7 @@ class PostController extends Controller {
 
   async sendPublishedPosts(req, res) {
 
-    const foundPosts = await PostModel.find({ published: true }).sort({ created: -1 }).lean()
+    const foundPosts = await Post.find({ published: true }).sort({ created: -1 }).lean()
 
     res.send(foundPosts)
   }
@@ -171,12 +173,12 @@ class PostController extends Controller {
 
     let foundPost
     try {
-      foundPost = await PostModel.findById(req.params.id)
+      foundPost = await Post.findById(req.params.id)
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch(e) {
-      foundPost = await PostModel.findOne({ slug: req.params.id })
+      foundPost = await Post.findOne({ slug: req.params.id })
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
@@ -190,11 +192,11 @@ class PostController extends Controller {
 
     const postDocument = { _id: req.params.id }
     req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
-    const updatedPost = await PostModel.findOneAndUpdate(postDocument, req.body)
+    const updatedPost = await Post.findOneAndUpdate(postDocument, req.body)
 
     // If a bulk-email post was published, send it
     const mailer = new Mailer()
-    const post = await PostModel.findOne(postDocument)
+    const post = await Post.findOne(postDocument)
     if (
       res.locals.settings.enableEmailingToUsers &&
       post.tags.includes(mailer.templateTag) &&
@@ -210,17 +212,17 @@ class PostController extends Controller {
 
   async deletePost(req, res) {
 
-    const post = await PostModel.findById(req.params.id)
+    const post = await Post.findById(req.params.id)
 
     post.comments.forEach(async comment => {
-      await CommentModel.findOneAndDelete({ _id: comment })
+      await Comment.findOneAndDelete({ _id: comment })
     })
 
-    await PostModel.findByIdAndDelete(req.params.id)
+    await Post.findByIdAndDelete(req.params.id)
 
     res.send('post deleted')
   }
 }
 
 
-module.exports = PostController
+export default PostController

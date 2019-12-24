@@ -1,8 +1,8 @@
-const Controller = require('./abstractController')
-const BlogModel = require('../models/blog')
-const CommentModel = require('../models/comment')
-const { configureSettings } = require('../utilities/functions')
-const { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } = require('../utilities/middleware')
+import Controller from './abstractController'
+import Blog from '../models/blog'
+import Comment from '../models/comment'
+import { configureSettings } from '../utilities/functions'
+import { checkIfAdmin, mapTagsToArray, sanitizeRequestBody } from '../utilities/middleware'
 
 class BlogController extends Controller {
 
@@ -121,13 +121,13 @@ class BlogController extends Controller {
 
     let blog
     try {
-      blog = await BlogModel.findById(req.params.id)
+      blog = await Blog.findById(req.params.id)
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch (e) {
-      blog = await BlogModel.findOne({ slug: req.params.id })
+      blog = await Blog.findOne({ slug: req.params.id })
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
@@ -146,7 +146,7 @@ class BlogController extends Controller {
 
   createBlog(req, res) {
 
-    const blog = new BlogModel(req.body)
+    const blog = new Blog(req.body)
     blog.author = req.user
     blog.slug = blog.title.replace(/\s+/g, '-').toLowerCase()
 
@@ -161,7 +161,7 @@ class BlogController extends Controller {
 
   async sendAllBlogs(req, res) {
 
-    const foundBlogs = await BlogModel.find().sort({ publishDate: -1, created: -1 }).lean()
+    const foundBlogs = await Blog.find().sort({ publishDate: -1, created: -1 }).lean()
 
     res.send(foundBlogs)
   }
@@ -169,7 +169,7 @@ class BlogController extends Controller {
 
   async sendPublishedBlogs(req, res) {
 
-    const foundBlogs = await BlogModel.find({ published: true }).sort({ publishDate: -1 }).lean()
+    const foundBlogs = await Blog.find({ published: true }).sort({ publishDate: -1 }).lean()
 
     res.send(foundBlogs)
   }
@@ -179,13 +179,13 @@ class BlogController extends Controller {
 
     let foundBlog
     try {
-      foundBlog = await BlogModel.findById(req.params.id)
+      foundBlog = await Blog.findById(req.params.id)
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
         .lean()
     } catch(e) {
-      foundBlog = await BlogModel.findOne({ slug: req.params.id })
+      foundBlog = await Blog.findOne({ slug: req.params.id })
         .populate('author')
         .populate('comments')
         .populate({ path: 'comments', populate: { path: 'author' } })
@@ -198,7 +198,7 @@ class BlogController extends Controller {
 
   async updateBlog(req, res) {
 
-    const oldBlog = await BlogModel.findById(req.params.id)
+    const oldBlog = await Blog.findById(req.params.id)
 
     if ( !oldBlog.published && req.body.published ) {
       req.body.publishDate = Date.now()
@@ -206,7 +206,7 @@ class BlogController extends Controller {
 
     req.body.slug = req.body.title.replace(/\s+/g, '-').toLowerCase()
 
-    const updatedBlog = await BlogModel.findOneAndUpdate({ _id: req.params.id }, req.body)
+    const updatedBlog = await Blog.findOneAndUpdate({ _id: req.params.id }, req.body)
 
     res.send(updatedBlog)
   }
@@ -215,17 +215,17 @@ class BlogController extends Controller {
   async deleteBlog(req, res) {
 
     const { id } = req.params
-    const blog = await BlogModel.findById(id)
+    const blog = await Blog.findById(id)
 
     blog.comments.forEach(async comment => {
-      await CommentModel.findOneAndDelete({ _id: comment })
+      await Comment.findOneAndDelete({ _id: comment })
     })
 
-    await BlogModel.findByIdAndDelete(id)
+    await Blog.findByIdAndDelete(id)
 
     res.send('blog deleted')
   }
 }
 
 
-module.exports = BlogController
+export default BlogController

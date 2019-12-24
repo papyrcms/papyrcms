@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   stripePublishableTestKey: process.env.STRIPE_PUBLISHABLE_TEST_KEY,
   stripeSecretTestKey: process.env.STRIPE_SECRET_TEST_KEY,
   stripePublishableLiveKey: process.env.STRIPE_PUBLISHABLE_LIVE_KEY,

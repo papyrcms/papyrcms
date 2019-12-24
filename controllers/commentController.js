@@ -1,7 +1,7 @@
-const Controller = require('./abstractController')
-const CommentModel = require('../models/comment')
-const { sanitizeRequestBody } = require('../utilities/middleware')
-const { configureSettings } = require('../utilities/functions')
+import Controller from './abstractController'
+import Comment from '../models/comment'
+import { sanitizeRequestBody } from '../utilities/middleware'
+import { configureSettings } from '../utilities/functions'
 
 
 class CommentController extends Controller {
@@ -73,7 +73,7 @@ class CommentController extends Controller {
   async createComment(req, res) {
 
     const { body, user, params } = req
-    const comment = new CommentModel({
+    const comment = new Comment({
       content: body.content,
       author: user
     })
@@ -91,7 +91,7 @@ class CommentController extends Controller {
   async updateComment(req, res) {
 
     const commentDocument = { _id: req.params.comment_id }
-    const updatedComment = await CommentModel.findOneAndUpdate(commentDocument, req.body)
+    const updatedComment = await Comment.findOneAndUpdate(commentDocument, req.body)
 
     res.send(updatedComment)
   }
@@ -111,11 +111,11 @@ class CommentController extends Controller {
     })
     post.save()
 
-    await CommentModel.findOneAndDelete({ _id: comment_id })
+    await Comment.findOneAndDelete({ _id: comment_id })
 
     res.send(comment_id)
   }
 }
 
 
-module.exports = CommentController
+export default CommentController

@@ -13,28 +13,28 @@ Inside the /config directory, create a file called `dev.js`. When not in product
       stripeSecretTestKey: ,
       stripePublishableLiveKey: '',
       stripeSecretLiveKey: '',
-  
+
       // Gmail
       gmailClientId: '',
       gmailClientSecret: '',
       gmailRefreshToken: '',
-  
+
       // Google Tools
       googleAnalyticsId: '',
       googleMapsKey: '',
-  
+
       // Emails
       siteEmail: '',
       adminEmail: '',
-  
+
       // Cloudinary
       cloudinaryCloudName: '',
       cloudinaryApiKey: '',
       cloudinaryApiSecret: '',
-    
+
       // Mongo
       mongoURI: '',
-              
+
       // Etc
       cookieKey: '',
       rootURL: '',

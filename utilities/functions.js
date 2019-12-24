@@ -1,7 +1,9 @@
-const Settings = require('../models/settings')
+import Settings from '../models/settings'
 
 
 const configureSettings = async (name, defaultOptions) => {
+
+  let appSettings
 
   // Search for the provided settings document
   const settings = await Settings.findOne({ name })
@@ -19,6 +21,6 @@ const configureSettings = async (name, defaultOptions) => {
 }
 
 
-module.exports = {
+export {
   configureSettings
 }

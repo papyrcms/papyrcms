@@ -1,11 +1,11 @@
-const nodemailer = require('nodemailer')
-const { google } = require('googleapis')
+import nodemailer from 'nodemailer'
+import { google } from 'googleapis'
+import handlebars from 'handlebars'
+import fs from 'fs'
+import PostModel from '../models/post'
+import UserModel from '../models/user'
+import keys from '../config/keys'
 const OAuth2 = google.auth.OAuth2
-var handlebars = require('handlebars')
-var fs = require('fs')
-const PostModel = require('../models/post')
-const UserModel = require('../models/user')
-const keys = require('../config/keys')
 
 
 class Mailer {
@@ -154,4 +154,4 @@ class Mailer {
   }
 }
 
-module.exports = Mailer
+export default Mailer
