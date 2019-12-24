@@ -5,15 +5,12 @@ import mongoose from 'mongoose'
 import passport from 'passport'
 import express from 'express'
 import next from 'next'
-import cors from 'cors'
 import fs from 'fs'
+import User from './models/user'
 
 // App keys
 import keys from './config/keys'
 const { mongoURI, cookieKey, port, rootURL } = keys
-
-// Models
-import User from './models/user'
 
 // Mongo config
 const mongooseConfig = {
@@ -26,12 +23,6 @@ mongoose.connect(mongoURI, mongooseConfig)
 mongoose.plugin(schema => { schema.options.usePushEach = true })
 
 const server = express()
-
-// CORS
-server.use(cors({
-  methods:['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}))
 
 // Middleware helpers
 server.use(bodyParser.json())
