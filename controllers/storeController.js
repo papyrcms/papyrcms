@@ -1,14 +1,32 @@
 import Controller from './abstractController'
 import Product from '../models/product'
 import Order from '../models/order'
+import User from '../models/user'
 import Payments from '../utilities/payments'
 import Mailer from '../utilities/mailer'
 import keys from '../config/keys'
-import { checkIfAdmin, sanitizeRequestBody } from '../utilities/middleware'
+import { checkIfAdmin, checkIfLoggedIn, sanitizeRequestBody } from '../utilities/middleware'
 import { configureSettings } from '../utilities/functions'
 
 
 class StoreController extends Controller {
+
+  constructor(server, app) {
+    super(server, app)
+
+    server.use(async (req, res, next) => {
+      if (!req.user) {
+        return next()
+      }
+
+      let i = 0
+      for (const productId of req.user.cart) {
+        req.user.cart[i] = await Product.findOne({ _id: productId })
+        i++
+      }
+      next()
+    })
+  }
 
   registerSettings() {
 
@@ -43,7 +61,7 @@ class StoreController extends Controller {
       this.renderPage.bind(this, 'edit')
     )
 
-    // Store API
+    // Products API
     this.server.post(
       '/api/products',
       checkIfAdmin,
@@ -74,6 +92,7 @@ class StoreController extends Controller {
       this.deleteProduct.bind(this)
     )
 
+    // Order API
     this.server.post(
       '/api/checkout',
       this.checkout.bind(this)
@@ -92,6 +111,18 @@ class StoreController extends Controller {
       '/api/orders/:id',
       checkIfAdmin,
       this.deleteOrder.bind(this)
+    )
+
+    // Cart API
+    this.server.put(
+      '/api/cart/:id',
+      checkIfLoggedIn,
+      this.addToCart.bind(this)
+    )
+    this.server.delete(
+      '/api/cart/:id',
+      checkIfLoggedIn,
+      this.removeFromCart.bind(this)
     )
   }
 
@@ -226,6 +257,21 @@ class StoreController extends Controller {
 
   async checkout(req, res) {
 
+    const requiredFields = [
+      'firstName', 'lastName', 'email', 'address1',
+      'city', 'state', 'zip', 'country'
+    ]
+
+    for (const field of requiredFields) {
+      if (!req.body[field]) {
+        return res.status(401).send({ message: 'Please complete all required fields' })
+      }
+    }
+
+    if (!req.body.products || !req.body.source) {
+      return res.status(401).send({ message: 'Something went wrong. Please try again later or contact us.' })
+    }
+
     // Set dynamic amount and description
     let amount = 0
     let description = 'Payment for '
@@ -256,10 +302,21 @@ class StoreController extends Controller {
 
       // Create an order
       const order = new Order({
-        user: req.user,
-        notes: req.body.notes,
-        products: []
+        notes: req.body.notes
       })
+
+      if (req.user) {
+        order.user = req.user
+      }
+
+      order.notes += `\n
+User info is:
+${req.body.firstName} ${req.body.lastName}
+${req.body.email}
+${req.body.address1}${req.body.address2 ? `\n${req.body.address2}` : ''}
+${req.body.city}, ${req.body.state} ${req.body.zip}
+${req.body.country}
+`
 
       // Start the email message
       let message = 'A new order has been placed for the following items:\n\n'
@@ -275,9 +332,7 @@ class StoreController extends Controller {
       }
 
       // Add order notes to the email
-      if (req.body.notes) {
-        message += `\nThese are the customer\'s order notes:\n${req.body.notes}`
-      }
+      message += `\nNotes:\n${order.notes}`
 
       message += '\nMake sure you send it as soon as possible!'
 
@@ -286,9 +341,13 @@ class StoreController extends Controller {
       const mailer = new Mailer()
       mailer.sendEmail({ message }, keys.adminEmail, 'plain', 'New Order!')
 
+      if (req.user && req.body.fromCart) {
+        await User.findOneAndUpdate({ _id: req.user._id }, { cart: [] })
+      }
+
       res.send('All items purchased')
     } else {
-      res.status(400).send({ message: 'Something went wrong. Please contact us directly to order.' })
+      res.status(401).send({ message: 'Something went wrong. Please contact us directly to order.' })
     }
   }
 
@@ -303,15 +362,54 @@ class StoreController extends Controller {
 
 
   async updateOrder(req, res) {
-
     await Order.findOneAndUpdate({ _id: req.params.id }, { shipped: req.body.shipped })
     res.send('updated')
   }
 
-  async deleteOrder(req, res) {
 
+  async deleteOrder(req, res) {
     await Order.findByIdAndDelete(req.params.id)
     res.send('deleted')
+  }
+
+
+  async addToCart(req, res) {
+
+    const product = await Product.findOne({ _id: req.params.id })
+    // If we are out of stock
+    if (product.quantity <= 0) {
+      return res.status(401).send({ message: 'This product is sold out.' })
+    }
+    // If we have all available products in our cart
+    if (req.user.cart.filter(inCart => product._id.equals(inCart._id)).length >= product.quantity) {
+      return res.status(401).send({ message: 'You cannot buy more than what is available.' })
+    }
+
+    req.user.cart.push(product)
+    await User.findOneAndUpdate({ _id: req.user._id }, { cart: req.user.cart })
+
+    res.send(req.user.cart)
+  }
+
+
+  async removeFromCart(req, res) {
+
+    // This function remove ONE item from the cart, not all of a particular product
+    let removed = false
+    const cart = req.user.cart.filter(product => {
+
+      // If one has not been removed and it has the passed id, remove it
+      if (product._id.equals(req.params.id) && !removed) {
+        removed = true
+        return false
+      }
+
+      return true
+    })
+
+    await User.findOneAndUpdate({ _id: req.user._id }, { cart })
+
+    res.send(cart)
   }
 }
 

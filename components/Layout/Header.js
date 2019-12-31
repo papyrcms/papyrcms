@@ -30,11 +30,22 @@ const Header = props => {
   }
 
 
+  const renderCart = () => {
+    if (settings.enableStore) {
+      return (
+        <Link href="/store/cart">
+          <a title="Cart" className="header__menu-item header__menu-item--2"><li>Cart</li></a>
+        </Link>
+      )
+    }
+  }
+
+
   const renderAdminItems = () => {
     if (currentUser && currentUser.isAdmin) {
       return (
         <Link href="/posts/new">
-          <a title="Content" className="header__menu-item header__menu-item--2"><li>Add Content</li></a>
+          <a title="Content" className="header__menu-item header__menu-item--3"><li>Add Content</li></a>
         </Link>
       )
     }
@@ -49,7 +60,8 @@ const Header = props => {
       return (
         <ul className="header__menu">
           {renderAuthenticator()}
-          {renderAdminItems()}
+          {renderCart()}
+          {/* {renderAdminItems()} */}
         </ul>
       )
     }

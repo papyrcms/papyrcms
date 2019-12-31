@@ -2,14 +2,25 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../../config/keys'
+import { setCurrentUser } from '../../reduxStore'
 import CreditCardForm from '../../components/CreditCardForm'
 import Input from '../../components/Input'
 import UserInfoForm from '../../components/UserInfoForm'
+import useCart from '../../hooks/useCart'
 
 
 const Checkout = props => {
 
-  const { product } = props
+  const { product, currentUser, setCurrentUser } = props
+
+  let cart = []
+  let fromCart
+  if (product) {
+    cart = [product]
+  } else {
+    cart = useCart(currentUser, setCurrentUser).cart
+    fromCart = true
+  }
 
   const [orderNotes, setOrderNotes] = useState("")
   const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(() => null)
@@ -26,9 +37,10 @@ const Checkout = props => {
 
     const successFunction = formState => {
       const additionalValues = {
+        fromCart,
         source,
         notes: orderNotes,
-        products: [product]
+        products: cart
       }
 
       const success = () => {
@@ -53,6 +65,18 @@ const Checkout = props => {
     document.getElementById('userInfoForm').dispatchEvent(new Event('submit'))
   }
 
+  const renderProductsList = () => {
+    return cart.map(product => {
+      return <p key={product._id}>{product.title}: ${product.price.toFixed(2)}</p>
+    })
+  }
+
+  const renderTotalCost = () => {
+    let totalCost = 0
+    cart.forEach(product => totalCost += product.price)
+    return <p className="u-margin-bottom-small">Total Cost: ${totalCost.toFixed(2)}</p>
+  }
+
   return (
     <section className="checkout">
       <div className="checkout__container">
@@ -72,7 +96,9 @@ const Checkout = props => {
             onChange={event => setOrderNotes(event.target.value)}
           />
 
-          <p>{product.title}: ${product.price.toFixed(2)}</p>
+          {renderProductsList()}
+          <hr />
+          {renderTotalCost()}
 
           <CreditCardForm onSubmit={handleCardSubmit} />
         </UserInfoForm>
@@ -106,4 +132,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(Checkout)
+export default connect(mapStateToProps, { setCurrentUser })(Checkout)

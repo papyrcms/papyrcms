@@ -7,7 +7,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --inspect index.js",
+    "dev": "nodemon index.js",
+    "debug": "nodemon --inspect index.js",
     "build": "next build",
     "start": "NODE_ENV=production node index.js",
     "heroku-config": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')",

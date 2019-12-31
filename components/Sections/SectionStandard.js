@@ -21,7 +21,7 @@ import Media from '../Media'
  * @prop beforeTitle - Function - Rendered before the section title
  * @prop afterTitle - Function - Rendered after the section title
  * @prop beforePosts - Function - Rendered before the section cards
- * @prop beforePosts - Function - Rendered before the section cards
+ * @prop afterPosts - Function - Rendered after the section cards
  *
  * Post Hooks
  * @prop beforePostTitle - Function - Rendered before the card title

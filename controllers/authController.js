@@ -164,7 +164,6 @@ class AuthController extends Controller {
 
 
   sendCurrentUser(req, res) {
-
     res.send(req.user)
   }
 

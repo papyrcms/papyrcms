@@ -3,32 +3,47 @@ import Link from 'next/link'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../../config/keys'
+import useCart from '../../hooks/useCart'
+import { setCurrentUser } from '../../reduxStore'
 import { SectionCards } from '../../components/Sections/'
 
 const StorePage = props => {
+
+  const { products, currentUser, setCurrentUser } = props
+  const { cart, addToCart } = useCart(currentUser, setCurrentUser)
+
 
   const renderPriceAndQuantity = product => {
     return (
       <Fragment>
         <p>${product.price.toFixed(2)}</p>
-        <p>{
-          product.quantity > 0
-            ? `${product.quantity} in stock`
-            : 'Sold out'
-        }</p>
+        <p>{product.quantity > 0 ? `${product.quantity} in stock` : 'Sold out'}</p>
       </Fragment>
     )
   }
 
-  const addToCart = product => {
-    
+
+  const renderAddToCart = product => {
+    const quantityInCart = cart.filter(cartProduct => cartProduct._id === product._id).length
+    let message = 'Add to cart'
+    if (quantityInCart) message += ` (${quantityInCart} now)`
+
+    return (
+      <a onClick={async event => {
+        event.preventDefault()
+        await addToCart(product)
+      }} href="#">
+        {message}
+      </a>
+    )
   }
+
 
   const renderCheckout = product => {
     if (product.quantity > 0) {
       return (
         <Fragment>
-          <a onClick={() => addToCart(product)} href="#">Add to cart</a>
+          {renderAddToCart(product)}
           <Link href={`/store/checkout?id=${product._id}`}>
             <a>Buy it now</a>
           </Link>
@@ -37,8 +52,9 @@ const StorePage = props => {
     }
   }
 
+
   return <SectionCards
-    posts={props.products}
+    posts={products}
     title='Store'
     clickableMedia
     perRow={4}
@@ -66,4 +82,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(StorePage)
+export default connect(mapStateToProps, { setCurrentUser })(StorePage)

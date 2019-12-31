@@ -150,7 +150,7 @@ class BlogController extends Controller {
     blog.author = req.user
     blog.slug = blog.title.replace(/\s+/g, '-').toLowerCase()
 
-    if ( blog.published ) {
+    if (blog.published) {
       blog.publishDate = Date.now()
     }
 

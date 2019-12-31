@@ -17,13 +17,7 @@ const LoginForm = props => {
     password: '',
     validation: ''
   }
-  const {
-    values,
-    validateField,
-    errors,
-    handleChange,
-    submitForm
-  } = useForm(INITIAL_STATE)
+  const formState = useForm(INITIAL_STATE)
 
 
   const handleSubmit = event => {
@@ -39,7 +33,7 @@ const LoginForm = props => {
         })
     }
 
-    submitForm('/api/login', { success })
+    formState.submitForm('/api/login', { success })
   }
 
 
@@ -49,30 +43,22 @@ const LoginForm = props => {
       <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
 
       <Input
-        id="email_login_input"
         label="Email"
         name="username"
         type="email"
-        value={values.email}
-        onChange={handleChange}
-        onBlur={validateField}
+        formState={formState}
         required
-        validation={errors.email}
       />
 
       <Input
-        id="password_login_input"
         label="Password"
         name="password"
-        value={values.password}
-        onChange={handleChange}
-        onBlur={validateField}
-        required
-        validation={errors.password}
         type="password"
+        formState={formState}
+        required
       />
 
-      <p className="login-form__validation">{values.validation}</p>
+      <p className="login-form__validation">{formState.values.validation}</p>
 
       <div className="login-form__bottom">
         <div className="login-form__submit">
@@ -87,7 +73,7 @@ const LoginForm = props => {
           buttonClasses="login-form__forgot-password"
           buttonText="Forgot Password?"
         >
-          <ForgotPasswordForm email={values.email} />
+          <ForgotPasswordForm email={formState.values.email} />
         </Modal>
       </div>
 

@@ -15,7 +15,7 @@ class Payments {
 
     const paymentDetails = {
       source: source.id,
-      amount: amount * 100,
+      amount: Math.floor(amount * 100), // In cents, needs to be an int
       receipt_email: email,
       currency: 'usd',
       description
