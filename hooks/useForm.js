@@ -74,7 +74,7 @@ const useForm = initialState => {
   }
 
 
-  return { values, validateField, errors, handleChange, submitForm }
+  return { values, setValues, validateField, errors, handleChange, submitForm }
 }
 
 

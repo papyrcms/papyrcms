@@ -65,7 +65,14 @@ const useCart = (currentUser, setCurrentUser) => {
     }
   }
 
-  return { addToCart, removeFromCart, cart }
+  const clearCart = () => {
+    setCart([])
+    if (!currentUser) {
+      localStorage.setItem('cart', JSON.stringify([]))
+    }
+  }
+
+  return { addToCart, removeFromCart, cart, clearCart }
 }
 
 export default useCart

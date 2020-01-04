@@ -257,6 +257,14 @@ class StoreController extends Controller {
 
   async checkout(req, res) {
 
+    const {
+      products, source, notes, firstName, lastName,
+      email, address1, address2, city, state, zip, country,
+      shippingEmail, shippingFirstName, shippingLastName,
+      shippingAddress1, shippingAddress2, shippingCity,
+      shippingState, shippingZip, shippingCountry, fromCart
+    } = req.body
+
     const requiredFields = [
       'firstName', 'lastName', 'email', 'address1',
       'city', 'state', 'zip', 'country'
@@ -268,18 +276,18 @@ class StoreController extends Controller {
       }
     }
 
-    if (!req.body.products || !req.body.source) {
+    if (!products || !source) {
       return res.status(401).send({ message: 'Something went wrong. Please try again later or contact us.' })
     }
 
     // Set dynamic amount and description
     let amount = 0
     let description = 'Payment for '
-    for (const product of req.body.products) {
+    for (const product of products) {
 
       // If there is no stock left, error
       if (product.quantity < 1) {
-        return res.status(400).send({ message: `${product.title} is out of stock.` })
+        return res.status(401).send({ message: `${product.title} is out of stock.` })
       }
 
       amount += product.price
@@ -287,11 +295,12 @@ class StoreController extends Controller {
     }
     description = description.substring(0, description.length-2) + '.'
 
+    // Stripe charge info
     const info = {
-      email: req.body.email,
+      email,
       amount,
       description,
-      source: req.body.source,
+      source,
     }
 
     const payments = new Payments()
@@ -301,9 +310,7 @@ class StoreController extends Controller {
     if (charge) {
 
       // Create an order
-      const order = new Order({
-        notes: req.body.notes
-      })
+      const order = new Order({ notes })
 
       if (req.user) {
         order.user = req.user
@@ -311,18 +318,18 @@ class StoreController extends Controller {
 
       order.notes += `\n
 User info is:
-${req.body.firstName} ${req.body.lastName}
-${req.body.email}
-${req.body.address1}${req.body.address2 ? `\n${req.body.address2}` : ''}
-${req.body.city}, ${req.body.state} ${req.body.zip}
-${req.body.country}
+${shippingFirstName || firstName} ${shippingLastName || lastName}
+${shippingEmail || email}
+${shippingAddress1 || address1}${(shippingAddress2 || address2) ? `\n${shippingAddress2 || address2}` : ''}
+${shippingCity || city}, ${shippingState || state} ${shippingZip || zip}
+${shippingCountry || country}
 `
 
       // Start the email message
       let message = 'A new order has been placed for the following items:\n\n'
 
       // Save the updated products and put in the order
-      for (const product of req.body.products) {
+      for (const product of products) {
         const found = await Product.findById(product._id)
         found.quantity--
         found.save()
@@ -341,7 +348,7 @@ ${req.body.country}
       const mailer = new Mailer()
       mailer.sendEmail({ message }, keys.adminEmail, 'plain', 'New Order!')
 
-      if (req.user && req.body.fromCart) {
+      if (req.user && fromCart) {
         await User.findOneAndUpdate({ _id: req.user._id }, { cart: [] })
       }
 

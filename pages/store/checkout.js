@@ -15,10 +15,12 @@ const Checkout = props => {
 
   let cart = []
   let fromCart
+  let cartState
   if (product) {
     cart = [product]
   } else {
-    cart = useCart(currentUser, setCurrentUser).cart
+    cartState = useCart(currentUser, setCurrentUser)
+    cart = cartState.cart
     fromCart = true
   }
 
@@ -27,7 +29,6 @@ const Checkout = props => {
   const [handleSubmitError, setHandleSubmitError] = useState(() => null)
 
   const handleCardSubmit = (source, setProcessing, setValidation) => {
-
     const errorFunction = () => {
       setProcessing(false)
       setValidation('Something went wrong.')
@@ -46,11 +47,16 @@ const Checkout = props => {
       const success = () => {
         setProcessing(false)
         setValidation('Your order has been sent!')
+        if (fromCart) {
+          cartState.clearCart()
+        }
       }
 
       const error = err => {
         setProcessing(false)
-        setValidation(err.response.data.message)
+        if (err.response) {
+          setValidation(err.response.data.message)
+        }
       }
 
       formState.submitForm(
@@ -66,8 +72,8 @@ const Checkout = props => {
   }
 
   const renderProductsList = () => {
-    return cart.map(product => {
-      return <p key={product._id}>{product.title}: ${product.price.toFixed(2)}</p>
+    return cart.map((product, i) => {
+      return <p key={product._id + i.toString()}>{product.title}: ${product.price.toFixed(2)}</p>
     })
   }
 

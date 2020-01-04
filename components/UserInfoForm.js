@@ -54,34 +54,63 @@ const UserInfoForm = props => {
 
   const handleSubmit = async event => {
     event.preventDefault()
+debugger
+    // If the box was checked on submit, clear all shipping fields
+    if (formState.values.shipToBilling) {
+      formState.setValues({
+        ...formState.values,
+        shippingFirstName: '',
+        shippingLastName: '',
+        shippingEmail: '',
+        shippingAddress1: '',
+        shippingAddress2: '',
+        shippingCity: '',
+        shippingState: '',
+        shippingZip: '',
+        shippingCountry: ''
+      })
+    }
 
     const success = () => {
       if (currentUser) {
         axios.get('/api/currentUser')
           .then(res => {
             setCurrentUser(res.data)
+            // hook
             onSubmitSuccess(formState, res.data)
           }).catch(err => {
             console.error(err)
+            // hook
             onSubmitError(formState, err)
           })
       } else {
+        // hook
         onSubmitSuccess(formState)
       }
     }
 
     const error = err => {
+      // hook
       onSubmitError(formState, err)
     }
 
+    // hook
     beforeSubmit(formState)
 
-    formState.submitForm(
-      '/api/currentUser',
-      { success, error },
-      true,
-      { userId: currentUser._id }
-    )
+    // If we have a current user, submit to save
+    if (currentUser) {
+      formState.submitForm(
+        '/api/currentUser',
+        { success, error },
+        true,
+        { userId: currentUser._id }
+      )
+
+    // If we are using this form without a current user,
+    // bypass the submit and run the submit hook with no response
+    } else {
+      success()
+    }
   }
 
   const renderAddressFields = shipping => {

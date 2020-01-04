@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
+import useCart from '../../hooks/useCart'
 
 
 /**
@@ -30,11 +31,14 @@ const Header = props => {
   }
 
 
+  const { cart } = useCart(currentUser, null)
   const renderCart = () => {
     if (settings.enableStore) {
+      const menuText = `Cart${cart.length !== 0 ? ` (${cart.length})` : ''}`
+
       return (
         <Link href="/store/cart">
-          <a title="Cart" className="header__menu-item header__menu-item--2"><li>Cart</li></a>
+          <a title="Cart" className="header__menu-item header__menu-item--2"><li>{menuText}</li></a>
         </Link>
       )
     }

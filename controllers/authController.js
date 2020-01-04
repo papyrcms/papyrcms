@@ -117,10 +117,10 @@ class AuthController extends Controller {
       if (jwt.verify(req.query.token, keys.jwtSecret)) {
         next()
       } else {
-        res.status(400).send({ message: 'You\'re not allowed to do that.' })
+        res.status(401).send({ message: 'You\'re not allowed to do that.' })
       }
     } catch(exception) {
-      res.status(400).send({ message: 'You\'re not allowed to do that.' })
+      res.status(401).send({ message: 'You\'re not allowed to do that.' })
     }
   }
 
@@ -130,7 +130,7 @@ class AuthController extends Controller {
     const { id } = req.params
 
     if (id === req.user._id) {
-      return res.status(400).send({ message: 'You cannot delete yourself.' })
+      return res.status(401).send({ message: 'You cannot delete yourself.' })
     }
 
     await User.findOneAndDelete({ _id: id })
@@ -144,7 +144,7 @@ class AuthController extends Controller {
     if (res.locals.settings.enableRegistration) {
       next()
     } else {
-      res.status(400).send({ message: 'You\'re not allowed to do that.' })
+      res.status(401).send({ message: 'You\'re not allowed to do that.' })
     }
   }
 
@@ -180,21 +180,21 @@ class AuthController extends Controller {
     const { firstName, lastName, email, password, passwordConfirm } = req.body
 
     if (!firstName || firstName === '') {
-      return res.status(400).send({ message: 'Please enter your first name' })
+      return res.status(401).send({ message: 'Please enter your first name' })
     }
 
     if (!lastName || lastName === '') {
-      return res.status(400).send({ message: 'Please enter your last name' })
+      return res.status(401).send({ message: 'Please enter your last name' })
     }
 
     // Make sure email is in email format
     if (!this.verifyEmailSyntax(email)) {
-      return res.status(400).send({ message: 'Please use a valid email address' })
+      return res.status(401).send({ message: 'Please use a valid email address' })
     }
 
     // Make sure password fields match
     if (password !== passwordConfirm) {
-      return res.status(400).send({ message: 'The password fields need to match' })
+      return res.status(401).send({ message: 'The password fields need to match' })
     }
 
     // The LocalStrategy module requires a username
@@ -234,17 +234,28 @@ class AuthController extends Controller {
       shippingState, shippingZip, shippingCountry
     } = req.body
 
+    const requiredFields = [
+      'firstName', 'lastName', 'email',
+      'address1', 'city', 'state', 'zip', 'country'
+    ]
+
+    for (const field of requiredFields) {
+      if (!req.body[field]) {
+        return res.status(401).send({ message: 'Please complete all required fields.' })
+      }
+    }
+
     // Make sure the user submitting the form is the logged in on the server
     if (userId.toString() !== req.user._id.toString()) {
       const message = 'There\'s a problem with your session. Try logging out and logging back in'
-      return res.status(400).send({ message })
+      return res.status(401).send({ message })
     }
 
     // Make sure a user with the email does not already exist
     const existingUser = await User.findOne({ email })
     if (existingUser && !existingUser._id.equals(req.user._id)) {
       const message = 'Someone is already using this email.'
-      return res.status(400).send({ message })
+      return res.status(401).send({ message })
     }
 
     // Update user data
@@ -267,9 +278,9 @@ class AuthController extends Controller {
 
     // Make sure password fields are filled out
     if (!oldPass) {
-      return res.status(400).send({ message: 'You need to fill in your current password.' })
+      return res.status(401).send({ message: 'You need to fill in your current password.' })
     } else if (!newPass) {
-      return res.status(400).send({ message: 'You need to fill in your new password.' })
+      return res.status(401).send({ message: 'You need to fill in your new password.' })
     }
 
     User.findById(userId, (err, foundUser) => {
@@ -279,7 +290,7 @@ class AuthController extends Controller {
           if (!!user) {
             // Check to see new password fields match
             if (newPass !== confirmPass) {
-              return res.status(400).send({ message: 'The new password fields do not match.' })
+              return res.status(401).send({ message: 'The new password fields do not match.' })
             } else {
               // Set the new password
               foundUser.setPassword(newPass, () => {
@@ -288,13 +299,13 @@ class AuthController extends Controller {
               })
             }
           } else if (!!err) {
-            return res.status(400).send(err)
+            return res.status(401).send(err)
           } else if (!!passwordError) {
-            return res.status(400).send({ message: 'You have entered the wrong current password.' })
+            return res.status(401).send({ message: 'You have entered the wrong current password.' })
           }
         })
       } else {
-        return res.status(400).send(err)
+        return res.status(401).send(err)
       }
     })
   }
@@ -309,7 +320,7 @@ class AuthController extends Controller {
       const data = jwt.verify(token, keys.jwtSecret)
 
       if (password !== confirmPassword) {
-        res.status(400).send({ message: 'The new password fields do not match.' })
+        res.status(401).send({ message: 'The new password fields do not match.' })
       }
 
       const foundUser = await User.findOne({ email: data.email })
@@ -321,7 +332,7 @@ class AuthController extends Controller {
       })
 
     } catch (e) {
-      res.status(400).send(err)
+      res.status(401).send(err)
     }
   }
 
@@ -333,7 +344,7 @@ class AuthController extends Controller {
       const { email } = req.body
 
       if (!this.verifyEmailSyntax(email)) {
-        res.status(400).send({ message: 'Please enter your email address.' })
+        res.status(401).send({ message: 'Please enter your email address.' })
       }
 
       const userExists = await User.findOne({ email })
@@ -345,7 +356,7 @@ class AuthController extends Controller {
           message = message + ' Try filling out the "Register" form.'
         }
 
-        return res.status(400).send({ message })
+        return res.status(401).send({ message })
       }
 
       const mailer = new Mailer()
@@ -358,7 +369,7 @@ class AuthController extends Controller {
       mailer.sendEmail(variables, email, 'forgot-password', subject)
       res.send({ message: 'Your email is on its way!' })
     } else {
-      res.status(400).send({ message: 'Looks like emailing is disabled. Please contact a site administrator to reset your password.' })
+      res.status(401).send({ message: 'Looks like emailing is disabled. Please contact a site administrator to reset your password.' })
     }
   }
 
