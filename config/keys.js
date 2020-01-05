@@ -1,9 +1,9 @@
-let config
+let keys
 
 if (process.env.NODE_ENV === 'production') {
-  config = require('./prod')
+  keys = require('./prod')
 } else {
-  config = require('./dev')
+  keys = require('./dev')
 }
 
-export default { ...config }
+export default keys
