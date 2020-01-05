@@ -6,4 +6,4 @@ if (process.env.NODE_ENV === 'production') {
   config = require('./dev')
 }
 
-export default config
+export default { ...config }
