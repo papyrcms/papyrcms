@@ -10,10 +10,9 @@
   grid-template-columns: 1fr;
 
   @include sectionStyle();
-
-  & > *:not(:last-child) {
-    border-bottom: .1rem solid $color-grey-dark;
-  }
+  padding: 10rem 0;
+  max-width: $max-text-width;
+  margin: 0 auto;
 
   & > *:not(:first-child) {
     padding-bottom: 3.5rem;
