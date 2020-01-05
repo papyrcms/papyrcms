@@ -11,6 +11,7 @@ import User from './models/user'
 // App keys
 import keys from './config/keys'
 const { mongoURI, cookieKey, port, rootURL } = keys
+console.log(keys)
 
 // Mongo config
 const mongooseConfig = {
