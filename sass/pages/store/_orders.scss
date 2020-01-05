@@ -12,6 +12,10 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
     justify-items: start;
+
+    &--notes {
+      white-space: pre-wrap;
+    }
   }
 
   &__actions {

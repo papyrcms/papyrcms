@@ -33,6 +33,9 @@ const Orders = props => {
   }
 
   const deleteOrder = deletedOrder => {
+    const confirm = window.confirm('Are you sure you want to delete this order?')
+    if (!confirm) return
+
     axios.delete(`/api/orders/${deletedOrder._id}`)
       .then(response => {
         const newOrders = orders.filter(order => order._id !== deletedOrder._id)
@@ -50,7 +53,12 @@ const Orders = props => {
         <li key={_id} className="order">
           <p>This has {!shipped && 'not '}been shipped.</p>
           <div className="order__info">
-            <div className="order__info--address">
+
+            { // Address info is based on a user bound to the order
+            // If the user was logged out, this breaks.
+            // The address should already be in the notes 100% of the time anyway
+
+             /* <div className="order__info--address">
               <h3 className="heading-tertiary">Ship to:</h3>
               <p>
                 {user.shippingFirstName || user.firstName}
@@ -70,21 +78,21 @@ const Orders = props => {
                 {user.shippingZip || user.zip}
               </p>
               <p>{user.shippingCountry || user.country}</p>
-            </div>
+            </div> */}
 
             <div className="order__info--products">
               <h3 className="heading-tertiary">Products:</h3>
               <ul className="order__products">{renderProducts(products)}</ul>
             </div>
 
-            <div className="order__info--created">
-              <h3 className="heading-tertiary">Created:</h3>
-              <p>{moment(created).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
-            </div>
-
             <div className="order__info--notes">
               <h3 className="heading-tertiary">Order Notes:</h3>
               <p>{notes || 'none'}</p>
+            </div>
+
+            <div className="order__info--created">
+              <h3 className="heading-tertiary">Created:</h3>
+              <p>{moment(created).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
             </div>
           </div>
 

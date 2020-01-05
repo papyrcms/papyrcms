@@ -316,8 +316,11 @@ class StoreController extends Controller {
         order.user = req.user
       }
 
-      order.notes += `\n
-User info is:
+      if (order.notes) {
+        order.notes += '\n\n'
+      }
+
+      order.notes += `User info is:
 ${shippingFirstName || firstName} ${shippingLastName || lastName}
 ${shippingEmail || email}
 ${shippingAddress1 || address1}${(shippingAddress2 || address2) ? `\n${shippingAddress2 || address2}` : ''}
