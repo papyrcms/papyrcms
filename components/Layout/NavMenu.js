@@ -95,17 +95,26 @@ const NavMenu = props => {
   }
 
 
-  return (
-    <nav>
-      <ul className="nav-menu">
-
+  const renderLogo = () => {
+    if (props.logo) {
+      return (
         <Link href="/">
-          <a title="Home">
+          <a title="Home" title="Home">
             <div className="nav-menu__logo">
               <img src={props.logo} alt="site logo" />
             </div>
           </a>
         </Link>
+      )
+    }
+  }
+
+
+  return (
+    <nav>
+      <ul className="nav-menu">
+
+        {renderLogo()}
 
         <div className="nav-menu__items" id="nav-menu-checkbox">
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import { connect } from 'react-redux'
 
 const excludeFooterRoutes = [
@@ -20,33 +19,28 @@ const excludeFooterRoutes = [
 const Footer = props => {
 
   // Only include the footer if the current route is not in the array
-  if (!excludeFooterRoutes.includes(props.route)) {
-    return (
-      <footer className='footer'>
-
-        {/* Footer contact form */}
-        <div className="cta">
-          <h2 className="cta__title u-margin-bottom-small">{props.footerTitle}</h2>
-          <div className="cta__content">{props.footerContent}</div>
-          <Link href="/contact">
-            <a title="Contact">
-              <button className="button button-cta">{props.ctaButtonText}</button>
-            </a>
-          </Link>
-        </div>
-
-        {/* Credit section */}
-        <div className="credit">
-          <div className="credit__text">
-            {props.footerCopyrightContent}
-          </div>
-        </div>
-
-      </footer>
-    )
-  } else {
+  if (excludeFooterRoutes.includes(props.route)) {
     return null
   }
+
+  return (
+    <footer className='footer'>
+
+      {/* Footer contact form */}
+      <div className="cta">
+        <h2 className="cta__title u-margin-bottom-small">{props.footerTitle}</h2>
+        <div className="cta__content">{props.footerContent}</div>
+      </div>
+
+      {/* Credit section */}
+      <div className="credit">
+        <div className="credit__text">
+          {props.footerCopyrightContent}
+        </div>
+      </div>
+
+    </footer>
+  )
 }
 
 

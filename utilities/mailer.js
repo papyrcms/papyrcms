@@ -7,7 +7,7 @@ import UserModel from '../models/user'
 import keys from '../config/keys'
 const OAuth2 = google.auth.OAuth2
 
-
+// https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
 class Mailer {
 
   constructor() {

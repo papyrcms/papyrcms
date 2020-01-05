@@ -53,12 +53,12 @@ const sanitizeRequestBody = (req, res, next) => {
       'h1', 'h2', 'h3',
       'div', 'p', 'pre', 'em', 'strong',
       'ol', 'ul', 'li', 'a',
-      'blockquote', 'hr',
+      'blockquote', 'hr', 'button',
       'table', 'thead', 'tbody',
       'th', 'tr', 'td', 'img'
     ],
     allowedAttributes: {
-      '*': ['style'],
+      '*': ['style', 'class'],
       a: ['style', 'href', 'target', 'title'],
       table: ['style', 'align'],
       img: ['style', 'alt', 'src'],
