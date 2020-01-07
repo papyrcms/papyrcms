@@ -21,7 +21,7 @@ const UserList = props => {
       user._id !== currentUser._id
     ) {
 
-      axios.delete(`/api/user/${user._id}`)
+      axios.delete(`/api/users/${user._id}`)
         .then(response => {
 
           const newUsers = users.filter(foundUser => user._id !== foundUser._id)
@@ -38,7 +38,7 @@ const UserList = props => {
 
     if (user._id !== currentUser._id) {
 
-      axios.put('/api/user/makeAdmin', { userId: user._id, isAdmin: !user.isAdmin })
+      axios.put('/api/users/makeAdmin', { userId: user._id, isAdmin: !user.isAdmin })
         .then(response => {
 
           const newUsers = users.map(foundUser => {
@@ -60,7 +60,7 @@ const UserList = props => {
 
     if (user._id !== currentUser._id) {
 
-      axios.put('/api/user/ban', { userId: user._id, isBanned: !user.isBanned })
+      axios.put('/api/users/ban', { userId: user._id, isBanned: !user.isBanned })
         .then(response => {
 
           const newUsers = users.map(foundUser => {

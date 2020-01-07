@@ -24,7 +24,7 @@ const LoginForm = props => {
     event.preventDefault()
 
     const success = () => {
-      axios.get('/api/currentUser')
+      axios.get('/api/auth/currentUser')
         .then(res => {
           setCurrentUser(res.data)
           Router.push('/profile')
@@ -33,7 +33,7 @@ const LoginForm = props => {
         })
     }
 
-    formState.submitForm('/api/login', { success })
+    formState.submitForm('/api/auth/login', { success })
   }
 
 
@@ -44,7 +44,7 @@ const LoginForm = props => {
 
       <Input
         label="Email"
-        name="username"
+        name="email"
         type="email"
         formState={formState}
         required

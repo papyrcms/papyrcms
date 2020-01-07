@@ -19,7 +19,7 @@ const ProfilePage = props => {
 
 
   const onLogoutClick = () => {
-    axios.get('/api/logout')
+    axios.get('/api/auth/logout')
       .then(res => {
         if (res.data === 'logged out') {
           Router.push('/')
@@ -35,10 +35,10 @@ const ProfilePage = props => {
     event.preventDefault()
 
     const success = (response, setValidation) => {
-      setValidation('Your password has been changed.')
+      setValidation(response.data.message)
     }
 
-    password.submitForm('/api/changePassword', { success })
+    password.submitForm('/api/auth/requestPasswordChange', { success })
   }
 
 
@@ -77,7 +77,7 @@ const ProfilePage = props => {
       <div>
         <UserInfoForm
           onSubmitSuccess={() => setInfoValidation('User info has been updated.')}
-          onSubmitError={err => setInfoValidation(err.response.data.message)}
+          onSubmitError={(formState, err) => setInfoValidation(err.response.data.message)}
         />
         <p className="profile__validation">{infoValidation}</p>
       </div>

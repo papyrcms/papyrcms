@@ -31,83 +31,83 @@ class AuthController extends Controller {
   registerRoutes() {
 
     // Views
-    this.server.get(
-      '/login',
-      this.renderPage.bind(this)
-    )
-    this.server.get(
-      '/profile',
-      this.renderPage.bind(this)
-    )
-    this.server.get(
-      '/forgot_password',
-      this.verifyJWT,
-      this.renderPage.bind(this)
-    )
+    // this.server.get(
+    //   '/login',
+    //   this.renderPage.bind(this)
+    // )
+    // this.server.get(
+    //   '/profile',
+    //   this.renderPage.bind(this)
+    // )
+    // this.server.get(
+    //   '/forgot_password',
+    //   this.verifyJWT,
+    //   this.renderPage.bind(this)
+    // )
 
     // API
-    this.server.post(
-      '/api/register',
-      this.allowRegisterUser,
-      this.registerUser.bind(this)
-    )
-    this.server.post(
-      '/api/login',
-      sanitizeRequestBody,
-      passport.authenticate('local', {}),
-      checkIfBanned,
-      this.sendCurrentUser.bind(this)
-    )
-    this.server.get(
-      '/api/currentUser',
-      this.sendCurrentUser.bind(this)
-    )
-    this.server.put(
-      '/api/currentUser',
-      sanitizeRequestBody,
-      this.updateCurrentUser.bind(this)
-    )
-    this.server.put(
-      '/api/user/makeAdmin',
-      sanitizeRequestBody,
-      checkIfAdmin,
-      this.makeAdmin.bind(this)
-    )
-    this.server.put(
-      '/api/user/ban',
-      sanitizeRequestBody,
-      checkIfAdmin,
-      this.banUser.bind(this)
-    )
-    this.server.post(
-      '/api/changePassword',
-      sanitizeRequestBody,
-      this.changeUserPassword.bind(this)
-    )
-    this.server.post(
-      '/api/changeForgottenPassword',
-      sanitizeRequestBody,
-      this.changeForgottenPassword.bind(this)
-    )
-    this.server.post(
-      '/api/forgotPassword',
-      sanitizeRequestBody,
-      this.sendForgotPasswordEmail.bind(this)
-    )
-    this.server.get(
-      '/api/logout',
-      this.logoutUser.bind(this)
-    )
-    this.server.get(
-      '/api/users',
-      checkIfAdmin,
-      this.sendAllUsers.bind(this)
-    )
-    this.server.delete(
-      '/api/user/:id',
-      checkIfAdmin,
-      this.deleteUser.bind(this)
-    )
+    // this.server.post(
+    //   '/api/register',
+    //   this.allowRegisterUser,
+    //   this.registerUser.bind(this)
+    // )
+    // this.server.post(
+    //   '/api/login',
+    //   sanitizeRequestBody,
+    //   passport.authenticate('local', {}),
+    //   checkIfBanned,
+    //   this.sendCurrentUser.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/currentUser',
+    //   this.sendCurrentUser.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/currentUser',
+    //   sanitizeRequestBody,
+    //   this.updateCurrentUser.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/user/makeAdmin',
+    //   sanitizeRequestBody,
+    //   checkIfAdmin,
+    //   this.makeAdmin.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/user/ban',
+    //   sanitizeRequestBody,
+    //   checkIfAdmin,
+    //   this.banUser.bind(this)
+    // )
+    // this.server.post(
+    //   '/api/changePassword',
+    //   sanitizeRequestBody,
+    //   this.changeUserPassword.bind(this)
+    // )
+    // this.server.post(
+    //   '/api/changeForgottenPassword',
+    //   sanitizeRequestBody,
+    //   this.changeForgottenPassword.bind(this)
+    // )
+    // this.server.post(
+    //   '/api/forgotPassword',
+    //   sanitizeRequestBody,
+    //   this.sendForgotPasswordEmail.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/logout',
+    //   this.logoutUser.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/users',
+    //   checkIfAdmin,
+    //   this.sendAllUsers.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/user/:id',
+    //   checkIfAdmin,
+    //   this.deleteUser.bind(this)
+    // )
   }
 
 

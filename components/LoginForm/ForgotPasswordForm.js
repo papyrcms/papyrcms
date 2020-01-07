@@ -26,7 +26,7 @@ const ForgotPasswordForm = props => {
     event.preventDefault()
 
     // Send password reset email
-    axios.post('/api/forgotPassword', { email })
+    axios.post('/api/auth/forgotPassword', { email })
       .then(response => {
         setValidation(response.data.message)
       })

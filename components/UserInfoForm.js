@@ -54,7 +54,7 @@ const UserInfoForm = props => {
 
   const handleSubmit = async event => {
     event.preventDefault()
-debugger
+
     // If the box was checked on submit, clear all shipping fields
     if (formState.values.shipToBilling) {
       formState.setValues({
@@ -73,7 +73,7 @@ debugger
 
     const success = () => {
       if (currentUser) {
-        axios.get('/api/currentUser')
+        axios.get('/api/auth/currentUser')
           .then(res => {
             setCurrentUser(res.data)
             // hook
@@ -100,7 +100,7 @@ debugger
     // If we have a current user, submit to save
     if (currentUser) {
       formState.submitForm(
-        '/api/currentUser',
+        '/api/auth/currentUser',
         { success, error },
         true,
         { userId: currentUser._id }
@@ -172,7 +172,7 @@ debugger
             name={`${shipping ? 'shippingS' : 's'}tate`}
             label={`${shipping ? 'Shipping ' : ''}State`}
             formState={formState}
-            required
+            // required
           />
         </div>
 

@@ -25,8 +25,8 @@ mongoose.plugin(schema => { schema.options.usePushEach = true })
 const server = express()
 
 // Middleware helpers
-server.use(bodyParser.json())
-server.use(bodyParser.urlencoded({ extended: true }))
+// server.use(bodyParser.json())
+// server.use(bodyParser.urlencoded({ extended: true }))
 server.use(cookieSession({
   maxAge: 30 * 24 * 60 * 60 * 1000,
   keys: [cookieKey]
@@ -81,7 +81,7 @@ app.prepare().then(async () => {
   })
 
   // Anything without a specified route
-  server.get('*', (req, res) => {
+  server.all('*', (req, res) => {
     return handle(req, res)
   })
 

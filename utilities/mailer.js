@@ -2,9 +2,11 @@ import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
 import handlebars from 'handlebars'
 import fs from 'fs'
-import PostModel from '../models/post'
-import UserModel from '../models/user'
+// import Post from '../models/post'
+// import User from '../models/user'
 import keys from '../config/keys'
+import mongoose from 'mongoose'
+const { user: User, post: Post } = mongoose.models
 const OAuth2 = google.auth.OAuth2
 
 // https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
@@ -52,7 +54,7 @@ class Mailer {
   async getEmailTemplateByTag(tag) {
 
     // Get all published posts
-    const posts = await PostModel.find({ published: true })
+    const posts = await Post.find({ published: true })
 
     let template = null
 
@@ -71,7 +73,7 @@ class Mailer {
 
   async sendBulkEmail(post) {
 
-    const subscribedUsers = await UserModel.find({ isSubscribed: true })
+    const subscribedUsers = await User.find({ isSubscribed: true })
 
     // Create an email transporter
     const transporter = this.createTransporter()

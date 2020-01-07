@@ -29,17 +29,21 @@ const RegisterForm = props => {
   const handleSubmit = event => {
     event.preventDefault()
 
-    const success = () => {
-      axios.get('/api/currentUser')
-      .then(res => {
-        setCurrentUser(res.data)
-        Router.push('/profile')
-      }).catch(err => {
-        console.error(err)
-      })
+    const success = response => {
+      axios.get('/api/auth/currentUser')
+        .then(res => {
+          setCurrentUser(res.data)
+          Router.push('/profile')
+        }).catch(err => {
+          console.error(err)
+        })
     }
 
-    formState.submitForm('/api/register', { success })
+    const error = err => {
+      console.error(err.response)
+    }
+
+    formState.submitForm('/api/auth/register', { success, error })
   }
 
 
