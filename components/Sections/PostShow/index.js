@@ -87,7 +87,7 @@ const PostShow = props => {
       return (
         <div className="post__buttons">
           <button className="button button-delete" onClick={onDeleteClick}>Delete</button>
-          <Link href={`/${path}/edit?id=${post._id}`} as={`/${path}/${post._id}/edit`}>
+          <Link href={`/${path}/[id]/edit`} as={`/${path}/${post._id}/edit`}>
             <button className="button button-edit">Edit</button>
           </Link>
         </div>

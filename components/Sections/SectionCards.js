@@ -65,7 +65,7 @@ const SectionCards = props => {
       const readMorePath = path ? path : 'posts'
 
       return (
-        <Link href={`/${readMorePath || 'posts'}/show?id=${post._id}`} as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}>
+        <Link href={`/${readMorePath || 'posts'}/[id]`} as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}>
           <a className="section-cards__link">Read More</a>
         </Link>
       )

@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import PostsForm from '../../components/PostsForm/'
-import keys from '../../config/keys'
+import PostsForm from '../../../components/PostsForm/'
+import keys from '../../../config/keys'
 
 
 const PostsEdit = props => (

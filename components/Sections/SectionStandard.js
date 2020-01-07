@@ -128,7 +128,7 @@ const SectionStandard = props => {
         {afterPostContent(post)}
 
         {beforePostLink(post)}
-        <Link href={`/${path || 'posts'}/show?id=${post._id}`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
+        <Link href={`/${path || 'posts'}/[id]`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
           <a>Read More</a>
         </Link>
         {afterPostLink(post)}

@@ -72,7 +72,7 @@ const PostIndex = props => {
               {renderHTML(postContent)}
             </div>
             <div className="post-item__link">
-              <Link href={`/posts/show?id=${_id}`} as={`/posts/${_id}`}>
+              <Link href={`/posts/[id]`} as={`/posts/${_id}`}>
                 <button className="button button-primary">Read More</button>
               </Link>
             </div>

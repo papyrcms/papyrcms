@@ -38,7 +38,7 @@ const Form = props => {
     let formData = new FormData
     formData.append('file', event.target.files[0])
 
-    axios.post('/api/upload', formData)
+    axios.post('/api/utility/upload', formData)
       .then(res => {
         const event = { target: { value: res.data, name: 'mainMedia' } }
         handleChange(event)

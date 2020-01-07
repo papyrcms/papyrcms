@@ -44,41 +44,41 @@ class PostController extends Controller {
   registerRoutes() {
 
     // Views
-    this.server.get(
-      '/posts/:id',
-      checkIfAdmin,
-      this.renderPage.bind(this, 'show')
-    )
-    this.server.get(
-      '/posts/:id/edit',
-      checkIfAdmin,
-      this.renderPage.bind(this, 'edit')
-    )
+    // this.server.get(
+    //   '/posts/:id',
+    //   checkIfAdmin,
+    //   this.renderPage.bind(this, 'show')
+    // )
+    // this.server.get(
+    //   '/posts/:id/edit',
+    //   checkIfAdmin,
+    //   this.renderPage.bind(this, 'edit')
+    // )
 
     // Post API
-    this.server.post(
-      '/api/upload',
-      checkIfAdmin,
-      this.upload.single('file'),
-      sanitizeRequestBody,
-      this.uploadMedia.bind(this)
-    )
-    this.server.post(
-      '/api/posts',
-      checkIfAdmin,
-      sanitizeRequestBody,
-      mapTagsToArray,
-      this.createPost.bind(this)
-    )
-    this.server.get(
-      '/api/posts',
-      checkIfAdmin,
-      this.sendAllPosts.bind(this)
-    )
-    this.server.get(
-      '/api/published_posts',
-      this.sendPublishedPosts.bind(this)
-    )
+    // this.server.post(
+    //   '/api/upload',
+    //   checkIfAdmin,
+    //   this.upload.single('file'),
+    //   sanitizeRequestBody,
+    //   this.uploadMedia.bind(this)
+    // )
+    // this.server.post(
+    //   '/api/posts',
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   mapTagsToArray,
+    //   this.createPost.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/posts',
+    //   checkIfAdmin,
+    //   this.sendAllPosts.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/published_posts',
+    //   this.sendPublishedPosts.bind(this)
+    // )
     this.server.get(
       '/api/posts/:id',
       this.sendOnePost.bind(this)

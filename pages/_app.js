@@ -34,10 +34,10 @@ class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
 
     const { reduxStore, req, res, pathname } = ctx
+    const { dispatch } = reduxStore
     const isServer = !!req
     let pageProps = {}
 
-    const { dispatch } = reduxStore
 
     // Pass the route to the redux store
     dispatch(setRoute(pathname))
@@ -52,7 +52,7 @@ class MyApp extends App {
       dispatch(setPosts(pageProps.posts))
     } else {
       const rootUrl = keys.rootURL ? keys.rootURL : ''
-      const response = await axios.get(`${rootUrl}/api/published_posts`)
+      const response = await axios.get(`${rootUrl}/api/posts/published`)
       dispatch(setPosts(response.data))
     }
 
