@@ -79,22 +79,22 @@ class PostController extends Controller {
     //   '/api/published_posts',
     //   this.sendPublishedPosts.bind(this)
     // )
-    this.server.get(
-      '/api/posts/:id',
-      this.sendOnePost.bind(this)
-    )
-    this.server.put(
-      '/api/posts/:id',
-      checkIfAdmin,
-      sanitizeRequestBody,
-      mapTagsToArray,
-      this.updatePost.bind(this)
-    )
-    this.server.delete(
-      '/api/posts/:id',
-      checkIfAdmin,
-      this.deletePost.bind(this)
-    )
+    // this.server.get(
+    //   '/api/posts/:id',
+    //   this.sendOnePost.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/posts/:id',
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   mapTagsToArray,
+    //   this.updatePost.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/posts/:id',
+    //   checkIfAdmin,
+    //   this.deletePost.bind(this)
+    // )
   }
 
 

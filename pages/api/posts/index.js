@@ -44,14 +44,18 @@ export default async (req, res) => {
     return res.status(401).send({ message: 'You are not allowed to do that.' })
   }
 
-  switch (req.method) {
-    case 'GET':
-      const posts = await getPosts()
-      return res.send(posts)
-    case 'POST':
-      const newPost = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
-      return res.send(newPost)
-    default:
-      return res.status(404).send({ message: 'Endpoint not found.' })
+  try {
+    switch (req.method) {
+      case 'GET':
+        const posts = await getPosts()
+        return res.send(posts)
+      case 'POST':
+        const newPost = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
+        return res.send(newPost)
+      default:
+        return res.status(404).send({ message: 'Endpoint not found.' })
+    }
+  } catch (err) {
+    return res.status(401).send({ message: err.message })
   }
 }
