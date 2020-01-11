@@ -30,9 +30,9 @@ const updateBlog = async (id, body) => {
 
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
 
-  const updatedBlog = await Blog.findOneAndUpdate({ _id: id }, body)
+  const blog = await Blog.findOneAndUpdate({ _id: id }, body)
 
-  return updatedBlog
+  return blog
 }
 
 

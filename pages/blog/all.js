@@ -50,9 +50,9 @@ BlogAllPage.getInitialProps = async ({ req, reduxStore }) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
   const published = currentUser && currentUser.isAdmin ? '' : '/published'
-  const blogs = await axios.get(`${rootUrl}/api/blogs${published}`, axiosConfig)
+  const res = await axios.get(`${rootUrl}/api/blogs${published}`, axiosConfig)
 
-  return { blogs: blogs.data }
+  return { blogs: res.data }
 }
 
 

@@ -18,9 +18,8 @@ const BlogEdit = props => (
 
 BlogEdit.getInitialProps = async ({ query, req }) => {
 
-  let axiosConfig
-
   // Depending on if we are doing a client or server render
+  let axiosConfig = {}
   if (!!req) {
     axiosConfig = {
       withCredentials: true,

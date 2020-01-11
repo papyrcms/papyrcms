@@ -25,60 +25,60 @@ class EventController extends Controller {
 
   registerRoutes() {
 
-    // Views
-    this.server.get(
-      '/events/:id',
-      this.eventsEnabled,
-      this.renderPage.bind(this, 'show')
-    )
-    this.server.get(
-      '/events/:id/edit',
-      this.eventsEnabled,
-      checkIfAdmin,
-      this.renderPage.bind(this, 'edit')
-    )
+    // // Views
+    // this.server.get(
+    //   '/events/:id',
+    //   this.eventsEnabled,
+    //   this.renderPage.bind(this, 'show')
+    // )
+    // this.server.get(
+    //   '/events/:id/edit',
+    //   this.eventsEnabled,
+    //   checkIfAdmin,
+    //   this.renderPage.bind(this, 'edit')
+    // )
 
     // Event API
-    this.server.post(
-      '/api/events',
-      this.eventsEnabled,
-      checkIfAdmin,
-      sanitizeRequestBody,
-      this.validateEvent,
-      mapTagsToArray,
-      this.createEvent.bind(this)
-    )
-    this.server.get(
-      '/api/events',
-      this.eventsEnabled,
-      checkIfAdmin,
-      this.sendAllEvents.bind(this)
-    )
-    this.server.get(
-      '/api/publishedEvents',
-      this.eventsEnabled,
-      this.sendPublishedEvents.bind(this)
-    )
-    this.server.get(
-      '/api/events/:id',
-      this.eventsEnabled,
-      this.sendOneEvent.bind(this)
-    )
-    this.server.put(
-      '/api/events/:id',
-      this.eventsEnabled,
-      checkIfAdmin,
-      sanitizeRequestBody,
-      this.validateEvent,
-      mapTagsToArray,
-      this.updateEvent.bind(this)
-    )
-    this.server.delete(
-      '/api/events/:id',
-      this.eventsEnabled,
-      checkIfAdmin,
-      this.deleteEvent.bind(this)
-    )
+    // this.server.post(
+    //   '/api/events',
+    //   this.eventsEnabled,
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   this.validateEvent,
+    //   mapTagsToArray,
+    //   this.createEvent.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/events',
+    //   this.eventsEnabled,
+    //   checkIfAdmin,
+    //   this.sendAllEvents.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/publishedEvents',
+    //   this.eventsEnabled,
+    //   this.sendPublishedEvents.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/events/:id',
+    //   this.eventsEnabled,
+    //   this.sendOneEvent.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/events/:id',
+    //   this.eventsEnabled,
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   this.validateEvent,
+    //   mapTagsToArray,
+    //   this.updateEvent.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/events/:id',
+    //   this.eventsEnabled,
+    //   checkIfAdmin,
+    //   this.deleteEvent.bind(this)
+    // )
   }
 
 

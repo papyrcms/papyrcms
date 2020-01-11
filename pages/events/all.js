@@ -45,10 +45,10 @@ EventsAllPage.getInitialProps = async ({ req, reduxStore }) => {
   }
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const eventRequest = currentUser && currentUser.isAdmin ? 'events' : 'publishedEvents'
-  const events = await axios.get(`${rootUrl}/api/${eventRequest}`, axiosConfig)
+  const published = currentUser && currentUser.isAdmin ? '' : '/published'
+  const res = await axios.get(`${rootUrl}/api/events${published}`, axiosConfig)
 
-  return { events: events.data }
+  return { events: res.data }
 }
 
 

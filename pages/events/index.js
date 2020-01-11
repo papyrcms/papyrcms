@@ -28,7 +28,7 @@ const EventsPage = props => {
 EventsPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const events = await axios.get(`${rootUrl}/api/publishedEvents`)
+  const events = await axios.get(`${rootUrl}/api/events/published`)
 
   return { events: events.data }
 }
