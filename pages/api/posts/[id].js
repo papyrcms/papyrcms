@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Mailer from '../../../utilities/mailer'
 const { post: Post, comment: Comment } = mongoose.models
 
 
@@ -9,7 +10,9 @@ const getPost = async id => {
       .populate("comments")
       .populate({ path: "comments", populate: { path: "author" } })
       .lean()
-  } catch (err) {
+  } catch (err) {}
+
+  if (!post) {
     post = await Post.findOne({ slug: id })
       .populate("comments")
       .populate({ path: "comments", populate: { path: "author" } })
@@ -59,16 +62,19 @@ export default async (req, res) => {
     switch (req.method) {
       case 'GET':
         response = await getPost(req.query.id)
+        if (!response.published && (!req.user || !req.user.isAdmin)) {
+          return res.status(403).send({ message: 'You are not allowed to do that.' })
+        }
         return res.send(response)
       case 'PUT':
         if (!req.user || !req.user.isAdmin) {
-          throw Error('You are not allowed to do that.')
+          return res.status(403).send({ message: 'You are not allowed to do that.' })
         }
         response = await updatePost(req.query.id, req.body, res.locals.settings.enableEmailingToUsers)
         return res.send(response)
       case 'DELETE':
         if (!req.user || !req.user.isAdmin) {
-          throw Error('You are not allowed to do that.')
+          return res.status(403).send({ message: 'You are not allowed to do that.' })
         }
         response = await deletePost(req.query.id)
         return res.send(response)

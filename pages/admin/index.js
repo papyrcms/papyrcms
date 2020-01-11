@@ -26,7 +26,7 @@ AdminPage.getInitialProps = async ({ req }) => {
     axiosConfig = {
       withCredentials: true,
       headers: {
-        Cookie: req.headers.cookie
+        Cookie: req.headers.cookie || ''
       }
     }
   }

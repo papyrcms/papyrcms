@@ -37,7 +37,7 @@ EventsAllPage.getInitialProps = async ({ req, reduxStore }) => {
     axiosConfig = {
       withCredentials: true,
       headers: {
-        Cookie: req.headers.cookie
+        Cookie: req.headers.cookie || ''
       }
     }
   } else {

@@ -109,6 +109,7 @@ const PostShow = props => {
 
   const renderTagsSection = () => {
     if (
+      tags &&
       tags[0] &&
       currentUser &&
       currentUser.isAdmin

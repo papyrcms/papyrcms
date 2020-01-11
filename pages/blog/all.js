@@ -41,7 +41,7 @@ BlogAllPage.getInitialProps = async ({ req, reduxStore }) => {
     axiosConfig = {
       withCredentials: true,
       headers: {
-        Cookie: req.headers.cookie
+        Cookie: req.headers.cookie || ''
       }
     }
   } else {
@@ -49,8 +49,8 @@ BlogAllPage.getInitialProps = async ({ req, reduxStore }) => {
   }
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const blogRequest = currentUser && currentUser.isAdmin ? 'blogs' : 'publishedBlogs'
-  const blogs = await axios.get(`${rootUrl}/api/${blogRequest}`, axiosConfig)
+  const published = currentUser && currentUser.isAdmin ? '' : '/published'
+  const blogs = await axios.get(`${rootUrl}/api/blogs${published}`, axiosConfig)
 
   return { blogs: blogs.data }
 }

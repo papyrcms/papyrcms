@@ -27,59 +27,59 @@ class BlogController extends Controller {
   registerRoutes() {
 
     // Views
-    this.server.get(
-      '/blog/:id',
-      this.blogEnabled,
-      this.renderPage.bind(this, 'show')
-    )
-    this.server.get(
-      '/blog/:id/edit',
-      this.blogEnabled,
-      checkIfAdmin,
-      this.renderPage.bind(this, 'edit')
-    )
+    // this.server.get(
+    //   '/blog/:id',
+    //   this.blogEnabled,
+    //   this.renderPage.bind(this, 'show')
+    // )
+    // this.server.get(
+    //   '/blog/:id/edit',
+    //   this.blogEnabled,
+    //   checkIfAdmin,
+    //   this.renderPage.bind(this, 'edit')
+    // )
 
     // Blog API
-    this.server.post(
-      '/api/blogs',
-      this.blogEnabled,
-      checkIfAdmin,
-      sanitizeRequestBody,
-      this.validateBlog,
-      mapTagsToArray,
-      this.createBlog.bind(this)
-    )
-    this.server.get(
-      '/api/blogs',
-      this.blogEnabled,
-      checkIfAdmin,
-      this.sendAllBlogs.bind(this)
-    )
-    this.server.get(
-      '/api/publishedBlogs',
-      this.blogEnabled,
-      this.sendPublishedBlogs.bind(this)
-    )
-    this.server.get(
-      '/api/blogs/:id',
-      this.blogEnabled,
-      this.sendOneBlog.bind(this)
-    )
-    this.server.put(
-      '/api/blogs/:id',
-      this.blogEnabled,
-      checkIfAdmin,
-      sanitizeRequestBody,
-      this.validateBlog,
-      mapTagsToArray,
-      this.updateBlog.bind(this)
-    )
-    this.server.delete(
-      '/api/blogs/:id',
-      this.blogEnabled,
-      checkIfAdmin,
-      this.deleteBlog.bind(this)
-    )
+    // this.server.post(
+    //   '/api/blogs',
+    //   this.blogEnabled,
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   this.validateBlog,
+    //   mapTagsToArray,
+    //   this.createBlog.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/blogs',
+    //   this.blogEnabled,
+    //   checkIfAdmin,
+    //   this.sendAllBlogs.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/publishedBlogs',
+    //   this.blogEnabled,
+    //   this.sendPublishedBlogs.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/blogs/:id',
+    //   this.blogEnabled,
+    //   this.sendOneBlog.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/blogs/:id',
+    //   this.blogEnabled,
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   this.validateBlog,
+    //   mapTagsToArray,
+    //   this.updateBlog.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/blogs/:id',
+    //   this.blogEnabled,
+    //   checkIfAdmin,
+    //   this.deleteBlog.bind(this)
+    // )
   }
 
 

@@ -13,17 +13,23 @@ const PostsShow = props => (
 )
 
 
-PostsShow.getInitialProps = async context => {
+PostsShow.getInitialProps = async ({ query, req }) => {
 
-  let { id, post } = context.query
-
-  if (!post) {
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const res = await axios.get(`${rootUrl}/api/posts/${id}`)
-    post = res.data
+  // Depending on if we are doing a client or server render
+  let axiosConfig = {}
+  if (!!req) {
+    axiosConfig = {
+      withCredentials: true,
+      headers: {
+        Cookie: req.headers.cookie || ''
+      }
+    }
   }
 
-  return { post }
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const res = await axios.get(`${rootUrl}/api/posts/${query.id}`, axiosConfig)
+
+  return { post: res.data }
 }
 
 

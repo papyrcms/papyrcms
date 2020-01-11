@@ -27,23 +27,23 @@ class CommentController extends Controller {
   registerRoutes() {
 
     // Comment API
-    this.server.post(
-      '/api/:postType/:id/comments',
-      this.allowUserComments,
-      sanitizeRequestBody,
-      this.createComment.bind(this)
-    )
-    this.server.put(
-      '/api/:postType/:id/comments/:comment_id',
-      this.allowUserComments,
-      sanitizeRequestBody,
-      this.updateComment.bind(this)
-    )
-    this.server.delete(
-      '/api/:postType/:id/comments/:comment_id',
-      this.allowUserComments,
-      this.deleteComment.bind(this)
-    )
+    // this.server.post(
+    //   '/api/:postType/:id/comments',
+    //   this.allowUserComments,
+    //   sanitizeRequestBody,
+    //   this.createComment.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/:postType/:id/comments/:comment_id',
+    //   this.allowUserComments,
+    //   sanitizeRequestBody,
+    //   this.updateComment.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/:postType/:id/comments/:comment_id',
+    //   this.allowUserComments,
+    //   this.deleteComment.bind(this)
+    // )
   }
 
 
@@ -60,7 +60,7 @@ class CommentController extends Controller {
 
 
   getPostModel(postType) {
-    
+
     switch (postType) {
       case 'blog':
         return require('../models/blog')

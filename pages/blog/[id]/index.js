@@ -2,8 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
 import { connect } from 'react-redux'
-import keys from '../../config/keys'
-import { PostShow } from '../../components/Sections/'
+import keys from '../../../config/keys'
+import { PostShow } from '../../../components/Sections/'
 
 const BlogShow = props => {
 
@@ -27,17 +27,23 @@ const BlogShow = props => {
 }
 
 
-BlogShow.getInitialProps = async context => {
+BlogShow.getInitialProps = async ({ req, query }) => {
 
-  let { id, blog } = context.query
-
-  if (!blog) {
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const res = await axios.get(`${rootUrl}/api/blogs/${id}`)
-    blog = res.data
+  // Depending on if we are doing a client or server render
+  let axiosConfig = {}
+  if (!!req) {
+    axiosConfig = {
+      withCredentials: true,
+      headers: {
+        Cookie: req.headers.cookie || ''
+      }
+    }
   }
 
-  return { blog }
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const res = await axios.get(`${rootUrl}/api/blogs/${query.id}`, axiosConfig)
+
+  return { blog: res.data }
 }
 
 

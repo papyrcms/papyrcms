@@ -40,7 +40,12 @@ const Comment = props => {
       axios.put(`${apiPath}/${post._id}/comments/${editing}`, commentObject)
         .then(res => {
 
-          const newComments = comments.filter(comment => comment._id !== editing)
+          const newComments = comments.map(comment =>{
+            if (comment._id === editing) {
+              comment = res.data
+            }
+            return comment
+          })
           setComments(newComments)
           setFormContent('')
           setEditing(null)

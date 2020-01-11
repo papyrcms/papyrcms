@@ -7,12 +7,12 @@ class AdminController extends Controller {
   registerRoutes() {
 
     // API
-    this.server.post(
-      '/api/admin/settings',
-      checkIfAdmin,
-      sanitizeRequestBody,
-      this.changeSettings.bind(this)
-    )
+    // this.server.post(
+    //   '/api/admin/settings',
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   this.changeSettings.bind(this)
+    // )
   }
 
 
@@ -21,9 +21,7 @@ class AdminController extends Controller {
     const settings = await Settings.find()
 
     for (const setting of settings) {
-
       for (const key in req.body) {
-
         let value = req.body[key]
 
         if (typeof setting.options[key] !== 'undefined') {

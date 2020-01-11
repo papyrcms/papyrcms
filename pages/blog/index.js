@@ -47,7 +47,7 @@ const BlogPage = ({ posts }) => {
 BlogPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const blogs = await axios.get(`${rootUrl}/api/publishedBlogs`)
+  const blogs = await axios.get(`${rootUrl}/api/blogs/published`)
 
   return { blogs: blogs.data }
 }
