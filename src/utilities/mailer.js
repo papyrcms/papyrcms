@@ -2,8 +2,6 @@ import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
 import handlebars from 'handlebars'
 import fs from 'fs'
-// import Post from '../models/post'
-// import User from '../models/user'
 import keys from '../config/keys'
 import mongoose from 'mongoose'
 const { user: User, post: Post } = mongoose.models

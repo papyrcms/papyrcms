@@ -1,3 +1,4 @@
 node_modules
+src/config/dev.js
 .next
 .env
