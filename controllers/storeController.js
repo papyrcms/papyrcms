@@ -49,81 +49,81 @@ class StoreController extends Controller {
   registerRoutes() {
 
     // Views
-    this.server.get(
-      '/store/:id',
-      this.checkIfStoreEnabled,
-      this.renderPage.bind(this, 'show')
-    )
-    this.server.get(
-      '/store/:id/edit',
-      this.checkIfStoreEnabled,
-      checkIfAdmin,
-      this.renderPage.bind(this, 'edit')
-    )
+    // this.server.get(
+    //   '/store/:id',
+    //   this.checkIfStoreEnabled,
+    //   this.renderPage.bind(this, 'show')
+    // )
+    // this.server.get(
+    //   '/store/:id/edit',
+    //   this.checkIfStoreEnabled,
+    //   checkIfAdmin,
+    //   this.renderPage.bind(this, 'edit')
+    // )
 
     // Products API
-    this.server.post(
-      '/api/products',
-      checkIfAdmin,
-      sanitizeRequestBody,
-      this.createProduct.bind(this)
-    )
-    this.server.get(
-      '/api/products',
-      this.sendAllProducts.bind(this)
-    )
-    this.server.get(
-      '/api/publishedProducts',
-      this.sendPublishedProducts.bind(this)
-    )
-    this.server.get(
-      '/api/products/:id',
-      this.sendOneProduct.bind(this)
-    )
-    this.server.put(
-      '/api/products/:id',
-      checkIfAdmin,
-      sanitizeRequestBody,
-      this.updateProduct.bind(this)
-    )
-    this.server.delete(
-      '/api/products/:id',
-      checkIfAdmin,
-      this.deleteProduct.bind(this)
-    )
+    // this.server.post(
+    //   '/api/products',
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   this.createProduct.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/products',
+    //   this.sendAllProducts.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/publishedProducts',
+    //   this.sendPublishedProducts.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/products/:id',
+    //   this.sendOneProduct.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/products/:id',
+    //   checkIfAdmin,
+    //   sanitizeRequestBody,
+    //   this.updateProduct.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/products/:id',
+    //   checkIfAdmin,
+    //   this.deleteProduct.bind(this)
+    // )
 
     // Order API
-    this.server.post(
-      '/api/checkout',
-      this.checkout.bind(this)
-    )
-    this.server.get(
-      '/api/orders',
-      checkIfAdmin,
-      this.sendOrders.bind(this)
-    )
-    this.server.put(
-      '/api/orders/:id',
-      checkIfAdmin,
-      this.updateOrder.bind(this)
-    )
-    this.server.delete(
-      '/api/orders/:id',
-      checkIfAdmin,
-      this.deleteOrder.bind(this)
-    )
+    // this.server.post(
+    //   '/api/checkout',
+    //   this.checkout.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/orders',
+    //   checkIfAdmin,
+    //   this.sendOrders.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/orders/:id',
+    //   checkIfAdmin,
+    //   this.updateOrder.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/orders/:id',
+    //   checkIfAdmin,
+    //   this.deleteOrder.bind(this)
+    // )
 
     // Cart API
-    this.server.put(
-      '/api/cart/:id',
-      checkIfLoggedIn,
-      this.addToCart.bind(this)
-    )
-    this.server.delete(
-      '/api/cart/:id',
-      checkIfLoggedIn,
-      this.removeFromCart.bind(this)
-    )
+    // this.server.put(
+    //   '/api/cart/:id',
+    //   checkIfLoggedIn,
+    //   this.addToCart.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/cart/:id',
+    //   checkIfLoggedIn,
+    //   this.removeFromCart.bind(this)
+    // )
   }
 
 

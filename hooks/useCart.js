@@ -26,7 +26,7 @@ const useCart = (currentUser, setCurrentUser) => {
     } else {
 
       try {
-        const response = await axios.put(`/api/cart/${product._id}`)
+        const response = await axios.put(`/api/store/cart/${product._id}`)
         setCurrentUser({ ...currentUser, cart: newCart })
         setCart(newCart)
       } catch (err) {
@@ -56,7 +56,7 @@ const useCart = (currentUser, setCurrentUser) => {
     } else {
 
       try {
-        const response = await axios.delete(`/api/cart/${product._id}`)
+        const response = await axios.delete(`/api/store/cart/${product._id}`)
         setCurrentUser({ ...currentUser, cart: newCart })
         setCart(newCart)
       } catch (err) {

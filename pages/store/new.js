@@ -33,7 +33,7 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => (
 export default () => (
   <PostsForm
     pageTitle="New Product"
-    apiEndpoint="/api/products"
+    apiEndpoint="/api/store/products"
     redirectRoute="/store"
     additionalFields={[ProductFields]}
     additionalState={{

@@ -18,7 +18,7 @@ const Orders = props => {
 
   const markShipped = shippedOrder => {
     const newOrder = { ...shippedOrder, shipped: !shippedOrder.shipped }
-    axios.put(`/api/orders/${shippedOrder._id}`, newOrder)
+    axios.put(`/api/store/orders/${shippedOrder._id}`, newOrder)
       .then(response => {
         const newOrders = orders.map(order => {
           if (order._id === newOrder._id) {
@@ -36,7 +36,7 @@ const Orders = props => {
     const confirm = window.confirm('Are you sure you want to delete this order?')
     if (!confirm) return
 
-    axios.delete(`/api/orders/${deletedOrder._id}`)
+    axios.delete(`/api/store/orders/${deletedOrder._id}`)
       .then(response => {
         const newOrders = orders.filter(order => order._id !== deletedOrder._id)
         setOrders(newOrders)
@@ -141,9 +141,9 @@ Orders.getInitialProps = async ({ req }) => {
   }
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const orders = await axios.get(`${rootUrl}/api/orders`, axiosConfig)
+  const res = await axios.get(`${rootUrl}/api/store/orders`, axiosConfig)
 
-  return { orders: orders.data }
+  return { orders: res.data }
 }
 
 

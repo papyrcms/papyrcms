@@ -60,7 +60,7 @@ const Checkout = props => {
       }
 
       formState.submitForm(
-        '/api/checkout',
+        '/api/store/checkout',
         { success, error },
         false,
         additionalValues
@@ -115,19 +115,27 @@ const Checkout = props => {
 }
 
 
-Checkout.getInitialProps = async (context) => {
-
-  let { id, product } = context.query
+Checkout.getInitialProps = async ({ req, query }) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
 
-  if (!product) {
-    const res = await axios.get(`${rootUrl}/api/products/${id}`)
-    product = res.data
+  // Depending on if we are doing a client or server render
+  let axiosConfig = {}
+  if (!!req) {
+    axiosConfig = {
+      withCredentials: true,
+      headers: {
+        Cookie: req.headers.cookie || ''
+      }
+    }
   }
 
-  const stripePubKeyRes = await axios.post(`${rootUrl}/api/stripePubKey`)
-  const stripePubKey = stripePubKeyRes.data
+  let product
+  if (query.id) {
+    const res = await axios.get(`${rootUrl}/api/store/products/${query.id}`, axiosConfig)
+    product = res.data
+  }
+  const { data: stripePubKey } = await axios.post(`${rootUrl}/api/stripePubKey`)
 
   return { product, stripePubKey }
 }

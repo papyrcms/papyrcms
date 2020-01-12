@@ -68,10 +68,26 @@ const StorePage = props => {
 }
 
 
-StorePage.getInitialProps = async () => {
+StorePage.getInitialProps = async ({ req, reduxStore }) => {
+
+  // Depending on if we are doing a client or server render
+  let axiosConfig = {}
+  let currentUser = null
+  if (!!req) {
+    axiosConfig = {
+      withCredentials: true,
+      headers: {
+        Cookie: req.headers.cookie || ''
+      }
+    }
+    currentUser = req.user
+  } else {
+    currentUser = reduxStore.getState().currentUser
+  }
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const products = await axios.get(`${rootUrl}/api/products`)
+  const published = currentUser && currentUser.isAdmin ? '' : '/published'
+  const products = await axios.get(`${rootUrl}/api/store/products${published}`, axiosConfig)
 
   return { products: products.data }
 }

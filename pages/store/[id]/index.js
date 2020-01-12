@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import keys from '../../config/keys'
-import { PostShow } from '../../components/Sections'
+import keys from '../../../config/keys'
+import { PostShow } from '../../../components/Sections'
 
 
 const StoreShow = props => {
@@ -20,7 +20,7 @@ const StoreShow = props => {
     <PostShow
       post={props.product}
       path="store"
-      apiPath="/api/products"
+      apiPath="/api/store/products"
       redirectRoute="/store"
       afterContent={renderProductDetails}
     />
@@ -28,17 +28,23 @@ const StoreShow = props => {
 }
 
 
-StoreShow.getInitialProps = async context => {
+StoreShow.getInitialProps = async ({ req, query }) => {
 
-  let { id, product } = context.query
-
-  if (!product) {
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const res = await axios.get(`${rootUrl}/api/products/${id}`)
-    product = res.data
+  // Depending on if we are doing a client or server render
+  let axiosConfig = {}
+  if (!!req) {
+    axiosConfig = {
+      withCredentials: true,
+      headers: {
+        Cookie: req.headers.cookie || ''
+      }
+    }
   }
 
-  return { product }
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const res = await axios.get(`${rootUrl}/api/store/products/${query.id}`, axiosConfig)
+
+  return { product: res.data }
 }
 
 
