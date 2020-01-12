@@ -223,10 +223,10 @@ Page.getInitialProps = async ({ req, query }) => {
       const pageRes = await axios.get(`/api/page/${query.page}`)
       page = pageRes.data
 
-      const mapsRes = await axios.post('/api/googleMapsKey')
+      const mapsRes = await axios.post('/api/utility/googleMapsKey')
       googleMapsKey = mapsRes.data
 
-      const stripePubKeyRes = await axios.post('/api/stripePubKey')
+      const stripePubKeyRes = await axios.post('/api/utility/stripePubKey')
       stripePubKey = stripePubKeyRes.data
 
       // If we did not find a page, push to the page template file

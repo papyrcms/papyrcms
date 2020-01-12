@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const initGA = async () => {
   if (!window.GA_INITIALIED) {
-    const res = await axios.post('/api/googleAnalyticsId')
+    const res = await axios.post('/api/utility/googleAnalyticsId')
 
     ReactGA.initialize(res.data)
     window.GA_INITIALIED = true

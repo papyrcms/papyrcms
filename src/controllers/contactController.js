@@ -31,21 +31,21 @@ class ContactController extends Controller {
   registerRoutes() {
 
     // Message API
-    this.server.post(
-      '/api/contact',
-      sanitizeRequestBody,
-      this.createMessage.bind(this)
-    )
-    this.server.get(
-      '/api/messages',
-      checkIfAdmin,
-      this.sendAllMessages.bind(this)
-    )
-    this.server.delete(
-      '/api/messages/:id',
-      checkIfAdmin,
-      this.deleteMessage.bind(this)
-    )
+    // this.server.post(
+    //   '/api/contact',
+    //   sanitizeRequestBody,
+    //   this.createMessage.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/messages',
+    //   checkIfAdmin,
+    //   this.sendAllMessages.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/messages/:id',
+    //   checkIfAdmin,
+    //   this.deleteMessage.bind(this)
+    // )
   }
 
 

@@ -92,7 +92,7 @@ class PageBuilder extends Component {
     } else {
 
       try {
-        const mapsRes = await axios.post('/api/googleMapsKey')
+        const mapsRes = await axios.post('/api/utility/googleMapsKey')
         googleMapsKey = mapsRes.data
 
         const stripePubKeyRes = await axios.post('/api/stripePubKey')

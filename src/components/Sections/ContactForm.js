@@ -45,7 +45,7 @@ const ContactForm = props => {
       setValidation('Thanks for reaching out! I\'ll be in touch.')
     }
 
-    submitForm('/api/contact', { success })
+    submitForm('/api/messages', { success })
   }
 
 

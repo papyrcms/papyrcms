@@ -32,7 +32,7 @@ class AppSettingsForm extends Component {
         settings[key] = this.state[key]
       })
 
-      axios.post('/api/settings', settings)
+      axios.post('/api/utility/settings', settings)
         .then(response => {
           this.props.setSettings(response.data)
           const message = 'Your app settings have been updated.'
