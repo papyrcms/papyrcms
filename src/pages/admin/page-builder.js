@@ -95,7 +95,7 @@ class PageBuilder extends Component {
         const mapsRes = await axios.post('/api/utility/googleMapsKey')
         googleMapsKey = mapsRes.data
 
-        const stripePubKeyRes = await axios.post('/api/stripePubKey')
+        const stripePubKeyRes = await axios.post('/api/utility/stripePubKey')
         stripePubKey = stripePubKeyRes.data
 
         if (query.page) {

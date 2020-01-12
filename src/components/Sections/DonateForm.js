@@ -35,7 +35,7 @@ const DonateForm = props => {
           email,
         }
 
-        axios.post('/api/donate', donationData)
+        axios.post('/api/utility/donate', donationData)
           .then(response => {
             if (response.data.status === 'succeeded') {
               setPaid(true)

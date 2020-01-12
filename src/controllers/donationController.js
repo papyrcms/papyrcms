@@ -28,14 +28,14 @@ class DonationController extends Controller {
   registerRoutes() {
 
     // Message API
-    this.server.post(
-      '/api/donate',
-      this.createDonation.bind(this)
-    )
-    this.server.post(
-      '/api/stripePubKey',
-      this.sendStripePubKey.bind(this)
-    )
+    // this.server.post(
+    //   '/api/donate',
+    //   this.createDonation.bind(this)
+    // )
+    // this.server.post(
+    //   '/api/stripePubKey',
+    //   this.sendStripePubKey.bind(this)
+    // )
   }
 
 
