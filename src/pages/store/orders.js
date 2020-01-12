@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
 import { connect } from 'react-redux'
-import { setOrders } from '../../../reduxStore'
+import { setOrders } from '../../reduxStore'
 import keys from '../../config/keys'
 
 

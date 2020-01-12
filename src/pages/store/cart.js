@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import Link from 'next/link'
-import { setCurrentUser } from '../../../reduxStore'
+import { setCurrentUser } from '../../reduxStore'
 import useCart from '../../hooks/useCart'
 import { SectionStandard } from '../../components/Sections'
 

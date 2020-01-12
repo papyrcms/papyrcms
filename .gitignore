@@ -1,5 +1,3 @@
 node_modules
 .next
-config/dev.js
-config/dev-unused.js
 .env

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../../config/keys'
 import useCart from '../../hooks/useCart'
-import { setCurrentUser } from '../../../reduxStore'
+import { setCurrentUser } from '../../reduxStore'
 import { SectionCards } from '../../components/Sections/'
 
 const StorePage = props => {

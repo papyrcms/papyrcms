@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { setSettings } from '../../../reduxStore'
+import { setSettings } from '../../reduxStore'
 
 
 class AppSettingsForm extends Component {
