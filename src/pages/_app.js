@@ -61,7 +61,7 @@ class MyApp extends App {
       dispatch(setPages(pageProps.pages))
     } else {
       const rootUrl = keys.rootURL ? keys.rootURL : ''
-      const response = await axios.get(`${rootUrl}/api/page`)
+      const response = await axios.get(`${rootUrl}/api/pages`)
       dispatch(setPages(response.data))
     }
 

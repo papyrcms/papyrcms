@@ -77,36 +77,14 @@ const sectionOptions = {
 
 class PageBuilder extends Component {
 
-  static async getInitialProps({ req, query }) {
+  static async getInitialProps(context) {
+    const { data: googleMapsKey } = await axios.post('/api/utility/googleMapsKey')
+    const { data: stripePubKey } = await axios.post('/api/utility/stripePubKey')
 
     let page
-    let googleMapsKey
-    let stripePubKey
-
-    if (!!req) {
-
-      page = query.pageObject
-      googleMapsKey = query.googleMapsKey
-      stripePubKey = query.stripePubKey
-
-    } else {
-
-      try {
-        const mapsRes = await axios.post('/api/utility/googleMapsKey')
-        googleMapsKey = mapsRes.data
-
-        const stripePubKeyRes = await axios.post('/api/utility/stripePubKey')
-        stripePubKey = stripePubKeyRes.data
-
-        if (query.page) {
-          const pageRes = await axios.get(`/api/page/${query.page}`)
-          page = pageRes.data
-        }
-
-        // If we did not find a page, push to the page template file
-      } catch (e) {
-        Router.push(`/${query.page === 'home' ? '' : query.page}`)
-      }
+    if (context.query.page) {
+      const res = await axios.get(`/api/pages/${context.query.page}`)
+      page = res.data
     }
 
     return { page, googleMapsKey, stripePubKey }
@@ -352,7 +330,7 @@ class PageBuilder extends Component {
 
     if (id) {
 
-      axios.put(`/api/page/${id}`, postObject).then(response => {
+      axios.put(`/api/pages/${id}`, postObject).then(response => {
         Router.push('/admin/pages')
       }).catch(err => {
         this.setState({ validation: err.response.data.message })
@@ -360,7 +338,7 @@ class PageBuilder extends Component {
 
     } else {
 
-      axios.post("/api/page", postObject).then(response => {
+      axios.post("/api/pages", postObject).then(response => {
         Router.push('/admin/pages')
       }).catch(err => {
         this.setState({ validation: err.response.data.message })
@@ -374,7 +352,7 @@ class PageBuilder extends Component {
     const confirm = window.confirm('Are you sure you want to delete this page?')
 
     if (confirm) {
-      axios.delete(`/api/page/${this.state.id}`).then(response => {
+      axios.delete(`/api/pages/${this.state.id}`).then(response => {
         Router.push('/admin/pages')
       })
     }

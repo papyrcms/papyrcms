@@ -16,24 +16,22 @@ const Pages = props => {
   const renderPages = () => {
 
     return pages.map(page => (
-      <li className="pages__page" key={page._id}>
-
-        <div className="pages__link--visit">
-          Visit page{' - '}
+      <li className='pages__page' key={page._id}>
+        <div className='pages__link--visit'>
+          Visit page{" - "}
           <Link href={`/_page?page=${page.route}`} as={`/${page.route}`}>
             <a>/{page.route}</a>
           </Link>
         </div>
 
-        <div className="pages__link-divider">|</div>
+        <div className='pages__link-divider'>|</div>
 
-        <div className="pages__link--edit">
-          Edit page{' - '}
-          <Link href={`/admin/page-builder?page=${page.route}`} as={`/admin/pages/${page.route}`}>
+        <div className='pages__link--edit'>
+          Edit page{" - "}
+          <Link href={`/admin/pages/${page.route}`}>
             <a>/admin/pages/{page.route}</a>
           </Link>
         </div>
-
       </li>
     ))
   }
@@ -52,8 +50,6 @@ const Pages = props => {
 
 Pages.getInitialProps = async ({ req }) => {
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-
   let axiosConfig = {}
 
   // Depending on if we are doing a client or server render
@@ -66,9 +62,10 @@ Pages.getInitialProps = async ({ req }) => {
     }
   }
 
-  const res = await axios.get(`${rootUrl}/api/page`, axiosConfig)
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  const { data: pages } = await axios.get(`${rootUrl}/api/pages`, axiosConfig)
 
-  return { pages: res.data }
+  return { pages }
 }
 
 

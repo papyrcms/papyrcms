@@ -8,38 +8,38 @@ class PageController extends Controller {
 
   registerRoutes() {
 
-    this.server.get('/', this.renderPage.bind(this))
-    this.server.get('/:page', this.renderPage.bind(this))
+    // this.server.get('/', this.renderPage.bind(this))
+    // this.server.get('/:page', this.renderPage.bind(this))
 
-    this.server.get(
-      '/admin/pages/:page',
-      checkIfAdmin,
-      this.renderPageBuilder.bind(this)
-    )
+    // this.server.get(
+    //   '/admin/pages/:page',
+    //   checkIfAdmin,
+    //   this.renderPageBuilder.bind(this)
+    // )
 
-    this.server.post(
-      '/api/page',
-      checkIfAdmin,
-      this.savePage.bind(this)
-    )
-    this.server.get(
-      '/api/page',
-      this.sendPages.bind(this)
-    )
-    this.server.get(
-      '/api/page/:page',
-      this.sendPage.bind(this)
-    )
-    this.server.put(
-      '/api/page/:id',
-      checkIfAdmin,
-      this.updatePage.bind(this)
-    )
-    this.server.delete(
-      '/api/page/:id',
-      checkIfAdmin,
-      this.deletePage.bind(this)
-    )
+    // this.server.post(
+    //   '/api/pages',
+    //   checkIfAdmin,
+    //   this.savePage.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/pages',
+    //   this.sendPages.bind(this)
+    // )
+    // this.server.get(
+    //   '/api/pages/:page',
+    //   this.sendPage.bind(this)
+    // )
+    // this.server.put(
+    //   '/api/pages/:id',
+    //   checkIfAdmin,
+    //   this.updatePage.bind(this)
+    // )
+    // this.server.delete(
+    //   '/api/pages/:id',
+    //   checkIfAdmin,
+    //   this.deletePage.bind(this)
+    // )
   }
 
 

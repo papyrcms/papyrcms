@@ -205,37 +205,18 @@ const Page = props => {
 }
 
 
-Page.getInitialProps = async ({ req, query }) => {
+Page.getInitialProps = async context => {
+  try {
+    const { data: page } = await axios.get(`/api/pages/${context.query.page}`)
+    const { data: googleMapsKey } = await axios.post("/api/utility/googleMapsKey")
+    const { data: stripePubKey } = await axios.post("/api/utility/stripePubKey")
 
-  let page
-  let googleMapsKey
-  let stripePubKey
+    return { page, googleMapsKey, stripePubKey }
+  } catch (err) {
 
-  if (!!req) {
-
-    page = query.pageObject
-    googleMapsKey = query.googleMapsKey
-    stripePubKey = query.stripePubKey
-
-  } else {
-
-    try {
-      const pageRes = await axios.get(`/api/page/${query.page}`)
-      page = pageRes.data
-
-      const mapsRes = await axios.post('/api/utility/googleMapsKey')
-      googleMapsKey = mapsRes.data
-
-      const stripePubKeyRes = await axios.post('/api/utility/stripePubKey')
-      stripePubKey = stripePubKeyRes.data
-
-      // If we did not find a page, push to the page template file
-    } catch(e) {
-      Router.push(`/${query.page === 'home' ? '' : query.page}`)
-    }
+    // If we did not find a page, push to the page template file
+    Router.push(`/${context.query.page === 'home' ? '' : context.query.page}`)
   }
-
-  return { page, googleMapsKey, stripePubKey }
 }
 
 
