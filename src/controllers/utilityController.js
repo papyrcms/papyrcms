@@ -25,9 +25,9 @@ class UtilityController extends Controller {
 
   registerRoutes() {
 
-    this.server.post('/api/googleAnalyticsId', this.sendGoogleAnalyticsId)
-    this.server.post('/api/googleMapsKey', this.sendGoogleMapsKey)
-    this.server.get('/.well-known/acme-challenge/jF3NwtV-cPO87squ85GYih5h-8bo1rnMqz5L9UcZxSw', this.certbot)
+    // this.server.post('/api/googleAnalyticsId', this.sendGoogleAnalyticsId)
+    // this.server.post('/api/googleMapsKey', this.sendGoogleMapsKey)
+    // this.server.get('/.well-known/acme-challenge/jF3NwtV-cPO87squ85GYih5h-8bo1rnMqz5L9UcZxSw', this.certbot)
   }
 
 
