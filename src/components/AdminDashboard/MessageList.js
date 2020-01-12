@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import moment from 'moment-timezone'
-import { setMessages } from '../../reduxStore'
+import { setMessages } from '../../../reduxStore'
 import Modal from '../Modal'
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux'
 import axios from 'axios'
 import keys from '../../config/keys'
-import { setCurrentUser } from '../../reduxStore'
+import { setCurrentUser } from '../../../reduxStore'
 import CreditCardForm from '../../components/CreditCardForm'
 import Input from '../../components/Input'
 import UserInfoForm from '../../components/UserInfoForm'

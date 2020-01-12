@@ -1,15 +1,14 @@
 import cookieSession from 'cookie-session'
 import LocalStrategy from 'passport-local'
-import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import passport from 'passport'
 import express from 'express'
 import next from 'next'
 import fs from 'fs'
-import User from './models/user'
+import User from './src/models/user'
 
 // App keys
-import keys from './config/keys'
+import keys from './src/config/keys'
 const { mongoURI, cookieKey, port, rootURL } = keys
 
 // Mongo config
@@ -50,7 +49,7 @@ server.use(async (req, res, next) => {
 
 
 // Check if the user is banned
-const middleware = require('./utilities/middleware')
+const middleware = require('./src/utilities/middleware')
 server.use(middleware.checkIfBanned)
 
 
@@ -62,11 +61,11 @@ const handle = app.getRequestHandler()
 app.prepare().then(async () => {
 
   // Controllers, filtering out the abstract controller
-  const controllers = fs.readdirSync('./controllers').filter(controller => controller !== 'abstractController.js')
+  const controllers = fs.readdirSync('./src/controllers').filter(controller => controller !== 'abstractController.js')
 
   // import and instantiate controllers
   for (let i = 0; i < controllers.length; i++) {
-    const Controller = await import(`./controllers/${controllers[i]}`)
+    const Controller = await import(`./src/controllers/${controllers[i]}`)
     controllers[i] = new Controller.default(server, app)
   }
 

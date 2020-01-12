@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { setCurrentUser } from '../reduxStore'
+import { setCurrentUser } from '../../reduxStore'
 import useForm from '../hooks/useForm'
 import Input from './Input'
 

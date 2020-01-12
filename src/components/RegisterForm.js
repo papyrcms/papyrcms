@@ -3,7 +3,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import { connect } from 'react-redux'
 import useForm from '../hooks/useForm'
-import { setCurrentUser } from '../reduxStore'
+import { setCurrentUser } from '../../reduxStore'
 import Input from './Input'
 
 
