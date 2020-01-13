@@ -6,7 +6,7 @@ const Page = () => <PageBuilder />
 
 
 Page.getInitialProps = async context => {
-  await PageBuilder.getInitialProps(context)
+  return await PageBuilder.getInitialProps(context)
 }
 
 

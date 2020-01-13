@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import Router from 'next/router'
 import Input from '../../components/Input'
-import Page from '../_page'
+import Page from '../[page]'
 
 
 // Static object of sections for the builder

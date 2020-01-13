@@ -2,7 +2,7 @@ import keys from '../../../config/keys'
 
 
 export default (req, res) => {
-  if (req.method === 'POST') {
+  if (req.method !== 'POST') {
     return res.status(404).send({ message: 'Endpoint not found.' })
   }
 

@@ -12,9 +12,14 @@ const onClick = () => {
 
 const NavLink = props => {
 
-  const href = props.href === '/'
-    ? `/_page?page=home`
-    : `/_page?page=${props.href.substr(1)}`
+  let href
+  if (props.exact) {
+    href = props.href
+  } else {
+    href = props.href === '/'
+      ? '/'
+      : "/[page]"
+  }
 
   return (
     <Link href={href} as={props.href}>
@@ -41,21 +46,21 @@ const NavMenu = props => {
 
   const renderBlogItem = () => {
     if (enableBlog) {
-      return <NavLink href="/blog">Blog</NavLink>
+      return <NavLink href="/blog" exact>Blog</NavLink>
     }
   }
 
 
   const renderEventsItem = () => {
     if (enableEvents) {
-      return <NavLink href="/events">Events</NavLink>
+      return <NavLink href="/events" exact>Events</NavLink>
     }
   }
 
 
   const renderStoreItem = () => {
     if (enableStore) {
-      return <NavLink href="/store">Store</NavLink>
+      return <NavLink href="/store" exact>Store</NavLink>
     }
   }
 

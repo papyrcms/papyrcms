@@ -14,6 +14,7 @@ import {
 } from '../components/Sections/'
 import PageHead from '../components/PageHead'
 import filterPosts from '../components/filterPosts'
+import keys from '../config/keys'
 
 
 const PageContent = props => {
@@ -205,17 +206,22 @@ const Page = props => {
 }
 
 
-Page.getInitialProps = async context => {
+Page.getInitialProps = async ({ query }) => {
   try {
-    const { data: page } = await axios.get(`/api/pages/${context.query.page}`)
-    const { data: googleMapsKey } = await axios.post("/api/utility/googleMapsKey")
-    const { data: stripePubKey } = await axios.post("/api/utility/stripePubKey")
+    if (!query.page) {
+      query.page = 'home'
+    }
+
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: page } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
+    const { data: googleMapsKey } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
+    const { data: stripePubKey } = await axios.post(`${rootUrl}/api/utility/stripePubKey`)
 
     return { page, googleMapsKey, stripePubKey }
   } catch (err) {
-
+return {}
     // If we did not find a page, push to the page template file
-    Router.push(`/${context.query.page === 'home' ? '' : context.query.page}`)
+    Router.push(`/${query.page === 'home' ? '' : query.page}`)
   }
 }
 
