@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
-import Mailer from "../utilities/mailer"
-import keys from "../config/keys"
+import Mailer from "../../../utilities/mailer"
+import keys from "../../../config/keys"
 const { message: Message } = mongoose.models
 
 
