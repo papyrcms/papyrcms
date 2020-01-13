@@ -219,7 +219,7 @@ Page.getInitialProps = async ({ query }) => {
 
     return { page, googleMapsKey, stripePubKey }
   } catch (err) {
-return {}
+
     // If we did not find a page, push to the page template file
     Router.push(`/${query.page === 'home' ? '' : query.page}`)
   }
