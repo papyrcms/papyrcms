@@ -14,4 +14,4 @@ const pageSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
 })
 
-export default mongoose.model('page', pageSchema)
+export default mongoose.models.page || mongoose.model('page', pageSchema)

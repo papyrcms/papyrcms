@@ -1,3 +1,4 @@
+// import config from './dev'
 let config
 
 if (process.env.NODE_ENV === 'production') {

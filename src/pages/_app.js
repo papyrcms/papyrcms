@@ -37,7 +37,7 @@ class MyApp extends App {
     const { dispatch } = reduxStore
     const isServer = !!req
     let pageProps = {}
-
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
 
     // Pass the route to the redux store
     dispatch(setRoute(pathname))
@@ -51,18 +51,16 @@ class MyApp extends App {
     if (!!pageProps.posts) {
       dispatch(setPosts(pageProps.posts))
     } else {
-      const rootUrl = keys.rootURL ? keys.rootURL : ''
-      const response = await axios.get(`${rootUrl}/api/posts/published`)
-      dispatch(setPosts(response.data))
+      const { data: posts } = await axios.get(`${rootUrl}/api/posts/published`)
+      dispatch(setPosts(posts))
     }
 
     // Get pages for navmenu
     if (!!pageProps.pages) {
       dispatch(setPages(pageProps.pages))
     } else {
-      const rootUrl = keys.rootURL ? keys.rootURL : ''
-      const response = await axios.get(`${rootUrl}/api/pages`)
-      dispatch(setPages(response.data))
+      const { data: pages } = await axios.get(`${rootUrl}/api/pages`)
+      dispatch(setPages(pages))
     }
 
     // If a page was recieved, send it to the redux store
@@ -132,8 +130,16 @@ class MyApp extends App {
 
     // Set Current User and Website Settings in the redux store
     if (isServer) {
-      dispatch(setSettings(res.locals.settings))
-      dispatch(setCurrentUser(req.user))
+      const axiosConfig = {
+        withCredentials: true,
+        headers: {
+          Cookie: req.headers.cookie || ""
+        }
+      }
+      const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
+      const { data: user } = await axios.get(`${rootUrl}/api/auth/currentUser`, axiosConfig)
+      dispatch(setSettings(settings))
+      dispatch(setCurrentUser(user))
       dispatch(setUrl({ query: req.query }))
     }
 

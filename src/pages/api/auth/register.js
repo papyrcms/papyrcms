@@ -1,6 +1,13 @@
+import connect from 'next-connet'
+import common from "../../../middleware/common"
+import registrationEnabled from "../../../middleware/registrationEnabled"
 import Mailer from '../../../utilities/mailer'
-import mongoose from 'mongoose'
-const { user: User } = mongoose.models
+import User from '../../../models/user'
+
+
+const handler = connect()
+handler.use(common)
+handler.use(registrationEnabled)
 
 
 const verifyEmailSyntax = email => {
@@ -9,15 +16,7 @@ const verifyEmailSyntax = email => {
 }
 
 
-export default (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
-
-  if (!res.locals.settings.enableRegistration) {
-    return res.status(401).send({ message: 'You\'re not allowed to do that.' })
-  }
-
+handler.post((req, res) => {
   const { firstName, lastName, email, password, passwordConfirm } = req.body
 
   if (!firstName || firstName === '') {
@@ -66,4 +65,7 @@ export default (req, res) => {
       return res.send(newUser)
     })
   })
-}
+})
+
+
+export default handler

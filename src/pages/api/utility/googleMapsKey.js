@@ -1,9 +1,12 @@
+import connect from "next-connect"
+import common from "../../../middleware/common"
 import keys from "../../../config/keys"
 
-export default (req, res) => {
-  if (req.method !== "POST") {
-    return res.status(404).send({ message: "Endpoint not found." })
-  }
+const handler = connect()
+handler.use(common)
 
+handler.post((req, res) => {
   return res.send(keys.googleMapsKey)
-}
+})
+
+export default handler

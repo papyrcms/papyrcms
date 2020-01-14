@@ -1,21 +1,24 @@
-import mongoose from 'mongoose'
-const { blog: Blog, comment: Comment } = mongoose.models
+import connect from "next-connect"
+import common from "../../../middleware/common"
+import blogEnabled from "../../../middleware/blogEnabled"
+import Blog from "../../../models/blog"
+
+
+const handler = connect()
+handler.use(common)
+handler.use(blogEnabled)
 
 
 const getBlog = async id => {
   let blog
   try {
-    blog = await Blog.findById(id)
-      .populate('comments')
-      .populate({ path: 'comments', populate: { path: 'author' } })
-      .lean()
+    blog = await Blog.findById(id).populate('comments')
+      .populate({ path: 'comments', populate: { path: 'author' } }).lean()
   } catch (err) {}
 
   if (!blog) {
-    blog = await Blog.findOne({ slug: id })
-      .populate('comments')
-      .populate({ path: 'comments', populate: { path: 'author' } })
-      .lean()
+    blog = await Blog.findOne({ slug: id }).populate('comments')
+      .populate({ path: 'comments', populate: { path: 'author' } }).lean()
   }
   return blog
 }
@@ -49,36 +52,31 @@ const deleteBlog = async id => {
 }
 
 
-export default async (req, res) => {
-  if (!res.locals.settings.enableBlog && (!req.user || !req.user.isAdmin)) {
+handler.get(async (req, res) => {
+  const blog = await getBlog(req.query.id)
+  if (!blog.published && (!req.user || !req.user.isAdmin)) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
+  return res.send(blog)
+})
 
-  try {
-    let response
-    switch (req.method) {
-      case 'GET':
-        response = await getBlog(req.query.id)
-        if (!response.published && (!req.user || !req.user.isAdmin)) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        return res.send(response)
-      case 'PUT':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await updateBlog(req.query.id, req.body)
-        return res.send(response)
-      case 'DELETE':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await deleteBlog(req.query.id)
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
+
+handler.put(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-}
+  const blog = await updateBlog(req.query.id, req.body)
+  return res.send(blog)
+})
+
+
+handler.delete(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  }
+  const message = await deleteBlog(req.query.id)
+  return res.send(message)
+})
+
+
+export default handler

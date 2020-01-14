@@ -1,5 +1,10 @@
-import mongoose from 'mongoose'
-const { page: Page } = mongoose.models
+import connect from 'next-connect'
+import common from '../../../middleware/common'
+import Page from '../../../models/page'
+
+
+const handler = connect()
+handler.use(common)
 
 
 const getPages = async () => {
@@ -19,7 +24,7 @@ const createPage = async body => {
 
   // Make sure the page has a route
   if (!page.route) {
-    throw Error("Please choose a page route.")
+    throw new Error("Please choose a page route.")
   }
 
   // Map tags string to an array
@@ -31,12 +36,12 @@ const createPage = async body => {
       section.type !== "ContactForm" &&
       section.type !== "DonateForm"
     ) {
-      throw Error("Please add at least one required tag to each section.")
+      throw new Error("Please add at least one required tag to each section.")
     }
 
     // Make sure the section has a valid maxPosts
     if (section.maxPosts < 1 || section.maxPosts % 1 !== 0) {
-      throw Error("You can only choose positive integers for max posts.")
+      throw new Error("You can only choose positive integers for max posts.")
     }
 
     section.tags = section.tags.split(',').map(tag => {
@@ -51,7 +56,7 @@ const createPage = async body => {
 
   // Make sure the page has at least one section
   if (page.sections.length === 0) {
-    throw Error("Please add at least one section.")
+    throw new Error("Please add at least one section.")
   }
 
   try {
@@ -62,28 +67,24 @@ const createPage = async body => {
     if (err.code === 11000) {
       message = "You have already saved a page with this route. Go change that one or choose another route."
     }
-    throw Error(message)
+    throw new Error(message)
   }
 }
 
 
-export default async (req, res) => {
-  try {
-    let response
-    switch (req.method) {
-      case 'GET':
-        response = await getPages()
-        return res.send(response)
-      case 'POST':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await createPage(req.body)
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
+handler.get(async (req, res) => {
+  response = await getPages()
+  return res.send(response)
+})
+
+
+handler.post(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-}
+  response = await createPage(req.body)
+  return res.send(response)
+})
+
+
+export default handler

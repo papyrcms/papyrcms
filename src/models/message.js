@@ -9,4 +9,4 @@ const messageSchema = new mongoose.Schema({
   created: { type: Date, default: Date.now },
 })
 
-export default mongoose.model('message', messageSchema)
+export default mongoose.models.message || mongoose.model('message', messageSchema)

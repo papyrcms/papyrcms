@@ -1,6 +1,12 @@
-import mongoose from 'mongoose'
-import Mailer from '../../../utilities/mailer'
-const { post: Post } = mongoose.models
+import connect from "next-connect"
+import common from "../../../middleware/common"
+import isAdmin from "../../../middleware/isAdmin"
+import Post from "../../../models/post"
+
+
+const handler = connect()
+handler.use(common)
+handler.use(isAdmin)
 
 
 const getPosts = async () => {
@@ -39,23 +45,16 @@ const createPost = async (body, enableEmailingToUsers) => {
 }
 
 
-export default async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(401).send({ message: 'You are not allowed to do that.' })
-  }
+handler.get(async (req, res) => {
+  const posts = await getPosts()
+  return res.send(posts)
+})
 
-  try {
-    switch (req.method) {
-      case 'GET':
-        const posts = await getPosts()
-        return res.send(posts)
-      case 'POST':
-        const newPost = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
-        return res.send(newPost)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(401).send({ message: err.message })
-  }
-}
+
+handler.post(async (req, res) => {
+  const post = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
+  return res.send(post)
+})
+
+
+export default handler

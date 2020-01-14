@@ -5,4 +5,4 @@ const settingsSchema = new mongoose.Schema({
   options: { type: Object, required: true }
 })
 
-export default mongoose.model('settings', settingsSchema)
+export default mongoose.models.settings || mongoose.model('settings', settingsSchema)

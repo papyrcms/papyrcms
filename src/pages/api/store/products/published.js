@@ -1,16 +1,18 @@
-import mongoose from 'mongoose'
-const { product: Product } = mongoose.models
+import connect from "next-connect"
+import common from "../../../../middleware/common"
+import storeEnabled from "../../../../middleware/storeEnabled"
+import Product from "../../../../models/product"
 
 
-export default async (req, res) => {
-  if (req.method !== 'GET') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
+const handler = connect()
+handler.use(common)
+handler.use(storeEnabled)
 
-  try {
-    const products = await Product.find({ published: true }).sort({ created: -1 }).lean()
-    return res.send(products)
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
-  }
-}
+
+handler.get(async (req, res) => {
+  const products = await Product.find({ published: true }).sort({ created: -1 }).lean()
+  return res.send(products)
+})
+
+
+export default handler

@@ -1,5 +1,12 @@
-import mongoose from 'mongoose'
-const { product: Product } = mongoose.models
+import connect from 'next-connect'
+import common from '../../../../middleware/common'
+import storeEnabled from '../../../../middleware/storeEnabled'
+import Product from '../../../../models/product'
+
+
+const handler = connect()
+handler.use(common)
+handler.use(storeEnabled)
 
 
 const getProduct = async id => {
@@ -36,36 +43,31 @@ const deleteProduct = async id => {
 }
 
 
-export default async (req, res) => {
-  if (!res.locals.settings.enableProducts && (!req.user || !req.user.isAdmin)) {
+handler.get(async (req, res) => {
+  const product = await getProduct(req.query.id)
+  if (!product.published && (!req.user || !req.user.isAdmin)) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
+  return res.send(product)
+})
 
-  try {
-    let response
-    switch (req.method) {
-      case 'GET':
-        response = await getProduct(req.query.id)
-        if (!response.published && (!req.user || !req.user.isAdmin)) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        return res.send(response)
-      case 'PUT':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await updateProduct(req.query.id, req.body)
-        return res.send(response)
-      case 'DELETE':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await deleteProduct(req.query.id)
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
+
+handler.put(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-}
+  const product = await updateProduct(req.query.id, req.body)
+  return res.send(product)
+})
+
+
+handler.delete(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  }
+  const message = await deleteProduct(req.query.id)
+  return res.send(message)
+})
+
+
+export default handler

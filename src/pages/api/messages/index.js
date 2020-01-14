@@ -1,7 +1,12 @@
-import mongoose from "mongoose"
+import connect from 'next-connect'
+import common from '../../../middleware/common'
 import Mailer from "../../../utilities/mailer"
 import keys from "../../../config/keys"
-const { message: Message } = mongoose.models
+import Message from '../../../models/message'
+
+
+const handler = connect()
+handler.use(common)
 
 
 const getMessages = async () => {
@@ -32,23 +37,19 @@ const createMessage = async (body, enableEmailingToAdmin) => {
 }
 
 
-export default async (req, res) => {
-  try {
-    let response
-    switch (req.method) {
-      case 'GET':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await getMessages()
-        return res.send(response)
-      case 'POST':
-        response = await createMessage(req.body, res.locals.settings.enableEmailingToAdmin)
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
+handler.get(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-}
+  const messages = await getMessages()
+  return res.send(messages)
+})
+
+
+handler.post(async (req, res) => {
+  const message = await createMessage(req.body, res.locals.settings.enableEmailingToAdmin)
+  return res.send(message)
+})
+
+
+export default handler

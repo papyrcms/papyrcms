@@ -1,6 +1,13 @@
 import moment from 'moment-timezone'
-import mongoose from 'mongoose'
-const { event: Event } = mongoose.models
+import connect from "next-connect"
+import common from "../../../middleware/common"
+import isAdmin from "../../../middleware/isAdmin"
+import Event from "../../../models/event"
+
+
+const handler = connect()
+handler.use(common)
+handler.use(isAdmin)
 
 
 const getEvents = async () => {
@@ -19,24 +26,16 @@ const createEvent = async body => {
 }
 
 
-export default async (req, res) => {
-  if (!req.user && !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
-  }
+handler.get(async (req, res) => {
+  const events = await getEvents()
+  return res.send(events)
+})
 
-  try {
-    let response
-    switch (req.method) {
-      case 'GET':
-        response = await getEvents()
-        return res.send(response)
-      case 'POST':
-        response = await createEvent(req.body)
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
-  }
-}
+
+handler.post(async (req, res) => {
+  const event = await createEvent(req.body)
+  return res.send(event)
+})
+
+
+export default handler

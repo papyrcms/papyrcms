@@ -1,22 +1,20 @@
-import mongoose from 'mongoose'
-const { order: Order } = mongoose.models
+import connect from "next-connect"
+import common from "../../../../middleware/common"
+import isAdmin from "../../../../middleware/isAdmin"
+import Order from "../../../../models/order"
 
 
-export default async (req, res) => {
-  if (req.method !== 'GET') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
+const handler = connect()
+handler.use(common)
+handler.use(isAdmin)
 
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
-  }
 
-  try {
-    const orders = await Order.find().sort({ created: -1 })
-      .populate('user').populate('products').lean()
+handler.get(async (req, res) => {
+  const orders = await Order.find().sort({ created: -1 })
+    .populate('user').populate('products').lean()
 
-    return res.send(orders)
-  } catch (err) {
-    return res.status(400).send({ message: 'You are not allowed to do that.' })
-  }
-}
+  return res.send(orders)
+})
+
+
+export default handler

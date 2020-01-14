@@ -1,5 +1,12 @@
-import mongoose from 'mongoose'
-const { order: Order } = mongoose.models
+import connect from "next-connect"
+import common from "../../../../middleware/common"
+import isAdmin from "../../../../middleware/isAdmin"
+import Order from "../../../../models/order"
+
+
+const handler = connect()
+handler.use(common)
+handler.use(isAdmin)
 
 
 const updateOrder = async (id, body) => {
@@ -13,24 +20,16 @@ const deleteOrder = async id => {
 }
 
 
-export default async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
-  }
+handler.put(async (req, res) => {
+  const order = await updateOrder(req.query.id, req.body)
+  return res.send(order)
+})
 
-  try {
-    let response
-    switch (req.method) {
-      case 'PUT':
-        response = await updateOrder(req.query.id, req.body)
-        return res.send(response)
-      case 'DELETE':
-        response = await deleteOrder()
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
-  }
-}
+
+handler.delete(async (req, res) => {
+  const message = await deleteOrder()
+  return res.send(message)
+})
+
+
+export default handler

@@ -1,8 +1,15 @@
 import jwt from 'jsonwebtoken'
-import mongoose from 'mongoose'
+import connect from "next-connect"
+import common from "../../../middleware/common"
+import emailToUsersEnabled from "../../../middleware/emailToUsersEnabled"
 import Mailer from '../../../utilities/mailer'
 import keys from '../../../config/keys'
-const { user: User } = mongoose.models
+import User from "../../../models/user"
+
+
+const handler = connect()
+handler.use(common)
+handler.use(emailToUsersEnabled)
 
 
 const verifyEmailSyntax = email => {
@@ -11,15 +18,7 @@ const verifyEmailSyntax = email => {
 }
 
 
-export default async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(404).send({ message: 'Endpoint not found' })
-  }
-
-  if (!res.locals.settings.enableEmailingToUsers) {
-    return res.status(401).send({ message: 'Mailing is disabled. Please contact a site administrator to reset your password.' })
-  }
-
+handler.post(async (req, res) => {
   const { email } = req.body
 
   if (!verifyEmailSyntax(email)) {
@@ -47,4 +46,7 @@ export default async (req, res) => {
   mailer.sendEmail(variables, email, 'forgot-password', subject)
 
   return res.send({ message: 'Your email is on its way!' })
-}
+})
+
+
+export default handler

@@ -1,5 +1,15 @@
-import mongoose from 'mongoose'
-const { user: User, product: Product } = mongoose.models
+import connect from "next-connect"
+import common from "../../../../middleware/common"
+import isLoggedIn from "../../../../middleware/isLoggedIn"
+import storeEnabled from "../../../../middleware/storeEnabled"
+import Product from "../../../../models/product"
+import User from "../../../../models/user"
+
+
+const handler = connect()
+handler.use(common)
+handler.use(isLoggedIn)
+handler.use(storeEnabled)
 
 
 const addToCart = async (productId, user) => {
@@ -7,11 +17,12 @@ const addToCart = async (productId, user) => {
 
   // If we are out of stock
   if (product.quantity <= 0) {
-    throw Error('This product is sold out.')
+    throw new Error('This product is sold out.')
   }
+
   // If we have all available products in our cart
   if (user.cart.filter(inCart => product._id.equals(inCart._id)).length >= product.quantity) {
-    throw Error('You cannot buy more than what is available.')
+    throw new Error('You cannot buy more than what is available.')
   }
 
   user.cart.push(product)
@@ -40,24 +51,16 @@ const removeFromCart = async (productId, user) => {
 }
 
 
-export default async (req, res) => {
-  if (!req.user) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
-  }
+handler.put(async (req, res) => {
+  const cart = await addToCart(req.query.id, req.user)
+  return res.send(cart)
+})
 
-  try {
-    let cart
-    switch (req.method) {
-      case 'PUT':
-        cart = await addToCart(req.query.id, req.user)
-        return res.send(cart)
-      case 'DELETE':
-        cart = await removeFromCart(req.query.id, req.user)
-        return res.send(cart)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
-  }
-}
+
+handler.delete( async (req, res) => {
+  const cart = await removeFromCart(req.query.id, req.user)
+  return res.send(cart)
+})
+
+
+export default handler

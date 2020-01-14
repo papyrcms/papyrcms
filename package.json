@@ -7,10 +7,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "debug": "nodemon --inspect index.js",
+    "dev": "next -p 5000",
     "build": "next build",
-    "start": "NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production next start",
     "heroku-config": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
@@ -20,19 +19,17 @@
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.1",
-    "body-parser": "^1.19.0",
     "cloudinary": "^1.18.1",
-    "cookie-session": "^1.4.0",
-    "esm": "^3.2.25",
-    "express": "^4.17.1",
     "google-map-react": "^1.1.5",
     "googleapis": "^46.0.0",
-    "handlebars": "^4.7.1",
+    "handlebars": "^4.7.2",
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.27",
     "mongoose": "^5.8.7",
     "multer": "^1.4.2",
     "next": "^9.1.7",
+    "next-connect": "^0.5.2",
+    "next-session": "^2.2.0",
     "nodemailer": "^6.4.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
@@ -51,8 +48,7 @@
     "stripe": "^8.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.0",
-    "node-sass": "^4.13.0",
-    "nodemon": "^2.0.2"
+    "@babel/core": "^7.8.3",
+    "node-sass": "^4.13.0"
   }
 }

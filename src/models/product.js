@@ -15,4 +15,4 @@ const productSchema = new mongoose.Schema({
   quantity: { type: Number, default: 0 }
 })
 
-export default mongoose.model('product', productSchema)
+export default mongoose.models.product || mongoose.model('product', productSchema)

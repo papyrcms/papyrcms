@@ -207,7 +207,8 @@ const Page = props => {
 
 
 Page.getInitialProps = async ({ query }) => {
-  try {
+  console.log('ffff')
+  // try {
     if (!query.page) {
       query.page = 'home'
     }
@@ -218,11 +219,11 @@ Page.getInitialProps = async ({ query }) => {
     const { data: stripePubKey } = await axios.post(`${rootUrl}/api/utility/stripePubKey`)
 
     return { page, googleMapsKey, stripePubKey }
-  } catch (err) {
+  // } catch (err) {
 
-    // If we did not find a page, push to the page template file
-    Router.push(`/${query.page === 'home' ? '' : query.page}`)
-  }
+  //   // If we did not find a page, push to the page template file
+  //   Router.push(`/${query.page === 'home' ? '' : query.page}`)
+  // }
 }
 
 

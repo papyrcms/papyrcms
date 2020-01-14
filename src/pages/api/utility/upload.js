@@ -1,6 +1,12 @@
+import connect from 'next-connect'
 import multer from 'multer'
 import cloudinary from 'cloudinary'
+import common from '../../../middleware/common'
 import keys from '../../../config/keys'
+
+
+const handler = connect()
+handler.use(common)
 
 
 const storage = multer.diskStorage({
@@ -31,11 +37,7 @@ export const config = {
 }
 
 
-export default async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
-
+handler.post(async (req, res) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(401).send({ message: 'You are not allowed to do that.' })
   }
@@ -48,4 +50,7 @@ export default async (req, res) => {
     const uploadResponse = await cloudinary.v2.uploader.upload(req.file.path, { resource_type: 'auto', angle: 0 })
     return res.send(uploadResponse.secure_url)
   })
-}
+})
+
+
+export default handler

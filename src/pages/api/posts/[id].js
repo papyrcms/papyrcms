@@ -1,6 +1,10 @@
-import mongoose from 'mongoose'
-import Mailer from '../../../utilities/mailer'
-const { post: Post, comment: Comment } = mongoose.models
+import connect from "next-connect"
+import common from "../../../middleware/common"
+import Post from "../../../models/post"
+
+
+const handler = connect()
+handler.use(common)
 
 
 const getPost = async id => {
@@ -56,32 +60,31 @@ const deletePost = async id => {
 }
 
 
-export default async (req, res) => {
-  try {
-    let response
-    switch (req.method) {
-      case 'GET':
-        response = await getPost(req.query.id)
-        if (!response.published && (!req.user || !req.user.isAdmin)) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        return res.send(response)
-      case 'PUT':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await updatePost(req.query.id, req.body, res.locals.settings.enableEmailingToUsers)
-        return res.send(response)
-      case 'DELETE':
-        if (!req.user || !req.user.isAdmin) {
-          return res.status(403).send({ message: 'You are not allowed to do that.' })
-        }
-        response = await deletePost(req.query.id)
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(401).send({ message: err.message })
+handler.get(async (req, res) => {
+  const post = await getPost(req.query.id)
+  if (!post.published && (!req.user || !req.user.isAdmin)) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-}
+  return res.send(post)
+})
+
+
+handler.put(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  }
+  const post = await updatePost(req.query.id, req.body, res.locals.settings.enableEmailingToUsers)
+  return res.send(post)
+})
+
+
+handler.delete(async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  }
+  const message = await deletePost(req.query.id)
+  return res.send(message)
+})
+
+
+export default handler

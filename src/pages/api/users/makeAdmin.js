@@ -1,18 +1,20 @@
-import mongoose from 'mongoose'
-const { user: User } = mongoose.models
+import connect from 'next-connect'
+import common from '../../../middleware/common'
+import isAdmin from '../../../middleware/isAdmin'
+import User from '../../../models/user'
 
 
-export default async (req, res) => {
-  if (req.method !== 'PUT') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
+const handler = connect()
+handler.use(common)
+handler.use(isAdmin)
 
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(401).send({ message: 'You are not allowed to do that.' })
-  }
 
+handler.put(async (req, res) => {
   const { userId, isAdmin } = req.body
 
   await User.findByIdAndUpdate(userId, { isAdmin })
   return res.send({ message: 'Success' })
-}
+})
+
+
+export default handler

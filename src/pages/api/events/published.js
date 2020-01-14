@@ -1,21 +1,23 @@
-import mongoose from 'mongoose'
-const { event: Event } = mongoose.models
+import connect from 'next-connect'
+import common from '../../../middleware/common'
+import eventsEnabled from '../../../middleware/eventsEnabled'
+import Event from '../../../models/event'
 
 
-export default async (req, res) => {
-  if (req.method !== 'GET') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
+const handler = connect()
+handler.use(common)
+handler.use(eventsEnabled)
 
+
+handler.get(async (req, res) => {
   const date = new Date(new Date().toISOString())
   const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
 
-  try {
-    const events = await Event.find({ published: true, date: { $gte: dateFilter } })
-      .sort({ date: 1 }).lean()
+  const events = await Event.find({ published: true, date: { $gte: dateFilter } })
+    .sort({ date: 1 }).lean()
 
-    return res.send(events)
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
-  }
-}
+  return res.send(events)
+})
+
+
+export default handler

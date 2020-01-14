@@ -1,16 +1,16 @@
-import mongoose from 'mongoose'
-const { post: Post } = mongoose.models
+import connect from 'next-connect'
+import common from '../../../middleware/common'
+import Post from '../../../models/post'
 
 
-export default async (req, res) => {
-  if (req.method !== 'GET') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
+const handler = connect()
+handler.use(common)
 
-  try {
-    const posts = await Post.find({ published: true }).sort({ created: -1 }).lean()
-    return res.send(posts)
-  } catch (err) {
-    return res.status(401).send({ message: err.message })
-  }
-}
+
+handler.get(async (req, res) => {
+  const posts = await Post.find({ published: true }).sort({ created: -1 }).lean()
+  return res.send(posts)
+})
+
+
+export default handler

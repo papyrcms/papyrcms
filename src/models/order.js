@@ -16,4 +16,4 @@ const orderSchema = new mongoose.Schema({
   shipped: { type: Boolean, default: false }
 })
 
-export default mongoose.model('order', orderSchema)
+export default mongoose.models.order || mongoose.model('order', orderSchema)

@@ -1,16 +1,18 @@
-import mongoose from 'mongoose'
-const { message: Message } = mongoose.models
+import connect from "next-connect"
+import common from "../../../middleware/common"
+import isAdmin from "../../../middleware/isAdmin"
+import Message from "../../../models/message"
 
 
-export default async (req, res) => {
-  if (req.method !== 'DELETE') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
+const handler = connect()
+handler.use(common)
+handler.use(isAdmin)
 
-  try {
-    await Message.findByIdAndDelete(req.query.id)
-    return res.send("message deleted")
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
-  }
-}
+
+handler.delete(async (req, res) => {
+  await Message.findByIdAndDelete(req.query.id)
+  return res.send("message deleted")
+})
+
+
+export default handler

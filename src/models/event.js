@@ -16,4 +16,4 @@ const eventSchema = new mongoose.Schema({
   longitude: Number
 })
 
-export default mongoose.model('event', eventSchema)
+export default mongoose.models.event || mongoose.model('event', eventSchema)

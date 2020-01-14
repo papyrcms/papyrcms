@@ -1,12 +1,18 @@
-import mongoose from 'mongoose'
-const { settings: Settings } = mongoose.models
+import connect from 'next-connect'
+import common from '../../../middleware/common'
+import Settings from '../../../models/settings'
 
 
-export default async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(404).send({ message: 'Endpoint not found.' })
-  }
+const handler = connect()
+handler.use(common)
 
+
+handler.get((req, res) => {
+  return res.send(res.locals.settings || {})
+})
+
+
+handler.post(async (req, res) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(401).send({ message: 'You are not allowed to do that.' })
   }
@@ -23,4 +29,7 @@ export default async (req, res) => {
   }
 
   return res.send(req.body)
-}
+})
+
+
+export default handler

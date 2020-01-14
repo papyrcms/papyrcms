@@ -1,5 +1,12 @@
-import mongoose from 'mongoose'
-const { blog: Blog } = mongoose.models
+import connect from "next-connect"
+import common from "../../../middleware/common"
+import isAdmin from "../../../middleware/isAdmin"
+import Blog from "../../../models/blog"
+
+
+const handler = connect()
+handler.use(common)
+handler.use(isAdmin)
 
 
 const getBlogs = async () => {
@@ -20,24 +27,16 @@ const createBlog = async body => {
 }
 
 
-export default async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
-  }
+handler.get(async (req, res) => {
+  const blogs = await getBlogs()
+  return res.send(blogs)
+})
 
-  try {
-    let response
-    switch (req.method) {
-      case 'GET':
-        response = await getBlogs()
-        return res.send(response)
-      case 'POST':
-        response = await createBlog(req.body)
-        return res.send(response)
-      default:
-        return res.status(404).send({ message: 'Endpoint not found.' })
-    }
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
-  }
-}
+
+handler.post(async (req, res) => {
+  const blog = await createBlog(req.body)
+  return res.send(blog)
+})
+
+
+export default handler
