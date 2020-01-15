@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import connect from "next-connect"
-import common from "../../../middleware/common"
+import common from "../../../middleware/common/"
 import keys from '../../../config/keys'
 import User from "../../../models/user"
 

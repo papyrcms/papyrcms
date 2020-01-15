@@ -1,6 +1,6 @@
 import moment from 'moment-timezone'
 import connect from "next-connect"
-import common from "../../../middleware/common"
+import common from "../../../middleware/common/"
 import isAdmin from "../../../middleware/isAdmin"
 import Event from "../../../models/event"
 

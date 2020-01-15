@@ -1,5 +1,5 @@
 import connect from "next-connect"
-import common from "../../../middleware/common"
+import common from "../../../middleware/common/"
 import blogEnabled from "../../../middleware/blogEnabled"
 import Blog from "../../../models/blog"
 

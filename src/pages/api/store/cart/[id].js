@@ -1,5 +1,5 @@
 import connect from "next-connect"
-import common from "../../../../middleware/common"
+import common from "../../../../middleware/common/"
 import isLoggedIn from "../../../../middleware/isLoggedIn"
 import storeEnabled from "../../../../middleware/storeEnabled"
 import Product from "../../../../models/product"

@@ -1,5 +1,5 @@
 import connect from 'next-connect'
-import common from '../../../middleware/common'
+import common from '../../../middleware/common/'
 import Mailer from "../../../utilities/mailer"
 import keys from "../../../config/keys"
 import Message from '../../../models/message'

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import connect from "next-connect"
-import common from "../../../middleware/common"
+import common from "../../../middleware/common/"
 import emailToUsersEnabled from "../../../middleware/emailToUsersEnabled"
 import Mailer from '../../../utilities/mailer'
 import keys from '../../../config/keys'

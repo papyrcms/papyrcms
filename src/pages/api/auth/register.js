@@ -1,5 +1,5 @@
 import connect from 'next-connet'
-import common from "../../../middleware/common"
+import common from "../../../middleware/common/"
 import registrationEnabled from "../../../middleware/registrationEnabled"
 import Mailer from '../../../utilities/mailer'
 import User from '../../../models/user'

@@ -1,7 +1,7 @@
 import connect from 'next-connect'
 import multer from 'multer'
 import cloudinary from 'cloudinary'
-import common from '../../../middleware/common'
+import common from '../../../middleware/common/'
 import keys from '../../../config/keys'
 
 
