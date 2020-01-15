@@ -43,8 +43,8 @@ handler.put(async (req, res) => {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
 
-  response = await updateComment(comment, req.body.content)
-  return res.send(response)
+  const comment = await updateComment(comment, req.body.content)
+  return res.send(comment)
 })
 
 
@@ -57,8 +57,8 @@ handler.delete(async (req, res) => {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
 
-  response = await deleteComment(req.query.id, comment)
-  return res.send(response)
+  const message = await deleteComment(req.query.id, comment)
+  return res.send(message)
 })
 
 

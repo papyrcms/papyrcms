@@ -73,8 +73,8 @@ const createPage = async body => {
 
 
 handler.get(async (req, res) => {
-  response = await getPages()
-  return res.send(response)
+  const pages = await getPages()
+  return res.send(pages)
 })
 
 
@@ -82,8 +82,8 @@ handler.post(async (req, res) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  response = await createPage(req.body)
-  return res.send(response)
+  const page = await createPage(req.body)
+  return res.send(page)
 })
 
 
