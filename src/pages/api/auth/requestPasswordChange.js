@@ -1,5 +1,7 @@
+import jwt from 'jsonwebtoken'
 import connect from "next-connect"
 import common from "../../../middleware/common/"
+import keys from '../../../config/keys'
 import User from "../../../models/user"
 
 
@@ -7,42 +9,21 @@ const handler = connect()
 handler.use(common)
 
 
-handler.post((req, res) => {
-  const { oldPass, newPass, confirmPass, userId } = req.body
+handler.post(async (req, res) => {
+  const { token, password, confirmPassword } = req.body
 
-  // Make sure password fields are filled out
-  if (!oldPass) {
-    return res.status(401).send({ message: 'You need to fill in your current password.' })
-  } else if (!newPass) {
-    return res.status(401).send({ message: 'You need to fill in your new password.' })
+  const data = jwt.verify(token, keys.jwtSecret)
+
+  if (password !== confirmPassword) {
+    res.status(401).send({ message: 'The new password fields do not match.' })
   }
 
-  User.findById(userId, (err, foundUser) => {
-    if (!foundUser) {
-      return res.status(401).send(err)
-    }
+  const foundUser = await User.findOne({ email: data.email })
 
-    // Make sure the entered password is the user's password
-    foundUser.authenticate(oldPass, (err, user, passwordError) => {
-      if (!!user) {
-
-        // Check to see new password fields match
-        if (newPass !== confirmPass) {
-          return res.status(401).send({ message: 'The new password fields do not match.' })
-        } else {
-
-          // Set the new password
-          foundUser.setPassword(newPass, () => {
-            foundUser.save()
-            res.send({ message: 'Your password has been saved!' })
-          })
-        }
-      } else if (!!err) {
-        return res.status(401).send(err)
-      } else if (!!passwordError) {
-        return res.status(401).send({ message: 'You have entered the wrong current password.' })
-      }
-    })
+  // Set the new password
+  foundUser.setPassword(password, () => {
+    foundUser.save()
+    res.send({ message: 'Your password has been saved!' })
   })
 })
 

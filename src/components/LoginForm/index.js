@@ -23,14 +23,10 @@ const LoginForm = props => {
   const handleSubmit = event => {
     event.preventDefault()
 
-    const success = () => {
-      axios.get('/api/auth/currentUser')
-        .then(res => {
-          setCurrentUser(res.data)
-          Router.push('/profile')
-        }).catch(err => {
-          console.error(err)
-        })
+    const success = res => {
+      localStorage.setItem('token', res.data.token)
+      setCurrentUser(res.data.user)
+      Router.push('/profile')
     }
 
     formState.submitForm('/api/auth/login', { success })

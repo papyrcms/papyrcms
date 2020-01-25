@@ -1,4 +1,4 @@
-import connect from 'next-connet'
+import connect from 'next-connect'
 import common from "../../../middleware/common/"
 import registrationEnabled from "../../../middleware/registrationEnabled"
 import Mailer from '../../../utilities/mailer'
@@ -54,7 +54,7 @@ handler.post((req, res) => {
     const subject = `Welcome, ${newUser.firstName}!`
 
     if (res.locals.settings.enableEmailingToUsers) {
-      await mailer.sendEmail(newUser, newUser.email, 'welcome', subject)
+      await mailer.sendEmail(newUser._doc, newUser.email, 'welcome', subject)
     }
 
     req.login(newUser, err => {

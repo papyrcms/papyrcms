@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import keys from '../../config/keys'
+import { setPages } from '../../../reduxStore'
 
 
 const Pages = props => {
@@ -12,6 +12,14 @@ const Pages = props => {
   if (!currentUser || !currentUser.isAdmin) {
     return <div />
   }
+
+  useEffect(() => {
+    const getPages = async () => {
+      const { data: pages } = await axios.get('/api/pages')
+      setPages(pages)
+    }
+    getPages()
+  }, [])
 
   const renderPages = () => {
 
@@ -48,30 +56,9 @@ const Pages = props => {
 }
 
 
-Pages.getInitialProps = async ({ req }) => {
-
-  let axiosConfig = {}
-
-  // Depending on if we are doing a client or server render
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-  }
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: pages } = await axios.get(`${rootUrl}/api/pages`, axiosConfig)
-
-  return { pages }
-}
-
-
 const mapStateToProps = state => {
   return { pages: state.pages, currentUser: state.currentUser }
 }
 
 
-export default connect(mapStateToProps)(Pages)
+export default connect(mapStateToProps, { setPages })(Pages)

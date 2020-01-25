@@ -1,7 +1,8 @@
 import connect from "next-connect"
-import common from "../../../middleware/common/"
-import blogEnabled from "../../../middleware/blogEnabled"
-import Blog from "../../../models/blog"
+import common from "../../../../middleware/common/"
+import blogEnabled from "../../../../middleware/blogEnabled"
+import Blog from "../../../../models/blog"
+import Comment from '../../../../models/comment'
 
 
 const handler = connect()
@@ -54,7 +55,7 @@ const deleteBlog = async id => {
 
 handler.get(async (req, res) => {
   const blog = await getBlog(req.query.id)
-  if (!blog.published && (!req.user || !req.user.isAdmin)) {
+  if (!blog || !blog.published && (!req.user || !req.user.isAdmin)) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   return res.send(blog)

@@ -16,8 +16,12 @@ handler.delete(async (req, res) => {
     return res.status(401).send({ message: 'You cannot delete yourself.' })
   }
 
-  await User.findOneAndDelete({ _id: id })
-  return res.send({ message: 'User deleted' })
+  try {
+    await User.findOneAndDelete({ _id: id })
+    return res.send({ message: 'user deleted' })
+  } catch (err) {
+    return res.status(400).send({ message: err.message })
+  }
 })
 
 

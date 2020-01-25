@@ -24,7 +24,7 @@ const ForgotPasswordPage = props => {
       token
     }
 
-    axios.post('/api/auth/changePassword', params)
+    axios.post('/api/auth/requestPasswordChange', params)
       .then(response => {
         setValidation(response.data.message)
         Router.push('/login')

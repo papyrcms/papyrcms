@@ -7,7 +7,6 @@ import MessageList from './MessageList'
 
 export default () => (
   <div className="admin-dashboard">
-
     <div className="admin-dashboard__left">
       <AdminLinks />
     </div>

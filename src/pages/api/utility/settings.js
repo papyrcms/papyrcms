@@ -14,7 +14,7 @@ handler.get((req, res) => {
 
 handler.post(async (req, res) => {
   if (!req.user || !req.user.isAdmin) {
-    return res.status(401).send({ message: 'You are not allowed to do that.' })
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
 
   const settings = await Settings.find()

@@ -130,16 +130,8 @@ class MyApp extends App {
 
     // Set Current User and Website Settings in the redux store
     if (isServer) {
-      const axiosConfig = {
-        withCredentials: true,
-        headers: {
-          Cookie: req.headers.cookie || ""
-        }
-      }
       const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
-      const { data: user } = await axios.get(`${rootUrl}/api/auth/currentUser`, axiosConfig)
       dispatch(setSettings(settings))
-      dispatch(setCurrentUser(user))
       dispatch(setUrl({ query: req.query }))
     }
 
@@ -148,8 +140,17 @@ class MyApp extends App {
   }
 
 
-  componentDidMount() {
+  async componentDidMount() {
     initGA()
+    const token = localStorage.getItem('token')
+
+    if (token) {
+      axios.defaults.headers.common = {
+        Authorization: `bearer ${token}`
+      }
+      const { data: user } = await axios.get('/api/auth/currentUser')
+      this.props.reduxStore.dispatch(setCurrentUser(user))
+    }
   }
 
 

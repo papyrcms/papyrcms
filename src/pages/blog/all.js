@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
+import { connect } from 'react-redux'
 import keys from '../../config/keys'
+import { setBlogs } from '../../reduxStore'
 import { SectionCards } from '../../components/Sections/'
 import filterPosts from '../../components/filterPosts'
 
 
 const BlogAllPage = props => {
 
-  const renderDate = post => {
+  const { currentUser, posts } = props
 
+  useEffect(() => {
+    if (currentUser && currentUser.isAdmin) {
+      const getBlogs = async () => {
+        const { data: blogs } = await axios.get('/api/blogs')
+        setBlogs(blogs)
+      }
+      getBlogs()
+    }
+  }, [])
+
+  const renderDate = post => {
     const date = post.published && post.publishDate
       ? post.publishDate
       : post.created
@@ -24,35 +37,17 @@ const BlogAllPage = props => {
     contentLength={100}
     emptyMessage="There are no blogs yet."
     readMore
-    posts={props.posts}
+    posts={posts}
     afterPostTitle={renderDate}
   />
 }
 
 
-BlogAllPage.getInitialProps = async ({ req, reduxStore }) => {
-
-  let currentUser
-  let axiosConfig = {}
-
-  // Depending on if we are doing a client or server render
-  if (!!req) {
-    currentUser = req.user
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-  } else {
-    currentUser = reduxStore.getState().currentUser
-  }
-
+BlogAllPage.getInitialProps = async () => {
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const published = currentUser && currentUser.isAdmin ? '' : '/published'
-  const res = await axios.get(`${rootUrl}/api/blogs${published}`, axiosConfig)
+  const { data: blogs } = await axios.get(`${rootUrl}/api/blogs/published`)
 
-  return { blogs: res.data }
+  return { blogs }
 }
 
 
@@ -61,4 +56,9 @@ const settings = {
 }
 
 
-export default filterPosts(BlogAllPage, settings)
+const mapStateToProps = state => {
+  return { currentUser: state.currentUser }
+}
+
+
+export default connect(mapStateToProps, { setBlogs })(filterPosts(BlogAllPage, settings))

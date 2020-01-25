@@ -1,15 +1,22 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import { setUsers } from '../../reduxStore'
 import Modal from '../Modal'
 
 
 const UserList = props => {
 
-
   const { currentUser, users, setUsers } = props
   const [selectedUser, setSelectedUser] = useState('')
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const { data: users } = await axios.get('/api/users')
+      setUsers(users)
+    }
+    getUsers()
+  }, [])
 
 
   const deleteUser = user => {
@@ -146,7 +153,6 @@ const UserList = props => {
       )
     })
   }
-
 
   return (
     <Modal

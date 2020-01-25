@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Input from '../components/Input'
 import useForm from '../hooks/useForm'
 import UserInfoForm from '../components/UserInfoForm'
+import { setCurrentUser } from '../reduxStore'
 
 const ProfilePage = props => {
 
@@ -15,7 +16,7 @@ const ProfilePage = props => {
   }
 
 
-  const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '', userId: currentUser._id })
+  const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '' })
 
 
   const onLogoutClick = () => {
@@ -23,6 +24,7 @@ const ProfilePage = props => {
       .then(res => {
         if (res.data === 'logged out') {
           Router.push('/')
+          localStorage.removeItem('token')
           setCurrentUser(null)
         }
       }).catch(err => {
@@ -38,7 +40,7 @@ const ProfilePage = props => {
       setValidation(response.data.message)
     }
 
-    password.submitForm('/api/auth/requestPasswordChange', { success })
+    password.submitForm('/api/auth/changePassword', { success })
   }
 
 
@@ -128,4 +130,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps)(ProfilePage)
+export default connect(mapStateToProps, { setCurrentUser })(ProfilePage)

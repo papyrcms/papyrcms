@@ -1,7 +1,7 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
+import { connect } from 'react-redux'
 import { setMessages } from '../../reduxStore'
 import Modal from '../Modal'
 
@@ -9,6 +9,14 @@ import Modal from '../Modal'
 const MessageList = props => {
 
   const { messages, setMessages } = props
+  useEffect(() => {
+    const getMessages = async () => {
+      const { data: messages } = await axios.get('/api/messages')
+      setMessages(messages)
+    }
+    getMessages()
+  }, [])
+
 
   const deleteMessage = id => {
 
@@ -58,7 +66,6 @@ const MessageList = props => {
       )
     })
   }
-
 
   return (
     <Modal

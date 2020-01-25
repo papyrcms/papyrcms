@@ -22,7 +22,26 @@ export default (App) => {
     static async getInitialProps(appContext) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
-      const reduxStore = getOrCreateStore({})
+      const reduxStore = getOrCreateStore({
+        currentUser: null,
+        pages: [],
+        page: {},
+        posts: [],
+        post: {},
+        blogs: [],
+        blog: {},
+        events: [],
+        event: {},
+        products: [],
+        product: {},
+        orders: [],
+        users: [],
+        messages: [],
+        settings: {},
+        stripePubKey: '',
+        route: '',
+        googleMapsKey: ''
+      })
 
       // Provide the store to getInitialProps of pages
       appContext.ctx.reduxStore = reduxStore
