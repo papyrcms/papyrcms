@@ -7,7 +7,7 @@ const { rootURL, test } = keys
 const axiosConfig = {
   withCredentials: true,
   headers: {
-    Cookie: test.cookie
+    Authorization: `bearer ${test.token}`
   }
 }
 
@@ -34,6 +34,8 @@ describe('/api/auth', () => {
     it('does not create a user if the passwords do not match', async () => {
       try {
         await axios.post(`${rootURL}/api/auth/register`, { ...newUser, passwordConfirm: 'notamatch' })
+        // Fail if we made it here.
+        expect(true).to.equal(false)
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
@@ -42,6 +44,8 @@ describe('/api/auth', () => {
     it('does not create a user if there is no firstName', async () => {
       try {
         await axios.post(`${rootURL}/api/auth/register`, { ...newUser, firstName: '' })
+        // Fail if we made it here.
+        expect(true).to.equal(false)
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
@@ -50,6 +54,8 @@ describe('/api/auth', () => {
     it('does not create a user if there is no lastName', async () => {
       try {
         await axios.post(`${rootURL}/api/auth/register`, { ...newUser, lastName: '' })
+        // Fail if we made it here.
+        expect(true).to.equal(false)
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
@@ -58,6 +64,8 @@ describe('/api/auth', () => {
     it('does not create a user if the email is invalid', async () => {
       try {
         await axios.post(`${rootURL}/api/auth/register`, { ...newUser, email: 'invalidEmail' })
+        // Fail if we made it here.
+        expect(true).to.equal(false)
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
@@ -65,14 +73,16 @@ describe('/api/auth', () => {
 
     it('creates a user', async () => {
       const { data: created } = await axios.post(`${rootURL}/api/auth/register`, newUser)
-      expect(newUser.email).to.equal(created.email) &&
-      expect(newUser.firstName).to.equal(created.firstName) &&
-      expect(newUser.lastName).to.equal(created.lastName)
+      expect(newUser.email).to.equal(created.user.email) &&
+      expect(newUser.firstName).to.equal(created.user.firstName) &&
+      expect(newUser.lastName).to.equal(created.user.lastName)
     })
 
     it('does not create a user if the user already exists', async () => {
       try {
         await axios.post(`${rootURL}/api/auth/register`, newUser)
+        // Fail if we made it here.
+        expect(true).to.equal(false)
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
@@ -82,16 +92,16 @@ describe('/api/auth', () => {
   describe('/login', () => {
     it('returns the authenticated user', async () => {
       const { data: foundUser } = await axios.post(`${rootURL}/api/auth/login`, { email: newUser.email, password: newUser.password })
-      expect(newUser.email).to.equal(foundUser.email) &&
-      expect(newUser.firstName).to.equal(foundUser.firstName) &&
-      expect(newUser.lastName).to.equal(foundUser.lastName)
+      expect(newUser.email).to.equal(foundUser.user.email) &&
+      expect(newUser.firstName).to.equal(foundUser.user.firstName) &&
+      expect(newUser.lastName).to.equal(foundUser.user.lastName)
     })
 
     it('throws an error if the user does not exist', async () => {
       try {
         await axios.post(`${rootURL}/api/auth/login`, { email: 'abcd@abcd.com', password: 'invalid' })
       } catch (err) {
-        expect(err.response.status).to.equal(401)
+        expect(err.response.status).to.equal(400)
       }
     })
 
@@ -169,6 +179,67 @@ describe('/api/auth', () => {
   })
 
   describe('/forgotPassword', () => {
-    
+    it('returns an error if the password is not a valid email', async () => {
+      // Set emailing to users to true for the next 2 tests
+      const expectedSettings = {
+        enableMenu: true,
+        enableRegistration: true,
+        enableBlog: false,
+        enableCommenting: false,
+        enableEmailingToAdmin: true,
+        enableEmailingToUsers: true,
+        enableEvents: false,
+        enableStore: false
+      }
+      await axios.post(`${rootURL}/api/utility/settings`, expectedSettings, axiosConfig)
+
+      try {
+        await axios.post(`${rootURL}/api/auth/forgotPassword`, { email: '' })
+      } catch (err) {
+        expect(err.response.status).to.equal(401)
+      }
+    })
+
+    it('returns an error if the email is not in the system', async () => {
+      try {
+        await axios.post(`${rootURL}/api/auth/forgotPassword`, { email: 'tester@gmail.com' })
+      } catch (err) {
+        // disable emailing to users now that the tests are finished
+        const expectedSettings = {
+          enableMenu: true,
+          enableRegistration: true,
+          enableBlog: false,
+          enableCommenting: false,
+          enableEmailingToAdmin: true,
+          enableEmailingToUsers: false,
+          enableEvents: false,
+          enableStore: false
+        }
+        await axios.post(`${rootURL}/api/utility/settings`, expectedSettings, axiosConfig)
+
+        expect(err.response.status).to.equal(401)
+      }
+    })
+  })
+
+  describe('/requestPasswordChange', () => {
+    const data = {
+      token: test.rpcToken,
+      password: test.newPass,
+      confirmPassword: test.newPass
+    }
+
+    it('returns an error if the passwords do not match', async () => {
+      try {
+        await axios.post(`${rootURL}/api/auth/requestPasswordChange`, { ...data, passwordConfirm: 'notamatch' })
+      } catch (err) {
+        expect(err.response.status).to.equal(401)
+      }
+    })
+
+    it('returns a success message if the password was successfully saved', async () => {
+      const { status } = await axios.post(`${rootURL}/api/auth/requestPasswordChange`, data)
+      expect(status).to.equal(200)
+    })
   })
 })

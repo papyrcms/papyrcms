@@ -7,7 +7,7 @@ const { test, rootURL, googleAnalyticsId, googleMapsKey, stripePublishableTestKe
 const axiosConfig = {
   withCredentials: true,
   headers: {
-    Cookie: test.cookie
+    Authorization: `bearer ${test.token}`
   }
 }
 

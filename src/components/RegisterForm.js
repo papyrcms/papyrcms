@@ -30,13 +30,9 @@ const RegisterForm = props => {
     event.preventDefault()
 
     const success = response => {
-      axios.get('/api/auth/currentUser')
-        .then(res => {
-          setCurrentUser(res.data)
-          Router.push('/profile')
-        }).catch(err => {
-          console.error(err)
-        })
+      localStorage.setItem('token', response.data.token)
+      setCurrentUser(response.data.user)
+      Router.push('/profile')
     }
 
     const error = err => {

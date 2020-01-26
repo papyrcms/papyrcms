@@ -12,6 +12,7 @@ const handler = connect()
 
 
 handler.use(database)
+handler.use(passport.initialize())
 handler.use(authentication)
 handler.use(authorization)
 handler.use(useSettings)

@@ -1,4 +1,6 @@
 import connect from 'next-connect'
+import jwt from 'jsonwebtoken'
+import keys from '../../../config/keys'
 import common from "../../../middleware/common/"
 import registrationEnabled from "../../../middleware/registrationEnabled"
 import Mailer from '../../../utilities/mailer'
@@ -19,11 +21,11 @@ const verifyEmailSyntax = email => {
 handler.post((req, res) => {
   const { firstName, lastName, email, password, passwordConfirm } = req.body
 
-  if (!firstName || firstName === '') {
+  if (!firstName) {
     return res.status(401).send({ message: 'Please enter your first name' })
   }
 
-  if (!lastName || lastName === '') {
+  if (!lastName) {
     return res.status(401).send({ message: 'Please enter your last name' })
   }
 
@@ -46,23 +48,33 @@ handler.post((req, res) => {
   User.register(newUser, password, async err => {
 
     if (err) {
-      err.message = err.message.replace('username', 'email')
-      return res.status(401).send({ message: err.message })
+      const message = err.message.replace('username', 'email')
+      return res.status(401).send({ message })
     }
 
-    const mailer = new Mailer()
-    const subject = `Welcome, ${newUser.firstName}!`
-
     if (res.locals.settings.enableEmailingToUsers) {
+      const mailer = new Mailer()
+      const subject = `Welcome, ${newUser.firstName}!`
+
       await mailer.sendEmail(newUser._doc, newUser.email, 'welcome', subject)
     }
 
-    req.login(newUser, err => {
+    req.login(newUser, { session: false }, err => {
       if (err) {
-        return res.status(401).send({ message: err.message })
+        return res.status(400).send({ message: err.message })
       }
 
-      return res.send(newUser)
+      // generate a signed json web token with the contents of user object and return it in the response
+      const now = new Date()
+      const expiry = new Date(now).setDate(now.getDate() + 30)
+
+      const token = jwt.sign({
+        uid: newUser._id,
+        iat: Math.floor(now.getTime() / 1000),
+        exp: Math.floor(expiry / 1000)
+      }, keys.jwtSecret)
+
+      return res.send({ user: newUser, token })
     })
   })
 })

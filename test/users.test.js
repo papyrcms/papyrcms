@@ -9,7 +9,7 @@ const { rootURL, test } = keys
 const axiosConfig = {
   withCredentials: true,
   headers: {
-    Cookie: test.cookie
+    Authorization: `bearer ${test.token}`
   }
 }
 

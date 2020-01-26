@@ -21,7 +21,7 @@ handler.post(async (req, res) => {
 
     req.login(user, { session: false }, error => {
       if (error) {
-        res.send(error)
+        return res.status(401).send(error)
       }
 
       // generate a signed json web token with the contents of user object and return it in the response

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
 import axios from 'axios'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
 import jwt from 'jsonwebtoken'
 import Input from '../components/Input'
 
 
 const ForgotPasswordPage = props => {
 
-  const { token } = props.url.query
+  const { query } = useRouter()
+  const { token } = query
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [validation, setValidation] = useState('')
@@ -76,9 +76,4 @@ const ForgotPasswordPage = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { url: state.url }
-}
-
-
-export default connect(mapStateToProps)(ForgotPasswordPage)
+export default ForgotPasswordPage
