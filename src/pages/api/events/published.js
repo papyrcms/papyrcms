@@ -10,7 +10,7 @@ handler.use(eventsEnabled)
 
 
 handler.get(async (req, res) => {
-  const date = new Date(new Date().toISOString())
+  const date = new Date()
   const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
 
   const events = await Event.find({ published: true, date: { $gte: dateFilter } })

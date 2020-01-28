@@ -24,13 +24,12 @@ const getEvent = async id => {
 }
 
 
-const updateEvent = (id, body) => {
+const updateEvent = async (id, body) => {
   body.date = moment(body.date).tz('America/Chicago').toISOString()
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
 
-  const event = await Event.findOneAndUpdate({ _id: id }, body)
-
-  return event
+  await Event.findOneAndUpdate({ _id: id }, body)
+  return await Event.findOne({ _id: id }).lean()
 }
 
 
