@@ -12,7 +12,7 @@ handler.use(isAdmin)
 handler.delete(async (req, res) => {
   const { id } = req.query
 
-  if (id === req.user._id) {
+  if (req.user._id.equals(id)) {
     return res.status(401).send({ message: 'You cannot delete yourself.' })
   }
 

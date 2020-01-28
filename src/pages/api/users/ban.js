@@ -13,7 +13,7 @@ handler.put(async (req, res) => {
   const { userId, isBanned } = req.body
 
   await User.findByIdAndUpdate(userId, { isBanned })
-  return res.send({ message: 'success' })
+  return res.send({ message: 'Success' })
 })
 
 
