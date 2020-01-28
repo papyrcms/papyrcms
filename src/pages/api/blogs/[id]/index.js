@@ -34,9 +34,8 @@ const updateBlog = async (id, body) => {
 
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
 
-  const blog = await Blog.findOneAndUpdate({ _id: id }, body)
-
-  return blog
+  await Blog.findOneAndUpdate({ _id: id }, body)
+  return await Blog.findOne({ _id: id }).lean()
 }
 
 
