@@ -242,4 +242,11 @@ describe('/api/auth', () => {
       expect(status).to.equal(200)
     })
   })
+
+  describe('/logout', () => {
+    it('returns a success message on logout', async () => {
+      const { status } = await axios.get(`${rootURL}/api/auth/logout`)
+      expect(status).to.equal(200)
+    })
+  })
 })
