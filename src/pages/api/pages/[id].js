@@ -27,7 +27,7 @@ const updatePage = async (body, id) => {
     sections: []
   }
 
-  if (!page.route) {
+  if (!pageData.route) {
     res.status(401).send({ message: 'Please choose a page route.' })
   }
 
@@ -64,8 +64,8 @@ const updatePage = async (body, id) => {
   }
 
   try {
-    const page = await Page.findOneAndUpdate({ _id: id }, pageData)
-    return page
+    await Page.findOneAndUpdate({ _id: id }, pageData)
+    return await Page.findOne({ _id: id }).lean()
   } catch (err) {
     let message = 'There was a problem. Try again later.'
     if (e.code === 11000) {

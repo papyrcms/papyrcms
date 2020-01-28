@@ -13,26 +13,24 @@ const axiosConfig = {
 
 
 describe('/api/messages', () => {
-  describe('/', () => {
-    it('creates and returns a message', async () => {
-      const message = {
-        name: 'Scooby Doo',
-        email: 'scoob@gmail.com',
-        message: 'Ruh Roh'
-      }
-      const { data: created, status } = await axios.post(`${rootURL}/api/messages`, message, axiosConfig)
+  it('creates and returns a message', async () => {
+    const message = {
+      name: 'Scooby Doo',
+      email: 'scoob@gmail.com',
+      message: 'Ruh Roh'
+    }
+    const { data: created, status } = await axios.post(`${rootURL}/api/messages`, message, axiosConfig)
 
-      expect(status).to.equal(200) &&
-      expect(created.name).to.equal(message.name) &&
-      expect(created.email).to.equal(message.email) &&
-      expect(created.message).to.equal(message.message)
-    })
+    expect(status).to.equal(200) &&
+    expect(created.name).to.equal(message.name) &&
+    expect(created.email).to.equal(message.email) &&
+    expect(created.message).to.equal(message.message)
+  })
 
-    it('returns an array of messages', async () => {
-      const { data: messages, status } = await axios.get(`${rootURL}/api/messages`, axiosConfig)
-      expect(status).to.equal(200) &&
-      expect(messages).to.be.an('array')
-    })
+  it('returns an array of messages', async () => {
+    const { data: messages, status } = await axios.get(`${rootURL}/api/messages`, axiosConfig)
+    expect(status).to.equal(200) &&
+    expect(messages).to.be.an('array')
   })
 
   describe('/[id]', () => {
