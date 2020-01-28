@@ -1,6 +1,8 @@
 import connect from "next-connect"
 import common from "../../../middleware/common/"
 import Post from "../../../models/post"
+import Comment from "../../../models/comment"
+import Mailer from "../../../utilities/mailer"
 
 
 const handler = connect()
@@ -29,7 +31,7 @@ const getPost = async id => {
 const updatePost = async (id, body, enableEmailingToUsers) => {
   const postDocument = { _id: id }
   body.slug = body.title.replace(/\s+/g, "-").toLowerCase()
-  const updatedPost = await Post.findOneAndUpdate(postDocument, body)
+  await Post.findOneAndUpdate(postDocument, body)
 
   // If a bulk-email post was published, send it
   const mailer = new Mailer()
@@ -43,7 +45,7 @@ const updatePost = async (id, body, enableEmailingToUsers) => {
     await mailer.sendBulkEmail(post)
   }
 
-  return updatedPost
+  return post
 }
 
 

@@ -2,6 +2,7 @@ import connect from "next-connect"
 import common from "../../../middleware/common/"
 import isAdmin from "../../../middleware/isAdmin"
 import Post from "../../../models/post"
+import Mailer from "../../../utilities/mailer"
 
 
 const handler = connect()
