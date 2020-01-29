@@ -9,7 +9,7 @@ export default async (req, res, next) => {
     const token = req.headers.authorization.replace('bearer ', '')
     const { uid } = jwt.verify(token, keys.jwtSecret)
     if (uid) {
-      req.user = await User.findOne({ _id: uid })
+      req.user = await User.findOne({ _id: uid }).populate('cart').lean()
     }
   }
 

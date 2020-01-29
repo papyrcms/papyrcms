@@ -31,9 +31,9 @@ const getProduct = async id => {
 
 const updateProduct = async (id, body) => {
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
-  const product = await Product.findOneAndUpdate({ _id: id }, body)
+  await Product.findOneAndUpdate({ _id: id }, body)
 
-  return product
+  return await Product.findOne({ _id: id }).lean()
 }
 
 

@@ -10,7 +10,8 @@ handler.use(isAdmin)
 
 
 const updateOrder = async (id, body) => {
-  return await Order.findOneAndUpdate({ _id: id }, { shipped: body.shipped })
+  await Order.findOneAndUpdate({ _id: id }, { shipped: body.shipped })
+  return await Order.findOne({ _id: id }).lean()
 }
 
 

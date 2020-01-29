@@ -64,4 +64,8 @@ describe("/api/utility", () => {
       expect(settings).to.eql(expectedSettings)
     })
   })
+
+  describe('/donate', () => {
+    // I don't know how to create a test card programatically currently
+  })
 })
