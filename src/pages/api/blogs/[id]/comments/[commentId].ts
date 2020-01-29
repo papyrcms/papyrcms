@@ -1,9 +1,9 @@
 import connect from "next-connect"
-import common from "../../../middleware/common/"
-import blogEnabled from "../../../middleware/blogEnabled"
-import userCommentsEnabled from "../../../middleware/userCommentsEnabled"
-import Blog from "../../../models/blog"
-import Comment from "../../../models/comment"
+import common from "../../../../../middleware/common/"
+import blogEnabled from "../../../../../middleware/blogEnabled"
+import userCommentsEnabled from "../../../../../middleware/userCommentsEnabled"
+import Blog from "../../../../../models/blog"
+import Comment from "../../../../../models/comment"
 
 
 const handler = connect()
@@ -35,7 +35,7 @@ const deleteComment = async (blogId, comment) => {
 
 
 handler.put(async (req, res) => {
-  const comment = await Comment.findById(req.query.commentId).populate("author")
+  let comment = await Comment.findById(req.query.commentId).populate("author")
   if (
     !comment.author._id.equals(req.user._id) ||
     !req.user.isAdmin
@@ -43,7 +43,7 @@ handler.put(async (req, res) => {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
 
-  const comment = await updateComment(comment, req.body.content)
+  comment = await updateComment(comment, req.body.content)
   return res.send(comment)
 })
 

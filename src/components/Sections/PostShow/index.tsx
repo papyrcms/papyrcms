@@ -114,7 +114,7 @@ const PostShow = props => {
       currentUser &&
       currentUser.isAdmin
     ) {
-      return <p className="post__tags">Tags: <em>{renderTags(tags)}</em></p>
+      return <p className="post__tags">Tags: <em>{renderTags()}</em></p>
     }
   }
 

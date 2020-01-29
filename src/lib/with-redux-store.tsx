@@ -4,7 +4,7 @@ import { initializeStore } from '../reduxStore'
 const isServer = typeof window === 'undefined'
 const __NEXT_REDUX_STORE__ = '__NEXT_REDUX_STORE__'
 
-function getOrCreateStore(initialState) {
+function getOrCreateStore(initialState?: any) {
   // Always make a new store if server, otherwise state is shared between requests
   if (isServer) {
     return initializeStore(initialState)
@@ -22,26 +22,7 @@ export default (App) => {
     static async getInitialProps(appContext) {
       // Get or Create the store with `undefined` as initialState
       // This allows you to set a custom default initialState
-      const reduxStore = getOrCreateStore({
-        currentUser: null,
-        pages: [],
-        page: {},
-        posts: [],
-        post: {},
-        blogs: [],
-        blog: {},
-        events: [],
-        event: {},
-        products: [],
-        product: {},
-        orders: [],
-        users: [],
-        messages: [],
-        settings: {},
-        stripePubKey: '',
-        route: '',
-        googleMapsKey: ''
-      })
+      const reduxStore = getOrCreateStore()
 
       // Provide the store to getInitialProps of pages
       appContext.ctx.reduxStore = reduxStore
@@ -56,6 +37,8 @@ export default (App) => {
         initialReduxState: reduxStore.getState()
       }
     }
+
+    reduxStore: any
 
     constructor(props) {
       super(props)

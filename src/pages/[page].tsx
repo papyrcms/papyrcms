@@ -177,7 +177,7 @@ const PageContent = props => {
     <Fragment>
       {renderPageHead()}
       <div className={props.page.className}>
-        {renderSections(props)}
+        {renderSections()}
       </div>
     </Fragment>
   )
@@ -201,7 +201,7 @@ const Page = props => {
     })
   }
 
-  const PageComponent = filterPosts(PageContent, settings)
+  const PageComponent: any = filterPosts(PageContent, settings)
   return <PageComponent page={page} />
 }
 

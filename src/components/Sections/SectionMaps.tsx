@@ -11,7 +11,7 @@ import Map from '../Map'
  */
 const SectionMaps = props => {
 
-  const { posts, emptyTitle, emptyMessage, mapLocation = start } = props
+  const { posts, emptyTitle, emptyMessage, mapLocation = 'start' } = props
 
   let latitudePost
   let longitudePost

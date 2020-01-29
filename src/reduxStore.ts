@@ -4,7 +4,7 @@ import reduxThunk from 'redux-thunk'
 
 
 // Initial State
-const initialState = {
+const initialReduxState = {
   currentUser: null,
   pages: [],
   page: {},
@@ -27,7 +27,7 @@ const initialState = {
 
 
 // Reducer
-export const reducer = (state = initialState, action) => {
+export const reducer = (state = initialReduxState, action) => {
   switch (action.type) {
     case 'set_current_user':
       return { ...state, currentUser: action.payload }
@@ -151,7 +151,7 @@ export const setGoogleMapsKey = key => {
 }
 
 // Initialization
-export const initializeStore = (initialState = initialState) => {
+export const initializeStore = (initialState = initialReduxState) => {
   return createStore(
     reducer,
     initialState,

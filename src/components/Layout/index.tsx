@@ -13,7 +13,7 @@ import PageHead from '../PageHead'
  *
  * @prop children - Component - The page rendered
  */
-const Layout = props => {
+const Layout: any = props => {
 
   let headerTitle = '',
     headerSubTitle = '',

@@ -1,11 +1,14 @@
 import keys from '../config/keys'
-import stripe from 'stripe'
+import Stripe from 'stripe'
 
 
 class Payments {
 
+  stripe: any
+
   constructor() {
-    this.stripe = stripe(keys.stripeSecretTestKey)
+    const config: any = {}
+    this.stripe = new Stripe(keys.stripeSecretTestKey, config)
   }
 
 

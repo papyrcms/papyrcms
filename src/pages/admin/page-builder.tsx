@@ -136,7 +136,7 @@ class PageBuilder extends Component {
 
   removeSection(index) {
 
-    this.setState(prevState => {
+    this.setState((prevState: any) => {
 
       const newSections = prevState.sections.filter((_, i) => i !== index)
       prevState.page.sections = newSections.map(section => JSON.stringify(section))
@@ -148,7 +148,7 @@ class PageBuilder extends Component {
 
   changeSectionState(index, key, value) {
 
-    this.setState(prevState => {
+    this.setState((prevState: any) => {
 
       const newSections = prevState.sections.map((section, i) => {
         if (index === i) {
@@ -248,7 +248,9 @@ class PageBuilder extends Component {
 
   renderSections() {
 
-    return this.state.sections.map((section, i) => {
+    const { sections } = this.state as any
+
+    return sections.map((section, i) => {
 
       if (section) {
 
@@ -298,7 +300,7 @@ class PageBuilder extends Component {
 
   addSection() {
 
-    this.setState(prevState => {
+    this.setState((prevState: any) => {
       const { sections, sectionSelect } = prevState
 
       const newSection = {
@@ -318,7 +320,7 @@ class PageBuilder extends Component {
 
   handleSubmit() {
 
-    const { title, url, className, navOrder, sections, id, css } = this.state
+    const { title, url, className, navOrder, sections, id, css } = this.state as any
     const postObject = {
       title,
       route: url,
@@ -352,7 +354,8 @@ class PageBuilder extends Component {
     const confirm = window.confirm('Are you sure you want to delete this page?')
 
     if (confirm) {
-      axios.delete(`/api/pages/${this.state.id}`).then(response => {
+      const { id } = this.state as any
+      axios.delete(`/api/pages/${id}`).then(response => {
         Router.push('/admin/pages')
       })
     }
@@ -361,7 +364,8 @@ class PageBuilder extends Component {
 
   renderDelete() {
 
-    if (this.state.id) {
+    const { id } = this.state as any
+    if (id) {
       return <button
         className="button button-delete page-builder__section-bottom--delete"
         onClick={() => this.deletePage()}
@@ -375,15 +379,16 @@ class PageBuilder extends Component {
   // Whenever we change our state, we need to change a prop being sent
   // to our page preview component so it will rerender
   componentDidUpdate(_, prevState) {
-    if (prevState.pageTrigger === this.state.pageTrigger) {
-      this.setState({ pageTrigger: !this.state.pageTrigger })
+    const { pageTrigger } = this.state as any
+    if (prevState.pageTrigger === pageTrigger) {
+      this.setState({ pageTrigger: !pageTrigger })
     }
   }
 
 
   setPageState(key, value) {
 
-    return this.setState(prevState => {
+    return this.setState((prevState: any) => {
 
       prevState.page[key] = value
       return { [key]: value, page: prevState.page }
@@ -393,8 +398,8 @@ class PageBuilder extends Component {
 
   render() {
 
-    const { title, url, className, navOrder, validation, page, pageTrigger, css } = this.state
-    const { currentUser } = this.props
+    const { title, url, className, navOrder, validation, page, pageTrigger, css } = this.state as any
+    const { currentUser } = this.props as any
 
     if (!currentUser || !currentUser.isAdmin) {
       return <div />

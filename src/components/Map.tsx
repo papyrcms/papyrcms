@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react'
 import { connect } from 'react-redux'
 
 
-const Position = () => <div className="map__position" />
+const Position: any = () => <div className="map__position" />
 
 const Map = props => {
 

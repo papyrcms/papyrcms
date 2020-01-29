@@ -104,7 +104,7 @@ const NavMenu = props => {
     if (props.logo) {
       return (
         <Link href="/">
-          <a title="Home" title="Home">
+          <a title="Home">
             <div className="nav-menu__logo">
               <img src={props.logo} alt="site logo" />
             </div>

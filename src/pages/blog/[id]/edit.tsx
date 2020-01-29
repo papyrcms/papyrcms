@@ -8,11 +8,11 @@ import keys from '../../../config/keys'
 
 const BlogEdit = props => {
 
-  useEffect(async () => {
-    const router = useRouter()
-    console.log(router)
-    // const { data: blog } = 
-  }, [])
+  // useEffect(async () => {
+  //   const router = useRouter()
+  //   console.log(router)
+  //   // const { data: blog } = 
+  // }, [])
 
   return (
     <PostsForm
@@ -28,21 +28,10 @@ const BlogEdit = props => {
 
 BlogEdit.getInitialProps = async ({ query, req }) => {
 
-  // Depending on if we are doing a client or server render
-  let axiosConfig = {}
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-  }
-
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const res = await axios.get(`${rootUrl}/api/blogs/${query.id}`, axiosConfig)
+  const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)
 
-  return { blog: res.data }
+  return { blog }
 }
 
 

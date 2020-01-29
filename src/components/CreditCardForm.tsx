@@ -10,7 +10,7 @@ import {
 } from 'react-stripe-elements'
 
 
-const CreditCardForm = injectStripe(({ className = "", stripe, onSubmit }) => {
+const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) => {
 
   const [validation, setValidation] = useState('')
   const [processing, setProcessing] = useState(false)
@@ -31,7 +31,7 @@ const CreditCardForm = injectStripe(({ className = "", stripe, onSubmit }) => {
     onSubmit(data.source, setProcessing, setValidation)
   }
 
-  const fieldStyle = {
+  const fieldStyle: any = {
     base: {
       color: "#333",
       fontSize: "16px",

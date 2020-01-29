@@ -62,7 +62,6 @@ const Input = props => {
         <Fragment>
           {renderLabel()}
           <textarea
-            type={type}
             placeholder={placeholder}
             name={name}
             id={id}

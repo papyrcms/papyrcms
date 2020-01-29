@@ -26,15 +26,16 @@ class AppSettingsForm extends Component {
 
     if (confirm) {
 
-      const settings = {}
+      const newSettings = {}
+      const { settings, setSettings } = this.props as any
 
-      Object.keys(this.props.settings).forEach(key => {
-        settings[key] = this.state[key]
+      Object.keys(settings).forEach(key => {
+        newSettings[key] = this.state[key]
       })
 
-      axios.post('/api/utility/settings', settings)
+      axios.post('/api/utility/settings', newSettings)
         .then(response => {
-          this.props.setSettings(response.data)
+          setSettings(response.data)
           const message = 'Your app settings have been updated.'
           this.setState({ appSettingsVerification: message })
         }).catch(error => {
@@ -47,7 +48,8 @@ class AppSettingsForm extends Component {
 
   renderSettingsInputs() {
 
-    return Object.keys(this.props.settings).map(key => {
+    const { settings } = this.props as any
+    return Object.keys(settings).map(key => {
 
       // Format label
       const result = key.replace(/([A-Z])/g, " $1")
@@ -71,7 +73,7 @@ class AppSettingsForm extends Component {
 
   render() {
 
-    const { appSettingsVerification } = this.state
+    const { appSettingsVerification } = this.state as any
 
     return (
       <form className="app-settings-form" onSubmit={event => this.handleSubmit(event)}>

@@ -1,4 +1,5 @@
 node_modules
+src/config/dev.ts
 src/config/dev.js
 .next
 .env

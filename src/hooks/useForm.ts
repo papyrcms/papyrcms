@@ -4,8 +4,9 @@ import axios from 'axios'
 
 const useForm = initialState => {
 
+  const initialErrors: any = {}
   const [values, setValues] = useState(initialState)
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState(initialErrors)
 
 
   const handleChange = event => {
@@ -36,7 +37,7 @@ const useForm = initialState => {
   }
 
 
-  const submitForm = async (url, callbacks = {}, update = false, additionalValues = {}) => {
+  const submitForm = async (url, callbacks: any = {}, update = false, additionalValues = {}) => {
 
     const success = callbacks.success ? callbacks.success : () => null
     const error = callbacks.error ? callbacks.error : () => null

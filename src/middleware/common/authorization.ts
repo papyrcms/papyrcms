@@ -2,6 +2,9 @@ import jwt from 'jsonwebtoken'
 import User from '../../models/user'
 import keys from '../../config/keys'
 
+// to initialize the product model
+import Product from '../../models/product'
+
 
 export default async (req, res, next) => {
 

@@ -148,12 +148,12 @@ const filterPosts = (WrappedComponent, settings) => {
 }
 
 
-const mapStateToProps = ({ posts, blogs, events }) => {
-  return { posts, blogs, events }
+const mapStateToProps = ({ posts, blogs, events, products }) => {
+  return { posts, blogs, events, products }
 }
 
 
-export default compose(
+export default compose<any>(
   connect(mapStateToProps),
   filterPosts
 )

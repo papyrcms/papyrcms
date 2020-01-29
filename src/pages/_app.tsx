@@ -31,12 +31,12 @@ import {
 
 class MyApp extends App {
 
-  static async getInitialProps({ Component, ctx }) {
+  static async getInitialProps({ Component, ctx }): Promise<any> {
 
     const { reduxStore, req, res, pathname } = ctx
     const { dispatch } = reduxStore
     const isServer = !!req
-    let pageProps = {}
+    let pageProps: any = {}
     const rootUrl = keys.rootURL ? keys.rootURL : ''
 
     // Pass the route to the redux store
@@ -149,7 +149,8 @@ class MyApp extends App {
         Authorization: `bearer ${token}`
       }
       const { data: user } = await axios.get('/api/auth/currentUser')
-      this.props.reduxStore.dispatch(setCurrentUser(user))
+      const { reduxStore } = this.props as any
+      reduxStore.dispatch(setCurrentUser(user))
     }
   }
 
@@ -161,7 +162,7 @@ class MyApp extends App {
 
   render() {
 
-    const { Component, reduxStore } = this.props
+    const { Component, reduxStore } = this.props as any
 
     return (
       <Provider store={reduxStore}>

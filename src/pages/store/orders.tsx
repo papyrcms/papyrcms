@@ -41,7 +41,7 @@ const Orders = props => {
         const newOrders = orders.filter(order => order._id !== deletedOrder._id)
         setOrders(newOrders)
       }).catch(error => {
-        console.errors(error)
+        console.error(error)
       })
   }
 

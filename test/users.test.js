@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import axios from 'axios'
 import mongoose from 'mongoose'
-import keys from '../src/config/keys'
+import keys from '../src/config/keys.ts'
 import User from '../src/models/user'
 const { mongoURI, rootURL, test, adminEmail } = keys
 

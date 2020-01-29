@@ -1,9 +1,9 @@
 import connect from "next-connect"
-import common from "../../../middleware/common/"
-import blogEnabled from "../../../middleware/blogEnabled"
-import userCommentsEnabled from "../../../middleware/userCommentsEnabled"
-import Blog from "../../../models/blog"
-import Comment from "../../../models/comment"
+import common from "../../../../../middleware/common/"
+import blogEnabled from "../../../../../middleware/blogEnabled"
+import userCommentsEnabled from "../../../../../middleware/userCommentsEnabled"
+import Blog from "../../../../../models/blog"
+import Comment from "../../../../../models/comment"
 
 
 const handler = connect()
