@@ -5,10 +5,9 @@
   "engines": {
     "node": "12.14.0"
   },
-  "main": "index.js",
   "scripts": {
     "dev": "next -p 5000",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha",
     "build": "next build",
     "start": "NODE_ENV=production next start",
     "heroku-config": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')",
@@ -51,6 +50,8 @@
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/register": "^7.8.3",
+    "@types/chai": "^4.2.8",
+    "@types/mocha": "^7.0.1",
     "@types/node": "^13.5.1",
     "@types/react": "^16.9.19",
     "@types/react-ga": "^2.3.0",
@@ -59,6 +60,7 @@
     "chai": "^4.2.0",
     "mocha": "^7.0.1",
     "node-sass": "^4.13.1",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   }
 }

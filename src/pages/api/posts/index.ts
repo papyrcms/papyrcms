@@ -17,7 +17,7 @@ const getPosts = async () => {
 
 const createPost = async (body, enableEmailingToUsers) => {
   if (body.tags) {
-    const newTags = body.tags.split(',').map(tag => {
+    const newTags: any = body.tags.split(',').map(tag => {
       let pendingTag = tag
       pendingTag = pendingTag.trim()
 
