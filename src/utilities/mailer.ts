@@ -117,7 +117,7 @@ class Mailer {
 
       // Read the file with the template name
       try {
-        html = await this.readHTMLFile(`emails/${templateName}.html`)
+        html = await this.readHTMLFile(`src/emails/${templateName}.html`)
         emailSubject = subject
       } catch (e) {
         console.error('There was an error getting the HTML file', e)
