@@ -28,7 +28,7 @@ const updatePage = async (body, id) => {
   }
 
   if (!pageData.route) {
-    res.status(401).send({ message: 'Please choose a page route.' })
+    throw new Error('Please choose a page route.')
   }
 
   // Map tags string to an array
@@ -68,7 +68,7 @@ const updatePage = async (body, id) => {
     return await Page.findOne({ _id: id }).lean()
   } catch (err) {
     let message = 'There was a problem. Try again later.'
-    if (e.code === 11000) {
+    if (err.code === 11000) {
       message = 'You have already saved a page with this route. Go change that one or choose another route.'
     }
     throw new Error(message)

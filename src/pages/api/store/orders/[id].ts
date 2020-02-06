@@ -28,7 +28,7 @@ handler.put(async (req, res) => {
 
 
 handler.delete(async (req, res) => {
-  const message = await deleteOrder()
+  const message = await deleteOrder(req.query.id)
   return res.send(message)
 })
 

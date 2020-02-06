@@ -23,7 +23,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage, fileFilter })
 
 const { cloudinaryCloudName, cloudinaryApiKey, cloudinaryApiSecret } = keys
-cloudinary.config({
+cloudinary.v2.config({
   cloud_name: cloudinaryCloudName,
   api_key: cloudinaryApiKey,
   api_secret: cloudinaryApiSecret
