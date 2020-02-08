@@ -6,7 +6,7 @@ const configureSettings = async (name, defaultOptions) => {
   let appSettings
 
   // Search for the provided settings document
-  const settings = await Settings.findOne({ name })
+  const settings = await Settings.findOne({ name }).lean()
 
   // If we found one
   if (settings) {

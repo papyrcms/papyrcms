@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import axios from 'axios'
-import keys from '../src/config/keys'
+import keys from '../../src/config/keys'
 const { rootURL, test } = keys
 
 
@@ -186,7 +186,7 @@ describe('/api/auth', () => {
         enableRegistration: true,
         enableBlog: false,
         enableCommenting: false,
-        enableEmailingToAdmin: true,
+        enableEmailingToAdmin: false,
         enableEmailingToUsers: true,
         enableEvents: false,
         enableStore: false
@@ -210,7 +210,7 @@ describe('/api/auth', () => {
           enableRegistration: true,
           enableBlog: false,
           enableCommenting: false,
-          enableEmailingToAdmin: true,
+          enableEmailingToAdmin: false,
           enableEmailingToUsers: false,
           enableEvents: false,
           enableStore: false

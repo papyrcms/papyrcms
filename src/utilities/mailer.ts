@@ -10,14 +10,14 @@ const OAuth2 = google.auth.OAuth2
 // https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
 class Mailer {
 
-  templateTag: any
-  accessToken: any
+  templateTag: string
 
   constructor() {
-
     this.templateTag = 'email-template'
-    this.accessToken
+  }
 
+
+  async getAccessToken() {
     const oauth2Client = new OAuth2(
       keys.gmailClientId,
       keys.gmailClientSecret,
@@ -28,13 +28,23 @@ class Mailer {
       refresh_token: keys.gmailRefreshToken
     })
 
-    oauth2Client.getAccessToken()
-      .then(response => this.accessToken = response.token)
-      .catch(error => console.error('error', error))
+    try {
+      const { token } = await oauth2Client.getAccessToken()
+      return token
+    } catch (err) {
+      console.error('error', err)
+      return false
+    }
   }
 
 
-  createTransporter() {
+  async createTransporter() {
+
+    const accessToken = await this.getAccessToken()
+
+    if (!accessToken) {
+      return false
+    }
 
     return nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -46,7 +56,7 @@ class Mailer {
         clientId: keys.gmailClientId,
         clientSecret: keys.gmailClientSecret,
         refreshToken: keys.gmailRefreshToken,
-        accessToken: this.accessToken
+        accessToken
       }
     })
   }
@@ -77,7 +87,7 @@ class Mailer {
     const subscribedUsers = await User.find({ isSubscribed: true })
 
     // Create an email transporter
-    const transporter = this.createTransporter()
+    const transporter = await this.createTransporter()
 
     for (const user of subscribedUsers) {
 
@@ -93,6 +103,7 @@ class Mailer {
     }
 
     transporter.close()
+    return true
   }
 
 
@@ -120,7 +131,7 @@ class Mailer {
         html = await this.readHTMLFile(`src/emails/${templateName}.html`)
         emailSubject = subject
       } catch (e) {
-        console.error('There was an error getting the HTML file', e)
+        // console.error('There was an error getting the HTML file', e)
         return false
       }
     }
@@ -130,7 +141,7 @@ class Mailer {
     const htmlToSend = template(variables)
 
     // Create an email transporter
-    const transporter = this.createTransporter()
+    const transporter = await this.createTransporter()
 
     const mailOptions = {
       from: keys.siteEmail,
@@ -152,7 +163,6 @@ class Mailer {
 
 
   async readHTMLFile(path) {
-
     return await fs.readFileSync(path, { encoding: 'utf-8' })
   }
 }
