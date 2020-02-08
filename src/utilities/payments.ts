@@ -4,10 +4,10 @@ import Stripe from 'stripe'
 
 class Payments {
 
-  stripe: any
+  stripe: Stripe
 
   constructor() {
-    const config: any = {}
+    const config: Stripe.StripeConfig = { apiVersion: '2019-12-03' }
     this.stripe = new Stripe(keys.stripeSecretTestKey, config)
   }
 
@@ -15,6 +15,10 @@ class Payments {
   async makePayment(info) {
 
     const { email, amount, source, description } = info
+
+    if (!email || !amount || !source || !description) {
+      return null
+    }
 
     const paymentDetails = {
       source: source.id,
