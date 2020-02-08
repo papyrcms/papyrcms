@@ -12,7 +12,7 @@ handler.use(blogEnabled)
 handler.get(async (req, res) => {
   const blogs = await Blog.find({ published: true })
     .sort({ publishDate: -1 }).lean()
-  return res.send(blogs)
+  return res.status(200).send(blogs)
 })
 
 

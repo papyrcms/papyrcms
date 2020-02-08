@@ -53,13 +53,13 @@ const removeFromCart = async (productId, user) => {
 
 handler.put(async (req, res) => {
   const cart = await addToCart(req.query.id, req.user)
-  return res.send(cart)
+  return res.status(200).send(cart)
 })
 
 
 handler.delete( async (req, res) => {
   const cart = await removeFromCart(req.query.id, req.user)
-  return res.send(cart)
+  return res.status(200).send(cart)
 })
 
 

@@ -44,7 +44,7 @@ handler.put(async (req, res) => {
   }
 
   comment = await updateComment(comment, req.body.content)
-  return res.send(comment)
+  return res.status(200).send(comment)
 })
 
 
@@ -58,7 +58,7 @@ handler.delete(async (req, res) => {
   }
 
   const message = await deleteComment(req.query.id, comment)
-  return res.send(message)
+  return res.status(200).send(message)
 })
 
 

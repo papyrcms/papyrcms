@@ -57,7 +57,7 @@ handler.get(async (req, res) => {
   if (!blog || !blog.published && (!req.user || !req.user.isAdmin)) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  return res.send(blog)
+  return res.status(200).send(blog)
 })
 
 
@@ -66,7 +66,7 @@ handler.put(async (req, res) => {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   const blog = await updateBlog(req.query.id, req.body)
-  return res.send(blog)
+  return res.status(200).send(blog)
 })
 
 
@@ -75,7 +75,7 @@ handler.delete(async (req, res) => {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   const message = await deleteBlog(req.query.id)
-  return res.send(message)
+  return res.status(200).send(message)
 })
 
 

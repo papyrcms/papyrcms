@@ -23,13 +23,13 @@ const deleteOrder = async id => {
 
 handler.put(async (req, res) => {
   const order = await updateOrder(req.query.id, req.body)
-  return res.send(order)
+  return res.status(200).send(order)
 })
 
 
 handler.delete(async (req, res) => {
   const message = await deleteOrder(req.query.id)
-  return res.send(message)
+  return res.status(200).send(message)
 })
 
 

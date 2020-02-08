@@ -8,7 +8,7 @@ handler.use(common)
 
 handler.get((req, res) => {
   req.logout()
-  return res.send('logged out')
+  return res.status(200).send('logged out')
 })
 
 

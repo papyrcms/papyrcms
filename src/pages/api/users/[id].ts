@@ -18,7 +18,7 @@ handler.delete(async (req, res) => {
 
   try {
     await User.findOneAndDelete({ _id: id })
-    return res.send({ message: 'user deleted' })
+    return res.status(200).send({ message: 'user deleted' })
   } catch (err) {
     return res.status(400).send({ message: err.message })
   }

@@ -8,7 +8,7 @@ handler.use(common)
 
 
 handler.post((req, res) => {
-  return res.send(keys.googleMapsKey)
+  return res.status(200).send(keys.googleMapsKey)
 })
 
 

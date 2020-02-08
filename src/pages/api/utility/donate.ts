@@ -18,7 +18,7 @@ handler.post(async (req, res) => {
   const payments = new Payments()
   const charge = await payments.makePayment(chargeInfo)
 
-  return res.send(charge)
+  return res.status(200).send(charge)
 })
 
 

@@ -29,13 +29,13 @@ const createBlog = async body => {
 
 handler.get(async (req, res) => {
   const blogs = await getBlogs()
-  return res.send(blogs)
+  return res.status(200).send(blogs)
 })
 
 
 handler.post(async (req, res) => {
   const blog = await createBlog(req.body)
-  return res.send(blog)
+  return res.status(200).send(blog)
 })
 
 

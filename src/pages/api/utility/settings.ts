@@ -8,7 +8,7 @@ handler.use(common)
 
 
 handler.get((req, res) => {
-  return res.send(res.locals.settings || {})
+  return res.status(200).send(res.locals.settings || {})
 })
 
 
@@ -28,7 +28,7 @@ handler.post(async (req, res) => {
     }
   }
 
-  return res.send(req.body)
+  return res.status(200).send(req.body)
 })
 
 

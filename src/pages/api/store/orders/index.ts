@@ -13,7 +13,7 @@ handler.get(async (req, res) => {
   const orders = await Order.find().sort({ created: -1 })
     .populate('user').populate('products').lean()
 
-  return res.send(orders)
+  return res.status(200).send(orders)
 })
 
 

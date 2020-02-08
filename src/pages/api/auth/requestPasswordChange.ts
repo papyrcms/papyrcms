@@ -22,7 +22,7 @@ handler.post(async (req, res) => {
   // Set the new password
   foundUser.setPassword(password, async () => {
     await foundUser.save()
-    return res.send({ message: 'Your password has been saved!' })
+    return res.status(200).send({ message: 'Your password has been saved!' })
   })
 })
 

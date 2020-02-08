@@ -48,7 +48,7 @@ handler.post(async (req, res) => {
     }
 
     const uploadResponse = await cloudinary.v2.uploader.upload(req.file.path, { resource_type: 'auto', angle: 0 })
-    return res.send(uploadResponse.secure_url)
+    return res.status(200).send(uploadResponse.secure_url)
   })
 })
 

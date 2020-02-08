@@ -11,7 +11,7 @@ handler.use(isAdmin)
 
 handler.delete(async (req, res) => {
   await Message.findByIdAndDelete(req.query.id)
-  return res.send("message deleted")
+  return res.status(200).send("message deleted")
 })
 
 

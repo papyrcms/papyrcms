@@ -110,7 +110,7 @@ ${shippingCountry || country}
       await User.findOneAndUpdate({ _id: req.user._id }, { cart: [] })
     }
 
-    return res.send('All items purchased')
+    return res.status(200).send('All items purchased')
   } else {
     return res.status(401).send({ message: 'Something went wrong. Please contact us directly to order.' })
   }

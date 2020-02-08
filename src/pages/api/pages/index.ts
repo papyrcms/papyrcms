@@ -74,7 +74,7 @@ const createPage = async body => {
 
 handler.get(async (req, res) => {
   const pages = await getPages()
-  return res.send(pages)
+  return res.status(200).send(pages)
 })
 
 
@@ -83,7 +83,7 @@ handler.post(async (req, res) => {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   const page = await createPage(req.body)
-  return res.send(page)
+  return res.status(200).send(page)
 })
 
 

@@ -13,7 +13,7 @@ handler.put(async (req, res) => {
   const { userId, isAdmin } = req.body
 
   await User.findByIdAndUpdate(userId, { isAdmin })
-  return res.send({ message: 'Success' })
+  return res.status(200).send({ message: 'Success' })
 })
 
 

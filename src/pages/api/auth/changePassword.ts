@@ -38,7 +38,7 @@ handler.post((req, res) => {
           // Set the new password
           foundUser.setPassword(newPass, () => {
             foundUser.save()
-            res.send({ message: 'Your password has been saved!' })
+            res.status(200).send({ message: 'Your password has been saved!' })
           })
         }
       } else if (err) {

@@ -28,13 +28,13 @@ const createEvent = async body => {
 
 handler.get(async (req, res) => {
   const events = await getEvents()
-  return res.send(events)
+  return res.status(200).send(events)
 })
 
 
 handler.post(async (req, res) => {
   const event = await createEvent(req.body)
-  return res.send(event)
+  return res.status(200).send(event)
 })
 
 

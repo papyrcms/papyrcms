@@ -48,13 +48,13 @@ const createPost = async (body, enableEmailingToUsers) => {
 
 handler.get(async (req, res) => {
   const posts = await getPosts()
-  return res.send(posts)
+  return res.status(200).send(posts)
 })
 
 
 handler.post(async (req, res) => {
   const post = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
-  return res.send(post)
+  return res.status(200).send(post)
 })
 
 

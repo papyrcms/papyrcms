@@ -42,13 +42,13 @@ handler.get(async (req, res) => {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   const messages = await getMessages()
-  return res.send(messages)
+  return res.status(200).send(messages)
 })
 
 
 handler.post(async (req, res) => {
   const message = await createMessage(req.body, res.locals.settings.enableEmailingToAdmin)
-  return res.send(message)
+  return res.status(200).send(message)
 })
 
 

@@ -22,7 +22,7 @@ handler.post(async (req, res) => {
   comment.save()
   blog.comments.push(comment)
   blog.save()
-  return res.send(comment)
+  return res.status(200).send(comment)
 })
 
 

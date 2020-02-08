@@ -45,7 +45,7 @@ handler.post(async (req, res) => {
   }
   mailer.sendEmail(variables, email, 'forgot-password', subject)
 
-  return res.send({ message: 'Your email is on its way!' })
+  return res.status(200).send({ message: 'Your email is on its way!' })
 })
 
 

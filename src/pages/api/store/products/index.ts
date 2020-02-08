@@ -47,13 +47,13 @@ const createProduct = async body => {
 
 handler.get(async (req, res) => {
   const products = await getProducts()
-  return res.send(products)
+  return res.status(200).send(products)
 })
 
 
 handler.post(async (req, res) => {
   const product = await createProduct(req.body)
-  return res.send(product)
+  return res.status(200).send(product)
 })
 
 

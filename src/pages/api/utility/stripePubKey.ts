@@ -8,7 +8,7 @@ handler.use(common)
 
 
 handler.post((req, res) => {
-  return res.send(keys.stripePublishableTestKey)
+  return res.status(200).send(keys.stripePublishableTestKey)
 })
 
 

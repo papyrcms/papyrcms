@@ -11,7 +11,7 @@ handler.use(storeEnabled)
 
 handler.get(async (req, res) => {
   const products = await Product.find({ published: true }).sort({ created: -1 }).lean()
-  return res.send(products)
+  return res.status(200).send(products)
 })
 
 

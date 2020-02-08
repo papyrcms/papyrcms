@@ -11,7 +11,7 @@ handler.use(isAdmin)
 
 handler.get(async (req, res) => {
   const users = await User.find()
-  return res.send(users)
+  return res.status(200).send(users)
 })
 
 

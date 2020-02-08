@@ -51,13 +51,13 @@ const updateCurrentUser = async (body, user) => {
 
 
 handler.get((req, res) => {
-  return res.send(req.user || null)
+  return res.status(200).send(req.user || null)
 })
 
 
 handler.put(async (req, res) => {
   const updatedUser = await updateCurrentUser(req.body, req.user)
-  return res.send(updatedUser)
+  return res.status(200).send(updatedUser)
 })
 
 

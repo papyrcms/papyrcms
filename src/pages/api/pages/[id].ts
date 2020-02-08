@@ -84,7 +84,7 @@ const deletePage = async id => {
 
 handler.get(async (req, res) => {
   const page = await getPage(req.query.id)
-  return res.send(page)
+  return res.status(200).send(page)
 })
 
 
@@ -93,7 +93,7 @@ handler.put(async (req, res) => {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   const page = await updatePage(req.body, req.query.id)
-  return res.send(page)
+  return res.status(200).send(page)
 })
 
 
@@ -102,7 +102,7 @@ handler.delete(async (req, res) => {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   const message = await deletePage(req.query.id)
-  return res.send(message)
+  return res.status(200).send(message)
 })
 
 

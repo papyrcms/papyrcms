@@ -16,7 +16,7 @@ handler.get(async (req, res) => {
   const events = await Event.find({ published: true, date: { $gte: dateFilter } })
     .sort({ date: 1 }).lean()
 
-  return res.send(events)
+  return res.status(200).send(events)
 })
 
 

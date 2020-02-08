@@ -9,7 +9,7 @@ handler.use(common)
 
 handler.get(async (req, res) => {
   const posts = await Post.find({ published: true }).sort({ created: -1 }).lean()
-  return res.send(posts)
+  return res.status(200).send(posts)
 })
 
 

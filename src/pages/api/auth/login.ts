@@ -34,7 +34,7 @@ handler.post(async (req, res) => {
         exp: Math.floor(expiry/1000)
       }, keys.jwtSecret)
 
-      return res.send({ user, token })
+      return res.status(200).send({ user, token })
     })
   })(req, res)
 })
