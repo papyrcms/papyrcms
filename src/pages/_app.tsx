@@ -7,6 +7,8 @@ import Layout from '../components/Layout/'
 import keys from '../config/keys'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
+import UserProvider from '../context/UserProvider'
+import StoreProvider from '../context/StoreProvider'
 import {
   setCurrentUser,
   setPages,
@@ -142,16 +144,6 @@ class MyApp extends App {
 
   async componentDidMount() {
     initGA()
-    const token = localStorage.getItem('token')
-
-    if (token) {
-      axios.defaults.headers.common = {
-        Authorization: `bearer ${token}`
-      }
-      const { data: user } = await axios.get('/api/auth/currentUser')
-      const { reduxStore } = this.props as any
-      reduxStore.dispatch(setCurrentUser(user))
-    }
   }
 
 
@@ -165,11 +157,15 @@ class MyApp extends App {
     const { Component, reduxStore } = this.props as any
 
     return (
-      <Provider store={reduxStore}>
-        <Layout>
-          <Component />
-        </Layout>
-      </Provider>
+      <UserProvider>
+        <StoreProvider>
+          <Provider store={reduxStore}>
+            <Layout>
+              <Component />
+            </Layout>
+          </Provider>
+        </StoreProvider>
+      </UserProvider>
     )
   }
 }
