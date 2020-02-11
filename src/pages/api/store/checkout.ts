@@ -117,4 +117,4 @@ ${shippingCountry || country}
 })
 
 
-export default handler
+export default (req, res) => handler.apply(req, res)

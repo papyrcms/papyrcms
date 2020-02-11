@@ -33,4 +33,4 @@ handler.delete(async (req, res) => {
 })
 
 
-export default handler
+export default (req, res) => handler.apply(req, res)
