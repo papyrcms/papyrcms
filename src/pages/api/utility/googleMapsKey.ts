@@ -11,5 +11,4 @@ handler.post((req, res) => {
   return res.status(200).send(keys.googleMapsKey)
 })
 
-
-export default handler
+export default (req, res) => handler.apply(req, res)
