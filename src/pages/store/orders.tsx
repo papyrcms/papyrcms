@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
-import { connect } from 'react-redux'
-import { setOrders } from '../../reduxStore'
-import keys from '../../config/keys'
+import userContext from '../../context/userContext'
 
 
 const Orders = props => {
 
-  const { orders, setOrders } = props
+  const { currentUser } = useContext(userContext)
+
+  const [orders, setOrders] = useState([])
+  useEffect(() => {
+    const resetOrders = async () => {
+      if (currentUser && currentUser.isAdmin) {
+        const { data: foundOrders } = await axios.get('/api/store/orders')
+        setOrders(foundOrders)
+      }
+    }
+    resetOrders()
+  }, [currentUser])
+
 
   const renderProducts = products => {
     return products.map(product => {
@@ -126,30 +136,4 @@ const Orders = props => {
 }
 
 
-Orders.getInitialProps = async ({ req }) => {
-
-  let axiosConfig = {}
-
-  // Depending on if we are doing a client or server render
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-  }
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const res = await axios.get(`${rootUrl}/api/store/orders`, axiosConfig)
-
-  return { orders: res.data }
-}
-
-
-const mapStateToProps = state => {
-  return { orders: state.orders }
-}
-
-
-export default connect(mapStateToProps, { setOrders })(Orders)
+export default Orders

@@ -2,6 +2,7 @@ import { createContext } from 'react';
 
 export default createContext({
   currentUser: {
+    _id: '',
     username: '',
     password: '',
 

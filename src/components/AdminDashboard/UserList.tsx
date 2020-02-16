@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { setUsers } from '../../reduxStore'
+import userContext from '../../context/userContext'
 import Modal from '../Modal'
 
 
 const UserList = props => {
 
-  const { currentUser, users, setUsers } = props
+  const { users, setUsers } = props
   const [selectedUser, setSelectedUser] = useState('')
+  const { currentUser } = useContext(userContext)
 
   useEffect(() => {
     const getUsers = async () => {
@@ -174,7 +176,7 @@ const UserList = props => {
 
 
 const mapStateToProps = state => {
-  return { users: state.users, currentUser: state.currentUser }
+  return { users: state.users }
 }
 
 

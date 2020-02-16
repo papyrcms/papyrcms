@@ -1,17 +1,16 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useContext } from 'react'
+import userContext from '../../context/userContext'
 import Input from '../Input'
 import useForm from '../../hooks/useForm'
 
 
 /**
  * ContactForm is the main contact form component
- *
- * @prop initialMessage - String - a suggested message to initially be displayed in the textarea
  */
 const ContactForm = props => {
 
-  const { currentUser, initialMessage, className } = props
+  const { className } = props
+  const { currentUser } = useContext(userContext)
 
   let name = ''
   let email = ''
@@ -107,9 +106,4 @@ const ContactForm = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps)(ContactForm)
+export default ContactForm

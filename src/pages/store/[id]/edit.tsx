@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import axios from 'axios'
-import { connect } from 'react-redux'
+import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import PostsForm from '../../../components/PostsForm'
 import Input from '../../../components/Input'
@@ -39,7 +40,20 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => {
 
 const StoreEdit = props => {
 
-  const { product } = props
+  const { currentUser } = useContext(userContext)
+
+  const [product, setProduct] = useState(props.product)
+  const { query } = useRouter()
+
+  useEffect(() => {
+    const resetProduct = async () => {
+      if (currentUser && currentUser.isAdmin) {
+        const { data: product } = await axios.get(`/api/store/products/${query.id}`)
+        setProduct(product)
+      }
+    }
+    resetProduct()
+  }, [currentUser])
 
   return (
     <PostsForm
@@ -58,29 +72,17 @@ const StoreEdit = props => {
 }
 
 
-StoreEdit.getInitialProps = async ({ req, query }) => {
+StoreEdit.getInitialProps = async ({ query }) => {
 
-  // Depending on if we are doing a client or server render
-  let axiosConfig = {}
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: product } = await axios.get(`${rootUrl}/api/store/products/${query.id}`)
+
+    return { product }
+  } catch (err) {
+    return { product: null }
   }
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const res = await axios.get(`${rootUrl}/api/store/products/${query.id}`, axiosConfig)
-
-  return { product: res.data }
 }
 
 
-const mapStateToProps = state => {
-  return { product: state.product }
-}
-
-
-export default connect(mapStateToProps)(StoreEdit)
+export default StoreEdit

@@ -1,8 +1,6 @@
-import React from 'react'
-import axios from 'axios'
+import React, { useContext } from 'react'
 import Router from 'next/router'
-import { connect } from 'react-redux'
-import { setCurrentUser } from '../../reduxStore'
+import userContext from '../../context/userContext'
 import useForm from '../../hooks/useForm'
 import Input from '../Input'
 import Modal from '../Modal'
@@ -11,7 +9,7 @@ import ForgotPasswordForm from './ForgotPasswordForm'
 
 const LoginForm = props => {
 
-  const { setCurrentUser } = props
+  const { setCurrentUser } = useContext(userContext)
   const INITIAL_STATE = {
     username: '',
     password: '',
@@ -77,4 +75,4 @@ const LoginForm = props => {
   )
 }
 
-export default connect(null, { setCurrentUser })(LoginForm)
+export default LoginForm

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import StoreContext from './storeContext'
 import UserContext from './userContext'
@@ -6,9 +6,18 @@ import UserContext from './userContext'
 const StoreProvider = props => {
 
   const [cart, setCart] = useState([])
-  const [products, setProducts] = useState([])
-  const [orders, setOrders] = useState([])
   const { currentUser } = useContext(UserContext)
+
+
+  useEffect(() => {
+    if (currentUser) {
+      setCart(currentUser.cart)
+    } else if (localStorage.getItem('cart')) {
+      const localCart = JSON.parse(localStorage.getItem('cart'))
+      setCart(localCart)
+    }
+  }, [currentUser])
+
 
   const addToCart = async product => {
     const newCart = [...cart, product]
@@ -62,8 +71,6 @@ const StoreProvider = props => {
   return (
     <StoreContext.Provider
       value={{
-        products,
-        orders,
         cart,
         addToCart,
         removeFromCart,

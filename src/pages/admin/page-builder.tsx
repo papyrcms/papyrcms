@@ -1,7 +1,8 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component, Fragment, useContext } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import Router from 'next/router'
+import userContext from '../../context/userContext'
 import Input from '../../components/Input'
 import Page from '../[page]'
 
@@ -399,7 +400,7 @@ class PageBuilder extends Component {
   render() {
 
     const { title, url, className, navOrder, validation, page, pageTrigger, css } = this.state as any
-    const { currentUser } = this.props as any
+    const { currentUser } = useContext(userContext)
 
     if (!currentUser || !currentUser.isAdmin) {
       return <div />
@@ -508,7 +509,7 @@ class PageBuilder extends Component {
 
 
 const mapStateToProps = state => {
-  return { page: state.page, currentUser: state.currentUser }
+  return { page: state.page }
 }
 
 

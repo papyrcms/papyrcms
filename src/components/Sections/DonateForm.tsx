@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
+import userContext from '../../context/userContext'
 import CreditCardForm from '../CreditCardForm'
 import Input from '../Input'
 
 
 const DonateForm = props => {
 
-
-  const { currentUser, className } = props
+  const { currentUser } = useContext(userContext)
+  const { className } = props
   const [email, setEmail] = useState(currentUser ? currentUser.email : '')
   const [amount, setAmount] = useState(1.00)
   const [paid, setPaid] = useState(false)
@@ -90,9 +90,4 @@ const DonateForm = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps)(DonateForm)
+export default DonateForm

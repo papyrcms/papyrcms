@@ -1,16 +1,27 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useContext, useEffect } from 'react'
 import Link from 'next/link'
-import { connect } from 'react-redux'
 import axios from 'axios'
+import storeContext from '../../context/storeContext'
+import userContext from '../../context/userContext'
 import keys from '../../config/keys'
-import useCart from '../../hooks/useCart'
-import { setCurrentUser } from '../../reduxStore'
 import { SectionCards } from '../../components/Sections/'
+
 
 const StorePage = props => {
 
-  const { products, currentUser, setCurrentUser } = props
-  const { cart, addToCart } = useCart(currentUser, setCurrentUser)
+  const { cart, addToCart } = useContext(storeContext)
+  const { currentUser } = useContext(userContext)
+
+  const [products, setProducts] = useState(props.products)
+  useEffect(() => {
+    const resetProducts = async () => {
+      if (currentUser && currentUser.isAdmin) {
+        const { data: allProducts } = await axios.get('/api/store/products')
+        setProducts(allProducts)
+      }
+    }
+    resetProducts()
+  }, [currentUser])
 
 
   const renderPriceAndQuantity = product => {
@@ -68,34 +79,13 @@ const StorePage = props => {
 }
 
 
-StorePage.getInitialProps = async ({ req, reduxStore }) => {
-
-  // Depending on if we are doing a client or server render
-  let axiosConfig = {}
-  let currentUser = null
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-    currentUser = req.user
-  } else {
-    currentUser = reduxStore.getState().currentUser
-  }
+StorePage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const published = currentUser && currentUser.isAdmin ? '' : '/published'
-  const products = await axios.get(`${rootUrl}/api/store/products${published}`, axiosConfig)
+  const { data: products } = await axios.get(`${rootUrl}/api/store/products/published`)
 
-  return { products: products.data }
+  return { products }
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser, products: state.products }
-}
-
-
-export default connect(mapStateToProps, { setCurrentUser })(StorePage)
+export default StorePage

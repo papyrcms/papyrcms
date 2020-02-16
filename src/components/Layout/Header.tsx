@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react'
-import Link from 'next/link'
+import React, { Fragment, useContext } from 'react'
 import { connect } from 'react-redux'
-import useCart from '../../hooks/useCart'
+import Link from 'next/link'
+import storeContext from '../../context/storeContext'
+import userContext from '../../context/userContext'
 
 
 /**
@@ -12,7 +13,8 @@ import useCart from '../../hooks/useCart'
  */
 const Header = props => {
 
-  const { currentUser, settings, mainTitle, subTitle, page } = props
+  const { settings, mainTitle, subTitle, page } = props
+  const { currentUser } = useContext(userContext)
 
   const renderAuthenticator = () => {
     if (currentUser) {
@@ -31,7 +33,7 @@ const Header = props => {
   }
 
 
-  const { cart } = useCart(currentUser, null)
+  const { cart } = useContext(storeContext)
   const renderCart = () => {
     if (settings.enableStore) {
       const menuText = `Cart${cart.length !== 0 ? ` (${cart.length})` : ''}`
@@ -101,7 +103,6 @@ const Header = props => {
 
 const mapStateToProps = state => {
   return {
-    currentUser: state.currentUser,
     settings: state.settings,
     page: state.page
   }

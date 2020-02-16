@@ -5,7 +5,6 @@ import reduxThunk from 'redux-thunk'
 
 // Initial State
 const initialReduxState = {
-  currentUser: null,
   pages: [],
   page: {},
   posts: [],
@@ -14,8 +13,6 @@ const initialReduxState = {
   blog: {},
   events: [],
   event: {},
-  products: [],
-  product: {},
   orders: [],
   users: [],
   messages: [],
@@ -29,8 +26,6 @@ const initialReduxState = {
 // Reducer
 export const reducer = (state = initialReduxState, action) => {
   switch (action.type) {
-    case 'set_current_user':
-      return { ...state, currentUser: action.payload }
     case 'set_pages':
       return { ...state, pages: action.payload }
     case 'set_page':
@@ -47,10 +42,6 @@ export const reducer = (state = initialReduxState, action) => {
       return { ...state, events: action.payload }
     case 'set_event':
       return { ...state, event: action.payload }
-    case 'set_products':
-      return { ...state, products: action.payload }
-    case 'set_product':
-      return { ...state, product: action.payload }
     case 'set_orders':
       return { ...state, orders: action.payload }
     case 'set_users':
@@ -74,10 +65,6 @@ export const reducer = (state = initialReduxState, action) => {
 
 
 // Action creators
-export const setCurrentUser = currentUser => {
-  return { type: 'set_current_user', payload: currentUser }
-}
-
 export const setPages = pages => {
   return { type: 'set_pages', payload: pages }
 }
@@ -108,14 +95,6 @@ export const setEvents = events => {
 
 export const setEvent = event => {
   return { type: 'set_event', payload: event }
-}
-
-export const setProducts = products => {
-  return { type: 'set_products', payload: products }
-}
-
-export const setProduct = product => {
-  return { type: 'set_product', payload: product }
 }
 
 export const setOrders = orders => {

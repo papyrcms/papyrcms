@@ -83,8 +83,12 @@ const deletePage = async id => {
 
 
 handler.get(async (req, res) => {
-  const page = await getPage(req.query.id)
-  return res.status(200).send(page)
+  try {
+    const page = await getPage(req.query.id)
+    return res.status(200).send(page)
+  } catch (err) {
+    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  }
 })
 
 

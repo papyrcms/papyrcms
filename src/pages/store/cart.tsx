@@ -1,15 +1,12 @@
-import React, { Fragment } from 'react'
-import { connect } from 'react-redux'
+import React, { Fragment, useContext } from 'react'
 import Link from 'next/link'
-import { setCurrentUser } from '../../reduxStore'
-import useCart from '../../hooks/useCart'
+import storeContext from '../../context/storeContext'
 import { SectionStandard } from '../../components/Sections'
 
 
 const Cart = props => {
 
-  const { currentUser, setCurrentUser } = props
-  const { cart, removeFromCart } = useCart(currentUser, setCurrentUser)
+  const { cart, removeFromCart } = useContext(storeContext)
 
   const uniqueProducts = []
   for (const product of cart) {
@@ -97,9 +94,4 @@ const Cart = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps, { setCurrentUser })(Cart)
+export default Cart

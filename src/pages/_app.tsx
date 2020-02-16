@@ -7,10 +7,8 @@ import Layout from '../components/Layout/'
 import keys from '../config/keys'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
-import UserProvider from '../context/UserProvider'
-import StoreProvider from '../context/StoreProvider'
+import GlobalState from '../context/GlobalState'
 import {
-  setCurrentUser,
   setPages,
   setPage,
   setPosts,
@@ -19,8 +17,6 @@ import {
   setBlog,
   setEvents,
   setEvent,
-  setProducts,
-  setProduct,
   setOrders,
   setUsers,
   setMessages,
@@ -35,7 +31,7 @@ class MyApp extends App {
 
   static async getInitialProps({ Component, ctx }): Promise<any> {
 
-    const { reduxStore, req, res, pathname } = ctx
+    const { reduxStore, req, pathname } = ctx
     const { dispatch } = reduxStore
     const isServer = !!req
     let pageProps: any = {}
@@ -100,16 +96,6 @@ class MyApp extends App {
       dispatch(setEvents(pageProps.events))
     }
 
-    // If an product was recieved, send it to the redux store
-    if (!!pageProps.product) {
-      dispatch(setProduct(pageProps.product))
-    }
-
-    // If an array of products were recieved, send them to the redux store
-    if (!!pageProps.products) {
-      dispatch(setProducts(pageProps.products))
-    }
-
     // If an array of orders were recieved, send them to the redux store
     if (!!pageProps.orders) {
       dispatch(setOrders(pageProps.orders))
@@ -137,8 +123,7 @@ class MyApp extends App {
       dispatch(setUrl({ query: req.query }))
     }
 
-    // Return nothing. Props are set by the redux store
-    return {}
+    return pageProps
   }
 
 
@@ -157,15 +142,13 @@ class MyApp extends App {
     const { Component, reduxStore } = this.props as any
 
     return (
-      <UserProvider>
-        <StoreProvider>
-          <Provider store={reduxStore}>
-            <Layout>
-              <Component />
-            </Layout>
-          </Provider>
-        </StoreProvider>
-      </UserProvider>
+      <GlobalState>
+        <Provider store={reduxStore}>
+          <Layout>
+            <Component {...this.props} />
+          </Layout>
+        </Provider>
+      </GlobalState>
     )
   }
 }

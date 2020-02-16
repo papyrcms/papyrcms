@@ -1,25 +1,23 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux'
+import React, { useState, useContext } from 'react';
 import axios from 'axios'
 import keys from '../../config/keys'
-import { setCurrentUser } from '../../reduxStore'
+import storeContext from '../../context/storeContext'
 import CreditCardForm from '../../components/CreditCardForm'
 import Input from '../../components/Input'
 import UserInfoForm from '../../components/UserInfoForm'
-import useCart from '../../hooks/useCart'
 
 
 const Checkout = props => {
 
-  const { product, currentUser, setCurrentUser } = props
+  const cartState = useContext(storeContext)
 
   let cart = []
-  let fromCart
-  let cartState
-  if (product) {
-    cart = [product]
+  let fromCart = false
+
+  // Get the checkout item(s)
+  if (props.product) {
+    cart = [props.product]
   } else {
-    cartState = useCart(currentUser, setCurrentUser)
     cart = cartState.cart
     fromCart = true
   }
@@ -115,35 +113,20 @@ const Checkout = props => {
 }
 
 
-Checkout.getInitialProps = async ({ req, query }) => {
+Checkout.getInitialProps = async ({ query }) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
 
-  // Depending on if we are doing a client or server render
-  let axiosConfig = {}
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-  }
-
   let product
   if (query.id) {
-    const res = await axios.get(`${rootUrl}/api/store/products/${query.id}`, axiosConfig)
+    const res = await axios.get(`${rootUrl}/api/store/products/${query.id}`)
     product = res.data
   }
+
   const { data: stripePubKey } = await axios.post(`${rootUrl}/api/utility/stripePubKey`)
 
-  return { product, stripePubKey }
+  return { stripePubKey, product }
 }
 
 
-const mapStateToProps = state => {
-  return { product: state.product, currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps, { setCurrentUser })(Checkout)
+export default Checkout

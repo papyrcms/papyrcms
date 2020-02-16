@@ -1,9 +1,9 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useContext } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import Router from 'next/router'
 import renderHTML from 'react-render-html'
+import userContext from '../../../context/userContext'
 import Comment from './Comment'
 import Media from '../../Media'
 import PageHead from '../../PageHead'
@@ -37,10 +37,14 @@ import PageHead from '../../PageHead'
  */
 const PostShow = props => {
 
+  if (!props.post) return null
+
+  const { currentUser } = useContext(userContext)
+
   const {
     post, enableCommenting,
     apiPath, className, redirectRoute,
-    currentUser, path, emptyTitle, emptyMessage,
+    path, emptyTitle, emptyMessage,
 
     // Hook functions
     beforePost = () => null,
@@ -199,9 +203,4 @@ const PostShow = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps)(PostShow)
+export default PostShow

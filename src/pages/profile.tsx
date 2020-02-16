@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
+import userContext from '../context/userContext'
 import Input from '../components/Input'
 import useForm from '../hooks/useForm'
 import UserInfoForm from '../components/UserInfoForm'
-import { setCurrentUser } from '../reduxStore'
+
 
 const ProfilePage = props => {
 
-  const { currentUser, setCurrentUser } = props
+  const { currentUser, setCurrentUser } = useContext(userContext)
   if (!currentUser) {
     return <h3 className="not-logged-in">You need to be logged in to view this page.</h3>
   }
@@ -125,9 +125,4 @@ const ProfilePage = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps, { setCurrentUser })(ProfilePage)
+export default ProfilePage

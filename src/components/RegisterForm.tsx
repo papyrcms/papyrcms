@@ -1,15 +1,15 @@
-import React from 'react'
-import axios from 'axios'
+import React, { useContext } from 'react'
 import Router from 'next/router'
 import { connect } from 'react-redux'
+import userContext from '../context/userContext'
 import useForm from '../hooks/useForm'
-import { setCurrentUser } from '../reduxStore'
 import Input from './Input'
 
 
 const RegisterForm = props => {
 
-  const { settings, setCurrentUser } = props
+  const { settings } = props
+  const { setCurrentUser } = useContext(userContext)
 
   if (!settings.enableRegistration) {
     return null
@@ -104,4 +104,4 @@ const mapStateToProps = state => {
 }
 
 
-export default connect(mapStateToProps, { setCurrentUser })(RegisterForm)
+export default connect(mapStateToProps)(RegisterForm)

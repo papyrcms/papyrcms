@@ -1,6 +1,5 @@
 import React from 'react'
 import Router from 'next/router'
-import { connect } from 'react-redux'
 import Form from './Form'
 import useForm from '../../hooks/useForm'
 
@@ -93,9 +92,4 @@ const PostsForm = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps)(PostsForm)
+export default PostsForm

@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import axios from 'axios'
-import { connect } from 'react-redux'
-import { setCurrentUser } from '../reduxStore'
+import userContext from '../context/userContext'
 import useForm from '../hooks/useForm'
 import Input from './Input'
 
@@ -9,13 +8,14 @@ import Input from './Input'
 const UserInfoForm = props => {
 
   let {
-    currentUser,
     beforeSubmit = () => null,
     onSubmitError = () => null,
     onSubmitSuccess = () => null,
     children,
     useSubmit = true
   } = props
+
+  const { currentUser, setCurrentUser } = useContext(userContext)
 
   const INITIAL_STATE = {
     firstName: '',
@@ -225,9 +225,4 @@ const UserInfoForm = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps, { setCurrentUser })(UserInfoForm)
+export default UserInfoForm

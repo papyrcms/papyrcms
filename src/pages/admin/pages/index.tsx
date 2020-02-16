@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux'\
+import userContext from '../../../context/userContext'
 import { setPages } from '../../../reduxStore'
 
 
 const Pages = props => {
 
-  const { currentUser, pages } = props
+  const { pages } = props
+  const { currentUser } = useContext(userContext)
 
   if (!currentUser || !currentUser.isAdmin) {
     return <div />
@@ -57,7 +59,7 @@ const Pages = props => {
 
 
 const mapStateToProps = state => {
-  return { pages: state.pages, currentUser: state.currentUser }
+  return { pages: state.pages }
 }
 
 
