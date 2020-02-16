@@ -11,8 +11,6 @@ import GlobalState from '../context/GlobalState'
 import {
   setPages,
   setPage,
-  setPosts,
-  setPost,
   setBlogs,
   setBlog,
   setEvents,
@@ -45,14 +43,6 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    // Get posts for page layout
-    if (!!pageProps.posts) {
-      dispatch(setPosts(pageProps.posts))
-    } else {
-      const { data: posts } = await axios.get(`${rootUrl}/api/posts/published`)
-      dispatch(setPosts(posts))
-    }
-
     // Get pages for navmenu
     if (!!pageProps.pages) {
       dispatch(setPages(pageProps.pages))
@@ -69,11 +59,6 @@ class MyApp extends App {
     // If a google maps key was recieved, send it to the redux store
     if (!!pageProps.googleMapsKey) {
       dispatch(setGoogleMapsKey(pageProps.googleMapsKey))
-    }
-
-    // If a post was recieved, send it to the redux store
-    if (!!pageProps.post) {
-      dispatch(setPost(pageProps.post))
     }
 
     // If a blog was recieved, send it to the redux store
@@ -123,11 +108,14 @@ class MyApp extends App {
       dispatch(setUrl({ query: req.query }))
     }
 
+    const { data: posts } = await axios.get(`${rootUrl}/api/posts/published`)
+    pageProps.posts = posts
+
     return pageProps
   }
 
 
-  async componentDidMount() {
+  componentDidMount() {
     initGA()
   }
 
@@ -139,13 +127,13 @@ class MyApp extends App {
 
   render() {
 
-    const { Component, reduxStore } = this.props as any
+    const { Component, reduxStore, posts, ...pageProps } = this.props as any
 
     return (
-      <GlobalState>
+      <GlobalState posts={posts}>
         <Provider store={reduxStore}>
           <Layout>
-            <Component {...this.props} />
+            <Component {...pageProps} />
           </Layout>
         </Provider>
       </GlobalState>

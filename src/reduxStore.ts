@@ -7,8 +7,6 @@ import reduxThunk from 'redux-thunk'
 const initialReduxState = {
   pages: [],
   page: {},
-  posts: [],
-  post: {},
   blogs: [],
   blog: {},
   events: [],
@@ -30,10 +28,6 @@ export const reducer = (state = initialReduxState, action) => {
       return { ...state, pages: action.payload }
     case 'set_page':
       return { ...state, page: action.payload }
-    case 'set_posts':
-      return { ...state, posts: action.payload }
-    case 'set_post':
-      return { ...state, post: action.payload }
     case 'set_blogs':
       return { ...state, blogs: action.payload }
     case 'set_blog':
@@ -71,14 +65,6 @@ export const setPages = pages => {
 
 export const setPage = page => {
   return { type: 'set_page', payload: page }
-}
-
-export const setPosts = posts => {
-  return { type: 'set_posts', payload: posts }
-}
-
-export const setPost = post => {
-  return { type: 'set_post', payload: post }
 }
 
 export const setBlogs = blogs => {

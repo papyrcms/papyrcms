@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
 import renderHTML from 'react-render-html'
+import postsContext from '../../context/postsContext'
+import filterPosts from '../../hooks/filterPosts'
 import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
-import filterPosts from '../filterPosts'
 import PageHead from '../PageHead'
 
 
@@ -14,6 +15,18 @@ import PageHead from '../PageHead'
  * @prop children - Component - The page rendered
  */
 const Layout: any = props => {
+
+  let { posts } = useContext(postsContext)
+  const settings = {
+    maxPosts: 4,
+    postTags: [
+      'section-header',
+      'section-footer',
+      'site-description',
+      'copyright'
+    ]
+  }
+  const filtered = filterPosts(posts, settings)
 
   let headerTitle = '',
     headerSubTitle = '',
@@ -26,7 +39,7 @@ const Layout: any = props => {
     keywords = '',
     shareImage = ''
 
-  props.posts.forEach(post => {
+  filtered.posts.forEach(post => {
 
     if (post.tags.includes('section-header')) {
 
@@ -112,15 +125,4 @@ const Layout: any = props => {
 }
 
 
-const settings = {
-  maxPosts: 4,
-  postTags: [
-    'section-header',
-    'section-footer',
-    'site-description',
-    'copyright'
-  ]
-}
-
-
-export default filterPosts(Layout, settings)
+export default Layout

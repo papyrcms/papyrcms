@@ -1,12 +1,15 @@
 import UserProvider from './UserProvider'
-import StoreProdiver from './StoreProvider'
+import StoreProvider from './StoreProvider'
+import PostsProvider from './PostsProvider'
 
 
 const GlobalState = props => (
   <UserProvider>
-    <StoreProdiver>
-      {props.children}
-    </StoreProdiver>
+    <StoreProvider>
+      <PostsProvider posts={props.posts}>
+        {props.children}
+      </PostsProvider>
+    </StoreProvider>
   </UserProvider>
 )
 

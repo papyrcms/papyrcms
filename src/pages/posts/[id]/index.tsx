@@ -1,41 +1,43 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import axios from 'axios'
-import { connect } from 'react-redux'
+import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import { PostShow } from '../../../components/Sections/'
 
-const PostsShow = props => (
-  <PostShow
-    post={props.post}
-    enableCommenting={false}
-    path="posts"
-  />
-)
+const PostsShow = props => {
 
-
-PostsShow.getInitialProps = async ({ query, req }) => {
-
-  // Depending on if we are doing a client or server render
-  let axiosConfig = {}
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
+  const { currentUser } = useContext(userContext)
+  const { query } = useRouter()
+  const [post, setPost] = useState(props.post)
+  useEffect(() => {
+    const resetPost = async () => {
+      if (currentUser && currentUser.isAdmin) {
+        const { data: foundPost } = await axios.get(`/api/posts/${query.id}`)
+        setPost(foundPost)
       }
     }
-  }
+    resetPost()
+  }, [currentUser])
+
+
+  return (
+    <PostShow
+      post={post}
+      enableCommenting={false}
+      path="posts"
+    />
+  )
+}
+
+
+PostsShow.getInitialProps = async ({ query }) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const res = await axios.get(`${rootUrl}/api/posts/${query.id}`, axiosConfig)
+  const { data: post } = await axios.get(`${rootUrl}/api/posts/${query.id}`)
 
-  return { post: res.data }
+  return { post }
 }
 
 
-const mapStateToProps = state => {
-  return { post: state.post }
-}
-
-
-export default connect(mapStateToProps)(PostsShow)
+export default PostsShow

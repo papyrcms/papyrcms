@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import { connect } from 'react-redux'\
+import { connect } from 'react-redux'
 import userContext from '../../../context/userContext'
 import { setPages } from '../../../reduxStore'
 

@@ -1,16 +1,28 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import { connect } from 'react-redux'
-import keys from '../../config/keys'
+import postsContext from '../../context/postsContext'
+import userContext from '../../context/userContext'
 import PostIndex from '../../components/PostIndex'
 import Input from '../../components/Input'
 
 
 const Posts = props => {
 
+  const { currentUser } = useContext(userContext)
+  const { posts, setPosts } = useContext(postsContext)
+  useEffect(() => {
+    const resetPosts = async () => {
+      if (currentUser && currentUser.isAdmin) {
+        const { data: foundPosts } = await axios.get('/api/posts')
+        setPosts(foundPosts)
+      }
+    }
+    resetPosts()
+  }, [currentUser])
+
 
   const [search, setSearch] = useState('')
-  const [posts, setPosts] = useState(props.posts)
+  const [searchPosts, setSearchPosts] = useState(posts)
 
 
   const onSearchTextChange = event => {
@@ -18,7 +30,7 @@ const Posts = props => {
     // Set the search bar state
     setSearch(event.target.value)
 
-    let foundPosts = props.posts.filter(post => {
+    let foundPosts = posts.filter(post => {
       let isFound = false
 
       // Go through each post's tags
@@ -34,7 +46,7 @@ const Posts = props => {
       return isFound
     })
 
-    setPosts(foundPosts)
+    setSearchPosts(foundPosts)
   }
 
 
@@ -52,36 +64,10 @@ const Posts = props => {
           className="posts-all-page__input"
         />
       </div>
-      <PostIndex posts={posts} />
+      <PostIndex posts={searchPosts} />
     </div>
   )
 }
 
 
-Posts.getInitialProps = async ({ req }) => {
-
-  let axiosConfig = {}
-
-  // Depending on if we are doing a client or server render
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-  }
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const posts = await axios.get(`${rootUrl}/api/posts`, axiosConfig)
-
-  return { posts: posts.data }
-}
-
-
-const mapStateToProps = state => {
-  return { posts: state.posts }
-}
-
-
-export default connect(mapStateToProps)(Posts)
+export default Posts

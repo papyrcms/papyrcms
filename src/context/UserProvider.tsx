@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import UserContext from './userContext'
+import userContext from './userContext'
 
 const UserProvider = props => {
 
@@ -21,14 +21,14 @@ const UserProvider = props => {
   }, [])
 
   return (
-    <UserContext.Provider
+    <userContext.Provider
       value={{
         currentUser,
         setCurrentUser
       }}
     >
       {props.children}
-    </UserContext.Provider>
+    </userContext.Provider>
   )
 }
 

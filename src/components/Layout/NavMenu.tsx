@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 const onClick = () => {
   const checkbox = document.getElementById('nav-menu-checkbox')
-
   checkbox.classList.toggle('checked')
 }
 

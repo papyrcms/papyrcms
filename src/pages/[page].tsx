@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react'
-import Router from 'next/router'
+import React, { Fragment, useContext } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import {
@@ -12,12 +11,31 @@ import {
   ContactForm,
   DonateForm
 } from '../components/Sections/'
+import postsContext from '../context/postsContext'
 import PageHead from '../components/PageHead'
-import filterPosts from '../components/filterPosts'
+import filterPosts from '../hooks/filterPosts'
 import keys from '../config/keys'
 
 
-const PageContent = props => {
+const Page = props => {
+
+  const settings = []
+  const page = props.previewPage ? props.previewPage : props.page
+
+  for (let i = 0; i < page.sections.length; i++) {
+    const section = JSON.parse(page.sections[i])
+
+    settings.push({
+      propName: `${section.type}-${i}`,
+      maxPosts: section.maxPosts,
+      postTags: section.tags,
+      strictTags: true
+    })
+  }
+
+  const { posts } = useContext(postsContext)
+  const filtered = filterPosts(posts, settings)
+
 
   const renderSections = () => {
 
@@ -26,7 +44,7 @@ const PageContent = props => {
       section = JSON.parse(section)
 
       const key = `${section.type}-${i}`
-      const posts = props[key]
+      const posts = filtered[key]
       const emptyMessage = `Create content with the ${section.tags} tags.`
 
       switch (section.type) {
@@ -181,28 +199,6 @@ const PageContent = props => {
       </div>
     </Fragment>
   )
-}
-
-
-const Page = props => {
-
-  const settings = []
-  const page = props.previewPage ? props.previewPage : props.page
-
-  for (let i = 0; i < page.sections.length; i++) {
-
-    const section = JSON.parse(page.sections[i])
-
-    settings.push({
-      propName: `${section.type}-${i}`,
-      maxPosts: section.maxPosts,
-      postTags: section.tags,
-      strictTags: true
-    })
-  }
-
-  const PageComponent: any = filterPosts(PageContent, settings)
-  return <PageComponent page={page} />
 }
 
 
