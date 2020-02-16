@@ -1,6 +1,5 @@
 import React, { Component, Fragment, useContext } from 'react'
 import axios from 'axios'
-import { connect } from 'react-redux'
 import Router from 'next/router'
 import userContext from '../../context/userContext'
 import Input from '../../components/Input'
@@ -508,9 +507,4 @@ class PageBuilder extends Component {
 }
 
 
-const mapStateToProps = state => {
-  return { page: state.page }
-}
-
-
-export default connect(mapStateToProps)(PageBuilder)
+export default PageBuilder

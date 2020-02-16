@@ -9,8 +9,6 @@ import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 import GlobalState from '../context/GlobalState'
 import {
-  setPages,
-  setPage,
   setBlogs,
   setBlog,
   setEvents,
@@ -41,19 +39,6 @@ class MyApp extends App {
     // Run getInitialProps for each component
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
-    }
-
-    // Get pages for navmenu
-    if (!!pageProps.pages) {
-      dispatch(setPages(pageProps.pages))
-    } else {
-      const { data: pages } = await axios.get(`${rootUrl}/api/pages`)
-      dispatch(setPages(pages))
-    }
-
-    // If a page was recieved, send it to the redux store
-    if (!!pageProps.page) {
-      dispatch(setPage(pageProps.page))
     }
 
     // If a google maps key was recieved, send it to the redux store
@@ -111,6 +96,9 @@ class MyApp extends App {
     const { data: posts } = await axios.get(`${rootUrl}/api/posts/published`)
     pageProps.posts = posts
 
+    const { data: pages } = await axios.get(`${rootUrl}/api/pages`)
+    pageProps.pages = pages
+
     return pageProps
   }
 
@@ -127,10 +115,10 @@ class MyApp extends App {
 
   render() {
 
-    const { Component, reduxStore, posts, ...pageProps } = this.props as any
+    const { Component, reduxStore, posts, pages, ...pageProps } = this.props as any
 
     return (
-      <GlobalState posts={posts}>
+      <GlobalState posts={posts} pages={pages}>
         <Provider store={reduxStore}>
           <Layout>
             <Component {...pageProps} />

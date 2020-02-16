@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from 'react'
-import { connect } from 'react-redux'
 import axios from 'axios'
 import {
   SectionStandard,
@@ -216,9 +215,4 @@ Page.getInitialProps = async ({ query }) => {
 }
 
 
-const mapStateToProps = state => {
-  return { page: state.page }
-}
-
-
-export default connect(mapStateToProps)(Page)
+export default Page

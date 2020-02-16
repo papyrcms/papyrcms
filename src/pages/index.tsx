@@ -1,7 +1,7 @@
 import Page from './[page]'
 
 
-const Home = () => <Page />
+const Home = props => <Page {...props} />
 
 
 Home.getInitialProps = async context => {

@@ -2,7 +2,7 @@ import React from 'react'
 import PageBuilder from '../page-builder'
 
 
-const Page = () => <PageBuilder />
+const Page = props => <PageBuilder {...props} />
 
 
 Page.getInitialProps = async context => {

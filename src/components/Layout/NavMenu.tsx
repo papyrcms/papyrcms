@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
 import { connect } from 'react-redux'
+import pagesContext from '../../context/pagesContext'
 
 
 const onClick = () => {
@@ -39,7 +40,8 @@ const NavLink = props => {
  */
 const NavMenu = props => {
 
-  const { settings, pages } = props
+  const { pages } = useContext(pagesContext)
+  const { settings } = props
   const { enableBlog, enableEvents, enableStore } = settings
 
 
@@ -143,8 +145,7 @@ const NavMenu = props => {
 
 const mapStateToProps = state => {
   return {
-    settings: state.settings,
-    pages: state.pages
+    settings: state.settings
   }
 }
 

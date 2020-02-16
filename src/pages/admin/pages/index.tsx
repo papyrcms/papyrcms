@@ -1,18 +1,17 @@
 import React, { useEffect, useContext } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import { connect } from 'react-redux'
 import userContext from '../../../context/userContext'
-import { setPages } from '../../../reduxStore'
+import pagesContext from '../../../context/pagesContext'
 
 
 const Pages = props => {
 
-  const { pages } = props
+  const { pages, setPages } = useContext(pagesContext)
   const { currentUser } = useContext(userContext)
 
   if (!currentUser || !currentUser.isAdmin) {
-    return <div />
+    return null
   }
 
   useEffect(() => {
@@ -22,6 +21,7 @@ const Pages = props => {
     }
     getPages()
   }, [])
+
 
   const renderPages = () => {
 
@@ -58,9 +58,4 @@ const Pages = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { pages: state.pages }
-}
-
-
-export default connect(mapStateToProps, { setPages })(Pages)
+export default Pages
