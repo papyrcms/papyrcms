@@ -80,7 +80,7 @@ StoreEdit.getInitialProps = async ({ query }) => {
 
     return { product }
   } catch (err) {
-    return { product: null }
+    return {}
   }
 }
 

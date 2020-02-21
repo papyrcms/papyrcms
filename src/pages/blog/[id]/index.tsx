@@ -20,7 +20,7 @@ const BlogShow = props => {
       }
       getBlog()
     }
-  }, [])
+  }, [currentUser])
 
   const renderDate = () => {
 
@@ -44,10 +44,14 @@ const BlogShow = props => {
 
 BlogShow.getInitialProps = async ({ query }) => {
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)
 
-  return { blog }
+    return { blog }
+  } catch (err) {
+    return {}
+  }
 }
 
 

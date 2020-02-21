@@ -1,21 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
-import { connect } from 'react-redux'
-import { setMessages } from '../../reduxStore'
 import Modal from '../Modal'
+import userContext from '../../context/userContext'
 
 
 const MessageList = props => {
 
-  const { messages, setMessages } = props
+  const [messages, setMessages] = useState([])
+  const { currentUser } = useContext(userContext)
   useEffect(() => {
     const getMessages = async () => {
-      const { data: messages } = await axios.get('/api/messages')
-      setMessages(messages)
+      if (currentUser && currentUser.isAdmin) {
+        const { data: messages } = await axios.get('/api/messages')
+        setMessages(messages)
+      }
     }
     getMessages()
-  }, [])
+  }, [currentUser])
 
 
   const deleteMessage = id => {
@@ -81,9 +83,4 @@ const MessageList = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { messages: state.messages }
-}
-
-
-export default connect(mapStateToProps, { setMessages })(MessageList)
+export default MessageList

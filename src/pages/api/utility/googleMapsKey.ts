@@ -8,6 +8,7 @@ handler.use(common)
 
 
 handler.post((req, res) => {
+  console.log('nicenicenice')
   return res.status(200).send(keys.googleMapsKey)
 })
 

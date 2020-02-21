@@ -10,6 +10,7 @@ const PostsShow = props => {
   const { currentUser } = useContext(userContext)
   const { query } = useRouter()
   const [post, setPost] = useState(props.post)
+
   useEffect(() => {
     const resetPost = async () => {
       if (currentUser && currentUser.isAdmin) {
@@ -32,11 +33,14 @@ const PostsShow = props => {
 
 
 PostsShow.getInitialProps = async ({ query }) => {
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: post } = await axios.get(`${rootUrl}/api/posts/${query.id}`)
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: post } = await axios.get(`${rootUrl}/api/posts/${query.id}`)
-
-  return { post }
+    return { post }
+  } catch (err) {
+    return {}
+  }
 }
 
 

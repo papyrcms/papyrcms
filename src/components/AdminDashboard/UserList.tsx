@@ -1,24 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import { connect } from 'react-redux'
-import { setUsers } from '../../reduxStore'
 import userContext from '../../context/userContext'
 import Modal from '../Modal'
 
 
 const UserList = props => {
 
-  const { users, setUsers } = props
+  const [users, setUsers] = useState([])
   const [selectedUser, setSelectedUser] = useState('')
   const { currentUser } = useContext(userContext)
 
   useEffect(() => {
     const getUsers = async () => {
-      const { data: users } = await axios.get('/api/users')
-      setUsers(users)
+      if (currentUser && currentUser.isAdmin) {
+        const { data: users } = await axios.get('/api/users')
+        setUsers(users)
+      }
     }
     getUsers()
-  }, [])
+  }, [currentUser])
 
 
   const deleteUser = user => {
@@ -175,9 +175,4 @@ const UserList = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { users: state.users }
-}
-
-
-export default connect(mapStateToProps, { setUsers })(UserList)
+export default UserList

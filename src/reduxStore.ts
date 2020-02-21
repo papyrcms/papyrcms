@@ -5,11 +5,6 @@ import reduxThunk from 'redux-thunk'
 
 // Initial State
 const initialReduxState = {
-  events: [],
-  event: {},
-  orders: [],
-  users: [],
-  messages: [],
   settings: {},
   stripePubKey: '',
   route: '',
@@ -20,16 +15,6 @@ const initialReduxState = {
 // Reducer
 export const reducer = (state = initialReduxState, action) => {
   switch (action.type) {
-    case 'set_events':
-      return { ...state, events: action.payload }
-    case 'set_event':
-      return { ...state, event: action.payload }
-    case 'set_orders':
-      return { ...state, orders: action.payload }
-    case 'set_users':
-      return { ...state, users: action.payload }
-    case 'set_messages':
-      return { ...state, messages: action.payload }
     case 'set_settings':
       return { ...state, settings: action.payload }
     case 'set_pub_key':
@@ -47,26 +32,6 @@ export const reducer = (state = initialReduxState, action) => {
 
 
 // Action creators
-export const setEvents = events => {
-  return { type: 'set_events', payload: events }
-}
-
-export const setEvent = event => {
-  return { type: 'set_event', payload: event }
-}
-
-export const setOrders = orders => {
-  return { type: 'set_orders', payload: orders }
-}
-
-export const setUsers = users => {
-  return { type: 'set_users', payload: users }
-}
-
-export const setMessages = messages => {
-  return { type: 'set_messages', payload: messages }
-}
-
 export const setSettings = settings => {
   return { type: 'set_settings', payload: settings }
 }

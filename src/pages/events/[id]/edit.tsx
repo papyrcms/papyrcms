@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import axios from 'axios'
-import { connect } from 'react-redux'
 import moment from 'moment-timezone'
+import userContext from '../../../context/userContext'
 import PostsForm from '../../../components/PostsForm'
 import keys from '../../../config/keys'
 import Input from '../../../components/Input'
@@ -38,46 +39,50 @@ const coordinatesField = ({ latitude, longitude, changeState }) => (
 )
 
 
-const EventsEdit = props => (
-  <PostsForm
-    pageTitle="Edit Event"
-    post={props.event}
-    apiEndpoint={`/api/events/${props.event._id}`}
-    redirectRoute="/events/all"
-    editing
-    additionalFields={[coordinatesField, dateField]}
-    additionalState={{
-      date: moment(props.event.date).tz('America/Chicago').format("YYYY-MM-DD"),
-      latitude: props.event.latitude,
-      longitude: props.event.longitude,
-    }}
-  />
-)
+const EventsEdit = props => {
 
+  const { currentUser } = useContext(userContext)
+  const [event, setEvent] = useState(props.event || {})
+  const { query } = useRouter()
 
-EventsEdit.getInitialProps = async ({ query, req }) => {
-
-  // Depending on if we are doing a client or server render
-  let axiosConfig = {}
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
+  useEffect(() => {
+    if (currentUser && currentUser.isAdmin) {
+      const getEvent = async () => {
+        const { data: event } = await axios.get(`/api/events/${query.id}`)
+        setEvent(event)
       }
+      getEvent()
     }
+  }, [])
+
+  return (
+    <PostsForm
+      pageTitle="Edit Event"
+      post={event}
+      apiEndpoint={`/api/events/${event._id}`}
+      redirectRoute="/events/all"
+      editing
+      additionalFields={[coordinatesField, dateField]}
+      additionalState={{
+        date: moment(event.date).tz('America/Chicago').format("YYYY-MM-DD"),
+        latitude: event.latitude,
+        longitude: event.longitude,
+      }}
+    />
+  )
+}
+
+
+EventsEdit.getInitialProps = async ({ query }) => {
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)
+
+    return { event }
+  } catch (err) {
+    return {}
   }
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const res = await axios.get(`${rootUrl}/api/events/${query.id}`, axiosConfig)
-
-  return { event: res.data }
 }
 
 
-const mapStateToProps = state => {
-  return { event: state.event }
-}
-
-
-export default connect(mapStateToProps)(EventsEdit)
+export default EventsEdit

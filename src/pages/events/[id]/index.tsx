@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment-timezone'
-import { connect } from 'react-redux'
+import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import Map from '../../../components/Map'
 import { PostShow } from '../../../components/Sections/'
@@ -9,21 +10,36 @@ import { PostShow } from '../../../components/Sections/'
 
 const EventsShow = props => {
 
+  const { currentUser } = useContext(userContext)
+  const [event, setEvent] = useState(props.event || {})
+  const { query } = useRouter()
+
+  useEffect(() => {
+    if (currentUser && currentUser.isAdmin) {
+      console.log(query.id, 'nice')
+      const getEvent = async () => {
+        const { data: event } = await axios.get(`/api/events/${query.id}`)
+        setEvent(event)
+      }
+      getEvent()
+    }
+  }, [currentUser])
+
   const renderMap = () => (
     <Map
       className="u-padding-top-medium"
-      latitude={props.event.latitude}
-      longitude={props.event.longitude}
+      latitude={event.latitude}
+      longitude={event.longitude}
       zoom={16}
     />
   )
 
   const renderDate = () => (
-    <p>{moment(props.event.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+    <p>{moment(event.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
   )
 
   return <PostShow
-    post={props.event}
+    post={event}
     path="events"
     apiPath="/api/events"
     redirectRoute="/events/all"
@@ -33,30 +49,17 @@ const EventsShow = props => {
 }
 
 
-EventsShow.getInitialProps = async ({ query, req }) => {
+EventsShow.getInitialProps = async ({ query }) => {
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)
+    const { data: googleMapsKey } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
 
-  // Depending on if we are doing a client or server render
-  let axiosConfig = {}
-  if (!!req) {
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
+    return { event, googleMapsKey }
+  } catch (err) {
+    return {}
   }
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`, axiosConfig)
-  const { data: googleMapsKey } = await axios.post('/api/utility/googleMapsKey')
-
-  return { event, googleMapsKey }
 }
 
 
-const mapStateToProps = state => {
-  return { event: state.event }
-}
-
-
-export default connect(mapStateToProps)(EventsShow)
+export default EventsShow

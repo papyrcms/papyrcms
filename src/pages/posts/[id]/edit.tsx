@@ -35,11 +35,14 @@ const PostsEdit = props => {
 
 
 PostsEdit.getInitialProps = async ({ query }) => {
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: post } = await axios.get(`${rootUrl}/api/posts/${query.id}`)
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const res = await axios.get(`${rootUrl}/api/posts/${query.id}`)
-
-  return { post: res.data }
+    return { post }
+  } catch (err) {
+    return {}
+  }
 }
 
 

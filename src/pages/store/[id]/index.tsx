@@ -9,7 +9,6 @@ import { PostShow } from '../../../components/Sections'
 const StoreShow = props => {
 
   const { currentUser } = useContext(userContext)
-
   const [product, setProduct] = useState(props.product)
   const { query } = useRouter()
 
@@ -52,7 +51,7 @@ StoreShow.getInitialProps = async ({ query }) => {
     const { data: product } = await axios.get(`${rootUrl}/api/store/products/${query.id}`)
     return { product }
   } catch (err) {
-    return { product: null }
+    return {}
   }
 }
 

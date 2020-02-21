@@ -1,11 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
+import userContext from '../../context/userContext'
 import keys from '../../config/keys'
-import filterPosts from '../../components/filterPosts'
 import { SectionCards } from '../../components/Sections/'
 
 const EventsAllPage = props => {
+
+  const { currentUser } = useContext(userContext)
+  const [events, setEvents] = useState(props.events || [])
+
+  useEffect(() => {
+    if (currentUser && currentUser.isAdmin) {
+      const getEvents = async () => {
+        const { data: events } = await axios.get('/api/events')
+        setEvents(events)
+      }
+      getEvents()
+    }
+  }, [])
 
 
   const renderDate = (sectionProps, post) => (
@@ -14,7 +27,7 @@ const EventsAllPage = props => {
 
 
   return <SectionCards
-    posts={props.posts}
+    posts={events}
     title="Events"
     perRow={4}
     readMore
@@ -26,35 +39,13 @@ const EventsAllPage = props => {
 }
 
 
-EventsAllPage.getInitialProps = async ({ req, reduxStore }) => {
-
-  let currentUser
-  let axiosConfig = {}
-
-  // Depending on if we are doing a client or server render
-  if (!!req) {
-    currentUser = req.user
-    axiosConfig = {
-      withCredentials: true,
-      headers: {
-        Cookie: req.headers.cookie || ''
-      }
-    }
-  } else {
-    currentUser = reduxStore.getState().currentUser
-  }
+EventsAllPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const published = currentUser && currentUser.isAdmin ? '' : '/published'
-  const res = await axios.get(`${rootUrl}/api/events${published}`, axiosConfig)
+  const { data: events } = await axios.get(`${rootUrl}/api/events/published`)
 
-  return { events: res.data }
+  return { events }
 }
 
 
-const settings = {
-  postType: 'events'
-}
-
-
-export default filterPosts(EventsAllPage, settings)
+export default EventsAllPage

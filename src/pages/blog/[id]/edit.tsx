@@ -35,11 +35,14 @@ const BlogEdit = props => {
 
 
 BlogEdit.getInitialProps = async ({ query }) => {
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)
-
-  return { blog }
+    return { blog }
+  } catch (err) {
+    return {}
+  }
 }
 
 
