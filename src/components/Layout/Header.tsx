@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react'
-import { connect } from 'react-redux'
 import Link from 'next/link'
+import settingsContext from '../../context/settingsContext'
 import storeContext from '../../context/storeContext'
 import userContext from '../../context/userContext'
 
@@ -13,8 +13,9 @@ import userContext from '../../context/userContext'
  */
 const Header = props => {
 
-  const { settings, mainTitle, subTitle, page } = props
+  const { mainTitle, subTitle } = props
   const { currentUser } = useContext(userContext)
+  const { settings } = useContext(settingsContext)
 
   const renderAuthenticator = () => {
     if (currentUser) {
@@ -35,7 +36,7 @@ const Header = props => {
 
   const { cart } = useContext(storeContext)
   const renderCart = () => {
-    if (settings.enableStore) {
+    if (settings['enableStore']) {
       const menuText = `Cart${cart.length !== 0 ? ` (${cart.length})` : ''}`
 
       return (
@@ -60,7 +61,7 @@ const Header = props => {
 
   const renderNav = () => {
     if (
-      (settings && settings.enableMenu) ||
+      settings['enableMenu'] ||
       (currentUser && currentUser.isAdmin)
     ) {
       return (
@@ -101,12 +102,4 @@ const Header = props => {
 }
 
 
-const mapStateToProps = state => {
-  return {
-    settings: state.settings,
-    page: state.page
-  }
-}
-
-
-export default connect(mapStateToProps)(Header)
+export default Header

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import { connect } from 'react-redux'
+import settingsContext from '../../context/settingsContext'
 import pagesContext from '../../context/pagesContext'
 
 
@@ -41,26 +41,24 @@ const NavLink = props => {
 const NavMenu = props => {
 
   const { pages } = useContext(pagesContext)
-  const { settings } = props
-  const { enableBlog, enableEvents, enableStore } = settings
-
+  const { settings } = useContext(settingsContext)
 
   const renderBlogItem = () => {
-    if (enableBlog) {
+    if (settings['enableBlog']) {
       return <NavLink href="/blog" exact>Blog</NavLink>
     }
   }
 
 
   const renderEventsItem = () => {
-    if (enableEvents) {
+    if (settings['enableEvents']) {
       return <NavLink href="/events" exact>Events</NavLink>
     }
   }
 
 
   const renderStoreItem = () => {
-    if (enableStore) {
+    if (settings['enableStore']) {
       return <NavLink href="/store" exact>Store</NavLink>
     }
   }
@@ -143,11 +141,4 @@ const NavMenu = props => {
 }
 
 
-const mapStateToProps = state => {
-  return {
-    settings: state.settings
-  }
-}
-
-
-export default connect(mapStateToProps)(NavMenu)
+export default NavMenu

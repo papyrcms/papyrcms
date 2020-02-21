@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Router from 'next/router'
-import { connect } from 'react-redux'
+import settingsContext from '../context/settingsContext'
 import userContext from '../context/userContext'
 import useForm from '../hooks/useForm'
 import Input from './Input'
@@ -8,10 +8,10 @@ import Input from './Input'
 
 const RegisterForm = props => {
 
-  const { settings } = props
+  const { settings } = useContext(settingsContext)
   const { setCurrentUser } = useContext(userContext)
 
-  if (!settings.enableRegistration) {
+  if (!settings['enableRegistration']) {
     return null
   }
 
@@ -99,9 +99,4 @@ const RegisterForm = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { settings: state.settings }
-}
-
-
-export default connect(mapStateToProps)(RegisterForm)
+export default RegisterForm

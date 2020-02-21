@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import Link from 'next/link'
-import { connect } from 'react-redux'
+import settingsContext from '../../context/settingsContext'
 
 
 const AdminLinks = props => {
 
-  const { enableEvents, enableBlog, enableStore } = props.settings
+  const { settings } = useContext(settingsContext)
 
   const renderStoreMenuItems = () => {
-    if (enableStore) {
+    if (settings['enableStore']) {
       return (
         <Fragment>
           <Link href="/store/new">
@@ -29,7 +29,7 @@ const AdminLinks = props => {
 
 
   const renderBlogMenuItems = () => {
-    if (enableBlog) {
+    if (settings['enableBlog']) {
       return (
         <Fragment>
           <Link href="/blog/new">
@@ -46,7 +46,7 @@ const AdminLinks = props => {
 
 
   const renderEventMenuItems = () => {
-    if (enableEvents) {
+    if (settings['enableEvents']) {
       return (
         <Fragment>
           <Link href="/events/new">
@@ -88,9 +88,4 @@ const AdminLinks = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { settings: state.settings }
-}
-
-
-export default connect(mapStateToProps)(AdminLinks)
+export default AdminLinks

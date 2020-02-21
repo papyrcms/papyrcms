@@ -9,10 +9,7 @@ import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 import GlobalState from '../context/GlobalState'
 import {
-  setSettings,
   setStripePubKey,
-  setRoute,
-  setUrl,
   setGoogleMapsKey
 } from '../reduxStore'
 
@@ -20,14 +17,10 @@ class MyApp extends App {
 
   static async getInitialProps({ Component, ctx }): Promise<any> {
 
-    const { reduxStore, req, pathname } = ctx
+    const { reduxStore } = ctx
     const { dispatch } = reduxStore
-    const isServer = !!req
     let pageProps: any = {}
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-
-    // Pass the route to the redux store
-    dispatch(setRoute(pathname))
 
     // Run getInitialProps for each component
     if (Component.getInitialProps) {
@@ -44,12 +37,8 @@ class MyApp extends App {
       dispatch(setStripePubKey(pageProps.stripePubKey))
     }
 
-    // Set Current User and Website Settings in the redux store
-    if (isServer) {
-      const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
-      dispatch(setSettings(settings))
-      dispatch(setUrl({ query: req.query }))
-    }
+    const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
+    pageProps.settings = settings
 
     const { data: posts } = await axios.get(`${rootUrl}/api/posts/published`)
     pageProps.posts = posts
@@ -73,10 +62,10 @@ class MyApp extends App {
 
   render() {
 
-    const { Component, reduxStore, posts, pages, ...pageProps } = this.props as any
+    const { Component, reduxStore, posts, pages, settings, ...pageProps } = this.props as any
 
     return (
-      <GlobalState posts={posts} pages={pages}>
+      <GlobalState posts={posts} pages={pages} settings={settings}>
         <Provider store={reduxStore}>
           <Layout>
             <Component {...pageProps} />

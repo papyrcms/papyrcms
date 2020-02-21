@@ -1,19 +1,20 @@
 import React, { useState, useContext } from 'react'
 import Link from 'next/link'
-import { connect } from 'react-redux'
 import axios from 'axios'
 import renderHTML from 'react-render-html'
 import userContext from '../../../context/userContext'
+import settingsContext from '../../../context/settingsContext'
 import CommentForm from './CommentForm'
 
 const Comment = props => {
 
   const {
-    settings, enableCommenting,
-    post, apiPath, beforeCommentForm, afterCommentForm
+    enableCommenting, post, apiPath,
+    beforeCommentForm, afterCommentForm
   } = props
+  const { settings } = useContext(settingsContext)
 
-  if (!settings.enableCommenting || !enableCommenting) {
+  if (!settings['enableCommenting'] || !enableCommenting) {
     return null
   }
 
@@ -190,9 +191,4 @@ const Comment = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { settings: state.settings }
-}
-
-
-export default connect(mapStateToProps)(Comment)
+export default Comment

@@ -5,9 +5,7 @@ import reduxThunk from 'redux-thunk'
 
 // Initial State
 const initialReduxState = {
-  settings: {},
   stripePubKey: '',
-  route: '',
   googleMapsKey: ''
 }
 
@@ -15,14 +13,8 @@ const initialReduxState = {
 // Reducer
 export const reducer = (state = initialReduxState, action) => {
   switch (action.type) {
-    case 'set_settings':
-      return { ...state, settings: action.payload }
     case 'set_pub_key':
       return { ...state, stripePubKey: action.payload }
-    case 'set_route':
-      return { ...state, route: action.payload }
-    case 'set_url':
-      return { ...state, url: action.payload }
     case 'set_google_maps_key':
       return { ...state, googleMapsKey: action.payload }
     default:
@@ -32,20 +24,8 @@ export const reducer = (state = initialReduxState, action) => {
 
 
 // Action creators
-export const setSettings = settings => {
-  return { type: 'set_settings', payload: settings }
-}
-
 export const setStripePubKey = key => {
   return { type: 'set_pub_key', payload: key }
-}
-
-export const setRoute = route => {
-  return { type: 'set_route', payload: route }
-}
-
-export const setUrl = url => {
-  return { type: 'set_url', payload: url }
 }
 
 export const setGoogleMapsKey = key => {

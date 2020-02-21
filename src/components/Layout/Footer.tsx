@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 
 const excludeFooterRoutes = [
   '/admin',
@@ -18,10 +17,7 @@ const excludeFooterRoutes = [
  */
 const Footer = props => {
 
-  // Only include the footer if the current route is not in the array
-  if (excludeFooterRoutes.includes(props.route)) {
-    return null
-  }
+  // TODO: Only include the footer if the current route is not in the array
 
   return (
     <footer className='footer'>
@@ -44,9 +40,4 @@ const Footer = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { route: state.route }
-}
-
-
-export default connect(mapStateToProps)(Footer)
+export default Footer
