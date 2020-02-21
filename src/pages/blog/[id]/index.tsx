@@ -1,23 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment-timezone'
-import { connect } from 'react-redux'
+import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import { PostShow } from '../../../components/Sections/'
 
 const BlogShow = props => {
 
+  const { currentUser } = useContext(userContext)
+  const [blog, setBlog] = useState(props.blog || {})
+  const { query } = useRouter()
+
+  useEffect(() => {
+    if (currentUser && currentUser.isAdmin) {
+      const getBlog = async () => {
+        const { data: blog } = await axios.get(`/api/blogs/${query.id}`)
+        setBlog(blog)
+      }
+      getBlog()
+    }
+  }, [])
+
   const renderDate = () => {
 
-    const date = props.blog.published && props.blog.publishDate
-      ? props.blog.publishDate
-      : props.blog.created
+    const date = blog.published && blog.publishDate
+      ? blog.publishDate
+      : blog.created
 
     return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
   }
 
   return <PostShow
-    post={props.blog}
+    post={blog}
     enableCommenting={true}
     path="blog"
     apiPath="/api/blogs"
@@ -36,9 +51,4 @@ BlogShow.getInitialProps = async ({ query }) => {
 }
 
 
-const mapStateToProps = state => {
-  return { blog: state.blog }
-}
-
-
-export default connect(mapStateToProps)(BlogShow)
+export default BlogShow

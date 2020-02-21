@@ -6,13 +6,13 @@ import PagesProvider from './PagesProvider'
 
 const GlobalState = props => (
   <UserProvider>
-    <StoreProvider>
-      <PagesProvider pages={props.pages}>
-        <PostsProvider posts={props.posts}>
+    <PagesProvider pages={props.pages}>
+      <PostsProvider posts={props.posts}>
+        <StoreProvider>
           {props.children}
-        </PostsProvider>
-      </PagesProvider>
-    </StoreProvider>
+        </StoreProvider>
+      </PostsProvider>
+    </PagesProvider>
   </UserProvider>
 )
 

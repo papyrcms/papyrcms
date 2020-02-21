@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
-import { connect } from 'react-redux'
+import userContext from '../../context/userContext'
 import keys from '../../config/keys'
-import { setBlogs } from '../../reduxStore'
 import { SectionCards } from '../../components/Sections/'
-import filterPosts from '../../components/filterPosts'
 
 
 const BlogAllPage = props => {
 
-  const { currentUser, posts } = props
+  const { currentUser } = useContext(userContext)
+  const [blogs, setBlogs] = useState(props.blogs || [])
 
   useEffect(() => {
     if (currentUser && currentUser.isAdmin) {
@@ -37,7 +36,7 @@ const BlogAllPage = props => {
     contentLength={100}
     emptyMessage="There are no blogs yet."
     readMore
-    posts={posts}
+    posts={blogs}
     afterPostTitle={renderDate}
   />
 }
@@ -51,14 +50,4 @@ BlogAllPage.getInitialProps = async () => {
 }
 
 
-const settings = {
-  postType: 'blogs'
-}
-
-
-const mapStateToProps = state => {
-  return { currentUser: state.currentUser }
-}
-
-
-export default connect(mapStateToProps, { setBlogs })(filterPosts(BlogAllPage, settings))
+export default BlogAllPage

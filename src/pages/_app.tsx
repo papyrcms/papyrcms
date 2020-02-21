@@ -9,8 +9,6 @@ import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 import GlobalState from '../context/GlobalState'
 import {
-  setBlogs,
-  setBlog,
   setEvents,
   setEvent,
   setOrders,
@@ -44,16 +42,6 @@ class MyApp extends App {
     // If a google maps key was recieved, send it to the redux store
     if (!!pageProps.googleMapsKey) {
       dispatch(setGoogleMapsKey(pageProps.googleMapsKey))
-    }
-
-    // If a blog was recieved, send it to the redux store
-    if (!!pageProps.blog) {
-      dispatch(setBlog(pageProps.blog))
-    }
-
-    // If an array of blogs were recieved, send them to the redux store
-    if (!!pageProps.blogs) {
-      dispatch(setBlogs(pageProps.blogs))
     }
 
     // If an event was recieved, send it to the redux store

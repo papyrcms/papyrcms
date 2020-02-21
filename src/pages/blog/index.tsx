@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
 import Link from 'next/link'
 import keys from '../../config/keys'
-import filterPosts from '../../components/filterPosts'
+import filterPosts from '../../hooks/filterPosts'
 import { SectionStandard } from '../../components/Sections/'
 
 
-const BlogPage = ({ posts }) => {
+const BlogPage = props => {
 
+  const [blogs, setBlogs] = useState(props.blogs)
+
+  useEffect(() => {
+    const settings = {
+      maxPosts: 5
+    }
+    const { posts: filteredBlogs } = filterPosts(blogs, settings)
+    setBlogs(filteredBlogs)
+  }, [])
 
   const renderAllBlogsLink = () => {
-    if (posts.length === 5) {
+    if (blogs.length === 5) {
       return (
         <Link href="/blog/all">
           <button className="button button-secondary">See all blog posts</button>
@@ -32,7 +41,7 @@ const BlogPage = ({ posts }) => {
 
 
   return <SectionStandard
-    posts={posts}
+    posts={blogs}
     title="Blog"
     mediaLeft
     readMore
@@ -47,16 +56,10 @@ const BlogPage = ({ posts }) => {
 BlogPage.getInitialProps = async () => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const blogs = await axios.get(`${rootUrl}/api/blogs/published`)
+  const { data: blogs } = await axios.get(`${rootUrl}/api/blogs/published`)
 
-  return { blogs: blogs.data }
+  return { blogs }
 }
 
 
-const settings = {
-  postType: 'blogs',
-  maxPosts: 5
-}
-
-
-export default filterPosts(BlogPage, settings)
+export default BlogPage

@@ -5,8 +5,6 @@ import reduxThunk from 'redux-thunk'
 
 // Initial State
 const initialReduxState = {
-  blogs: [],
-  blog: {},
   events: [],
   event: {},
   orders: [],
@@ -22,10 +20,6 @@ const initialReduxState = {
 // Reducer
 export const reducer = (state = initialReduxState, action) => {
   switch (action.type) {
-    case 'set_blogs':
-      return { ...state, blogs: action.payload }
-    case 'set_blog':
-      return { ...state, blog: action.payload }
     case 'set_events':
       return { ...state, events: action.payload }
     case 'set_event':
@@ -53,14 +47,6 @@ export const reducer = (state = initialReduxState, action) => {
 
 
 // Action creators
-export const setBlogs = blogs => {
-  return { type: 'set_blogs', payload: blogs }
-}
-
-export const setBlog = blog => {
-  return { type: 'set_blog', payload: blog }
-}
-
 export const setEvents = events => {
   return { type: 'set_events', payload: events }
 }

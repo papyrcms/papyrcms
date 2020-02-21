@@ -1,24 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { connect } from 'react-redux'
+import userContext from '../../../context/userContext'
 import PostsForm from '../../../components/PostsForm'
 import keys from '../../../config/keys'
 
 
 const BlogEdit = props => {
 
-  // useEffect(async () => {
-  //   const router = useRouter()
-  //   console.log(router)
-  //   // const { data: blog } = 
-  // }, [])
+  const { currentUser } = useContext(userContext)
+  const [blog, setBlog] = useState(props.blog || [])
+  const { query } = useRouter()
+
+  useEffect(() => {
+    if (currentUser && currentUser.isAdmin) {
+      const getBlog = async () => {
+        const { data: blog } = await axios.get(`/api/blogs/${query.id}`)
+        setBlog(blog)
+      }
+      getBlog()
+    }
+  }, [])
 
   return (
     <PostsForm
       pageTitle="Edit Blog Post"
-      post={props.blog}
-      apiEndpoint={`/api/blogs/${props.blog._id}`}
+      post={blog}
+      apiEndpoint={`/api/blogs/${blog._id}`}
       redirectRoute="/blog/all"
       editing
     />
@@ -26,7 +34,7 @@ const BlogEdit = props => {
 }
 
 
-BlogEdit.getInitialProps = async ({ query, req }) => {
+BlogEdit.getInitialProps = async ({ query }) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
   const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)
@@ -35,9 +43,4 @@ BlogEdit.getInitialProps = async ({ query, req }) => {
 }
 
 
-const mapStateToProps = state => {
-  return { blog: state.blog }
-}
-
-
-export default connect(mapStateToProps)(BlogEdit)
+export default BlogEdit

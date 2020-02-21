@@ -21,7 +21,7 @@ const filterPosts = (posts, settings) => {
     const { postTags, strictTags } = filters
 
     // Filter posts by postTags
-    if (!!postTags && postTags.length > 0) {
+    if (postTags && postTags.length > 0) {
       return postsToFilter.filter(post => {
         let included = false
 
