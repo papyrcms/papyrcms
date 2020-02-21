@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   StripeProvider,
   Elements,
@@ -8,6 +7,7 @@ import {
   CardNumberElement,
   injectStripe
 } from 'react-stripe-elements'
+import keysContext from '../context/keysContext'
 
 
 const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) => {
@@ -68,7 +68,7 @@ const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) 
       <button
         className="button button-primary credit-card-form__submit"
         disabled={processing ? true : false}
-        onClick={event => handleSubmit(event)}
+        onClick={handleSubmit}
       >
         {processing ? "Processing" : "Submit"}
       </button>
@@ -79,10 +79,11 @@ const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) 
 
 const StripeForm = props => {
 
-  const { stripePubKey, className, onSubmit } = props
+  const { className, onSubmit } = props
   const [stripe, setStripe] = useState(null)
+  const { keys } = useContext(keysContext)
 
-  useEffect(() => {setStripe(window.Stripe(stripePubKey))}, [])
+  useEffect(() => {setStripe(window.Stripe(keys['stripePubKey']))}, [])
 
   return (
     <StripeProvider stripe={stripe}>
@@ -94,9 +95,4 @@ const StripeForm = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { stripePubKey: state.stripePubKey }
-}
-
-
-export default connect(mapStateToProps)(StripeForm)
+export default StripeForm

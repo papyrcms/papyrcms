@@ -78,16 +78,13 @@ const sectionOptions = {
 class PageBuilder extends Component {
 
   static async getInitialProps(context) {
-    const { data: googleMapsKey } = await axios.post('/api/utility/googleMapsKey')
-    const { data: stripePubKey } = await axios.post('/api/utility/stripePubKey')
-
     let page
     if (context.query.page) {
       const res = await axios.get(`/api/pages/${context.query.page}`)
       page = res.data
     }
 
-    return { page, googleMapsKey, stripePubKey }
+    return { page }
   }
 
 

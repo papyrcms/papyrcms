@@ -123,9 +123,7 @@ Checkout.getInitialProps = async ({ query }) => {
     product = res.data
   }
 
-  const { data: stripePubKey } = await axios.post(`${rootUrl}/api/utility/stripePubKey`)
-
-  return { stripePubKey, product }
+  return { product }
 }
 
 

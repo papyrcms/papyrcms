@@ -208,10 +208,8 @@ Page.getInitialProps = async ({ query }) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
   const { data: page } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
-  const { data: googleMapsKey } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
-  const { data: stripePubKey } = await axios.post(`${rootUrl}/api/utility/stripePubKey`)
 
-  return { page, googleMapsKey, stripePubKey }
+  return { page }
 }
 
 

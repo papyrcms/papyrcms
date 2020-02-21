@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import GoogleMapReact from 'google-map-react'
-import { connect } from 'react-redux'
+import keysContext from '../context/keysContext'
 
 
 const Position: any = () => <div className="map__position" />
@@ -9,7 +9,6 @@ const Map = props => {
 
   const {
     className = '',
-    googleMapsKey,
     latitude,
     longitude,
     zoom = 14
@@ -19,10 +18,12 @@ const Map = props => {
     return null
   }
 
+  const { keys } = useContext(keysContext)
+
   return (
     <div className={`map ${className}`}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: googleMapsKey }}
+        bootstrapURLKeys={{ key: keys['googleMapsKey'] }}
         defaultCenter={{ lat: latitude, lng: longitude }}
         defaultZoom={zoom}
       >
@@ -36,9 +37,4 @@ const Map = props => {
 }
 
 
-const mapStateToProps = state => {
-  return { googleMapsKey: state.googleMapsKey }
-}
-
-
-export default connect(mapStateToProps)(Map)
+export default Map

@@ -1,3 +1,4 @@
+import KeysProvider from './KeysProvider'
 import SettingsProvider from './SettingsProvider'
 import UserProvider from './UserProvider'
 import StoreProvider from './StoreProvider'
@@ -6,17 +7,19 @@ import PagesProvider from './PagesProvider'
 
 
 const GlobalState = props => (
-  <SettingsProvider settings={props.settings}>
-    <UserProvider>
-      <PagesProvider pages={props.pages}>
-        <PostsProvider posts={props.posts}>
-          <StoreProvider>
-            {props.children}
-          </StoreProvider>
-        </PostsProvider>
-      </PagesProvider>
-    </UserProvider>
-  </SettingsProvider>
+  <KeysProvider keys={props.keys}>
+    <SettingsProvider settings={props.settings}>
+      <UserProvider>
+        <PagesProvider pages={props.pages}>
+          <PostsProvider posts={props.posts}>
+            <StoreProvider>
+              {props.children}
+            </StoreProvider>
+          </PostsProvider>
+        </PagesProvider>
+      </UserProvider>
+    </SettingsProvider>
+  </KeysProvider>
 )
 
 

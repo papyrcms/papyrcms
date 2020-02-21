@@ -53,9 +53,8 @@ EventsShow.getInitialProps = async ({ query }) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)
-    const { data: googleMapsKey } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
 
-    return { event, googleMapsKey }
+    return { event }
   } catch (err) {
     return {}
   }
