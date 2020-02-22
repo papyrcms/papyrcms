@@ -6,6 +6,7 @@ import keys from '../config/keys'
 import GlobalState from '../context/GlobalState'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
+import { route } from 'next/dist/next-server/server/router'
 
 class MyApp extends App {
 
@@ -19,12 +20,9 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx)
     }
 
-    if (ctx.req) {
-      pageProps.keys = {
-        googleMapsKey: keys.googleMapsKey,
-        stripePubKey: keys.stripePubKey
-      }
-    }
+    const { data: googleMapsKey } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
+    const { data: stripePubKey } = await axios.post(`${rootUrl}/api/utility/stripePubKey`)
+    pageProps.keys = { googleMapsKey, stripePubKey }
 
     const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
     pageProps.settings = settings
