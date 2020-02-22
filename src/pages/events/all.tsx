@@ -21,7 +21,7 @@ const EventsAllPage = props => {
   }, [])
 
 
-  const renderDate = (sectionProps, post) => (
+  const renderDate = post => (
     <p>{moment(post.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
   )
 
