@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import mongoose from 'mongoose'
-import keys from '../../src/config/keys'
-import { configureSettings } from '../../src/utilities/functions'
-import Settings from '../../src/models/settings'
+import keys from '../../../src/config/keys'
+import { configureSettings } from '../../../src/utilities/functions'
+import Settings from '../../../src/models/settings'
 
 
 describe('utility functions', () => {

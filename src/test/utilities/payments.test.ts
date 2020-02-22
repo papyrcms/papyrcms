@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import Payments from '../../src/utilities/payments'
+import Payments from '../../../src/utilities/payments'
 
 describe('payments', () => {
   it('has the correct properties when constructed', () => {

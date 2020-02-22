@@ -1,6 +1,6 @@
 import { expect } from "chai"
 import axios from 'axios'
-import keys from '../../src/config/keys'
+import keys from '../../../src/config/keys'
 const { test, rootURL, googleAnalyticsId, googleMapsKey, stripePublishableTestKey } = keys
 
 

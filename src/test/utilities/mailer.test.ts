@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import mongoose from 'mongoose'
-import keys from '../../src/config/keys'
-import Mailer from '../../src/utilities/mailer'
-import Post from '../../src/models/post'
+import keys from '../../../src/config/keys'
+import Mailer from '../../../src/utilities/mailer'
+import Post from '../../../src/models/post'
 
 describe('mailer', () => {
   it('has the correct properties when constructed', () => {
