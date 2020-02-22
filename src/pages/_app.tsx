@@ -6,7 +6,7 @@ import keys from '../config/keys'
 import GlobalState from '../context/GlobalState'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
-import { route } from 'next/dist/next-server/server/router'
+
 
 class MyApp extends App {
 
