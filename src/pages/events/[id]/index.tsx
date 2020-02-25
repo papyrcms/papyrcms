@@ -5,7 +5,7 @@ import moment from 'moment-timezone'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import Map from '../../../components/Map'
-import { PostShow } from '../../../components/Sections/'
+import { SectionStandard } from '../../../components/Sections/'
 
 
 const EventsShow = props => {
@@ -38,7 +38,7 @@ const EventsShow = props => {
     <p>{moment(event.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
   )
 
-  return <PostShow
+  return <SectionStandard
     post={event}
     path="events"
     apiPath="/api/events"

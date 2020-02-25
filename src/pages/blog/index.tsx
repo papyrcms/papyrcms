@@ -4,7 +4,7 @@ import moment from 'moment-timezone'
 import Link from 'next/link'
 import keys from '../../config/keys'
 import filterPosts from '../../hooks/filterPosts'
-import { SectionStandard } from '../../components/Sections/'
+import { SectionStrip } from '../../components/Sections/'
 
 
 const BlogPage = props => {
@@ -40,7 +40,7 @@ const BlogPage = props => {
   }
 
 
-  return <SectionStandard
+  return <SectionStrip
     posts={blogs}
     title="Blog"
     mediaLeft

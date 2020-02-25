@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
-import { PostShow } from '../../../components/Sections/'
+import { SectionStandard } from '../../../components/Sections/'
 
 const PostsShow = props => {
 
@@ -23,7 +23,7 @@ const PostsShow = props => {
 
 
   return (
-    <PostShow
+    <SectionStandard
       post={post}
       enableCommenting={false}
       path="posts"

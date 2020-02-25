@@ -5,7 +5,7 @@ import Media from '../Media'
 
 
 /**
- * SectionStandard will render Posts in a more horizontal style
+ * SectionStrip will render Posts in a more horizontal style
  *
  * @prop title - String - The title to display above the cards
  * @prop readMore - Boolean - If true, a link to the full post will render at the bottom of each card
@@ -33,7 +33,7 @@ import Media from '../Media'
  * @prop beforePostLink - Function - Rendered before the card link
  * @prop afterPostLink - Function - Rendered after the card link
  */
-const SectionStandard = props => {
+const SectionStrip = props => {
 
   const {
     clickableMedia, mediaLeft, mediaRight,
@@ -181,4 +181,4 @@ const SectionStandard = props => {
   )
 }
 
-export default SectionStandard
+export default SectionStrip

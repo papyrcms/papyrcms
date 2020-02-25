@@ -8,24 +8,24 @@ import Page from '../[page]'
 
 // Static object of sections for the builder
 const sectionOptions = {
-  PostShow: {
-    name: 'Post Page',
+  Standard: {
+    name: 'Standard Section',
     description: 'This is the simplest component. It will only take one post with the required tags.',
     inputs: ['className', 'tags'],
     maxPosts: 1
   },
-  Standard: {
-    name: 'Standard Section',
+  Strip: {
+    name: 'Strip Section',
     description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
   },
-  LeftStandard: {
-    name: 'Left Standard Section',
+  LeftStrip: {
+    name: 'Left Strip Section',
     description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
   },
-  RightStandard: {
-    name: 'Right Standard Section',
+  RightStrip: {
+    name: 'Right Strip Section',
     description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
   },
@@ -100,7 +100,7 @@ class PageBuilder extends Component {
       navOrder: 0,
       sections: [],
       css: '',
-      sectionSelect: 'PostShow',
+      sectionSelect: 'SectionStandard',
       validation: '',
       page: {
         className: '',

@@ -4,7 +4,7 @@ import axios from 'axios'
 import moment from 'moment-timezone'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
-import { PostShow } from '../../../components/Sections/'
+import { SectionStandard } from '../../../components/Sections/'
 
 const BlogShow = props => {
 
@@ -31,7 +31,7 @@ const BlogShow = props => {
     return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
   }
 
-  return <PostShow
+  return <SectionStandard
     post={blog}
     enableCommenting={true}
     path="blog"

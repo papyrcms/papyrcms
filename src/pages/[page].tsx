@@ -1,12 +1,12 @@
 import React, { Fragment, useContext } from 'react'
 import axios from 'axios'
 import {
-  SectionStandard,
+  SectionStrip,
   SectionCards,
   SectionSlideshow,
   SectionMedia,
   SectionMaps,
-  PostShow,
+  SectionStandard,
   ContactForm,
   DonateForm
 } from '../components/Sections/'
@@ -107,8 +107,8 @@ const Page = props => {
             emptyMessage={emptyMessage}
           />
 
-        case 'Standard':
-          return <SectionStandard
+        case 'Strip':
+          return <SectionStrip
             key={key}
             readMore
             contentLength={300}
@@ -118,8 +118,8 @@ const Page = props => {
             emptyMessage={emptyMessage}
           />
 
-        case 'LeftStandard':
-          return <SectionStandard
+        case 'LeftStrip':
+          return <SectionStrip
             key={key}
             readMore
             mediaLeft
@@ -130,8 +130,8 @@ const Page = props => {
             emptyMessage={emptyMessage}
           />
 
-        case 'RightStandard':
-          return <SectionStandard
+        case 'RightStrip':
+          return <SectionStrip
             key={key}
             readMore
             mediaRight
@@ -155,7 +155,7 @@ const Page = props => {
           />
 
         default:
-          return <PostShow
+          return <SectionStandard
             key={key}
             post={posts[0]}
             path="posts"
@@ -170,16 +170,16 @@ const Page = props => {
 
   const renderPageHead = () => {
 
-    let postShow = false
+    let SectionStandard = false
     for (let section of props.page.sections) {
       section = JSON.parse(section)
-      if (section.type === 'PostShow') {
-        postShow = true
+      if (section.type === 'SectionStandard') {
+        SectionStandard = true
       }
     }
 
     let title
-    if (!postShow && props.page.route !== 'home') {
+    if (!SectionStandard && props.page.route !== 'home') {
       title = `Derek Garnett | ${props.page.title}`
     }
 

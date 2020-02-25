@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import moment from 'moment-timezone'
 import keys from '../../config/keys'
-import { SectionStandard } from '../../components/Sections/'
+import { SectionStrip } from '../../components/Sections/'
 
 const EventsPage = ({ events }) => {
 
@@ -12,7 +12,7 @@ const EventsPage = ({ events }) => {
   )
 
 
-  return <SectionStandard
+  return <SectionStrip
     posts={events}
     title="Events"
     mediaLeft

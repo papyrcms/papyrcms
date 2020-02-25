@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import Link from 'next/link'
 import storeContext from '../../context/storeContext'
-import { SectionStandard } from '../../components/Sections'
+import { SectionStrip } from '../../components/Sections'
 
 
 const Cart = props => {
@@ -79,7 +79,7 @@ const Cart = props => {
   }
 
 
-  return <SectionStandard
+  return <SectionStrip
     posts={uniqueProducts}
     title="Cart"
     mediaLeft

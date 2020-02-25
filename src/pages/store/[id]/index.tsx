@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
-import { PostShow } from '../../../components/Sections'
+import { SectionStandard } from '../../../components/Sections'
 
 
 const StoreShow = props => {
@@ -33,7 +33,7 @@ const StoreShow = props => {
   }
 
   return (
-    <PostShow
+    <SectionStandard
       post={product}
       path="store"
       apiPath="/api/store/products"

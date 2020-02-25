@@ -10,7 +10,7 @@ import PageHead from '../../PageHead'
 
 
 /**
- * PostShow is the main component to show the details of a particular post
+ * SectionStandard is the main component to show the details of a particular post
  *
  * @prop post - Object - The post that will be displayed on the page
  * @prop enableCommenting - Boolean - Whether or not users can comment on this post
@@ -35,7 +35,7 @@ import PageHead from '../../PageHead'
  * @prop beforeCommentForm - Function - Rendered before the post comment form
  * @prop afterCommentForm - Function - Rendered after the post comment form
  */
-const PostShow = props => {
+const SectionStandard = props => {
 
   if (!props.post) return null
 
@@ -203,4 +203,4 @@ const PostShow = props => {
 }
 
 
-export default PostShow
+export default SectionStandard
