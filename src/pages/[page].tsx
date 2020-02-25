@@ -44,7 +44,7 @@ const Page = props => {
 
       const key = `${section.type}-${i}`
       const posts = filtered[key]
-      const emptyMessage = `Create content with the ${section.tags} tags.`
+      const emptyMessage = `Create content with the ${section.tags.join(', ')} tags.`
 
       switch (section.type) {
 
