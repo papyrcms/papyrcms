@@ -29,7 +29,7 @@
     "next": "^9.2.2",
     "next-connect": "^0.6.0",
     "next-session": "^2.2.0",
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.3",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.0.1",
@@ -39,8 +39,8 @@
     "react-render-html": "^0.6.0",
     "react-stripe-elements": "^6.1.0",
     "react-tinymce": "^0.7.0",
-    "sanitize-html": "^1.21.1",
-    "stripe": "^8.20.0"
+    "sanitize-html": "^1.22.0",
+    "stripe": "^8.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

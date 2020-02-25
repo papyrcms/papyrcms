@@ -109,6 +109,7 @@ describe('/api/store', () => {
         const { data: found } = await axios.get(`${rootURL}/api/store/products/mocha-test-product`, axiosConfig)
         const { data: cart, status } = await axios.delete(`${rootURL}/api/store/cart/${found._id}`, axiosConfig)
         const { data: user } = await axios.get(`${rootURL}/api/auth/currentUser`, axiosConfig)
+        await axios.delete(`${rootURL}/api/store/products/${found._id}`, axiosConfig)
 
         expect(status).to.equal(200) &&
         expect(cart).to.eql(user.cart)

@@ -15,7 +15,7 @@ describe('mailer', () => {
       const mailer = new Mailer()
       const accessToken = await mailer.getAccessToken()
       expect(accessToken).to.be.a('string')
-    })
+    }).timeout(5000)
   })
 
   describe('readHTMLFile()', () => {
@@ -110,7 +110,7 @@ describe('mailer', () => {
       const sent = await mailer.sendEmail(variables, recipient, templateName, subject)
 
       expect(sent).to.equal(true)
-    })
+    }).timeout(5000)
   })
 
   describe('sendBulkEmail()', () => {
@@ -123,13 +123,19 @@ describe('mailer', () => {
       }
       await mongoose.connect(keys.mongoURI, mongooseConfig)
 
-      const post = await Post.findOne({ slug: 'mocha-test-post' })
+      const post = new Post({
+        title: 'Mocha Test Post',
+        content: 'This is some test post content.',
+        tags: 'test, post',
+        published: true,
+        mainMedia: 'some-picture.jpg'
+      })
 
       const mailer = new Mailer()
       const sent = await mailer.sendBulkEmail(post)
 
       expect(post).to.exist &&
       expect(sent).to.equal(true)
-    })
+    }).timeout(5000)
   })
 })
