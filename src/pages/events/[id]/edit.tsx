@@ -8,32 +8,32 @@ import keys from '../../../config/keys'
 import Input from '../../../components/Input'
 
 
-const dateField = ({ date, changeState }) => (
+const dateField = ({ values, handleChange }) => (
   <Input
     label="Date"
     type="date"
     name="date"
-    value={date || ''}
-    onChange={event => changeState(event.target.value, 'date')}
+    value={values['date'] || ''}
+    onChange={event => handleChange(event.target.value, 'date')}
   />
 )
 
-const coordinatesField = ({ latitude, longitude, changeState }) => (
+const coordinatesField = ({ values, handleChange }) => (
   <div className="u-form-row">
     <Input
       id="event_latitude"
       label="Latitude"
       name="latitude"
-      value={latitude || ''}
-      onChange={event => changeState(event.target.value, 'latitude')}
+      value={values['latitude'] || ''}
+      onChange={event => handleChange(event.target.value, 'latitude')}
     />
 
     <Input
       id="event_longitude"
       label="Longitude"
       name="longitude"
-      value={longitude || ''}
-      onChange={event => changeState(event.target.value, 'longitude')}
+      value={values['longitude'] || ''}
+      onChange={event => handleChange(event.target.value, 'longitude')}
     />
   </div>
 )
