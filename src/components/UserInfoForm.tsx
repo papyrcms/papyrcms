@@ -103,7 +103,8 @@ const UserInfoForm = props => {
         '/api/auth/currentUser',
         { success, error },
         true,
-        { userId: currentUser._id }
+        { userId: currentUser._id },
+        false
       )
 
     // If we are using this form without a current user,

@@ -10,13 +10,14 @@ import UserInfoForm from '../components/UserInfoForm'
 
 const ProfilePage = props => {
 
+  const [infoValidation, setInfoValidation] = useState('')
+  const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '' })
   const { currentUser, setCurrentUser } = useContext(userContext)
+
+
   if (!currentUser) {
     return <h3 className="not-logged-in">You need to be logged in to view this page.</h3>
   }
-
-
-  const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '' })
 
 
   const onLogoutClick = () => {
@@ -56,8 +57,6 @@ const ProfilePage = props => {
       )
     }
   }
-
-  const [infoValidation, setInfoValidation] = useState('')
 
   return (
     <div className="profile">

@@ -37,7 +37,7 @@ const useForm = initialState => {
   }
 
 
-  const submitForm = async (url, callbacks: any = {}, update = false, additionalValues = {}) => {
+  const submitForm = async (url, callbacks: any = {}, update = false, additionalValues = {}, resetForm = true) => {
 
     const success = callbacks.success ? callbacks.success : () => null
     const error = callbacks.error ? callbacks.error : () => null
@@ -54,8 +54,8 @@ const useForm = initialState => {
         throw response
       }
 
-      setValues(initialState)
-      success(response, message => setValues({ ...initialState, validation: message }))
+      const resetState = resetForm ? initialState : values
+      success(response, message => setValues({ ...resetState, validation: message }))
 
     } catch (err) {
 
