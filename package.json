@@ -9,8 +9,7 @@
     "dev": "next -p 5000",
     "test": "NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha",
     "build": "next build",
-    "start": "NODE_ENV=production next start -p $PORT",
-    "heroku-config": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')"
+    "start": "NODE_ENV=production next start -p $PORT"
   },
   "keywords": [],
   "author": "Derek Garnett",
