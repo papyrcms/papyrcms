@@ -16,7 +16,6 @@ const EventsShow = props => {
 
   useEffect(() => {
     if (currentUser && currentUser.isAdmin) {
-      console.log(query.id, 'nice')
       const getEvent = async () => {
         const { data: event } = await axios.get(`/api/events/${query.id}`)
         setEvent(event)

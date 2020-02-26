@@ -38,7 +38,6 @@ const updateProduct = async (id, body) => {
 
 
 const deleteProduct = async id => {
-  console.log(id)
   await Product.findByIdAndDelete(id)
   return 'product deleted'
 }

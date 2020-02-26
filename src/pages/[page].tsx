@@ -38,7 +38,7 @@ const Page = props => {
 
   const renderSections = () => {
 
-    return props.page.sections.map((section, i) => {
+    return page.sections.map((section, i) => {
 
       section = JSON.parse(section)
 
@@ -171,7 +171,7 @@ const Page = props => {
   const renderPageHead = () => {
 
     let SectionStandard = false
-    for (let section of props.page.sections) {
+    for (let section of page.sections) {
       section = JSON.parse(section)
       if (section.type === 'SectionStandard') {
         SectionStandard = true
@@ -179,13 +179,13 @@ const Page = props => {
     }
 
     let title
-    if (!SectionStandard && props.page.route !== 'home') {
-      title = `Derek Garnett | ${props.page.title}`
+    if (!SectionStandard && page.route !== 'home') {
+      title = `Derek Garnett | ${page.title}`
     }
 
     return (
       <PageHead title={title} keywords={title}>
-        <style>{props.page.css}</style>
+        <style>{page.css}</style>
       </PageHead>
     )
   }
@@ -193,7 +193,7 @@ const Page = props => {
   return (
     <Fragment>
       {renderPageHead()}
-      <div className={props.page.className}>
+      <div className={page.className}>
         {renderSections()}
       </div>
     </Fragment>

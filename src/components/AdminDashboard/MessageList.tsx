@@ -44,10 +44,11 @@ const MessageList = props => {
     return messages.map(mess => {
 
       const { name, email, message, created, _id } = mess
+      const localReadableDate = moment(created).format('LLLL')
 
       return (
         <div key={_id} className="message-list__message">
-          <p className="message-list__date">Sent: {moment(created).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+          <p className="message-list__date">Sent: {localReadableDate}</p>
 
           <div className="message-list__info">
             <span className="message-list__info--name">From: {name}</span>
