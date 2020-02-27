@@ -15,23 +15,24 @@ const getMessages = async () => {
 
 
 const createMessage = async (body, enableEmailingToAdmin) => {
-  const message = new Message({
+  const messageBody = {
     name: body.name,
     email: body.email,
     message: body.message
-  })
+  }
 
   if (enableEmailingToAdmin) {
     const mailer = new Mailer()
-    const subject = `New message from ${message.name}!`
+    const subject = `New message from ${messageBody.name}!`
 
-    const sent = mailer.sendEmail(message, keys.adminEmail, "contact", subject)
+    const sent = mailer.sendEmail(messageBody, keys.adminEmail, "contact", subject)
 
     if (sent) {
-      message.emailSent = true
+      messageBody['emailSent'] = true
     }
   }
 
+  const message = new Message()
   await message.save()
   return message
 }
