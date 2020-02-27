@@ -8,7 +8,7 @@ const EventsPage = ({ events }) => {
 
 
   const renderDate = event => (
-    <p>{moment(event.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+    <p>{moment(event.date).format('MMMM Do, YYYY')}</p>
   )
 
 

@@ -36,7 +36,7 @@ const BlogPage = props => {
       ? post.publishDate
       : post.created
 
-    return <p>{moment(date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+    return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }
 
 

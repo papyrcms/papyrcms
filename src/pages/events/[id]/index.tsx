@@ -34,7 +34,7 @@ const EventsShow = props => {
   )
 
   const renderDate = () => (
-    <p>{moment(event.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+    <p>{moment(event.date).format('MMMM Do, YYYY')}</p>
   )
 
   return <SectionStandard

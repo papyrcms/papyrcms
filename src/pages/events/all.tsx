@@ -22,7 +22,7 @@ const EventsAllPage = props => {
 
 
   const renderDate = post => (
-    <p>{moment(post.date).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+    <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
   )
 
 

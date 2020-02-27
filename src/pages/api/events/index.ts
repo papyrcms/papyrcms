@@ -16,7 +16,7 @@ const getEvents = async () => {
 
 
 const createEvent = async body => {
-  body.date = moment(body.date).tz('America/Chicago').toISOString()
+  body.date = moment(body.date).toISOString()
 
   const event = new Event(body)
   event.slug = event.title.replace(/\s+/g, '-').toLowerCase()

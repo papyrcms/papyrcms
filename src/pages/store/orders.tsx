@@ -102,7 +102,7 @@ const Orders = props => {
 
             <div className="order__info--created">
               <h3 className="heading-tertiary">Created:</h3>
-              <p>{moment(created).tz('America/Chicago').format('MMMM Do, YYYY')}</p>
+              <p>{moment(created).format('MMMM Do, YYYY')}</p>
             </div>
           </div>
 

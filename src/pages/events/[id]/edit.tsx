@@ -64,7 +64,7 @@ const EventsEdit = props => {
       editing
       additionalFields={[coordinatesField, dateField]}
       additionalState={{
-        date: moment(event.date).tz('America/Chicago').format("YYYY-MM-DD"),
+        date: moment(event.date).format("YYYY-MM-DD"),
         latitude: event.latitude,
         longitude: event.longitude,
       }}
