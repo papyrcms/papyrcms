@@ -14,7 +14,7 @@ const dateField = ({ values, handleChange }) => (
     type="date"
     name="date"
     value={values['date'] || ''}
-    onChange={event => handleChange(event.target.value, 'date')}
+    onChange={handleChange}
   />
 )
 
@@ -25,7 +25,7 @@ const coordinatesField = ({ values, handleChange }) => (
       label="Latitude"
       name="latitude"
       value={values['latitude'] || ''}
-      onChange={event => handleChange(event.target.value, 'latitude')}
+      onChange={handleChange}
     />
 
     <Input
@@ -33,7 +33,7 @@ const coordinatesField = ({ values, handleChange }) => (
       label="Longitude"
       name="longitude"
       value={values['longitude'] || ''}
-      onChange={event => handleChange(event.target.value, 'longitude')}
+      onChange={handleChange}
     />
   </div>
 )
