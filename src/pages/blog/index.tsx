@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import moment from 'moment-timezone'
+import moment from 'moment'
 import Link from 'next/link'
 import keys from '../../config/keys'
 import filterPosts from '../../hooks/filterPosts'

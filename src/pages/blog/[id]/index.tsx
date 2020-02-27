@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import moment from 'moment-timezone'
+import moment from 'moment'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import { SectionStandard } from '../../../components/Sections/'

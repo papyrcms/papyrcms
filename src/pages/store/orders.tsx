@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import moment from 'moment-timezone'
+import moment from 'moment'
 import userContext from '../../context/userContext'
 
 

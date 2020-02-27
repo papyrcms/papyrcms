@@ -1,4 +1,4 @@
-import moment from 'moment-timezone'
+import moment from 'moment'
 import connect from "next-connect"
 import common from "../../../middleware/common/"
 import eventsEnabled from "../../../middleware/eventsEnabled"
