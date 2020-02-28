@@ -9,6 +9,8 @@ import keys from '../../../config/keys'
 const BlogEdit = props => {
 
   const { currentUser } = useContext(userContext)
+  if (!currentUser || !currentUser.isAdmin) return null
+
   const [blog, setBlog] = useState(props.blog || [])
   const { query } = useRouter()
 

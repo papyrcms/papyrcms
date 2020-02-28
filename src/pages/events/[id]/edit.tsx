@@ -42,6 +42,8 @@ const coordinatesField = ({ values, handleChange }) => (
 const EventsEdit = props => {
 
   const { currentUser } = useContext(userContext)
+  if (!currentUser || !currentUser.isAdmin) return null
+
   const [event, setEvent] = useState(props.event || {})
   const { query } = useRouter()
 

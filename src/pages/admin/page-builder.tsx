@@ -352,9 +352,7 @@ const PageBuilder = props => {
   const { title, url, className, navOrder, validation, page, css } = state as any
   const { currentUser } = useContext(userContext)
 
-  if (!currentUser || !currentUser.isAdmin) {
-    return <div />
-  }
+  if (!currentUser || !currentUser.isAdmin) return null
 
   return (
     <Fragment>

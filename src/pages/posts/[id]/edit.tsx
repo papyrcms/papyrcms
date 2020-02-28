@@ -9,6 +9,8 @@ import keys from '../../../config/keys'
 const PostsEdit = props => {
 
   const { currentUser } = useContext(userContext)
+  if (!currentUser || !currentUser.isAdmin) return null
+
   const { query } = useRouter()
   const [post, setPost] = useState(props.post)
   useEffect(() => {

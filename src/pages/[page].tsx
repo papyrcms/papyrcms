@@ -22,6 +22,8 @@ const Page = props => {
   const settings = []
   const page = props.previewPage ? props.previewPage : props.page
 
+  if (!page) return null
+
   for (let i = 0; i < page.sections.length; i++) {
     const section = JSON.parse(page.sections[i])
 
@@ -212,10 +214,14 @@ Page.getInitialProps = async ({ query }) => {
     query.page = 'home'
   }
 
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: page } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
+  try {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
+    const { data: page } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
 
-  return { page }
+    return { page }
+  } catch {
+    return {}
+  }
 }
 
 

@@ -15,9 +15,7 @@ const ProfilePage = props => {
   const { currentUser, setCurrentUser } = useContext(userContext)
 
 
-  if (!currentUser) {
-    return <h3 className="not-logged-in">You need to be logged in to view this page.</h3>
-  }
+  if (!currentUser) return null
 
 
   const onLogoutClick = () => {

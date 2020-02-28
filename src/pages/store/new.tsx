@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import userContext from '../../context/userContext'
 import PostsForm from '../../components/PostsForm'
 import Input from '../../components/Input'
 
@@ -30,15 +31,21 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => (
   </div>
 )
 
-export default () => (
-  <PostsForm
-    pageTitle="New Product"
-    apiEndpoint="/api/store/products"
-    redirectRoute="/store"
-    additionalFields={[ProductFields]}
-    additionalState={{
-      price: 0.00,
-      quantity: 0
-    }}
-  />
-)
+export default () => {
+
+  const { currentUser } = useContext(userContext)
+  if (!currentUser || !currentUser.isAdmin) return null
+
+  return (
+    <PostsForm
+      pageTitle="New Product"
+      apiEndpoint="/api/store/products"
+      redirectRoute="/store"
+      additionalFields={[ProductFields]}
+      additionalState={{
+        price: 0.00,
+        quantity: 0
+      }}
+    />
+  )
+}

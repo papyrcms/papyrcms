@@ -41,6 +41,8 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => {
 const StoreEdit = props => {
 
   const { currentUser } = useContext(userContext)
+  if (!currentUser || !currentUser.isAdmin) return null
+
 
   const [product, setProduct] = useState(props.product)
   const { query } = useRouter()

@@ -8,6 +8,7 @@ import userContext from '../../context/userContext'
 const Orders = props => {
 
   const { currentUser } = useContext(userContext)
+  if (!currentUser || !currentUser.isAdmin) return null
 
   const [orders, setOrders] = useState([])
   useEffect(() => {

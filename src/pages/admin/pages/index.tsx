@@ -10,10 +10,7 @@ const Pages = props => {
 
   const { pages, setPages } = useContext(pagesContext)
   const { currentUser } = useContext(userContext)
-
-  if (!currentUser || !currentUser.isAdmin) {
-    return null
-  }
+  if (!currentUser || !currentUser.isAdmin) return null
 
   useEffect(() => {
     const getPages = async () => {
