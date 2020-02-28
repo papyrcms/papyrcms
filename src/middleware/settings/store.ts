@@ -6,7 +6,7 @@ export default async (req, res, next) => {
   const defaultSettings = { enableStore: false }
   const settings = await configureSettings("store", defaultSettings)
 
-  _.forEach(settings, (key, value) => {
+  _.forEach(settings, (value, key) => {
     res.locals.settings[key] = value
   })
   return next()

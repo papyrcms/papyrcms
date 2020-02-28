@@ -9,7 +9,7 @@ export default async (req, res, next) => {
   }
   const settings = await configureSettings("email", defaultSettings)
 
-  _.forEach(settings, (key, value) => {
+  _.forEach(settings, (value, key) => {
     res.locals.settings[key] = value
   })
   return next()

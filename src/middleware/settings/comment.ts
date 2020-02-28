@@ -6,7 +6,7 @@ export default async (req, res, next) => {
   const defaultSettings = { enableCommenting: false }
   const settings = await configureSettings("comment", defaultSettings)
 
-  _.forEach(settings, (key, value) => {
+  _.forEach(settings, (value, key) => {
     res.locals.settings[key] = value
   })
   return next()

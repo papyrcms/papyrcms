@@ -6,7 +6,7 @@ export default async (req, res, next) => {
   const defaultSettings = { enableRegistration: true }
   const settings = await configureSettings("auth", defaultSettings)
 
-  _.forEach(settings, (key, value) => {
+  _.forEach(settings, (value, key) => {
     res.locals.settings[key] = value
   })
   return next()
