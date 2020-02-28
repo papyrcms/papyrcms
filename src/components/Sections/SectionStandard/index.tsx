@@ -163,7 +163,7 @@ const SectionStandard = props => {
     postTags: ['section-header']
   }
   const { posts: [headerPost] } = filterPosts(posts, headerSettings)
-  if (!SectionStandard && title) {
+  if (title) {
     headTitle = `${headerPost.title} | ${title}`
   }
 
