@@ -1,4 +1,5 @@
 import sanitizeHTML from "sanitize-html"
+import _ from 'lodash'
 
 
 export default (req, res, next) => {
@@ -36,7 +37,7 @@ export default (req, res, next) => {
   }
 
   // Santize inputs
-  Object.keys(req.body).forEach(key => {
+  _.forEach(req.body, (value, key) => {
     req.body[key] = sanitizeHTML(req.body[key], sanitizeRules)
   })
 

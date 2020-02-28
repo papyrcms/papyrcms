@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
+import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import postsContext from '../../context/postsContext'
 import filterPosts from '../../hooks/filterPosts'
@@ -39,7 +40,7 @@ const Layout: any = props => {
     keywords = '',
     shareImage = ''
 
-  filtered.posts.forEach(post => {
+  _.forEach(filtered.posts, post => {
 
     if (post.tags.includes('section-header')) {
 
@@ -67,7 +68,7 @@ const Layout: any = props => {
     } else if (post.tags.includes('site-description')) {
 
       descriptionContent = sanitizeHTML(post.content, { allowedTags: [] })
-      post.tags.forEach(tag => {
+      _.forEach(post.tags, tag => {
         if (tag !== 'site-description') {
           keywords = keywords.length === 0 ? tag : `${keywords}, ${tag}`
         }

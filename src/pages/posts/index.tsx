@@ -30,7 +30,7 @@ const Posts = props => {
     // Set the search bar state
     setSearch(event.target.value)
 
-    let foundPosts = posts.filter(post => {
+    let foundPosts = _.filter(posts, post => {
       let isFound = false
 
       // Go through each post's tags

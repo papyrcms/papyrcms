@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 const filterPosts = (posts, settings) => {
 
   const filterByMaxPosts = (postsToFilter, filters) => {
@@ -5,7 +7,7 @@ const filterPosts = (posts, settings) => {
 
     if (maxPosts) {
       let count = 0
-      return postsToFilter.filter(post => {
+      return _.filter(postsToFilter, post => {
         count++
         if (count <= maxPosts) {
           return post
@@ -22,7 +24,7 @@ const filterPosts = (posts, settings) => {
 
     // Filter posts by postTags
     if (postTags && postTags.length > 0) {
-      return postsToFilter.filter(post => {
+      return _.filter(postsToFilter, post => {
         let included = false
 
         if (
@@ -61,7 +63,7 @@ const filterPosts = (posts, settings) => {
       for (const tag of post.tags) {
         if (tag.includes('order-')) {
           // use index of a tag such as order-2 to be index 2
-          orderedPosts[parseInt(tag.split('-')[1])] = post
+          orderedPosts[parseInt(_.split(tag, '-')[1])] = post
           found = true
           break
         }
@@ -74,7 +76,7 @@ const filterPosts = (posts, settings) => {
       }
     }
 
-    return [...orderedPosts, ...unorderedPosts].filter(post => !!post)
+    return _.filter([...orderedPosts, ...unorderedPosts], post => !!post)
   }
 
 

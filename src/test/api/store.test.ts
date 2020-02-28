@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import axios from 'axios'
+import _ from 'lodash'
 import keys from '../../../src/config/keys'
 const { rootURL, test } = keys
 
@@ -48,7 +49,7 @@ describe('/api/store', () => {
       it('returns an array of only published products', async () => {
         const { data: products, status } = await axios.get(`${rootURL}/api/store/products/published`, axiosConfig)
         let allArePublished = true
-        products.forEach(found => {
+        _.forEach(products, found => {
           if (!found.published) allArePublished = false
         })
 

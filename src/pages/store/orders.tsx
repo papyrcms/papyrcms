@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import moment from 'moment'
 import userContext from '../../context/userContext'
 
@@ -21,7 +22,7 @@ const Orders = props => {
 
 
   const renderProducts = products => {
-    return products.map(product => {
+    return _.map(products, product => {
       return <p className="order__product" key={product._id}>{product.title}</p>
     })
   }
@@ -30,7 +31,7 @@ const Orders = props => {
     const newOrder = { ...shippedOrder, shipped: !shippedOrder.shipped }
     axios.put(`/api/store/orders/${shippedOrder._id}`, newOrder)
       .then(response => {
-        const newOrders = orders.map(order => {
+        const newOrders = _.map(orders, order => {
           if (order._id === newOrder._id) {
             order = newOrder
           }
@@ -48,7 +49,7 @@ const Orders = props => {
 
     axios.delete(`/api/store/orders/${deletedOrder._id}`)
       .then(response => {
-        const newOrders = orders.filter(order => order._id !== deletedOrder._id)
+        const newOrders = _.filter(orders, order => order._id !== deletedOrder._id)
         setOrders(newOrders)
       }).catch(error => {
         console.error(error)
@@ -56,7 +57,7 @@ const Orders = props => {
   }
 
   const renderOrders = () => {
-    return orders.map(order => {
+    return _.map(orders, order => {
       const { created, user, products, _id, notes, shipped } = order
 
       return (

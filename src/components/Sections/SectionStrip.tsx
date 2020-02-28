@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
@@ -143,7 +144,7 @@ const SectionStrip = props => {
       return <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
     }
 
-    return posts.map((post, i) => {
+    return _.map(posts, (post, i) => {
 
       const postTextClassName = post.mainMedia ? 'section-standard__text' : 'section-standard__text--wide'
 

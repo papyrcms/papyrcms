@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios'
+import _ from 'lodash'
 import keys from '../../config/keys'
 import storeContext from '../../context/storeContext'
 import CreditCardForm from '../../components/CreditCardForm'
@@ -70,14 +71,14 @@ const Checkout = props => {
   }
 
   const renderProductsList = () => {
-    return cart.map((product, i) => {
+    return _.map(cart, (product, i) => {
       return <p key={product._id + i.toString()}>{product.title}: ${product.price.toFixed(2)}</p>
     })
   }
 
   const renderTotalCost = () => {
     let totalCost = 0
-    cart.forEach(product => totalCost += product.price)
+    _.forEach(cart, product => totalCost += product.price)
     return <p className="u-margin-bottom-small">Total Cost: ${totalCost.toFixed(2)}</p>
   }
 

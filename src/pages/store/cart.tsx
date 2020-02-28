@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import Link from 'next/link'
+import _ from 'lodash'
 import storeContext from '../../context/storeContext'
 import { SectionStrip } from '../../components/Sections'
 
@@ -23,7 +24,7 @@ const Cart = props => {
 
   const renderTotal = () => {
     let totalCost = 0
-    cart.forEach(item => totalCost += item.price)
+    _.forEach(cart, item => totalCost += item.price)
 
     return (
       <Fragment>
@@ -40,7 +41,7 @@ const Cart = props => {
     let totalCost = 0
 
     if (product._id.equals) {
-      quantity = cart.filter(item => {
+      quantity = _.filter(cart, item => {
         if (product._id.equals(item._id)) {
           totalCost += item.price
           return true
@@ -48,7 +49,7 @@ const Cart = props => {
         return false
       }).length
     } else {
-      quantity = cart.filter(item => {
+      quantity = _.filter(cart, item => {
         if (item._id === product._id) {
           totalCost += item.price
           return true

@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import Link from 'next/link'
+import _ from 'lodash'
 import axios from 'axios'
 import userContext from '../../../context/userContext'
 import pagesContext from '../../../context/pagesContext'
@@ -25,7 +26,7 @@ const Pages = props => {
 
   const renderPages = () => {
 
-    return pages.map(page => (
+    return _.map(pages, page => (
       <li className='pages__page' key={page._id}>
         <div className='pages__link--visit'>
           Visit page{" - "}

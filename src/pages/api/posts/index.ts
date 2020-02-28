@@ -1,4 +1,5 @@
 import connect from "next-connect"
+import _ from 'lodash'
 import common from "../../../middleware/common/"
 import isAdmin from "../../../middleware/isAdmin"
 import Post from "../../../models/post"
@@ -17,7 +18,7 @@ const getPosts = async () => {
 
 const createPost = async (body, enableEmailingToUsers) => {
   if (body.tags) {
-    const newTags: any = body.tags.split(',').map(tag => {
+    const newTags: any = _.map(_.split(body.tags, ','), tag => {
       let pendingTag = tag
       pendingTag = pendingTag.trim()
 

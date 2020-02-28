@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Map from '../Map'
 
@@ -18,7 +19,7 @@ const SectionMaps = props => {
   let contentPost
 
   // Pick out the text, latitude, and logitude posts
-  posts.forEach(post => {
+  _.forEach(posts, post => {
     switch (true) {
       case post.tags.includes('latitude'):
         latitudePost = post

@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import Router from 'next/router'
 import Form from './Form'
 import useForm from '../../hooks/useForm'
@@ -22,7 +23,7 @@ const PostsForm = props => {
 
     let newTags = ''
 
-    tags.forEach((tag, i) => {
+    _.forEach(tags, (tag, i) => {
       if (i < tags.length - 1) {
         newTags = `${newTags}${tag}, `
       } else {
@@ -71,7 +72,7 @@ const PostsForm = props => {
   const additionalProps = {}
 
   if (additionalState) {
-    Object.keys(additionalState).forEach(key => {
+    _.forEach(additionalState, (state, key) => {
       additionalProps[key] = values[key]
     })
   }

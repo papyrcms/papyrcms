@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useContext } from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import Router from 'next/router'
 import userContext from '../../context/userContext'
 import keys from '../../config/keys'
@@ -103,9 +104,9 @@ const PageBuilder = props => {
     INITIAL_STATE.navOrder = props.page.navOrder
     INITIAL_STATE.className = props.page.className
     INITIAL_STATE.css = props.page.css
-    INITIAL_STATE.sections = props.page.sections.map(section => {
+    INITIAL_STATE.sections = _.map(props.page.sections, section => {
       const parsedSection = JSON.parse(section)
-      parsedSection.tags = parsedSection.tags.join(', ')
+      parsedSection.tags = _.join(parsedSection.tags, ', ')
       return parsedSection
     })
     INITIAL_STATE.page = props.page
@@ -115,22 +116,21 @@ const PageBuilder = props => {
 
 
   const removeSection = index => {
-    const newSections = state.sections.filter((section, i) => i !== index)
-    const newPageSections = newSections.map(section => JSON.stringify(section))
+    const newSections = _.filter(state.sections, (section, i) => i !== index)
+    const newPageSections = _.map(newSections, section => JSON.stringify(section))
     setState({ ...state, sections: newSections, page: { ...state.page, sections: newPageSections } })
   }
 
 
   const changeSectionState = (index, key, value) => {
-    const newSections = state.sections.map((section, i) => {
+    const newSections = _.map(state.sections, (section, i) => {
       if (index === i) {
         section[key] = value
       }
       return section
     })
 
-    // state.page.sections = newSections.map(section => JSON.stringify(section))
-    const newPageSections = state.page.sections.map((section, i) => {
+    const newPageSections = _.map(state.page.sections, (section, i) => {
       section = JSON.parse(section)
 
       if (index === i) {
@@ -138,7 +138,7 @@ const PageBuilder = props => {
       }
 
       if (typeof section.tags === 'string') {
-        section.tags = section.tags.split(',').map(tag => tag.trim())
+        section.tags = _.map(_.split(section.tags, ','), tag => tag.trim())
       }
 
       return JSON.stringify(section)
@@ -221,7 +221,7 @@ const PageBuilder = props => {
 
     const { sections } = state as any
 
-    return sections.map((section, i) => {
+    return _.map(sections, (section, i) => {
 
       if (section) {
 
@@ -256,14 +256,12 @@ const PageBuilder = props => {
 
 
   const renderSelectOptions = () => {
-
-    return Object.keys(sectionOptions).map(key => {
-
+    return _.map(sectionOptions, (option, key) => {
       return <option
         key={key}
         value={key}
       >
-        {sectionOptions[key].name}
+        {option.name}
       </option>
     })
   }
@@ -281,7 +279,7 @@ const PageBuilder = props => {
       className: ''
     }
 
-    const newPageSections = state.page.sections.map(section => section)
+    const newPageSections = _.map(state.page.sections, section => section)
     newPageSections.push(JSON.stringify(newSection));
 
     setState({ ...state, sections: [...sections, newSection], page: { ...state.page, sections: newPageSections } })

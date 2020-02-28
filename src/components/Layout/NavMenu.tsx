@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import _ from 'lodash'
 import Link from 'next/link'
 import settingsContext from '../../context/settingsContext'
 import pagesContext from '../../context/pagesContext'
@@ -66,7 +67,7 @@ const NavMenu = props => {
 
   const renderFirstMenuItems = () => {
 
-    const navPages = pages.filter(page => {
+    const navPages = _.filter(pages, page => {
       return (
         page.navOrder &&
         page.navOrder !== 0 &&
@@ -75,7 +76,7 @@ const NavMenu = props => {
       )
     }).sort((a, b) => a.navOrder > b.navOrder ? 1 : -1)
 
-    return navPages.map(page => {
+    return _.map(navPages, page => {
       const href = page.route === 'home' ? '/' : `/${page.route}`
       return <NavLink href={href} key={page._id}>{page.title}</NavLink>
     })
@@ -84,7 +85,7 @@ const NavMenu = props => {
 
   const renderLastMenuItems = () => {
 
-    const navPages = pages.filter(page => {
+    const navPages = _.filter(pages, page => {
       return (
         page.navOrder &&
         page.navOrder > 5 &&
@@ -92,7 +93,7 @@ const NavMenu = props => {
       )
     }).sort((a, b) => a.navOrder > b.navOrder ? 1 : -1)
 
-    return navPages.map(page => {
+    return _.map(navPages, page => {
       const href = page.route === 'home' ? '/' : `/${page.route}`
       return <NavLink href={href} key={page._id}>{page.title}</NavLink>
     })

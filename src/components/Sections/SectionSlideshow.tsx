@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import _ from 'lodash'
 import SectionMedia from './SectionMedia'
 
 
@@ -41,7 +42,7 @@ const SectionSlideshow = props => {
 
 
   const renderSlides = () => {
-    return posts.map((post, i) => {
+    return _.map(posts, (post, i) => {
       return (
         <SectionMedia
           key={post._id}
@@ -55,7 +56,7 @@ const SectionSlideshow = props => {
 
 
   const renderButtons = () => {
-    return posts.map((post, i) => {
+    return _.map(posts, (post, i) => {
       return (
         <input
           onClick={() => {

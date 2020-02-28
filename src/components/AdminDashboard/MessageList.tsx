@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import moment from 'moment'
 import Modal from '../Modal'
 import userContext from '../../context/userContext'
@@ -29,7 +30,7 @@ const MessageList = props => {
       axios.delete(`/api/messages/${id}`)
         .then(res => {
 
-          const newMessages = messages.filter(message => message._id !== id)
+          const newMessages = _.filter(messages, message => message._id !== id)
           setMessages(newMessages)
 
         }).catch(err => {
@@ -41,9 +42,8 @@ const MessageList = props => {
 
   const renderMessages = () => {
 
-    return messages.map(mess => {
+    return _.map(messages, ({ name, email, message, created, _id }) => {
 
-      const { name, email, message, created, _id } = mess
       const localReadableDate = moment(created).format('LLLL')
 
       return (

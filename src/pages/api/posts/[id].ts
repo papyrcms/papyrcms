@@ -1,4 +1,5 @@
 import connect from "next-connect"
+import _ from 'lodash'
 import common from "../../../middleware/common/"
 import Post from "../../../models/post"
 import Comment from "../../../models/comment"
@@ -52,7 +53,7 @@ const updatePost = async (id, body, enableEmailingToUsers) => {
 const deletePost = async id => {
   const post = await Post.findById(id)
 
-  post.comments.forEach(async comment => {
+  _.forEach(post.comments, async comment => {
     await Comment.findOneAndDelete({ _id: comment })
   })
 

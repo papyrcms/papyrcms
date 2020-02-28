@@ -1,4 +1,5 @@
 import connect from "next-connect"
+import _ from 'lodash'
 import common from "../../../../middleware/common/"
 import isLoggedIn from "../../../../middleware/isLoggedIn"
 import storeEnabled from "../../../../middleware/storeEnabled"
@@ -21,7 +22,7 @@ const addToCart = async (productId, user) => {
   }
 
   // If we have all available products in our cart
-  if (user.cart.filter(inCart => product._id.equals(inCart._id)).length >= product.quantity) {
+  if (_.filter(user.cart, inCart => product._id.equals(inCart._id)).length >= product.quantity) {
     throw new Error('You cannot buy more than what is available.')
   }
 
@@ -34,7 +35,7 @@ const addToCart = async (productId, user) => {
 
 const removeFromCart = async (productId, user) => {
   let removed = false
-  const cart = user.cart.filter(product => {
+  const cart = _.filter(user.cart, product => {
 
     // If one has not been removed and it has the passed id, remove it
     if (product._id.equals(productId) && !removed) {

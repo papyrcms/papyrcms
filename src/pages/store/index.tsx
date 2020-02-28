@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import Link from 'next/link'
+import _ from 'lodash'
 import axios from 'axios'
 import storeContext from '../../context/storeContext'
 import userContext from '../../context/userContext'
@@ -35,7 +36,7 @@ const StorePage = props => {
 
 
   const renderAddToCart = product => {
-    const quantityInCart = cart.filter(cartProduct => cartProduct._id === product._id).length
+    const quantityInCart = _.filter(cart, cartProduct => cartProduct._id === product._id).length
     let message = 'Add to cart'
     if (quantityInCart) message += ` (${quantityInCart} now)`
 

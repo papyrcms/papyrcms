@@ -1,4 +1,5 @@
 import connect from 'next-connect'
+import _ from 'lodash'
 import common from '../../../middleware/common/'
 import Page from '../../../models/page'
 
@@ -44,7 +45,7 @@ const createPage = async body => {
       throw new Error("You can only choose positive integers for max posts.")
     }
 
-    section.tags = section.tags.split(',').map(tag => {
+    section.tags = _.map(_.split(section.tags, ','), tag => {
       let pendingTag = tag
       pendingTag = pendingTag.trim()
       if (!!pendingTag) {

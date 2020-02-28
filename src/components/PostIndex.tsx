@@ -1,12 +1,13 @@
 import React from 'react'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
+import _ from 'lodash'
 import Media from './Media'
 
 const PostIndex = props => {
 
   const renderTags = tags => {
-    return tags.map((tag, i) => {
+    return _.map(tags, (tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
       } else {
@@ -49,9 +50,8 @@ const PostIndex = props => {
       return <h3 className="heading-tertiary">Nothing published yet</h3>
     }
 
-    return Object.keys(posts).map(key => {
+    return _.map(posts, post => {
 
-      const post = posts[key]
       const { _id, title, tags, mainMedia, content, published } = post
 
       let postContent = ''

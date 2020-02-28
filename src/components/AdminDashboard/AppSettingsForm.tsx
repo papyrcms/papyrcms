@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import settingsContext from '../../context/settingsContext'
 
 
@@ -31,7 +32,7 @@ const AppSettingsForm = () => {
 
   const renderSettingsInputs = () => {
 
-    return Object.keys(settings).map(key => {
+    return _.map(settings, (setting, key) => {
 
       // Format label
       const result = key.replace(/([A-Z])/g, " $1")

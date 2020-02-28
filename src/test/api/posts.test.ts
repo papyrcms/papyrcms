@@ -1,5 +1,6 @@
 import { expect } from 'chai'
 import axios from 'axios'
+import _ from 'lodash'
 import keys from '../../../src/config/keys'
 const { rootURL, test } = keys
 
@@ -43,7 +44,7 @@ describe('/api/posts', () => {
     it('returns an array of only published posts', async () => {
       const { data: posts, status } = await axios.get(`${rootURL}/api/posts/published`)
       let allArePublished = true
-      posts.forEach(found => {
+      _.forEach(posts, found => {
         if (!found.published) allArePublished = false
       })
 

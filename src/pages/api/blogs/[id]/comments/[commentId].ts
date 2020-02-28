@@ -1,4 +1,5 @@
 import connect from "next-connect"
+import _ from 'lodash'
 import common from "../../../../../middleware/common/"
 import blogEnabled from "../../../../../middleware/blogEnabled"
 import userCommentsEnabled from "../../../../../middleware/userCommentsEnabled"
@@ -22,7 +23,7 @@ const updateComment = async (comment, newContent) => {
 
 const deleteComment = async (blogId, comment) => {
   const blog = await Blog.findById(blogId)
-  blog.comments.forEach((foundComment, i) => {
+  _.forEach(blog.comments, (foundComment, i) => {
     if (comment._id.equals(foundComment._id)) {
       blog.comments.splice(i, 1)
     }

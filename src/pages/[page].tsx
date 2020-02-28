@@ -1,5 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import {
   SectionStrip,
   SectionCards,
@@ -38,13 +39,13 @@ const Page = props => {
 
   const renderSections = () => {
 
-    return page.sections.map((section, i) => {
+    return _.map(page.sections, (section, i) => {
 
       section = JSON.parse(section)
 
       const key = `${section.type}-${i}`
       const posts = filtered[key]
-      const emptyMessage = `Create content with the ${section.tags.join(', ')} tags.`
+      const emptyMessage = `Create content with the ${_.join(section.tags, ', ')} tags.`
 
       switch (section.type) {
 

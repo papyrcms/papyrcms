@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import Link from 'next/link'
+import _ from 'lodash'
 import axios from 'axios'
 import renderHTML from 'react-render-html'
 import userContext from '../../../context/userContext'
@@ -44,7 +45,7 @@ const Comment = props => {
       axios.put(`${apiPath}/${post._id}/comments/${editing}`, commentObject)
         .then(res => {
 
-          const newComments = comments.map(comment =>{
+          const newComments = _.map(comments, comment =>{
             if (comment._id === editing) {
               comment = res.data
             }
@@ -70,7 +71,7 @@ const Comment = props => {
       axios.delete(`${apiPath}/${post._id}/comments/${comment._id}`)
         .then(res => {
 
-          const newComments = comments.filter(comm => comm._id !== comment._id)
+          const newComments = _.filter(comments, comm => comm._id !== comment._id)
           setComments(newComments)
 
         }).catch(err => {
@@ -117,7 +118,7 @@ const Comment = props => {
       return <p className="comments__none">Leave a comment.</p>
     }
 
-    return comments.map(comment => {
+    return _.map(comments, comment => {
 
       const { content, author, _id } = comment
 

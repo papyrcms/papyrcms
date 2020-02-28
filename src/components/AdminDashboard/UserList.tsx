@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import userContext from '../../context/userContext'
 import Modal from '../Modal'
 
@@ -33,7 +34,7 @@ const UserList = props => {
       axios.delete(`/api/users/${user._id}`)
         .then(response => {
 
-          const newUsers = users.filter(foundUser => user._id !== foundUser._id)
+          const newUsers = _.filter(users, foundUser => user._id !== foundUser._id)
           setUsers(newUsers)
         })
         .catch(error => {
@@ -50,7 +51,7 @@ const UserList = props => {
       axios.put('/api/users/makeAdmin', { userId: user._id, isAdmin: !user.isAdmin })
         .then(response => {
 
-          const newUsers = users.map(foundUser => {
+          const newUsers = _.map(users, foundUser => {
             if (user._id === foundUser._id) {
               foundUser.isAdmin = !user.isAdmin
             }
@@ -72,7 +73,7 @@ const UserList = props => {
       axios.put('/api/users/ban', { userId: user._id, isBanned: !user.isBanned })
         .then(response => {
 
-          const newUsers = users.map(foundUser => {
+          const newUsers = _.map(users, foundUser => {
             if (user._id === foundUser._id) {
               foundUser.isBanned = !user.isBanned
             }
@@ -138,7 +139,7 @@ const UserList = props => {
 
 
   const renderUsers = () => {
-    return users.map(user => {
+    return _.map(users, user => {
       return (
         <li key={user._id} className="user-list__user">
           <div className="user-list__item">

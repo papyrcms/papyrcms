@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import axios from 'axios'
+import _ from 'lodash'
 import Link from 'next/link'
 import Router from 'next/router'
 import renderHTML from 'react-render-html'
@@ -104,7 +105,7 @@ const SectionStandard = props => {
 
 
   const renderTags = () => {
-    return tags.map((tag, i) => {
+    return _.map(tags, (tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
       } else {
