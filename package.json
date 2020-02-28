@@ -39,11 +39,11 @@
     "react-stripe-elements": "^6.1.0",
     "react-tinymce": "^0.7.0",
     "sanitize-html": "^1.22.0",
-    "stripe": "^8.22.0"
+    "stripe": "^8.23.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/register": "^7.8.3",
+    "@babel/core": "^7.8.6",
+    "@babel/register": "^7.8.6",
     "@types/chai": "^4.2.9",
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.6",
