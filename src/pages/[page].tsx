@@ -179,8 +179,13 @@ const Page = props => {
     }
 
     let title
-    if (!SectionStandard && page.route !== 'home') {
-      title = `Derek Garnett | ${page.title}`
+    const headerSettings = {
+      maxPosts: 1,
+      postTags: ['section-header']
+    }
+    const { posts: [headerPost] } = filterPosts(posts, headerSettings)
+    if (!SectionStandard && page.route !== 'home' && page.title) {
+      title = `${headerPost.title} | ${page.title}`
     }
 
     return (

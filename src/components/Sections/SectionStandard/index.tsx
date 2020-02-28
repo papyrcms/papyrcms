@@ -4,9 +4,11 @@ import Link from 'next/link'
 import Router from 'next/router'
 import renderHTML from 'react-render-html'
 import userContext from '../../../context/userContext'
+import postsContext from '../../../context/postsContext'
 import Comment from './Comment'
 import Media from '../../Media'
 import PageHead from '../../PageHead'
+import filterPosts from '../../../hooks/filterPosts'
 
 
 /**
@@ -40,6 +42,7 @@ const SectionStandard = props => {
   if (!props.post) return null
 
   const { currentUser } = useContext(userContext)
+  const { posts } = useContext(postsContext)
 
   const {
     post, enableCommenting,
@@ -153,11 +156,21 @@ const SectionStandard = props => {
     )
   }
 
+  let headTitle
+  const headerSettings = {
+    maxPosts: 1,
+    postTags: ['section-header']
+  }
+  const { posts: [headerPost] } = filterPosts(posts, headerSettings)
+  if (!SectionStandard && title) {
+    headTitle = `${headerPost.title} | ${title}`
+  }
+
   return (
     <div className={`posts-show ${className || ''}`}>
 
       <PageHead
-        title={`Derek Garnett | ${title || ''}`}
+        title={headTitle}
         image={mainMedia}
         description={postContent.replace('<p>', '').replace('</p>', '')}
         keywords={tags}
