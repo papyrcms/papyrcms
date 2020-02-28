@@ -1,8 +1,6 @@
 export default {
-  stripePublishableTestKey: process.env.STRIPE_PUBLISHABLE_TEST_KEY,
-  stripeSecretTestKey: process.env.STRIPE_SECRET_TEST_KEY,
-  stripePublishableLiveKey: process.env.STRIPE_PUBLISHABLE_LIVE_KEY,
-  stripeSecretLiveKey: process.env.STRIPE_SECRET_LIVE_KEY,
+  stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY,
 
   gmailClientId: process.env.GMAIL_CLIENT_ID,
   gmailClientSecret: process.env.GMAIL_CLIENT_SECRET,

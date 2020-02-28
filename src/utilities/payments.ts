@@ -8,7 +8,7 @@ class Payments {
 
   constructor() {
     const config: Stripe.StripeConfig = { apiVersion: '2019-12-03' }
-    this.stripe = new Stripe(keys.stripeSecretTestKey, config)
+    this.stripe = new Stripe(keys.stripeSecretKey, config)
   }
 
 

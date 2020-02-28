@@ -9,8 +9,8 @@ Inside the /config directory, create a file called `dev.js`. When not in product
 
     module.exports = {
       // Stripe
-      stripePublishableTestKey: '',
-      stripeSecretTestKey: ,
+      stripePublishableKey: '',
+      stripeSecretKey: ,
       stripePublishableLiveKey: '',
       stripeSecretLiveKey: '',
 
@@ -46,8 +46,8 @@ Let's go through each of these keys and establish what their values should be:
 
 #### Stripe
 The following keys can be obtained through your Stripe Dashboard found at stripe.com.
-* stripePublishableTestKey: This is your publishable key in Stripe's test mode
-* stripeSecretTestKey: This is your publishable key in Stripe's test mode
+* stripePublishableKey: This is your publishable key in Stripe's test mode
+* stripeSecretKey: This is your publishable key in Stripe's test mode
 * stripePublishableLiveKey: This is your publishable key in Stripe's test mode
 * stripeSecretLiveKey: This is your publishable key in Stripe's test mode
 

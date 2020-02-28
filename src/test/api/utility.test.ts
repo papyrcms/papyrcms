@@ -1,7 +1,7 @@
 import { expect } from "chai"
 import axios from 'axios'
 import keys from '../../../src/config/keys'
-const { test, rootURL, googleAnalyticsId, googleMapsKey, stripePublishableTestKey } = keys
+const { test, rootURL, googleAnalyticsId, googleMapsKey, stripePublishableKey } = keys
 
 
 const axiosConfig = {
@@ -30,7 +30,7 @@ describe("/api/utility", () => {
   describe("/stripePubKey", () => {
     it("returns the correct id", async () => {
       const { data: id } = await axios.post(`${rootURL}/api/utility/stripePubKey`)
-      expect(id).to.equal(stripePublishableTestKey)
+      expect(id).to.equal(stripePublishableKey)
     })
   })
 
