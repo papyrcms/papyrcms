@@ -7,7 +7,16 @@ import userContext from '../../../context/userContext'
 import settingsContext from '../../../context/settingsContext'
 import CommentForm from './CommentForm'
 
-const Comment = props => {
+type Props = {
+  enableCommenting: boolean,
+  post: any,
+  apiPath: string,
+  beforeCommentForm: Function,
+  afterCommentForm: Function,
+  comments: Array<any>
+}
+
+const Comment = (props: Props) => {
 
   const {
     enableCommenting, post, apiPath,
@@ -15,7 +24,7 @@ const Comment = props => {
   } = props
   const { settings } = useContext(settingsContext)
 
-  if (!settings['enableCommenting'] || !enableCommenting) {
+  if (!settings.enableCommenting || !enableCommenting) {
     return null
   }
 
@@ -27,7 +36,7 @@ const Comment = props => {
   const [formDetached, setFormDetached] = useState(false)
 
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: MouseEvent) => {
 
     event.preventDefault()
 
@@ -62,7 +71,7 @@ const Comment = props => {
   }
 
 
-  const onDeleteClick = comment => {
+  const onDeleteClick = (comment) => {
 
     const confirm = window.confirm('Are you sure you want to delete this comment?')
 
@@ -81,7 +90,7 @@ const Comment = props => {
   }
 
 
-  const renderAuthOptions = comment => {
+  const renderAuthOptions = (comment) => {
 
     if (
       currentUser && (

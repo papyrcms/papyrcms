@@ -7,7 +7,7 @@ import Modal from '../Modal'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
 
-const LoginForm = props => {
+const LoginForm = () => {
 
   const { setCurrentUser } = useContext(userContext)
   const INITIAL_STATE = {
@@ -18,10 +18,10 @@ const LoginForm = props => {
   const formState = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    const success = res => {
+    const success = (res: any) => {
       localStorage.setItem('token', res.data.token)
       setCurrentUser(res.data.user)
       Router.push('/profile')

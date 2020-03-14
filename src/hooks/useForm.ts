@@ -2,14 +2,15 @@ import { useState } from 'react'
 import axios from 'axios'
 
 
-const useForm = initialState => {
-
+const useForm = (initialState: any) => {
   const initialErrors: any = {}
+
+
   const [values, setValues] = useState(initialState)
   const [errors, setErrors] = useState(initialErrors)
 
 
-  const handleChange = event => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { type, checked, name, value } = event.target
 
     if (type && type === 'checkbox') {
@@ -20,7 +21,7 @@ const useForm = initialState => {
   }
 
 
-  const validateField = event => {
+  const validateField = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { type, required, value, name } = event.target
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -37,7 +38,7 @@ const useForm = initialState => {
   }
 
 
-  const submitForm = async (url, callbacks: any = {}, update = false, additionalValues = {}, resetForm = true) => {
+  const submitForm = async (url: string, callbacks: any = {}, update = false, additionalValues = {}, resetForm = true) => {
 
     const success = callbacks.success ? callbacks.success : () => null
     const error = callbacks.error ? callbacks.error : () => null
@@ -55,7 +56,7 @@ const useForm = initialState => {
       }
 
       const resetState = resetForm ? initialState : values
-      success(response, message => setValues({ ...resetState, validation: message }))
+      success(response, (message: string) => setValues({ ...resetState, validation: message }))
 
     } catch (err) {
 
@@ -70,7 +71,7 @@ const useForm = initialState => {
       }
 
       setValues({ ...values, validation: message })
-      error(err, message => setValues({ ...initialState, validation: message }))
+      error(err, (message: string) => setValues({ ...initialState, validation: message }))
     }
   }
 

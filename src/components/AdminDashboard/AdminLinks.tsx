@@ -3,12 +3,12 @@ import Link from 'next/link'
 import settingsContext from '../../context/settingsContext'
 
 
-const AdminLinks = props => {
+const AdminLinks = () => {
 
   const { settings } = useContext(settingsContext)
 
   const renderStoreMenuItems = () => {
-    if (settings['enableStore']) {
+    if (settings.enableStore) {
       return (
         <Fragment>
           <Link href="/store/new">
@@ -29,7 +29,7 @@ const AdminLinks = props => {
 
 
   const renderBlogMenuItems = () => {
-    if (settings['enableBlog']) {
+    if (settings.enableBlog) {
       return (
         <Fragment>
           <Link href="/blog/new">
@@ -46,7 +46,7 @@ const AdminLinks = props => {
 
 
   const renderEventMenuItems = () => {
-    if (settings['enableEvents']) {
+    if (settings.enableEvents) {
       return (
         <Fragment>
           <Link href="/events/new">

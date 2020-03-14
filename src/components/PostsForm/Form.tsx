@@ -5,7 +5,16 @@ import RichTextEditor from '../RichTextEditor'
 import Media from '../Media'
 import Input from '../Input'
 
-const Form = props => {
+type Props = {
+  values: any,
+  handleChange: Function,
+  errors: any,
+  validateField: Function,
+  additionalFields: Array<React.FunctionComponent>,
+  handleSubmit: React.FormEvent<HTMLFormElement>
+}
+
+const Form = (props: Props) => {
 
   const {
     values, handleChange, errors,
@@ -31,7 +40,7 @@ const Form = props => {
   )
 
 
-  const handleFileInputChange = event => {
+  const handleFileInputChange = (event: React.ChangeEvent<FileEventTarget>) => {
 
     handleChange({ target: { value: '', name: 'mainMedia' } })
     setUploadedMedia(true)

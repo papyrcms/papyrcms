@@ -5,9 +5,9 @@ import userContext from '../../context/userContext'
 import Modal from '../Modal'
 
 
-const UserList = props => {
+const UserList = () => {
 
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<Array<User>>([])
   const [selectedUser, setSelectedUser] = useState('')
   const { currentUser } = useContext(userContext)
 
@@ -22,7 +22,7 @@ const UserList = props => {
   }, [currentUser])
 
 
-  const deleteUser = user => {
+  const deleteUser = (user: User) => {
 
     const confirm = window.confirm(`Are you sure you want to delete ${user.email}`)
 
@@ -44,7 +44,7 @@ const UserList = props => {
   }
 
 
-  const changeAdminStatus = user => {
+  const changeAdminStatus = (user: User) => {
 
     if (user._id !== currentUser._id) {
 
@@ -66,7 +66,7 @@ const UserList = props => {
   }
 
 
-  const changeBannedStatus = user => {
+  const changeBannedStatus = (user: User) => {
 
     if (user._id !== currentUser._id) {
 
@@ -88,7 +88,7 @@ const UserList = props => {
   }
 
 
-  const renderUserOptions = user => {
+  const renderUserOptions = (user: User) => {
     if (user._id !== currentUser._id) {
       return (
         <div className="user-list__options">
@@ -118,7 +118,7 @@ const UserList = props => {
   }
 
 
-  const renderUserInfo = user => {
+  const renderUserInfo = (user: User) => {
 
     const visible = user._id === selectedUser ? true : false
 

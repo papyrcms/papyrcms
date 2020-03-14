@@ -5,13 +5,19 @@ import storeContext from '../../context/storeContext'
 import userContext from '../../context/userContext'
 
 
+type Props = {
+  mainTitle: string,
+  subTitle: string
+}
+
+
 /**
  * Header displayed in every view
  *
  * @prop mainTitle - String - Text displayed in big letters
  * @prop subTitle - String - Smaller text displayed under the main Title
  */
-const Header = props => {
+const Header = (props: Props) => {
 
   const { mainTitle, subTitle } = props
   const { currentUser } = useContext(userContext)
@@ -36,7 +42,7 @@ const Header = props => {
 
   const { cart } = useContext(storeContext)
   const renderCart = () => {
-    if (settings['enableStore']) {
+    if (settings.enableStore) {
       const menuText = `Cart${cart.length !== 0 ? ` (${cart.length})` : ''}`
 
       return (
@@ -61,7 +67,7 @@ const Header = props => {
 
   const renderNav = () => {
     if (
-      settings['enableMenu'] ||
+      settings.enableMenu ||
       (currentUser && currentUser.isAdmin)
     ) {
       return (

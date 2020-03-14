@@ -15,7 +15,7 @@ const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) 
   const [validation, setValidation] = useState('')
   const [processing, setProcessing] = useState(false)
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault()
 
     setProcessing(true)
@@ -77,13 +77,22 @@ const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) 
 })
 
 
-const StripeForm = props => {
+type Props = {
+  className: string,
+  onSubmit: Function
+}
+
+
+const StripeForm = (props: Props) => {
 
   const { className, onSubmit } = props
-  const [stripe, setStripe] = useState(null)
+  const [stripe, setStripe] = useState(window.Stripe(''))
   const { keys } = useContext(keysContext)
 
-  useEffect(() => {setStripe(window.Stripe(keys['stripePubKey']))}, [])
+  useEffect(() => {
+    const stripeInstance = window.Stripe(keys.stripePubKey)
+    setStripe(stripeInstance)
+  }, [])
 
   return (
     <StripeProvider stripe={stripe}>

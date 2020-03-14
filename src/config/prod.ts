@@ -18,5 +18,5 @@ export default {
 
   mongoURI: process.env.MONGO_URI,
   rootURL: process.env.ROOT_URL,
-  jwtSecret: process.env.JWT_SECRET,
+  jwtSecret: process.env.JWT_SECRET
 }

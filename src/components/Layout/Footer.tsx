@@ -9,13 +9,14 @@ const excludeFooterRoutes = [
 ]
 
 
-/**
- * Footer for every view except those listed in excludeFooterRoutes
- *
- * @prop ctaText - String - Heading text over the CTA button
- * @prop ctaButtonText - String - Text inside the CTA button
- */
-const Footer = props => {
+type Props = {
+  footerTitle: string,
+  footerContent: string,
+  footerCopyrightContent: string
+}
+
+
+const Footer = (props: Props) => {
 
   // TODO: Only include the footer if the current route is not in the array
 

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, ReactChild } from 'react'
 import sanitizeHTML from 'sanitize-html'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
@@ -10,12 +10,15 @@ import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
 
 
+type Props = {
+  children: React.ReactChildren
+}
 /**
  * Layout wrapping all views
  *
  * @prop children - Component - The page rendered
  */
-const Layout: any = props => {
+const Layout: any = (props: Props) => {
 
   let { posts } = useContext(postsContext)
   const settings = {
@@ -117,7 +120,6 @@ const Layout: any = props => {
       <Footer
         footerTitle={footerTitle}
         footerContent={renderHTML(footerContent)}
-        ctaButtonText="contact"
         footerCopyrightContent={renderHTML(footerCopyrightContent)}
       />
 

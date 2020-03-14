@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import pagesContext from './pagesContext'
 
-const PagesProvider = props => {
+type Props = {
+  pages: Array<object>,
+  children: React.ReactChildren
+}
+
+const PagesProvider = (props: Props) => {
 
   const [pages, setPages] = useState(props.pages)
 

@@ -6,9 +6,9 @@ import Modal from '../Modal'
 import userContext from '../../context/userContext'
 
 
-const MessageList = props => {
+const MessageList = () => {
 
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState<Array<Message>>([])
   const { currentUser } = useContext(userContext)
   useEffect(() => {
     const getMessages = async () => {
@@ -21,7 +21,7 @@ const MessageList = props => {
   }, [currentUser])
 
 
-  const deleteMessage = id => {
+  const deleteMessage = (id: string) => {
 
     const confirm = window.confirm("Are you sure you want to delete this message?")
 
