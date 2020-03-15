@@ -1,25 +1,33 @@
 import _ from 'lodash'
 
-const filterPosts = (posts, settings) => {
+type Posts = Array<Post | Blog | Event | Product>
+type Filter = {
+  maxPosts?: number,
+  postTags?: Array<string>,
+  strictTags?: boolean,
+  propName?: string
+}
+type Settings = Filter | Array<Filter>
 
-  const filterByMaxPosts = (postsToFilter, filters) => {
+const filterPosts = (posts: Posts, settings: Settings) => {
+
+  const filterByMaxPosts = (postsToFilter: Posts, filters: Filter): Posts => {
     const { maxPosts } = filters
 
     if (maxPosts) {
-      let count = 0
-      return _.filter(postsToFilter, post => {
-        count++
-        if (count <= maxPosts) {
-          return post
-        }
-      })
+      // const filteredPosts = _.filter(postsToFilter, (post, i) => {
+      //   if (i+1 <= maxPosts) {
+      //     return post
+      //   }
+      // })
+      postsToFilter.length = maxPosts
     }
 
     return postsToFilter
   }
 
 
-  const filterByPostTags = (postsToFilter, filters) => {
+  const filterByPostTags = (postsToFilter: Posts, filters: Filter) => {
     const { postTags, strictTags } = filters
 
     // Filter posts by postTags
@@ -52,7 +60,7 @@ const filterPosts = (posts, settings) => {
   }
 
 
-  const orderPosts = postsToFilter => {
+  const orderPosts = (postsToFilter: Posts) => {
 
     const orderedPosts = []
     const unorderedPosts = []
@@ -80,7 +88,7 @@ const filterPosts = (posts, settings) => {
   }
 
 
-  const filterPosts = (postsToFilter, filters) => {
+  const filterPosts = (postsToFilter: Posts, filters: Filter) => {
 
     postsToFilter = filterByPostTags(postsToFilter, filters)
     postsToFilter = orderPosts(postsToFilter)
@@ -95,7 +103,9 @@ const filterPosts = (posts, settings) => {
 
   if (Array.isArray(settings)) {
     for (const filters of settings) {
-      filtered[filters.propName] = filterPosts(posts, filters)
+      if (filters.propName) {
+        filtered[filters.propName] = filterPosts(posts, filters)
+      }
     }
   } else {
     filtered['posts'] = filterPosts(posts, settings)
