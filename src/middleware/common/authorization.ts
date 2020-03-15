@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import User from '../../models/user'
 import keys from '../../config/keys'
@@ -6,7 +7,7 @@ import keys from '../../config/keys'
 require('../../models/product')
 
 
-export default async (req, res, next) => {
+export default async (req: NextApiRequest, res: NextApiResponse, next: Function) => {
 
   if (req.headers.authorization && req.headers.authorization.includes('bearer ')) {
     const token = req.headers.authorization.replace('bearer ', '')
