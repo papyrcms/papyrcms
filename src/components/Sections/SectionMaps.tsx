@@ -3,6 +3,13 @@ import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Map from '../Map'
 
+type Props = {
+  posts: Array<Post>,
+  emptyTitle: string,
+  emptyMessage: string,
+  mapLocation?: string
+}
+
 /**
  * SectionMaps will render a section with some text and a
  * google map at a particular location
@@ -10,13 +17,13 @@ import Map from '../Map'
  * @prop mapLocation - String('start' or 'end') - renders the map before or after the content
  * @prop posts - Array[Object - latitude, longitude, and content posts]
  */
-const SectionMaps = props => {
+const SectionMaps = (props: Props) => {
 
   const { posts, emptyTitle, emptyMessage, mapLocation = 'start' } = props
 
-  let latitudePost
-  let longitudePost
-  let contentPost
+  let latitudePost: Post | null
+  let longitudePost: Post | null
+  let contentPost: Post | null
 
   // Pick out the text, latitude, and logitude posts
   _.forEach(posts, post => {
@@ -33,6 +40,7 @@ const SectionMaps = props => {
   })
 
   // If we don't have all the info we need
+  // @ts-ignore vars assigned in the forEach above
   if (!contentPost || !longitudePost || !latitudePost) {
     return (
       <section className="section-maps">

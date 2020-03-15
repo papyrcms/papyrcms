@@ -9,9 +9,15 @@ import {
 } from 'react-stripe-elements'
 import keysContext from '../context/keysContext'
 
+type CreditCardFormProps = {
+  className?: string,
+  stripe: stripe.Stripe,
+  onSubmit: Function
+}
 
-const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) => {
+const CreditCardForm = injectStripe<any>((props: CreditCardFormProps) => {
 
+  const { className = "", stripe, onSubmit } = props
   const [validation, setValidation] = useState('')
   const [processing, setProcessing] = useState(false)
 
@@ -23,7 +29,7 @@ const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) 
     const data = await stripe.createSource({ type: "card" })
 
     if (data.error) {
-      setValidation(data.error.message)
+      setValidation(data.error.message || '')
       setProcessing(false)
       return
     }
@@ -77,13 +83,13 @@ const CreditCardForm = injectStripe<any>(({ className = "", stripe, onSubmit }) 
 })
 
 
-type Props = {
-  className: string,
+type StripeFormProps = {
+  className?: string,
   onSubmit: Function
 }
 
 
-const StripeForm = (props: Props) => {
+const StripeForm = (props: StripeFormProps) => {
 
   const { className, onSubmit } = props
   const [stripe, setStripe] = useState(window.Stripe(''))

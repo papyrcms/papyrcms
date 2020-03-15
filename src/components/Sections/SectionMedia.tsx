@@ -2,6 +2,14 @@ import React from 'react'
 import renderHTML from 'react-render-html'
 import Media from '../Media'
 
+type Props = {
+  post: Post,
+  emptyTitle?: string,
+  emptyMessage?: string,
+  fixed?: boolean,
+  alt: string,
+  className?: string
+}
 
 /**
  * SectionMedia will render an image or video across the width
@@ -12,7 +20,7 @@ import Media from '../Media'
  * @prop fixed - Boolean - Determine whether the media will be fixed to the background or scroll with the view
  * @prop alt - String - The alt attribute for the media
  */
-const SectionMedia = props => {
+const SectionMedia = (props: Props) => {
 
   if (!props.post) {
     const { emptyTitle, emptyMessage } = props

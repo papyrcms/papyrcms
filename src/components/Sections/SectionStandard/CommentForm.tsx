@@ -1,12 +1,20 @@
 import React from 'react'
-import RichTextEditor from '../../RichTextEditor'
+// import RichTextEditor from '../../RichTextEditor'
 
-const CommentForm = props => {
+type Props = {
+  content: string,
+  onChange: Function,
+  onSubmit: Function,
+  detached: Boolean,
+  onDetachClick: Function
+}
+
+const CommentForm = (props: Props) => {
 
   const { content, onChange, onSubmit, detached, onDetachClick } = props
 
   return (
-    <form className={`comment-form  ${detached ? 'detached' : ''}`} onSubmit={onSubmit.bind(this)}>
+    <form className={`comment-form  ${detached ? 'detached' : ''}`} onSubmit={event => onSubmit(event)}>
 
       <label htmlFor="comment-text-editor" className="comment-form__label">Comment</label>
       {/* <RichTextEditor

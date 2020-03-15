@@ -8,7 +8,7 @@ import settingsContext from '../../../context/settingsContext'
 import CommentForm from './CommentForm'
 
 type Props = {
-  enableCommenting: boolean,
+  enableCommenting: Boolean,
   post: any,
   apiPath: string,
   beforeCommentForm: Function,
@@ -32,11 +32,11 @@ const Comment = (props: Props) => {
 
   const [formContent, setFormContent] = useState('')
   const [comments, setComments] = useState(props.comments)
-  const [editing, setEditing] = useState(null)
+  const [editing, setEditing] = useState('')
   const [formDetached, setFormDetached] = useState(false)
 
 
-  const handleSubmit = (event: MouseEvent) => {
+  const handleSubmit = (event: React.FormEvent<Element>) => {
 
     event.preventDefault()
 
@@ -62,7 +62,7 @@ const Comment = (props: Props) => {
           })
           setComments(newComments)
           setFormContent('')
-          setEditing(null)
+          setEditing('')
 
         }).catch(err => {
           console.error(err)
@@ -71,7 +71,7 @@ const Comment = (props: Props) => {
   }
 
 
-  const onDeleteClick = (comment) => {
+  const onDeleteClick = (comment: Comment) => {
 
     const confirm = window.confirm('Are you sure you want to delete this comment?')
 
@@ -90,7 +90,7 @@ const Comment = (props: Props) => {
   }
 
 
-  const renderAuthOptions = (comment) => {
+  const renderAuthOptions = (comment: Comment) => {
 
     if (
       currentUser && (
@@ -150,7 +150,7 @@ const Comment = (props: Props) => {
           <button
             className="button button-small button-tertiary"
             onClick={() => {
-              setEditing(null)
+              setEditing('')
               setFormContent('')
             }}
           >
@@ -178,7 +178,7 @@ const Comment = (props: Props) => {
           detached={formDetached}
           onDetachClick={() => setFormDetached(!formDetached)}
           content={formContent}
-          onChange={newContent => setFormContent(newContent)}
+          onChange={(newContent: string) => setFormContent(newContent)}
           onSubmit={handleSubmit}
         />
       </div>

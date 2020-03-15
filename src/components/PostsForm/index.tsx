@@ -4,6 +4,15 @@ import Router from 'next/router'
 import Form from './Form'
 import useForm from '../../hooks/useForm'
 
+type Props = {
+  post: Post,
+  pageTitle: string,
+  additionalFields: Array<React.FunctionComponent<{}>>
+  additionalState: object,
+  apiEndpoint: string,
+  redirectRoute: string,
+  editing: false
+}
 
 /**
  * PostsForm is an extendable form to be able to save and edit
@@ -17,9 +26,9 @@ import useForm from '../../hooks/useForm'
  * @prop additionalFields: Array[Component] - Additional form fields to render to the form
  * @prop additionalState: Object - Additional state data to accompany any additional fields
  */
-const PostsForm = props => {
+const PostsForm = (props: Props) => {
 
-  const mapTagsToString = tags => {
+  const mapTagsToString = (tags: Array<string>) => {
 
     let newTags = ''
 
@@ -52,7 +61,7 @@ const PostsForm = props => {
   } = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const { apiEndpoint, redirectRoute, editing } = props
@@ -69,7 +78,7 @@ const PostsForm = props => {
 
   const { pageTitle, additionalFields } = props
 
-  const additionalProps = {}
+  const additionalProps: any = {}
 
   if (additionalState) {
     _.forEach(additionalState, (state, key) => {

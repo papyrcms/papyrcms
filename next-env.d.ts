@@ -5,7 +5,7 @@ declare module 'react-render-html'
 
 type FileEventTarget = EventTarget & { files: FileList }
 
-type Message = {
+interface Message {
   _id: string,
   name: string,
   email: string,
@@ -13,7 +13,7 @@ type Message = {
   created: Date
 }
 
-type User = {
+interface User {
   _id: string,
   email: string,
   firstName: string,
@@ -38,4 +38,94 @@ type User = {
   isAdmin: boolean,
   isSubscribed: boolean,
   isBanned: boolean
+}
+
+interface Comment {
+  _id: string,
+  content: string,
+  replies: Array<Comment>,
+  created: Date,
+  author: User
+}
+
+interface Blog {
+  _id: string,
+  title: string,
+  slug: string,
+  content: string,
+  tags: Array<string>,
+  mainMedia: string,
+  subImages: Array<string>,
+  published: Boolean,
+  created: Date,
+  publishDate: Date,
+  comments: Array<Comment>
+}
+
+interface Event {
+  _id: string,
+  title: string,
+  slug: string,
+  content: string,
+  tags: Array<string>,
+  mainMedia: string,
+  subImages: Array<string>,
+  published: Boolean,
+  created: Date,
+  date: Date,
+  latitude: Number,
+  longitude: Number
+}
+
+interface Product {
+  _id: string,
+  title: string,
+  slug: string,
+  content: string,
+  tags: Array<string>,
+  mainMedia: string,
+  subImages: Array<string>,
+  published: Boolean,
+  created: Date,
+  price: Number,
+  quantity: Number
+}
+
+interface Order {
+  _id: string,
+  created: Date,
+  products: Array<Product>,
+  user: User,
+  notes: string,
+  shipped: Boolean
+}
+
+interface Page {
+  _id: string,
+  title: string,
+  className: string,
+  route: string,
+  navOrder: Number,
+  sections: Array<string>,
+  css: string,
+  created: Date,
+}
+
+interface Post {
+  _id: string,
+  title: string,
+  slug: string,
+  content: string,
+  tags: Array<string>,
+  mainMedia: string,
+  subImages: Array<string>,
+  published: Boolean,
+  created: Date,
+  comments: Array<Comment>
+}
+
+interface Setting {
+  _id: string,
+  name: string,
+  options: Object
 }

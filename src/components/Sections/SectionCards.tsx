@@ -4,6 +4,30 @@ import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
 
+type Props = {
+  posts: Array<Post>,
+  contentLength: number,
+  emptyMessage: string,
+  perRow: number,
+  title: string,
+  path: string,
+  readMore: Boolean,
+  clickableMedia: Boolean,
+  beforeTitle: Function,
+  afterTitle: Function,
+  beforePostList: Function,
+  afterPostList: Function,
+  beforePosts: Function,
+  afterPosts: Function,
+  beforePostTitle: Function,
+  afterPostTitle: Function,
+  beforePostMedia: Function,
+  afterPostMedia: Function,
+  beforePostContent: Function,
+  afterPostContent: Function,
+  beforePostLink: Function,
+  afterPostLink: Function
+}
 
 /**
  * SectionCards will display a section of card-like components
@@ -35,7 +59,7 @@ import Media from '../Media'
  * @prop beforePostLink - Function - Rendered before the card link
  * @prop afterPostLink - Function - Rendered after the card link
  */
-const SectionCards = props => {
+const SectionCards = (props: Props) => {
 
   const {
     posts, contentLength, emptyMessage,
@@ -61,7 +85,7 @@ const SectionCards = props => {
   } = props
 
 
-  const renderReadMore = post => {
+  const renderReadMore = (post: Post) => {
     if (readMore) {
       const readMorePath = path ? path : 'posts'
 
@@ -74,14 +98,14 @@ const SectionCards = props => {
   }
 
 
-  const renderPublishSection = published => {
+  const renderPublishSection = (published: Boolean) => {
     if (!published) {
       return <p><em>Not published</em></p>
     }
   }
 
 
-  const renderMediaSection = post => {
+  const renderMediaSection = (post: Post) => {
     if (post.mainMedia) {
       return <Media
         className="section-cards__image"

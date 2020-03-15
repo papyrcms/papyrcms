@@ -11,6 +11,28 @@ import Media from '../../Media'
 import PageHead from '../../PageHead'
 import filterPosts from '../../../hooks/filterPosts'
 
+type Props = {
+  post: Post,
+  enableCommenting: Boolean,
+  apiPath: string,
+  className: string,
+  redirectRoute: string,
+  path: string,
+  emptyTitle: string,
+  emptyMessage: string,
+  beforePost: Function,
+  afterPost: Function,
+  beforeTitle: Function,
+  afterTitle: Function,
+  beforeMainMedia: Function,
+  afterMainMedia: Function,
+  beforeContent: Function,
+  afterContent: Function,
+  beforeComments: Function,
+  afterComments: Function,
+  beforeCommentForm: Function,
+  afterCommentForm: Function
+}
 
 /**
  * SectionStandard is the main component to show the details of a particular post
@@ -38,7 +60,7 @@ import filterPosts from '../../../hooks/filterPosts'
  * @prop beforeCommentForm - Function - Rendered before the post comment form
  * @prop afterCommentForm - Function - Rendered after the post comment form
  */
-const SectionStandard = props => {
+const SectionStandard = (props: Props) => {
 
   if (!props.post) return null
 

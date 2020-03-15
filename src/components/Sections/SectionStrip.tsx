@@ -4,6 +4,31 @@ import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
 
+type Props = {
+  clickableMedia: boolean,
+  mediaLeft: boolean,
+  mediaRight: boolean,
+  readMore: boolean,
+  path: string,
+  emptyMessage: string,
+  className: string,
+  posts: Array<Post>,
+  title: string,
+  contentLength?: number,
+  beforeTitle: Function,
+  afterTitle: Function,
+  beforePosts: Function,
+  afterPosts: Function,
+  beforePostTitle: Function,
+  afterPostTitle: Function,
+  beforePostMedia: Function,
+  afterPostMedia: Function,
+  beforePostContent: Function,
+  afterPostContent: Function,
+  beforePostLink: Function,
+  afterPostLink: Function
+}
+
 
 /**
  * SectionStrip will render Posts in a more horizontal style
@@ -34,7 +59,7 @@ import Media from '../Media'
  * @prop beforePostLink - Function - Rendered before the card link
  * @prop afterPostLink - Function - Rendered after the card link
  */
-const SectionStrip = props => {
+const SectionStrip = (props: Props) => {
 
   const {
     clickableMedia, mediaLeft, mediaRight,
@@ -59,7 +84,7 @@ const SectionStrip = props => {
   } = props
 
 
-  const renderMedia = post => {
+  const renderMedia = (post: Post) => {
     if (post.mainMedia) {
       return (
         <Fragment>
@@ -77,7 +102,7 @@ const SectionStrip = props => {
   }
 
 
-  const renderRightMedia = (post, i) => {
+  const renderRightMedia = (post: Post, i: number) => {
     if (mediaRight && !mediaLeft) {
       return renderMedia(post)
     } else if (
@@ -92,7 +117,7 @@ const SectionStrip = props => {
   }
 
 
-  const renderLeftMedia = (post, i) => {
+  const renderLeftMedia = (post: Post, i: number) => {
     if (mediaLeft && !mediaRight) {
       return renderMedia(post)
     } else if (
@@ -107,7 +132,7 @@ const SectionStrip = props => {
   }
 
 
-  const renderContent = post => {
+  const renderContent = (post: Post) => {
 
     const contentLength = props.contentLength || 300
     let postContent = post.content.length >= contentLength ? `${post.content.substring(0, contentLength).trim()} . . .` : post.content

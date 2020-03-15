@@ -10,7 +10,7 @@ const useForm = (initialState: any) => {
   const [errors, setErrors] = useState(initialErrors)
 
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<any>) => {
     const { type, checked, name, value } = event.target
 
     if (type && type === 'checkbox') {
@@ -21,7 +21,7 @@ const useForm = (initialState: any) => {
   }
 
 
-  const validateField = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const validateField = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { type, required, value, name } = event.target
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

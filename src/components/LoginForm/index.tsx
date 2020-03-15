@@ -18,7 +18,7 @@ const LoginForm = () => {
   const formState = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const success = (res: any) => {

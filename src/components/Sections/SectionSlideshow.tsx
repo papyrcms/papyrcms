@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import SectionMedia from './SectionMedia'
 
+type Props = {
+  timer: number,
+  posts: Array<Post>
+  emptyTitle: string,
+  emptyMessage: string
+}
 
 /**
  * SectionSlideshow will render a media slideshow across the width of the screen
@@ -9,7 +15,7 @@ import SectionMedia from './SectionMedia'
  * @prop timer - Integer - Milliseconds between media changes
  * @prop posts - Array[Object - Posts to be switched between]
  */
-const SectionSlideshow = props => {
+const SectionSlideshow = (props: Props) => {
 
 
   const { timer, posts, emptyTitle, emptyMessage } = props
@@ -26,11 +32,13 @@ const SectionSlideshow = props => {
   }
 
   const [counter, setCounter] = useState(0)
-  const [ticker, setTicker] = useState(null)
+  const [ticker, setTicker] = useState<null | NodeJS.Timeout>(null)
 
   useEffect(() => {
     setTicker(setInterval(incrimentCounter, timer || 5000))
-    return () => clearInterval(ticker)
+    return () => {
+      if (ticker) clearInterval(ticker)
+    }
   }, [])
 
 
@@ -60,7 +68,7 @@ const SectionSlideshow = props => {
       return (
         <input
           onClick={() => {
-            clearInterval(ticker)
+            if (ticker) clearInterval(ticker)
             setCounter(i)
           }}
           className="section-slideshow__button"

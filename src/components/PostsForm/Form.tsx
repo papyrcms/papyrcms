@@ -10,8 +10,8 @@ type Props = {
   handleChange: Function,
   errors: any,
   validateField: Function,
-  additionalFields: Array<React.FunctionComponent>,
-  handleSubmit: React.FormEvent<HTMLFormElement>
+  additionalFields: Array<React.FunctionComponent<any>>,
+  handleSubmit: Function
 }
 
 const Form = (props: Props) => {
@@ -40,7 +40,9 @@ const Form = (props: Props) => {
   )
 
 
-  const handleFileInputChange = (event: React.ChangeEvent<FileEventTarget>) => {
+  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    if (!event.target.files) return
 
     handleChange({ target: { value: '', name: 'mainMedia' } })
     setUploadedMedia(true)
@@ -134,7 +136,11 @@ const Form = (props: Props) => {
 
 
   return (
-    <form encType="multipart/form-data" className="post-form__form" onSubmit={handleSubmit}>
+    <form
+      encType="multipart/form-data"
+      className="post-form__form"
+      onSubmit={(event) => handleSubmit(event)}
+    >
 
       <div className="u-form-row">
         <Input
