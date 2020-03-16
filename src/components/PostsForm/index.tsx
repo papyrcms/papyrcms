@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import _ from 'lodash'
 import Router from 'next/router'
 import Form from './Form'
+import postsContext from '../../context/postsContext'
 import useForm from '../../hooks/useForm'
 
 
@@ -18,6 +19,8 @@ import useForm from '../../hooks/useForm'
  * @prop additionalState: Object - Additional state data to accompany any additional fields
  */
 const PostsForm = props => {
+
+  const { posts, setPosts } = useContext(postsContext)
 
   const mapTagsToString = tags => {
 
@@ -59,7 +62,9 @@ const PostsForm = props => {
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
     const redirect = redirectRoute ? redirectRoute : '/posts'
 
-    const success = () => {
+    const success = (response) => {
+      const newPosts = [...posts, response.data]
+      setPosts(newPosts)
       Router.push(redirect)
     }
 

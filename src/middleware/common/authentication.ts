@@ -1,11 +1,11 @@
 import passport from "passport"
-import LocalStrategy from "passport-local"
+import { Strategy } from "passport-local"
 import User from '../../models/user'
 
 
 export default async (req, res, next) => {
   passport.use(
-    new LocalStrategy({
+    new Strategy({
       usernameField: 'email',
       passwordField: 'password'
     },

@@ -43,7 +43,7 @@ const SectionStandard = props => {
   if (!props.post) return null
 
   const { currentUser } = useContext(userContext)
-  const { posts } = useContext(postsContext)
+  const { posts, setPosts } = useContext(postsContext)
 
   const {
     post, enableCommenting,
@@ -78,6 +78,8 @@ const SectionStandard = props => {
 
       axios.delete(`${deletePath}/${post._id}`)
         .then(res => {
+          const newPosts = _.filter(posts, filtered => filtered._id !== post._id)
+          setPosts(newPosts)
           Router.push(deleteRedirect)
         }).catch(error => {
           console.error(error)
@@ -163,7 +165,7 @@ const SectionStandard = props => {
     postTags: ['section-header']
   }
   const { posts: [headerPost] } = filterPosts(posts, headerSettings)
-  if (title) {
+  if (headerPost && title) {
     headTitle = `${headerPost.title} | ${title}`
   }
 
