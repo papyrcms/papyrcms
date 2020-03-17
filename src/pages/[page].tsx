@@ -187,7 +187,7 @@ const Page = props => {
       postTags: ['section-header']
     }
     const { posts: [headerPost] } = filterPosts(posts, headerSettings)
-    if (!SectionStandard && page.route !== 'home' && page.title) {
+    if (!SectionStandard && page.route !== 'home' && page.title && headerPost) {
       title = `${headerPost.title} | ${page.title}`
     }
 
