@@ -35,6 +35,7 @@ const Page = props => {
     })
   }
 
+
   const { posts } = useContext(postsContext)
   const filtered = filterPosts(posts, settings)
 
@@ -46,7 +47,7 @@ const Page = props => {
       section = JSON.parse(section)
 
       const key = `${section.type}-${i}`
-      const posts = filtered[key]
+      const filteredPosts = filtered[key]
       const emptyMessage = `Create content with the ${_.join(section.tags, ', ')} tags.`
 
       switch (section.type) {
@@ -54,7 +55,7 @@ const Page = props => {
         case 'Map':
           return <SectionMaps
             key={key}
-            posts={posts}
+            posts={filteredPosts}
             mapLocation="end"
             emptyTitle={section.title}
             emptyMessage={emptyMessage}
@@ -63,7 +64,7 @@ const Page = props => {
         case 'Media':
           return <SectionMedia
             key={key}
-            post={posts[0]}
+            post={filteredPosts[0]}
             alt={section.title}
             emptyTitle={section.title}
             emptyMessage={emptyMessage}
@@ -72,7 +73,7 @@ const Page = props => {
         case 'Parallax':
           return <SectionMedia
             key={key}
-            post={posts[0]}
+            post={filteredPosts[0]}
             alt={section.title}
             emptyTitle={section.title}
             emptyMessage={emptyMessage}
@@ -82,7 +83,7 @@ const Page = props => {
         case 'Slideshow':
           return <SectionSlideshow
             key={key}
-            posts={posts}
+            posts={filteredPosts}
             timer={5000}
             emptyTitle={section.title}
             emptyMessage={emptyMessage}
@@ -91,7 +92,7 @@ const Page = props => {
         case 'ThreeCards':
           return <SectionCards
             key={key}
-            posts={posts}
+            posts={filteredPosts}
             title={section.title}
             contentLength={120}
             readMore
@@ -102,7 +103,7 @@ const Page = props => {
         case 'FourCards':
           return <SectionCards
             key={key}
-            posts={posts}
+            posts={filteredPosts}
             title={section.title}
             contentLength={120}
             readMore
@@ -115,7 +116,7 @@ const Page = props => {
             key={key}
             readMore
             contentLength={300}
-            posts={posts}
+            posts={filteredPosts}
             title={section.title}
             className={section.className}
             emptyMessage={emptyMessage}
@@ -127,7 +128,7 @@ const Page = props => {
             readMore
             mediaLeft
             contentLength={300}
-            posts={posts}
+            posts={filteredPosts}
             title={section.title}
             className={section.className}
             emptyMessage={emptyMessage}
@@ -139,7 +140,7 @@ const Page = props => {
             readMore
             mediaRight
             contentLength={300}
-            posts={posts}
+            posts={filteredPosts}
             title={section.title}
             className={section.className}
             emptyMessage={emptyMessage}
@@ -160,7 +161,7 @@ const Page = props => {
         default:
           return <SectionStandard
             key={key}
-            post={posts[0]}
+            post={filteredPosts[0]}
             path="posts"
             className={section.className}
             apiPath="/api/posts"
