@@ -63,7 +63,16 @@ const PostsForm = props => {
     const redirect = redirectRoute ? redirectRoute : '/posts'
 
     const success = (response) => {
-      const newPosts = [...posts, response.data]
+      let newPosts = []
+      if (editing) {
+        newPosts = _.map(posts, mappedPost => {
+          if (mappedPost._id === post._id) return response.data
+          return mappedPost
+        })
+      } else {
+        newPosts = [...posts, response.data]
+      }
+      
       setPosts(newPosts)
       Router.push(redirect)
     }
