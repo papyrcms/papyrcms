@@ -11,9 +11,9 @@ export default async (req: NextApiRequest, res: NextApiResponse, next: Function)
 
   if (req.headers.authorization && req.headers.authorization.includes('bearer ')) {
     const token = req.headers.authorization.replace('bearer ', '')
-    const { uid } = jwt.verify(token, keys.jwtSecret)
-    if (uid) {
-      req.user = await User.findOne({ _id: uid }).populate('cart').lean()
+    const tokenObject = jwt.verify(token, keys.jwtSecret)
+    if (tokenObject['uid']) {
+      req.user = await User.findOne({ _id: tokenObject['uid'] }).populate('cart').lean()
     }
   }
 

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import _ from 'lodash'
 import Router from 'next/router'
 import Form from './Form'
+import postsContext from '../../context/postsContext'
 import useForm from '../../hooks/useForm'
 
 type Props = {
@@ -28,11 +29,13 @@ type Props = {
  */
 const PostsForm = (props: Props) => {
 
+  const { posts, setPosts } = useContext(postsContext)
+
   const mapTagsToString = (tags: Array<string>) => {
 
     let newTags = ''
 
-    _.forEach(tags, (tag, i) => {
+    _.forEach(tags, (tag: string, i: number) => {
       if (i < tags.length - 1) {
         newTags = `${newTags}${tag}, `
       } else {
@@ -68,7 +71,18 @@ const PostsForm = (props: Props) => {
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
     const redirect = redirectRoute ? redirectRoute : '/posts'
 
-    const success = () => {
+    const success = (response) => {
+      let newPosts = []
+      if (editing) {
+        newPosts = _.map(posts, mappedPost => {
+          if (mappedPost._id === post._id) return response.data
+          return mappedPost
+        })
+      } else {
+        newPosts = [...posts, response.data]
+      }
+      
+      setPosts(newPosts)
       Router.push(redirect)
     }
 

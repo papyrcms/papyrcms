@@ -30,6 +30,16 @@ const getPost = async id => {
 
 
 const updatePost = async (id, body, enableEmailingToUsers) => {
+  if (body.tags) {
+    const newTags: any = _.map(_.split(body.tags, ','), tag => {
+      let pendingTag = tag
+      pendingTag = pendingTag.trim()
+
+      if (!!pendingTag) return pendingTag
+    })
+
+    body.tags = [...new Set(newTags)]
+  }
   const postDocument = { _id: id }
   body.slug = body.title.replace(/\s+/g, "-").toLowerCase()
   await Post.findOneAndUpdate(postDocument, body)
