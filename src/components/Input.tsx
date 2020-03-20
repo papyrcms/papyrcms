@@ -1,6 +1,24 @@
 import React, { Fragment } from 'react'
 
 
+type Props = {
+  className?: string,
+  type?: string,
+  placeholder?: string,
+  name?: string,
+  id?: string,
+  label?: string,
+  value?: string,
+  required?: boolean,
+  onChange?: React.ChangeEvent,
+  onFocus?: React.FocusEvent,
+  onBlur?: React.FocusEvent,
+  validation?: string,
+  formState?: any,
+  children?: any,
+}
+
+
 /**
  * Input is a default text-type input component
  *
@@ -16,7 +34,7 @@ import React, { Fragment } from 'react'
  * @prop className - String - Wrapper class
  * @prop type - String - The type attribute for the input
  */
-const Input = props => {
+const Input = (props: Props) => {
 
   // Instantiate props with defaults
   let {
@@ -27,8 +45,8 @@ const Input = props => {
     id = name,
     label = '',
     value = '',
-    onChange = () => null,
     required = false,
+    onChange = () => null,
     onFocus = () => null,
     onBlur = () => null,
     children = null,
@@ -84,7 +102,7 @@ const Input = props => {
             name={name}
             id={id}
             className="input__checkbox"
-            checked={value}
+            checked={!!value}
             required={!!required}
             onChange={onChange}
             onBlur={onBlur}

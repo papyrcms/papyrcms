@@ -9,11 +9,11 @@ import CommentForm from './CommentForm'
 
 type Props = {
   enableCommenting: Boolean,
-  post: any,
+  post: Post,
   apiPath: string,
   beforeCommentForm: Function,
   afterCommentForm: Function,
-  comments: Array<any>
+  comments: Array<Comment>
 }
 
 const Comment = (props: Props) => {

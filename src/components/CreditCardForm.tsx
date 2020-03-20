@@ -11,15 +11,17 @@ import keysContext from '../context/keysContext'
 
 type CreditCardFormProps = {
   className?: string,
-  stripe: stripe.Stripe,
+  stripe?: stripe.Stripe,
   onSubmit: Function
 }
 
-const CreditCardForm = injectStripe<any>((props: CreditCardFormProps) => {
+const CreditCardForm = injectStripe((props: CreditCardFormProps) => {
 
   const { className = "", stripe, onSubmit } = props
   const [validation, setValidation] = useState('')
   const [processing, setProcessing] = useState(false)
+
+  if (!stripe) return null
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault()

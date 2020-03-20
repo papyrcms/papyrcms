@@ -1,7 +1,13 @@
 import { createContext } from 'react'
 
 type SettingsContext = {
-  settings: object,
+  settings: {
+    enableMenu: boolean,
+    enableStore: boolean,
+    enableBlog: boolean,
+    enableEvents: boolean,
+    enableCommenting: boolean,
+  },
   setSettings: Function
 }
 
