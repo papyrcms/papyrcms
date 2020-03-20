@@ -62,7 +62,7 @@ class Mailer {
   }
 
 
-  async getEmailTemplateByTag(tag) {
+  async getEmailTemplateByTag(tag: string) {
 
     // Get all published posts
     const posts = await Post.find({ published: true })
@@ -82,12 +82,14 @@ class Mailer {
   }
 
 
-  async sendBulkEmail(post) {
+  async sendBulkEmail(post: Post) {
 
     const subscribedUsers = await User.find({ isSubscribed: true })
 
     // Create an email transporter
     const transporter = await this.createTransporter()
+
+    if (!transporter) return false
 
     for (const user of subscribedUsers) {
 
@@ -107,12 +109,12 @@ class Mailer {
   }
 
 
-  async sendEmail(variables, recipient, templateName, subject = null) {
+  async sendEmail(variables: object, recipient: string, templateName: string, subject?: string) {
 
     // Instantiate sent. This will change when the email gets sent
     let sent = false
-    let html = ''
-    let emailSubject = ''
+    let html: string
+    let emailSubject: string | undefined
 
     // First search for a post with a tag that matches the template name
     let emailTemplatePost = await this.getEmailTemplateByTag(templateName)
@@ -143,6 +145,8 @@ class Mailer {
     // Create an email transporter
     const transporter = await this.createTransporter()
 
+    if (!transporter) return false
+
     const mailOptions = {
       from: keys.siteEmail,
       to: recipient,
@@ -162,7 +166,7 @@ class Mailer {
   }
 
 
-  async readHTMLFile(path) {
+  async readHTMLFile(path: string) {
     return await fs.readFileSync(path, { encoding: 'utf-8' })
   }
 }

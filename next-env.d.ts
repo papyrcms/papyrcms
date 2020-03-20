@@ -127,5 +127,5 @@ interface Post {
 interface Setting {
   _id: string,
   name: string,
-  options: Object
+  options: object
 }
