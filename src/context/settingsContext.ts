@@ -1,6 +1,11 @@
 import { createContext } from 'react'
 
-export default createContext({
+type SettingsContext = {
+  settings: object,
+  setSettings: Function
+}
+
+export default createContext<SettingsContext>({
   settings: {
     enableMenu: false,
     enableStore: false,

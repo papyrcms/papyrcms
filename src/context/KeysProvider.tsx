@@ -1,7 +1,15 @@
 import React from 'react'
 import keysContext from './keysContext'
 
-const KeysProvider = props => {
+type Props = {
+  keys: {
+    stripePubKey: string,
+    googleMapsKey: string
+  },
+  children: any
+}
+
+const KeysProvider = (props: Props) => {
 
   return (
     <keysContext.Provider

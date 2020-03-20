@@ -1,6 +1,11 @@
 import { createContext } from 'react'
 
-export default createContext({
+type PostsContext = {
+  posts: Array<Post>
+  setPosts: Function
+}
+
+export default createContext<PostsContext>({
   posts: [],
-  setPosts: posts => {}
+  setPosts: (posts: Array<Post>) => {}
 })

@@ -1,4 +1,4 @@
-import React, { useContext, ReactChild } from 'react'
+import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'

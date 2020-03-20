@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import userContext from './userContext'
 
-const UserProvider = props => {
+type Props = {
+  children: any
+}
 
-  const [currentUser, setCurrentUser] = useState(null)
+const UserProvider = (props: Props) => {
+
+  const [currentUser, setCurrentUser] = useState<User | null>(null)
 
   useEffect(() => {
     const getCurrentUser = async () => {

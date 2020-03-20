@@ -1,8 +1,15 @@
 import { createContext } from 'react'
 
-export default createContext({
+type StoreContext = {
+  cart: Array<Product>,
+  addToCart: Function,
+  removeFromCart: Function,
+  clearCart: Function
+}
+
+export default createContext<StoreContext>({
   cart: [],
-  addToCart: product => {},
-  removeFromCart: product => {},
+  addToCart: (product: Product) => {},
+  removeFromCart: (product: Product) => {},
   clearCart: () => {}
 })

@@ -3,7 +3,7 @@
 
 declare module 'react-render-html'
 
-type FileEventTarget = EventTarget & { files: FileList }
+// type FileEventTarget = EventTarget & { files: FileList }
 
 interface Message {
   _id: string,
@@ -33,7 +33,7 @@ interface User {
   shippingState: string,
   shippingZip: string,
   shippingCountry: string,
-  cart: Array<object>,
+  cart: Array<Product>,
   created: Date,
   isAdmin: boolean,
   isSubscribed: boolean,

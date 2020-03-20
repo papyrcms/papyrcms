@@ -64,14 +64,14 @@ const PostsForm = (props: Props) => {
   } = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
     const { apiEndpoint, redirectRoute, editing } = props
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
     const redirect = redirectRoute ? redirectRoute : '/posts'
 
-    const success = (response) => {
+    const success = (response: any) => {
       let newPosts = []
       if (editing) {
         newPosts = _.map(posts, mappedPost => {

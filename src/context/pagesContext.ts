@@ -1,12 +1,11 @@
 import { createContext } from 'react'
 
-export default createContext({
-  pages: [{
-    title: '',
-    className: '',
-    navOrder: 0,
-    route: '',
-    _id: ''
-  }],
-  setPages: (pages: Array<object>) => {}
+type PagesContext = {
+  pages: Array<Page>,
+  setPages: Function
+}
+
+export default createContext<PagesContext>({
+  pages: [],
+  setPages: (pages: Array<Page>) => {}
 })

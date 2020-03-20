@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import pagesContext from './pagesContext'
 
 type Props = {
-  pages: Array<object>,
-  children: React.ReactChildren
+  pages: Array<Page>,
+  children: any
 }
 
 const PagesProvider = (props: Props) => {

@@ -1,7 +1,18 @@
 import React, { useState } from 'react'
 import settingsContext from './settingsContext'
 
-const SettingsProvider = props => {
+type Props = {
+  settings: {
+    enableMenu: boolean,
+    enableStore: boolean,
+    enableBlog: boolean,
+    enableEvents: boolean,
+    enableCommenting: boolean,
+  },
+  children: any
+}
+
+const SettingsProvider = (props: Props) => {
 
   const [settings, setSettings] = useState(props.settings)
 

@@ -1,10 +1,13 @@
 import { createContext } from 'react'
 
-export default createContext({
+type UserContext = {
+  currentUser: User | null,
+  setCurrentUser: Function
+}
+
+export default createContext<UserContext>({
   currentUser: {
     _id: '',
-    username: '',
-    password: '',
 
     // Personal Info
     email: '',
@@ -34,12 +37,12 @@ export default createContext({
     cart: [],
 
     // Account creation date
-    created: '',
+    created: new Date(),
 
     // Etc
-    isAdmin: null,
-    isSubscribed: null,
-    isBanned: null
+    isAdmin: false,
+    isSubscribed: false,
+    isBanned: false
   },
-  setCurrentUser: user => {}
+  setCurrentUser: (user: User) => {}
 })

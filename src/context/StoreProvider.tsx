@@ -4,23 +4,30 @@ import _ from 'lodash'
 import StoreContext from './storeContext'
 import UserContext from './userContext'
 
-const StoreProvider = props => {
+type Props = {
+  children: any
+}
 
-  const [cart, setCart] = useState([])
+const StoreProvider = (props: Props) => {
+
+  const [cart, setCart] = useState<Array<Product>>([])
   const { currentUser } = useContext(UserContext)
 
 
   useEffect(() => {
     if (currentUser) {
       setCart(currentUser.cart)
-    } else if (localStorage.getItem('cart')) {
-      const localCart = JSON.parse(localStorage.getItem('cart'))
-      setCart(localCart)
+    } else {
+      const localCart = localStorage.getItem('cart')
+      if (localCart) {
+        const foundCart = JSON.parse(localCart)
+        setCart(foundCart)
+      }
     }
   }, [currentUser])
 
 
-  const addToCart = async product => {
+  const addToCart = async (product: Product) => {
     const newCart = [...cart, product]
     if (!currentUser) {
       if (_.filter(cart, inCart => inCart._id === product._id).length < product.quantity) {
@@ -37,7 +44,7 @@ const StoreProvider = props => {
     }
   }
 
-  const removeFromCart = async product => {
+  const removeFromCart = async (product: Product) => {
     let removed = false
     const newCart = _.filter(cart, item => {
       if (item._id === product._id && !removed) {

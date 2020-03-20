@@ -6,11 +6,20 @@ import PostsProvider from './PostsProvider'
 import PagesProvider from './PagesProvider'
 
 type Props = {
-  keys: object,
-  settings: object,
-  pages: Array<object>,
-  posts: Array<object>,
-  children: Array<object>
+  keys: {
+    stripePubKey: string,
+    googleMapsKey: string
+  },
+  settings: {
+    enableMenu: boolean,
+    enableStore: boolean,
+    enableBlog: boolean,
+    enableEvents: boolean,
+    enableCommenting: boolean,
+  },
+  pages: Array<Page>,
+  posts: Array<Post>,
+  children: any
 }
 
 const GlobalState = (props: Props) => (
