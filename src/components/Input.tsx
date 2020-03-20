@@ -10,9 +10,9 @@ type Props = {
   label?: string,
   value?: string,
   required?: boolean,
-  onChange?: React.ChangeEvent,
-  onFocus?: React.FocusEvent,
-  onBlur?: React.FocusEvent,
+  onChange?: Function,
+  onFocus?: Function,
+  onBlur?: Function,
   validation?: string,
   formState?: any,
   children?: any,
@@ -86,9 +86,9 @@ const Input = (props: Props) => {
             className={`input__textarea ${validation && 'input__textarea--invalid'}`}
             value={value}
             required={!!required}
-            onChange={onChange}
-            onBlur={onBlur}
-            onFocus={onFocus}
+            onChange={event => onChange(event)}
+            onBlur={event => onBlur(event)}
+            onFocus={event => onFocus(event)}
           />
         </Fragment>
       )
@@ -104,9 +104,9 @@ const Input = (props: Props) => {
             className="input__checkbox"
             checked={!!value}
             required={!!required}
-            onChange={onChange}
-            onBlur={onBlur}
-            onFocus={onFocus}
+            onChange={event => onChange(event)}
+            onBlur={event => onBlur(event)}
+            onFocus={event => onFocus(event)}
           />
           {renderLabel()}
         </Fragment>
@@ -124,10 +124,10 @@ const Input = (props: Props) => {
           className={`input__input ${validation && 'input__input--invalid'}`}
           value={value}
           required={!!required}
-          onChange={onChange}
-          onBlur={onBlur}
-          onFocus={onFocus}
-        />
+          onChange={event => onChange(event)}
+          onBlur={event => onBlur(event)}
+          onFocus={event => onFocus(event)}
+      />
       </Fragment>
     )
   }
