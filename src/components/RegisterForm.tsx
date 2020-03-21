@@ -6,12 +6,12 @@ import useForm from '../hooks/useForm'
 import Input from './Input'
 
 
-const RegisterForm = props => {
+const RegisterForm = () => {
 
   const { settings } = useContext(settingsContext)
   const { setCurrentUser } = useContext(userContext)
 
-  if (!settings['enableRegistration']) {
+  if (!settings.enableRegistration) {
     return null
   }
 
@@ -26,16 +26,16 @@ const RegisterForm = props => {
   const formState = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    const success = response => {
+    const success = (response: any) => {
       localStorage.setItem('token', response.data.token)
       setCurrentUser(response.data.user)
       Router.push('/profile')
     }
 
-    const error = err => {
+    const error = (err: any) => {
       console.error(err.response)
     }
 
@@ -44,7 +44,7 @@ const RegisterForm = props => {
 
 
   return (
-    <form onSubmit={handleSubmit} className="register-form">
+    <form onSubmit={event => handleSubmit(event)} className="register-form">
       <h3 className="heading-tertiary u-margin-bottom-small">Register</h3>
 
       <Input

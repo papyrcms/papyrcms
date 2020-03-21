@@ -1,5 +1,14 @@
 import React, { useState, Fragment } from 'react'
 
+type Props = {
+  children: any,
+  buttonClasses?: string,
+  buttonText: string,
+  className?: string,
+  alt?: string,
+  src?: string,
+  image?: boolean
+}
 
 /**
  * Modal renders a button which, when clicked, displays a modal
@@ -12,7 +21,7 @@ import React, { useState, Fragment } from 'react'
  * @prop alt - String - The alt given to the image
  * @prop src - String - the src of the image
  */
-const Modal = props => {
+const Modal = (props: Props) => {
 
   const { children, buttonClasses, buttonText, className, alt, src, image } = props
   const [hidden, setHidden] = useState(true)

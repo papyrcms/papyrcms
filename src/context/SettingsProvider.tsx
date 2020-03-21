@@ -2,13 +2,7 @@ import React, { useState } from 'react'
 import settingsContext from './settingsContext'
 
 type Props = {
-  settings: {
-    enableMenu: boolean,
-    enableStore: boolean,
-    enableBlog: boolean,
-    enableEvents: boolean,
-    enableCommenting: boolean,
-  },
+  settings: Settings,
   children: any
 }
 

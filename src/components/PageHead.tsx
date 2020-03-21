@@ -1,8 +1,16 @@
 import React, { Fragment } from 'react'
 import Head from 'next/head'
 
+type Props = {
+  title?: string,
+  titleContent?: string,
+  image?: string,
+  description?: string,
+  keywords?: string,
+  children?: any
+}
 
-const PageHead = props => {
+const PageHead = (props: Props) => {
 
   const {
     title, titleContent, image,

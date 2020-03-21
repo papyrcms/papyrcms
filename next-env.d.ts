@@ -2,6 +2,10 @@
 /// <reference types="next/types/global" />
 
 declare module 'react-render-html'
+declare module 'react-tinymce';
+interface TinyMceEditor extends HTMLTextAreaElement {
+  getContent: Function
+}
 
 // type FileEventTarget = EventTarget & { files: FileList }
 
@@ -56,7 +60,7 @@ interface Blog {
   tags: Array<string>,
   mainMedia: string,
   subImages: Array<string>,
-  published: Boolean,
+  published: boolean,
   created: Date,
   publishDate: Date,
   comments: Array<Comment>
@@ -70,11 +74,11 @@ interface Event {
   tags: Array<string>,
   mainMedia: string,
   subImages: Array<string>,
-  published: Boolean,
+  published: boolean,
   created: Date,
   date: Date,
-  latitude: Number,
-  longitude: Number
+  latitude: number,
+  longitude: number
 }
 
 interface Product {
@@ -85,10 +89,10 @@ interface Product {
   tags: Array<string>,
   mainMedia: string,
   subImages: Array<string>,
-  published: Boolean,
+  published: boolean,
   created: Date,
-  price: Number,
-  quantity: Number
+  price: number,
+  quantity: number
 }
 
 interface Order {
@@ -97,7 +101,7 @@ interface Order {
   products: Array<Product>,
   user: User,
   notes: string,
-  shipped: Boolean
+  shipped: boolean
 }
 
 interface Page {
@@ -105,7 +109,7 @@ interface Page {
   title: string,
   className: string,
   route: string,
-  navOrder: Number,
+  navOrder: number,
   sections: Array<string>,
   css: string,
   created: Date,
@@ -119,13 +123,27 @@ interface Post {
   tags: Array<string>,
   mainMedia: string,
   subImages: Array<string>,
-  published: Boolean,
+  published: boolean,
   created: Date,
   comments: Array<Comment>
 }
 
-interface Setting {
-  _id: string,
-  name: string,
-  options: object
+// interface Setting {
+//   _id: string,
+//   name: string,
+//   options: object
+// }
+
+interface Settings {
+  enableMenu: boolean,
+  enableStore: boolean,
+  enableBlog: boolean,
+  enableEvents: boolean,
+  enableCommenting: boolean,
+  enableRegistration: boolean
+}
+
+interface Keys {
+  stripePubKey: string,
+  googleMapsKey: string
 }

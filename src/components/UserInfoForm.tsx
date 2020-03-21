@@ -4,8 +4,15 @@ import userContext from '../context/userContext'
 import useForm from '../hooks/useForm'
 import Input from './Input'
 
+type Props = {
+  beforeSubmit?: Function,
+  onSubmitError?: Function,
+  onSubmitSuccess?: Function,
+  children?: any,
+  useSubmit?: boolean
+}
 
-const UserInfoForm = props => {
+const UserInfoForm = (props: Props) => {
 
   let {
     beforeSubmit = () => null,
@@ -45,6 +52,8 @@ const UserInfoForm = props => {
   if (currentUser) {
     for (const state in INITIAL_STATE) {
       if (state in currentUser) {
+
+        // @ts-ignore - In order to dynamically pass keys
         INITIAL_STATE[state] = currentUser[state]
       }
     }
@@ -52,7 +61,7 @@ const UserInfoForm = props => {
 
   const formState = useForm(INITIAL_STATE)
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
     // If the box was checked on submit, clear all shipping fields
@@ -89,7 +98,7 @@ const UserInfoForm = props => {
       }
     }
 
-    const error = err => {
+    const error = (err: any) => {
       // hook
       onSubmitError(formState, err)
     }
@@ -114,7 +123,7 @@ const UserInfoForm = props => {
     }
   }
 
-  const renderAddressFields = shipping => {
+  const renderAddressFields = (shipping: boolean) => {
 
     if (shipping && formState.values.shipToBilling) {
       return null

@@ -4,9 +4,13 @@ import Link from 'next/link'
 import _ from 'lodash'
 import Media from './Media'
 
-const PostIndex = props => {
+type Props = {
+  posts: Array<Post>
+}
 
-  const renderTags = tags => {
+const PostIndex = (props: Props) => {
+
+  const renderTags = (tags: Array<string>) => {
     return _.map(tags, (tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
@@ -17,14 +21,14 @@ const PostIndex = props => {
   }
 
 
-  const renderTagsSection = tags => {
+  const renderTagsSection = (tags: Array<string>) => {
     if (tags[0]) {
       return <p className="post-item__tags">Tags: <em>{renderTags(tags)}</em></p>
     }
   }
 
 
-  const renderMediaSection = media => {
+  const renderMediaSection = (media: string) => {
     if (media) {
       return (
         <div className="post-item__image">
@@ -35,7 +39,7 @@ const PostIndex = props => {
   }
 
 
-  const renderPublishSection = published => {
+  const renderPublishSection = (published: boolean) => {
     if (!published) {
       return <p><em>Not published</em></p>
     }

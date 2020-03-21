@@ -1,13 +1,7 @@
 import { createContext } from 'react'
 
 type SettingsContext = {
-  settings: {
-    enableMenu: boolean,
-    enableStore: boolean,
-    enableBlog: boolean,
-    enableEvents: boolean,
-    enableCommenting: boolean,
-  },
+  settings: Settings,
   setSettings: Function
 }
 
@@ -18,6 +12,7 @@ export default createContext<SettingsContext>({
     enableBlog: false,
     enableEvents: false,
     enableCommenting: false,
+    enableRegistration: false
   },
   setSettings: (settings: object) => {}
 })

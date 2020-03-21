@@ -2,10 +2,7 @@ import React from 'react'
 import keysContext from './keysContext'
 
 type Props = {
-  keys: {
-    stripePubKey: string,
-    googleMapsKey: string
-  },
+  keys: Keys,
   children: any
 }
 
