@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import moment from 'moment'
 import connect from "next-connect"
 import common from "../../../middleware/common/"
@@ -15,7 +16,7 @@ const getEvents = async () => {
 }
 
 
-const createEvent = async body => {
+const createEvent = async (body: any) => {
   body.date = moment(body.date).toISOString()
 
   const event = new Event(body)
@@ -26,16 +27,16 @@ const createEvent = async body => {
 }
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const events = await getEvents()
   return res.status(200).send(events)
 })
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   const event = await createEvent(req.body)
   return res.status(200).send(event)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

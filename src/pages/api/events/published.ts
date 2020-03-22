@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import common from '../../../middleware/common/'
 import eventsEnabled from '../../../middleware/eventsEnabled'
@@ -9,7 +10,7 @@ handler.use(common)
 handler.use(eventsEnabled)
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const date = new Date()
   const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
 
@@ -20,4 +21,4 @@ handler.get(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)
