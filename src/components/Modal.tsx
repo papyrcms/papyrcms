@@ -1,9 +1,9 @@
 import React, { useState, Fragment } from 'react'
 
 type Props = {
-  children: any,
+  children?: any,
   buttonClasses?: string,
-  buttonText: string,
+  buttonText?: string,
   className?: string,
   alt?: string,
   src?: string,

@@ -28,6 +28,7 @@ const UserList = () => {
 
     if (
       confirm &&
+      currentUser &&
       user._id !== currentUser._id
     ) {
 
@@ -46,7 +47,7 @@ const UserList = () => {
 
   const changeAdminStatus = (user: User) => {
 
-    if (user._id !== currentUser._id) {
+    if (currentUser && user._id !== currentUser._id) {
 
       axios.put('/api/users/makeAdmin', { userId: user._id, isAdmin: !user.isAdmin })
         .then(response => {
@@ -68,7 +69,7 @@ const UserList = () => {
 
   const changeBannedStatus = (user: User) => {
 
-    if (user._id !== currentUser._id) {
+    if (currentUser && user._id !== currentUser._id) {
 
       axios.put('/api/users/ban', { userId: user._id, isBanned: !user.isBanned })
         .then(response => {
@@ -89,7 +90,7 @@ const UserList = () => {
 
 
   const renderUserOptions = (user: User) => {
-    if (user._id !== currentUser._id) {
+    if (currentUser && user._id !== currentUser._id) {
       return (
         <div className="user-list__options">
           <button

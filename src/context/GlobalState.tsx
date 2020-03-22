@@ -6,17 +6,8 @@ import PostsProvider from './PostsProvider'
 import PagesProvider from './PagesProvider'
 
 type Props = {
-  keys: {
-    stripePubKey: string,
-    googleMapsKey: string
-  },
-  settings: {
-    enableMenu: boolean,
-    enableStore: boolean,
-    enableBlog: boolean,
-    enableEvents: boolean,
-    enableCommenting: boolean,
-  },
+  keys: Keys,
+  settings: Settings,
   pages: Array<Page>,
   posts: Array<Post>,
   children: any

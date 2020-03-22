@@ -12,7 +12,9 @@ export default createContext<SettingsContext>({
     enableBlog: false,
     enableEvents: false,
     enableCommenting: false,
-    enableRegistration: false
+    enableRegistration: false,
+    enableEmailingToAdmin: false,
+    enableEmailingToUsers: false
   },
   setSettings: (settings: object) => {}
 })

@@ -32,7 +32,7 @@ const AppSettingsForm = () => {
 
   const renderSettingsInputs = () => {
 
-    return _.map(settings, (setting, key: keyof typeof settings) => {
+    return _.map(settings, (setting, key: keyof Settings) => {
 
       // Format label
       const result = key.replace(/([A-Z])/g, " $1")
