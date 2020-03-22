@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import { SectionStandard } from '../../../components/Sections/'
 
-const PostsShow = props => {
+type Props = {
+  post: Post
+}
+
+const PostsShow = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   const { query } = useRouter()
@@ -32,7 +37,7 @@ const PostsShow = props => {
 }
 
 
-PostsShow.getInitialProps = async ({ query }) => {
+PostsShow.getInitialProps = async ({ query }: NextPageContext) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: post } = await axios.get(`${rootUrl}/api/posts/${query.id}`)

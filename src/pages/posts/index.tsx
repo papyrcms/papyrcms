@@ -7,7 +7,7 @@ import PostIndex from '../../components/PostIndex'
 import Input from '../../components/Input'
 
 
-const Posts = props => {
+const Posts = () => {
 
   const { currentUser } = useContext(userContext)
   const { posts, setPosts } = useContext(postsContext)
@@ -26,7 +26,7 @@ const Posts = props => {
   const [searchPosts, setSearchPosts] = useState(posts)
 
 
-  const onSearchTextChange = event => {
+  const onSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 
     // Set the search bar state
     setSearch(event.target.value)

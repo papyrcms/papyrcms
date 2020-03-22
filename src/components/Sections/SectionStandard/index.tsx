@@ -14,9 +14,9 @@ import filterPosts from '../../../hooks/filterPosts'
 type Props = {
   post: Post,
   enableCommenting?: boolean,
-  apiPath: string,
-  className: string,
-  redirectRoute: string,
+  apiPath?: string,
+  className?: string,
+  redirectRoute?: string,
   path?: string,
   emptyTitle?: string,
   emptyMessage?: string,

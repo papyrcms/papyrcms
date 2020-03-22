@@ -10,7 +10,7 @@ import CommentForm from './CommentForm'
 type Props = {
   enableCommenting: boolean,
   post: Post,
-  apiPath: string,
+  apiPath?: string,
   beforeCommentForm: Function,
   afterCommentForm: Function,
   comments: Array<Comment>

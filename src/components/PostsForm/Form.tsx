@@ -10,7 +10,7 @@ type Props = {
   handleChange: Function,
   errors: any,
   validateField: Function,
-  additionalFields: Array<React.FunctionComponent<any>>,
+  additionalFields?: Array<any>,
   handleSubmit: Function
 }
 

@@ -6,13 +6,13 @@ import postsContext from '../../context/postsContext'
 import useForm from '../../hooks/useForm'
 
 type Props = {
-  post: Post,
+  post?: Post,
   pageTitle: string,
-  additionalFields: Array<React.FunctionComponent<{}>>
-  additionalState: object,
-  apiEndpoint: string,
-  redirectRoute: string,
-  editing: false
+  additionalFields?: Array<any>
+  additionalState?: object,
+  apiEndpoint?: string,
+  redirectRoute?: string,
+  editing?: boolean
 }
 
 /**
@@ -73,7 +73,7 @@ const PostsForm = (props: Props) => {
 
     const success = (response: any) => {
       let newPosts = []
-      if (editing) {
+      if (editing && post) {
         newPosts = _.map(posts, mappedPost => {
           if (mappedPost._id === post._id) return response.data
           return mappedPost
