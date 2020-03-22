@@ -5,8 +5,11 @@ import userContext from '../../context/userContext'
 import keys from '../../config/keys'
 import { SectionCards } from '../../components/Sections/'
 
+type Props = {
+  blogs: Array<Blog>
+}
 
-const BlogAllPage = props => {
+const BlogAllPage = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   const [blogs, setBlogs] = useState(props.blogs || [])
@@ -21,7 +24,7 @@ const BlogAllPage = props => {
     }
   }, [])
 
-  const renderDate = post => {
+  const renderDate = (post: Blog) => {
     const date = post.published && post.publishDate
       ? post.publishDate
       : post.created

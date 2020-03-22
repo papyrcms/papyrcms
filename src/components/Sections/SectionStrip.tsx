@@ -11,7 +11,7 @@ type Props = {
   readMore?: boolean,
   path?: string,
   emptyMessage: string,
-  className: string,
+  className?: string,
   posts: Array<Post>,
   title: string,
   contentLength?: number,

@@ -1,12 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react'
+import { NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import userContext from '../../../context/userContext'
 import PostsForm from '../../../components/PostsForm'
 import keys from '../../../config/keys'
 
+type Props = {
+  blog: Blog
+}
 
-const BlogEdit = props => {
+const BlogEdit = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   if (!currentUser || !currentUser.isAdmin) return null
@@ -36,7 +40,7 @@ const BlogEdit = props => {
 }
 
 
-BlogEdit.getInitialProps = async ({ query }) => {
+BlogEdit.getInitialProps = async ({ query }: NextPageContext) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)

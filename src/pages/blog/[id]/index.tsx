@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
@@ -6,7 +7,11 @@ import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import { SectionStandard } from '../../../components/Sections/'
 
-const BlogShow = props => {
+type Props = {
+  blog: Blog
+}
+
+const BlogShow = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   const [blog, setBlog] = useState(props.blog || {})
@@ -42,7 +47,7 @@ const BlogShow = props => {
 }
 
 
-BlogShow.getInitialProps = async ({ query }) => {
+BlogShow.getInitialProps = async ({ query }: NextPageContext) => {
 
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''

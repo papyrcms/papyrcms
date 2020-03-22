@@ -3,9 +3,8 @@
 
 declare module 'react-render-html'
 declare module 'react-tinymce';
-interface TinyMceEditor extends HTMLTextAreaElement {
-  getContent: Function
-}
+
+type TinyMceEditor = HTMLTextAreaElement & { getContent: Function }
 
 // type FileEventTarget = EventTarget & { files: FileList }
 

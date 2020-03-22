@@ -6,8 +6,11 @@ import keys from '../../config/keys'
 import filterPosts from '../../hooks/filterPosts'
 import { SectionStrip } from '../../components/Sections/'
 
+type Props = {
+  blogs: Array<Blog>
+}
 
-const BlogPage = props => {
+const BlogPage = (props: Props) => {
 
   const [blogs, setBlogs] = useState(props.blogs)
 
@@ -30,7 +33,7 @@ const BlogPage = props => {
   }
 
 
-  const renderDate = post => {
+  const renderDate = (post: Blog) => {
 
     const date = post.published && post.publishDate
       ? post.publishDate
