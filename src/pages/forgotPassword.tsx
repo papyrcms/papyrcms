@@ -5,16 +5,17 @@ import jwt from 'jsonwebtoken'
 import Input from '../components/Input'
 
 
-const ForgotPasswordPage = props => {
+const ForgotPasswordPage = () => {
 
-  const { query } = useRouter()
-  const { token } = query
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [validation, setValidation] = useState('')
+  const { query } = useRouter()
+  const { token } = query
+  if (typeof token !== 'string') return null
 
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: React.FormEvent) => {
 
     event.preventDefault()
 
@@ -35,12 +36,15 @@ const ForgotPasswordPage = props => {
       })
   }
 
-
   const data = jwt.decode(token)
+  if (!data) return null
+
+  // @ts-ignore email is decoded from the token
+  const { email } = data
 
   return (
     <div className="forgot-password-page">
-      <h3 className="heading-tertiary u-margin-bottom-small forgot-password-page__title">Reset Password for {data.email}</h3>
+      <h3 className="heading-tertiary u-margin-bottom-small forgot-password-page__title">Reset Password for {email}</h3>
 
       <form
         onSubmit={handleSubmit}
@@ -52,7 +56,7 @@ const ForgotPasswordPage = props => {
           name="password"
           type="password"
           value={password}
-          onChange={event => setPassword(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
         />
 
         <Input
@@ -61,7 +65,7 @@ const ForgotPasswordPage = props => {
           name="confirmPassword"
           type="password"
           value={confirmPassword}
-          onChange={event => setConfirmPassword(event.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(event.target.value)}
         />
 
         <p className="forgot-password-page__validation">{validation}</p>

@@ -5,7 +5,7 @@ type Props = {
   content: string,
   onChange: Function,
   onSubmit: Function,
-  detached: Boolean,
+  detached: boolean,
   onDetachClick: Function
 }
 

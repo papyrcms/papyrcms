@@ -8,7 +8,7 @@ import settingsContext from '../../../context/settingsContext'
 import CommentForm from './CommentForm'
 
 type Props = {
-  enableCommenting: Boolean,
+  enableCommenting: boolean,
   post: Post,
   apiPath: string,
   beforeCommentForm: Function,

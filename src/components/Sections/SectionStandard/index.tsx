@@ -13,25 +13,25 @@ import filterPosts from '../../../hooks/filterPosts'
 
 type Props = {
   post: Post,
-  enableCommenting: Boolean,
+  enableCommenting?: boolean,
   apiPath: string,
   className: string,
   redirectRoute: string,
-  path: string,
-  emptyTitle: string,
-  emptyMessage: string,
-  beforePost: Function,
-  afterPost: Function,
-  beforeTitle: Function,
-  afterTitle: Function,
-  beforeMainMedia: Function,
-  afterMainMedia: Function,
-  beforeContent: Function,
-  afterContent: Function,
-  beforeComments: Function,
-  afterComments: Function,
-  beforeCommentForm: Function,
-  afterCommentForm: Function
+  path?: string,
+  emptyTitle?: string,
+  emptyMessage?: string,
+  beforePost?: Function,
+  afterPost?: Function,
+  beforeTitle?: Function,
+  afterTitle?: Function,
+  beforeMainMedia?: Function,
+  afterMainMedia?: Function,
+  beforeContent?: Function,
+  afterContent?: Function,
+  beforeComments?: Function,
+  afterComments?: Function,
+  beforeCommentForm?: Function,
+  afterCommentForm?: Function
 }
 
 /**
@@ -198,7 +198,7 @@ const SectionStandard = (props: Props) => {
         title={headTitle}
         image={mainMedia}
         description={postContent.replace('<p>', '').replace('</p>', '')}
-        keywords={tags}
+        keywords={tags.toString()}
       />
 
       {beforePost()}
@@ -226,7 +226,7 @@ const SectionStandard = (props: Props) => {
         <Comment
           post={post}
           comments={comments}
-          enableCommenting={enableCommenting}
+          enableCommenting={!!enableCommenting}
           apiPath={apiPath}
 
           beforeCommentForm={beforeCommentForm}

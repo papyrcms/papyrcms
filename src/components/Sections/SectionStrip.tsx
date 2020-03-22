@@ -5,28 +5,28 @@ import Link from 'next/link'
 import Media from '../Media'
 
 type Props = {
-  clickableMedia: boolean,
-  mediaLeft: boolean,
-  mediaRight: boolean,
-  readMore: boolean,
-  path: string,
+  clickableMedia?: boolean,
+  mediaLeft?: boolean,
+  mediaRight?: boolean,
+  readMore?: boolean,
+  path?: string,
   emptyMessage: string,
   className: string,
   posts: Array<Post>,
   title: string,
   contentLength?: number,
-  beforeTitle: Function,
-  afterTitle: Function,
-  beforePosts: Function,
-  afterPosts: Function,
-  beforePostTitle: Function,
-  afterPostTitle: Function,
-  beforePostMedia: Function,
-  afterPostMedia: Function,
-  beforePostContent: Function,
-  afterPostContent: Function,
-  beforePostLink: Function,
-  afterPostLink: Function
+  beforeTitle?: Function,
+  afterTitle?: Function,
+  beforePosts?: Function,
+  afterPosts?: Function,
+  beforePostTitle?: Function,
+  afterPostTitle?: Function,
+  beforePostMedia?: Function,
+  afterPostMedia?: Function,
+  beforePostContent?: Function,
+  afterPostContent?: Function,
+  beforePostLink?: Function,
+  afterPostLink?: Function
 }
 
 

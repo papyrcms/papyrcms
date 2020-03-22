@@ -8,7 +8,7 @@ import useForm from '../hooks/useForm'
 import UserInfoForm from '../components/UserInfoForm'
 
 
-const ProfilePage = props => {
+const ProfilePage = () => {
 
   const [infoValidation, setInfoValidation] = useState('')
   const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '' })
@@ -32,10 +32,10 @@ const ProfilePage = props => {
   }
 
 
-  const handlePasswordSubmit = event => {
+  const handlePasswordSubmit = (event: React.FormEvent) => {
     event.preventDefault()
 
-    const success = (response, setValidation) => {
+    const success = (response: any, setValidation: Function) => {
       setValidation(response.data.message)
     }
 
@@ -76,7 +76,7 @@ const ProfilePage = props => {
       <div>
         <UserInfoForm
           onSubmitSuccess={() => setInfoValidation('User info has been updated.')}
-          onSubmitError={(formState, err) => setInfoValidation(err.response.data.message)}
+          onSubmitError={(formState: any, err: any) => setInfoValidation(err.response.data.message)}
         />
         <p className="profile__validation">{infoValidation}</p>
       </div>
