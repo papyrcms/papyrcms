@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../middleware/common/"
@@ -10,7 +11,7 @@ const handler = connect()
 handler.use(common)
 
 
-const getPost = async id => {
+const getPost = async (id: string) => {
   let post
   try {
     post = await Post.findById(id)
@@ -29,7 +30,7 @@ const getPost = async id => {
 }
 
 
-const updatePost = async (id, body, enableEmailingToUsers) => {
+const updatePost = async (id: string, body: any, enableEmailingToUsers: boolean) => {
   if (body.tags) {
     const newTags: any = _.map(_.split(body.tags, ','), tag => {
       let pendingTag = tag
@@ -60,7 +61,7 @@ const updatePost = async (id, body, enableEmailingToUsers) => {
 }
 
 
-const deletePost = async id => {
+const deletePost = async (id: string) => {
   const post = await Post.findById(id)
 
   _.forEach(post.comments, async comment => {
@@ -73,31 +74,31 @@ const deletePost = async id => {
 }
 
 
-handler.get(async (req, res) => {
-  const post = await getPost(req.query.id)
-  if (!post.published && (!req.user || !req.user.isAdmin)) {
+handler.get(async (req: NextApiRequest & Req, res: NextApiResponse) => {
+  const post = await getPost(req.query.id as string)
+  if (!post || !post.published && (!req.user || !req.user.isAdmin)) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   return res.status(200).send(post)
 })
 
 
-handler.put(async (req, res) => {
+handler.put(async (req: NextApiRequest & Req, res: NextApiResponse & Res) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  const post = await updatePost(req.query.id, req.body, res.locals.settings.enableEmailingToUsers)
+  const post = await updatePost(req.query.id as string, req.body, res.locals.settings.enableEmailingToUsers)
   return res.status(200).send(post)
 })
 
 
-handler.delete(async (req, res) => {
+handler.delete(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  const message = await deletePost(req.query.id)
+  const message = await deletePost(req.query.id as string)
   return res.status(200).send(message)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

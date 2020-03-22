@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../middleware/common/"
@@ -16,7 +17,7 @@ const getPosts = async () => {
 }
 
 
-const createPost = async (body, enableEmailingToUsers) => {
+const createPost = async (body: any, enableEmailingToUsers: boolean) => {
   if (body.tags) {
     const newTags: any = _.map(_.split(body.tags, ','), tag => {
       let pendingTag = tag
@@ -47,16 +48,16 @@ const createPost = async (body, enableEmailingToUsers) => {
 }
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const posts = await getPosts()
   return res.status(200).send(posts)
 })
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse & Res) => {
   const post = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
   return res.status(200).send(post)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)
