@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import _ from 'lodash'
 import common from '../../../middleware/common/'
@@ -13,7 +14,7 @@ const getPages = async () => {
 }
 
 
-const createPage = async body => {
+const createPage = async (body: any) => {
   const page = new Page({
     title: body.title,
     className: body.className,
@@ -73,13 +74,13 @@ const createPage = async body => {
 }
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const pages = await getPages()
   return res.status(200).send(pages)
 })
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
@@ -88,4 +89,4 @@ handler.post(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

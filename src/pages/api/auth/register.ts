@@ -82,4 +82,4 @@ handler.post((req: NextApiRequest & Req, res: NextApiResponse & Res) => {
 })
 
 
-export default (req: NextApiRequest & Req, res: NextApiResponse) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

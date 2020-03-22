@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../middleware/common/"
@@ -8,7 +9,7 @@ const handler = connect()
 handler.use(common)
 
 
-const getPage = async route => {
+const getPage = async (route: string) => {
   const page = await Page.findOne({ route }).lean()
   if (!page) {
     throw new Error('This page does not exist.')
@@ -18,14 +19,14 @@ const getPage = async route => {
 }
 
 
-const updatePage = async (body, id) => {
+const updatePage = async (body: any, id: string) => {
   const pageData = {
     title: body.title,
     className: body.className,
     route: body.route,
     navOrder: body.navOrder,
     css: body.css,
-    sections: []
+    sections: [] as Array<string>
   }
 
   if (!pageData.route) {
@@ -56,7 +57,8 @@ const updatePage = async (body, id) => {
         return pendingTag
       }
     })
-    pageData.sections.push(JSON.stringify(section))
+    const newSection = JSON.stringify(section)
+    pageData.sections.push(newSection)
   }
 
   // Make sure the page has at least one section
@@ -77,15 +79,15 @@ const updatePage = async (body, id) => {
 }
 
 
-const deletePage = async id => {
+const deletePage = async (id: string) => {
   await Page.findByIdAndDelete(id)
   return 'Page deleted.'
 }
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const page = await getPage(req.query.id)
+    const page = await getPage(req.query.id as string)
     return res.status(200).send(page)
   } catch (err) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
@@ -93,22 +95,22 @@ handler.get(async (req, res) => {
 })
 
 
-handler.put(async (req, res) => {
-  if (!req.user && !req.user.isAdmin) {
+handler.put(async (req: NextApiRequest & Req, res: NextApiResponse) => {
+  if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  const page = await updatePage(req.body, req.query.id)
+  const page = await updatePage(req.body, req.query.id as string)
   return res.status(200).send(page)
 })
 
 
-handler.delete(async (req, res) => {
-  if (!req.user && !req.user.isAdmin) {
+handler.delete(async (req: NextApiRequest & Req, res: NextApiResponse) => {
+  if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  const message = await deletePage(req.query.id)
+  const message = await deletePage(req.query.id as string)
   return res.status(200).send(message)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)
