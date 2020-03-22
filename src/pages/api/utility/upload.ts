@@ -38,7 +38,7 @@ export const config = {
 }
 
 
-handler.post(async (req: NextApiRequest & Req, res: NextApiResponse & Res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse) => {
 
   if (!req.user || !req.user.isAdmin) {
     return res.status(401).send({ message: 'You are not allowed to do that.' })
