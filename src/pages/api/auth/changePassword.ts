@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import common from "../../../middleware/common/"
 import isLoggedIn from '../../../middleware/isLoggedIn'
@@ -9,7 +10,7 @@ handler.use(common)
 handler.use(isLoggedIn)
 
 
-handler.post((req, res) => {
+handler.post((req: NextApiRequest & Req, res: NextApiResponse) => {
   const { oldPass, newPass, confirmPass } = req.body
 
   // Make sure password fields are filled out
@@ -27,7 +28,7 @@ handler.post((req, res) => {
     }
 
     // Make sure the entered password is the user's password
-    foundUser.authenticate(oldPass, (err, user, passwordError) => {
+    foundUser.authenticate(oldPass, (err: any, user: User, passwordError: any) => {
       if (user) {
 
         // Check to see new password fields match
@@ -51,4 +52,4 @@ handler.post((req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest & Req, res: NextApiResponse) => handler.apply(req, res)

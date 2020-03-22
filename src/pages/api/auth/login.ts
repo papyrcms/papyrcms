@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
@@ -9,7 +10,7 @@ const handler = connect()
 handler.use(common)
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   passport.authenticate('local', { session: false }, (err, user) => {
 
     if (err || !user) {
@@ -19,7 +20,7 @@ handler.post(async (req, res) => {
       })
     }
 
-    req.login(user, { session: false }, error => {
+    req.login(user, { session: false }, (error: any) => {
       if (error) {
         return res.status(401).send(error)
       }
@@ -40,4 +41,4 @@ handler.post(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest & Req, res: NextApiResponse) => handler.apply(req, res)

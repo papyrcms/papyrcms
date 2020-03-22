@@ -8,6 +8,8 @@ declare module 'react-tinymce'
 type Req = {
   user: User,
   file: { path: string }
+  login: Function,
+  logout: Function
 }
 type Res = {
   locals: {
@@ -152,7 +154,8 @@ type Settings = {
   enableEvents: boolean,
   enableCommenting: boolean,
   enableRegistration: boolean,
-  enableEmailingToAdmin: boolean
+  enableEmailingToAdmin: boolean,
+  enableEmailingToUsers: boolean
 }
 
 type Keys = {

@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import common from '../../../middleware/common/'
 import User from '../../../models/user'
@@ -7,7 +8,7 @@ const handler = connect()
 handler.use(common)
 
 
-const updateCurrentUser = async (body, user) => {
+const updateCurrentUser = async (body: any, user: User) => {
   const {
     userId, firstName, lastName, email, address1, address2,
     city, state, zip, country, shippingFirstName, shippingLastName,
@@ -50,15 +51,15 @@ const updateCurrentUser = async (body, user) => {
 }
 
 
-handler.get((req, res) => {
+handler.get((req: NextApiRequest & Req, res: NextApiResponse) => {
   return res.status(200).send(req.user || null)
 })
 
 
-handler.put(async (req, res) => {
+handler.put(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   const updatedUser = await updateCurrentUser(req.body, req.user)
   return res.status(200).send(updatedUser)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest & Req, res: NextApiResponse) => handler.apply(req, res)

@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import connect from "next-connect"
 import common from "../../../middleware/common/"
@@ -9,7 +10,7 @@ const handler = connect()
 handler.use(common)
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   const { token, password, confirmPassword } = req.body
 
   if (password !== confirmPassword) {
@@ -17,6 +18,7 @@ handler.post(async (req, res) => {
   }
 
   const data = jwt.verify(token, keys.jwtSecret)
+  // @ts-ignore email is decoded from the token
   const foundUser = await User.findOne({ email: data.email })
 
   // Set the new password
@@ -27,4 +29,4 @@ handler.post(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest & Req, res: NextApiResponse) => handler.apply(req, res)

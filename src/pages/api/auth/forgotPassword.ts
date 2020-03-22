@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import jwt from 'jsonwebtoken'
 import connect from "next-connect"
 import common from "../../../middleware/common/"
@@ -12,13 +13,13 @@ handler.use(common)
 handler.use(emailToUsersEnabled)
 
 
-const verifyEmailSyntax = email => {
+const verifyEmailSyntax = (email: string) => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return regex.test(String(email).toLowerCase())
 }
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse & Res) => {
   const { email } = req.body
 
   if (!verifyEmailSyntax(email)) {
@@ -49,4 +50,4 @@ handler.post(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest & Req, res: NextApiResponse) => handler.apply(req, res)

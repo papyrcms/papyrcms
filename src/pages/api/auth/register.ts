@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import jwt from 'jsonwebtoken'
 import keys from '../../../config/keys'
@@ -12,13 +13,13 @@ handler.use(common)
 handler.use(registrationEnabled)
 
 
-const verifyEmailSyntax = email => {
+const verifyEmailSyntax = (email: string) => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return regex.test(String(email).toLowerCase())
 }
 
 
-handler.post((req, res) => {
+handler.post((req: NextApiRequest & Req, res: NextApiResponse & Res) => {
   const { firstName, lastName, email, password, passwordConfirm } = req.body
 
   if (!firstName) {
@@ -45,7 +46,8 @@ handler.post((req, res) => {
     username: email, email, firstName, lastName
   })
 
-  User.register(newUser, password, async err => {
+  // @ts-ignore passport local mongoose makes this possible
+  User.register(newUser, password, async (err: any) => {
 
     if (err) {
       const message = err.message.replace('username', 'email')
@@ -59,7 +61,7 @@ handler.post((req, res) => {
       await mailer.sendEmail(newUser._doc, newUser.email, 'welcome', subject)
     }
 
-    req.login(newUser, { session: false }, err => {
+    req.login(newUser, { session: false }, (err: any) => {
       if (err) {
         return res.status(400).send({ message: err.message })
       }
@@ -80,4 +82,4 @@ handler.post((req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest & Req, res: NextApiResponse) => handler.apply(req, res)
