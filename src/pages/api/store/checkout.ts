@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import common from '../../../middleware/common/'
 import Mailer from '../../../utilities/mailer'
@@ -12,7 +13,7 @@ const handler = connect()
 handler.use(common)
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   const {
     products, source, notes, firstName, lastName,
     email, address1, address2, city, state, zip, country,
@@ -117,4 +118,4 @@ ${shippingCountry || country}
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import common from "../../../../middleware/common/"
 import isAdmin from "../../../../middleware/isAdmin"
@@ -14,7 +15,7 @@ const getProducts = async () => {
 }
 
 
-const createProduct = async body => {
+const createProduct = async (body: any) => {
   const {
     title,
     content,
@@ -45,16 +46,16 @@ const createProduct = async body => {
 }
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const products = await getProducts()
   return res.status(200).send(products)
 })
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   const product = await createProduct(req.body)
   return res.status(200).send(product)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

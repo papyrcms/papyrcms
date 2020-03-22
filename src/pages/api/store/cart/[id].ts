@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../../middleware/common/"
@@ -13,7 +14,7 @@ handler.use(isLoggedIn)
 handler.use(storeEnabled)
 
 
-const addToCart = async (productId, user) => {
+const addToCart = async (productId: string, user: User) => {
   const product = await Product.findOne({ _id: productId })
 
   // If we are out of stock
@@ -33,11 +34,12 @@ const addToCart = async (productId, user) => {
 }
 
 
-const removeFromCart = async (productId, user) => {
+const removeFromCart = async (productId: string, user: User) => {
   let removed = false
   const cart = _.filter(user.cart, product => {
 
     // If one has not been removed and it has the passed id, remove it
+    // @ts-ignore .equals() exists on the mongoose oid
     if (product._id.equals(productId) && !removed) {
       removed = true
       return false
@@ -52,16 +54,16 @@ const removeFromCart = async (productId, user) => {
 }
 
 
-handler.put(async (req, res) => {
-  const cart = await addToCart(req.query.id, req.user)
+handler.put(async (req: NextApiRequest & Req, res: NextApiResponse) => {
+  const cart = await addToCart(req.query.id as string, req.user)
   return res.status(200).send(cart)
 })
 
 
-handler.delete( async (req, res) => {
-  const cart = await removeFromCart(req.query.id, req.user)
+handler.delete( async (req: NextApiRequest & Req, res: NextApiResponse) => {
+  const cart = await removeFromCart(req.query.id as string, req.user)
   return res.status(200).send(cart)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)
