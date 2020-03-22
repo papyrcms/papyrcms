@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import common from '../../../middleware/common/'
 import Settings from '../../../models/settings'
@@ -7,12 +8,12 @@ const handler = connect()
 handler.use(common)
 
 
-handler.get((req, res) => {
+handler.get((req: NextApiRequest, res: NextApiResponse & Res) => {
   return res.status(200).send(res.locals.settings || {})
 })
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse & Res) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
@@ -32,4 +33,4 @@ handler.post(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

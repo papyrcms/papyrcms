@@ -51,6 +51,7 @@
     "@types/lodash": "^4.14.149",
     "@types/mocha": "^7.0.2",
     "@types/mongoose": "^5.7.7",
+    "@types/multer": "^1.4.2",
     "@types/node": "^13.9.2",
     "@types/nodemailer": "^6.4.0",
     "@types/passport-local-mongoose": "^4.0.13",

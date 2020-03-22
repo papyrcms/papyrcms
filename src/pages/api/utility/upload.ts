@@ -1,7 +1,8 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import multer from 'multer'
 import cloudinary from 'cloudinary'
-import common from '../../../middleware/common/'
+import common from '../../../middleware/common'
 import keys from '../../../config/keys'
 
 
@@ -14,7 +15,7 @@ const storage = multer.diskStorage({
     callback(null, Date.now() + file.originalname)
   }
 })
-const fileFilter = (req, file, cb) => {
+const fileFilter = (req: any, file: any, cb: Function) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
     return cb(new Error('Only image files are allowed!'), false)
   }
@@ -37,12 +38,13 @@ export const config = {
 }
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse & Res) => {
+
   if (!req.user || !req.user.isAdmin) {
     return res.status(401).send({ message: 'You are not allowed to do that.' })
   }
 
-  upload.single('file')(req, {}, async err => {
+  upload.single('file')(req as any, res as any, async err => {
     if (err) {
       return res.status(401).send({ message: err.message })
     }
@@ -53,4 +55,4 @@ handler.post(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: Req, res: Res) => handler.apply(req, res)

@@ -1,14 +1,25 @@
 /// <reference types="next" />
 /// <reference types="next/types/global" />
 
+declare module 'next-connect'
 declare module 'react-render-html'
-declare module 'react-tinymce';
+declare module 'react-tinymce'
+
+type Req = {
+  user: User,
+  file: { path: string }
+}
+type Res = {
+  locals: {
+    settings: Settings
+  }
+}
 
 type TinyMceEditor = HTMLTextAreaElement & { getContent: Function }
 
 // type FileEventTarget = EventTarget & { files: FileList }
 
-interface Message {
+type Message = {
   _id: string,
   name: string,
   email: string,
@@ -16,7 +27,7 @@ interface Message {
   created: Date
 }
 
-interface User {
+type User = {
   _id: string,
   email: string,
   firstName: string,
@@ -43,7 +54,7 @@ interface User {
   isBanned: boolean
 }
 
-interface Comment {
+type Comment = {
   _id: string,
   content: string,
   replies: Array<Comment>,
@@ -51,7 +62,7 @@ interface Comment {
   author: User
 }
 
-interface Blog {
+type Blog = {
   _id: string,
   title: string,
   slug: string,
@@ -65,7 +76,7 @@ interface Blog {
   comments: Array<Comment>
 }
 
-interface Event {
+type Event = {
   _id: string,
   title: string,
   slug: string,
@@ -80,7 +91,7 @@ interface Event {
   longitude: number
 }
 
-interface Product {
+type Product = {
   _id: string,
   title: string,
   slug: string,
@@ -94,7 +105,7 @@ interface Product {
   quantity: number
 }
 
-interface Order {
+type Order = {
   _id: string,
   created: Date,
   products: Array<Product>,
@@ -103,7 +114,7 @@ interface Order {
   shipped: boolean
 }
 
-interface Page {
+type Page = {
   _id: string,
   url: string,
   title: string,
@@ -115,7 +126,7 @@ interface Page {
   created: Date,
 }
 
-interface Post {
+type Post = {
   _id: string,
   title: string,
   slug: string,
@@ -128,13 +139,13 @@ interface Post {
   comments: Array<Comment>
 }
 
-// interface Setting {
+// type Setting = {
 //   _id: string,
 //   name: string,
 //   options: object
 // }
 
-interface Settings {
+type Settings = {
   enableMenu: boolean,
   enableStore: boolean,
   enableBlog: boolean,
@@ -143,7 +154,7 @@ interface Settings {
   enableRegistration: boolean
 }
 
-interface Keys {
+type Keys = {
   stripePubKey: string,
   googleMapsKey: string
 }
