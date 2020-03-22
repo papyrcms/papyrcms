@@ -9,7 +9,7 @@ import Map from '../../../components/Map'
 import { SectionStandard } from '../../../components/Sections/'
 
 type Posts = {
-  event: Event
+  event: event
 }
 
 const EventsShow = (props: Posts) => {

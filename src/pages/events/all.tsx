@@ -6,7 +6,7 @@ import keys from '../../config/keys'
 import { SectionCards } from '../../components/Sections/'
 
 type Props = {
-  events: Array<Event>
+  events: Array<event>
 }
 
 const EventsAllPage = (props: Props) => {
@@ -25,7 +25,7 @@ const EventsAllPage = (props: Props) => {
   }, [])
 
 
-  const renderDate = (post: Event) => (
+  const renderDate = (post: event) => (
     <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
   )
 

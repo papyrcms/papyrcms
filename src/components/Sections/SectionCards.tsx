@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Media from '../Media'
 
 type Props = {
-  posts: Array<Post | Blog | Event | Product>,
+  posts: Array<Post | Blog | event | Product>,
   contentLength?: number,
   emptyMessage?: string,
   perRow: number,
@@ -85,7 +85,7 @@ const SectionCards = (props: Props) => {
   } = props
 
 
-  const renderReadMore = (post: Post | Blog | Event | Product) => {
+  const renderReadMore = (post: Post | Blog | event | Product) => {
     if (readMore) {
       const readMorePath = path ? path : 'posts'
 
@@ -105,7 +105,7 @@ const SectionCards = (props: Props) => {
   }
 
 
-  const renderMediaSection = (post: Post | Blog | Event | Product) => {
+  const renderMediaSection = (post: Post | Blog | event | Product) => {
     if (post.mainMedia) {
       return <Media
         className="section-cards__image"

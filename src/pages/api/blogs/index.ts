@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import common from "../../../middleware/common/"
 import isAdmin from "../../../middleware/isAdmin"
@@ -14,7 +15,7 @@ const getBlogs = async () => {
 }
 
 
-const createBlog = async body => {
+const createBlog = async (body: any) => {
   const blog = new Blog(body)
   blog.slug = blog.title.replace(/\s+/g, '-').toLowerCase()
 
@@ -27,16 +28,16 @@ const createBlog = async body => {
 }
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
   const blogs = await getBlogs()
   return res.status(200).send(blogs)
 })
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse) => {
   const blog = await createBlog(req.body)
   return res.status(200).send(blog)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

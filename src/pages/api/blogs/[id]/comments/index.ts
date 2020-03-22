@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import common from "../../../../../middleware/common/"
 import blogEnabled from "../../../../../middleware/blogEnabled"
@@ -12,7 +13,7 @@ handler.use(blogEnabled)
 handler.use(userCommentsEnabled)
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   const comment = new Comment({
     content: req.body.content,
     author: req.user
@@ -26,4 +27,4 @@ handler.post(async (req, res) => {
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

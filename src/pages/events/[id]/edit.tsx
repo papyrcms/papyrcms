@@ -54,7 +54,7 @@ const coordinatesField = ({ values, errors, handleChange, validateField }: Field
 )
 
 type Props = {
-  event: Event
+  event: event
 }
 
 const EventsEdit = (props: Props) => {

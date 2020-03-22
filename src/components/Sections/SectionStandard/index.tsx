@@ -12,7 +12,7 @@ import PageHead from '../../PageHead'
 import filterPosts from '../../../hooks/filterPosts'
 
 type Props = {
-  post: Post | Blog | Event | Product,
+  post: Post | Blog | event | Product,
   enableCommenting?: boolean,
   apiPath?: string,
   className?: string,
@@ -86,7 +86,7 @@ const SectionStandard = (props: Props) => {
     beforeCommentForm = () => null,
     afterCommentForm = () => null
   } = props
-  const { title, tags, mainMedia, content, published, comments } = post
+  const { title, tags, mainMedia, content, published } = post
   let postContent = content || ''
 
 
@@ -169,6 +169,21 @@ const SectionStandard = (props: Props) => {
   }
 
 
+  const renderComments = () => {
+    return (
+      <Comment
+        post={post}
+        comments={post.comments}
+        enableCommenting={!!enableCommenting}
+        apiPath={apiPath}
+
+        beforeCommentForm={beforeCommentForm}
+        afterCommentForm={afterCommentForm}
+      />
+    )
+  }
+
+
   if (
     !post ||
     Object.keys(post).length == 0
@@ -223,15 +238,7 @@ const SectionStandard = (props: Props) => {
         {renderAuthOptions()}
 
         {beforeComments()}
-        <Comment
-          post={post}
-          comments={comments}
-          enableCommenting={!!enableCommenting}
-          apiPath={apiPath}
-
-          beforeCommentForm={beforeCommentForm}
-          afterCommentForm={afterCommentForm}
-        />
+        {renderComments()}
         {afterComments()}
       </div>
 

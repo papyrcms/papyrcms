@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-type Posts = Array<Post | Blog | Event | Product>
+type Posts = Array<Post | Blog | event | Product>
 type Filter = {
   maxPosts?: number,
   postTags?: Array<string>,

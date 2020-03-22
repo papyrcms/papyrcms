@@ -56,10 +56,10 @@ type User = {
   isBanned: boolean
 }
 
-type Comment = {
+type comment = {
   _id: string,
   content: string,
-  replies: Array<Comment>,
+  replies: Array<comment>,
   created: Date,
   author: User
 }
@@ -75,10 +75,10 @@ type Blog = {
   published: boolean,
   created: Date,
   publishDate: Date,
-  comments: Array<Comment>
+  comments: Array<comment>
 }
 
-type Event = {
+type event = {
   _id: string,
   title: string,
   slug: string,
@@ -90,7 +90,8 @@ type Event = {
   created: Date,
   date: Date,
   latitude: number,
-  longitude: number
+  longitude: number,
+  comments: Array<never>
 }
 
 type Product = {
@@ -104,7 +105,8 @@ type Product = {
   published: boolean,
   created: Date,
   price: number,
-  quantity: number
+  quantity: number,
+  comments: Array<never>
 }
 
 type Order = {
@@ -138,7 +140,7 @@ type Post = {
   subImages: Array<string>,
   published: boolean,
   created: Date,
-  comments: Array<Comment>
+  comments: Array<comment>
 }
 
 // type Setting = {

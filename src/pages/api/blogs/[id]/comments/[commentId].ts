@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../../../middleware/common/"
@@ -13,17 +14,19 @@ handler.use(blogEnabled)
 handler.use(userCommentsEnabled)
 
 
-const updateComment = async (comment, newContent) => {
+const updateComment = async (comment: comment, newContent: string) => {
   comment.content = newContent
+  // @ts-ignore .save() exists on the mongoose model
   await comment.save()
 
   return comment
 }
 
 
-const deleteComment = async (blogId, comment) => {
+const deleteComment = async (blogId: string, comment: comment) => {
   const blog = await Blog.findById(blogId)
   _.forEach(blog.comments, (foundComment, i) => {
+    // @ts-ignore .equals() exists on the mongoose oid
     if (comment._id.equals(foundComment._id)) {
       blog.comments.splice(i, 1)
     }
@@ -35,7 +38,7 @@ const deleteComment = async (blogId, comment) => {
 }
 
 
-handler.put(async (req, res) => {
+handler.put(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   let comment = await Comment.findById(req.query.commentId).populate("author")
   if (
     !comment.author._id.equals(req.user._id) ||
@@ -49,7 +52,7 @@ handler.put(async (req, res) => {
 })
 
 
-handler.delete(async (req, res) => {
+handler.delete(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   const comment = await Comment.findById(req.query.commentId).populate("author")
   if (
     !comment.author._id.equals(req.user._id) ||
@@ -58,9 +61,9 @@ handler.delete(async (req, res) => {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
 
-  const message = await deleteComment(req.query.id, comment)
+  const message = await deleteComment(req.query.id as string, comment)
   return res.status(200).send(message)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

@@ -13,7 +13,7 @@ type Props = {
   apiPath?: string,
   beforeCommentForm: Function,
   afterCommentForm: Function,
-  comments: Array<Comment>
+  comments: Array<comment>
 }
 
 const Comment = (props: Props) => {
@@ -71,7 +71,7 @@ const Comment = (props: Props) => {
   }
 
 
-  const onDeleteClick = (comment: Comment) => {
+  const onDeleteClick = (comment: comment) => {
 
     const confirm = window.confirm('Are you sure you want to delete this comment?')
 
@@ -90,7 +90,7 @@ const Comment = (props: Props) => {
   }
 
 
-  const renderAuthOptions = (comment: Comment) => {
+  const renderAuthOptions = (comment: comment) => {
 
     if (
       currentUser && (

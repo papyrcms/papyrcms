@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../../middleware/common/"
@@ -11,7 +12,7 @@ handler.use(common)
 handler.use(blogEnabled)
 
 
-const getBlog = async id => {
+const getBlog = async (id: string) => {
   let blog
   try {
     blog = await Blog.findById(id).populate('comments')
@@ -26,7 +27,7 @@ const getBlog = async id => {
 }
 
 
-const updateBlog = async (id, body) => {
+const updateBlog = async (id: string, body: any) => {
   const oldBlog = await Blog.findById(id)
 
   if (!oldBlog.published && body.published) {
@@ -40,7 +41,7 @@ const updateBlog = async (id, body) => {
 }
 
 
-const deleteBlog = async id => {
+const deleteBlog = async (id: string) => {
   const blog = await Blog.findById(id)
 
   _.forEach(blog.comments, async comment => {
@@ -53,31 +54,31 @@ const deleteBlog = async id => {
 }
 
 
-handler.get(async (req, res) => {
-  const blog = await getBlog(req.query.id)
-  if (!blog.published && (!req.user || !req.user.isAdmin)) {
+handler.get(async (req: NextApiRequest & Req, res: NextApiResponse) => {
+  const blog = await getBlog(req.query.id as string)
+  if (!blog || !blog.published && (!req.user || !req.user.isAdmin)) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
   return res.status(200).send(blog)
 })
 
 
-handler.put(async (req, res) => {
+handler.put(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  const blog = await updateBlog(req.query.id, req.body)
+  const blog = await updateBlog(req.query.id as string, req.body)
   return res.status(200).send(blog)
 })
 
 
-handler.delete(async (req, res) => {
+handler.delete(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-  const message = await deleteBlog(req.query.id)
+  const message = await deleteBlog(req.query.id as string)
   return res.status(200).send(message)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

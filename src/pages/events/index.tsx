@@ -5,13 +5,13 @@ import keys from '../../config/keys'
 import { SectionStrip } from '../../components/Sections/'
 
 type Props = {
-  events: Array<Event>
+  events: Array<event>
 }
 
 const EventsPage = ({ events }: Props) => {
 
 
-  const renderDate = (event: Event) => (
+  const renderDate = (event: event) => (
     <p>{moment(event.date).format('MMMM Do, YYYY')}</p>
   )
 
