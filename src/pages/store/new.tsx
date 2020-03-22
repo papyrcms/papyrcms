@@ -3,7 +3,14 @@ import userContext from '../../context/userContext'
 import PostsForm from '../../components/PostsForm'
 import Input from '../../components/Input'
 
-const ProductFields = ({ values, errors, validateField, handleChange }) => (
+type FieldProps = {
+  values: any,
+  errors: any,
+  validateField: Function,
+  handleChange: Function
+}
+
+const ProductFields = ({ values, errors, validateField, handleChange }: FieldProps) => (
   <div className="u-form-row">
     <Input
       id="price"

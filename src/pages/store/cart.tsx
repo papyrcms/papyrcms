@@ -5,16 +5,18 @@ import storeContext from '../../context/storeContext'
 import { SectionStrip } from '../../components/Sections'
 
 
-const Cart = props => {
+
+const Cart = () => {
 
   const { cart, removeFromCart } = useContext(storeContext)
 
   const uniqueProducts = []
   for (const product of cart) {
     const unique = uniqueProducts.filter(prod => {
-      if (prod._id.equals) {
-        return prod._id.equals(product._id)
-      }
+      // For server render. Might not be necessary anymore
+      // if (prod._id.equals) {
+      //   return prod._id.equals(product._id)
+      // }
       return prod._id === product._id
     }).length === 0
     if (unique) {
@@ -36,19 +38,20 @@ const Cart = props => {
     )
   }
 
-  const renderDetails = product => {
+  const renderDetails = (product: Product) => {
     let quantity
     let totalCost = 0
 
-    if (product._id.equals) {
-      quantity = _.filter(cart, item => {
-        if (product._id.equals(item._id)) {
-          totalCost += item.price
-          return true
-        }
-        return false
-      }).length
-    } else {
+    // For server render. Might not be necessary anymore
+    // if (product._id.equals) {
+    //   quantity = _.filter(cart, item => {
+    //     if (product._id.equals(item._id)) {
+    //       totalCost += item.price
+    //       return true
+    //     }
+    //     return false
+    //   }).length
+    // } else {
       quantity = _.filter(cart, item => {
         if (item._id === product._id) {
           totalCost += item.price
@@ -56,7 +59,7 @@ const Cart = props => {
         }
         return false
       }).length
-    }
+    // }
 
     return <span>{quantity} in cart (
       <a href="#" onClick={event => {

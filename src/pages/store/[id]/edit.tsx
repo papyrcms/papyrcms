@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import userContext from '../../../context/userContext'
@@ -6,8 +7,14 @@ import keys from '../../../config/keys'
 import PostsForm from '../../../components/PostsForm'
 import Input from '../../../components/Input'
 
+type FieldProps = {
+  values: any,
+  errors: any,
+  validateField: Function,
+  handleChange: Function
+}
 
-const ProductFields = ({ values, errors, validateField, handleChange }) => {
+const ProductFields = ({ values, errors, validateField, handleChange }: FieldProps) => {
 
   return(
     <div className="u-form-row">
@@ -38,7 +45,11 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => {
   )
 }
 
-const StoreEdit = props => {
+type Props = {
+  product: Product
+}
+
+const StoreEdit = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   if (!currentUser || !currentUser.isAdmin) return null
@@ -74,7 +85,7 @@ const StoreEdit = props => {
 }
 
 
-StoreEdit.getInitialProps = async ({ query }) => {
+StoreEdit.getInitialProps = async ({ query }: NextPageContext) => {
 
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''

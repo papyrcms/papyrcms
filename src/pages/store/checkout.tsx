@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { NextPageContext } from 'next'
 import axios from 'axios'
 import _ from 'lodash'
 import keys from '../../config/keys'
@@ -6,13 +7,17 @@ import storeContext from '../../context/storeContext'
 import CreditCardForm from '../../components/CreditCardForm'
 import Input from '../../components/Input'
 import UserInfoForm from '../../components/UserInfoForm'
+import Stripe from 'stripe';
 
+type Props = {
+  product: Product
+}
 
-const Checkout = props => {
+const Checkout = (props: Props) => {
 
   const cartState = useContext(storeContext)
 
-  let cart = []
+  let cart: Array<Product> = []
   let fromCart = false
 
   // Get the checkout item(s)
@@ -24,10 +29,10 @@ const Checkout = props => {
   }
 
   const [orderNotes, setOrderNotes] = useState("")
-  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(() => null)
-  const [handleSubmitError, setHandleSubmitError] = useState(() => null)
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<Function>(() => null)
+  const [handleSubmitError, setHandleSubmitError] = useState<Function>(() => null)
 
-  const handleCardSubmit = (source, setProcessing, setValidation) => {
+  const handleCardSubmit = (source: Stripe.Source, setProcessing: Function, setValidation: Function) => {
     const errorFunction = () => {
       setProcessing(false)
       setValidation('Something went wrong.')
@@ -35,7 +40,7 @@ const Checkout = props => {
     setHandleSubmitError(() => errorFunction)
 
 
-    const successFunction = formState => {
+    const successFunction = (formState: any) => {
       const additionalValues = {
         fromCart,
         source,
@@ -51,7 +56,7 @@ const Checkout = props => {
         }
       }
 
-      const error = err => {
+      const error = (err: any) => {
         setProcessing(false)
         if (err.response) {
           setValidation(err.response.data.message)
@@ -67,7 +72,8 @@ const Checkout = props => {
     }
     setHandleSubmitSuccess(() => successFunction)
 
-    document.getElementById('userInfoForm').dispatchEvent(new Event('submit'))
+    const userInfoForm = document.getElementById('userInfoForm')
+    if (userInfoForm) userInfoForm.dispatchEvent(new Event('submit'))
   }
 
   const renderProductsList = () => {
@@ -98,7 +104,7 @@ const Checkout = props => {
             label="Additional notes about the order"
             name="orderNotes"
             value={orderNotes}
-            onChange={event => setOrderNotes(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) => setOrderNotes(event.target.value)}
           />
 
           {renderProductsList()}
@@ -114,7 +120,7 @@ const Checkout = props => {
 }
 
 
-Checkout.getInitialProps = async ({ query }) => {
+Checkout.getInitialProps = async ({ query }: NextPageContext) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
 

@@ -5,12 +5,12 @@ import moment from 'moment'
 import userContext from '../../context/userContext'
 
 
-const Orders = props => {
+const Orders = () => {
 
   const { currentUser } = useContext(userContext)
   if (!currentUser || !currentUser.isAdmin) return null
 
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState<Array<Order>>([])
   useEffect(() => {
     const resetOrders = async () => {
       if (currentUser && currentUser.isAdmin) {
@@ -22,13 +22,13 @@ const Orders = props => {
   }, [currentUser])
 
 
-  const renderProducts = products => {
+  const renderProducts = (products: Array<Product>) => {
     return _.map(products, product => {
       return <p className="order__product" key={product._id}>{product.title}</p>
     })
   }
 
-  const markShipped = shippedOrder => {
+  const markShipped = (shippedOrder: Order) => {
     const newOrder = { ...shippedOrder, shipped: !shippedOrder.shipped }
     axios.put(`/api/store/orders/${shippedOrder._id}`, newOrder)
       .then(response => {
@@ -44,7 +44,7 @@ const Orders = props => {
       })
   }
 
-  const deleteOrder = deletedOrder => {
+  const deleteOrder = (deletedOrder: Order) => {
     const confirm = window.confirm('Are you sure you want to delete this order?')
     if (!confirm) return
 

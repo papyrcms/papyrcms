@@ -7,8 +7,11 @@ import userContext from '../../context/userContext'
 import keys from '../../config/keys'
 import { SectionCards } from '../../components/Sections/'
 
+type Props = {
+  products: Array<Product>
+}
 
-const StorePage = props => {
+const StorePage = (props: Props) => {
 
   const { cart, addToCart } = useContext(storeContext)
   const { currentUser } = useContext(userContext)
@@ -25,7 +28,7 @@ const StorePage = props => {
   }, [currentUser])
 
 
-  const renderPriceAndQuantity = product => {
+  const renderPriceAndQuantity = (product: Product) => {
     return (
       <Fragment>
         <p>${product.price.toFixed(2)}</p>
@@ -35,7 +38,7 @@ const StorePage = props => {
   }
 
 
-  const renderAddToCart = product => {
+  const renderAddToCart = (product: Product) => {
     const quantityInCart = _.filter(cart, cartProduct => cartProduct._id === product._id).length
     let message = 'Add to cart'
     if (quantityInCart) message += ` (${quantityInCart} now)`
@@ -51,7 +54,7 @@ const StorePage = props => {
   }
 
 
-  const renderCheckout = product => {
+  const renderCheckout = (product: Product) => {
     if (product.quantity > 0) {
       return (
         <Fragment>

@@ -1,12 +1,16 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react'
+import { NextPageContext } from 'next'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import { SectionStandard } from '../../../components/Sections'
 
+type Props = {
+  product: Product
+}
 
-const StoreShow = props => {
+const StoreShow = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   const [product, setProduct] = useState(props.product)
@@ -44,7 +48,7 @@ const StoreShow = props => {
 }
 
 
-StoreShow.getInitialProps = async ({ query }) => {
+StoreShow.getInitialProps = async ({ query }: NextPageContext) => {
 
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
