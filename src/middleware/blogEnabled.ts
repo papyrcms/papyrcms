@@ -1,4 +1,6 @@
-export default (req, res, next) => {
+import { NextApiRequest, NextApiResponse } from 'next'
+
+export default (req: NextApiRequest & Req, res: NextApiResponse & Res, next: Function) => {
   if (res.locals.settings.enableBlog || (req.user && req.user.isAdmin)) {
     return next()
   } else {

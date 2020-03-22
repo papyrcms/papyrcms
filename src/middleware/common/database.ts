@@ -1,7 +1,9 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import mongoose from 'mongoose'
 import keys from '../../config/keys'
 
-export default async (req, res, next) => {
+export default async (req: NextApiRequest, res: NextApiResponse & Res, next: Function) => {
   const mongooseConfig = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -9,7 +11,7 @@ export default async (req, res, next) => {
     useCreateIndex: true
   }
   await mongoose.connect(keys.mongoURI, mongooseConfig)
-  mongoose.plugin(schema => {
+  mongoose.plugin((schema: any) => {
     schema.options.usePushEach = true
   })
 

@@ -1,10 +1,10 @@
-export default async (req, res, next) => {
-  if (!res.locals) {
-    res.locals = {}
-  }
+import { NextApiRequest, NextApiResponse } from 'next'
 
-  if (!res.locals.settings) {
-    res.locals.settings = {}
+export default async (req: NextApiRequest, res: NextApiResponse & Res, next: Function) => {
+  if (!res.locals) {
+    res.locals = { settings: {} as Settings }
+  } else if (!res.locals.settings) {
+    res.locals.settings = {} as Settings
   }
 
   return next()
