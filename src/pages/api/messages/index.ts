@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'next-connect'
 import common from '../../../middleware/common/'
 import Mailer from "../../../utilities/mailer"
@@ -14,11 +15,12 @@ const getMessages = async () => {
 }
 
 
-const createMessage = async (body, enableEmailingToAdmin) => {
+const createMessage = async (body: any, enableEmailingToAdmin: boolean) => {
   const messageBody = {
     name: body.name,
     email: body.email,
-    message: body.message
+    message: body.message,
+    emailSent: false
   }
 
   if (enableEmailingToAdmin) {
@@ -28,7 +30,7 @@ const createMessage = async (body, enableEmailingToAdmin) => {
     const sent = mailer.sendEmail(messageBody, keys.adminEmail, "contact", subject)
 
     if (sent) {
-      messageBody['emailSent'] = true
+      messageBody.emailSent = true
     }
   }
 
@@ -38,7 +40,7 @@ const createMessage = async (body, enableEmailingToAdmin) => {
 }
 
 
-handler.get(async (req, res) => {
+handler.get(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   if (!req.user || !req.user.isAdmin) {
     return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
@@ -47,10 +49,10 @@ handler.get(async (req, res) => {
 })
 
 
-handler.post(async (req, res) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse & Res) => {
   const message = await createMessage(req.body, res.locals.settings.enableEmailingToAdmin)
   return res.status(200).send(message)
 })
 
 
-export default (req, res) => handler.apply(req, res)
+export default (req: NextApiRequest, res: NextApiResponse) => handler.apply(req, res)

@@ -151,7 +151,8 @@ type Settings = {
   enableBlog: boolean,
   enableEvents: boolean,
   enableCommenting: boolean,
-  enableRegistration: boolean
+  enableRegistration: boolean,
+  enableEmailingToAdmin: boolean
 }
 
 type Keys = {
