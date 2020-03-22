@@ -8,7 +8,7 @@ type Props = {
   name?: string,
   id?: string,
   label?: string,
-  value?: string,
+  value?: string | number,
   required?: boolean,
   onChange?: Function,
   onFocus?: Function,

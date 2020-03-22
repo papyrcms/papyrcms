@@ -6,7 +6,7 @@ import userContext from '../../../context/userContext'
 import pagesContext from '../../../context/pagesContext'
 
 
-const Pages = props => {
+const Pages = () => {
 
   const { pages, setPages } = useContext(pagesContext)
   const { currentUser } = useContext(userContext)

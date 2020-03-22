@@ -105,6 +105,7 @@ interface Order {
 
 interface Page {
   _id: string,
+  url: string,
   title: string,
   className: string,
   route: string,

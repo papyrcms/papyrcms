@@ -19,7 +19,7 @@ import keys from '../config/keys'
 
 type Props = {
   previewPage?: any,
-  page: any
+  page?: any
 }
 
 const Page = (props: Props) => {

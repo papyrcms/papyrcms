@@ -1,11 +1,12 @@
 import React from 'react'
+import { NextPageContext } from 'next'
 import PageBuilder from '../page-builder'
 
 
-const Page = props => <PageBuilder {...props} />
+const Page = (props: any) => <PageBuilder {...props} />
 
 
-Page.getInitialProps = async context => {
+Page.getInitialProps = async (context: NextPageContext) => {
   return await PageBuilder.getInitialProps(context)
 }
 

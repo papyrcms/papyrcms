@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react'
+import { NextPageContext } from 'next'
 import axios from 'axios'
 import _ from 'lodash'
 import Router from 'next/router'
@@ -20,31 +21,37 @@ const sectionOptions = {
     name: 'Strip Section',
     description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null
   },
   LeftStrip: {
     name: 'Left Strip Section',
     description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null
   },
   RightStrip: {
     name: 'Right Strip Section',
     description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null
   },
   ThreeCards: {
     name: 'Three Cards Section',
     description: 'This section will display each post in a vertical style with three posts per row.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null
   },
   FourCards: {
     name: 'Four Cards Section',
     description: 'This section will display each post in a vertical style with four posts per row.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null
   },
   Slideshow: {
     name: 'Slideshow Section',
     description: 'This section will display a slideshow of each post at 5 second intervals.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null
   },
   Parallax: {
     name: 'Parallax Section',
@@ -67,19 +74,50 @@ const sectionOptions = {
   ContactForm: {
     name: 'Contact Form',
     description: 'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
-    inputs: ['className']
+    inputs: ['className'],
+    maxPosts: null
   },
   DonateForm: {
     name: 'Donate Form',
     description: 'This is a simple donation form where people can donate money to you.',
-    inputs: ['className']
+    inputs: ['className'],
+    maxPosts: null
   }
 }
 
+type Props = {
+  page?: Page
+}
 
-const PageBuilder = props => {
+type Section = {
+  type: keyof typeof sectionOptions,
+  title: string,
+  tags: string,
+  className: string,
+  maxPosts: number
+}
 
-  const INITIAL_STATE = {
+type State = {
+  id: string,
+  title: string,
+  url: string,
+  className: string,
+  navOrder: number,
+  sections: Array<Section>,
+  css: string,
+  sectionSelect: keyof typeof sectionOptions,
+  validation: string,
+  page: {
+    className: string,
+    url: string,
+    sections: Array<string>,
+    css: string
+  }
+}
+
+const PageBuilder = (props: Props) => {
+
+  const INITIAL_STATE: State = {
     id: '',
     title: '',
     url: '',
@@ -115,23 +153,23 @@ const PageBuilder = props => {
   const [state, setState] = useState(INITIAL_STATE)
 
 
-  const removeSection = index => {
+  const removeSection = (index: number) => {
     const newSections = _.filter(state.sections, (section, i) => i !== index)
     const newPageSections = _.map(newSections, section => JSON.stringify(section))
     setState({ ...state, sections: newSections, page: { ...state.page, sections: newPageSections } })
   }
 
 
-  const changeSectionState = (index, key, value) => {
+  const changeSectionState = (index: number, key: keyof Section, value: string | number) => {
     const newSections = _.map(state.sections, (section, i) => {
       if (index === i) {
-        section[key] = value
+        return { ...section, [key]: value }
       }
       return section
     })
 
-    const newPageSections = _.map(state.page.sections, (section, i) => {
-      section = JSON.parse(section)
+    const newPageSections = _.map(state.page.sections, (jsonSection, i) => {
+      const section = JSON.parse(jsonSection)
 
       if (index === i) {
         section[key] = value
@@ -148,7 +186,7 @@ const PageBuilder = props => {
   }
 
 
-  const renderTitleInput = (i, section) => {
+  const renderTitleInput = (i: number, section: Section) => {
 
     const { type, title } = section
 
@@ -159,13 +197,13 @@ const PageBuilder = props => {
         label="Component Title"
         name={`title-${i}`}
         value={title}
-        onChange={event => changeSectionState(i, 'title', event.target.value)}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeSectionState(i, 'title', event.target.value)}
       />
     }
   }
 
 
-  const renderClassNameInput = (i, section) => {
+  const renderClassNameInput = (i: number, section: Section) => {
 
     const { type, className } = section
 
@@ -176,13 +214,13 @@ const PageBuilder = props => {
         label="Component Wrapper Class"
         name={`class-name-${i}`}
         value={className}
-        onChange={event => changeSectionState(i, 'className', event.target.value)}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeSectionState(i, 'className', event.target.value)}
       />
     }
   }
 
 
-  const renderTagsInput = (i, section) => {
+  const renderTagsInput = (i: number, section: Section) => {
 
     const { type, tags } = section
 
@@ -193,13 +231,13 @@ const PageBuilder = props => {
         label="Required Post Tags"
         name={`tags-${i}`}
         value={tags}
-        onChange={event => changeSectionState(i, 'tags', event.target.value)}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeSectionState(i, 'tags', event.target.value)}
       />
     }
   }
 
 
-  const renderMaxPostsInput = (i, section) => {
+  const renderMaxPostsInput = (i: number, section: Section) => {
 
     const { type, maxPosts } = section
 
@@ -211,7 +249,7 @@ const PageBuilder = props => {
         label="Maximum number of posts in this component"
         name={`max-posts-${i}`}
         value={maxPosts}
-        onChange={event => changeSectionState(i, 'maxPosts', event.target.value)}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeSectionState(i, 'maxPosts', event.target.value)}
       />
     }
   }
@@ -219,7 +257,7 @@ const PageBuilder = props => {
 
   const renderSections = () => {
 
-    const { sections } = state as any
+    const { sections } = state
 
     return _.map(sections, (section, i) => {
 
@@ -270,14 +308,15 @@ const PageBuilder = props => {
   const addSection = () => {
 
     const { sections, sectionSelect } = state
+    const section = sectionOptions[sectionSelect]
 
     const newSection = {
       type: sectionSelect,
       tags: '',
       title: '',
-      maxPosts: sectionOptions[sectionSelect].maxPosts || 1,
+      maxPosts: section.maxPosts || 1,
       className: ''
-    }
+    } as Section
 
     const newPageSections = _.map(state.page.sections, section => section)
     newPageSections.push(JSON.stringify(newSection));
@@ -288,7 +327,7 @@ const PageBuilder = props => {
 
   const handleSubmit = () => {
 
-    const { title, url, className, navOrder, sections, id, css } = state as any
+    const { title, url, className, navOrder, sections, id, css } = state
     const postObject = {
       title,
       route: url,
@@ -344,7 +383,7 @@ const PageBuilder = props => {
   }
 
 
-  const setPageState = (key, value) => {
+  const setPageState = (key: string, value: string) => {
     setState({ ...state, [key]: value, page: { ...state.page, [key]: value }})
   }
 
@@ -366,7 +405,7 @@ const PageBuilder = props => {
             placeholder="About"
             name="title"
             value={title}
-            onChange={event => setPageState('title', event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPageState('title', event.target.value)}
           />
 
           <Input
@@ -375,7 +414,7 @@ const PageBuilder = props => {
             placeholder="about"
             name="url"
             value={url}
-            onChange={event => setPageState('url', event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPageState('url', event.target.value)}
           />
 
           <Input
@@ -384,7 +423,7 @@ const PageBuilder = props => {
             name="nav-order"
             value={navOrder}
             type="number"
-            onChange={event => setPageState('navOrder', event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPageState('navOrder', event.target.value)}
           />
 
           <Input
@@ -393,7 +432,7 @@ const PageBuilder = props => {
             placeholder="about-page"
             name="wrapper-class"
             value={className}
-            onChange={event => setPageState('className', event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPageState('className', event.target.value)}
           />
         </div>
 
@@ -403,7 +442,7 @@ const PageBuilder = props => {
 
           <select
             className="button button-secondary page-builder__section-select--select"
-            onChange={event => setState({ ...state, sectionSelect: event.target.value })}
+            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setState({ ...state, sectionSelect: (event.target.value as keyof typeof sectionOptions) })}
           >
             {renderSelectOptions()}
           </select>
@@ -455,7 +494,7 @@ const PageBuilder = props => {
 }
 
 
-PageBuilder.getInitialProps = async ({ query }) => {
+PageBuilder.getInitialProps = async ({ query }: NextPageContext) => {
   let page
   if (query.page) {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
