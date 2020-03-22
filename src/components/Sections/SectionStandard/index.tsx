@@ -12,7 +12,7 @@ import PageHead from '../../PageHead'
 import filterPosts from '../../../hooks/filterPosts'
 
 type Props = {
-  post: Post,
+  post: Post | Blog | Event | Product,
   enableCommenting?: boolean,
   apiPath?: string,
   className?: string,

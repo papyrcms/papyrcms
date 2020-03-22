@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
@@ -7,24 +8,36 @@ import PostsForm from '../../../components/PostsForm'
 import keys from '../../../config/keys'
 import Input from '../../../components/Input'
 
+type FieldProps = {
+  values: any,
+  errors: any,
+  handleChange: Function,
+  validateField: Function
+}
 
-const dateField = ({ values, handleChange }) => (
+const dateField = ({ values, errors, handleChange, validateField }: FieldProps) => (
   <Input
+    id="event_date"
     label="Date"
     type="date"
     name="date"
-    value={values['date'] || ''}
+    value={values.date || ''}
+    validation={errors.date}
+    onBlur={validateField}
     onChange={handleChange}
+    required
   />
 )
 
-const coordinatesField = ({ values, handleChange }) => (
+const coordinatesField = ({ values, errors, handleChange, validateField }: FieldProps) => (
   <div className="u-form-row">
     <Input
       id="event_latitude"
       label="Latitude"
       name="latitude"
-      value={values['latitude'] || ''}
+      value={values.latitude || ''}
+      validation={errors.latitude}
+      onBlur={validateField}
       onChange={handleChange}
     />
 
@@ -32,14 +45,19 @@ const coordinatesField = ({ values, handleChange }) => (
       id="event_longitude"
       label="Longitude"
       name="longitude"
-      value={values['longitude'] || ''}
+      value={values.longitude || ''}
+      validation={errors.longitude}
+      onBlur={validateField}
       onChange={handleChange}
     />
   </div>
 )
 
+type Props = {
+  event: Event
+}
 
-const EventsEdit = props => {
+const EventsEdit = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   if (!currentUser || !currentUser.isAdmin) return null
@@ -75,7 +93,7 @@ const EventsEdit = props => {
 }
 
 
-EventsEdit.getInitialProps = async ({ query }) => {
+EventsEdit.getInitialProps = async ({ query }: NextPageContext) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)

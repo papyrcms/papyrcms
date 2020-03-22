@@ -5,7 +5,11 @@ import userContext from '../../context/userContext'
 import keys from '../../config/keys'
 import { SectionCards } from '../../components/Sections/'
 
-const EventsAllPage = props => {
+type Props = {
+  events: Array<Event>
+}
+
+const EventsAllPage = (props: Props) => {
 
   const { currentUser } = useContext(userContext)
   const [events, setEvents] = useState(props.events || [])
@@ -21,7 +25,7 @@ const EventsAllPage = props => {
   }, [])
 
 
-  const renderDate = post => (
+  const renderDate = (post: Event) => (
     <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
   )
 

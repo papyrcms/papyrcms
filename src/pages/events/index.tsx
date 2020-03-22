@@ -4,10 +4,14 @@ import moment from 'moment'
 import keys from '../../config/keys'
 import { SectionStrip } from '../../components/Sections/'
 
-const EventsPage = ({ events }) => {
+type Props = {
+  events: Array<Event>
+}
+
+const EventsPage = ({ events }: Props) => {
 
 
-  const renderDate = event => (
+  const renderDate = (event: Event) => (
     <p>{moment(event.date).format('MMMM Do, YYYY')}</p>
   )
 

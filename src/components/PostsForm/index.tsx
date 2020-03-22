@@ -6,7 +6,7 @@ import postsContext from '../../context/postsContext'
 import useForm from '../../hooks/useForm'
 
 type Props = {
-  post?: Post,
+  post?: Post | Blog | Event | Product,
   pageTitle: string,
   additionalFields?: Array<any>
   additionalState?: object,

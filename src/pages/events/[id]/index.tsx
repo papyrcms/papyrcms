@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { NextPageContext } from 'next'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
@@ -7,8 +8,11 @@ import keys from '../../../config/keys'
 import Map from '../../../components/Map'
 import { SectionStandard } from '../../../components/Sections/'
 
+type Posts = {
+  event: Event
+}
 
-const EventsShow = props => {
+const EventsShow = (props: Posts) => {
 
   const { currentUser } = useContext(userContext)
   const [event, setEvent] = useState(props.event || {})
@@ -48,7 +52,7 @@ const EventsShow = props => {
 }
 
 
-EventsShow.getInitialProps = async ({ query }) => {
+EventsShow.getInitialProps = async ({ query }: NextPageContext) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)

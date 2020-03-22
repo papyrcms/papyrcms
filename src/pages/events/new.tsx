@@ -3,7 +3,14 @@ import userContext from '../../context/userContext'
 import PostsForm from '../../components/PostsForm/'
 import Input from '../../components/Input'
 
-const dateField = ({ values, errors, handleChange, validateField }) => (
+type FieldProps = {
+  values: any,
+  errors: any,
+  handleChange: Function,
+  validateField: Function
+}
+
+const dateField = ({ values, errors, handleChange, validateField }: FieldProps) => (
   <Input
     id="event_date"
     label="Date"
@@ -17,7 +24,7 @@ const dateField = ({ values, errors, handleChange, validateField }) => (
   />
 )
 
-const coordinatesField = ({ values, errors, handleChange, validateField }) => (
+const coordinatesField = ({ values, errors, handleChange, validateField }: FieldProps) => (
   <div className="u-form-row">
     <Input
       id="event_latitude"

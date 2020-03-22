@@ -12,7 +12,7 @@ type Props = {
   path?: string,
   emptyMessage: string,
   className?: string,
-  posts: Array<Post>,
+  posts: Array<Post | Blog | Event | Product>,
   title: string,
   contentLength?: number,
   beforeTitle?: Function,
@@ -84,7 +84,7 @@ const SectionStrip = (props: Props) => {
   } = props
 
 
-  const renderMedia = (post: Post) => {
+  const renderMedia = (post: Post | Blog | Event | Product) => {
     if (post.mainMedia) {
       return (
         <Fragment>
@@ -102,7 +102,7 @@ const SectionStrip = (props: Props) => {
   }
 
 
-  const renderRightMedia = (post: Post, i: number) => {
+  const renderRightMedia = (post: Post | Blog | Event | Product, i: number) => {
     if (mediaRight && !mediaLeft) {
       return renderMedia(post)
     } else if (
@@ -117,7 +117,7 @@ const SectionStrip = (props: Props) => {
   }
 
 
-  const renderLeftMedia = (post: Post, i: number) => {
+  const renderLeftMedia = (post: Post | Blog | Event | Product, i: number) => {
     if (mediaLeft && !mediaRight) {
       return renderMedia(post)
     } else if (
@@ -132,7 +132,7 @@ const SectionStrip = (props: Props) => {
   }
 
 
-  const renderContent = (post: Post) => {
+  const renderContent = (post: Post | Blog | Event | Product) => {
 
     const contentLength = props.contentLength || 300
     let postContent = post.content.length >= contentLength ? `${post.content.substring(0, contentLength).trim()} . . .` : post.content
