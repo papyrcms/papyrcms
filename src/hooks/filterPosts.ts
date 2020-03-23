@@ -15,15 +15,10 @@ const filterPosts = (posts: Posts, settings: Settings) => {
     const { maxPosts } = filters
 
     if (maxPosts) {
-      // const filteredPosts = _.filter(postsToFilter, (post, i) => {
-      //   if (i+1 <= maxPosts) {
-      //     return post
-      //   }
-      // })
       postsToFilter.length = maxPosts
     }
 
-    return postsToFilter
+    return postsToFilter.filter(post => !!post)
   }
 
 

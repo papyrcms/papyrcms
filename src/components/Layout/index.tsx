@@ -21,6 +21,7 @@ type Props = {
 const Layout: any = (props: Props) => {
 
   let { posts } = useContext(postsContext)
+
   const settings = {
     maxPosts: 4,
     postTags: [
@@ -45,7 +46,7 @@ const Layout: any = (props: Props) => {
 
   _.forEach(filtered.posts, post => {
 
-    if (post.tags.includes('section-header')) {
+    if (post.tags && post.tags.includes('section-header')) {
 
       headerTitle = post.title || ''
       headerSubTitle = post.content || ''

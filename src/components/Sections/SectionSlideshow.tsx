@@ -17,7 +17,6 @@ type Props = {
  */
 const SectionSlideshow = (props: Props) => {
 
-
   const { timer, posts, emptyTitle, emptyMessage } = props
 
   if (posts.length === 0) {

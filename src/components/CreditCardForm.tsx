@@ -94,7 +94,7 @@ type StripeFormProps = {
 const StripeForm = (props: StripeFormProps) => {
 
   const { className, onSubmit } = props
-  const [stripe, setStripe] = useState(window.Stripe(''))
+  const [stripe, setStripe] = useState<stripe.Stripe | null>(null)
   const { keys } = useContext(keysContext)
 
   useEffect(() => {

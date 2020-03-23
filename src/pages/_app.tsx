@@ -8,11 +8,17 @@ import GlobalState from '../context/GlobalState'
 import { initGA, logPageView } from '../utilities/analytics'
 import '../sass/main.scss'
 
+type Props = {
+  pages: Array<Page>,
+  posts: Array<Post>,
+  keys: Keys,
+  settings: Settings
+}
 
-const App = (props: AppProps) => {
+const App = (props: AppProps & Props) => {
 
   const { pathname } = useRouter()
-  const { Component, pageProps } = props
+  const { Component, pages, posts, keys, settings, } = props
   const [initialized, setInitialized] = useState(false)
 
   useEffect(() => {
@@ -26,9 +32,9 @@ const App = (props: AppProps) => {
   }, [pathname])
 
   return (
-    <GlobalState {...pageProps}>
+    <GlobalState pages={pages} posts={posts} keys={keys} settings={settings}>
       <Layout>
-        <Component {...pageProps} />
+        <Component {...props as any} />
       </Layout>
     </GlobalState>
   )
