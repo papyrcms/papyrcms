@@ -18,7 +18,7 @@ const filterPosts = (posts: Posts, settings: Settings) => {
       postsToFilter.length = maxPosts
     }
 
-    return postsToFilter.filter(post => !!post)
+    return _.filter(postsToFilter, post => !!post)
   }
 
 
