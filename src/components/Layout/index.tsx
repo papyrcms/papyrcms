@@ -96,9 +96,9 @@ const Layout: any = (props: Props) => {
       >
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="shortcut icon" type="image/x-icon" href="/static/cup.png" />
-        <link rel="apple-touch-icon" sizes="57x57" href="/static/cup.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/static/cup.png" />
+        <link rel="shortcut icon" type="image/x-icon" href={logo} />
+        <link rel="apple-touch-icon" sizes="57x57" href={logo} />
+        <link rel="apple-touch-icon" sizes="180x180" href={logo} />
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
         <script src="https://js.stripe.com/v3/"></script>
