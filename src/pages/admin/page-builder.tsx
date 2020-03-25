@@ -125,7 +125,7 @@ const PageBuilder = (props: Props) => {
     navOrder: 0,
     sections: [],
     css: '',
-    sectionSelect: 'Strip',
+    sectionSelect: 'Standard',
     validation: '',
     page: {
       className: '',
