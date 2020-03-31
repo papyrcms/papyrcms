@@ -106,74 +106,74 @@ If you do have an admin account, simply navigate to yourWebsiteName.com/login an
 You can access your admin dashboard by logging in with your admin account and then navigating to yourWebsiteName.com/admin, or by clicking "Profile" to get to your profile and then "Admin Dashboard" to get to your admin dashboard. The following options can be set from the admin dashboard:
 
 -   Enable Menu
-  -   This will make the header menu with login/profile visible to non-admin users.
+    -   This will make the header menu with login/profile visible to non-admin users.
 -   Enable Blog
-  -   This will enable read and write functionality to the website blog.
+    -   This will enable read and write functionality to the website blog.
 -   Enable Registration
-  -   This will allow users to be able to register on your website.
+    -   This will allow users to be able to register on your website.
 -   Enable Commenting
-  -   This will allow users to be able to comment on your blog.
+    -   This will allow users to be able to comment on your blog.
 -   Enable Emailing to Admin
-  -   This will allow emails to be sent to the admin email.
+    -   This will allow emails to be sent to the admin email.
 -   Enable Emailing to Users
-  -   This will allow emails to be sent to your users.
+    -   This will allow emails to be sent to your users.
 -   Enable Events
-  -   This will enable read and write functionality to the website events
+    -   This will enable read and write functionality to the website events
 -   Enable Donations
-  -   This enables users to be able to access the donation form.
+    -   This enables users to be able to access the donation form.
 
 ### Pages
 
 Pages are how you can design the different pages of your site. They all consist of the following attributes:
 
 -   Page Title
-  -   This will be displayed if it is in the Navigation Menu.
+    -   This will be displayed if it is in the Navigation Menu.
 -   Page Route
-  -   This is the URL route to get to that page. For example, to create a page at "[www.yourwebsite.com/about](http://www.yourwebsite.com/about)", make the page route "about"
+    -   This is the URL route to get to that page. For example, to create a page at "[www.yourwebsite.com/about](http://www.yourwebsite.com/about)", make the page route "about"
 -   Nav Menu Order
-  -   This determines the order in the Navigation Menu that the page is placed. Leave it 0 to exclude from the Nav Menu.
+    -   This determines the order in the Navigation Menu that the page is placed. Leave it 0 to exclude from the Nav Menu.
 -   Page Wrapper Classname
-  -   You can enter some text here to add a class to the page if you want to add your own custom CSS.
+    -   You can enter some text here to add a class to the page if you want to add your own custom CSS.
 
 Each page is also made up of Sections. Each section will have the following attributes (if they apply to the section):
 
 -   Section Title
-  -   This will be a title or header for the section.
+    -   This will be a title or header for the section.
 -   Section Wrapper Classname
-  -   You can enter some text here to add a class to the section if you want to add your own custom CSS.
+    -   You can enter some text here to add a class to the section if you want to add your own custom CSS.
 -   Required post tags
-  -   This is a comma-separated list of post tags in order to determine which content post(s) will fill out your section.
+    -   This is a comma-separated list of post tags in order to determine which content post(s) will fill out your section.
 -   Maximum number of posts
-  -   This is the maximum number of posts that will appear in the section.
+    -   This is the maximum number of posts that will appear in the section.
 
 There are several types of sections you can choose from. Below is a basic overview of the sections:
 
 -   3 Card Section
-  -   Title, media, and content of each post will be displayed
+    -   Title, media, and content of each post will be displayed
 -   Video Section
-  -   Title, media, and content of the post will be displayed
+    -   Title, media, and content of the post will be displayed
 -   Strip Section
-  -   Title, media, and content of each post will be displayed
+    -   Title, media, and content of each post will be displayed
 -   Parallax Section
-  -   Title, media, and content of the post will be displayed
+    -   Title, media, and content of the post will be displayed
 -   4 Card Section
-  -   Title, media, and content of each post will be displayed
+    -   Title, media, and content of each post will be displayed
 -   Slideshow Section
-  -   Title, media, and content of each post will be displayed
+    -   Title, media, and content of each post will be displayed
 -   Maps Section
-  -   The latitude coordinate for the map will require a post with the latitude coordinate as the title and tag "latitude".
-  -   The longitude coordinate for the map will require a post with the longitude coordinate as the title and tag  "longitude".
+    -   The latitude coordinate for the map will require a post with the latitude coordinate as the title and tag "latitude".
+    -   The longitude coordinate for the map will require a post with the longitude coordinate as the title and tag  "longitude".
 
 ### Content
 
 Content posts are the main controller for your website content. Content posts can be created, read, edited, and deleted. Because of their multi-purpose nature, none of the fields are explicitly required to create a content post, though if all fields are left blank when submitted, the post will not be created. Website content is determined by what tags are given to content posts. Below is an outline of what is required to be included in your website's content:
 
 -   Header
-  -   A post with the tag "section-header" is required. The website will use its title as the site title, content as the site subtitle, and image as the site logo in the nav menu.
+    -   A post with the tag "section-header" is required. The website will use its title as the site title, content as the site subtitle, and image as the site logo in the nav menu.
 -   Footer
-  -   A post with the tag "section-footer" is required. The website will use its title as the footer title and the content as the bottom footer text.
+    -   A post with the tag "section-footer" is required. The website will use its title as the footer title and the content as the bottom footer text.
 -   Site Description
-  -   An optional post with the tag "site-description" can be used as a website descriptor for SEO purposes. Content and tags will be used.
+    -   An optional post with the tag "site-description" can be used as a website descriptor for SEO purposes. Content and tags will be used.
 
 ### Ordering Content
 
