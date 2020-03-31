@@ -13,7 +13,7 @@ import Page from '../[page]'
 const sectionOptions = {
   Standard: {
     name: 'Standard Section',
-    description: 'This is the simplest component. It will only take one post with the required tags.',
+    description: 'This is the simplest section. It will only take one post with the required tags.',
     inputs: ['className', 'tags'],
     maxPosts: 1
   },
@@ -194,7 +194,7 @@ const PageBuilder = (props: Props) => {
 
       return <Input
         id={`${type}-${i}--title-${i}`}
-        label="Component Title"
+        label="Section Title"
         name={`title-${i}`}
         value={title}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeSectionState(i, 'title', event.target.value)}
@@ -211,7 +211,7 @@ const PageBuilder = (props: Props) => {
 
       return <Input
         id={`${type}-${i}--class-name-${i}`}
-        label="Component Wrapper Class"
+        label="Section Wrapper Class"
         name={`class-name-${i}`}
         value={className}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeSectionState(i, 'className', event.target.value)}
@@ -246,7 +246,7 @@ const PageBuilder = (props: Props) => {
       return <Input
         id={`${type}-${i}--max-posts-${i}`}
         type="number"
-        label="Maximum number of posts in this component"
+        label="Maximum number of posts in this section"
         name={`max-posts-${i}`}
         value={maxPosts}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => changeSectionState(i, 'maxPosts', event.target.value)}

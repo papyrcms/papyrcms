@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-cms",
+  "name": "papyr-cms",
   "version": "1.0.0",
   "description": "A dynamic CMS template made with Next.js",
   "engines": {
@@ -13,7 +13,7 @@
     "deploy": "git remote | xargs -L1 -I R git push R master"
   },
   "keywords": [],
-  "author": "Derek Garnett",
+  "author": "drkgrntt",
   "license": "ISC",
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
