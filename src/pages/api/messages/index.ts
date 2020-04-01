@@ -34,7 +34,7 @@ const createMessage = async (body: any, enableEmailingToAdmin: boolean) => {
     }
   }
 
-  const message = new Message()
+  const message = new Message(messageBody)
   await message.save()
   return message
 }
