@@ -13,10 +13,10 @@ handler.use(isAdmin)
 handler.delete(async (req: NextApiRequest & Req, res: NextApiResponse) => {
   const { id } = req.query
 
-  // TODO: _id.equals fails typechecks because it's actually a mongoose OID. So make this work.
-  // if (req.user._id.equals(id)) {
-  //   return res.status(401).send({ message: 'You cannot delete yourself.' })
-  // }
+  // @ts-ignore _id.equals fails typechecks because it's actually a mongoose OID
+  if (req.user._id.equals(id)) {
+    return res.status(401).send({ message: 'You cannot delete yourself.' })
+  }
 
   try {
     await User.findOneAndDelete({ _id: id })

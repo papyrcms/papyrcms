@@ -11,12 +11,15 @@ export default async (req: NextApiRequest & Req, res: NextApiResponse, next: Fun
 
   if (req.headers.authorization && req.headers.authorization.includes('bearer ')) {
     const token = req.headers.authorization.replace('bearer ', '')
-    const tokenObject = jwt.verify(token, keys.jwtSecret)
-    // @ts-ignore uid comes from the decoded jwt object
-    const { uid } = tokenObject
-    if (uid) {
-      req.user = await User.findOne({ _id: uid }).populate('cart').lean() as User
-    }
+
+    try {
+      const tokenObject = jwt.verify(token, keys.jwtSecret)
+      // @ts-ignore uid comes from the decoded jwt object
+      const { uid } = tokenObject
+      if (uid) {
+        req.user = await User.findOne({ _id: uid }).populate('cart').lean() as User
+      }
+    } catch (err) {}
   }
 
   return next()

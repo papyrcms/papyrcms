@@ -126,6 +126,7 @@ describe('/api/users', () => {
 
       try {
         await axios.delete(`${rootURL}/api/users/${adminUser._id}`, axiosConfig)
+        expect(1).to.equal(2)
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }

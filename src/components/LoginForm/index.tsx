@@ -11,7 +11,7 @@ const LoginForm = () => {
 
   const { setCurrentUser } = useContext(userContext)
   const INITIAL_STATE = {
-    username: '',
+    email: '',
     password: '',
     validation: ''
   }
@@ -39,6 +39,7 @@ const LoginForm = () => {
       <Input
         label="Email"
         name="email"
+        id="login-email"
         type="email"
         formState={formState}
         required
@@ -47,6 +48,7 @@ const LoginForm = () => {
       <Input
         label="Password"
         name="password"
+        id="login-password"
         type="password"
         formState={formState}
         required

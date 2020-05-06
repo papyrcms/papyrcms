@@ -34,7 +34,7 @@ describe('mailer', () => {
       const transporter = await mailer.createTransporter()
 
       expect(transporter.constructor.name).to.equal('Mail')
-    })
+    }).timeout(5000)
   })
 
   describe('getEmailTemplateByTag()', () => {
@@ -85,9 +85,8 @@ describe('mailer', () => {
       const variables = { firstName: 'Scoob' }
       const recipient = keys.adminEmail
       const templateName = 'fart'
-      const subject = null
 
-      const sent = await mailer.sendEmail(variables, recipient, templateName, subject)
+      const sent = await mailer.sendEmail(variables, recipient, templateName)
 
       expect(sent).to.equal(false)
     })
@@ -105,12 +104,11 @@ describe('mailer', () => {
       const variables = { firstName: 'Scoob' }
       const recipient = keys.adminEmail
       const templateName = 'welcome'
-      const subject = null
 
-      const sent = await mailer.sendEmail(variables, recipient, templateName, subject)
+      const sent = await mailer.sendEmail(variables, recipient, templateName)
 
       expect(sent).to.equal(true)
-    }).timeout(5000)
+    }).timeout(20000) // Sometimes sending an email takes a little longer
   })
 
   describe('sendBulkEmail()', () => {
@@ -136,6 +134,6 @@ describe('mailer', () => {
 
       expect(post).to.exist &&
       expect(sent).to.equal(true)
-    }).timeout(5000)
+    }).timeout(20000) // Sometimes sending an email takes a little longer
   })
 })

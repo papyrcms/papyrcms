@@ -23,7 +23,7 @@ handler.post(async (req: NextApiRequest & Req, res: NextApiResponse & Res) => {
   const { email } = req.body
 
   if (!verifyEmailSyntax(email)) {
-    res.status(401).send({ message: 'Please enter your email address.' })
+    return res.status(401).send({ message: 'Please enter your email address.' })
   }
 
   const userExists = await User.findOne({ email })

@@ -4,7 +4,7 @@ import handlebars from 'handlebars'
 import fs from 'fs'
 import keys from '../config/keys'
 import User from '../models/user'
-import Post from '../models/post'
+import PostModel from '../models/post'
 const OAuth2 = google.auth.OAuth2
 
 // https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
@@ -65,7 +65,7 @@ class Mailer {
   async getEmailTemplateByTag(tag: string) {
 
     // Get all published posts
-    const posts = await Post.find({ published: true })
+    const posts = await PostModel.find({ published: true })
 
     let template = null
 
@@ -133,7 +133,7 @@ class Mailer {
         html = await this.readHTMLFile(`src/emails/${templateName}.html`)
         emailSubject = subject
       } catch (e) {
-        console.error('There was an error getting the HTML file', e)
+        // console.error('There was an error getting the HTML file', e)
         return false
       }
     }

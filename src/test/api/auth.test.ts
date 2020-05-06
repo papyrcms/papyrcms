@@ -224,14 +224,14 @@ describe('/api/auth', () => {
 
   describe('/requestPasswordChange', () => {
     const data = {
-      token: test.rpcToken,
+      token: test.tokenRpc,
       password: test.newPass,
       confirmPassword: test.newPass
     }
 
     it('returns an error if the passwords do not match', async () => {
       try {
-        await axios.post(`${rootURL}/api/auth/requestPasswordChange`, { ...data, passwordConfirm: 'notamatch' })
+        await axios.post(`${rootURL}/api/auth/requestPasswordChange`, { ...data, confirmPassword: 'notamatch' })
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }

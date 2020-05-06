@@ -64,6 +64,7 @@ const RegisterForm = () => {
       <Input
         label="Email"
         name="email"
+        id="register-email"
         type="email"
         formState={formState}
         required
@@ -73,6 +74,7 @@ const RegisterForm = () => {
         label="Password"
         name="password"
         type="password"
+        id="register-password"
         formState={formState}
         required
       />
