@@ -11,12 +11,12 @@ handler.post((req, res) => {
   const {
     googleAnalyticsId,
     googleMapsKey,
-    stripePubKey
+    stripePublishableKey
   } = keys
   const publicKeys = {
     googleAnalyticsId,
     googleMapsKey,
-    stripePubKey
+    stripePublishableKey
   }
   return res.status(200).send(publicKeys)
 })

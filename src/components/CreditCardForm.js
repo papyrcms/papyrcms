@@ -87,7 +87,7 @@ const StripeForm = (props) => {
   const { keys } = useContext(keysContext)
 
   useEffect(() => {
-    const stripeInstance = window.Stripe(keys.stripePubKey)
+    const stripeInstance = window.Stripe(keys.stripePublishableKey)
     setStripe(stripeInstance)
   }, [])
 

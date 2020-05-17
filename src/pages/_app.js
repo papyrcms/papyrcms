@@ -44,7 +44,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
     pageProps = await Component.getInitialProps(ctx)
   }
 
-  const { data: publicKeys } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
+  const { data: publicKeys } = await axios.post(`${rootUrl}/api/utility/publicKeys`)
   pageProps.keys = publicKeys
 
   const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)

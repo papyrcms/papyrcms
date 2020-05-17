@@ -1,5 +1,4 @@
 import React, { Fragment, useContext } from 'react'
-import { NextPageContext } from 'next'
 import axios from 'axios'
 import _ from 'lodash'
 import {
@@ -17,12 +16,8 @@ import PageHead from '../components/PageHead'
 import filterPosts from '../hooks/filterPosts'
 import keys from '../config/keys'
 
-type Props = {
-  previewPage?: any,
-  page?: any
-}
 
-const Page = (props: Props) => {
+const Page = (props) => {
 
   const settings = []
   const page = props.previewPage ? props.previewPage : props.page
@@ -215,7 +210,7 @@ const Page = (props: Props) => {
 }
 
 
-Page.getInitialProps = async ({ query }: NextPageContext) => {
+Page.getInitialProps = async ({ query }) => {
   if (!query.page) {
     query.page = 'home'
   }

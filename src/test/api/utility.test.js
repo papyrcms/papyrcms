@@ -17,12 +17,12 @@ describe("/api/utility", () => {
   describe("/publicKeys", () => {
     it("returns the ananlytics id, maps kye, and stripe pub key", async () => {
       const { data: publicKeys } = await axios.post(`${rootURL}/api/utility/publicKeys`)
-      const { googleAnalyticsId, googleMapsKey, stripePubKey } = publicKeys
+      const { googleAnalyticsId, googleMapsKey, stripePublishableKey } = publicKeys
 
       expect(publicKeys).to.exist &&
       expect(googleAnalyticsId).to.be.a('string') &&
       expect(googleMapsKey).to.be.a('string') &&
-      expect(stripePubKey).to.be.a('string')
+      expect(stripePublishableKey).to.be.a('string')
     })
   })
 
@@ -58,6 +58,18 @@ describe("/api/utility", () => {
   })
 
   describe('/donate', () => {
-    // I don't know how to create a test card programatically currently
+    it('makes a one-dollar donation', async () => {
+      const info = {
+        email: 'drkgrntt@gmail.com',
+        amount: 1,
+        source: { id: 'tok_discover' }
+      }
+      const { data: charge } = await axios.post(`${rootURL}/api/utility/donate`, info)
+
+      expect(charge).to.exist &&
+      expect(charge.object).to.equal('charge') &&
+      expect(charge.status).to.equal('succeeded') &&
+      expect(charge.amount).to.equal(100)
+    }).timeout(10000)
   })
 })

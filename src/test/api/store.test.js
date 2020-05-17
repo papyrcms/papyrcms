@@ -68,7 +68,6 @@ describe('/api/store', () => {
         expect(found.content).to.equal(product.content) &&
         expect(found.mainMedia).to.equal(product.mainMedia) &&
         expect(found.price).to.equal(product.price) &&
-        expect(found.quantity).to.equal(product.quantity) &&
         expect(found.tags).to.be.an('array')
       })
 
@@ -119,10 +118,63 @@ describe('/api/store', () => {
   })
 
   describe('/checkout', () => {
-    // I don't know how to create a test card programatically currently
+    
+    it('buys all items from the cart and returns a string', async () => {
+      // Add an item to the cart to be able to checkout
+      const { data: created } = await axios.post(`${rootURL}/api/store/products`, product, axiosConfig)
+      const { data: cart } = await axios.put(`${rootURL}/api/store/cart/${created._id}`, {}, axiosConfig)
+
+      const fields = {
+        firstName: 'Test',
+        lastName: 'User',
+        email: 'drkgrntt@gmail.com',
+        address1: '1234 main st.',
+        city: 'Kansas City',
+        state: 'MO',
+        zip: 64050,
+        country: 'US',
+        products: cart,
+        source: {
+          id: 'tok_discover'
+        }
+      }
+
+      const { data: response, status } = await axios.post(`${rootURL}/api/store/checkout`, fields)
+
+      expect(status).to.equal(200) &&
+      expect(response).to.be.a('string')
+
+    }).timeout(10000)
   })
 
   describe('/orders', () => {
-    // Cannot create a test order without /checkout
+    
+    it('returns an array of orders', async () => {
+      const { data: orders } = await axios.get(`${rootURL}/api/store/orders`, axiosConfig)
+
+      expect(orders).to.be.an('array')
+    })
+
+    describe('/[id]', () => {
+      it('updates the order as shipped', async () => {
+        const { data: orders } = await axios.get(`${rootURL}/api/store/orders`, axiosConfig)
+        const [order] = orders
+
+        const { data: updatedOrder, status } = await axios.put(`${rootURL}/api/store/orders/${order._id}`, { shipped: true }, axiosConfig)
+
+        expect(status).to.equal(200) &&
+        expect(updatedOrder.shipped).to.equal(true)
+      })
+
+      it('deletes the order', async () => {
+        const { data: orders } = await axios.get(`${rootURL}/api/store/orders`, axiosConfig)
+        const [order] = orders
+
+        const { data: response, status } = await axios.delete(`${rootURL}/api/store/orders/${order._id}`, axiosConfig)
+
+        expect(status).to.equal(200) &&
+        expect(response).to.be.a('string')
+      })
+    })
   })
 })

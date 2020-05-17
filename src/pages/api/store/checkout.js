@@ -26,6 +26,7 @@ handler.post(async (req, res) => {
     'city', 'state', 'zip', 'country'
   ]
 
+  // Make sure all required fields are present
   for (const field of requiredFields) {
     if (!req.body[field]) {
       return res.status(400).send({ message: 'Please complete all required fields' })
