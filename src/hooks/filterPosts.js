@@ -1,17 +1,9 @@
 import _ from 'lodash'
 
-type Posts = Array<Post | Blog | event | Product>
-type Filter = {
-  maxPosts?: number,
-  postTags?: Array<string>,
-  strictTags?: boolean,
-  propName?: string
-}
-type Settings = Filter | Array<Filter>
 
-const filterPosts = (posts: Posts, settings: Settings) => {
+const filterPosts = (posts, settings) => {
 
-  const filterByMaxPosts = (postsToFilter: Posts, filters: Filter): Posts => {
+  const filterByMaxPosts = (postsToFilter, filters) => {
     const { maxPosts } = filters
 
     if (maxPosts) {
@@ -22,7 +14,7 @@ const filterPosts = (posts: Posts, settings: Settings) => {
   }
 
 
-  const filterByPostTags = (postsToFilter: Posts, filters: Filter) => {
+  const filterByPostTags = (postsToFilter, filters) => {
     const { postTags, strictTags } = filters
 
     // Filter posts by postTags
@@ -55,7 +47,7 @@ const filterPosts = (posts: Posts, settings: Settings) => {
   }
 
 
-  const orderPosts = (postsToFilter: Posts) => {
+  const orderPosts = (postsToFilter) => {
 
     const orderedPosts = []
     const unorderedPosts = []
@@ -83,7 +75,7 @@ const filterPosts = (posts: Posts, settings: Settings) => {
   }
 
 
-  const filterPosts = (postsToFilter: Posts, filters: Filter) => {
+  const filterPosts = (postsToFilter, filters) => {
 
     postsToFilter = filterByPostTags(postsToFilter, filters)
     postsToFilter = orderPosts(postsToFilter)
@@ -94,7 +86,7 @@ const filterPosts = (posts: Posts, settings: Settings) => {
 
 
   // Begin the filtering
-  const filtered: any = {}
+  const filtered = {}
 
   if (Array.isArray(settings)) {
     for (const filters of settings) {
