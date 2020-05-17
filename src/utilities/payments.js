@@ -2,25 +2,17 @@ import keys from '../config/keys'
 import Stripe from 'stripe'
 
 
-type paymentInfo = {
-  email: string,
-  amount: number,
-  source: Stripe.Source,
-  description: string
-}
-
-
 class Payments {
 
-  stripe: Stripe
+  stripe
 
   constructor() {
-    const config: Stripe.StripeConfig = { apiVersion: '2020-03-02' }
+    const config = { apiVersion: '2020-03-02' }
     this.stripe = new Stripe(keys.stripeSecretKey, config)
   }
 
 
-  async makePayment(info: paymentInfo) {
+  async makePayment(info) {
 
     const { email, amount, source, description } = info
 

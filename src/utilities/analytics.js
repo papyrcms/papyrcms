@@ -1,10 +1,6 @@
 import ReactGA from 'react-ga'
 
-declare global {
-  interface Window { GA_INITIALIZED: any }
-}
-
-export const initGA = async (googleAnalyticsId: string) => {
+export const initGA = async (googleAnalyticsId) => {
   if (!window.GA_INITIALIZED) {
     ReactGA.initialize(googleAnalyticsId)
     window.GA_INITIALIZED = true

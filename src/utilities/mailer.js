@@ -10,7 +10,7 @@ const OAuth2 = google.auth.OAuth2
 // https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
 class Mailer {
 
-  templateTag: string
+  templateTag
 
   constructor() {
     this.templateTag = 'email-template'
@@ -62,7 +62,7 @@ class Mailer {
   }
 
 
-  async getEmailTemplateByTag(tag: string) {
+  async getEmailTemplateByTag(tag) {
 
     // Get all published posts
     const posts = await PostModel.find({ published: true })
@@ -82,7 +82,7 @@ class Mailer {
   }
 
 
-  async sendBulkEmail(post: Post) {
+  async sendBulkEmail(post) {
 
     const subscribedUsers = await User.find({ isSubscribed: true })
 
@@ -109,12 +109,12 @@ class Mailer {
   }
 
 
-  async sendEmail(variables: object, recipient: string, templateName: string, subject?: string) {
+  async sendEmail(variables, recipient, templateName, subject = null) {
 
     // Instantiate sent. This will change when the email gets sent
     let sent = false
-    let html: string
-    let emailSubject: string | undefined
+    let html
+    let emailSubject
 
     // First search for a post with a tag that matches the template name
     let emailTemplatePost = await this.getEmailTemplateByTag(templateName)
@@ -166,7 +166,7 @@ class Mailer {
   }
 
 
-  async readHTMLFile(path: string) {
+  async readHTMLFile(path) {
     return await fs.readFileSync(path, { encoding: 'utf-8' })
   }
 }

@@ -1,7 +1,7 @@
 import Settings from '../models/settings'
 
 
-const configureSettings = async (name: string, defaultOptions: object) => {
+const configureSettings = async (name, defaultOptions) => {
 
   let appSettings
 
