@@ -16,14 +16,14 @@ const App = (props) => {
 
   const { pathname } = useRouter()
   let { Component, pages, posts, keys, settings, } = props
-  const [initialized, setInitialized] = useState(false)
+  const [gaInitialized, setGaInitialized] = useState(false)
 
   useEffect(() => {
-    if (!initialized) {
-      setInitialized(true)
+    if (!gaInitialized) {
+      setGaInitialized(true)
       initGA(keys.googleAnalyticsId)
     }
-    if (initialized) {
+    if (gaInitialized) {
       logPageView()
     }
   }, [pathname])
