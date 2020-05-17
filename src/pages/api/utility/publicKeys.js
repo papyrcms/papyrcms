@@ -7,7 +7,7 @@ const handler = connect()
 handler.use(common)
 
 
-handler.post((req, res) => {
+handler.get((req, res) => {
   const {
     googleAnalyticsId,
     googleMapsKey,

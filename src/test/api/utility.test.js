@@ -16,7 +16,7 @@ describe("/api/utility", () => {
 
   describe("/publicKeys", () => {
     it("returns the ananlytics id, maps kye, and stripe pub key", async () => {
-      const { data: publicKeys } = await axios.post(`${rootURL}/api/utility/publicKeys`)
+      const { data: publicKeys } = await axios.get(`${rootURL}/api/utility/publicKeys`)
       const { googleAnalyticsId, googleMapsKey, stripePublishableKey } = publicKeys
 
       expect(publicKeys).to.exist &&

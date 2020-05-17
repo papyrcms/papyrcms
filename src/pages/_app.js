@@ -60,7 +60,7 @@ App.getInitialProps = async ({ Component, ctx }) => {
 
   if (!!ctx.res) {
     
-    const { data: publicKeys } = await axios.post(`${rootUrl}/api/utility/publicKeys`)
+    const { data: publicKeys } = await axios.get(`${rootUrl}/api/utility/publicKeys`)
     pageProps.keys = publicKeys
   
     const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
