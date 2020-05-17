@@ -3,6 +3,17 @@ import _ from 'lodash'
 
 const filterPosts = (posts, settings) => {
 
+  const filterByPublished = (postsToFilter, filters) => {
+    const { showAll } = filters
+
+    if (!showAll) {
+      postsToFilter = _.filter(postsToFilter, post => post.published)
+    }
+
+    return postsToFilter
+  }
+
+
   const filterByMaxPosts = (postsToFilter, filters) => {
     const { maxPosts } = filters
 
@@ -77,6 +88,7 @@ const filterPosts = (posts, settings) => {
 
   const filterPosts = (postsToFilter, filters) => {
 
+    postsToFilter = filterByPublished(postsToFilter, filters)
     postsToFilter = filterByPostTags(postsToFilter, filters)
     postsToFilter = orderPosts(postsToFilter)
     postsToFilter = filterByMaxPosts(postsToFilter, filters)

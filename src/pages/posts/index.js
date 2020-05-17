@@ -26,7 +26,7 @@ const Posts = () => {
   const [searchPosts, setSearchPosts] = useState(posts)
 
 
-  const onSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onSearchTextChange = (event) => {
 
     // Set the search bar state
     setSearch(event.target.value)
