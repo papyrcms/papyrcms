@@ -1,6 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next'
-
-export default (req: NextApiRequest & Req, res: NextApiResponse, next: Function) => {
+export default (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     return next()
   } else {

@@ -1,9 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import { configureSettings } from "../../utilities/functions"
 
 
-export default async (req: NextApiRequest, res: NextApiResponse & Res, next: Function) => {
+export default async (req, res, next) => {
   const defaultSettings = { enableCommenting: false }
   const settings = await configureSettings("comment", defaultSettings)
 

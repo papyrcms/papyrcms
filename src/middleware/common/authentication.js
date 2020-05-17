@@ -1,10 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import passport from "passport"
 import { Strategy } from "passport-local"
 import User from '../../models/user'
 
 
-export default async (req: NextApiRequest, res: NextApiResponse, next: Function) => {
+export default async (req, res, next) => {
   passport.use(
     new Strategy({
       usernameField: 'email',
@@ -15,7 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse, next: Function)
         if (!user) {
           return cb(null, false, { message: 'Incorrect email or password.' })
         }
-        user.authenticate(password, (err: any, user: User, passwordError: any) => {
+        user.authenticate(password, (err, user, passwordError) => {
           if (err) {
             return res.status(401).send({ message: err.message })
           }

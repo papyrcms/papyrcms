@@ -1,9 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import sanitizeHTML from "sanitize-html"
 import _ from 'lodash'
 
 
-export default (req: NextApiRequest, res: NextApiResponse, next: Function) => {
+export default (req, res, next) => {
   const sanitizeRules = {
     allowedTags: [
       "h1",
