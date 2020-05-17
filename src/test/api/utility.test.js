@@ -13,24 +13,16 @@ const axiosConfig = {
 
 
 describe("/api/utility", () => {
-  describe("/googleAnalyticsId", () => {
-    it("returns the correct id", async () => {
-      const { data: id } = await axios.post(`${rootURL}/api/utility/googleAnalyticsId`)
-      expect(id).to.equal(googleAnalyticsId)
-    })
-  })
 
-  describe("/googleMapsKey", () => {
-    it("returns the correct id", async () => {
-      const { data: id } = await axios.post(`${rootURL}/api/utility/googleMapsKey`)
-      expect(id).to.equal(googleMapsKey)
-    })
-  })
+  describe("/publicKeys", () => {
+    it("returns the ananlytics id, maps kye, and stripe pub key", async () => {
+      const { data: publicKeys } = await axios.post(`${rootURL}/api/utility/publicKeys`)
+      const { googleAnalyticsId, googleMapsKey, stripePubKey } = publicKeys
 
-  describe("/stripePubKey", () => {
-    it("returns the correct id", async () => {
-      const { data: id } = await axios.post(`${rootURL}/api/utility/stripePubKey`)
-      expect(id).to.equal(stripePublishableKey)
+      expect(publicKeys).to.exist &&
+      expect(googleAnalyticsId).to.be.a('string') &&
+      expect(googleMapsKey).to.be.a('string') &&
+      expect(stripePubKey).to.be.a('string')
     })
   })
 
