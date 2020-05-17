@@ -11,15 +11,7 @@ const onClick = () => {
 }
 
 
-type LinkProps = {
-  exact?: Boolean,
-  href: string,
-  children: string,
-  title?: string
-}
-
-
-const NavLink = (props: LinkProps) => {
+const NavLink = (props) => {
 
   let href
   if (props.exact) {
@@ -42,17 +34,12 @@ const NavLink = (props: LinkProps) => {
 }
 
 
-type MenuProps = {
-  logo: string
-}
-
-
 /**
  * NavMenu displayed at the top of every view.
  *
  * @prop logo - String - The source for the logo image displayed at the top right
  */
-const NavMenu = (props: MenuProps) => {
+const NavMenu = (props) => {
 
   const { pages } = useContext(pagesContext)
   const { settings } = useContext(settingsContext)

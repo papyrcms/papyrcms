@@ -9,13 +9,8 @@ import {
 } from 'react-stripe-elements'
 import keysContext from '../context/keysContext'
 
-type CreditCardFormProps = {
-  className?: string,
-  stripe?: stripe.Stripe,
-  onSubmit: Function
-}
 
-const CreditCardForm = injectStripe((props: CreditCardFormProps) => {
+const CreditCardForm = injectStripe((props) => {
 
   const { className = "", stripe, onSubmit } = props
   const [validation, setValidation] = useState('')
@@ -23,7 +18,7 @@ const CreditCardForm = injectStripe((props: CreditCardFormProps) => {
 
   if (!stripe) return null
 
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     setProcessing(true)
@@ -39,7 +34,7 @@ const CreditCardForm = injectStripe((props: CreditCardFormProps) => {
     onSubmit(data.source, setProcessing, setValidation)
   }
 
-  const fieldStyle: any = {
+  const fieldStyle = {
     base: {
       color: "#333",
       fontSize: "16px",
@@ -85,16 +80,10 @@ const CreditCardForm = injectStripe((props: CreditCardFormProps) => {
 })
 
 
-type StripeFormProps = {
-  className?: string,
-  onSubmit: Function
-}
-
-
-const StripeForm = (props: StripeFormProps) => {
+const StripeForm = (props) => {
 
   const { className, onSubmit } = props
-  const [stripe, setStripe] = useState<stripe.Stripe | null>(null)
+  const [stripe, setStripe] = useState(null)
   const { keys } = useContext(keysContext)
 
   useEffect(() => {

@@ -9,14 +9,7 @@ const excludeFooterRoutes = [
 ]
 
 
-type Props = {
-  footerTitle: string,
-  footerContent: string,
-  footerCopyrightContent: string
-}
-
-
-const Footer = (props: Props) => {
+const Footer = (props) => {
 
   // TODO: Only include the footer if the current route is not in the array
 

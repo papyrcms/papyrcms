@@ -7,16 +7,8 @@ import userContext from '../../../context/userContext'
 import settingsContext from '../../../context/settingsContext'
 import CommentForm from './CommentForm'
 
-type Props = {
-  enableCommenting: boolean,
-  post: Post,
-  apiPath?: string,
-  beforeCommentForm: Function,
-  afterCommentForm: Function,
-  comments: Array<comment>
-}
 
-const Comment = (props: Props) => {
+const Comment = (props) => {
 
   const {
     enableCommenting, post, apiPath,
@@ -36,7 +28,7 @@ const Comment = (props: Props) => {
   const [formDetached, setFormDetached] = useState(false)
 
 
-  const handleSubmit = (event: React.FormEvent<Element>) => {
+  const handleSubmit = (event) => {
 
     event.preventDefault()
 
@@ -71,7 +63,7 @@ const Comment = (props: Props) => {
   }
 
 
-  const onDeleteClick = (comment: comment) => {
+  const onDeleteClick = (comment) => {
 
     const confirm = window.confirm('Are you sure you want to delete this comment?')
 
@@ -90,7 +82,7 @@ const Comment = (props: Props) => {
   }
 
 
-  const renderAuthOptions = (comment: comment) => {
+  const renderAuthOptions = (comment) => {
 
     if (
       currentUser && (
@@ -178,7 +170,7 @@ const Comment = (props: Props) => {
           detached={formDetached}
           onDetachClick={() => setFormDetached(!formDetached)}
           content={formContent}
-          onChange={(newContent: string) => setFormContent(newContent)}
+          onChange={(newContent) => setFormContent(newContent)}
           onSubmit={handleSubmit}
         />
       </div>

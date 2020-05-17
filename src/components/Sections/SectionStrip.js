@@ -4,31 +4,6 @@ import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
 
-type Props = {
-  clickableMedia?: boolean,
-  mediaLeft?: boolean,
-  mediaRight?: boolean,
-  readMore?: boolean,
-  path?: string,
-  emptyMessage: string,
-  className?: string,
-  posts: Array<Post | Blog | event | Product>,
-  title: string,
-  contentLength?: number,
-  beforeTitle?: Function,
-  afterTitle?: Function,
-  beforePosts?: Function,
-  afterPosts?: Function,
-  beforePostTitle?: Function,
-  afterPostTitle?: Function,
-  beforePostMedia?: Function,
-  afterPostMedia?: Function,
-  beforePostContent?: Function,
-  afterPostContent?: Function,
-  beforePostLink?: Function,
-  afterPostLink?: Function
-}
-
 
 /**
  * SectionStrip will render Posts in a more horizontal style
@@ -59,7 +34,7 @@ type Props = {
  * @prop beforePostLink - Function - Rendered before the card link
  * @prop afterPostLink - Function - Rendered after the card link
  */
-const SectionStrip = (props: Props) => {
+const SectionStrip = (props) => {
 
   const {
     clickableMedia, mediaLeft, mediaRight,
@@ -84,7 +59,7 @@ const SectionStrip = (props: Props) => {
   } = props
 
 
-  const renderMedia = (post: Post | Blog | event | Product) => {
+  const renderMedia = (post) => {
     if (post.mainMedia) {
       return (
         <Fragment>
@@ -102,7 +77,7 @@ const SectionStrip = (props: Props) => {
   }
 
 
-  const renderRightMedia = (post: Post | Blog | event | Product, i: number) => {
+  const renderRightMedia = (post, i) => {
     if (mediaRight && !mediaLeft) {
       return renderMedia(post)
     } else if (
@@ -117,7 +92,7 @@ const SectionStrip = (props: Props) => {
   }
 
 
-  const renderLeftMedia = (post: Post | Blog | event | Product, i: number) => {
+  const renderLeftMedia = (post, i) => {
     if (mediaLeft && !mediaRight) {
       return renderMedia(post)
     } else if (
@@ -132,7 +107,7 @@ const SectionStrip = (props: Props) => {
   }
 
 
-  const renderContent = (post: Post | Blog | event | Product) => {
+  const renderContent = (post) => {
 
     const contentLength = props.contentLength || 300
     let postContent = post.content.length >= contentLength ? `${post.content.substring(0, contentLength).trim()} . . .` : post.content
@@ -179,7 +154,9 @@ const SectionStrip = (props: Props) => {
           <div className={postTextClassName}>
 
             {beforePostTitle(post)}
-            <h3 className="heading-tertiary">{post.title}</h3>
+            <h3 className="heading-tertiary">
+              {post.title}
+            </h3>
             {afterPostTitle(post)}
 
             {renderContent(post)}
@@ -196,7 +173,9 @@ const SectionStrip = (props: Props) => {
     <section className={`${className || ''} section-standard`}>
 
       {beforeTitle()}
-      <h2 className="heading-secondary section-standard__header">{title}</h2>
+      <h2 className="heading-secondary section-standard__header">
+        {title}
+      </h2>
       {afterTitle()}
 
       {beforePosts()}

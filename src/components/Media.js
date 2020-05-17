@@ -2,15 +2,6 @@ import React from 'react'
 import Modal from './Modal'
 
 
-type Props = {
-  src?: string,
-  className?: string,
-  alt?: string,
-  parallax?: boolean,
-  clickable?: boolean
-}
-
-
 /**
  * Media dynamically renders video/img elements
  *
@@ -18,7 +9,7 @@ type Props = {
  * @prop className - String - The class name of the video/img element
  * @prop alt - String - The alt property for a passed image
  */
-const Media = (props: Props) => {
+const Media = (props) => {
 
   const { src, className, alt, parallax, clickable } = props
 

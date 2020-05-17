@@ -1,24 +1,6 @@
 import React, { Fragment } from 'react'
 
 
-type Props = {
-  className?: string,
-  type?: string,
-  placeholder?: string,
-  name?: string,
-  id?: string,
-  label?: string,
-  value?: string | number,
-  required?: boolean,
-  onChange?: Function,
-  onFocus?: Function,
-  onBlur?: Function,
-  validation?: string,
-  formState?: any,
-  children?: any,
-}
-
-
 /**
  * Input is a default text-type input component
  *
@@ -34,7 +16,7 @@ type Props = {
  * @prop className - String - Wrapper class
  * @prop type - String - The type attribute for the input
  */
-const Input = (props: Props) => {
+const Input = (props) => {
 
   // Instantiate props with defaults
   let {

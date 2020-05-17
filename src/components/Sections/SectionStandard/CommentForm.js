@@ -1,15 +1,8 @@
 import React from 'react'
 // import RichTextEditor from '../../RichTextEditor'
 
-type Props = {
-  content: string,
-  onChange: Function,
-  onSubmit: Function,
-  detached: boolean,
-  onDetachClick: Function
-}
 
-const CommentForm = (props: Props) => {
+const CommentForm = (props) => {
 
   const { content, onChange, onSubmit, detached, onDetachClick } = props
 

@@ -4,30 +4,6 @@ import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
 
-type Props = {
-  posts: Array<Post | Blog | event | Product>,
-  contentLength?: number,
-  emptyMessage?: string,
-  perRow: number,
-  title: string,
-  path?: string,
-  readMore?: boolean,
-  clickableMedia?: boolean,
-  beforeTitle?: Function,
-  afterTitle?: Function,
-  beforePostList?: Function,
-  afterPostList?: Function,
-  beforePosts?: Function,
-  afterPosts?: Function,
-  beforePostTitle?: Function,
-  afterPostTitle?: Function,
-  beforePostMedia?: Function,
-  afterPostMedia?: Function,
-  beforePostContent?: Function,
-  afterPostContent?: Function,
-  beforePostLink?: Function,
-  afterPostLink?: Function
-}
 
 /**
  * SectionCards will display a section of card-like components
@@ -59,7 +35,7 @@ type Props = {
  * @prop beforePostLink - Function - Rendered before the card link
  * @prop afterPostLink - Function - Rendered after the card link
  */
-const SectionCards = (props: Props) => {
+const SectionCards = (props) => {
 
   const {
     posts, contentLength, emptyMessage,
@@ -85,7 +61,7 @@ const SectionCards = (props: Props) => {
   } = props
 
 
-  const renderReadMore = (post: Post | Blog | event | Product) => {
+  const renderReadMore = (post) => {
     if (readMore) {
       const readMorePath = path ? path : 'posts'
 
@@ -98,14 +74,14 @@ const SectionCards = (props: Props) => {
   }
 
 
-  const renderPublishSection = (published: Boolean) => {
+  const renderPublishSection = (published) => {
     if (!published) {
       return <p><em>Not published</em></p>
     }
   }
 
 
-  const renderMediaSection = (post: Post | Blog | event | Product) => {
+  const renderMediaSection = (post) => {
     if (post.mainMedia) {
       return <Media
         className="section-cards__image"
@@ -138,7 +114,9 @@ const SectionCards = (props: Props) => {
         <li key={post._id} className="section-cards__card">
 
           {beforePostTitle(post)}
-          <h3 className="section-cards__title heading-tertiary">{post.title}</h3>
+          <h3 className="section-cards__title heading-tertiary">
+            {post.title}
+          </h3>
           {afterPostTitle(post)}
 
           {renderPublishSection(post.published)}
@@ -148,7 +126,9 @@ const SectionCards = (props: Props) => {
           {afterPostMedia(post)}
 
           {beforePostContent(post)}
-          <div className="section-cards__content">{renderHTML(postContent)}</div>
+          <div className="section-cards__content">
+            {renderHTML(postContent)}
+          </div>
           {afterPostContent(post)}
 
           {beforePostLink(post)}
@@ -167,7 +147,9 @@ const SectionCards = (props: Props) => {
     <section className='section-cards'>
 
       {beforeTitle()}
-      <h2 className='heading-secondary section-cards__header'>{title}</h2>
+      <h2 className='heading-secondary section-cards__header'>
+        {title}
+      </h2>
       {afterTitle()}
 
       {beforePostList()}

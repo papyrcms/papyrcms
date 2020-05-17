@@ -8,7 +8,7 @@ import userContext from '../../context/userContext'
 
 const MessageList = () => {
 
-  const [messages, setMessages] = useState<Array<Message>>([])
+  const [messages, setMessages] = useState([])
   const { currentUser } = useContext(userContext)
   useEffect(() => {
     const getMessages = async () => {
@@ -21,7 +21,7 @@ const MessageList = () => {
   }, [currentUser])
 
 
-  const deleteMessage = (id: string) => {
+  const deleteMessage = (id) => {
 
     const confirm = window.confirm("Are you sure you want to delete this message?")
 

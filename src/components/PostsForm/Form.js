@@ -5,16 +5,7 @@ import RichTextEditor from '../RichTextEditor'
 import Media from '../Media'
 import Input from '../Input'
 
-type Props = {
-  values: any,
-  handleChange: Function,
-  errors: any,
-  validateField: Function,
-  additionalFields?: Array<any>,
-  handleSubmit: Function
-}
-
-const Form = (props: Props) => {
+const Form = (props) => {
 
   const {
     values, handleChange, errors,
@@ -40,7 +31,7 @@ const Form = (props: Props) => {
   )
 
 
-  const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileInputChange = (event) => {
 
     if (!event.target.files) return
 

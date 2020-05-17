@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Input from '../Input'
 
-type Props = {
-  email: string
-}
 
-const ForgotPasswordForm = (props: Props) => {
+const ForgotPasswordForm = (props) => {
 
   const [email, setEmail] = useState(props.email || '')
   const [validation, setValidation] = useState('')
@@ -24,7 +21,7 @@ const ForgotPasswordForm = (props: Props) => {
   })
 
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = (event) => {
 
     event.preventDefault()
 
@@ -52,7 +49,7 @@ const ForgotPasswordForm = (props: Props) => {
         label="Email"
         name="email"
         value={email}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+        onChange={(event) => setEmail(event.target.value)}
         onFocus={() => { if (!editing) setEditing(true) }}
         onBlur={() => { if (editing) setEditing(false) }}
       />

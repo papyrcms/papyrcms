@@ -5,19 +5,13 @@ import storeContext from '../../context/storeContext'
 import userContext from '../../context/userContext'
 
 
-type Props = {
-  mainTitle: string,
-  subTitle: string
-}
-
-
 /**
  * Header displayed in every view
  *
  * @prop mainTitle - String - Text displayed in big letters
  * @prop subTitle - String - Smaller text displayed under the main Title
  */
-const Header = (props: Props) => {
+const Header = (props) => {
 
   const { mainTitle, subTitle } = props
   const { currentUser } = useContext(userContext)

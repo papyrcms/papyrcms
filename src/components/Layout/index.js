@@ -10,15 +10,12 @@ import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
 
 
-type Props = {
-  children: React.ReactChildren
-}
 /**
  * Layout wrapping all views
  *
  * @prop children - Component - The page rendered
  */
-const Layout: any = (props: Props) => {
+const Layout = (props) => {
 
   let { posts } = useContext(postsContext)
 

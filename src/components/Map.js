@@ -3,17 +3,9 @@ import GoogleMapReact from 'google-map-react'
 import keysContext from '../context/keysContext'
 
 
-type Props = {
-  className?: string,
-  zoom?: number,
-  latitude: number,
-  longitude: number
-}
+const Position = () => <div className="map__position" />
 
-
-const Position: any = () => <div className="map__position" />
-
-const Map = (props: Props) => {
+const Map = (props) => {
 
   const {
     className = '',

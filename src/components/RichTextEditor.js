@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TinyMCE from 'react-tinymce'
 
-type Props = {
-  name: string,
-  content: string,
-  className?: string,
-  onChange: Function
-}
 
 /**
  * RichTextEditor is a react-wrapped component using Tiny MCE
@@ -15,7 +9,7 @@ type Props = {
  * @prop className - String - The class applied to the editor wrapper
  * @prop onChange - Function - The event handler when the content is changed
  */
-const TextEditor = (props: Props) => {
+const TextEditor = (props) => {
 
   const [useEditor, setUseEditor] = useState(false)
   useEffect(() => {
@@ -47,7 +41,7 @@ const TextEditor = (props: Props) => {
           height: 250,
           content_style: contentStyle
         }}
-        onChange={(event: React.ChangeEvent<TinyMceEditor>) => {
+        onChange={(event) => {
           event.target.value = event.target.getContent()
           event.target.name = name
           onChange(event)

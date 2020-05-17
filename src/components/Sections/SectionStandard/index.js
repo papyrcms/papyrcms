@@ -11,28 +11,6 @@ import Media from '../../Media'
 import PageHead from '../../PageHead'
 import filterPosts from '../../../hooks/filterPosts'
 
-type Props = {
-  post: Post | Blog | event | Product,
-  enableCommenting?: boolean,
-  apiPath?: string,
-  className?: string,
-  redirectRoute?: string,
-  path?: string,
-  emptyTitle?: string,
-  emptyMessage?: string,
-  beforePost?: Function,
-  afterPost?: Function,
-  beforeTitle?: Function,
-  afterTitle?: Function,
-  beforeMainMedia?: Function,
-  afterMainMedia?: Function,
-  beforeContent?: Function,
-  afterContent?: Function,
-  beforeComments?: Function,
-  afterComments?: Function,
-  beforeCommentForm?: Function,
-  afterCommentForm?: Function
-}
 
 /**
  * SectionStandard is the main component to show the details of a particular post
@@ -60,7 +38,7 @@ type Props = {
  * @prop beforeCommentForm - Function - Rendered before the post comment form
  * @prop afterCommentForm - Function - Rendered after the post comment form
  */
-const SectionStandard = (props: Props) => {
+const SectionStandard = (props) => {
 
   if (!props.post) return null
 
@@ -222,7 +200,9 @@ const SectionStandard = (props: Props) => {
         {renderPublishSection()}
 
         {beforeTitle()}
-        <h2 className="heading-secondary post__title u-margin-bottom-small">{title}</h2>
+        <h2 className="heading-secondary post__title u-margin-bottom-small">
+          {title}
+        </h2>
         {afterTitle()}
 
         {renderTagsSection()}
@@ -232,7 +212,9 @@ const SectionStandard = (props: Props) => {
         {afterMainMedia()}
 
         {beforeContent()}
-        <div className="post__content">{renderHTML(postContent)}</div>
+        <div className="post__content">
+          {renderHTML(postContent)}
+        </div>
         {afterContent()}
 
         {renderAuthOptions()}

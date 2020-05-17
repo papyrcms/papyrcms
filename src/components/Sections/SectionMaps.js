@@ -3,12 +3,6 @@ import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Map from '../Map'
 
-type Props = {
-  posts: Array<Post>,
-  emptyTitle: string,
-  emptyMessage: string,
-  mapLocation?: string
-}
 
 /**
  * SectionMaps will render a section with some text and a
@@ -17,13 +11,13 @@ type Props = {
  * @prop mapLocation - String('start' or 'end') - renders the map before or after the content
  * @prop posts - Array[Object - latitude, longitude, and content posts]
  */
-const SectionMaps = (props: Props) => {
+const SectionMaps = (props) => {
 
   const { posts, emptyTitle, emptyMessage, mapLocation = 'start' } = props
 
-  let latitudePost: Post | null
-  let longitudePost: Post | null
-  let contentPost: Post | null
+  let latitudePost
+  let longitudePost
+  let contentPost
 
   // Pick out the text, latitude, and logitude posts
   _.forEach(posts, post => {

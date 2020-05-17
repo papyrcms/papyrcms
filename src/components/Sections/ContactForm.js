@@ -3,14 +3,11 @@ import userContext from '../../context/userContext'
 import Input from '../Input'
 import useForm from '../../hooks/useForm'
 
-type Props = {
-  className: string
-}
 
 /**
  * ContactForm is the main contact form component
  */
-const ContactForm = (props: Props) => {
+const ContactForm = (props) => {
 
   const { className } = props
   const { currentUser } = useContext(userContext)
@@ -40,10 +37,10 @@ const ContactForm = (props: Props) => {
   } = useForm({ name, email, message: '', validation: '' })
 
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
-    const success = (response: any, setValidation: Function) => {
+    const success = (response, setValidation) => {
       setValidation('Thanks for reaching out! I\'ll be in touch.')
     }
 

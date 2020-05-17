@@ -18,10 +18,10 @@ const LoginForm = () => {
   const formState = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
-    const success = (res: any) => {
+    const success = (res) => {
       localStorage.setItem('token', res.data.token)
       setCurrentUser(res.data.user)
       Router.push('/profile')

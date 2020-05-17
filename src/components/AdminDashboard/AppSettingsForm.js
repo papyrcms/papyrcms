@@ -10,7 +10,7 @@ const AppSettingsForm = () => {
   const { settings, setSettings } = useContext(settingsContext)
   const [formSettings, setFormSettings] = useState(settings)
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event) => {
 
     event.preventDefault()
 
@@ -32,7 +32,7 @@ const AppSettingsForm = () => {
 
   const renderSettingsInputs = () => {
 
-    return _.map(settings, (setting, key: keyof Settings) => {
+    return _.map(settings, (setting, key) => {
 
       // Format label
       const result = key.replace(/([A-Z])/g, " $1")

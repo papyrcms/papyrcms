@@ -4,11 +4,8 @@ import userContext from '../../context/userContext'
 import CreditCardForm from '../CreditCardForm'
 import Input from '../Input'
 
-type Props = {
-  className: string
-}
 
-const DonateForm = (props: Props) => {
+const DonateForm = (props) => {
 
   const { currentUser } = useContext(userContext)
   const { className } = props
@@ -17,11 +14,7 @@ const DonateForm = (props: Props) => {
   const [paid, setPaid] = useState(false)
 
 
-  const handleSubmit = (
-    source: stripe.Source,
-    setProcessing: React.Dispatch<React.SetStateAction<boolean>>,
-    setValidation: React.Dispatch<React.SetStateAction<string>>
-  ) => {
+  const handleSubmit = (source, setProcessing, setValidation) => {
 
     switch (true) {
 
@@ -77,7 +70,7 @@ const DonateForm = (props: Props) => {
             type="email"
             required
             value={email}
-            onChange={(event: React.ChangeEvent<HTMLFormElement>) => setEmail(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
           />
 
           <Input
@@ -86,7 +79,7 @@ const DonateForm = (props: Props) => {
             type="number"
             required
             value={amount}
-            onChange={(event: React.ChangeEvent<HTMLFormElement>) => setAmount(event.target.value)}
+            onChange={(event) => setAmount(event.target.value)}
           />
         </div>
 

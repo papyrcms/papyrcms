@@ -5,15 +5,6 @@ import Form from './Form'
 import postsContext from '../../context/postsContext'
 import useForm from '../../hooks/useForm'
 
-type Props = {
-  post?: Post | Blog | event | Product,
-  pageTitle: string,
-  additionalFields?: Array<any>
-  additionalState?: object,
-  apiEndpoint?: string,
-  redirectRoute?: string,
-  editing?: boolean
-}
 
 /**
  * PostsForm is an extendable form to be able to save and edit
@@ -27,15 +18,15 @@ type Props = {
  * @prop additionalFields: Array[Component] - Additional form fields to render to the form
  * @prop additionalState: Object - Additional state data to accompany any additional fields
  */
-const PostsForm = (props: Props) => {
+const PostsForm = (props) => {
 
   const { posts, setPosts } = useContext(postsContext)
 
-  const mapTagsToString = (tags: Array<string>) => {
+  const mapTagsToString = (tags) => {
 
     let newTags = ''
 
-    _.forEach(tags, (tag: string, i: number) => {
+    _.forEach(tags, (tag, i) => {
       if (i < tags.length - 1) {
         newTags = `${newTags}${tag}, `
       } else {
@@ -64,14 +55,14 @@ const PostsForm = (props: Props) => {
   } = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
     const { apiEndpoint, redirectRoute, editing } = props
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
     const redirect = redirectRoute ? redirectRoute : '/posts'
 
-    const success = (response: any) => {
+    const success = (response) => {
       let newPosts = []
       if (editing && post) {
         newPosts = _.map(posts, mappedPost => {
@@ -92,7 +83,7 @@ const PostsForm = (props: Props) => {
 
   const { pageTitle, additionalFields } = props
 
-  const additionalProps: any = {}
+  const additionalProps = {}
 
   if (additionalState) {
     _.forEach(additionalState, (state, key) => {

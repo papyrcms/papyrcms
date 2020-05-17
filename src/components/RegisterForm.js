@@ -26,16 +26,16 @@ const RegisterForm = () => {
   const formState = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event) => {
     event.preventDefault()
 
-    const success = (response: any) => {
+    const success = (response) => {
       localStorage.setItem('token', response.data.token)
       setCurrentUser(response.data.user)
       Router.push('/profile')
     }
 
-    const error = (err: any) => {
+    const error = (err) => {
       console.error(err.response)
     }
 
