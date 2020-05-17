@@ -24,7 +24,7 @@ const App = (props: AppProps & Props) => {
   useEffect(() => {
     if (!initialized) {
       setInitialized(true)
-      initGA()
+      initGA(keys.googleAnalyticsId)
     }
     if (initialized) {
       logPageView()
@@ -51,9 +51,8 @@ App.getInitialProps = async ({ Component, ctx }: any) => {
     pageProps = await Component.getInitialProps(ctx)
   }
 
-  const { data: googleMapsKey } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
-  const { data: stripePubKey } = await axios.post(`${rootUrl}/api/utility/stripePubKey`)
-  pageProps.keys = { googleMapsKey, stripePubKey }
+  const { data: publicKeys } = await axios.post(`${rootUrl}/api/utility/googleMapsKey`)
+  pageProps.keys = publicKeys
 
   const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
   pageProps.settings = settings

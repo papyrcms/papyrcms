@@ -1,15 +1,12 @@
 import ReactGA from 'react-ga'
-import axios from 'axios'
 
 declare global {
   interface Window { GA_INITIALIZED: any }
 }
 
-export const initGA = async () => {
+export const initGA = async (googleAnalyticsId: string) => {
   if (!window.GA_INITIALIZED) {
-    const res = await axios.post('/api/utility/googleAnalyticsId')
-
-    ReactGA.initialize(res.data)
+    ReactGA.initialize(googleAnalyticsId)
     window.GA_INITIALIZED = true
 
     logPageView()

@@ -162,5 +162,6 @@ type Settings = {
 
 type Keys = {
   stripePubKey: string,
-  googleMapsKey: string
+  googleMapsKey: string,
+  googleAnalyticsId: string
 }
