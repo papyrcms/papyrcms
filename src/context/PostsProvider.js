@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
 import postsContext from './postsContext'
 
-type Props = {
-  posts: Array<Post>,
-  children: any
-}
-
-const PostsProvider = (props: Props) => {
+const PostsProvider = (props) => {
 
   const [posts, setPosts] = useState(props.posts)
 

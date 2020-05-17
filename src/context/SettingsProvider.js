@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
 import settingsContext from './settingsContext'
 
-type Props = {
-  settings: Settings,
-  children: any
-}
-
-const SettingsProvider = (props: Props) => {
+const SettingsProvider = (props) => {
 
   const [settings, setSettings] = useState(props.settings)
 

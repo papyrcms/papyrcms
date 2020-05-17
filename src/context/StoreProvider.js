@@ -4,13 +4,9 @@ import _ from 'lodash'
 import StoreContext from './storeContext'
 import UserContext from './userContext'
 
-type Props = {
-  children: any
-}
+const StoreProvider = (props) => {
 
-const StoreProvider = (props: Props) => {
-
-  const [cart, setCart] = useState<Array<Product>>([])
+  const [cart, setCart] = useState([])
   const { currentUser } = useContext(UserContext)
 
 
@@ -27,7 +23,7 @@ const StoreProvider = (props: Props) => {
   }, [currentUser])
 
 
-  const addToCart = async (product: Product) => {
+  const addToCart = async (product) => {
     const newCart = [...cart, product]
     if (!currentUser) {
       if (_.filter(cart, inCart => inCart._id === product._id).length < product.quantity) {
@@ -44,7 +40,7 @@ const StoreProvider = (props: Props) => {
     }
   }
 
-  const removeFromCart = async (product: Product) => {
+  const removeFromCart = async (product) => {
     let removed = false
     const newCart = _.filter(cart, item => {
       if (item._id === product._id && !removed) {

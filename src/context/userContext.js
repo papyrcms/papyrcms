@@ -1,11 +1,6 @@
 import { createContext } from 'react'
 
-type UserContext = {
-  currentUser: User | null,
-  setCurrentUser: Function
-}
-
-export default createContext<UserContext>({
+export default createContext({
   currentUser: {
     _id: '',
 
@@ -44,5 +39,5 @@ export default createContext<UserContext>({
     isSubscribed: false,
     isBanned: false
   },
-  setCurrentUser: (user: User) => {}
+  setCurrentUser: (user) => {}
 })

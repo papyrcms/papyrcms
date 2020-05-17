@@ -5,15 +5,7 @@ import StoreProvider from './StoreProvider'
 import PostsProvider from './PostsProvider'
 import PagesProvider from './PagesProvider'
 
-type Props = {
-  keys: Keys,
-  settings: Settings,
-  pages: Array<Page>,
-  posts: Array<Post>,
-  children: any
-}
-
-const GlobalState = (props: Props) => (
+const GlobalState = (props) => (
   <KeysProvider keys={props.keys}>
     <SettingsProvider settings={props.settings}>
       <UserProvider>

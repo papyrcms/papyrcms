@@ -1,12 +1,7 @@
 import React from 'react'
 import keysContext from './keysContext'
 
-type Props = {
-  keys: Keys,
-  children: any
-}
-
-const KeysProvider = (props: Props) => {
+const KeysProvider = (props) => {
 
   return (
     <keysContext.Provider
