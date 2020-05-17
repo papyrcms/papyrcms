@@ -45,7 +45,6 @@ handler.post((req, res) => {
     username: email, email, firstName, lastName
   })
 
-  // @ts-ignore passport local mongoose makes this possible
   User.register(newUser, password, async (err) => {
 
     if (err) {

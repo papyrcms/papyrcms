@@ -38,7 +38,6 @@ const removeFromCart = async (productId, user) => {
   const cart = _.filter(user.cart, product => {
 
     // If one has not been removed and it has the passed id, remove it
-    // @ts-ignore .equals() exists on the mongoose oid
     if (product._id.equals(productId) && !removed) {
       removed = true
       return false

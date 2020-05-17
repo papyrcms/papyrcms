@@ -34,7 +34,6 @@ const SectionMaps = (props) => {
   })
 
   // If we don't have all the info we need
-  // @ts-ignore vars assigned in the forEach above
   if (!contentPost || !longitudePost || !latitudePost) {
     return (
       <section className="section-maps">

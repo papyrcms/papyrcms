@@ -45,8 +45,6 @@ const UserInfoForm = (props) => {
   if (currentUser) {
     for (const state in INITIAL_STATE) {
       if (state in currentUser) {
-
-        // @ts-ignore - In order to dynamically pass keys
         INITIAL_STATE[state] = currentUser[state]
       }
     }

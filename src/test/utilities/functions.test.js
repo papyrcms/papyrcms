@@ -36,9 +36,7 @@ describe('utility functions', () => {
       const foundSettings = await Settings.findOne({ name: 'test' }).lean()
 
       if (foundSettings) {
-        // @ts-ignore name exists on settings
         expect(foundSettings.name).to.equal('test') &&
-        // @ts-ignore name exists on settings
         expect(foundSettings.options).to.eql(testSettings)
       }
     })

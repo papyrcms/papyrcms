@@ -39,7 +39,6 @@ const ForgotPasswordPage = () => {
   const data = jwt.decode(token)
   if (!data) return null
 
-  // @ts-ignore email is decoded from the token
   const { email } = data
 
   return (

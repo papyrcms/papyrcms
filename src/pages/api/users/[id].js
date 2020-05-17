@@ -12,7 +12,6 @@ handler.use(isAdmin)
 handler.delete(async (req, res) => {
   const { id } = req.query
 
-  // @ts-ignore _id.equals fails typechecks because it's actually a mongoose OID
   if (req.user._id.equals(id)) {
     return res.status(401).send({ message: 'You cannot delete yourself.' })
   }

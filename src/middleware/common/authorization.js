@@ -13,7 +13,6 @@ export default async (req, res, next) => {
 
     try {
       const tokenObject = jwt.verify(token, keys.jwtSecret)
-      // @ts-ignore uid comes from the decoded jwt object
       const { uid } = tokenObject
       if (uid) {
         req.user = await User.findOne({ _id: uid }).populate('cart').lean()

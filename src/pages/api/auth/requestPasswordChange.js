@@ -17,7 +17,6 @@ handler.post(async (req, res) => {
   }
 
   const data = jwt.verify(token, keys.jwtSecret)
-  // @ts-ignore email is decoded from the token
   const foundUser = await User.findOne({ email: data.email })
 
   // Set the new password
