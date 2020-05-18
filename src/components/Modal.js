@@ -29,7 +29,7 @@ const Modal = (props) => {
         {buttonText}
       </button>
 
-      <div className={`modal${hidden ? ' modal--hidden' : ''}`} onClick={() => setHidden(true)}>
+      <div className={`modal ${hidden ? 'modal--hidden' : ''}`} onClick={() => setHidden(true)}>
         <div className="modal__box" onClick={event => event.stopPropagation()}>
           <button
             className="modal__close"

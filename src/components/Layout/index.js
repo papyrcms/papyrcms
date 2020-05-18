@@ -4,6 +4,7 @@ import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import postsContext from '../../context/postsContext'
 import filterPosts from '../../hooks/filterPosts'
+import Notification from './Notification'
 import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
@@ -81,6 +82,22 @@ const Layout = (props) => {
   })
 
 
+  const notifications = filterPosts(posts, {
+    postTags: ['notification']
+  })
+
+  const renderNotifications = () => {
+    return _.map(notifications.posts, (post) => {
+      return (
+        <Notification
+          key={post._id}
+          post={post}    
+        />
+      )
+    })
+  }
+
+
   return (
     <div className="app">
 
@@ -101,6 +118,8 @@ const Layout = (props) => {
         <script src="https://js.stripe.com/v3/"></script>
         <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
       </PageHead>
+
+      {renderNotifications()}
 
       <NavMenu
         logo={logo}
