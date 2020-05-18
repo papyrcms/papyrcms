@@ -4,7 +4,7 @@ import PostsForm from '../../components/PostsForm/'
 import Input from '../../components/Input'
 
 
-const dateField = ({ values, errors, handleChange, validateField }: FieldProps) => (
+const dateField = ({ values, errors, handleChange, validateField }) => (
   <Input
     id="event_date"
     label="Date"
@@ -18,7 +18,7 @@ const dateField = ({ values, errors, handleChange, validateField }: FieldProps) 
   />
 )
 
-const coordinatesField = ({ values, errors, handleChange, validateField }: FieldProps) => (
+const coordinatesField = ({ values, errors, handleChange, validateField }) => (
   <div className="u-form-row">
     <Input
       id="event_latitude"
