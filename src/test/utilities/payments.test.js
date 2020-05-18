@@ -1,5 +1,7 @@
 import { expect } from 'chai'
 import Payments from '../../../src/utilities/payments'
+import keys from '../../../src/config/keys'
+const { adminEmail } = keys
 
 describe('payments', () => {
   it('has the correct properties when constructed', () => {
@@ -17,7 +19,7 @@ describe('payments', () => {
     it('returns a successful stripe charge', async () => {
       const payments = new Payments()
       const info = {
-        email: 'drkgrntt@gmail.com',
+        email: adminEmail,
         amount: 1,
         source: { id: 'tok_discover' },
         description: 'test payment'

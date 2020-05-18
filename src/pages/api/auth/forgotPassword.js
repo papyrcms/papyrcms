@@ -40,8 +40,7 @@ handler.post(async (req, res) => {
   const mailer = new Mailer()
   const subject = "Forgot your password?"
   const variables = {
-    website: keys.rootURL,
-    token: jwt.sign({ email }, keys.jwtSecret)
+    passwordResetLink: `${keys.rootURL}/forgotPassword?token=${jwt.sign({ email }, keys.jwtSecret)}`
   }
   mailer.sendEmail(variables, email, 'forgot-password', subject)
 

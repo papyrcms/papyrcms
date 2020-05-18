@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import axios from 'axios'
 import _ from 'lodash'
 import keys from '../../../src/config/keys'
-const { rootURL, test } = keys
+const { rootURL, test, adminEmail } = keys
 
 
 const axiosConfig = {
@@ -127,7 +127,7 @@ describe('/api/store', () => {
       const fields = {
         firstName: 'Test',
         lastName: 'User',
-        email: 'drkgrntt@gmail.com',
+        email: adminEmail,
         address1: '1234 main st.',
         city: 'Kansas City',
         state: 'MO',

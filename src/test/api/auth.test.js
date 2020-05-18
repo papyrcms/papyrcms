@@ -16,9 +16,9 @@ describe('/api/auth', () => {
   describe('/currentUser', () => {
     it('returns the current user', async () => {
       const { data: user } = await axios.get(`${rootURL}/api/auth/currentUser`, axiosConfig)
-      expect(user.email).to.equal("drkgrntt@gmail.com") &&
-      expect(user.firstName).to.equal('Derek') &&
-      expect(user.lastName).to.equal('Garnett')
+      expect(user.email).to.be.a('string') &&
+      expect(user.firstName).to.be.a('string') &&
+      expect(user.lastName).to.be.a('string')
     })
   })
 

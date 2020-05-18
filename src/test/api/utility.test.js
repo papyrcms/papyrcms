@@ -1,7 +1,7 @@
 import { expect } from "chai"
 import axios from 'axios'
 import keys from '../../../src/config/keys'
-const { test, rootURL, googleAnalyticsId, googleMapsKey, stripePublishableKey } = keys
+const { adminEmail, test, rootURL } = keys
 
 
 const axiosConfig = {
@@ -60,7 +60,7 @@ describe("/api/utility", () => {
   describe('/donate', () => {
     it('makes a one-dollar donation', async () => {
       const info = {
-        email: 'drkgrntt@gmail.com',
+        email: adminEmail,
         amount: 1,
         source: { id: 'tok_discover' }
       }
