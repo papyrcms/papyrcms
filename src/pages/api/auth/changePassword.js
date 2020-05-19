@@ -12,7 +12,7 @@ handler.use(isLoggedIn)
 
 handler.post(async (req, res) => {
   const { oldPass, newPass, confirmPass } = req.body
-debugger
+
   // Make sure password fields are filled out
   if (!oldPass) {
     return res.status(401).send({ message: 'You need to fill in your current password.' })
