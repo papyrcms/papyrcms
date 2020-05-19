@@ -16,7 +16,6 @@
   "author": "drkgrntt",
   "license": "ISC",
   "dependencies": {
-    "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "cloudinary": "^1.21.0",
@@ -31,9 +30,6 @@
     "next": "^9.4.1",
     "next-connect": "^0.6.6",
     "nodemailer": "^6.4.6",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^6.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",

@@ -17,13 +17,19 @@ handler.post(async (req, res) => {
   }
 
   const data = jwt.verify(token, keys.jwtSecret)
-  const foundUser = await User.findOne({ email: data.email })
+  const user = await User.findOne({ email: data.email })
 
   // Set the new password
-  foundUser.setPassword(password, async () => {
-    await foundUser.save()
-    return res.status(200).send({ message: 'Your password has been saved!' })
-  })
+  let passwordHash
+  try {
+    passwordHash = await bcrypt.hash(newPass, 15)
+  } catch (error) {
+    return res.status(400).send(error)
+  }
+
+  user.password = passwordHash
+  user.save()
+  res.status(200).send({ message: 'Your password has been saved!' })
 })
 
 

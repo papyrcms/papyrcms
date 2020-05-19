@@ -1,14 +1,12 @@
 import mongoose from 'mongoose'
-import passportLocalMongoose from 'passport-local-mongoose'
 
 const userSchema = new mongoose.Schema({
 
   // Authentication info
-  username: String,
+  email: { type: String, unique: true },
   password: String,
 
   // Personal Info
-  email: String,
   firstName: String,
   lastName: String,
 
@@ -45,7 +43,5 @@ const userSchema = new mongoose.Schema({
   isSubscribed: { type: Boolean, default: true },
   isBanned: { type: Boolean, default: false }
 })
-
-userSchema.plugin(passportLocalMongoose)
 
 export default mongoose.models.user || mongoose.model('user', userSchema)

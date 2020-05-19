@@ -19,16 +19,9 @@ const ProfilePage = () => {
 
 
   const onLogoutClick = () => {
-    axios.get('/api/auth/logout')
-      .then(res => {
-        if (res.data === 'logged out') {
-          Router.push('/')
-          localStorage.removeItem('token')
-          setCurrentUser(null)
-        }
-      }).catch(err => {
-        console.error(err)
-      })
+    Router.push('/')
+    localStorage.removeItem('token')
+    setCurrentUser(null)
   }
 
 

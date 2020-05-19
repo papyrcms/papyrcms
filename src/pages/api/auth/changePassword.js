@@ -1,4 +1,5 @@
 import connect from "next-connect"
+import bcrypt from 'bcrypt'
 import common from "../../../middleware/common/"
 import isLoggedIn from '../../../middleware/isLoggedIn'
 import User from "../../../models/user"
@@ -9,9 +10,9 @@ handler.use(common)
 handler.use(isLoggedIn)
 
 
-handler.post((req, res) => {
+handler.post(async (req, res) => {
   const { oldPass, newPass, confirmPass } = req.body
-
+debugger
   // Make sure password fields are filled out
   if (!oldPass) {
     return res.status(401).send({ message: 'You need to fill in your current password.' })
@@ -21,33 +22,41 @@ handler.post((req, res) => {
     return res.status(401).send({ message: 'You need to fill in your new password.' })
   }
 
-  User.findById(req.user._id, (err, foundUser) => {
-    if (!foundUser) {
-      return res.status(401).send(err)
+  const user = await User.findById(req.user._id)
+
+  if (!user) {
+    return res.status(401).send({ message: 'Something went wrong. Try again later.' })
+  }
+
+  // Make sure the entered password is the user's password
+  let result
+  try {
+    result = await bcrypt.compare(oldPass, user.password)
+  } catch (error) {
+    return res.status(401).send(error)
+  }
+
+  if (!result) {
+    return res.status(401).send({ message: 'The current password you entered is incorrect.' })
+  }
+
+  // Check to see new password fields match
+  if (newPass !== confirmPass) {
+    return res.status(401).send({ message: 'The new password fields do not match.' })
+  } else {
+
+    // Set the new password
+    let passwordHash
+    try {
+      passwordHash = await bcrypt.hash(newPass, 15)
+    } catch (error) {
+      return res.status(400).send(error)
     }
 
-    // Make sure the entered password is the user's password
-    foundUser.authenticate(oldPass, (err, user, passwordError) => {
-      if (user) {
-
-        // Check to see new password fields match
-        if (newPass !== confirmPass) {
-          return res.status(401).send({ message: 'The new password fields do not match.' })
-        } else {
-
-          // Set the new password
-          foundUser.setPassword(newPass, () => {
-            foundUser.save()
-            res.status(200).send({ message: 'Your password has been saved!' })
-          })
-        }
-      } else if (err) {
-        return res.status(401).send(err)
-      } else if (passwordError) {
-        return res.status(401).send({ message: 'You have entered the wrong current password.' })
-      }
-    })
-  })
+    user.password = passwordHash
+    user.save()
+    res.status(200).send({ message: 'Your password has been saved!' })
+  }
 })
 
 

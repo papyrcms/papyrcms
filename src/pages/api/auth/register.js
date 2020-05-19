@@ -1,4 +1,5 @@
 import connect from 'next-connect'
+import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import keys from '../../../config/keys'
 import common from "../../../middleware/common/"
@@ -18,7 +19,7 @@ const verifyEmailSyntax = (email) => {
 }
 
 
-handler.post((req, res) => {
+handler.post(async (req, res) => {
   const { firstName, lastName, email, password, passwordConfirm } = req.body
 
   if (!firstName) {
@@ -39,44 +40,51 @@ handler.post((req, res) => {
     return res.status(401).send({ message: 'The password fields need to match' })
   }
 
-  // The LocalStrategy module requires a username
+  // Get a hashed password
+  let passwordHash
+  try {
+    passwordHash = await bcrypt.hash(password, 15)
+  } catch (error) {
+    return res.status(400).send(error)
+  }
+
   // Set username and email as the user's email
   const newUser = new User({
-    username: email, email, firstName, lastName
+    email,
+    password: passwordHash,
+    firstName,
+    lastName
   })
 
-  User.register(newUser, password, async (err) => {
+  try {
+    await newUser.save()
+  } catch (error) {
 
-    if (err) {
-      const message = err.message.replace('username', 'email')
-      return res.status(401).send({ message })
+    let message = 'Uh oh, something went wrong.'
+    if (error.code == 11000) {
+      message = 'This email is already in use.'
     }
+    return res.status(401).send({ message })
+  }
 
-    if (res.locals.settings.enableEmailingToUsers) {
-      const mailer = new Mailer()
-      const subject = `Welcome, ${newUser.firstName}!`
+  if (res.locals.settings.enableEmailingToUsers) {
+    const mailer = new Mailer()
+    const subject = `Welcome, ${newUser.firstName}!`
 
-      await mailer.sendEmail(newUser._doc, newUser.email, 'welcome', subject)
-    }
+    await mailer.sendEmail(newUser._doc, newUser.email, 'welcome', subject)
+  }
 
-    req.login(newUser, { session: false }, (err) => {
-      if (err) {
-        return res.status(400).send({ message: err.message })
-      }
+  // generate a signed json web token with the contents of user object and return it in the response
+  const now = new Date()
+  const expiry = new Date(now).setDate(now.getDate() + 30)
 
-      // generate a signed json web token with the contents of user object and return it in the response
-      const now = new Date()
-      const expiry = new Date(now).setDate(now.getDate() + 30)
+  const token = jwt.sign({
+    uid: newUser._id,
+    iat: Math.floor(now.getTime() / 1000),
+    exp: Math.floor(expiry / 1000)
+  }, keys.jwtSecret)
 
-      const token = jwt.sign({
-        uid: newUser._id,
-        iat: Math.floor(now.getTime() / 1000),
-        exp: Math.floor(expiry / 1000)
-      }, keys.jwtSecret)
-
-      return res.status(200).send({ user: newUser, token })
-    })
-  })
+  return res.status(200).send({ user: newUser, token })
 })
 
 
