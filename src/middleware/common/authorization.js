@@ -6,7 +6,7 @@ import keys from '../../config/keys'
 require('../../models/product')
 
 
-export default async (req, res, next) => {
+export default async (req) => {
 
   if (req.headers.authorization && req.headers.authorization.includes('bearer ')) {
     const token = req.headers.authorization.replace('bearer ', '')
@@ -15,10 +15,10 @@ export default async (req, res, next) => {
       const tokenObject = jwt.verify(token, keys.jwtSecret)
       const { uid } = tokenObject
       if (uid) {
-        req.user = await User.findOne({ _id: uid }).populate('cart').lean()
+        return await User.findOne({ _id: uid, isBanned: false }).populate('cart').lean()
       }
     } catch (err) {}
   }
 
-  return next()
+  return null
 }

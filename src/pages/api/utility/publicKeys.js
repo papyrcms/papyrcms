@@ -1,25 +1,21 @@
-import connect from "next-connect"
-import common from "../../../middleware/common/"
 import keys from '../../../config/keys'
 
 
-const handler = connect()
-handler.use(common)
+export default (req, res) => {
 
-
-handler.get((req, res) => {
-  const {
-    googleAnalyticsId,
-    googleMapsKey,
-    stripePublishableKey
-  } = keys
-  const publicKeys = {
-    googleAnalyticsId,
-    googleMapsKey,
-    stripePublishableKey
+  if (req.method === 'GET') {
+    const {
+      googleAnalyticsId,
+      googleMapsKey,
+      stripePublishableKey
+    } = keys
+    const publicKeys = {
+      googleAnalyticsId,
+      googleMapsKey,
+      stripePublishableKey
+    }
+    return res.status(200).send(publicKeys)
   }
-  return res.status(200).send(publicKeys)
-})
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

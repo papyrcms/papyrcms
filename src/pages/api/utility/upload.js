@@ -1,12 +1,7 @@
-import connect from 'next-connect'
 import multer from 'multer'
 import cloudinary from 'cloudinary'
 import common from '../../../middleware/common'
 import keys from '../../../config/keys'
-
-
-const handler = connect()
-handler.use(common)
 
 
 const storage = multer.diskStorage({
@@ -37,21 +32,22 @@ export const config = {
 }
 
 
-handler.post(async (req, res) => {
+export default async (req, res) => {
 
-  if (!req.user || !req.user.isAdmin) {
+  const { user } = await common(req, res)
+  if (!user || !user.isAdmin) {
     return res.status(401).send({ message: 'You are not allowed to do that.' })
   }
 
-  upload.single('file')(req, res, async (err) => {
+  if (req.method === 'POST') {
+    const err = await upload.single('file')(req, res)
     if (err) {
       return res.status(401).send({ message: err.message })
     }
 
     const uploadResponse = await cloudinary.v2.uploader.upload(req.file.path, { resource_type: 'auto', angle: 0 })
     return res.status(200).send(uploadResponse.secure_url)
-  })
-})
+  }
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

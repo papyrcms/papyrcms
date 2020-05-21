@@ -1,20 +1,20 @@
-import connect from 'next-connect'
 import common from '../../../middleware/common/'
-import isAdmin from '../../../middleware/isAdmin'
 import User from '../../../models/user'
 
 
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
+export default async (req, res) => {
 
+  const { user } = await common(req, res)
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
 
-handler.put(async (req, res) => {
-  const { userId, isAdmin } = req.body
+  if (req.method === 'PUT') {
+    const { userId, isAdmin } = req.body
 
-  await User.findByIdAndUpdate(userId, { isAdmin })
-  return res.status(200).send({ message: 'Success' })
-})
+    await User.findByIdAndUpdate(userId, { isAdmin })
+    return res.status(200).send({ message: 'Success' })
+  }
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

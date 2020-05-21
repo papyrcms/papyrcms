@@ -1,23 +1,24 @@
-import connect from 'next-connect'
 import common from '../../../middleware/common/'
-import eventsEnabled from '../../../middleware/eventsEnabled'
 import Event from '../../../models/event'
 
 
-const handler = connect()
-handler.use(common)
-handler.use(eventsEnabled)
+export default async (req, res) => {
 
+  const { user, settings } = await common(req, res)
 
-handler.get(async (req, res) => {
-  const date = new Date()
-  const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
+  if ((!user || !user.isAdmin) && settings.enableEvents) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
 
-  const events = await Event.find({ published: true, date: { $gte: dateFilter } })
-    .sort({ date: 1 }).lean()
+  if (req.method === "GET") {
+    const date = new Date()
+    const dateFilter = date.setTime(date.getTime() - 2 * 24 * 60 * 60 * 1000)
 
-  return res.status(200).send(events)
-})
+    const events = await Event.find({ published: true, date: { $gte: dateFilter } })
+      .sort({ date: 1 }).lean()
 
+    return res.status(200).send(events)
+  }
 
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found' })
+}

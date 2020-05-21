@@ -1,12 +1,7 @@
-import connect from 'next-connect'
 import common from '../../../middleware/common/'
 import Mailer from "../../../utilities/mailer"
 import keys from "../../../config/keys"
 import Message from '../../../models/message'
-
-
-const handler = connect()
-handler.use(common)
 
 
 const getMessages = async () => {
@@ -39,19 +34,23 @@ const createMessage = async (body, enableEmailingToAdmin) => {
 }
 
 
-handler.get(async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
+export default async (req, res) => {
+
+  const { user } = await common(req, res)
+
+  if (req.method === 'GET') {
+    if (!user || !user.isAdmin) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+    const messages = await getMessages()
+    return res.status(200).send(messages)
   }
-  const messages = await getMessages()
-  return res.status(200).send(messages)
-})
 
 
-handler.post(async (req, res) => {
-  const message = await createMessage(req.body, res.locals.settings.enableEmailingToAdmin)
-  return res.status(200).send(message)
-})
+  if (req.method === 'POST') {
+    const message = await createMessage(req.body, res.locals.settings.enableEmailingToAdmin)
+    return res.status(200).send(message)
+  }
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(400).send({ message: 'Page not found' })
+}

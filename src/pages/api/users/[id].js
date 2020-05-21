@@ -1,28 +1,28 @@
-import connect from "next-connect"
 import common from "../../../middleware/common/"
-import isAdmin from "../../../middleware/isAdmin"
 import User from "../../../models/user"
 
 
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
+export default async (req, res) => {
 
-
-handler.delete(async (req, res) => {
-  const { id } = req.query
-
-  if (req.user._id.equals(id)) {
-    return res.status(401).send({ message: 'You cannot delete yourself.' })
+  const { user } = await common(req, res)
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
   }
 
-  try {
-    await User.findOneAndDelete({ _id: id })
-    return res.status(200).send({ message: 'user deleted' })
-  } catch (err) {
-    return res.status(400).send({ message: err.message })
+  if (req.method === 'DELETE') {
+    const { id } = req.query
+
+    if (user._id.equals(id)) {
+      return res.status(401).send({ message: 'You cannot delete yourself.' })
+    }
+
+    try {
+      await User.findOneAndDelete({ _id: id })
+      return res.status(200).send({ message: 'user deleted' })
+    } catch (err) {
+      return res.status(400).send({ message: err.message })
+    }
   }
-})
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

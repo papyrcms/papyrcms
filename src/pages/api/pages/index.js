@@ -1,11 +1,6 @@
-import connect from 'next-connect'
 import _ from 'lodash'
 import common from '../../../middleware/common/'
 import Page from '../../../models/page'
-
-
-const handler = connect()
-handler.use(common)
 
 
 const getPages = async () => {
@@ -73,19 +68,23 @@ const createPage = async (body) => {
 }
 
 
-handler.get(async (req, res) => {
-  const pages = await getPages()
-  return res.status(200).send(pages)
-})
+export default async (req, res) => {
+  
+  const { user } = await common(req, res)
 
-
-handler.post(async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  if (req.method === 'GET') {
+    const pages = await getPages()
+    return res.status(200).send(pages)
   }
-  const page = await createPage(req.body)
-  return res.status(200).send(page)
-})
 
 
-export default (req, res) => handler.apply(req, res)
+  if (req.method === 'POST') {
+    if (!user || !user.isAdmin) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+    const page = await createPage(req.body)
+    return res.status(200).send(page)
+  }
+
+  return res.status(404).send({ message: 'Page not found.' })
+}

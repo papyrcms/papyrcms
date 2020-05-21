@@ -1,16 +1,7 @@
-import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../../middleware/common/"
-import isLoggedIn from "../../../../middleware/isLoggedIn"
-import storeEnabled from "../../../../middleware/storeEnabled"
 import Product from "../../../../models/product"
 import User from "../../../../models/user"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(isLoggedIn)
-handler.use(storeEnabled)
 
 
 const addToCart = async (productId, user) => {
@@ -52,16 +43,24 @@ const removeFromCart = async (productId, user) => {
 }
 
 
-handler.put(async (req, res) => {
-  const cart = await addToCart(req.query.id, req.user)
-  return res.status(200).send(cart)
-})
+export default async (req, res) => {
+
+  const { user, settings } = await common(req, res)
+  if (!user || (!user.isAdmin && !settings.enableStore)) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
+
+  if (req.method === 'PUT') {
+    const cart = await addToCart(req.query.id, user)
+    return res.status(200).send(cart)
+  }
 
 
-handler.delete( async (req, res) => {
-  const cart = await removeFromCart(req.query.id, req.user)
-  return res.status(200).send(cart)
-})
+  if (req.method === 'DELETE') {
+    const cart = await removeFromCart(req.query.id, user)
+    return res.status(200).send(cart)
+  }
 
 
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

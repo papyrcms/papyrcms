@@ -1,10 +1,5 @@
-import connect from 'next-connect'
 import common from '../../../middleware/common/'
 import User from '../../../models/user'
-
-
-const handler = connect()
-handler.use(common)
 
 
 const updateCurrentUser = async (body, user) => {
@@ -50,15 +45,18 @@ const updateCurrentUser = async (body, user) => {
 }
 
 
-handler.get((req, res) => {
-  return res.status(200).send(req.user || null)
-})
+export default async (req, res) => {
 
+  const { user } = await common(req, res)
 
-handler.put(async (req, res) => {
-  const updatedUser = await updateCurrentUser(req.body, req.user)
-  return res.status(200).send(updatedUser)
-})
+  if (req.method === 'GET') {
+    return res.status(200).send(user)
+  }
+  
+  if (req.method === 'PUT') {
+    const updatedUser = await updateCurrentUser(req.body, user)
+    return res.status(200).send(updatedUser)
+  }
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

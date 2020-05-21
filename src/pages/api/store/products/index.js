@@ -1,12 +1,5 @@
-import connect from "next-connect"
 import common from "../../../../middleware/common/"
-import isAdmin from "../../../../middleware/isAdmin"
 import Product from "../../../../models/product"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
 
 
 const getProducts = async () => {
@@ -45,16 +38,23 @@ const createProduct = async (body) => {
 }
 
 
-handler.get(async (req, res) => {
-  const products = await getProducts()
-  return res.status(200).send(products)
-})
+export default async (req, res) => {
+
+  const { user } = await common(req, res)
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
+
+  if (req.method === 'GET') {
+    const products = await getProducts()
+    return res.status(200).send(products)
+  }
 
 
-handler.post(async (req, res) => {
-  const product = await createProduct(req.body)
-  return res.status(200).send(product)
-})
+  if (req.method === 'POST') {
+    const product = await createProduct(req.body)
+    return res.status(200).send(product)
+  }
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

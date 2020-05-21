@@ -1,11 +1,6 @@
-import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../middleware/common/"
 import Page from "../../../models/page"
-
-
-const handler = connect()
-handler.use(common)
 
 
 const getPage = async (route) => {
@@ -84,32 +79,37 @@ const deletePage = async (id) => {
 }
 
 
-handler.get(async (req, res) => {
-  try {
-    const page = await getPage(req.query.id)
+export default async (req, res) => {
+
+  const { user } = await common(req, res)
+
+
+  if (req.method === 'GET') {
+    try {
+      const page = await getPage(req.query.id)
+      return res.status(200).send(page)
+    } catch (err) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+  }
+
+
+  if (req.method === 'PUT') {
+    if (!user || !user.isAdmin) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+    const page = await updatePage(req.body, req.query.id)
     return res.status(200).send(page)
-  } catch (err) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
   }
-})
 
 
-handler.put(async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  if (req.method === 'DELETE') {
+    if (!user || !user.isAdmin) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+    const message = await deletePage(req.query.id)
+    return res.status(200).send(message)
   }
-  const page = await updatePage(req.body, req.query.id)
-  return res.status(200).send(page)
-})
 
-
-handler.delete(async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
-  }
-  const message = await deletePage(req.query.id)
-  return res.status(200).send(message)
-})
-
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

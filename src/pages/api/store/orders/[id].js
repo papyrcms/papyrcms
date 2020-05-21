@@ -1,12 +1,5 @@
-import connect from "next-connect"
 import common from "../../../../middleware/common/"
-import isAdmin from "../../../../middleware/isAdmin"
 import Order from "../../../../models/order"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
 
 
 const updateOrder = async (id, body) => {
@@ -21,16 +14,23 @@ const deleteOrder = async (id) => {
 }
 
 
-handler.put(async (req, res) => {
-  const order = await updateOrder(req.query.id, req.body)
-  return res.status(200).send(order)
-})
+export default async (req, res) => {
+
+  const { user } = await common(req, res)
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
+
+  if (req.method === 'PUT') {
+    const order = await updateOrder(req.query.id, req.body)
+    return res.status(200).send(order)
+  }
 
 
-handler.delete(async (req, res) => {
-  const message = await deleteOrder(req.query.id)
-  return res.status(200).send(message)
-})
+  if (req.method === 'DELETE') {
+    const message = await deleteOrder(req.query.id)
+    return res.status(200).send(message)
+  }
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

@@ -1,18 +1,19 @@
-import connect from "next-connect"
 import common from "../../../middleware/common/"
-import isAdmin from "../../../middleware/isAdmin"
 import Message from "../../../models/message"
 
 
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
+export default async (req, res) => {
 
+  const { user } = await common(req, res)
 
-handler.delete(async (req, res) => {
-  await Message.findByIdAndDelete(req.query.id)
-  return res.status(200).send("message deleted")
-})
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
 
+  if (req.method === 'DELETE') {
+    await Message.findByIdAndDelete(req.query.id)
+    return res.status(200).send("message deleted")
+  }
 
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

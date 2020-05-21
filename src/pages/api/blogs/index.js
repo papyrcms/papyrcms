@@ -1,12 +1,5 @@
-import connect from "next-connect"
 import common from "../../../middleware/common/"
-import isAdmin from "../../../middleware/isAdmin"
 import Blog from "../../../models/blog"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
 
 
 const getBlogs = async () => {
@@ -27,16 +20,24 @@ const createBlog = async (body) => {
 }
 
 
-handler.get(async (req, res) => {
-  const blogs = await getBlogs()
-  return res.status(200).send(blogs)
-})
+export default async (req, res) => {
 
+  const { user } = await common(req, res)
 
-handler.post(async (req, res) => {
-  const blog = await createBlog(req.body)
-  return res.status(200).send(blog)
-})
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
 
+  if (req.method === 'GET') {
+    const blogs = await getBlogs()
+    return res.status(200).send(blogs)
+  }
+  
+  
+  if (req.method === 'POST') {
+    const blog = await createBlog(req.body)
+    return res.status(200).send(blog)
+  }
 
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found' })
+}

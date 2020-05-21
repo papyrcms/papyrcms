@@ -1,14 +1,7 @@
-import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../../middleware/common/"
-import blogEnabled from "../../../../middleware/blogEnabled"
 import Blog from "../../../../models/blog"
 import Comment from '../../../../models/comment'
-
-
-const handler = connect()
-handler.use(common)
-handler.use(blogEnabled)
 
 
 const getBlog = async (id) => {
@@ -53,31 +46,40 @@ const deleteBlog = async (id) => {
 }
 
 
-handler.get(async (req, res) => {
-  const blog = await getBlog(req.query.id)
-  if (!blog || !blog.published && (!req.user || !req.user.isAdmin)) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
+
+export default async (req, res) => {
+
+  const { user, settings } = await common(req, res)
+
+  if ((!user || !user.isAdmin) && !settings.enableBlog) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
   }
-  return res.status(200).send(blog)
-})
 
-
-handler.put(async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  if (req.method === 'GET') {
+    const blog = await getBlog(req.query.id)
+    if (!blog || !blog.published && (!user || !user.isAdmin)) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+    return res.status(200).send(blog)
   }
-  const blog = await updateBlog(req.query.id, req.body)
-  return res.status(200).send(blog)
-})
 
 
-handler.delete(async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send({ message: 'You are not allowed to do that.' })
+  if (req.method === 'PUT') {
+    if (!user || !user.isAdmin) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+    const blog = await updateBlog(req.query.id, req.body)
+    return res.status(200).send(blog)
   }
-  const message = await deleteBlog(req.query.id)
-  return res.status(200).send(message)
-})
 
 
-export default (req, res) => handler.apply(req, res)
+  if (req.method === 'DELETE') {
+    if (!user || !user.isAdmin) {
+      return res.status(403).send({ message: 'You are not allowed to do that.' })
+    }
+    const message = await deleteBlog(req.query.id)
+    return res.status(200).send(message)
+  }
+
+  return res.status(404).send({ message: 'Page not found.' })
+}

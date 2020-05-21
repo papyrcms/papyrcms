@@ -1,15 +1,8 @@
 import jwt from 'jsonwebtoken'
-import connect from "next-connect"
 import common from "../../../middleware/common/"
-import emailToUsersEnabled from "../../../middleware/emailToUsersEnabled"
 import Mailer from '../../../utilities/mailer'
 import keys from '../../../config/keys'
 import User from "../../../models/user"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(emailToUsersEnabled)
 
 
 const verifyEmailSyntax = (email) => {
@@ -18,34 +11,43 @@ const verifyEmailSyntax = (email) => {
 }
 
 
-handler.post(async (req, res) => {
-  const { email } = req.body
+export default async (req, res) => {
 
-  if (!verifyEmailSyntax(email)) {
-    return res.status(401).send({ message: 'Please enter your email address.' })
-  }
+  if (req.method === 'POST') {
 
-  const userExists = await User.findOne({ email })
+    const { user, settings } = await common(req, res)
 
-  if (!userExists) {
-    let message = 'That email does not exist in our system.'
-
-    if (res.locals.settings.enableRegistration) {
-      message = message + ' Try filling out the "Register" form.'
+    if (!settings.enableEmailingToUsers && (!user || !user.isAdmin)) {
+      return res.status(403).send({ message: "We cannot currently email you." })
     }
 
-    return res.status(401).send({ message })
+    const { email } = req.body
+
+    if (!verifyEmailSyntax(email)) {
+      return res.status(401).send({ message: 'Please enter your email address.' })
+    }
+
+    const userExists = await User.findOne({ email })
+
+    if (!userExists) {
+      let message = 'That email does not exist in our system.'
+
+      if (settings.enableRegistration) {
+        message = message + ' Try filling out the "Register" form.'
+      }
+
+      return res.status(401).send({ message })
+    }
+
+    const mailer = new Mailer()
+    const subject = "Forgot your password?"
+    const variables = {
+      passwordResetLink: `${keys.rootURL}/forgotPassword?token=${jwt.sign({ email }, keys.jwtSecret)}`
+    }
+    mailer.sendEmail(variables, email, 'forgot-password', subject)
+
+    return res.status(200).send({ message: 'Your email is on its way!' })
   }
 
-  const mailer = new Mailer()
-  const subject = "Forgot your password?"
-  const variables = {
-    passwordResetLink: `${keys.rootURL}/forgotPassword?token=${jwt.sign({ email }, keys.jwtSecret)}`
-  }
-  mailer.sendEmail(variables, email, 'forgot-password', subject)
-
-  return res.status(200).send({ message: 'Your email is on its way!' })
-})
-
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

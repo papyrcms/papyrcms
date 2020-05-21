@@ -1,13 +1,6 @@
 import moment from 'moment'
-import connect from "next-connect"
 import common from "../../../middleware/common/"
-import isAdmin from "../../../middleware/isAdmin"
 import Event from "../../../models/event"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
 
 
 const getEvents = async () => {
@@ -25,17 +18,25 @@ const createEvent = async (body) => {
   return event
 }
 
+export default async (req, res) => {
 
-handler.get(async (req, res) => {
-  const events = await getEvents()
-  return res.status(200).send(events)
-})
+  const { user } = await common(req, res)
 
-
-handler.post(async (req, res) => {
-  const event = await createEvent(req.body)
-  return res.status(200).send(event)
-})
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
 
 
-export default (req, res) => handler.apply(req, res)
+  if (req.method === 'GET') {
+    const events = await getEvents()
+    return res.status(200).send(events)
+  }
+
+
+  if (req.method === 'PUT') {
+    const event = await createEvent(req.body)
+    return res.status(200).send(event)
+  }
+
+  return res.status(404).send({ message: 'Page not found' })
+}

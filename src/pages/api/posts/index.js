@@ -1,14 +1,7 @@
-import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../middleware/common/"
-import isAdmin from "../../../middleware/isAdmin"
 import Post from "../../../models/post"
 import Mailer from "../../../utilities/mailer"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(isAdmin)
 
 
 const getPosts = async () => {
@@ -47,16 +40,23 @@ const createPost = async (body, enableEmailingToUsers) => {
 }
 
 
-handler.get(async (req, res) => {
-  const posts = await getPosts()
-  return res.status(200).send(posts)
-})
+export default async (req, res) => {
+
+  const { user } = await common(req, res)
+  if (!user || !user.isAdmin) {
+    return res.status(403).send({ message: "You are not allowed to do that." })
+  }
+
+  if (req.method === 'GET') {
+    const posts = await getPosts()
+    return res.status(200).send(posts)
+  }
 
 
-handler.post(async (req, res) => {
-  const post = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
-  return res.status(200).send(post)
-})
+  if (req.method === 'POST') {
+    const post = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
+    return res.status(200).send(post)
+  }
 
-
-export default (req, res) => handler.apply(req, res)
+  return res.status(404).send({ message: 'Page not found.' })
+}

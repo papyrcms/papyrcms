@@ -1,16 +1,7 @@
-import connect from "next-connect"
 import _ from 'lodash'
 import common from "../../../../../middleware/common/"
-import blogEnabled from "../../../../../middleware/blogEnabled"
-import userCommentsEnabled from "../../../../../middleware/userCommentsEnabled"
 import Blog from "../../../../../models/blog"
 import Comment from "../../../../../models/comment"
-
-
-const handler = connect()
-handler.use(common)
-handler.use(blogEnabled)
-handler.use(userCommentsEnabled)
 
 
 const updateComment = async (comment, newContent) => {
@@ -37,32 +28,45 @@ const deleteComment = async (blogId, comment) => {
 }
 
 
-handler.put(async (req, res) => {
-  let comment = await Comment.findById(req.query.commentId).populate("author")
+export default async (req, res) => {
+
+  const { user, settings } = await common(req, res)
+
   if (
-    !comment.author._id.equals(req.user._id) ||
-    !req.user.isAdmin
+    (!user || !user.isAdmin) && (
+      !settings.enableBlog ||
+      !settings.enableCommenting
+    )
   ) {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
 
-  comment = await updateComment(comment, req.body.content)
-  return res.status(200).send(comment)
-})
+  if (req.method === 'PUT') {
+    let comment = await Comment.findById(req.query.commentId).populate("author")
+    if (
+      !comment.author._id.equals(user._id) ||
+      !user.isAdmin
+    ) {
+      return res.status(403).send({ message: "You are not allowed to do that." })
+    }
 
-
-handler.delete(async (req, res) => {
-  const comment = await Comment.findById(req.query.commentId).populate("author")
-  if (
-    !comment.author._id.equals(req.user._id) ||
-    !req.user.isAdmin
-  ) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    comment = await updateComment(comment, req.body.content)
+    return res.status(200).send(comment)
   }
 
-  const message = await deleteComment(req.query.id, comment)
-  return res.status(200).send(message)
-})
 
+  if (req.method === 'DELETE') {
+    const comment = await Comment.findById(req.query.commentId).populate("author")
+    if (
+      !comment.author._id.equals(user._id) ||
+      !user.isAdmin
+    ) {
+      return res.status(403).send({ message: "You are not allowed to do that." })
+    }
 
-export default (req, res) => handler.apply(req, res)
+    const message = await deleteComment(req.query.id, comment)
+    return res.status(200).send(message)
+  }
+
+  return res.status(404).send({ message: 'Page not found.' })
+}
