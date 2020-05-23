@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import common from "../../../utilities/serverContext/"
+import serverContext from "../../../utilities/serverContext/"
 import Mailer from '../../../utilities/mailer'
 import keys from '../../../config/keys'
 import User from "../../../models/user"
@@ -15,7 +15,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { user, settings } = await common(req, res)
+    const { user, settings } = await serverContext(req, res)
 
     if (!settings.enableEmailingToUsers && (!user || !user.isAdmin)) {
       return res.status(403).send({ message: "We cannot currently email you." })

@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import common from "../../../../utilities/serverContext/"
+import serverContext from "../../../../utilities/serverContext/"
 import Blog from "../../../../models/blog"
 import Comment from '../../../../models/comment'
 
@@ -49,7 +49,7 @@ const deleteBlog = async (id) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await common(req, res)
+  const { user, settings } = await serverContext(req, res)
 
   if ((!user || !user.isAdmin) && !settings.enableBlog) {
     return res.status(403).send({ message: "You are not allowed to do that." })

@@ -1,4 +1,4 @@
-import common from "../../../../utilities/serverContext/"
+import serverContext from "../../../../utilities/serverContext/"
 import Order from "../../../../models/order"
 
 
@@ -16,7 +16,7 @@ const deleteOrder = async (id) => {
 
 export default async (req, res) => {
 
-  const { user } = await common(req, res)
+  const { user } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }

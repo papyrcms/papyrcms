@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import common from '../../../utilities/serverContext/'
+import serverContext from '../../../utilities/serverContext/'
 import Page from '../../../models/page'
 
 
@@ -70,7 +70,7 @@ const createPage = async (body) => {
 
 export default async (req, res) => {
   
-  const { user } = await common(req, res)
+  const { user } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     const pages = await getPages()

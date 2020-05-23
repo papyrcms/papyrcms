@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import keys from '../../../config/keys'
-import common from "../../../utilities/serverContext/"
+import serverContext from "../../../utilities/serverContext/"
 import Mailer from '../../../utilities/mailer'
 import User from '../../../models/user'
 
@@ -16,7 +16,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { settings } = await common(req, res)
+    const { settings } = await serverContext(req, res)
 
     const { firstName, lastName, email, password, passwordConfirm } = req.body
 

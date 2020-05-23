@@ -1,11 +1,11 @@
-import common from "../../../../../utilities/serverContext/"
+import serverContext from "../../../../../utilities/serverContext/"
 import Blog from "../../../../../models/blog"
 import Comment from "../../../../../models/comment"
 
 
 export default async (req, res) => {
 
-  const { user, settings } = await common(req, res)
+  const { user, settings } = await serverContext(req, res)
 
   if (
     (!user || !user.isAdmin) && (

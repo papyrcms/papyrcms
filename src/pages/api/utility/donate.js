@@ -1,4 +1,4 @@
-import common from '../../../utilities/serverContext/'
+import serverContext from '../../../utilities/serverContext/'
 import Payments from '../../../utilities/payments'
 
 
@@ -6,7 +6,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    await common(req, res)
+    await serverContext(req, res)
 
     const chargeInfo = {
       email: req.body.email,

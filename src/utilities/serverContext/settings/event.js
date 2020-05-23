@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import configureSettings from './configureSettings'
 
 

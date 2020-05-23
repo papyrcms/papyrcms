@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import common from "../../../utilities/serverContext/"
+import serverContext from "../../../utilities/serverContext/"
 import keys from '../../../config/keys'
 import User from "../../../models/user"
 
@@ -8,7 +8,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    await common(req, res)
+    await serverContext(req, res)
 
     const { token, password, confirmPassword } = req.body
 

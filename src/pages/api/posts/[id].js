@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import common from "../../../utilities/serverContext/"
+import serverContext from "../../../utilities/serverContext/"
 import Post from "../../../models/post"
 import Comment from "../../../models/comment"
 import Mailer from "../../../utilities/mailer"

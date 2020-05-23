@@ -1,6 +1,6 @@
 import multer from 'multer'
 import cloudinary from 'cloudinary'
-import common from '../../../utilities/serverContext'
+import serverContext from '../../../utilities/serverContext'
 import keys from '../../../config/keys'
 
 
@@ -34,7 +34,7 @@ export const config = {
 
 export default async (req, res) => {
 
-  const { user } = await common(req, res)
+  const { user } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return res.status(401).send({ message: 'You are not allowed to do that.' })
   }

@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import common from "../../../utilities/serverContext/"
+import serverContext from "../../../utilities/serverContext/"
 import User from "../../../models/user"
 
 
@@ -7,7 +7,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { user } = await common(req, res)
+    const { user } = await serverContext(req, res)
 
     if (!user) {
       return res.status(403).send({ message: 'You must be logged in to do that.' })

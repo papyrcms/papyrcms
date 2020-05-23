@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import common from "../../../utilities/serverContext/"
+import serverContext from "../../../utilities/serverContext/"
 import User from '../../../models/user'
 import keys from '../../../config/keys'
 
@@ -9,7 +9,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    await common(req, res)
+    await serverContext(req, res)
 
     let user
     try {
