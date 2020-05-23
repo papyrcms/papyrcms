@@ -36,14 +36,14 @@ describe('/api/store', () => {
       expect(created.price).to.equal(product.price) &&
       expect(created.quantity).to.equal(product.quantity) &&
       expect(created.tags).to.be.an('array')
-    })
+    }).timeout(10000)
 
     it('returns an array of all products', async () => {
       const { data: products, status } = await axios.get(`${rootURL}/api/store/products`, axiosConfig)
 
       expect(status).to.equal(200) &&
       expect(products).to.be.an('array')
-    })
+    }).timeout(10000)
 
     describe('/published', () => {
       it('returns an array of only published products', async () => {
@@ -56,7 +56,7 @@ describe('/api/store', () => {
         expect(status).to.equal(200) &&
         expect(products).to.be.an('array') &&
         expect(allArePublished).to.equal(true)
-      })
+      }).timeout(10000)
     })
 
     describe('/[id]', () => {
@@ -69,7 +69,7 @@ describe('/api/store', () => {
         expect(found.mainMedia).to.equal(product.mainMedia) &&
         expect(found.price).to.equal(product.price) &&
         expect(found.tags).to.be.an('array')
-      })
+      }).timeout(10000)
 
       it('returns an updated product', async () => {
         const { data: found } = await axios.get(`${rootURL}/api/store/products/mocha-test-product`, axiosConfig)
@@ -83,14 +83,14 @@ describe('/api/store', () => {
         expect(updated.price).to.equal(updatedProduct.price) &&
         expect(updated.quantity).to.equal(updatedProduct.quantity) &&
         expect(updated.tags).to.be.an('array')
-      })
+      }).timeout(10000)
 
       it('deletes a product', async () => {
         const { data: found } = await axios.get(`${rootURL}/api/store/products/mocha-test-product`, axiosConfig)
         const { status } = await axios.delete(`${rootURL}/api/store/products/${found._id}`, axiosConfig)
 
         expect(status).to.equal(200)
-      })
+      }).timeout(10000)
     })
   })
 
@@ -103,7 +103,7 @@ describe('/api/store', () => {
 
         expect(status).to.equal(200) &&
         expect(cart).to.eql(user.cart)
-      })
+      }).timeout(10000)
 
       it('removes a product from the user\'s cart', async () => {
         const { data: found } = await axios.get(`${rootURL}/api/store/products/mocha-test-product`, axiosConfig)
@@ -113,7 +113,7 @@ describe('/api/store', () => {
 
         expect(status).to.equal(200) &&
         expect(cart).to.eql(user.cart)
-      })
+      }).timeout(10000)
     })
   })
 
@@ -153,7 +153,7 @@ describe('/api/store', () => {
       const { data: orders } = await axios.get(`${rootURL}/api/store/orders`, axiosConfig)
 
       expect(orders).to.be.an('array')
-    })
+    }).timeout(10000)
 
     describe('/[id]', () => {
       it('updates the order as shipped', async () => {
@@ -164,7 +164,7 @@ describe('/api/store', () => {
 
         expect(status).to.equal(200) &&
         expect(updatedOrder.shipped).to.equal(true)
-      })
+      }).timeout(10000)
 
       it('deletes the order', async () => {
         const { data: orders } = await axios.get(`${rootURL}/api/store/orders`, axiosConfig)
@@ -174,7 +174,7 @@ describe('/api/store', () => {
 
         expect(status).to.equal(200) &&
         expect(response).to.be.a('string')
-      })
+      }).timeout(10000)
     })
   })
 })

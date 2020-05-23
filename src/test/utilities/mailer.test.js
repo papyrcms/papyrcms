@@ -8,7 +8,7 @@ describe('mailer', () => {
   it('has the correct properties when constructed', () => {
     const mailer = new Mailer()
     expect(mailer.templateTag).to.be.a('string')
-  })
+  }).timeout(10000)
 
   describe('getAccessToken()', () => {
     it('retrieves an access token', async () => {
@@ -25,7 +25,7 @@ describe('mailer', () => {
 
       expect(html).to.be.a('string') &&
       expect(html).to.equal('<p style="white-space: pre-wrap;">{{message}}</p>')
-    })
+    }).timeout(10000)
   })
 
   describe('createTransporter()', () => {
@@ -34,7 +34,7 @@ describe('mailer', () => {
       const transporter = await mailer.createTransporter()
 
       expect(transporter.constructor.name).to.equal('Mail')
-    }).timeout(5000)
+    }).timeout(10000)
   })
 
   describe('getEmailTemplateByTag()', () => {
@@ -53,7 +53,7 @@ describe('mailer', () => {
       expect(template).to.exist &&
       expect(template.tags).to.include('welcome') &&
       expect(template.tags).to.include(mailer.templateTag)
-    })
+    }).timeout(10000)
 
     it('returns null if there is no email template with the passed tag', async () => {
       const mongooseConfig = {
@@ -68,7 +68,7 @@ describe('mailer', () => {
       const template = await mailer.getEmailTemplateByTag('fart')
 
       expect(template).to.equal(null)
-    })
+    }).timeout(10000)
   })
 
   describe('sendEmail()', () => {
@@ -89,7 +89,7 @@ describe('mailer', () => {
       const sent = await mailer.sendEmail(variables, recipient, templateName)
 
       expect(sent).to.equal(false)
-    })
+    }).timeout(10000)
 
     it('sends an email', async () => {
       const mongooseConfig = {

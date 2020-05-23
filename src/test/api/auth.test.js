@@ -19,7 +19,7 @@ describe('/api/auth', () => {
       expect(user.email).to.be.a('string') &&
       expect(user.firstName).to.be.a('string') &&
       expect(user.lastName).to.be.a('string')
-    })
+    }).timeout(10000)
   })
 
   const newUser = {
@@ -39,7 +39,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('does not create a user if there is no firstName', async () => {
       try {
@@ -49,7 +49,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('does not create a user if there is no lastName', async () => {
       try {
@@ -59,7 +59,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('does not create a user if the email is invalid', async () => {
       try {
@@ -69,14 +69,14 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('creates a user', async () => {
       const { data: created } = await axios.post(`${rootURL}/api/auth/register`, newUser)
       expect(newUser.email).to.equal(created.user.email) &&
       expect(newUser.firstName).to.equal(created.user.firstName) &&
       expect(newUser.lastName).to.equal(created.user.lastName)
-    })
+    }).timeout(10000)
 
     it('does not create a user if the user already exists', async () => {
       try {
@@ -86,7 +86,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
   })
 
   describe('/login', () => {
@@ -95,7 +95,7 @@ describe('/api/auth', () => {
       expect(newUser.email).to.equal(foundUser.user.email) &&
       expect(newUser.firstName).to.equal(foundUser.user.firstName) &&
       expect(newUser.lastName).to.equal(foundUser.user.lastName)
-    })
+    }).timeout(10000)
 
     it('throws an error if the user does not exist', async () => {
       try {
@@ -103,7 +103,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(400)
       }
-    })
+    }).timeout(10000)
 
     it('throws an error if the password is wrong', async () => {
       try {
@@ -111,7 +111,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
   })
 
   describe('/changePassword', () => {
@@ -123,7 +123,7 @@ describe('/api/auth', () => {
       }
       const { data: response } = await axios.post(`${rootURL}/api/auth/changePassword`, data, axiosConfig)
       expect(response.message).to.equal('Your password has been saved!')
-    })
+    }).timeout(10000)
 
     it('returns an error if there is no old password', async () => {
       const data = {
@@ -136,7 +136,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('returns an error if the old password is incorrect', async () => {
       const data = {
@@ -149,7 +149,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('returns an error if there is no new password', async () => {
       const data = {
@@ -162,7 +162,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('returns an error if the new and old passwords do not match', async () => {
       const data = {
@@ -175,7 +175,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
   })
 
   describe('/forgotPassword', () => {
@@ -198,7 +198,7 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('returns an error if the email is not in the system', async () => {
       try {
@@ -219,7 +219,7 @@ describe('/api/auth', () => {
 
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
   })
 
   describe('/requestPasswordChange', () => {
@@ -235,11 +235,11 @@ describe('/api/auth', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('returns a success message if the password was successfully saved', async () => {
       const { status } = await axios.post(`${rootURL}/api/auth/requestPasswordChange`, data)
       expect(status).to.equal(200)
-    })
+    }).timeout(10000)
   })
 })

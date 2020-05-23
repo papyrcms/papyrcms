@@ -32,14 +32,14 @@ describe('/api/blogs', () => {
     expect(created.content).to.equal(blog.content) &&
     expect(created.mainMedia).to.equal(blog.mainMedia) &&
     expect(created.tags).to.be.an('array')
-  })
+  }).timeout(10000)
 
   it('returns an array of all blogs', async () => {
     const { data: blogs, status } = await axios.get(`${rootURL}/api/blogs`, axiosConfig)
 
     expect(status).to.equal(200) &&
     expect(blogs).to.be.an('array')
-  })
+  }).timeout(10000)
 
   describe('/published', () => {
     it('returns an array of only published blogs', async () => {
@@ -52,7 +52,7 @@ describe('/api/blogs', () => {
       expect(status).to.equal(200) &&
       expect(blogs).to.be.an('array') &&
       expect(allArePublished).to.equal(true)
-    })
+    }).timeout(10000)
   })
 
   describe('/[id]', () => {
@@ -64,7 +64,7 @@ describe('/api/blogs', () => {
       expect(found.content).to.equal(blog.content) &&
       expect(found.mainMedia).to.equal(blog.mainMedia) &&
       expect(found.tags).to.be.an('array')
-    })
+    }).timeout(10000)
 
     it('returns an updated blog', async () => {
       const { data: found } = await axios.get(`${rootURL}/api/blogs/mocha-test-blog`, axiosConfig)
@@ -76,13 +76,13 @@ describe('/api/blogs', () => {
       expect(updated.content).to.equal(updatedBlog.content) &&
       expect(updated.mainMedia).to.equal(updatedBlog.mainMedia) &&
       expect(updated.tags).to.be.an('array')
-    })
+    }).timeout(10000)
 
     it('deletes a blog', async () => {
       const { data: found } = await axios.get(`${rootURL}/api/blogs/mocha-test-blog`, axiosConfig)
       const { status } = await axios.delete(`${rootURL}/api/blogs/${found._id}`, axiosConfig)
 
       expect(status).to.equal(200)
-    })
+    }).timeout(10000)
   })
 })

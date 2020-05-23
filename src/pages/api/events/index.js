@@ -33,7 +33,7 @@ export default async (req, res) => {
   }
 
 
-  if (req.method === 'PUT') {
+  if (req.method === 'POST') {
     const event = await createEvent(req.body)
     return res.status(200).send(event)
   }

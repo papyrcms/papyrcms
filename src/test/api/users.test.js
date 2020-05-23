@@ -18,7 +18,7 @@ describe('/api/users', () => {
   it('returns a list of users', async () => {
     const { data: users } = await axios.get(`${rootURL}/api/users`, axiosConfig)
     expect(users).to.be.an('array')
-  })
+  }).timeout(10000)
 
   describe('/makeAdmin', () => {
     it('makes a non-admin user an admin', async () => {
@@ -37,7 +37,7 @@ describe('/api/users', () => {
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isAdmin).to.equal(true)
-    })
+    }).timeout(10000)
 
     it('make an admin user into a non-admin', async () => {
       const mongooseConfig = {
@@ -55,7 +55,7 @@ describe('/api/users', () => {
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isAdmin).to.equal(false)
-    })
+    }).timeout(10000)
   })
 
   describe('/ban', () => {
@@ -75,7 +75,7 @@ describe('/api/users', () => {
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isBanned).to.equal(true)
-    })
+    }).timeout(10000)
 
     it('make a banned user into a non-banned', async () => {
       const mongooseConfig = {
@@ -93,7 +93,7 @@ describe('/api/users', () => {
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isBanned).to.equal(false)
-    })
+    }).timeout(10000)
   })
 
   describe('/[id]', () => {
@@ -112,7 +112,7 @@ describe('/api/users', () => {
       } catch (err) {
         expect(err.response.status).to.equal(403)
       }
-    })
+    }).timeout(10000)
 
     it('does not delete the user who sent the request', async () => {
       const mongooseConfig = {
@@ -130,7 +130,7 @@ describe('/api/users', () => {
       } catch (err) {
         expect(err.response.status).to.equal(401)
       }
-    })
+    }).timeout(10000)
 
     it('deletes a user', async () => {
       const mongooseConfig = {
@@ -147,6 +147,6 @@ describe('/api/users', () => {
 
       expect(response.data.message).to.equal('user deleted') &&
       expect(deletedUser).to.equal(null)
-    })
+    }).timeout(10000)
   })
 })

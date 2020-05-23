@@ -7,14 +7,14 @@ describe('payments', () => {
   it('has the correct properties when constructed', () => {
     const payments = new Payments()
     expect(payments.stripe).to.exist
-  })
+  }).timeout(10000)
 
   describe('makePayment()', () => {
     it('returns null if the incorrect info is passed', async () => {
       const payments = new Payments()
       const charge = await payments.makePayment({})
       expect(charge).to.equal(null)
-    })
+    }).timeout(10000)
 
     it('returns a successful stripe charge', async () => {
       const payments = new Payments()

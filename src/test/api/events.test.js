@@ -36,14 +36,14 @@ describe('/api/events', () => {
     expect(created.latitude).to.equal(event.latitude) &&
     expect(created.longitude).to.equal(event.longitude) &&
     expect(created.tags).to.be.an('array')
-  })
+  }).timeout(10000)
 
   it('returns an array of all events', async () => {
     const { data: events, status } = await axios.get(`${rootURL}/api/events`, axiosConfig)
 
     expect(status).to.equal(200) &&
     expect(events).to.be.an('array')
-  })
+  }).timeout(10000)
 
   describe('/published', () => {
     it('returns an array of only published events', async () => {
@@ -56,7 +56,7 @@ describe('/api/events', () => {
       expect(status).to.equal(200) &&
       expect(events).to.be.an('array') &&
       expect(allArePublished).to.equal(true)
-    })
+    }).timeout(10000)
   })
 
   describe('/[id]', () => {
@@ -68,7 +68,7 @@ describe('/api/events', () => {
         expect(found.content).to.equal(event.content) &&
         expect(found.mainMedia).to.equal(event.mainMedia) &&
         expect(found.tags).to.be.an('array')
-    })
+    }).timeout(10000)
 
     it('returns an updated event', async () => {
       const { data: found } = await axios.get(`${rootURL}/api/events/mocha-test-event`, axiosConfig)
@@ -80,13 +80,13 @@ describe('/api/events', () => {
       expect(updated.content).to.equal(updatedEvent.content) &&
       expect(updated.mainMedia).to.equal(updatedEvent.mainMedia) &&
       expect(updated.tags).to.be.an('array')
-    })
+    }).timeout(10000)
 
     it('deletes an event', async () => {
       const { data: found } = await axios.get(`${rootURL}/api/events/mocha-test-event`, axiosConfig)
       const { status } = await axios.delete(`${rootURL}/api/events/${found._id}`, axiosConfig)
 
       expect(status).to.equal(200)
-    })
+    }).timeout(10000)
   })
 })

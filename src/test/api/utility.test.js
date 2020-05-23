@@ -23,7 +23,7 @@ describe("/api/utility", () => {
       expect(googleAnalyticsId).to.be.a('string') &&
       expect(googleMapsKey).to.be.a('string') &&
       expect(stripePublishableKey).to.be.a('string')
-    })
+    }).timeout(10000)
   })
 
   describe("/settings", () => {
@@ -41,7 +41,7 @@ describe("/api/utility", () => {
     it("returns the settings that were posted", async () => {
       const { data: settings } = await axios.post(`${rootURL}/api/utility/settings`, expectedSettings, axiosConfig)
       expect(settings).to.eql(expectedSettings)
-    })
+    }).timeout(10000)
 
     it("will only allow settings to be posted by admin users", async () => {
       try {
@@ -49,12 +49,12 @@ describe("/api/utility", () => {
       } catch (err) {
         expect(err.response.status).to.equal(403)
       }
-    })
+    }).timeout(10000)
 
     it("gets the correct settings", async () => {
       const { data: settings } = await axios.get(`${rootURL}/api/utility/settings`)
       expect(settings).to.eql(expectedSettings)
-    })
+    }).timeout(10000)
   })
 
   describe('/donate', () => {

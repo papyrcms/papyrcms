@@ -39,14 +39,14 @@ describe('/api/pages', () => {
     expect(created.navOrder).to.equal(page.navOrder) &&
     expect(created.css).to.equal(page.css) &&
     expect(created.sections).to.be.an('array')
-  })
+  }).timeout(10000)
 
   it('returns an array of pages', async () => {
     const { data: pages, status } = await axios.get(`${rootURL}/api/pages`)
 
     expect(status).to.equal(200) &&
     expect(pages).to.be.an('array')
-  })
+  }).timeout(10000)
 
   describe('/[id]', () => {
     it('returns a page by its route as the id', async () => {
@@ -59,7 +59,7 @@ describe('/api/pages', () => {
       expect(found.navOrder).to.equal(page.navOrder) &&
       expect(found.css).to.equal(page.css) &&
       expect(found.sections).to.be.an('array')
-    })
+    }).timeout(10000)
 
     it('returns the updated page', async () => {
       const { data: found } = await axios.get(`${rootURL}/api/pages/${page.route}`)
@@ -73,13 +73,13 @@ describe('/api/pages', () => {
       expect(updated.navOrder).to.equal(updatedPage.navOrder) &&
       expect(updated.css).to.equal(updatedPage.css) &&
       expect(updated.sections).to.be.an('array')
-    })
+    }).timeout(10000)
 
     it('deletes a page', async () => {
       const { data: found } = await axios.get(`${rootURL}/api/pages/${page.route}`)
       const { status } = await axios.delete(`${rootURL}/api/pages/${found._id}`, axiosConfig)
 
       expect(status).to.equal(200)
-    })
+    }).timeout(10000)
   })
 })
