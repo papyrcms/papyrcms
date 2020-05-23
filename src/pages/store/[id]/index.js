@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import userContext from '../../../context/userContext'
 import storeContext from '../../../context/storeContext'
 import keys from '../../../config/keys'
-import { SectionStandard } from '../../../components/Sections'
+import SectionStandard from '../../../components/Sections/SectionStandard'
 
 
 const StoreShow = (props) => {
