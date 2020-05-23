@@ -42,7 +42,7 @@ export default async (req, res) => {
 
   if (req.method === "GET") {
     const event = await getEvent(req.query.id)
-    if (!event || !event.published && (!user || !user.isAdmin)) {
+    if ((!event || !event.published) && (!user || !user.isAdmin)) {
       return res.status(403).send({ message: 'You are not allowed to do that.' })
     }
     return res.status(200).send(event)

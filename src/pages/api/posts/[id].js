@@ -70,11 +70,11 @@ const deletePost = async (id) => {
 
 export default async (req, res) => {
 
-  const { user } = common(req, res)
+  const { user } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     const post = await getPost(req.query.id)
-    if (!post || !post.published && (!user || !user.isAdmin)) {
+    if ((!post || !post.published) && (!user || !user.isAdmin)) {
       return res.status(403).send({ message: 'You are not allowed to do that.' })
     }
     return res.status(200).send(post)

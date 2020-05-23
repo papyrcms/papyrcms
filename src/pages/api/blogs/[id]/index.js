@@ -57,7 +57,7 @@ export default async (req, res) => {
 
   if (req.method === 'GET') {
     const blog = await getBlog(req.query.id)
-    if (!blog || !blog.published && (!user || !user.isAdmin)) {
+    if ((!blog || !blog.published) && (!user || !user.isAdmin)) {
       return res.status(403).send({ message: 'You are not allowed to do that.' })
     }
     return res.status(200).send(blog)
