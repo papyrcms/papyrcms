@@ -5,7 +5,7 @@ import Product from "../../../../models/product"
 export default async (req, res) => {
 
   const { user, settings } = await serverContext(req, res)
-  if ((!user || !user.isAdmin) && settings.enableStore) {
+  if ((!user || !user.isAdmin) && !settings.enableStore) {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
 

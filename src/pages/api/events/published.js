@@ -6,7 +6,7 @@ export default async (req, res) => {
 
   const { user, settings } = await serverContext(req, res)
 
-  if ((!user || !user.isAdmin) && settings.enableEvents) {
+  if ((!user || !user.isAdmin) && !settings.enableEvents) {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
 
