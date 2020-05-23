@@ -22,7 +22,7 @@ export default async (req, res) => {
     // Set the new password
     let passwordHash
     try {
-      passwordHash = await bcrypt.hash(newPass, 15)
+      passwordHash = await bcrypt.hash(password, 15)
     } catch (error) {
       return res.status(400).send(error)
     }
