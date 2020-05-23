@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
-import { SectionStandard } from '../../../components/Sections/'
+import SectionStandard from '../../../components/Sections/SectionStandard'
 
 
 const PostsShow = (props) => {

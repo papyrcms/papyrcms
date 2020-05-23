@@ -5,7 +5,7 @@ import moment from 'moment'
 import userContext from '../../../context/userContext'
 import keys from '../../../config/keys'
 import Map from '../../../components/Map'
-import { SectionStandard } from '../../../components/Sections/'
+import SectionStandard from '../../../components/Sections/SectionStandard'
 
 
 const EventsShow = (props) => {

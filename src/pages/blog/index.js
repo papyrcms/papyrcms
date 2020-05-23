@@ -4,7 +4,7 @@ import moment from 'moment'
 import Link from 'next/link'
 import keys from '../../config/keys'
 import filterPosts from '../../hooks/filterPosts'
-import { SectionStrip } from '../../components/Sections/'
+import SectionStrip from '../../components/Sections/SectionStrip'
 
 
 const BlogPage = (props) => {

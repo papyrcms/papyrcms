@@ -5,7 +5,7 @@ import axios from 'axios'
 import storeContext from '../../context/storeContext'
 import userContext from '../../context/userContext'
 import keys from '../../config/keys'
-import { SectionCards } from '../../components/Sections/'
+import SectionCards from '../../components/Sections/SectionCards'
 
 
 const StorePage = (props) => {
