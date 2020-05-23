@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import common from "../../../middleware/common/"
+import common from "../../../utilities/serverContext/"
 import keys from '../../../config/keys'
 import User from "../../../models/user"
 

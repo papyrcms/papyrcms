@@ -1,4 +1,4 @@
-import common from "../../../middleware/common/"
+import common from "../../../utilities/serverContext/"
 import Blog from "../../../models/blog"
 
 

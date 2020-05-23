@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import keys from '../../../config/keys'
-import common from "../../../middleware/common/"
+import common from "../../../utilities/serverContext/"
 import Mailer from '../../../utilities/mailer'
 import User from '../../../models/user'
 

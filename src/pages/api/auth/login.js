@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import common from "../../../middleware/common/"
+import common from "../../../utilities/serverContext/"
 import User from '../../../models/user'
 import keys from '../../../config/keys'
 

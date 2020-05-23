@@ -1,4 +1,4 @@
-import common from '../../../middleware/common/'
+import common from '../../../utilities/serverContext/'
 import Mailer from "../../../utilities/mailer"
 import keys from "../../../config/keys"
 import Message from '../../../models/message'

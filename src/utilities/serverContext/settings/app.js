@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { configureSettings } from '../../utilities/functions'
+import configureSettings from './configureSettings'
 
 
 export default async () => {

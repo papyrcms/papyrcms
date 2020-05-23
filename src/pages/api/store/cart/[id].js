@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import common from "../../../../middleware/common/"
+import common from "../../../../utilities/serverContext/"
 import Product from "../../../../models/product"
 import User from "../../../../models/user"
 

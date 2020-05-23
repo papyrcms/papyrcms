@@ -1,6 +1,6 @@
 import multer from 'multer'
 import cloudinary from 'cloudinary'
-import common from '../../../middleware/common'
+import common from '../../../utilities/serverContext'
 import keys from '../../../config/keys'
 
 
