@@ -50,4 +50,27 @@ const SectionMedia = (props) => {
   )
 }
 
+
+export const options = {
+  Parallax: {
+    file: 'SectionMedia',
+    name: 'Parallax Section',
+    description: 'This section will display a post with the parallax effect on the media.',
+    inputs: ['className', 'tags', 'title'],
+    maxPosts: 1,
+    defaultProps: {
+      fixed: true
+    }
+  },
+  Media: {
+    file: 'SectionMedia',
+    name: 'Media Section',
+    description: 'This section will display a post media normally.',
+    inputs: ['className', 'tags', 'title'],
+    maxPosts: 1,
+    defaultProps: {}
+  }
+}
+
+
 export default SectionMedia

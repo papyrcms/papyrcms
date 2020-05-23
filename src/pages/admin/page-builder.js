@@ -8,84 +8,9 @@ import Input from '../../components/Input'
 import Page from '../[page]'
 
 
-// Static object of sections for the builder
-const sectionOptions = {
-  Standard: {
-    name: 'Standard Section',
-    description: 'This is the simplest section. It will only take one post with the required tags.',
-    inputs: ['className', 'tags'],
-    maxPosts: 1
-  },
-  Strip: {
-    name: 'Strip Section',
-    description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null
-  },
-  LeftStrip: {
-    name: 'Left Strip Section',
-    description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null
-  },
-  RightStrip: {
-    name: 'Right Strip Section',
-    description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null
-  },
-  ThreeCards: {
-    name: 'Three Cards Section',
-    description: 'This section will display each post in a vertical style with three posts per row.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null
-  },
-  FourCards: {
-    name: 'Four Cards Section',
-    description: 'This section will display each post in a vertical style with four posts per row.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null
-  },
-  Slideshow: {
-    name: 'Slideshow Section',
-    description: 'This section will display a slideshow of each post at 5 second intervals.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null
-  },
-  Parallax: {
-    name: 'Parallax Section',
-    description: 'This section will display a post with the parallax effect on the media.',
-    inputs: ['className', 'tags', 'title'],
-    maxPosts: 1,
-  },
-  Media: {
-    name: 'Media Section',
-    description: 'This section will display a post media normally.',
-    inputs: ['className', 'tags', 'title'],
-    maxPosts: 1,
-  },
-  Map: {
-    name: 'Map Section',
-    description: 'This section will display a google map at the location specified by the latitude and longitude posts, along with the content of the main post.',
-    inputs: ['className', 'tags', 'title'],
-    maxPosts: 3
-  },
-  ContactForm: {
-    name: 'Contact Form',
-    description: 'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
-    inputs: ['className'],
-    maxPosts: null
-  },
-  DonateForm: {
-    name: 'Donate Form',
-    description: 'This is a simple donation form where people can donate money to you.',
-    inputs: ['className'],
-    maxPosts: null
-  }
-}
-
-
 const PageBuilder = (props) => {
+
+  const { sectionOptions } = props
 
   const INITIAL_STATE = {
     id: '',
@@ -465,14 +390,17 @@ const PageBuilder = (props) => {
 
 
 PageBuilder.getInitialProps = async ({ query }) => {
+  const rootUrl = keys.rootURL ? keys.rootURL : ''
+
   let page
   if (query.page) {
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
     const res = await axios.get(`${rootUrl}/api/pages/${query.page}`)
     page = res.data
   }
 
-  return { page }
+  const { data: sectionOptions } = await axios.get(`${rootUrl}/api/pages/sectionOptions`)
+
+  return { page, sectionOptions }
 }
 
 

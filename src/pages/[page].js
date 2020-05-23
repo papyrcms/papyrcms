@@ -1,16 +1,6 @@
 import React, { Fragment, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import {
-  SectionStrip,
-  SectionCards,
-  SectionSlideshow,
-  SectionMedia,
-  SectionMaps,
-  SectionStandard,
-  ContactForm,
-  DonateForm
-} from '../components/Sections/'
 import postsContext from '../context/postsContext'
 import PageHead from '../components/PageHead'
 import filterPosts from '../hooks/filterPosts'
@@ -21,7 +11,7 @@ const Page = (props) => {
 
   const settings = []
   const page = props.previewPage ? props.previewPage : props.page
-
+  
   if (!page) return null
 
   for (let i = 0; i < page.sections.length; i++) {
@@ -39,6 +29,7 @@ const Page = (props) => {
   const { posts } = useContext(postsContext)
   const filtered = filterPosts(posts, settings)
 
+  const { sectionOptions } = props
 
   const renderSections = () => {
 
@@ -50,124 +41,22 @@ const Page = (props) => {
       const filteredPosts = filtered[key]
       const emptyMessage = `Create content with the ${_.join(section.tags, ', ')} tags.`
 
-      switch (section.type) {
+      const options = sectionOptions[section.type]
+      const Component = require(`../components/Sections/${options.file}`).default
 
-        case 'Map':
-          return <SectionMaps
-            key={key}
-            posts={filteredPosts}
-            mapLocation="end"
-            emptyTitle={section.title}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'Media':
-          return <SectionMedia
-            key={key}
-            post={filteredPosts[0]}
-            alt={section.title}
-            emptyTitle={section.title}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'Parallax':
-          return <SectionMedia
-            key={key}
-            post={filteredPosts[0]}
-            alt={section.title}
-            emptyTitle={section.title}
-            emptyMessage={emptyMessage}
-            fixed
-          />
-
-        case 'Slideshow':
-          return <SectionSlideshow
-            key={key}
-            posts={filteredPosts}
-            timer={5000}
-            emptyTitle={section.title}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'ThreeCards':
-          return <SectionCards
-            key={key}
-            posts={filteredPosts}
-            title={section.title}
-            contentLength={120}
-            readMore
-            perRow={3}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'FourCards':
-          return <SectionCards
-            key={key}
-            posts={filteredPosts}
-            title={section.title}
-            contentLength={120}
-            readMore
-            perRow={4}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'Strip':
-          return <SectionStrip
-            key={key}
-            readMore
-            contentLength={300}
-            posts={filteredPosts}
-            title={section.title}
-            className={section.className}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'LeftStrip':
-          return <SectionStrip
-            key={key}
-            readMore
-            mediaLeft
-            contentLength={300}
-            posts={filteredPosts}
-            title={section.title}
-            className={section.className}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'RightStrip':
-          return <SectionStrip
-            key={key}
-            readMore
-            mediaRight
-            contentLength={300}
-            posts={filteredPosts}
-            title={section.title}
-            className={section.className}
-            emptyMessage={emptyMessage}
-          />
-
-        case 'ContactForm':
-          return <ContactForm
-            className={section.className}
-            key={key}
-          />
-
-        case 'DonateForm':
-          return <DonateForm
-            className={section.className}
-            key={key}
-          />
-
-        default:
-          return <SectionStandard
-            key={key}
-            post={filteredPosts[0]}
-            path="posts"
-            className={section.className}
-            apiPath="/api/posts"
-            redirectRoute="/posts"
-          />
-      }
+      return (
+        <Component
+          key={key}
+          title={section.title}
+          className={section.className || ''}
+          post={filteredPosts[0]}
+          posts={filteredPosts}
+          emptyTitle={section.title || ''}
+          emptyMessage={emptyMessage || ''}
+          alt={section.title || ''}
+          {...options.defaultProps}
+        />
+      )
     })
   }
 
@@ -211,6 +100,7 @@ const Page = (props) => {
 
 
 Page.getInitialProps = async ({ query }) => {
+
   if (!query.page) {
     query.page = 'home'
   }
@@ -218,8 +108,9 @@ Page.getInitialProps = async ({ query }) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: page } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
+    const { data: sectionOptions } = await axios.get(`${rootUrl}/api/pages/sectionOptions`)
 
-    return { page }
+    return { page, sectionOptions }
   } catch {
     return {}
   }

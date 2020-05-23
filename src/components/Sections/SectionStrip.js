@@ -186,4 +186,44 @@ const SectionStrip = (props) => {
   )
 }
 
+
+export const options = {
+  Strip: {
+    file: 'SectionStrip',
+    name: 'Strip Section',
+    description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null,
+    defaultProps: {
+      readMore: true,
+      contentLength: 300,
+    }
+  },
+  LeftStrip: {
+    file: 'SectionStrip',
+    name: 'Left Strip Section',
+    description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null,
+    defaultProps: {
+      readMore: true,
+      contentLength: 300,
+      mediaLeft: true
+    }
+  },
+  RightStrip: {
+    file: 'SectionStrip',
+    name: 'Right Strip Section',
+    description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null,
+    defaultProps: {
+      readMore: true,
+      contentLength: 300,
+      mediaRight: true
+    }
+  }
+}
+
+
 export default SectionStrip

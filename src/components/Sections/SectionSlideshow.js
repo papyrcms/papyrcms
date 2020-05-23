@@ -85,4 +85,19 @@ const SectionSlideshow = (props) => {
   )
 }
 
+
+export const options = {
+  Slideshow: {
+    file: 'SectionSlideshow',
+    name: 'Slideshow Section',
+    description: 'This section will display a slideshow of each post at 5 second intervals.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null,
+    defaultProps: {
+      timer: 5000
+    }
+  }
+}
+
+
 export default SectionSlideshow

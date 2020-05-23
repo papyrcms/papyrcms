@@ -106,4 +106,16 @@ const ContactForm = (props) => {
 }
 
 
+export const options = {
+  ContactForm: {
+    file: 'ContactForm',
+    name: 'Contact Form',
+    description: 'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
+    inputs: ['className'],
+    maxPosts: null,
+    defaultProps: {}
+  }
+}
+
+
 export default ContactForm

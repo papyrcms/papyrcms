@@ -167,4 +167,32 @@ const SectionCards = (props) => {
 }
 
 
+export const options = {
+  ThreeCards: {
+    file: 'SectionCards',
+    name: 'Three Cards Section',
+    description: 'This section will display each post in a vertical style with three posts per row.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null,
+    defaultProps: {
+      contentLength: 120,
+      readMore: true,
+      perRow: 3
+    }
+  },
+  FourCards: {
+    file: 'SectionCards',
+    name: 'Four Cards Section',
+    description: 'This section will display each post in a vertical style with four posts per row.',
+    inputs: ['className', 'maxPosts', 'tags', 'title'],
+    maxPosts: null,
+    defaultProps: {
+      contentLength: 120,
+      readMore: true,
+      perRow: 4
+    }
+  }
+}
+
+
 export default SectionCards
