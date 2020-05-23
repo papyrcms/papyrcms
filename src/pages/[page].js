@@ -1,7 +1,9 @@
 import React, { Fragment, useContext } from 'react'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import _ from 'lodash'
 import postsContext from '../context/postsContext'
+import pagesContext from '../context/pagesContext'
 import sectionOptionsContext from '../context/sectionOptionsContext'
 import PageHead from '../components/PageHead'
 import filterPosts from '../hooks/filterPosts'
@@ -10,11 +12,27 @@ import keys from '../config/keys'
 
 const Page = (props) => {
 
-  const settings = []
-  const page = props.previewPage ? props.previewPage : props.page
+  // Determine if this is a page or the preview on the builder
+  let page = props.previewPage ? props.previewPage : props.page
   
-  if (!page) return null
+  // On a client load, we are not fetching the page from the server,
+  // So we'll get it from the pages in our pages context
+  const { query } = useRouter()
+  const { pages } = useContext(pagesContext)
+  if (!page) {
+    _.forEach(pages, foundPage => {
+      if (foundPage.route === 'home') foundPage.route === ''
+      if (foundPage.route === query.page) {
+        page = foundPage
+      }
+    })
 
+    // If the page was still not found, don't return anything
+    if (!page) return null
+  }
+
+  // Get our filter settings from the page sections
+  const settings = []
   for (let i = 0; i < page.sections.length; i++) {
     const section = JSON.parse(page.sections[i])
 
@@ -26,25 +44,30 @@ const Page = (props) => {
     })
   }
 
-
+  // Get posts and filter those by the settings
   const { posts } = useContext(postsContext)
   const filtered = filterPosts(posts, settings)
 
+  // Get our section options
   const { sectionOptions } = useContext(sectionOptionsContext)
 
   const renderSections = () => {
 
     return _.map(page.sections, (section, i) => {
 
+      // Parse the section from the page
       section = JSON.parse(section)
 
+      // Get properties by the section info
       const key = `${section.type}-${i}`
       const filteredPosts = filtered[key]
       const emptyMessage = `Create content with the ${_.join(section.tags, ', ')} tags.`
 
+      // Get the section component
       const options = sectionOptions[section.type]
       const Component = require(`../components/Sections/${options.file}`).default
 
+      // Return the section component
       return (
         <Component
           key={key}
@@ -100,20 +123,24 @@ const Page = (props) => {
 }
 
 
-Page.getInitialProps = async ({ query }) => {
+Page.getInitialProps = async ({ query, req }) => {
 
   if (!query.page) {
     query.page = 'home'
   }
 
-  try {
-    const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const { data: page } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
-
-    return { page }
-  } catch {
-    return {}
+  let page
+  if (!!req) {
+    try {
+      const rootUrl = keys.rootURL ? keys.rootURL : ''
+      const { data } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
+      page = data
+    } catch {
+      return {}
+    }
   }
+
+  return { page }
 }
 
 
