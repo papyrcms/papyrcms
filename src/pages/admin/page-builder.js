@@ -3,6 +3,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import Router from 'next/router'
 import userContext from '../../context/userContext'
+import sectionOptionsContext from '../../context/sectionOptionsContext'
 import keys from '../../config/keys'
 import Input from '../../components/Input'
 import Page from '../[page]'
@@ -10,7 +11,7 @@ import Page from '../[page]'
 
 const PageBuilder = (props) => {
 
-  const { sectionOptions } = props
+  const { sectionOptions } = useContext(sectionOptionsContext)
 
   const INITIAL_STATE = {
     id: '',
@@ -390,17 +391,15 @@ const PageBuilder = (props) => {
 
 
 PageBuilder.getInitialProps = async ({ query }) => {
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-
+  
   let page
   if (query.page) {
+    const rootUrl = keys.rootURL ? keys.rootURL : ''
     const res = await axios.get(`${rootUrl}/api/pages/${query.page}`)
     page = res.data
   }
 
-  const { data: sectionOptions } = await axios.get(`${rootUrl}/api/pages/sectionOptions`)
-
-  return { page, sectionOptions }
+  return { page }
 }
 
 

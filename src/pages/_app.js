@@ -8,6 +8,7 @@ import { initGA, logPageView } from '../utilities/analytics'
 import postsContext from '../context/postsContext'
 import keysContext from '../context/keysContext'
 import settingsContext from '../context/settingsContext'
+import sectionOptionsContext from '../context/sectionOptionsContext'
 import pagesContext from '../context/postsContext'
 import '../sass/main.scss'
 
@@ -15,7 +16,15 @@ import '../sass/main.scss'
 const App = (props) => {
 
   const { pathname } = useRouter()
-  let { Component, pages, posts, keys, settings, } = props
+  const {
+    Component,
+    pages,
+    posts,
+    keys,
+    settings,
+    sectionOptions,
+    ...pageProps
+  } = props
   const [gaInitialized, setGaInitialized] = useState(false)
 
   useEffect(() => {
@@ -32,6 +41,7 @@ const App = (props) => {
   const foundPages = useContext(pagesContext)
   const foundKeys = useContext(keysContext)
   const foundSettings = useContext(settingsContext)
+  const foundSectionOptions = useContext(sectionOptionsContext)
 
   return (
     <GlobalState
@@ -39,9 +49,10 @@ const App = (props) => {
       posts={posts ? posts : foundPosts.posts}
       keys={keys ? keys : foundKeys.keys}
       settings={settings ? settings : foundSettings.settings}
+      sectionOptions={sectionOptions ? sectionOptions : foundSectionOptions.sectionOptions}
     >
       <Layout>
-        <Component {...props} />
+        <Component {...pageProps} />
       </Layout>
     </GlobalState>
   )
@@ -65,6 +76,9 @@ App.getInitialProps = async ({ Component, ctx }) => {
   
     const { data: settings } = await axios.get(`${rootUrl}/api/utility/settings`)
     pageProps.settings = settings
+
+    const { data: sectionOptions } = await axios.get(`${rootUrl}/api/pages/sectionOptions`)
+    pageProps.sectionOptions = sectionOptions
   
     const { data: posts } = await axios.get(`${rootUrl}/api/posts/published`)
     pageProps.posts = posts

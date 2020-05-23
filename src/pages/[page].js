@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import postsContext from '../context/postsContext'
+import sectionOptionsContext from '../context/sectionOptionsContext'
 import PageHead from '../components/PageHead'
 import filterPosts from '../hooks/filterPosts'
 import keys from '../config/keys'
@@ -29,7 +30,7 @@ const Page = (props) => {
   const { posts } = useContext(postsContext)
   const filtered = filterPosts(posts, settings)
 
-  const { sectionOptions } = props
+  const { sectionOptions } = useContext(sectionOptionsContext)
 
   const renderSections = () => {
 
@@ -108,9 +109,8 @@ Page.getInitialProps = async ({ query }) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: page } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
-    const { data: sectionOptions } = await axios.get(`${rootUrl}/api/pages/sectionOptions`)
 
-    return { page, sectionOptions }
+    return { page }
   } catch {
     return {}
   }
