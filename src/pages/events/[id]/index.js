@@ -4,7 +4,7 @@ import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
 import keys from '@/keys'
-import Map from '../../../components/Map'
+import Map from '@/components/Map'
 import SectionStandard from '@/Sections/SectionStandard'
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import Router, { useRouter } from 'next/router'
 import jwt from 'jsonwebtoken'
-import Input from '../components/Input'
+import Input from '@/components/Input'
 
 
 const ForgotPasswordPage = () => {

@@ -3,8 +3,8 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import userContext from '@/context/userContext'
 import keys from '@/keys'
-import PostsForm from '../../../components/PostsForm'
-import Input from '../../../components/Input'
+import PostsForm from '@/components/PostsForm'
+import Input from '@/components/Input'
 
 
 const ProductFields = ({ values, errors, validateField, handleChange }) => {

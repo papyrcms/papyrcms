@@ -5,7 +5,7 @@ import Router from 'next/router'
 import userContext from '@/context/userContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
 import keys from '@/keys'
-import Input from '../../components/Input'
+import Input from '@/components/Input'
 import Page from '../[page]'
 
 

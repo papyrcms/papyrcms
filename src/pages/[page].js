@@ -5,7 +5,7 @@ import _ from 'lodash'
 import postsContext from '@/context/postsContext'
 import pagesContext from '@/context/pagesContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
-import PageHead from '../components/PageHead'
+import PageHead from '@/components/PageHead'
 import filterPosts from '@/hooks/filterPosts'
 import keys from '@/keys'
 

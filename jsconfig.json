@@ -8,6 +8,7 @@
       "@/context/*": ["src/context/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/utilities/*": ["src/utilities/*"],
+      "@/components/*": ["src/components/*"],
       "@/Sections/*": ["src/components/Sections/*"]
     }
   }

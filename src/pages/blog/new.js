@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import userContext from '@/context/userContext'
-import PostsForm from '../../components/PostsForm/'
+import PostsForm from '@/components/PostsForm/'
 
 export default () => {
 

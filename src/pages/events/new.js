@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import userContext from '@/context/userContext'
-import PostsForm from '../../components/PostsForm/'
-import Input from '../../components/Input'
+import PostsForm from '@/components/PostsForm/'
+import Input from '@/components/Input'
 
 
 const dateField = ({ values, errors, handleChange, validateField }) => (

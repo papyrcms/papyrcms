@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
-import PostsForm from '../../../components/PostsForm'
+import PostsForm from '@/components/PostsForm'
 import keys from '@/keys'
-import Input from '../../../components/Input'
+import Input from '@/components/Input'
 
 
 const dateField = ({ values, errors, handleChange, validateField }) => (
