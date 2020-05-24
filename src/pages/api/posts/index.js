@@ -42,7 +42,7 @@ const createPost = async (body, enableEmailingToUsers) => {
 
 export default async (req, res) => {
 
-  const { user } = await serverContext(req, res)
+  const { user, settings } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }
@@ -54,7 +54,7 @@ export default async (req, res) => {
 
 
   if (req.method === 'POST') {
-    const post = await createPost(req.body, res.locals.settings.enableEmailingToUsers)
+    const post = await createPost(req.body, settings.enableEmailingToUsers)
     return res.status(200).send(post)
   }
 

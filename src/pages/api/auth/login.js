@@ -32,7 +32,7 @@ export default async (req, res) => {
     }
 
     if (!result) {
-      return res.status(400).send({ message: 'Email or password is incorrect.' })
+      return res.status(401).send({ message: 'Email or password is incorrect.' })
     }
 
     // generate a signed json web token with the contents of user object and return it in the response

@@ -10,6 +10,7 @@ const getMessages = async () => {
 
 
 const createMessage = async (body, enableEmailingToAdmin) => {
+
   const messageBody = {
     name: body.name,
     email: body.email,
@@ -36,7 +37,7 @@ const createMessage = async (body, enableEmailingToAdmin) => {
 
 export default async (req, res) => {
 
-  const { user } = await serverContext(req, res)
+  const { user, settings } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     if (!user || !user.isAdmin) {
@@ -48,7 +49,7 @@ export default async (req, res) => {
 
 
   if (req.method === 'POST') {
-    const message = await createMessage(req.body, res.locals.settings.enableEmailingToAdmin)
+    const message = await createMessage(req.body, settings.enableEmailingToAdmin)
     return res.status(200).send(message)
   }
 

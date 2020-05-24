@@ -46,12 +46,12 @@ describe('/api/posts', () => {
       let allArePublished = true
       _.forEach(posts, found => {
         if (!found.published) allArePublished = false
-      }).timeout(10000)
+      })
 
       expect(status).to.equal(200) &&
       expect(posts).to.be.an('array') &&
       expect(allArePublished).to.equal(true)
-    })
+    }).timeout(10000)
   })
 
   describe('/[id]', () => {
