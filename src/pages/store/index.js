@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
 import axios from 'axios'
@@ -27,10 +27,10 @@ const StorePage = (props) => {
 
   const renderPriceAndQuantity = (product) => {
     return (
-      <Fragment>
+      <>
         <p>${product.price.toFixed(2)}</p>
         <p>{product.quantity > 0 ? `${product.quantity} in stock` : 'Sold out'}</p>
-      </Fragment>
+      </>
     )
   }
 
@@ -54,12 +54,12 @@ const StorePage = (props) => {
   const renderCheckout = (product) => {
     if (product.quantity > 0) {
       return (
-        <Fragment>
+        <>
           {renderAddToCart(product)}
           <Link href={`/store/checkout?id=${product._id}`}>
             <a>Buy it now</a>
           </Link>
-        </Fragment>
+        </>
       )
     }
   }

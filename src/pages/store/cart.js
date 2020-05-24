@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, {  useContext } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
 import storeContext from '@/context/storeContext'
@@ -29,12 +29,12 @@ const Cart = () => {
     _.forEach(cart, item => totalCost += item.price)
 
     return (
-      <Fragment>
+      <>
         <h3 className="heading-tertiary">Total Cost: ${totalCost.toFixed(2)}</h3>
         <Link href="/store/checkout">
           <button className="button button-primary">Checkout</button>
         </Link>
-      </Fragment>
+      </>
     )
   }
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import _ from 'lodash'
@@ -113,12 +113,12 @@ const Page = (props) => {
   }
 
   return (
-    <Fragment>
+    <>
       {renderPageHead()}
       <div className={page.className}>
         {renderSections()}
       </div>
-    </Fragment>
+    </>
   )
 }
 

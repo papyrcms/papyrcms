@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
@@ -62,7 +62,7 @@ const SectionStrip = (props) => {
   const renderMedia = (post) => {
     if (post.mainMedia) {
       return (
-        <Fragment>
+        <>
           {beforePostMedia(post)}
           <Media
             className="section-standard__image"
@@ -71,7 +71,7 @@ const SectionStrip = (props) => {
             clickable={clickableMedia}
           />
           {afterPostMedia(post)}
-        </Fragment>
+        </>
       )
     }
   }
@@ -114,16 +114,16 @@ const SectionStrip = (props) => {
 
     if (!readMore) {
       return (
-        <Fragment>
+        <>
           {beforePostContent(post)}
           {renderHTML(post.content)}
           {afterPostContent(post)}
-        </Fragment>
+        </>
       )
     }
 
     return (
-      <Fragment>
+      <>
         {beforePostContent(post)}
         {renderHTML(postContent)}
         {afterPostContent(post)}
@@ -133,7 +133,7 @@ const SectionStrip = (props) => {
           <a>Read More</a>
         </Link>
         {afterPostLink(post)}
-      </Fragment>
+      </>
     )
   }
 

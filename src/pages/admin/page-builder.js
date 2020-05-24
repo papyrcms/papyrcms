@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, {  useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import Router from 'next/router'
@@ -290,7 +290,7 @@ const PageBuilder = (props) => {
   if (!currentUser || !currentUser.isAdmin) return null
 
   return (
-    <Fragment>
+    <>
       <div className="page-builder">
         <h2 className="heading-secondary">Page Builder</h2>
 
@@ -385,7 +385,7 @@ const PageBuilder = (props) => {
       <div className="page-builder__preview">
         <Page previewPage={page} />
       </div>
-    </Fragment>
+    </>
   )
 }
 

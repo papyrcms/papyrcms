@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
 import settingsContext from '@/context/settingsContext'
 import storeContext from '@/context/storeContext'
@@ -81,10 +81,10 @@ const Header = (props) => {
     // }
 
     return (
-      <Fragment>
+      <>
         <span className="heading-primary--main">{mainTitle}</span>
         <span className="heading-primary--sub">{subTitle}</span>
-      </Fragment>
+      </>
     )
   }
 

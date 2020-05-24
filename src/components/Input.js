@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 
 /**
@@ -59,7 +59,7 @@ const Input = (props) => {
   const renderInput = () => {
     if (type === 'textarea') {
       return (
-        <Fragment>
+        <>
           {renderLabel()}
           <textarea
             placeholder={placeholder}
@@ -72,12 +72,12 @@ const Input = (props) => {
             onBlur={event => onBlur(event)}
             onFocus={event => onFocus(event)}
           />
-        </Fragment>
+        </>
       )
 
     } else if (type === 'checkbox') {
       return (
-        <Fragment>
+        <>
           <input
             type={type}
             placeholder={placeholder}
@@ -91,12 +91,12 @@ const Input = (props) => {
             onFocus={event => onFocus(event)}
           />
           {renderLabel()}
-        </Fragment>
+        </>
       )
     }
 
     return (
-      <Fragment>
+      <>
         {renderLabel()}
         <input
           type={type}
@@ -110,7 +110,7 @@ const Input = (props) => {
           onBlur={event => onBlur(event)}
           onFocus={event => onFocus(event)}
       />
-      </Fragment>
+      </>
     )
   }
 

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { useContext } from 'react'
 import axios from 'axios'
 import userContext from '@/context/userContext'
 import useForm from '@/hooks/useForm'
@@ -121,7 +121,7 @@ const UserInfoForm = (props) => {
     }
 
     return (
-      <Fragment>
+      <>
         <div className="u-form-row">
           <Input
             name={`${shipping ? 'shippingF' : 'f'}irstName`}
@@ -192,7 +192,7 @@ const UserInfoForm = (props) => {
             required
           />
         </div>
-      </Fragment>
+      </>
     )
   }
 

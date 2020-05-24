@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
 import settingsContext from '@/context/settingsContext'
 
@@ -10,7 +10,7 @@ const AdminLinks = () => {
   const renderStoreMenuItems = () => {
     if (settings.enableStore) {
       return (
-        <Fragment>
+        <>
           <Link href="/store/new">
             <a className="admin-links__link">Add Product</a>
           </Link>
@@ -22,7 +22,7 @@ const AdminLinks = () => {
           <Link href="/store/orders">
             <a className="admin-links__link">Orders</a>
           </Link>
-        </Fragment>
+        </>
       )
     }
   }
@@ -31,7 +31,7 @@ const AdminLinks = () => {
   const renderBlogMenuItems = () => {
     if (settings.enableBlog) {
       return (
-        <Fragment>
+        <>
           <Link href="/blog/new">
             <a className="admin-links__link">Add Blog</a>
           </Link>
@@ -39,7 +39,7 @@ const AdminLinks = () => {
           <Link href="/blog/all">
             <a className="admin-links__link">My Blogs</a>
           </Link>
-        </Fragment>
+        </>
       )
     }
   }
@@ -48,7 +48,7 @@ const AdminLinks = () => {
   const renderEventMenuItems = () => {
     if (settings.enableEvents) {
       return (
-        <Fragment>
+        <>
           <Link href="/events/new">
             <a className="admin-links__link">Add Event</a>
           </Link>
@@ -56,14 +56,14 @@ const AdminLinks = () => {
           <Link href="/events/all">
             <a className="admin-links__link">My Events</a>
           </Link>
-        </Fragment>
+        </>
       )
     }
   }
 
 
   return (
-    <Fragment>
+    <>
       <Link href="/admin/page-builder">
         <a className="admin-links__link">Page Builder</a>
       </Link>
@@ -83,7 +83,7 @@ const AdminLinks = () => {
       {renderBlogMenuItems()}
       {renderEventMenuItems()}
       {renderStoreMenuItems()}
-    </Fragment>
+    </>
   )
 }
 

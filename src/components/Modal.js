@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState } from 'react'
 
 
 /**
@@ -50,7 +50,7 @@ const Modal = (props) => {
 
 
   const renderImageModal = () => (
-    <Fragment>
+    <>
       <img
         className={`${className || ''} modal__image--clickable`}
         src={src}
@@ -70,7 +70,7 @@ const Modal = (props) => {
           />
         </div>
       </div>
-    </Fragment>
+    </>
   )
 
 
