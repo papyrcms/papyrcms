@@ -1,4 +1,4 @@
-import keys from '@/keys'
+import keys from '../config/keys'
 import Stripe from 'stripe'
 
 

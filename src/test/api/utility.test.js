@@ -1,6 +1,6 @@
 import { expect } from "chai"
 import axios from 'axios'
-import keys from '@/keys'
+import keys from '../../config/keys'
 const { adminEmail, test, rootURL } = keys
 
 
