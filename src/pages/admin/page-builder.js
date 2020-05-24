@@ -151,6 +151,25 @@ const PageBuilder = (props) => {
   }
 
 
+  const moveSection = (oldIndex, newIndex) => {
+
+    const { sections } = state
+
+    if (
+      (oldIndex < newIndex && newIndex === sections.length) ||
+      (oldIndex > newIndex && newIndex < 0)
+     ) {
+      return
+    }
+
+    let newSections = [...sections]
+    newSections.splice(newIndex, 0, newSections.splice(oldIndex, 1)[0])
+    const newPageSections = _.map(newSections, section => JSON.stringify(section))
+
+    setState({ ...state, sections: [...newSections], page: { ...state.page, sections: newPageSections } })
+  }
+
+
   const renderSections = () => {
 
     const { sections } = state
@@ -164,6 +183,7 @@ const PageBuilder = (props) => {
 
         return (
           <div key={`${type}-${i}`}>
+            <hr />
             <div className={`${type} page-builder__section`}>
               <h3 className={`heading-tertiary ${type}__title`}>{name}</h3>
               <p className={`${type}__description page-builder__section--description`}>{description}</p>
@@ -175,12 +195,19 @@ const PageBuilder = (props) => {
                 {renderMaxPostsInput(i, section)}
 
               </div>
-              <button
-                className="button button-delete"
-                onClick={() => removeSection(i)}
-              >
-                Remove Section
-              </button>
+
+              <div className={`${type}__buttons page-builder__section--buttons`}>
+                <div className={`${type}__move page-builder__section--move`}>
+                  <button onClick={() => moveSection(i, i-1)} title="Move up" className="button button-primary">&uarr;</button>
+                  <button onClick={() => moveSection(i, i+1)} title="Move down" className="button button-primary">&darr;</button>
+                </div>
+                <button
+                  className="button button-delete"
+                  onClick={() => removeSection(i)}
+                >
+                  Remove Section
+                </button>
+              </div>
             </div>
           </div>
         )
@@ -333,6 +360,8 @@ const PageBuilder = (props) => {
         </div>
 
         {renderSections()}
+
+        <hr /><br />
 
         <div className="page-builder__section-select">
 

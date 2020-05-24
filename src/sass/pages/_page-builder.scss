@@ -97,6 +97,17 @@
         grid-template-columns: 1fr;
       }
     }
+
+    &--buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &--move > * {
+      font-size: 3rem;
+      padding: .1rem 1.5rem;
+      margin-right: 1rem;
+    }
   }
 
   &__validation {
