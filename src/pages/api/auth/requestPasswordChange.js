@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import serverContext from "../../../utilities/serverContext/"
 import keys from '../../../config/keys'
 import User from "../../../models/user"
