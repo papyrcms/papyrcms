@@ -1,5 +1,5 @@
-import serverContext from '../../../utilities/serverContext/'
-import User from '../../../models/user'
+import serverContext from '@/serverContext'
+import User from '@/models/user'
 
 
 const updateCurrentUser = async (body, user) => {

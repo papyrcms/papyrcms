@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import userContext from '../../context/userContext'
+import userContext from '@/context/userContext'
 import Input from '../Input'
-import useForm from '../../hooks/useForm'
+import useForm from '@/hooks/useForm'
 
 
 /**

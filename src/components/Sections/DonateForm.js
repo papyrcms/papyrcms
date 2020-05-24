@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
-import userContext from '../../context/userContext'
+import userContext from '@/context/userContext'
 import CreditCardForm from '../CreditCardForm'
 import Input from '../Input'
 

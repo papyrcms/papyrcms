@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import userContext from '../../context/userContext'
+import userContext from '@/context/userContext'
 import PostsForm from '../../components/PostsForm'
 import Input from '../../components/Input'
 

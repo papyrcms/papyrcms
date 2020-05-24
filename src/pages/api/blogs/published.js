@@ -1,5 +1,5 @@
-import serverContext from '../../../utilities/serverContext/'
-import Blog from '../../../models/blog'
+import serverContext from '@/serverContext'
+import Blog from '@/models/blog'
 
 
 export default async (req, res) => {

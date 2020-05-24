@@ -1,5 +1,5 @@
-import serverContext from '../../../utilities/serverContext/'
-import Post from '../../../models/post'
+import serverContext from '@/serverContext'
+import Post from '@/models/post'
 
 
 export default async (req, res) => {

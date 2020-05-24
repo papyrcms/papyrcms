@@ -1,5 +1,5 @@
-import serverContext from "../../../../utilities/serverContext/"
-import Order from "../../../../models/order"
+import serverContext from "@/serverContext"
+import Order from "@/models/order"
 
 
 const updateOrder = async (id, body) => {

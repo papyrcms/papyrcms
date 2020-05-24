@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import keys from '../../../config/keys'
-import serverContext from "../../../utilities/serverContext/"
-import Mailer from '../../../utilities/mailer'
-import User from '../../../models/user'
+import keys from '@/keys'
+import serverContext from "@/serverContext"
+import Mailer from '@/utilities/mailer'
+import User from '@/models/user'
 
 
 const verifyEmailSyntax = (email) => {

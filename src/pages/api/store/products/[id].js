@@ -1,5 +1,5 @@
-import serverContext from '../../../../utilities/serverContext/'
-import Product from '../../../../models/product'
+import serverContext from '@/serverContext'
+import Product from '@/models/product'
 
 
 const getProduct = async (id) => {

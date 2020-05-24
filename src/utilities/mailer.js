@@ -2,9 +2,9 @@ import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
 import handlebars from 'handlebars'
 import fs from 'fs'
-import keys from '../config/keys'
-import User from '../models/user'
-import PostModel from '../models/post'
+import keys from '@/keys'
+import User from '@/models/user'
+import PostModel from '@/models/post'
 const OAuth2 = google.auth.OAuth2
 
 // https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1

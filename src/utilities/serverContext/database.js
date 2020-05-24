@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import keys from '../../config/keys'
+import keys from '@/keys'
 
 export default async () => {
   const mongooseConfig = {

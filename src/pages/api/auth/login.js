@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import serverContext from "../../../utilities/serverContext/"
-import User from '../../../models/user'
-import keys from '../../../config/keys'
+import serverContext from "@/serverContext"
+import User from '@/models/user'
+import keys from '@/keys'
 
 
 export default async (req, res) => {

@@ -3,8 +3,8 @@ import Link from 'next/link'
 import _ from 'lodash'
 import axios from 'axios'
 import renderHTML from 'react-render-html'
-import userContext from '../../../context/userContext'
-import settingsContext from '../../../context/settingsContext'
+import userContext from '@/context/userContext'
+import settingsContext from '@/context/settingsContext'
 import CommentForm from './CommentForm'
 
 

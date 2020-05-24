@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import userContext from '../../../context/userContext'
-import keys from '../../../config/keys'
+import userContext from '@/context/userContext'
+import keys from '@/keys'
 import PostsForm from '../../../components/PostsForm'
 import Input from '../../../components/Input'
 

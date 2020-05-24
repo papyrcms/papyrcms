@@ -2,8 +2,8 @@ import React, { useContext } from 'react'
 import _ from 'lodash'
 import Router from 'next/router'
 import Form from './Form'
-import postsContext from '../../context/postsContext'
-import useForm from '../../hooks/useForm'
+import postsContext from '@/context/postsContext'
+import useForm from '@/hooks/useForm'
 
 
 /**

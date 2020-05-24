@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
-import userContext from '../../../context/userContext'
+import userContext from '@/context/userContext'
 import PostsForm from '../../../components/PostsForm'
-import keys from '../../../config/keys'
+import keys from '@/keys'
 import Input from '../../../components/Input'
 
 

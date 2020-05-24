@@ -1,7 +1,7 @@
 import multer from 'multer'
 import cloudinary from 'cloudinary'
-import serverContext from '../../../utilities/serverContext'
-import keys from '../../../config/keys'
+import serverContext from '@/serverContext'
+import keys from '@/keys'
 
 
 const storage = multer.diskStorage({

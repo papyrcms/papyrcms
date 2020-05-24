@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
-import serverContext from "../../../utilities/serverContext/"
-import Mailer from '../../../utilities/mailer'
-import keys from '../../../config/keys'
-import User from "../../../models/user"
+import serverContext from "@/serverContext"
+import Mailer from '@/utilities/mailer'
+import keys from '@/keys'
+import User from "@/models/user"
 
 
 const verifyEmailSyntax = (email) => {

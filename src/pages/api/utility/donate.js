@@ -1,5 +1,5 @@
-import serverContext from '../../../utilities/serverContext/'
-import Payments from '../../../utilities/payments'
+import serverContext from '@/serverContext'
+import Payments from '@/utilities/payments'
 
 
 export default async (req, res) => {

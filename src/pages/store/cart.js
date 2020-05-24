@@ -1,8 +1,8 @@
 import React, { Fragment, useContext } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
-import storeContext from '../../context/storeContext'
-import SectionStrip from '../../components/Sections/SectionStrip'
+import storeContext from '@/context/storeContext'
+import SectionStrip from '@/Sections/SectionStrip'
 
 
 

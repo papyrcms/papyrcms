@@ -1,7 +1,7 @@
 import _ from 'lodash'
-import serverContext from "../../../../utilities/serverContext/"
-import Product from "../../../../models/product"
-import User from "../../../../models/user"
+import serverContext from "@/serverContext"
+import Product from "@/models/product"
+import User from "@/models/user"
 
 
 const addToCart = async (productId, user) => {

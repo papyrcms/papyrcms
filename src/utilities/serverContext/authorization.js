@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken'
-import User from '../../models/user'
-import keys from '../../config/keys'
+import User from '@/models/user'
+import keys from '@/keys'
 
 // to initialize the product model
-require('../../models/product')
+require('@/models/product')
 
 
 export default async (req) => {

@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import Payments from '../../../src/utilities/payments'
-import keys from '../../../src/config/keys'
+import Payments from '@/utilities/payments'
+import keys from '@/keys'
 const { adminEmail } = keys
 
 describe('payments', () => {

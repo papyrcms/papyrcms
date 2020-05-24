@@ -1,7 +1,7 @@
-import serverContext from '../../../utilities/serverContext/'
-import Mailer from "../../../utilities/mailer"
-import keys from "../../../config/keys"
-import Message from '../../../models/message'
+import serverContext from '@/serverContext'
+import Mailer from "@/utilities/mailer"
+import keys from "@/keys"
+import Message from '@/models/message'
 
 
 const getMessages = async () => {

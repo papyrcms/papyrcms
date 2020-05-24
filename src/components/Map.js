@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import GoogleMapReact from 'google-map-react'
-import keysContext from '../context/keysContext'
+import keysContext from '@/context/keysContext'
 
 
 const Position = () => <div className="map__position" />

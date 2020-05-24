@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
-import userContext from '../context/userContext'
+import userContext from '@/context/userContext'
 import Input from '../components/Input'
-import useForm from '../hooks/useForm'
+import useForm from '@/hooks/useForm'
 import UserInfoForm from '../components/UserInfoForm'
 
 

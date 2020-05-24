@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import userContext from '../../context/userContext'
+import userContext from '@/context/userContext'
 import AdminDashboard from '../../components/AdminDashboard'
 
 

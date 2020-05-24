@@ -1,10 +1,10 @@
-import serverContext from '../../../utilities/serverContext/'
-import Mailer from '../../../utilities/mailer'
-import Payments from '../../../utilities/payments'
-import keys from '../../../config/keys'
-import Order from "../../../models/order"
-import Product from "../../../models/product"
-import User from "../../../models/user"
+import serverContext from '@/serverContext'
+import Mailer from '@/utilities/mailer'
+import Payments from '@/utilities/payments'
+import keys from '@/keys'
+import Order from "@/models/order"
+import Product from "@/models/product"
+import User from "@/models/user"
 
 
 export default async (req, res) => {

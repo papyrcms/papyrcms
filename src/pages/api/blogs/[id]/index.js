@@ -1,7 +1,7 @@
 import _ from 'lodash'
-import serverContext from "../../../../utilities/serverContext/"
-import Blog from "../../../../models/blog"
-import Comment from '../../../../models/comment'
+import serverContext from "@/serverContext"
+import Blog from "@/models/blog"
+import Comment from '@/models/comment'
 
 
 const getBlog = async (id) => {

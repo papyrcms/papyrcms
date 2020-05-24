@@ -7,7 +7,7 @@ import {
   CardNumberElement,
   injectStripe
 } from 'react-stripe-elements'
-import keysContext from '../context/keysContext'
+import keysContext from '@/context/keysContext'
 
 
 const CreditCardForm = injectStripe((props) => {

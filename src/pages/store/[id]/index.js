@@ -3,10 +3,10 @@ import Link from 'next/link'
 import axios from 'axios'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import userContext from '../../../context/userContext'
-import storeContext from '../../../context/storeContext'
-import keys from '../../../config/keys'
-import SectionStandard from '../../../components/Sections/SectionStandard'
+import userContext from '@/context/userContext'
+import storeContext from '@/context/storeContext'
+import keys from '@/keys'
+import SectionStandard from '@/Sections/SectionStandard'
 
 
 const StoreShow = (props) => {

@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
-import userContext from '../../../context/userContext'
-import keys from '../../../config/keys'
+import userContext from '@/context/userContext'
+import keys from '@/keys'
 import Map from '../../../components/Map'
-import SectionStandard from '../../../components/Sections/SectionStandard'
+import SectionStandard from '@/Sections/SectionStandard'
 
 
 const EventsShow = (props) => {

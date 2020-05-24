@@ -4,12 +4,12 @@ import _ from 'lodash'
 import Link from 'next/link'
 import Router from 'next/router'
 import renderHTML from 'react-render-html'
-import userContext from '../../../context/userContext'
-import postsContext from '../../../context/postsContext'
+import userContext from '@/context/userContext'
+import postsContext from '@/context/postsContext'
 import Comment from './Comment'
 import Media from '../../Media'
 import PageHead from '../../PageHead'
-import filterPosts from '../../../hooks/filterPosts'
+import filterPosts from '@/hooks/filterPosts'
 
 
 /**

@@ -1,4 +1,4 @@
-import keys from '../../../config/keys'
+import keys from '@/keys'
 
 
 export default (req, res) => {

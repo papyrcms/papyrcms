@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import serverContext from "../../../utilities/serverContext/"
-import Post from "../../../models/post"
-import Comment from "../../../models/comment"
-import Mailer from "../../../utilities/mailer"
+import serverContext from "@/serverContext"
+import Post from "@/models/post"
+import Comment from "@/models/comment"
+import Mailer from "@/utilities/mailer"
 
 
 const getPost = async (id) => {

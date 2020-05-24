@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import _ from 'lodash'
 import Link from 'next/link'
-import settingsContext from '../../context/settingsContext'
-import pagesContext from '../../context/pagesContext'
+import settingsContext from '@/context/settingsContext'
+import pagesContext from '@/context/pagesContext'
 
 
 const onClick = () => {

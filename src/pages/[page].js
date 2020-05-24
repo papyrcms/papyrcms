@@ -2,12 +2,12 @@ import React, { Fragment, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import _ from 'lodash'
-import postsContext from '../context/postsContext'
-import pagesContext from '../context/pagesContext'
-import sectionOptionsContext from '../context/sectionOptionsContext'
+import postsContext from '@/context/postsContext'
+import pagesContext from '@/context/pagesContext'
+import sectionOptionsContext from '@/context/sectionOptionsContext'
 import PageHead from '../components/PageHead'
-import filterPosts from '../hooks/filterPosts'
-import keys from '../config/keys'
+import filterPosts from '@/hooks/filterPosts'
+import keys from '@/keys'
 
 
 const Page = (props) => {

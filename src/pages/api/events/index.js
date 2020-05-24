@@ -1,6 +1,6 @@
 import moment from 'moment'
-import serverContext from "../../../utilities/serverContext/"
-import Event from "../../../models/event"
+import serverContext from "@/serverContext"
+import Event from "@/models/event"
 
 
 const getEvents = async () => {

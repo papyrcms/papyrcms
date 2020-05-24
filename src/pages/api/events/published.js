@@ -1,5 +1,5 @@
-import serverContext from '../../../utilities/serverContext/'
-import Event from '../../../models/event'
+import serverContext from '@/serverContext'
+import Event from '@/models/event'
 
 
 export default async (req, res) => {

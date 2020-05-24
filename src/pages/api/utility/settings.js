@@ -1,5 +1,5 @@
-import serverContext from '../../../utilities/serverContext/'
-import Settings from '../../../models/settings'
+import serverContext from '@/serverContext'
+import Settings from '@/models/settings'
 
 
 export default async (req, res) => {

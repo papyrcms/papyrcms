@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import axios from 'axios'
-import userContext from '../context/userContext'
-import useForm from '../hooks/useForm'
+import userContext from '@/context/userContext'
+import useForm from '@/hooks/useForm'
 import Input from './Input'
 
 

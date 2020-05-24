@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import Router from 'next/router'
-import settingsContext from '../context/settingsContext'
-import userContext from '../context/userContext'
-import useForm from '../hooks/useForm'
+import settingsContext from '@/context/settingsContext'
+import userContext from '@/context/userContext'
+import useForm from '@/hooks/useForm'
 import Input from './Input'
 
 

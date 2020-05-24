@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import settingsContext from '../../context/settingsContext'
+import settingsContext from '@/context/settingsContext'
 
 
 const AppSettingsForm = () => {

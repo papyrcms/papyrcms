@@ -1,5 +1,5 @@
-import serverContext from "../../../utilities/serverContext/"
-import Message from "../../../models/message"
+import serverContext from "@/serverContext"
+import Message from "@/models/message"
 
 
 export default async (req, res) => {

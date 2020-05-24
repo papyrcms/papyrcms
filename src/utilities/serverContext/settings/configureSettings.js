@@ -1,4 +1,4 @@
-import Settings from '../../../models/settings'
+import Settings from '@/models/settings'
 
 
 const configureSettings = async (name, defaultOptions) => {

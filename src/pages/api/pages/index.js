@@ -1,6 +1,6 @@
 import _ from 'lodash'
-import serverContext from '../../../utilities/serverContext/'
-import Page from '../../../models/page'
+import serverContext from '@/serverContext'
+import Page from '@/models/page'
 
 
 const getPages = async () => {

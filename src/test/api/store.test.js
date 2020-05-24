@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import axios from 'axios'
 import _ from 'lodash'
-import keys from '../../../src/config/keys'
+import keys from '@/keys'
 const { rootURL, test, adminEmail } = keys
 
 

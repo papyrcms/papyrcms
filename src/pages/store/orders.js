@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import moment from 'moment'
-import userContext from '../../context/userContext'
+import userContext from '@/context/userContext'
 
 
 const Orders = () => {

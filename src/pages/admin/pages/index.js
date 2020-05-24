@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
 import axios from 'axios'
-import userContext from '../../../context/userContext'
-import pagesContext from '../../../context/pagesContext'
+import userContext from '@/context/userContext'
+import pagesContext from '@/context/pagesContext'
 
 
 const Pages = () => {
