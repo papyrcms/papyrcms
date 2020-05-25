@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 
 /**
@@ -11,31 +11,58 @@ import React, { useState } from 'react'
  * @prop className - String - The className given to the non-modal image
  * @prop alt - String - The alt given to the image
  * @prop src - String - the src of the image
+ * @prop onOpen - Function - A passed function to run after the modal opens
+ * @prop onClose - Function - A passed function to run after the modal closes
+ * @prop closeId - String - This id will be on an element that can be clicked to close the modal
  */
 const Modal = (props) => {
 
-  const { children, buttonClasses, buttonText, className, alt, src, image } = props
+  const {
+    children, buttonClasses, buttonId,
+    buttonText, className, alt, src, closeId,
+    image, onClose = () => {}, onOpen = () => {}
+  } = props
   const [hidden, setHidden] = useState(true)
 
+  useEffect(() => {
+    if (closeId) {
+      document.getElementById(closeId)
+        .addEventListener('click', () => {
+          setHidden(true)
+          onClose()
+        })
+    }
+  })
+
   const renderStandardModal = () => (
-    <div>
+    <>
       <button
+        id={buttonId}
         className={buttonClasses}
         onClick={event => {
           event.preventDefault()
           setHidden(false)
+          onOpen()
         }}
+        style={!buttonText ? {display: 'none'} : null}
       >
         {buttonText}
       </button>
 
-      <div className={`modal ${hidden ? 'modal--hidden' : ''}`} onClick={() => setHidden(true)}>
+      <div
+        className={`modal ${hidden ? 'modal--hidden' : ''}`}
+        onClick={() => {
+          setHidden(true)
+          onClose()
+        }}
+      >
         <div className="modal__box" onClick={event => event.stopPropagation()}>
           <button
             className="modal__close"
             onClick={event => {
               event.preventDefault()
               setHidden(true)
+              onClose()
             }}
           >
             &#10005;
@@ -45,7 +72,7 @@ const Modal = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 
 
@@ -58,12 +85,27 @@ const Modal = (props) => {
         onClick={event => {
           event.preventDefault()
           setHidden(false)
+          onOpen()
         }}
       />
 
-      <div className={`modal${hidden ? ' modal--hidden' : ''}`} onClick={() => setHidden(true)}>
+      <div
+        className={`modal${hidden ? ' modal--hidden' : ''}`}
+        onClick={() => {
+          setHidden(true)
+          onClose()
+        }}
+      >
         <div className="modal__image--content" onClick={event => event.stopPropagation()}>
-          <button className="modal__close" onClick={() => setHidden(true)}>&#10005;</button>
+          <button
+            className="modal__close"
+            onClick={() => {
+              setHidden(true)
+              onClose()
+            }}
+          >
+            &#10005;
+          </button>
           <img
             src={src}
             alt={alt || ''}

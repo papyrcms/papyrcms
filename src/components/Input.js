@@ -15,6 +15,7 @@ import React from 'react'
  * @prop children - Any - Anything additional to add under the input
  * @prop className - String - Wrapper class
  * @prop type - String - The type attribute for the input
+ * @prop formState - Object - The object passed from the useForm hook. This will handle most of the other props if they are not set.
  */
 const Input = (props) => {
 
