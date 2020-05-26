@@ -1,0 +1,34 @@
+.init-page {
+
+  background-color: $color-grey-light;
+  padding: 5rem 15vw;
+
+  @include respond(tab-port) {
+    padding: 5rem 5vw;
+    padding-bottom: 10rem;
+  }
+
+  @include respond(phone) {
+    padding: 5rem 3vw;
+    padding-bottom: 10rem;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+
+    & > :first-of-type {
+      margin-right: 1rem;
+    }
+  }
+
+  &__modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &--button {
+      align-self: flex-end;
+    }
+  }
+}

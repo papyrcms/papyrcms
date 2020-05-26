@@ -67,7 +67,7 @@ const Modal = (props) => {
           >
             &#10005;
           </button>
-          <div className="modal__content">
+          <div className={`modal__content ${className}`}>
             {children}
           </div>
         </div>

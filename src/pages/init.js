@@ -29,48 +29,65 @@ const Init = () => {
   })
 
   const handleSubmit = (event) => {
+    event.preventDefault()
 
+    console.log(formState)
   }
 
 
-  const renderForm = () => {
+  const personalInfoInputs = () => {
     return (
-      <form onSubmit={handleSubmit}>
-
+      <div className="init-page__row">
         <Input
-          formState={formState}
-          name="email"
-          type="email"
-          required
-          label="Email"
-        />
+            formState={formState}
+            name="email"
+            type="email"
+            required
+            label="Email"
+          />
 
-        <Input
-          formState={formState}
-          name="password"
-          type="password"
-          required
-          label="Password"
-        />
+          <Input
+            formState={formState}
+            name="password"
+            type="password"
+            required
+            label="Password"
+          />
+      </div>
+    )
+  }
 
-        <Input
-          formState={formState}
-          name="headerTitle"
-          label="Header Title"
-        />
 
-        <Input
-          formState={formState}
-          name="headerSubtitle"
-          label="Header Subtitle"
-        />
+  const headerInputs = () => {
+    return (
+      <>
+        <div className="init-page__row">
+          <Input
+            formState={formState}
+            name="headerTitle"
+            label="Header Title"
+          />
+
+          <Input
+            formState={formState}
+            name="headerSubtitle"
+            label="Header Subtitle"
+          />
+        </div>
 
         <Input
           formState={formState}
           name="siteLogo"
           label="Site Logo"
         />
+      </>
+    )
+  }
 
+
+  const footerInputs = () => {
+    return (
+      <div className="init-page__row">
         <Input
           formState={formState}
           name="footerTitle"
@@ -82,24 +99,50 @@ const Init = () => {
           name="footerSubtitle"
           label="Footer Subtitle"
         />
+      </div>
+    )
+  }
 
-        <Input
-          formState={formState}
-          name="pageHeader"
-          label="First Page Header"
-        />
 
-        <Input
-          formState={formState}
-          name="pageImage"
-          label="First Page Image"
-        />
+  const firstPageInputs = () => {
+    return (
+      <>
+        <div className="init-page__row">
+          <Input
+            formState={formState}
+            name="pageHeader"
+            label="First Page Header"
+          />
+
+          <Input
+            formState={formState}
+            name="pageImage"
+            label="First Page Image"
+          />
+        </div>
 
         <Input
           formState={formState}
           name="pageContent"
           label="First Page Content"
+          type="textarea"
         />
+      </>
+    )
+  }
+
+
+  const renderForm = () => {
+    return (
+      <form onSubmit={handleSubmit} className="init-page">
+
+        {personalInfoInputs()}
+
+        {headerInputs()}
+
+        {footerInputs()}
+
+        {firstPageInputs()}
 
         <button className="button button-primary" type="submit">Submit</button>
 
@@ -113,54 +156,63 @@ const Init = () => {
       <>
         <Modal
           closeId="auth-next"
+          className="init-page__modal"
           buttonId="auth-modal"
           onClose={() => document.getElementById('header-modal').click()}
         >
-          <p>First, let's get you set up with an admin account. With this account, you can manage the website by going to your admin dashboard. This can be accessed from your profile.</p>
-          <button className="button button-primary" id="auth-next">
+          <h3>First, let's get you set up with an admin account. With this account, you can manage the website by going to your admin dashboard. This can be accessed from your profile.</h3>
+          {personalInfoInputs()}
+          <button className="button button-primary init-page__modal--button" id="auth-next">
             Next
           </button>
         </Modal>
 
         <Modal
           closeId="header-next"
+          className="init-page__modal"
           buttonId="header-modal"
           onClose={() => document.getElementById('footer-modal').click()}
         >
-          <p>Next, we can set some content for your header.</p>
-          <button className="button button-primary" id="header-next">
+          <h3>Next, we can set some content for your header.</h3>
+          {headerInputs()}
+          <button className="button button-primary init-page__modal--button" id="header-next">
             Next
           </button>
         </Modal>
 
         <Modal
           closeId="footer-next"
+          className="init-page__modal"
           buttonId="footer-modal"
           onClose={() => document.getElementById('page-modal').click()}
         >
-          <p>Next we can set some content for your footer.</p>
-          <button className="button button-primary" id="footer-next">
+          <h3>Next we can set some content for your footer.</h3>
+          {footerInputs()}
+          <button className="button button-primary init-page__modal--button" id="footer-next">
             Next
           </button>
         </Modal>
 
         <Modal
           closeId="page-next"
+          className="init-page__modal"
           buttonId="page-modal"
           onClose={() => document.getElementById('confirm-modal').click()}
         >
-          <p>Now we'll set up your first page. For now, we'll make this your main landing page, but you can change that later from your admin dashboard.</p>
-          <button className="button button-primary" id="page-next">
+          <h3>Now we'll set up your first page. For now, we'll make this your main landing page, but you can change that later from your admin dashboard.</h3>
+          {firstPageInputs()}
+          <button className="button button-primary init-page__modal--button" id="page-next">
             Next
           </button>
         </Modal>
 
         <Modal
           closeId="confirm-next"
+          className="init-page__modal"
           buttonId="confirm-modal"
         >
-          <p>Before we submit all of this, go ahead and look over everything to make sure it looks okay.</p>
-          <button className="button button-primary" id="confirm-next">
+          <h3>Before we submit all of this, go ahead and look over everything to make sure it looks okay.</h3>
+          <button className="button button-primary init-page__modal--button" id="confirm-next">
             Okay
           </button>
         </Modal>
