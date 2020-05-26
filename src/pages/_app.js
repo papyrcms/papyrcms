@@ -15,7 +15,7 @@ import '../sass/main.scss'
 
 const App = (props) => {
 
-  const { pathname } = useRouter()
+  const { asPath } = useRouter()
   const {
     Component,
     pages,
@@ -35,7 +35,7 @@ const App = (props) => {
     if (gaInitialized) {
       logPageView()
     }
-  }, [pathname])
+  }, [asPath])
 
   const foundPosts = useContext(postsContext)
   const foundPages = useContext(pagesContext)
