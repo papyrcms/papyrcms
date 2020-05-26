@@ -5,6 +5,7 @@ import postsContext from '@/context/postsContext'
 import userContext from '@/context/userContext'
 import PostIndex from '@/components/PostIndex'
 import Input from '@/components/Input'
+import styles from './posts.module.scss'
 
 
 const Posts = () => {
@@ -52,9 +53,9 @@ const Posts = () => {
 
 
   return (
-    <div className="posts-all-page">
-      <div className="posts-all-page__top">
-        <h2 className="heading-secondary posts-all-page__header">My Content</h2>
+    <div className={styles["posts-all-page"]}>
+      <div className={styles["posts-all-page__top"]}>
+        <h2 className={`heading-secondary ${styles["posts-all-page__header"]}`}>My Content</h2>
         <Input
           id="posts-search"
           label="Search Posts"
@@ -62,7 +63,7 @@ const Posts = () => {
           name="search"
           value={search}
           onChange={onSearchTextChange}
-          className="posts-all-page__input"
+          className={styles["posts-all-page__input"]}
         />
       </div>
       <PostIndex posts={searchPosts} />

@@ -3,6 +3,7 @@ import axios from 'axios'
 import Router, { useRouter } from 'next/router'
 import jwt from 'jsonwebtoken'
 import Input from '@/components/Input'
+import styles from './forgotPassword.module.scss'
 
 
 const ForgotPasswordPage = () => {
@@ -42,12 +43,12 @@ const ForgotPasswordPage = () => {
   const { email } = data
 
   return (
-    <div className="forgot-password-page">
-      <h3 className="heading-tertiary u-margin-bottom-small forgot-password-page__title">Reset Password for {email}</h3>
+    <div className={styles["forgot-password-page"]}>
+      <h3 className={`heading-tertiary u-margin-bottom-small ${styles['forgot-password-page__title']}`}>Reset Password for {email}</h3>
 
       <form
         onSubmit={handleSubmit}
-        className="forgot-password-page__form"
+        className={styles["forgot-password-page__form"]}
       >
         <Input
           id="password"
@@ -67,7 +68,7 @@ const ForgotPasswordPage = () => {
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
 
-        <p className="forgot-password-page__validation">{validation}</p>
+        <p className={styles["forgot-password-page__validation"]}>{validation}</p>
 
         <input
           className="button button-primary"

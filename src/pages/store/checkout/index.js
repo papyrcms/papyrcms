@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-import { NextPageContext } from 'next'
 import axios from 'axios'
 import _ from 'lodash'
 import keys from '@/keys'
@@ -7,7 +6,7 @@ import storeContext from '@/context/storeContext'
 import CreditCardForm from '@/components/CreditCardForm'
 import Input from '@/components/Input'
 import UserInfoForm from '@/components/UserInfoForm'
-import Stripe from 'stripe';
+import styles from './checkout.module.scss'
 
 
 const Checkout = (props) => {
@@ -86,8 +85,8 @@ const Checkout = (props) => {
   }
 
   return (
-    <section className="checkout">
-      <div className="checkout__container">
+    <section className={styles["checkout"]}>
+      <div className={styles["checkout__container"]}>
 
         <h2 className="heading-secondary">Checkout</h2>
 

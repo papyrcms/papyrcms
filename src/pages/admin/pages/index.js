@@ -4,6 +4,7 @@ import _ from 'lodash'
 import axios from 'axios'
 import userContext from '@/context/userContext'
 import pagesContext from '@/context/pagesContext'
+import styles from './pages.module.scss'
 
 
 const Pages = () => {
@@ -24,17 +25,17 @@ const Pages = () => {
   const renderPages = () => {
 
     return _.map(pages, page => (
-      <li className='pages__page' key={page._id}>
-        <div className='pages__link--visit'>
+      <li className={styles['pages__page']} key={page._id}>
+        <div className={styles['pages__link--visit']}>
           Visit page{" - "}
           <Link href="/[page]" as={`/${page.route}`}>
             <a>/{page.route}</a>
           </Link>
         </div>
 
-        <div className='pages__link-divider'>|</div>
+        <div className={styles['pages__link-divider']}>|</div>
 
-        <div className='pages__link--edit'>
+        <div className={styles['pages__link--edit']}>
           Edit page{" - "}
           <Link href={`/admin/pages/${page.route}`}>
             <a>/admin/pages/{page.route}</a>
@@ -46,9 +47,9 @@ const Pages = () => {
 
 
   return (
-    <div className="pages-page">
+    <div className={styles["pages-page"]}>
       <h2 className="heading-secondary">Pages</h2>
-      <ul className="pages">
+      <ul className={styles["pages"]}>
         {renderPages()}
       </ul>
     </div>

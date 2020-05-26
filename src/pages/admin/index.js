@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import userContext from '@/context/userContext'
 import AdminDashboard from '@/components/AdminDashboard'
+import styles from './admin.module.scss'
 
 
 const AdminPage = () => {
@@ -9,8 +10,8 @@ const AdminPage = () => {
   if (!currentUser || !currentUser.isAdmin) return null
 
   return (
-    <div className="admin-page">
-      <h2 className="heading-secondary admin-page__title">Admin Dashboard</h2>
+    <div className={styles["admin-page"]}>
+      <h2 className={`heading-secondary ${styles["admin-page__title"]}`}>Admin Dashboard</h2>
       <AdminDashboard />
     </div>
   )

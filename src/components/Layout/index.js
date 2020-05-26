@@ -130,7 +130,7 @@ const Layout = (props) => {
         subTitle={renderHTML(headerSubTitle)}
       />
 
-      <main className="page">
+      <main>
         {props.children}
       </main>
 

@@ -1,8 +1,6 @@
-.not-logged-in {
-  font-weight: 400;
-  font-size: 3rem;
-  font-style: italic;
-}
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
 
 .profile {
   display: grid;

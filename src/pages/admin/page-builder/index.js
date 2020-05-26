@@ -6,7 +6,8 @@ import userContext from '@/context/userContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
 import keys from '@/keys'
 import Input from '@/components/Input'
-import Page from '../[page]'
+import Page from '../../[page]'
+import styles from './page-builder.module.scss'
 
 
 const PageBuilder = (props) => {
@@ -184,10 +185,10 @@ const PageBuilder = (props) => {
         return (
           <div key={`${type}-${i}`}>
             <hr />
-            <div className={`${type} page-builder__section`}>
+            <div className={`${type} ${styles["page-builder__section"]}`}>
               <h3 className={`heading-tertiary ${type}__title`}>{name}</h3>
-              <p className={`${type}__description page-builder__section--description`}>{description}</p>
-              <div className={`${type}__inputs page-builder__section--inputs`}>
+              <p className={`${type}__description ${styles["page-builder__section--description"]}`}>{description}</p>
+              <div className={`${type}__inputs ${styles['page-builder__section--inputs']}`}>
 
                 {renderTitleInput(i, section)}
                 {renderClassNameInput(i, section)}
@@ -196,8 +197,8 @@ const PageBuilder = (props) => {
 
               </div>
 
-              <div className={`${type}__buttons page-builder__section--buttons`}>
-                <div className={`${type}__move page-builder__section--move`}>
+              <div className={`${type}__buttons ${styles["page-builder__section--buttons"]}`}>
+                <div className={`${type}__move ${styles["page-builder__section--move"]}`}>
                   <button onClick={() => moveSection(i, i-1)} title="Move up" className="button button-primary">&uarr;</button>
                   <button onClick={() => moveSection(i, i+1)} title="Move down" className="button button-primary">&darr;</button>
                 </div>
@@ -297,7 +298,7 @@ const PageBuilder = (props) => {
     const { id } = state
     if (id) {
       return <button
-        className="button button-delete page-builder__section-bottom--delete"
+        className={`button button-delete ${styles["page-builder__section-bottom--delete"]}`}
         onClick={() => deletePage()}
       >
         Delete Page
@@ -318,10 +319,10 @@ const PageBuilder = (props) => {
 
   return (
     <>
-      <div className="page-builder">
+      <div className={styles["page-builder"]}>
         <h2 className="heading-secondary">Page Builder</h2>
 
-        <div className="page-builder__info">
+        <div className={styles["page-builder__info"]}>
           <Input
             id="title-input"
             label="Page Title"
@@ -363,17 +364,17 @@ const PageBuilder = (props) => {
 
         <hr /><br />
 
-        <div className="page-builder__section-select">
+        <div className={styles["page-builder__section-select"]}>
 
           <select
-            className="button button-secondary page-builder__section-select--select"
+            className={`button button-secondary ${styles["page-builder__section-select--select"]}`}
             onChange={(event) => setState({ ...state, sectionSelect: (event.target.value) })}
           >
             {renderSelectOptions()}
           </select>
 
           <button
-            className="button button-primary page-builder__section-select--submit"
+            className={`button button-primary ${styles["page-builder__section-select--submit"]}`}
             onClick={() => addSection()}
           >
             Add Section
@@ -381,22 +382,22 @@ const PageBuilder = (props) => {
 
         </div>
 
-        <div className="page-builder__css">
+        <div className={styles["page-builder__css"]}>
           <label
-            className="page-builder__css--label"
+            className={styles["page-builder__css--label"]}
             htmlFor="page-builder__css"
           >
             Custom CSS
           </label>
           <textarea
             id="page-builder__css"
-            className="page-builder__css--textarea"
+            className={styles["page-builder__css--textarea"]}
             onChange={event => setPageState('css', event.target.value)}
             value={css}
           />
         </div>
 
-        <div className="page-builder__section-bottom">
+        <div className={styles["page-builder__section-bottom"]}>
           <button
             className="button button-primary"
             onClick={() => handleSubmit()}
@@ -406,12 +407,12 @@ const PageBuilder = (props) => {
 
           {renderDelete()}
         </div>
-        <p className="page-builder__validation">{validation}</p>
+        <p className={styles["page-builder__validation"]}>{validation}</p>
 
       </div>
 
-      <h3 className="heading-tertiary page-builder__preview--title">Page Preview</h3>
-      <div className="page-builder__preview">
+      <h3 className={`heading-tertiary ${styles["page-builder__preview--title"]}`}>Page Preview</h3>
+      <div className={styles["page-builder__preview"]}>
         <Page previewPage={page} />
       </div>
     </>

@@ -3,6 +3,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import moment from 'moment'
 import userContext from '@/context/userContext'
+import styles from './orders.module.scss'
 
 
 const Orders = () => {
@@ -62,9 +63,9 @@ const Orders = () => {
       const { created, user, products, _id, notes, shipped } = order
 
       return (
-        <li key={_id} className="order">
+        <li key={_id} className={styles["order"]}>
           <p>This has {!shipped && 'not '}been shipped.</p>
-          <div className="order__info">
+          <div className={styles["order__info"]}>
 
             { // Address info is based on a user bound to the order
             // If the user was logged out, this breaks.
@@ -92,31 +93,31 @@ const Orders = () => {
               <p>{user.shippingCountry || user.country}</p>
             </div> */}
 
-            <div className="order__info--products">
+            <div className={styles["order__info--products"]}>
               <h3 className="heading-tertiary">Products:</h3>
-              <ul className="order__products">{renderProducts(products)}</ul>
+              <ul className={styles["order__products"]}>{renderProducts(products)}</ul>
             </div>
 
-            <div className="order__info--notes">
+            <div className={styles["order__info--notes"]}>
               <h3 className="heading-tertiary">Order Notes:</h3>
               <p>{notes || 'none'}</p>
             </div>
 
-            <div className="order__info--created">
+            <div className={styles["order__info--created"]}>
               <h3 className="heading-tertiary">Created:</h3>
               <p>{moment(created).format('MMMM Do, YYYY')}</p>
             </div>
           </div>
 
-          <div className="order__actions">
+          <div className={styles["order__actions"]}>
             <button
-              className="order__ship button button-primary"
+              className={`${styles["order__ship"]} button button-primary`}
               onClick={() => markShipped(order)}
             >
               Mark {order.shipped && 'not '}shipped
             </button>
             <button
-              className="order__delete button button-delete"
+              className={`${styles["order__delete"]} button button-delete`}
               onClick={() => deleteOrder(order)}
             >
               Delete
@@ -128,9 +129,9 @@ const Orders = () => {
   }
 
   return (
-    <div className="orders">
+    <div className={styles["orders"]}>
       <h2 className="heading-secondary u-margin-bottom-small">Orders</h2>
-      <ul className="orders__list">
+      <ul className={styles["orders__list"]}>
         {renderOrders()}
       </ul>
     </div>

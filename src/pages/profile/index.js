@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
-import axios from 'axios'
 import Router from 'next/router'
 import Link from 'next/link'
 import userContext from '@/context/userContext'
 import Input from '@/components/Input'
 import useForm from '@/hooks/useForm'
 import UserInfoForm from '@/components/UserInfoForm'
+import styles from './profile.module.scss'
 
 
 const ProfilePage = () => {
@@ -50,18 +50,18 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="profile">
+    <div className={styles["profile"]}>
       <h1 className="heading-secondary">Profile</h1>
 
-      <div className="profile__credentials">
-        <div className="profile__logout">
+      <div className={styles["profile__credentials"]}>
+        <div className={styles["profile__logout"]}>
           <span>Not {!!currentUser.firstName ? currentUser.firstName : currentUser.email}?</span>
           <button
             onClick={onLogoutClick}
             className="button button-primary"
           >
             Log Out
-            </button>
+          </button>
         </div>
         {renderAdmin()}
       </div>
@@ -71,12 +71,12 @@ const ProfilePage = () => {
           onSubmitSuccess={() => setInfoValidation('User info has been updated.')}
           onSubmitError={(formState, err) => setInfoValidation(err.response.data.message)}
         />
-        <p className="profile__validation">{infoValidation}</p>
+        <p className={styles["profile__validation"]}>{infoValidation}</p>
       </div>
 
-      <div className="profile__password">
+      <div className={styles["profile__password"]}>
         <h3>Reset Password</h3>
-        <form className="profile__form" onSubmit={handlePasswordSubmit}>
+        <form className={styles["profile__form"]} onSubmit={handlePasswordSubmit}>
           <div className="u-form-row">
             <Input
               label="Current Password"
@@ -107,7 +107,7 @@ const ProfilePage = () => {
             type="submit"
             value="Reset"
           />
-          <p className="profile__validation">{password.values.validation}</p>
+          <p className={styles["profile__validation"]}>{password.values.validation}</p>
         </form>
       </div>
     </div>

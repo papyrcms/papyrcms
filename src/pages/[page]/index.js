@@ -8,6 +8,7 @@ import sectionOptionsContext from '@/context/sectionOptionsContext'
 import PageHead from '@/components/PageHead'
 import filterPosts from '@/hooks/filterPosts'
 import keys from '@/keys'
+import styles from './page.module.scss'
 
 
 const Page = (props) => {
@@ -65,7 +66,7 @@ const Page = (props) => {
 
       // Get the section component
       const options = sectionOptions[section.type]
-      const Component = require(`../components/Sections/${options.file}`).default
+      const Component = require(`../../components/Sections/${options.file}`).default
 
       // Return the section component
       return (
@@ -115,7 +116,7 @@ const Page = (props) => {
   return (
     <>
       {renderPageHead()}
-      <div className={page.className}>
+      <div className={`${styles['page']} ${page.className}`}>
         {renderSections()}
       </div>
     </>

@@ -1,3 +1,7 @@
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
+
 .checkout {
 
   @include sectionStyle();
@@ -6,6 +10,4 @@
     max-width: $max-text-width;
     margin: 0 auto;
   }
-
-  
 }
