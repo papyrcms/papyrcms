@@ -1,3 +1,7 @@
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
+
 .init-page {
 
   background-color: $color-grey-light;
@@ -17,8 +21,16 @@
     display: flex;
     justify-content: space-between;
 
+    @include respond(phone) {
+      flex-direction: column;
+    }
+
     & > :first-of-type {
       margin-right: 1rem;
+
+      @include respond(phone) {
+        margin: 0;
+      }
     }
   }
 
