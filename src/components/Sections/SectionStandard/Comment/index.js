@@ -6,6 +6,7 @@ import renderHTML from 'react-render-html'
 import userContext from '@/context/userContext'
 import settingsContext from '@/context/settingsContext'
 import CommentForm from './CommentForm'
+import styles from './Comment.module.scss';
 
 
 const Comment = (props) => {
@@ -91,7 +92,7 @@ const Comment = (props) => {
       )
     ) {
       return (
-        <div className="comment__buttons">
+        <div className={styles["comment__buttons"]}>
           <button
             className="button button-delete button-small"
             onClick={() => onDeleteClick(comment)}
@@ -116,7 +117,7 @@ const Comment = (props) => {
   const renderComments = () => {
 
     if (comments.length === 0) {
-      return <p className="comments__none">Leave a comment.</p>
+      return <p className={styles["comments__none"]}>Leave a comment.</p>
     }
 
     return _.map(comments, comment => {
@@ -124,9 +125,9 @@ const Comment = (props) => {
       const { content, author, _id } = comment
 
       return (
-        <div className="comment" key={_id}>
-          <p className="comment__content">{renderHTML(content)}</p>
-          <p className="comment__author">&mdash; {author.firstName ? author.firstName : author.email}</p>
+        <div className={styles["comment"]} key={_id}>
+          <p className={styles["comment__content"]}>{renderHTML(content)}</p>
+          <p className={styles["comment__author"]}>&mdash; {author.firstName ? author.firstName : author.email}</p>
           {renderAuthOptions(comment)}
         </div>
       )
@@ -137,8 +138,8 @@ const Comment = (props) => {
   const renderEditingState = () => {
     if (editing) {
       return (
-        <div className="comment__editing">
-          <span className="comment__editing--state">Editing</span>
+        <div className={styles["comment__editing"]}>
+          <span className={styles["comment__editing--state"]}>Editing</span>
           <button
             className="button button-small button-tertiary"
             onClick={() => {
@@ -157,14 +158,14 @@ const Comment = (props) => {
   const renderCommentForm = () => {
     if (!currentUser) {
       return (
-        <p className="comment-form__login">
+        <p className={styles["comment-form__login"]}>
           <Link href="/login"><a title="Login">Login</a></Link> to comment.
         </p>
       )
     }
 
     return (
-      <div className="comment__form">
+      <div className={styles["comment__form"]}>
         {renderEditingState()}
         <CommentForm
           detached={formDetached}
@@ -180,8 +181,8 @@ const Comment = (props) => {
 
   return (
     <div>
-      <div className="comments">
-        <h3 className="heading-tertiary comments__title">Comments</h3>
+      <div className={styles["comments"]}>
+        <h3 className={`heading-tertiary ${styles["comments__title"]}`}>Comments</h3>
         {renderComments()}
       </div>
 

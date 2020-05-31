@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import userContext from '@/context/userContext'
-import Input from '../Input'
+import Input from '@/components/Input'
 import useForm from '@/hooks/useForm'
+import styles from './style.module.scss'
 
 
 /**
@@ -49,9 +50,9 @@ const ContactForm = (props) => {
 
 
   return (
-    <section className={`${className} contact-form`}>
+    <section className={`${className} ${styles['contact-form']}`}>
 
-      <form className="contact-form__form" onSubmit={handleSubmit}>
+      <form className={styles["contact-form__form"]} onSubmit={handleSubmit}>
 
         <div className="u-form-row">
           <Input
@@ -78,27 +79,27 @@ const ContactForm = (props) => {
           />
         </div>
 
-        <div className="contact-form__field--textarea">
-          <label htmlFor="contact-message" className="contact-form__label">Message</label>
+        <div className={styles["contact-form__field--textarea"]}>
+          <label htmlFor="contact-message" className={styles["contact-form__label"]}>Message</label>
           <textarea
             id="contact-message"
-            className="contact-form__textarea"
+            className={styles["contact-form__textarea"]}
             name="message"
             value={values.message}
             onBlur={validateField}
             onChange={handleChange}
             required
           />
-          <p className="contact-form__validation">{errors.message}</p>
+          <p className={styles["contact-form__validation"]}>{errors.message}</p>
         </div>
 
         <input
           type="submit"
-          className="button button-primary contact-form__submit"
+          className={[`button button-primary ${styles["contact-form__submit"]}`]}
           value="Send"
         />
 
-        <p className="contact-form__validation">{values.validation}</p>
+        <p className={styles["contact-form__validation"]}>{values.validation}</p>
 
       </form>
     </section>

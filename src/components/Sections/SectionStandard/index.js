@@ -7,9 +7,10 @@ import renderHTML from 'react-render-html'
 import userContext from '@/context/userContext'
 import postsContext from '@/context/postsContext'
 import Comment from './Comment'
-import Media from '../../Media'
-import PageHead from '../../PageHead'
+import Media from '@/components/Media'
+import PageHead from '@/components/PageHead'
 import filterPosts from '@/hooks/filterPosts'
+import styles from './style.module.scss'
 
 
 /**
@@ -95,7 +96,7 @@ const SectionStandard = (props) => {
       currentUser.isAdmin
     ) {
       return (
-        <div className="post__buttons">
+        <div className={styles["post__buttons"]}>
           <button className="button button-delete" onClick={onDeleteClick}>Delete</button>
           <Link href={`/${path}/[id]/edit`} as={`/${path}/${post._id}/edit`}>
             <button className="button button-edit">Edit</button>
@@ -124,7 +125,7 @@ const SectionStandard = (props) => {
       currentUser &&
       currentUser.isAdmin
     ) {
-      return <p className="post__tags">Tags: <em>{renderTags()}</em></p>
+      return <p className={styles["post__tags"]}>Tags: <em>{renderTags()}</em></p>
     }
   }
 
@@ -132,7 +133,7 @@ const SectionStandard = (props) => {
   const renderMainMedia = () => {
     if (mainMedia) {
       return (
-        <div className="post__image">
+        <div className={styles["post__image"]}>
           <Media src={mainMedia} alt={title} />
         </div>
       )
@@ -167,7 +168,7 @@ const SectionStandard = (props) => {
     Object.keys(post).length == 0
   ) {
     return (
-      <div className={`posts-show ${className || ''}`}>
+      <div className={`${styles['posts-show']} ${className || ''}`}>
         <h2 className="heading-secondary">{emptyTitle}</h2>
         <h3 className="heading-tertiary">{emptyMessage}</h3>
       </div>
@@ -185,7 +186,7 @@ const SectionStandard = (props) => {
   }
 
   return (
-    <div className={`posts-show ${className || ''}`}>
+    <div className={`${styles['posts-show']} ${className || ''}`}>
 
       <PageHead
         title={headTitle}
@@ -196,7 +197,7 @@ const SectionStandard = (props) => {
 
       {beforePost()}
 
-      <div className="post">
+      <div className={styles["post"]}>
         {renderPublishSection()}
 
         {beforeTitle()}
@@ -212,7 +213,7 @@ const SectionStandard = (props) => {
         {afterMainMedia()}
 
         {beforeContent()}
-        <div className="post__content">
+        <div className={styles["post__content"]}>
           {renderHTML(postContent)}
         </div>
         {afterContent()}

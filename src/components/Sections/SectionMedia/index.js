@@ -1,6 +1,7 @@
 import React from 'react'
 import renderHTML from 'react-render-html'
-import Media from '../Media'
+import Media from '@/components/Media'
+import styles from './style.module.scss'
 
 
 /**
@@ -18,8 +19,8 @@ const SectionMedia = (props) => {
     const { emptyTitle, emptyMessage } = props
 
     return (
-      <section className='section-media'>
-        <div className='section-media__empty'>
+      <section className={styles['section-media']}>
+        <div className={styles['section-media__empty']}>
           <h2 className='heading-secondary'>{emptyTitle}</h2>
           <h3 className='heading-tertiary'>{emptyMessage}</h3>
         </div>
@@ -32,15 +33,15 @@ const SectionMedia = (props) => {
   let className = props.className || 'section-media'
 
   return (
-    <section className={`${className}${fixed ? '--fixed' : ''}`}>
+    <section className={styles[`${className}${fixed ? '--fixed' : ''}`]}>
 
-      <div className={`${className}__text`}>
-        <h2 className={`${className}__title`}>{title}</h2>
-        <div className={`${className}__subtext`}>{renderHTML(content)}</div>
+      <div className={styles[`${className}__text`]}>
+        <h2 className={styles[`${className}__title`]}>{title}</h2>
+        <div className={styles[`${className}__subtext`]}>{renderHTML(content)}</div>
       </div>
 
       <Media
-        className={`${className}__media${fixed ? '--fixed' : ''}`}
+        className={styles[`${className}__media${fixed ? '--fixed' : ''}`]}
         src={mainMedia}
         alt={alt}
         parallax={fixed}

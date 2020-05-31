@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import userContext from '@/context/userContext'
-import CreditCardForm from '../CreditCardForm'
-import Input from '../Input'
+import CreditCardForm from '@/components/CreditCardForm'
+import Input from '@/components/Input'
+import styles from './style.module.scss'
 
 
 const DonateForm = (props) => {
@@ -51,8 +52,8 @@ const DonateForm = (props) => {
 
   if (paid) {
     return (
-      <div className={`donate-form ${className}`}>
-        <div className="donate-form__thanks">
+      <div className={`${styles['donate-form']} ${className}`}>
+        <div className={styles["donate-form__thanks"]}>
           <h3 className="heading-tertiary">Thank you for your donation!</h3>
           <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
         </div>
@@ -61,8 +62,8 @@ const DonateForm = (props) => {
   }
 
   return (
-    <section className={`donate-form ${className}`}>
-      <form className="donate-form__form">
+    <section className={`${styles['donate-form']} ${className}`}>
+      <form className={styles["donate-form__form"]}>
         <div className="u-form-row">
           <Input
             id="donation_email"

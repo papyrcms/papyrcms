@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
-import SectionMedia from './SectionMedia'
+import SectionMedia from '@/Sections/SectionMedia'
+import styles from './style.module.scss'
 
 
 /**
@@ -15,8 +16,8 @@ const SectionSlideshow = (props) => {
 
   if (posts.length === 0) {
     return (
-      <section className="section-slideshow">
-        <div className="section-slideshow__empty">
+      <section className={styles["section-slideshow"]}>
+        <div className={styles["section-slideshow__empty"]}>
           <h2 className="heading-secondary">{emptyTitle}</h2>
           <h3 className="heading-tertiary">{emptyMessage}</h3>
         </div>
@@ -44,11 +45,16 @@ const SectionSlideshow = (props) => {
 
   const renderSlides = () => {
     return _.map(posts, (post, i) => {
+
+      const slideClassName = counter !== i
+        ? styles['slide--hidden']
+        : ''
+
       return (
         <SectionMedia
           key={post._id}
           post={post}
-          className={`${counter !== i ? 'slide--hidden' : ''} slide`}
+          className={`${slideClassName} ${styles['slide']}`}
           alt={post.title}
         />
       )
@@ -64,7 +70,7 @@ const SectionSlideshow = (props) => {
             if (ticker) clearInterval(ticker)
             setCounter(i)
           }}
-          className="section-slideshow__button"
+          className={styles["section-slideshow__button"]}
           type="radio"
           checked={counter === i ? true : false}
           onChange={() => {}}
@@ -76,9 +82,9 @@ const SectionSlideshow = (props) => {
 
 
   return (
-    <section className="section-slideshow">
+    <section className={styles["section-slideshow"]}>
       {renderSlides()}
-      <div className="section-slideshow__buttons">
+      <div className={styles["section-slideshow__buttons"]}>
         {renderButtons()}
       </div>
     </section>

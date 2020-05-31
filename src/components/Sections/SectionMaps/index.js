@@ -1,7 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
-import Map from '../Map'
+import Map from '@/components/Map'
+import styles from './style.module.scss'
 
 
 /**
@@ -36,7 +37,7 @@ const SectionMaps = (props) => {
   // If we don't have all the info we need
   if (!contentPost || !longitudePost || !latitudePost) {
     return (
-      <section className="section-maps">
+      <section className={styles["section-maps"]}>
         <h2 className="heading-secondary">{emptyTitle}</h2>
         <h3 className="heading-tertiary">{emptyMessage}</h3>
       </section>
@@ -63,14 +64,14 @@ const SectionMaps = (props) => {
   const { title, content } = contentPost
 
   return (
-    <section className="section-maps">
-      <h2 className='heading-secondary section-maps__title'>{title}</h2>
+    <section className={styles["section-maps"]}>
+      <h2 className={`heading-secondary ${styles['section-maps__title']}`}>{title}</h2>
 
-      <div className="section-maps__content">
+      <div className={styles["section-maps__content"]}>
         {mapLocation === 'start' ? renderMap() : null}
 
-        <div className='section-maps__text'>
-          <div className='section-maps__subtext'>{renderHTML(content)}</div>
+        <div className={styles['section-maps__text']}>
+          <div className={styles['section-maps__subtext']}>{renderHTML(content)}</div>
         </div>
 
         {mapLocation === 'end' ? renderMap() : null}

@@ -17,23 +17,6 @@
     padding-bottom: 10rem;
   }
 
-  &__row {
-    display: flex;
-    justify-content: space-between;
-
-    @include respond(phone) {
-      flex-direction: column;
-    }
-
-    & > :first-of-type {
-      margin-right: 1rem;
-
-      @include respond(phone) {
-        margin: 0;
-      }
-    }
-  }
-
   &__modal {
     display: flex;
     flex-direction: column;

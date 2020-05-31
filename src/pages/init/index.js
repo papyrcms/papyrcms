@@ -38,7 +38,7 @@ const Init = () => {
 
   const personalInfoInputs = () => {
     return (
-      <div className={styles["init-page__row"]}>
+      <div className="u-form-row">
         <Input
             formState={formState}
             name="email"
@@ -62,7 +62,7 @@ const Init = () => {
   const headerInputs = () => {
     return (
       <>
-        <div className={styles["init-page__row"]}>
+        <div className="u-form-row">
           <Input
             formState={formState}
             name="headerTitle"
@@ -88,7 +88,7 @@ const Init = () => {
 
   const footerInputs = () => {
     return (
-      <div className={styles["init-page__row"]}>
+      <div className="u-form-row">
         <Input
           formState={formState}
           name="footerTitle"
@@ -108,7 +108,7 @@ const Init = () => {
   const firstPageInputs = () => {
     return (
       <>
-        <div className={styles["init-page__row"]}>
+        <div className="u-form-row">
           <Input
             formState={formState}
             name="pageHeader"
