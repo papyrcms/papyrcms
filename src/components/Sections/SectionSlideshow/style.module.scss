@@ -49,43 +49,4 @@
     opacity: 0;
     transition: all 1.5s ease;
   }
-
-  &__text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: $color-white;
-    text-transform: uppercase;
-    letter-spacing: .2rem;
-    text-align: center;
-    text-shadow: .2rem .2rem $color-black;
-    width: 75%;
-    z-index: 100;
-  }
-
-  &__title {
-    font-size: 4rem;
-
-    @include respond(phone) {
-      font-size: 3rem;
-    }
-  }
-
-  &__subtext {
-    font-size: 2rem;
-
-    @include respond(phone) {
-      font-size: 1.6rem;
-      font-weight: 400;
-    }
-  }
-
-  &__media {
-    height: 100%;
-    max-height: 80vh;
-    width: 100vw;
-    object-fit: cover;
-    margin-bottom: -1rem;
-  }
 }

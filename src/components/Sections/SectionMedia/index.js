@@ -29,19 +29,18 @@ const SectionMedia = (props) => {
   }
 
   const { title, content, mainMedia } = props.post
-  const { fixed, alt } = props
-  let className = props.className || 'section-media'
+  const { fixed, alt, className } = props
 
   return (
-    <section className={styles[`${className}${fixed ? '--fixed' : ''}`]}>
+    <section className={`${className} ${styles[`section-media${fixed ? '--fixed' : ''}`]}`}>
 
-      <div className={styles[`${className}__text`]}>
-        <h2 className={styles[`${className}__title`]}>{title}</h2>
-        <div className={styles[`${className}__subtext`]}>{renderHTML(content)}</div>
+      <div className={styles[`section-media__text`]}>
+        <h2 className={styles[`section-media__title`]}>{title}</h2>
+        <div className={styles[`section-media__subtext`]}>{renderHTML(content)}</div>
       </div>
 
       <Media
-        className={styles[`${className}__media${fixed ? '--fixed' : ''}`]}
+        className={styles[`section-media__media${fixed ? '--fixed' : ''}`]}
         src={mainMedia}
         alt={alt}
         parallax={fixed}
