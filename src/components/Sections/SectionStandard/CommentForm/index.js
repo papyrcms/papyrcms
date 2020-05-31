@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './CommentForm.module.scss'
+import styles from './style.module.scss'
 // import RichTextEditor from '@/components/RichTextEditor'
 
 

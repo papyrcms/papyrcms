@@ -18,7 +18,7 @@
     &--top {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-gap: 2rem;
+      grid-gap: $gap-width;
 
       @include respond(phone) {
         grid-template-columns: 1fr;

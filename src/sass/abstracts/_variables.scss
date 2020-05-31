@@ -2,29 +2,26 @@
 // ========================
 
 // neutrals
-$color-white: #fff;
-$color-grey-light: #fafafa;
-$color-grey-light-2: #ddd;
-$color-grey: #888;
-$color-grey-dark: #333;
-$color-grey-dark-2: #555;
-$color-black: #000;
+$color-white: rgb(255, 255, 255);
+$color-grey-light: rgb(250, 250, 250);
+$color-grey-light-2: rgb(221, 221, 221);
+$color-grey: rgb(136, 136, 136);
+$color-grey-dark: rgb(51, 51, 51);
+$color-grey-dark-2: rgb(85, 85, 85);
+$color-black: rgb(0, 0, 0);
 
 // palette
-// $color-primary: #4EBDEC;	// Main Primary color
-$color-primary: rgb(46, 147, 230);	// Main Primary color
+$color-primary: rgb(46, 147, 230);
+$color-secondary: rgb(255, 183, 28);
+$color-tertiary: rgb(243, 52, 77);
 
-// $color-secondary: #FFDB4D;	// Main Secondary color
-$color-secondary: rgb(255, 183, 28);	// Main Secondary color
-$color-edit: $color-secondary;	// Main Edit color
-$color-warning: $color-secondary;	// Main Warning color
-$color-notice: $color-secondary;	// Main notice color
+$color-edit: $color-secondary;
+$color-warning: $color-secondary;
+$color-notice: $color-secondary;
 
-// $color-tertiary: #FD4C61;	// Main tertiary color
-$color-tertiary: rgb(243, 52, 77);	// Main tertiary color
-$color-delete: $color-tertiary;	// Main delete color
-$color-error: $color-tertiary;	// Main error color
-$color-cta: $color-tertiary; // Main cta color
+$color-delete: $color-tertiary;
+$color-error: $color-tertiary;
+$color-cta: $color-tertiary;
 
 // FONT
 $default-font-size: 1.6rem;
@@ -34,3 +31,4 @@ $shadow-high: 0 .6rem 1.8rem rgba($color-black, .4);
 $shadow-low: 0 .3rem .9rem rgba($color-black, .6);
 $max-section-width: 130rem;
 $max-text-width: 73rem;
+$gap-width: 1.3rem;

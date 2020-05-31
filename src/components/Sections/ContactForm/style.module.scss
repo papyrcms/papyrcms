@@ -6,10 +6,6 @@
 
   @include sectionStyle();
 
-  &__header {
-    margin-bottom: 3rem;
-  }
-
   &__form {
     display: flex;
     flex-direction: column;
@@ -19,7 +15,7 @@
     margin: 0 auto;
 
     & > * {
-      margin-bottom: 2rem;
+      margin-bottom: $gap-width;
     }
   }
 

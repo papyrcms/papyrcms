@@ -13,12 +13,12 @@
 
     &--3 {
       grid-template-columns: repeat(3, 1fr);
-      grid-gap: 2.3vw;
+      grid-gap: $gap-width;
     }
 
     &--4 {
       grid-template-columns: repeat(4, 1fr);
-      grid-gap: 1.7vw;
+      grid-gap: $gap-width;
 
       @include respond(tab-land) {
         grid-template-columns: repeat(3, 1fr);
@@ -36,7 +36,7 @@
   }
 
   &__header {
-    margin-bottom: 2rem;
+    margin-bottom: $gap-width;
 
     @include respond(tab-port) {
       letter-spacing: .5rem;
@@ -49,7 +49,6 @@
 
   &__card {
     display: grid;
-    grid-gap: .3rem;
     align-content: start;
   }
 

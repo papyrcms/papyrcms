@@ -6,7 +6,7 @@ import renderHTML from 'react-render-html'
 import userContext from '@/context/userContext'
 import settingsContext from '@/context/settingsContext'
 import CommentForm from '../CommentForm'
-import styles from './Comment.module.scss';
+import styles from './style.module.scss';
 
 
 const Comment = (props) => {

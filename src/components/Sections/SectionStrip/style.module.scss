@@ -7,11 +7,11 @@
   @include sectionStyle();
 
   p {
-    margin-bottom: 3rem;
+    margin-bottom: $gap-width;
   }
 
   &__header {
-    margin-bottom: 3rem;
+    margin-bottom: $gap-width;
 
     @include respond(tab-port) {
       letter-spacing: .5rem;
@@ -27,11 +27,11 @@
   }
 
   &__post {
-    margin-bottom: 3rem;
+    margin-bottom: $gap-width*3;
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 4rem;
+    grid-gap: $gap-width;
     align-items: center;
 
     @include respond(tab-port) {
@@ -53,7 +53,7 @@
 
     h3 {
       line-height: 1;
-      padding-bottom: 2rem;
+      padding-bottom: $gap-width;
     }
 
     @include respond(tab-port) {

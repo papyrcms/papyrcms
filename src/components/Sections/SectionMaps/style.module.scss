@@ -9,7 +9,7 @@
   &__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
+    grid-gap: $gap-width;
     align-items: center;
 
     @include respond(tab-port) {
@@ -23,6 +23,6 @@
   }
 
   &__title {
-    margin-bottom: 3rem;
+    margin-bottom: $gap-width;
   }
 }
