@@ -5,7 +5,7 @@ import axios from 'axios'
 import renderHTML from 'react-render-html'
 import userContext from '@/context/userContext'
 import settingsContext from '@/context/settingsContext'
-import CommentForm from './CommentForm'
+import CommentForm from '../CommentForm'
 import styles from './Comment.module.scss';
 
 
