@@ -18,7 +18,7 @@ const UserProvider = (props) => {
       }
     }
     getCurrentUser()
-  }, [currentUser])
+  }, [])
 
   return (
     <userContext.Provider
