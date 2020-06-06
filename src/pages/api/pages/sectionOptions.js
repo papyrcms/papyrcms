@@ -1,9 +1,10 @@
 import fs from 'fs'
+import util from 'util'
 
 
-export default (req, res) => {
+export default async (req, res) => {
 
-  const files = fs.readdirSync("src/components/Sections")
+  const files = await util.promisify(fs.readdir)("src/components/Sections")
 
   let sectionOptions = {}
 

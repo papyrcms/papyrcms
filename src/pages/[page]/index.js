@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import _ from 'lodash'
@@ -66,7 +67,7 @@ const Page = (props) => {
 
       // Get the section component
       const options = sectionOptions[section.type]
-      const Component = require(`../../components/Sections/${options.file}`).default
+      const Component = dynamic(() => import(`../../components/Sections/${options.file}`))
 
       // Return the section component
       return (

@@ -1,8 +1,9 @@
 import fs from 'fs'
+import util from 'util'
 
 export default async () => {
 
-  const files = fs.readdirSync("src/utilities/serverContext/settings")
+  const files = await util.promisify(fs.readdir)("src/utilities/serverContext/settings")
 
   let settings = {}
 

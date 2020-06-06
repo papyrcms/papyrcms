@@ -1,11 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
+import Router from 'next/router'
+import postsContext from '@/context/postsContext'
+import pagesContext from '@/context/pagesContext'
+import userContext from '@/context/userContext'
 import useForm from '@/hooks/useForm'
 import Input from '@/components/Input'
 import Modal from '@/components/Modal'
 import styles from './init.module.scss'
 
-console.log(styles)
+
 const Init = () => {
+
+  const { posts, setPosts } = useContext(postsContext)
+  const { pages, setPages } = useContext(pagesContext)
+  const { setCurrentUser } = useContext(userContext)
+
+  if (posts.length > 0 || pages.length > 0) {
+    return null
+  }
 
   const INITIAL_STATE = {
     email: '',
@@ -27,104 +39,134 @@ const Init = () => {
 
   useEffect(() => {
     document.getElementById('auth-modal').click()
-  })
+  }, [])
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     console.log(formState)
+    const success = response => {
+      setPosts(response.data.posts)
+      setPages(response.data.pages)
+
+      localStorage.setItem('token', response.data.token)
+      setCurrentUser(response.data.user)
+      Router.push('/profile')
+    }
+
+    const error = err => {
+      console.dir(err)
+    }
+
+    await formState.submitForm('/api/utility/init', { success, error })
   }
 
 
-  const personalInfoInputs = () => {
+  const personalInfoInputs = (onForm) => {
     return (
       <div className="u-form-row">
         <Input
-            formState={formState}
-            name="email"
-            type="email"
-            required
-            label="Email"
-          />
+          formState={formState}
+          id={`email${onForm && 'Form'}`}
+          name="email"
+          type="email"
+          required
+          label="Email"
+        />
 
-          <Input
-            formState={formState}
-            name="password"
-            type="password"
-            required
-            label="Password"
-          />
+        <Input
+          formState={formState}
+          id={`password${onForm && 'Form'}`}
+          name="password"
+          type="password"
+          required
+          label="Password"
+        />
       </div>
     )
   }
 
 
-  const headerInputs = () => {
+  const headerInputs = (onForm) => {
     return (
       <>
         <div className="u-form-row">
           <Input
             formState={formState}
+            id={`headerTitle${onForm && 'Form'}`}
             name="headerTitle"
             label="Header Title"
+            required
           />
 
           <Input
             formState={formState}
+            id={`headerSubtitle${onForm && 'Form'}`}
             name="headerSubtitle"
             label="Header Subtitle"
+            required
           />
         </div>
 
         <Input
           formState={formState}
+          id={`siteLogo${onForm && 'Form'}`}
           name="siteLogo"
-          label="Site Logo"
+          label="Site Logo Image URL"
         />
       </>
     )
   }
 
 
-  const footerInputs = () => {
+  const footerInputs = (onForm) => {
     return (
       <div className="u-form-row">
         <Input
           formState={formState}
+          id={`footerTitle${onForm && 'Form'}`}
           name="footerTitle"
           label="Footer Title"
+          required
         />
 
         <Input
           formState={formState}
+          id={`footerSubtitle${onForm && 'Form'}`}
           name="footerSubtitle"
           label="Footer Subtitle"
+          required
         />
       </div>
     )
   }
 
 
-  const firstPageInputs = () => {
+  const firstPageInputs = (onForm) => {
     return (
       <>
         <div className="u-form-row">
           <Input
             formState={formState}
             name="pageHeader"
+            id={`pageHeader${onForm && 'Form'}`}
             label="First Page Header"
+            required
           />
 
           <Input
             formState={formState}
             name="pageImage"
-            label="First Page Image"
+            id={`pageImage${onForm && 'Form'}`}
+            label="First Page Image URL"
+            required
           />
         </div>
 
         <Input
           formState={formState}
           name="pageContent"
+          id={`pageContent${onForm && 'Form'}`}
           label="First Page Content"
           type="textarea"
         />
@@ -137,13 +179,15 @@ const Init = () => {
     return (
       <form onSubmit={handleSubmit} className={styles["init-page"]}>
 
-        {personalInfoInputs()}
+        {personalInfoInputs(true)}
 
-        {headerInputs()}
+        {headerInputs(true)}
 
-        {footerInputs()}
+        {footerInputs(true)}
 
-        {firstPageInputs()}
+        {firstPageInputs(true)}
+
+        <p>{formState.validation}</p>
 
         <button className="button button-primary" type="submit">Submit</button>
 
