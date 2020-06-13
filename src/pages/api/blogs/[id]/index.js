@@ -6,15 +6,25 @@ import Comment from '@/models/comment'
 
 const getBlog = async (id) => {
   let blog
+
+  // Search for the blog by its id
   try {
     blog = await Blog.findById(id).populate('comments')
       .populate({ path: 'comments', populate: { path: 'author' } }).lean()
   } catch (err) {}
 
+  // Then search by its slug
   if (!blog) {
     blog = await Blog.findOne({ slug: id }).populate('comments')
       .populate({ path: 'comments', populate: { path: 'author' } }).lean()
   }
+
+  // Then search by something resembling its slug
+  if (!blog) {
+    blog = await Blog.findOne({ slug: new RegExp(id, 'i') }).populate('comments')
+      .populate({ path: 'comments', populate: { path: 'author' } }).lean()
+  }
+
   return blog
 }
 

@@ -18,6 +18,13 @@ const getProduct = async (id) => {
       .lean()
   }
 
+  if (!product) {
+    product = await Product.findOne({ slug: new RegExp(id, 'i') })
+      .populate('comments')
+      .populate({ path: 'comments', populate: { path: 'author' } })
+      .lean()
+  }
+
   return product
 }
 

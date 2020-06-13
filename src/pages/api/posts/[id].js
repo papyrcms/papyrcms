@@ -20,6 +20,14 @@ const getPost = async (id) => {
       .populate({ path: "comments", populate: { path: "author" } })
       .lean()
   }
+
+  if (!post) {
+    post = await Post.findOne({ slug: new RegExp(id, 'i') })
+      .populate("comments")
+      .populate({ path: "comments", populate: { path: "author" } })
+      .lean()
+  }
+
   return post
 }
 

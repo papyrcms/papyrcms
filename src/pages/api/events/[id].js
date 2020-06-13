@@ -13,6 +13,10 @@ const getEvent = async (id) => {
     event = await Event.findOne({ slug: id }).lean()
   }
 
+  if (!event) {
+    event = await Event.findOne({ slug: new RegExp(id, 'i') }).lean()
+  }
+
   return event
 }
 
