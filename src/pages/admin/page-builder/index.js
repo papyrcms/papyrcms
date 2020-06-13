@@ -1,4 +1,4 @@
-import React, {  useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import Router from 'next/router'
@@ -159,7 +159,7 @@ const PageBuilder = (props) => {
     if (
       (oldIndex < newIndex && newIndex === sections.length) ||
       (oldIndex > newIndex && newIndex < 0)
-     ) {
+    ) {
       return
     }
 

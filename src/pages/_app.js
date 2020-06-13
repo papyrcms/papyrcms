@@ -16,7 +16,7 @@ import '../sass/main.scss'
 const App = (props) => {
 
   const { asPath } = useRouter()
-  const {
+  let {
     Component,
     pages,
     posts,
@@ -37,19 +37,19 @@ const App = (props) => {
     }
   }, [asPath])
 
-  const foundPosts = useContext(postsContext)
-  const foundPages = useContext(pagesContext)
-  const foundKeys = useContext(keysContext)
-  const foundSettings = useContext(settingsContext)
-  const foundSectionOptions = useContext(sectionOptionsContext)
+  posts = posts || useContext(postsContext).posts
+  pages = pages || useContext(pagesContext).pages
+  keys = keys || useContext(keysContext).keys
+  settings = settings || useContext(settingsContext).settings
+  sectionOptions = sectionOptions || useContext(sectionOptionsContext)
 
   return (
     <GlobalState
-      pages={pages ? pages : foundPages.pages}
-      posts={posts ? posts : foundPosts.posts}
-      keys={keys ? keys : foundKeys.keys}
-      settings={settings ? settings : foundSettings.settings}
-      sectionOptions={sectionOptions ? sectionOptions : foundSectionOptions.sectionOptions}
+      pages={pages}
+      posts={posts}
+      keys={keys}
+      settings={settings}
+      sectionOptions={sectionOptions}
     >
       <Layout>
         <Component {...pageProps} />

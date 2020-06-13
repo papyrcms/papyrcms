@@ -5,6 +5,7 @@ import User from "@/models/user"
 export default async (req, res) => {
 
   const { user } = await serverContext(req, res)
+
   if (!user || !user.isAdmin) {
     return res.status(403).send({ message: "You are not allowed to do that." })
   }

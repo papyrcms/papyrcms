@@ -4,27 +4,31 @@ import userContext from './userContext'
 
 const UserProvider = (props) => {
 
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setUser] = useState(null)
 
-  useEffect(() => {
-    const getCurrentUser = async () => {
-      const token = localStorage.getItem('token')
-      if (token) {
-        axios.defaults.headers.common = {
-          Authorization: `bearer ${token}`
-        }
-        const { data: user } = await axios.get('/api/auth/currentUser')
-        setCurrentUser(user)
+  const setCurrentUser = async user => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      axios.defaults.headers.common = {
+        Authorization: `bearer ${token}`
       }
     }
-    getCurrentUser()
+    if (!user) {
+      const result = await axios.get('/api/auth/currentUser')
+      user = result.data
+    }
+    setUser(user)
+  }
+
+  useEffect(() => {
+    setCurrentUser()
   }, [])
 
   return (
     <userContext.Provider
       value={{
         currentUser,
-        setCurrentUser
+        setCurrentUser: setCurrentUser
       }}
     >
       {props.children}
