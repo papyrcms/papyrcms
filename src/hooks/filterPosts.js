@@ -32,6 +32,7 @@ const filterPosts = (posts, settings) => {
     if (postTags && postTags.length > 0) {
       return _.filter(postsToFilter, post => {
         let included = false
+        let done = false
 
         if (
           typeof postTags === 'string' &&
@@ -39,15 +40,16 @@ const filterPosts = (posts, settings) => {
         ) {
           included = true
         } else if (Array.isArray(postTags)) {
-          for (const tag of postTags) {
-            if (post.tags.includes(tag)) {
+
+          _.forEach(postTags, tag => {
+            if (!done && post.tags.includes(tag)) {
               included = true
             }
-            if (strictTags && !post.tags.includes(tag)) {
+            if (!done && strictTags && !post.tags.includes(tag)) {
               included = false
-              break
+              done = true
             }
-          }
+          })
         }
 
         return included
@@ -63,24 +65,23 @@ const filterPosts = (posts, settings) => {
     const orderedPosts = []
     const unorderedPosts = []
 
-    for (const post of postsToFilter) {
+    // for (const post of postsToFilter) {
+    _.forEach(postsToFilter, post => {
       let found = false
 
-      for (const tag of post.tags) {
-        if (tag.includes('order-')) {
+      // for (const tag of post.tags) {
+      _.forEach(post.tags, tag => {
+        if (!found && tag.includes('order-')) {
           // use index of a tag such as order-2 to be index 2
           orderedPosts[parseInt(_.split(tag, '-')[1])] = post
           found = true
-          break
         }
-      }
+      })
 
-      if (found) {
-        continue
-      } else {
+      if (!found) {
         unorderedPosts.push(post)
       }
-    }
+    })
 
     return _.filter([...orderedPosts, ...unorderedPosts], post => !!post)
   }
@@ -101,11 +102,11 @@ const filterPosts = (posts, settings) => {
   const filtered = {}
 
   if (Array.isArray(settings)) {
-    for (const filters of settings) {
+    _.forEach(settings, filters => {
       if (filters.propName) {
         filtered[filters.propName] = filterPosts(posts, filters)
       }
-    }
+    })
   } else {
     filtered['posts'] = filterPosts(posts, settings)
   }

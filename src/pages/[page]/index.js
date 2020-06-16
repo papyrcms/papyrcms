@@ -35,8 +35,8 @@ const Page = (props) => {
 
   // Get our filter settings from the page sections
   const settings = []
-  for (let i = 0; i < page.sections.length; i++) {
-    const section = JSON.parse(page.sections[i])
+  _.forEach(page.sections, (section, i) => {
+    section = JSON.parse(section)
 
     settings.push({
       propName: `${section.type}-${i}`,
@@ -44,7 +44,7 @@ const Page = (props) => {
       postTags: section.tags,
       strictTags: true
     })
-  }
+  })
 
   // Get posts and filter those by the settings
   const { posts } = useContext(postsContext)
@@ -90,12 +90,12 @@ const Page = (props) => {
   const renderPageHead = () => {
 
     let SectionStandard = false
-    for (let section of page.sections) {
+    _.forEach(page.sections, section => {
       section = JSON.parse(section)
       if (section.type === 'SectionStandard') {
         SectionStandard = true
       }
-    }
+    })
 
     let title
     const headerSettings = {

@@ -37,11 +37,17 @@ const App = (props) => {
     }
   }, [asPath])
 
-  posts = posts || useContext(postsContext).posts
-  pages = pages || useContext(pagesContext).pages
-  keys = keys || useContext(keysContext).keys
-  settings = settings || useContext(settingsContext).settings
-  sectionOptions = sectionOptions || useContext(sectionOptionsContext)
+  const postContext = useContext(postsContext)
+  const pageContext = useContext(pagesContext)
+  const keyContext = useContext(keysContext)
+  const settingContext = useContext(settingsContext)
+  const sectionOptionContext = useContext(sectionOptionsContext)
+
+  posts = posts || postContext.posts
+  pages = pages || pageContext.pages
+  keys = keys || keyContext.keys
+  settings = settings || settingContext.settings
+  sectionOptions = sectionOptions || sectionOptionContext
 
   return (
     <GlobalState
