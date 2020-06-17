@@ -24,9 +24,7 @@ const Page = (props) => {
   if (!page) {
     _.forEach(pages, foundPage => {
       if (foundPage.route === 'home') foundPage.route === ''
-      if (foundPage.route === query.page) {
-        page = foundPage
-      }
+      if (foundPage.route === query.page) page = foundPage
     })
 
     // If the page was still not found, don't return anything
