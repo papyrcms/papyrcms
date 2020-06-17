@@ -3,7 +3,6 @@ import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '@/components/Media'
-import styles from './style.module.scss'
 
 
 /**
@@ -68,7 +67,7 @@ const SectionCards = (props) => {
 
       return (
         <Link href={`/${readMorePath || 'posts'}/[id]`} as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}>
-          <a className={styles["section-cards__link"]}>Read More</a>
+          <a className="section-cards__link">Read More</a>
         </Link>
       )
     }
@@ -85,7 +84,7 @@ const SectionCards = (props) => {
   const renderMediaSection = (post) => {
     if (post.mainMedia) {
       return <Media
-        className={styles["section-cards__image"]}
+        className="section-cards__image"
         src={post.mainMedia}
         alt={post.title}
         clickable={clickableMedia}
@@ -98,7 +97,7 @@ const SectionCards = (props) => {
 
     if (posts.length === 0) {
       return (
-        <div className={styles["section-cards__empty-message"]}>
+        <div className="section-cards__empty-message">
           <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
         </div>
       )
@@ -112,10 +111,10 @@ const SectionCards = (props) => {
       let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
 
       return (
-        <li key={post._id} className={styles["section-cards__card"]}>
+        <li key={post._id} className="section-cards__card">
 
           {beforePostTitle(post)}
-          <h3 className={`${styles["section-cards__title"]} heading-tertiary`}>
+          <h3 className="section-cards__title heading-tertiary">
             {post.title}
           </h3>
           {afterPostTitle(post)}
@@ -127,7 +126,7 @@ const SectionCards = (props) => {
           {afterPostMedia(post)}
 
           {beforePostContent(post)}
-          <div className={styles["section-cards__content"]}>
+          <div className="section-cards__content">
             {renderHTML(postContent)}
           </div>
           {afterPostContent(post)}
@@ -143,20 +142,20 @@ const SectionCards = (props) => {
 
 
   const listCountClass = perRow
-    ? styles[`section-cards__list--${perRow}`]
-    : styles['section-cards__list--3']
+    ? `section-cards__list--${perRow}`
+    : 'section-cards__list--3'
 
   return (
-    <section className={styles['section-cards']}>
+    <section className='section-cards'>
 
       {beforeTitle()}
-      <h2 className={`heading-secondary ${styles['section-cards__header']}`}>
+      <h2 className="heading-secondary section-cards__header">
         {title}
       </h2>
       {afterTitle()}
 
       {beforePostList()}
-      <ul className={`${styles['section-cards__list']} ${listCountClass}`}>
+      <ul className={`section-cards__list ${listCountClass}`}>
 
         {beforePosts()}
         {renderPosts()}

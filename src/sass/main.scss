@@ -12,6 +12,8 @@
 @import 'components/app_settings_form';
 @import 'components/button';
 @import 'components/credit_card_form';
+@import 'components/comment';
+@import 'components/comment_form';
 @import 'components/footer';
 @import 'components/forgot_password_form';
 @import 'components/header';
@@ -26,3 +28,12 @@
 @import 'components/posts_form';
 @import 'components/register_form';
 @import 'components/user_list';
+
+@import 'sections/cards';
+@import 'sections/contact_form';
+@import 'sections/donate_form';
+@import 'sections/maps';
+@import 'sections/media';
+@import 'sections/slideshow';
+@import 'sections/standard';
+@import 'sections/strip';

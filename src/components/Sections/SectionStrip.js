@@ -3,7 +3,6 @@ import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '@/components/Media'
-import styles from './style.module.scss'
 
 
 /**
@@ -66,7 +65,7 @@ const SectionStrip = (props) => {
         <>
           {beforePostMedia(post)}
           <Media
-            className={styles["section-standard__image"]}
+            className="section-standard__image"
             src={post.mainMedia}
             alt={post.title}
             clickable={clickableMedia}
@@ -148,11 +147,11 @@ const SectionStrip = (props) => {
     return _.map(posts, (post, i) => {
 
       const postTextClassName = post.mainMedia
-        ? styles['section-standard__text']
-        : styles['section-standard__text--wide']
+        ? 'section-standard__text'
+        : 'section-standard__text--wide'
 
       return (
-        <div className={styles["section-standard__post"]} key={post._id}>
+        <div className="section-standard__post" key={post._id}>
           {renderLeftMedia(post, i)}
           <div className={postTextClassName}>
 
@@ -173,10 +172,10 @@ const SectionStrip = (props) => {
 
 
   return (
-    <section className={`${className || ''} ${styles["section-standard"]}`}>
+    <section className={`${className || ''} section-standard`}>
 
       {beforeTitle()}
-      <h2 className={`heading-secondary ${styles["section-standard__header"]}`}>
+      <h2 className="heading-secondary section-standard__header">
         {title}
       </h2>
       {afterTitle()}
