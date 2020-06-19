@@ -6,7 +6,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    await serverContext(req, res)
+    const { done } = await serverContext(req, res)
 
     const chargeInfo = {
       email: req.body.email,
@@ -18,7 +18,7 @@ export default async (req, res) => {
     const payments = new Payments()
     const charge = await payments.makePayment(chargeInfo)
 
-    return res.status(200).send(charge)
+    return await done(200, charge)
   }
 
   return res.status(404).end({ message: 'Page not found.' })

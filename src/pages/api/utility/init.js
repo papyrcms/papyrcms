@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import serverContext from '@/serverContext'
 import keys from '@/keys'
 import User from '@/models/user'
 import Post from '@/models/post'
@@ -9,6 +10,8 @@ import Page from '@/models/page'
 export default async (req, res) => {
 
   if (req.method === 'POST') {
+
+    const { done } = await serverContext(req, res)
 
     // Since this is the initial site setup,
     // only run if there are no users, posts, or pages
@@ -21,7 +24,7 @@ export default async (req, res) => {
       postCount > 0 ||
       pageCount > 0
     ) {
-      return res.status(500).send({ message: 'You can only run this before your site has any data.' })
+      return await done(500, { message: 'You can only run this before your site has any data.' })
     }
 
     // We're wrapping this in one big try/catch because
@@ -41,7 +44,7 @@ export default async (req, res) => {
       try {
         passwordHash = await bcrypt.hash(password, 15)
       } catch (error) {
-        return res.status(400).send(error)
+        return await done(400, error)
       }
 
       const user = new User({
@@ -103,7 +106,7 @@ export default async (req, res) => {
       })
       await page.save()
 
-      return res.status(200).send({
+      return await done(200, {
         posts: [header, footer, pagePost],
         pages: [page],
         token,
@@ -118,7 +121,7 @@ export default async (req, res) => {
       await Post.deleteMany({})
       await Page.deleteMany({})
 
-      return res.status(500).send({ error: err.message })
+      return await done(500, { error: err.message })
     }
   }
 

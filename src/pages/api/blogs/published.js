@@ -4,17 +4,17 @@ import Blog from '@/models/blog'
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if ((!user || !user.isAdmin) && !settings.enableBlog) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
     const blogs = await Blog.find({ published: true })
       .sort({ publishDate: -1 }).lean()
-    return res.status(200).send(blogs)
+    return done(200, blogs)
   }
 
-  return res.status(404).send({ message: "Page not found" })
+  return done(404, { message: "Page not found" })
 }

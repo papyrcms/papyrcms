@@ -45,22 +45,22 @@ const removeFromCart = async (productId, user) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
   if (!user || (!user.isAdmin && !settings.enableStore)) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'PUT') {
     const cart = await addToCart(req.query.id, user)
-    return res.status(200).send(cart)
+    return await done(200, cart)
   }
 
 
   if (req.method === 'DELETE') {
     const cart = await removeFromCart(req.query.id, user)
-    return res.status(200).send(cart)
+    return await done(200, cart)
   }
 
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

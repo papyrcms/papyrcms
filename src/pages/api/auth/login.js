@@ -9,17 +9,17 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    await serverContext(req, res)
+    const { done } = await serverContext(req, res)
 
     let user
     try {
       user = await User.findOne({ email: req.body.email })
     } catch (error) {
-      return res.status(401).send(error)
+      return await done(401, error)
     }
 
     if (!user) {
-      return res.status(400).send({
+      return await done(400, {
         message: 'Email or password is incorrect.'
       })
     }
@@ -28,11 +28,11 @@ export default async (req, res) => {
     try {
       result = await bcrypt.compare(req.body.password, user.password)
     } catch (error) {
-      return res.status(401).send(error)
+      return await done(401, error)
     }
 
     if (!result) {
-      return res.status(401).send({ message: 'Email or password is incorrect.' })
+      return await done(401, { message: 'Email or password is incorrect.' })
     }
 
     // generate a signed json web token with the contents of user object and return it in the response
@@ -45,7 +45,7 @@ export default async (req, res) => {
       exp: Math.floor(expiry/1000)
     }, keys.jwtSecret)
 
-    return res.status(200).send({ user, token })
+    return await done(200, { user, token })
   }
 
   return res.status(404).send({ message: 'Page not found.' })

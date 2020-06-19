@@ -30,7 +30,7 @@ const deleteComment = async (blogId, comment) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if (
     (!user || !user.isAdmin) && (
@@ -38,7 +38,7 @@ export default async (req, res) => {
       !settings.enableCommenting
     )
   ) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'PUT') {
@@ -47,11 +47,11 @@ export default async (req, res) => {
       !comment.author._id.equals(user._id) ||
       !user.isAdmin
     ) {
-      return res.status(403).send({ message: "You are not allowed to do that." })
+      return await done(403, { message: "You are not allowed to do that." })
     }
 
     comment = await updateComment(comment, req.body.content)
-    return res.status(200).send(comment)
+    return await done(200, comment)
   }
 
 
@@ -61,12 +61,12 @@ export default async (req, res) => {
       !comment.author._id.equals(user._id) ||
       !user.isAdmin
     ) {
-      return res.status(403).send({ message: "You are not allowed to do that." })
+      return await done(403, { message: "You are not allowed to do that." })
     }
 
     const message = await deleteComment(req.query.id, comment)
-    return res.status(200).send(message)
+    return await done(200, message)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

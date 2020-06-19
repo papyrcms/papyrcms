@@ -47,16 +47,16 @@ const updateCurrentUser = async (body, user) => {
 
 export default async (req, res) => {
 
-  const { user } = await serverContext(req, res)
+  const { user, done } = await serverContext(req, res)
 
   if (req.method === 'GET') {
-    return res.status(200).send(user)
+    return await done(200, user)
   }
   
   if (req.method === 'PUT') {
     const updatedUser = await updateCurrentUser(req.body, user)
-    return res.status(200).send(updatedUser)
+    return await done(200, updatedUser)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

@@ -78,33 +78,33 @@ const deletePost = async (id) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     const post = await getPost(req.query.id)
     if ((!post || !post.published) && (!user || !user.isAdmin)) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
-    return res.status(200).send(post)
+    return await done(200, post)
   }
 
 
   if (req.method === 'PUT') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const post = await updatePost(req.query.id, req.body, settings.enableEmailingToUsers)
-    return res.status(200).send(post)
+    return await done(200, post)
   }
 
 
   if (req.method === 'DELETE') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const message = await deletePost(req.query.id)
-    return res.status(200).send(message)
+    return await done(200, message)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

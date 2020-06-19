@@ -42,21 +42,21 @@ const createPost = async (body, enableEmailingToUsers) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
     const posts = await getPosts()
-    return res.status(200).send(posts)
+    return await done(200, posts)
   }
 
 
   if (req.method === 'POST') {
     const post = await createPost(req.body, settings.enableEmailingToUsers)
-    return res.status(200).send(post)
+    return await done(200, post)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

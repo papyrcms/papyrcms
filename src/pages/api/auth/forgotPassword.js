@@ -15,16 +15,16 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { user, settings } = await serverContext(req, res)
+    const { user, settings, done } = await serverContext(req, res)
 
     if (!settings.enableEmailingToUsers && (!user || !user.isAdmin)) {
-      return res.status(403).send({ message: "We cannot currently email you." })
+      return await done(403, { message: "We cannot currently email you." })
     }
 
     const { email } = req.body
 
     if (!verifyEmailSyntax(email)) {
-      return res.status(401).send({ message: 'Please enter your email address.' })
+      return await done(401, { message: 'Please enter your email address.' })
     }
 
     const userExists = await User.findOne({ email })
@@ -36,7 +36,7 @@ export default async (req, res) => {
         message = message + ' Try filling out the "Register" form.'
       }
 
-      return res.status(401).send({ message })
+      return await done(401, { message })
     }
 
     const mailer = new Mailer()
@@ -46,7 +46,7 @@ export default async (req, res) => {
     }
     mailer.sendEmail(variables, email, 'forgot-password', subject)
 
-    return res.status(200).send({ message: 'Your email is on its way!' })
+    return await done(200, { message: 'Your email is on its way!' })
   }
 
   return res.status(404).send({ message: 'Page not found.' })

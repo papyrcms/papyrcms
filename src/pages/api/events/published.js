@@ -4,10 +4,10 @@ import Event from '@/models/event'
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if ((!user || !user.isAdmin) && !settings.enableEvents) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === "GET") {
@@ -17,8 +17,8 @@ export default async (req, res) => {
     const events = await Event.find({ published: true, date: { $gte: dateFilter } })
       .sort({ date: 1 }).lean()
 
-    return res.status(200).send(events)
+    return await done(200, events)
   }
 
-  return res.status(404).send({ message: 'Page not found' })
+  return await done(404, { message: 'Page not found' })
 }

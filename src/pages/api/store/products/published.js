@@ -4,15 +4,15 @@ import Product from "@/models/product"
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
   if ((!user || !user.isAdmin) && !settings.enableStore) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
     const products = await Product.find({ published: true }).sort({ created: -1 }).lean()
-    return res.status(200).send(products)
+    return await done(200, products)
   }
 
-  return res.status(404).send({ message: 'Page not found' })
+  return await done(404, { message: 'Page not found' })
 }

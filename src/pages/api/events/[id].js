@@ -38,37 +38,37 @@ const deleteEvent = async (id) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if ((!user || !user.isAdmin) && !settings.enableEvents) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === "GET") {
     const event = await getEvent(req.query.id)
     if ((!event || !event.published) && (!user || !user.isAdmin)) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return done(403, { message: 'You are not allowed to do that.' })
     }
-    return res.status(200).send(event)
+    return done(200, event)
   }
 
 
   if (req.method === 'PUT') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return done(403, { message: 'You are not allowed to do that.' })
     }
     const event = await updateEvent(req.query.id, req.body)
-    return res.status(200).send(event)
+    return done(200, event)
   }
 
 
   if (req.method === 'DELETE') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return done(403, { message: 'You are not allowed to do that.' })
     }
     const message = await deleteEvent(req.query.id)
-    return res.status(200).send(message)
+    return done(200, message)
   }
 
-  return res.status(404).send({ message: 'Page not found' })
+  return done(404, { message: 'Page not found' })
 }

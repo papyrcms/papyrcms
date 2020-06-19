@@ -16,26 +16,26 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { settings } = await serverContext(req, res)
+    const { settings, done } = await serverContext(req, res)
 
     const { firstName, lastName, email, password, passwordConfirm } = req.body
 
     if (!firstName) {
-      return res.status(401).send({ message: 'Please enter your first name' })
+      return await done(401, { message: 'Please enter your first name' })
     }
 
     if (!lastName) {
-      return res.status(401).send({ message: 'Please enter your last name' })
+      return await done(401, { message: 'Please enter your last name' })
     }
 
     // Make sure email is in email format
     if (!verifyEmailSyntax(email)) {
-      return res.status(401).send({ message: 'Please use a valid email address' })
+      return await done(401, { message: 'Please use a valid email address' })
     }
 
     // Make sure password fields match
     if (password !== passwordConfirm) {
-      return res.status(401).send({ message: 'The password fields need to match' })
+      return await done(401, { message: 'The password fields need to match' })
     }
 
     // Get a hashed password
@@ -43,7 +43,7 @@ export default async (req, res) => {
     try {
       passwordHash = await bcrypt.hash(password, 15)
     } catch (error) {
-      return res.status(400).send(error)
+      return await done(400, error)
     }
 
     // Set username and email as the user's email
@@ -62,7 +62,7 @@ export default async (req, res) => {
       if (error.code == 11000) {
         message = 'This email is already in use.'
       }
-      return res.status(401).send({ message })
+      return await done(401, { message })
     }
 
     if (settings.enableEmailingToUsers) {
@@ -82,7 +82,7 @@ export default async (req, res) => {
       exp: Math.floor(expiry / 1000)
     }, keys.jwtSecret)
 
-    return res.status(200).send({ user: newUser, token })
+    return await done(200, { user: newUser, token })
   }
 
   return res.status(404).send({ message: 'Page not found.' })

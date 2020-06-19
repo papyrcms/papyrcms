@@ -59,37 +59,37 @@ const deleteBlog = async (id) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if ((!user || !user.isAdmin) && !settings.enableBlog) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
     const blog = await getBlog(req.query.id)
     if ((!blog || !blog.published) && (!user || !user.isAdmin)) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
-    return res.status(200).send(blog)
+    return await done(200, blog)
   }
 
 
   if (req.method === 'PUT') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const blog = await updateBlog(req.query.id, req.body)
-    return res.status(200).send(blog)
+    return await done(200, blog)
   }
 
 
   if (req.method === 'DELETE') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const message = await deleteBlog(req.query.id)
-    return res.status(200).send(message)
+    return await done(200, message)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

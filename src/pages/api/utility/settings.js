@@ -4,16 +4,16 @@ import Settings from '@/models/settings'
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if (req.method === 'GET') {
-    return res.status(200).send(settings)
+    return await done(200, settings)
   }
 
 
   if (req.method === 'POST') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
 
     const settings = await Settings.find()
@@ -27,8 +27,8 @@ export default async (req, res) => {
       }
     }
 
-    return res.status(200).send(req.body)
+    return await done(200, req.body)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

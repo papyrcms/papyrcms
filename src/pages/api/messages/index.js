@@ -37,21 +37,21 @@ const createMessage = async (body, enableEmailingToAdmin) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const messages = await getMessages()
-    return res.status(200).send(messages)
+    return await done(200, messages)
   }
 
 
   if (req.method === 'POST') {
     const message = await createMessage(req.body, settings.enableEmailingToAdmin)
-    return res.status(200).send(message)
+    return await done(200, message)
   }
 
-  return res.status(400).send({ message: 'Page not found' })
+  return await done(400, { message: 'Page not found' })
 }

@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import useSettings from './useSettings'
 import database from './database'
 import authorization from './authorization'
@@ -9,5 +10,11 @@ export default async (req, res) => {
   const user = await authorization(req)
   const settings = await useSettings()
 
-  return { user, settings }
+  // A common wrap-up function
+  const done = async (status, data) => {
+    await mongoose.disconnect()
+    return res.status(status).send(data)
+  }
+
+  return { user, settings, done }
 }

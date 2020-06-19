@@ -5,7 +5,7 @@ import Comment from "@/models/comment"
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
 
   if (
     (!user || !user.isAdmin) && (
@@ -13,7 +13,7 @@ export default async (req, res) => {
       !settings.enableCommenting
     )
   ) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'POST') {
@@ -26,8 +26,8 @@ export default async (req, res) => {
     comment.save()
     blog.comments.push(comment)
     blog.save()
-    return res.status(200).send(comment)
+    return await done(200, comment)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

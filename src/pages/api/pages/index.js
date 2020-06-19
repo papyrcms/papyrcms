@@ -70,21 +70,21 @@ const createPage = async (body) => {
 
 export default async (req, res) => {
   
-  const { user } = await serverContext(req, res)
+  const { user, done } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     const pages = await getPages()
-    return res.status(200).send(pages)
+    return await done(200, pages)
   }
 
 
   if (req.method === 'POST') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const page = await createPage(req.body)
-    return res.status(200).send(page)
+    return await done(200, page)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

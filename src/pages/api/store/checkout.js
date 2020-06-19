@@ -9,7 +9,7 @@ import User from "@/models/user"
 
 export default async (req, res) => {
 
-  const { user } = await serverContext(req, res)
+  const { user, done } = await serverContext(req, res)
 
   if (req.method === 'POST') {
 
@@ -29,12 +29,12 @@ export default async (req, res) => {
     // Make sure all required fields are present
     for (const field of requiredFields) {
       if (!req.body[field]) {
-        return res.status(400).send({ message: 'Please complete all required fields' })
+        return await done(400, { message: 'Please complete all required fields' })
       }
     }
 
     if (!products || !source) {
-      return res.status(400).send({ message: 'Something went wrong. Please try again later or contact us.' })
+      return await done(400, { message: 'Something went wrong. Please try again later or contact us.' })
     }
 
     // Set dynamic amount and description
@@ -44,7 +44,7 @@ export default async (req, res) => {
 
       // If there is no stock left, error
       if (product.quantity < 1) {
-        return res.status(401).send({ message: `${product.title} is out of stock.` })
+        return await done(401, { message: `${product.title} is out of stock.` })
       }
 
       amount += product.price
@@ -111,11 +111,11 @@ export default async (req, res) => {
         await User.findOneAndUpdate({ _id: user._id }, { cart: [] })
       }
 
-      return res.status(200).send('All items purchased')
+      return await done(200, 'All items purchased')
     } else {
-      return res.status(401).send({ message: 'Something went wrong. Please contact us directly to order.' })
+      return await done(401, { message: 'Something went wrong. Please contact us directly to order.' })
     }
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }

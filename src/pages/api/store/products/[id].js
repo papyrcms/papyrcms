@@ -45,36 +45,36 @@ const deleteProduct = async (id) => {
 
 export default async (req, res) => {
 
-  const { user, settings } = await serverContext(req, res)
+  const { user, settings, done } = await serverContext(req, res)
   if ((!user || !user.isAdmin) && !settings.enableStore) {
-    return res.status(403).send({ message: "You are not allowed to do that." })
+    return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
     const product = await getProduct(req.query.id)
     if ((!product || !product.published) && (!user || !user.isAdmin)) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
-    return res.status(200).send(product)
+    return await done(200, product)
   }
 
 
   if (req.method === 'PUT') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const product = await updateProduct(req.query.id, req.body)
-    return res.status(200).send(product)
+    return await done(200, product)
   }
 
 
   if (req.method === 'DELETE') {
     if (!user || !user.isAdmin) {
-      return res.status(403).send({ message: 'You are not allowed to do that.' })
+      return await done(403, { message: 'You are not allowed to do that.' })
     }
     const message = await deleteProduct(req.query.id)
-    return res.status(200).send(message)
+    return await done(200, message)
   }
 
-  return res.status(404).send({ message: 'Page not found.' })
+  return await done(404, { message: 'Page not found.' })
 }
