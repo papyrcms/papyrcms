@@ -69,7 +69,7 @@ const StoreShow = (props) => {
 
   return (
     <SectionStandard
-      post={product}
+      posts={[product]}
       path="store"
       apiPath="/api/store/products"
       redirectRoute="/store"

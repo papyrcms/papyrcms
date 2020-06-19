@@ -25,7 +25,7 @@ const PostsShow = (props) => {
 
   return (
     <SectionStandard
-      post={post}
+      posts={[post]}
       enableCommenting={false}
       path="posts"
     />

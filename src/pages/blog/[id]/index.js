@@ -33,7 +33,7 @@ const BlogShow = (props) => {
   }
 
   return <SectionStandard
-    post={blog}
+    posts={[blog]}
     enableCommenting={true}
     path="blog"
     apiPath="/api/blogs"

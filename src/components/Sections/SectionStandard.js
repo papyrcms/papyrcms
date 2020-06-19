@@ -13,9 +13,9 @@ import filterPosts from '@/hooks/filterPosts'
 
 
 /**
- * SectionStandard is the main component to show the details of a particular post
+ * SectionStandard is the main component to show the details of an array of posts
  *
- * @prop post - Object - The post that will be displayed on the page
+ * @prop posts - Array[Object] - The post that will be displayed on the page
  * @prop enableCommenting - Boolean - Whether or not users can comment on this post
  * @prop path - String - The prefix for accessing the edit page
  * @prop apiPath - String - The api prefix for CRUD operations
@@ -25,28 +25,28 @@ import filterPosts from '@/hooks/filterPosts'
  * @prop emptyMessage - String - A message to display when there is no post passed
  *
  * Post Hooks
- * @prop beforePost - Function - Rendered before the post
- * @prop afterPost - Function - Rendered after the post
- * @prop beforeTitle - Function - Rendered before the post title
- * @prop afterTitle - Function - Rendered after the post title
- * @prop beforeMainMedia - Function - Rendered before the post main media
- * @prop afterMainMedia - Function - Rendered after the post main media
- * @prop beforeContent - Function - Rendered before the post content
- * @prop afterContent - Function - Rendered after the post content
- * @prop beforeComments - Function - Rendered before the post comments
- * @prop afterComments - Function - Rendered after the post comments
- * @prop beforeCommentForm - Function - Rendered before the post comment form
- * @prop afterCommentForm - Function - Rendered after the post comment form
+ * @prop beforePost - Function - Rendered before each post
+ * @prop afterPost - Function - Rendered after each post
+ * @prop beforeTitle - Function - Rendered before each post title
+ * @prop afterTitle - Function - Rendered after each post title
+ * @prop beforeMainMedia - Function - Rendered before each post main media
+ * @prop afterMainMedia - Function - Rendered after each post main media
+ * @prop beforeContent - Function - Rendered before each post content
+ * @prop afterContent - Function - Rendered after each post content
+ * @prop beforeComments - Function - Rendered before each post comments
+ * @prop afterComments - Function - Rendered after each post comments
+ * @prop beforeCommentForm - Function - Rendered before each post comment form
+ * @prop afterCommentForm - Function - Rendered after each post comment form
  */
 const SectionStandard = (props) => {
-
-  if (!props.post) return null
 
   const { currentUser } = useContext(userContext)
   const { posts, setPosts } = useContext(postsContext)
 
+  if (!props.posts) return null
+
   const {
-    post, enableCommenting,
+    enableCommenting,
     apiPath, className, redirectRoute,
     path, emptyTitle, emptyMessage,
 
@@ -64,11 +64,9 @@ const SectionStandard = (props) => {
     beforeCommentForm = () => null,
     afterCommentForm = () => null
   } = props
-  const { title, tags, mainMedia, content, published } = post
-  let postContent = content || ''
 
 
-  const onDeleteClick = () => {
+  const onDeleteClick = (post) => {
 
     const confirm = window.confirm('Are you sure you want to delete this post?')
 
@@ -88,7 +86,7 @@ const SectionStandard = (props) => {
   }
 
 
-  const renderAuthOptions = () => {
+  const renderAuthOptions = (post) => {
 
     if (
       currentUser &&
@@ -106,8 +104,8 @@ const SectionStandard = (props) => {
   }
 
 
-  const renderTags = () => {
-    return _.map(tags, (tag, i) => {
+  const renderTags = (post) => {
+    return _.map(post.tags, (tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
       } else {
@@ -117,37 +115,37 @@ const SectionStandard = (props) => {
   }
 
 
-  const renderTagsSection = () => {
+  const renderTagsSection = (post) => {
     if (
-      tags &&
-      tags[0] &&
+      post.tags &&
+      post.tags[0] &&
       currentUser &&
       currentUser.isAdmin
     ) {
-      return <p className="post__tags">Tags: <em>{renderTags()}</em></p>
+      return <p className="post__tags">Tags: <em>{renderTags(post)}</em></p>
     }
   }
 
 
-  const renderMainMedia = () => {
-    if (mainMedia) {
+  const renderMainMedia = (post) => {
+    if (post.mainMedia) {
       return (
         <div className="post__image">
-          <Media src={mainMedia} alt={title} />
+          <Media src={post.mainMedia} alt={post.title} />
         </div>
       )
     }
   }
 
 
-  const renderPublishSection = () => {
-    if (!published) {
+  const renderPublishSection = (post) => {
+    if (!post.published) {
       return <p><em>Not published</em></p>
     }
   }
 
 
-  const renderComments = () => {
+  const renderComments = (post) => {
     return (
       <Comment
         post={post}
@@ -161,10 +159,9 @@ const SectionStandard = (props) => {
     )
   }
 
-
   if (
-    !post ||
-    Object.keys(post).length == 0
+    posts.length === 0 ||
+    Object.keys(posts).length == 0
   ) {
     return (
       <div className={`posts-show ${className || ''}`}>
@@ -174,15 +171,59 @@ const SectionStandard = (props) => {
     )
   }
 
+  const renderPosts = () => {
+    return _.map(props.posts, post => {
+      return (
+        <>
+          {beforePost(post)}
+
+          <div className="post">
+            {renderPublishSection(post)}
+    
+            {beforeTitle(post)}
+            <h2 className="heading-secondary post__title u-margin-bottom-small">
+              {post.title}
+            </h2>
+            {afterTitle(post)}
+    
+            {renderTagsSection(post)}
+    
+            {beforeMainMedia(post)}
+            {renderMainMedia(post)}
+            {afterMainMedia(post)}
+    
+            {beforeContent(post)}
+            <div className="post__content">
+              {renderHTML(post.content || '')}
+            </div>
+            {afterContent(post)}
+    
+            {renderAuthOptions(post)}
+    
+            {beforeComments(post)}
+            {renderComments(post)}
+            {afterComments(post)}
+          </div>
+    
+          {afterPost(post)}
+        </>
+      )
+    })
+  }
+
+
+  const { title, tags, mainMedia, content } = posts[0]
+  let postContent = content || ''
+
   let headTitle
   const headerSettings = {
     maxPosts: 1,
     postTags: ['section-header']
-  }
-  const { posts: [headerPost] } = filterPosts(posts, headerSettings)
+  }  
+  const { posts: [headerPost] } = filterPosts(posts[0], headerSettings)
   if (headerPost && title) {
     headTitle = `${headerPost.title} | ${title}`
-  }
+  }  
 
   return (
     <div className={`posts-show ${className || ''}`}>
@@ -194,37 +235,8 @@ const SectionStandard = (props) => {
         keywords={tags.toString()}
       />
 
-      {beforePost()}
+      {renderPosts()}
 
-      <div className="post">
-        {renderPublishSection()}
-
-        {beforeTitle()}
-        <h2 className="heading-secondary post__title u-margin-bottom-small">
-          {title}
-        </h2>
-        {afterTitle()}
-
-        {renderTagsSection()}
-
-        {beforeMainMedia()}
-        {renderMainMedia()}
-        {afterMainMedia()}
-
-        {beforeContent()}
-        <div className="post__content">
-          {renderHTML(postContent)}
-        </div>
-        {afterContent()}
-
-        {renderAuthOptions()}
-
-        {beforeComments()}
-        {renderComments()}
-        {afterComments()}
-      </div>
-
-      {afterPost()}
     </div>
   )
 }

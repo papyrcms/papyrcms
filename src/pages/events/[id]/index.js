@@ -38,7 +38,7 @@ const EventsShow = (props) => {
   )
 
   return <SectionStandard
-    post={event}
+    posts={[event]}
     path="events"
     apiPath="/api/events"
     redirectRoute="/events/all"
