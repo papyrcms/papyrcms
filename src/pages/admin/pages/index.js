@@ -37,7 +37,7 @@ const Pages = () => {
 
         <div className={styles['pages__link--edit']}>
           Edit page{" - "}
-          <Link href={`/admin/pages/${page.route}`}>
+          <Link href="/admin/pages/[page]" as={`/admin/pages/${page.route}`}>
             <a>/admin/pages/{page.route}</a>
           </Link>
         </div>
