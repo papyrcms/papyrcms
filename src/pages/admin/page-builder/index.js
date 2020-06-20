@@ -221,12 +221,14 @@ const PageBuilder = (props) => {
 
   const renderSelectOptions = () => {
     return _.map(sectionOptions, (option, key) => {
-      return <option
-        key={key}
-        value={key}
-      >
-        {option.name}
-      </option>
+      return (
+        <option
+          key={key}
+          value={key}
+        >
+          {option.name}
+        </option>
+      )
     })
   }
 
@@ -371,6 +373,7 @@ const PageBuilder = (props) => {
           <select
             className={`button button-secondary ${styles["page-builder__section-select--select"]}`}
             onChange={(event) => setState({ ...state, sectionSelect: (event.target.value) })}
+            value={state.sectionSelect}
           >
             {renderSelectOptions()}
           </select>
