@@ -14,7 +14,11 @@ const TextEditor = (props) => {
   const [useEditor, setUseEditor] = useState(false)
   useEffect(() => {
     setUseEditor(true)
-  }, [])
+    const editor = tinymce.EditorManager.get(props.name)
+    if (editor && props.content === '') {
+      editor.setContent(props.content)
+    }
+  }, [props.content])
 
   if (!useEditor) return null
 
@@ -42,6 +46,7 @@ const TextEditor = (props) => {
           content_style: contentStyle
         }}
         onChange={(event) => {
+          console.log(event.target)
           event.target.value = event.target.getContent()
           event.target.name = name
           onChange(event)

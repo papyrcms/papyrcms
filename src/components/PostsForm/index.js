@@ -11,7 +11,9 @@ import useForm from '@/hooks/useForm'
  * posts of varying types
  *
  * @prop pageTitle: String - The title displayed above the form
+ * @prop className: String - The wrapper class name for the form
  * @prop post: Object - The post being edited if editing
+ * @prop onSubmit: Function - Event that happens after submitting
  * @prop apiEndpoint: String - The api endpoint to post/put the request to
  * @prop redirectRoute: String - The route to redirect to after submitting
  * @prop editing: Boolean - If the form is an edit form. This will use axios.put instead of axois.post
@@ -55,14 +57,20 @@ const PostsForm = (props) => {
   } = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
-    const { apiEndpoint, redirectRoute, editing } = props
+    const {
+      apiEndpoint,
+      redirectRoute,
+      editing,
+      onSubmit = (redirect) => Router.push(redirect)
+    } = props
+
     const postRoute = apiEndpoint ? apiEndpoint : '/api/posts'
     const redirect = redirectRoute ? redirectRoute : '/posts'
 
-    const success = (response) => {
+    const success = (response, resetForm) => {
       let newPosts = []
       if (editing && post) {
         newPosts = _.map(posts, mappedPost => {
@@ -74,14 +82,15 @@ const PostsForm = (props) => {
       }
       
       setPosts(newPosts)
-      Router.push(redirect)
+      resetForm()
+      onSubmit(redirect)
     }
 
-    submitForm(postRoute, { success }, editing)
+    await submitForm(postRoute, { success }, editing)
   }
 
 
-  const { pageTitle, additionalFields } = props
+  const { pageTitle, additionalFields, className } = props
 
   const additionalProps = {}
 
@@ -92,7 +101,7 @@ const PostsForm = (props) => {
   }
 
   return (
-    <div className="post-form">
+    <div className={`post-form ${className}`}>
       <h2 className="heading-secondary">{pageTitle ? pageTitle : 'New Post'}</h2>
       <Form
         handleChange={handleChange}

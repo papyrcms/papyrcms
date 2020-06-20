@@ -17,6 +17,15 @@
     padding-bottom: 10rem;
   }
 
+  &__posts-form {
+    padding: 0;
+  }
+
+  &__content-modal {
+    display: flex;
+    justify-content: center;
+  }
+
   &__info {
     display: grid;
     grid-template-columns: 1fr 1fr;

@@ -190,7 +190,7 @@ const Form = (props) => {
 
       <div className="post-form__bottom">
         {renderPublish()}
-        <input className="button button-primary post-form__submit" type="submit" />
+        <input id="posts-form-submit" className="button button-primary post-form__submit" type="submit" />
       </div>
 
     </form>

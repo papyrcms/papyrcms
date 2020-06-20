@@ -18,6 +18,7 @@ import filterPosts from '@/hooks/filterPosts'
  * @prop posts - Array[Object] - The post that will be displayed on the page
  * @prop enableCommenting - Boolean - Whether or not users can comment on this post
  * @prop path - String - The prefix for accessing the edit page
+ * @prop renderAuthButtons - Boolean - Whether or not to render auth buttons. Default true
  * @prop apiPath - String - The api prefix for CRUD operations
  * @prop redirectRoute - String - The route to redirect to after deleting the post
  * @prop className - String - Any additional classes to wrap the component
@@ -49,6 +50,7 @@ const SectionStandard = (props) => {
     enableCommenting,
     apiPath, className, redirectRoute,
     path, emptyTitle, emptyMessage,
+    renderAuthButtons = true,
 
     // Hook functions
     beforePost = () => null,
@@ -90,11 +92,12 @@ const SectionStandard = (props) => {
 
     if (
       currentUser &&
-      currentUser.isAdmin
+      currentUser.isAdmin &&
+      renderAuthButtons
     ) {
       return (
         <div className="post__buttons">
-          <button className="button button-delete" onClick={onDeleteClick}>Delete</button>
+          <button className="button button-delete" onClick={() => onDeleteClick(post)}>Delete</button>
           <Link href={`/${path}/[id]/edit`} as={`/${path}/${post._id}/edit`}>
             <button className="button button-edit">Edit</button>
           </Link>
@@ -174,7 +177,7 @@ const SectionStandard = (props) => {
   const renderPosts = () => {
     return _.map(props.posts, post => {
       return (
-        <>
+        <div key={post._id}>
           {beforePost(post)}
 
           <div className="post">
@@ -206,7 +209,7 @@ const SectionStandard = (props) => {
           </div>
     
           {afterPost(post)}
-        </>
+        </div>
       )
     })
   }
@@ -471,7 +474,8 @@ export const options = {
     defaultProps: {
       path: 'posts',
       apiPath: '/api/posts',
-      redirectRoute: 'posts'
+      redirectRoute: 'posts',
+      renderAuthButtons: false
     }
   }
 }

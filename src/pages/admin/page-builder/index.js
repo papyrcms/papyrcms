@@ -6,6 +6,8 @@ import userContext from '@/context/userContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
 import keys from '@/keys'
 import Input from '@/components/Input'
+import Modal from '@/components/Modal'
+import PostsForm from '@/components/PostsForm'
 import Page from '../../[page]'
 import styles from './page-builder.module.scss'
 
@@ -408,6 +410,20 @@ const PageBuilder = (props) => {
           {renderDelete()}
         </div>
         <p className={styles["page-builder__validation"]}>{validation}</p>
+
+        <div className={styles['page-builder__content-modal']}>
+          <Modal
+            buttonText="Add Content"
+            buttonClasses='button button-primary'
+            closeId="posts-form-submit"
+          >
+            <PostsForm
+              pageTitle="New Content"
+              onSubmit={() => null}
+              className={styles['page-builder__posts-form']}
+            />
+          </Modal>
+        </div>
 
       </div>
 
