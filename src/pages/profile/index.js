@@ -18,10 +18,10 @@ const ProfilePage = () => {
   if (!currentUser) return null
 
 
-  const onLogoutClick = () => {
+  const onLogoutClick = async () => {
     Router.push('/')
     localStorage.removeItem('token')
-    setCurrentUser(null)
+    await setCurrentUser(null)
   }
 
 

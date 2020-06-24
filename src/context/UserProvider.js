@@ -8,10 +8,8 @@ const UserProvider = (props) => {
 
   const setCurrentUser = async user => {
     const token = localStorage.getItem('token')
-    if (token) {
-      axios.defaults.headers.common = {
-        Authorization: `bearer ${token}`
-      }
+    axios.defaults.headers.common = {
+      Authorization: `bearer ${token}`
     }
     if (!user) {
       const result = await axios.get('/api/auth/currentUser')
