@@ -49,7 +49,7 @@ const ContactForm = (props) => {
 
 
   return (
-    <section className={`${className} 'contact-form'`}>
+    <section className={`${className} contact-form`}>
 
       <form className="contact-form__form" onSubmit={handleSubmit}>
 
