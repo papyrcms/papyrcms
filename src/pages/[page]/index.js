@@ -28,7 +28,7 @@ const Page = (props) => {
     })
 
     // If the page was still not found, don't return anything
-    if (!page) return null
+    if (!page) throw new Error('Page not found')
   }
 
   // Get our filter settings from the page sections
@@ -136,7 +136,8 @@ Page.getInitialProps = async ({ query, req }) => {
       const { data } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
       page = data
     } catch {
-      throw new Error('Page not found')
+      // throw new Error('Page not found')
+      return {}
     }
   }
 
