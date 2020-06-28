@@ -1,5 +1,5 @@
 node_modules
-src/config/_dev.js
+src/config/dev.js
 .next
 .env
 _safeKeeping
