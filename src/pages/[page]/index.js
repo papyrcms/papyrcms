@@ -136,7 +136,7 @@ Page.getInitialProps = async ({ query, req }) => {
       const { data } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
       page = data
     } catch {
-      return {}
+      throw new Error('Page not found')
     }
   }
 
