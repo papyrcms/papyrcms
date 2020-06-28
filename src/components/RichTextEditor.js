@@ -40,6 +40,7 @@ const TextEditor = (props) => {
         content={content}
         id={name}
         config={{
+          convert_urls: false,
           plugins: 'autolink link image lists code',
           toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
           height: 250,
