@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Error from 'next/error'
 import userContext from '@/context/userContext'
 import PostsForm from '@/components/PostsForm'
 import Input from '@/components/Input'
@@ -35,7 +36,7 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => (
 export default () => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm

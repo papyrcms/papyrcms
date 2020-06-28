@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import Error from 'next/error'
 import axios from 'axios'
 import _ from 'lodash'
 import moment from 'moment'
@@ -9,7 +10,7 @@ import styles from './orders.module.scss'
 const Orders = () => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   const [orders, setOrders] = useState([])
   useEffect(() => {

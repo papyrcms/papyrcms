@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import Link from 'next/link'
+import Error from 'next/error'
 import _ from 'lodash'
 import axios from 'axios'
 import userContext from '@/context/userContext'
@@ -11,7 +12,7 @@ const Pages = () => {
 
   const { pages, setPages } = useContext(pagesContext)
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   useEffect(() => {
     const getPages = async () => {

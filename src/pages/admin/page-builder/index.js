@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import Router from 'next/router'
+import Error from 'next/error'
 import userContext from '@/context/userContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
 import keys from '@/keys'
@@ -328,7 +329,7 @@ const PageBuilder = (props) => {
   const { title, url, className, navOrder, validation, page, css } = state
   const { currentUser } = useContext(userContext)
 
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   return (
     <>

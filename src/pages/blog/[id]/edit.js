@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
+import Error from 'next/error'
 import axios from 'axios'
 import userContext from '@/context/userContext'
 import PostsForm from '@/components/PostsForm'
@@ -9,7 +10,7 @@ import keys from '@/keys'
 const BlogEdit = (props) => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   const [blog, setBlog] = useState(props.blog || [])
   const { query } = useRouter()

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import dynamic from 'next/dynamic'
+import Error from 'next/error'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import _ from 'lodash'
@@ -28,7 +29,7 @@ const Page = (props) => {
     })
 
     // If the page was still not found, don't return anything
-    if (!page) throw new Error('Page not found')
+    if (!page) return <Error statusCode={404} />
   }
 
   // Get our filter settings from the page sections
@@ -136,7 +137,6 @@ Page.getInitialProps = async ({ query, req }) => {
       const { data } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
       page = data
     } catch {
-      // throw new Error('Page not found')
       return {}
     }
   }

@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import Error from 'next/error'
 import axios from 'axios'
 import userContext from '@/context/userContext'
 import keys from '@/keys'
@@ -42,7 +43,7 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => {
 const StoreEdit = (props) => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
 
   const [product, setProduct] = useState(props.product)

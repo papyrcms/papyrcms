@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
+import Error from 'next/error'
 import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
@@ -50,7 +51,7 @@ const coordinatesField = ({ values, errors, handleChange, validateField }) => (
 const EventsEdit = (props) => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   const [event, setEvent] = useState(props.event || {})
   const { query } = useRouter()

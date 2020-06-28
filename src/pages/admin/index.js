@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Error from 'next/error'
 import userContext from '@/context/userContext'
 import AdminDashboard from '@/components/AdminDashboard'
 import styles from './admin.module.scss'
@@ -7,7 +8,7 @@ import styles from './admin.module.scss'
 const AdminPage = () => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return null
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   return (
     <div className={styles["admin-page"]}>
