@@ -14,18 +14,18 @@ const DonateForm = (props) => {
   const [paid, setPaid] = useState(false)
 
 
-  const handleSubmit = (source, setProcessing, setValidation) => {
+  const handleSubmit = (source, resetButton, setValidation) => {
 
     switch (true) {
 
       case amount < 1:
         setValidation('You must donate at least 1 dollar.')
-        setProcessing(false)
+        resetButton()
         return
 
       case email === '':
         setValidation('Please enter your email.')
-        setProcessing(false)
+        resetButton()
         return
 
       default:
@@ -44,7 +44,7 @@ const DonateForm = (props) => {
           .catch(error => {
             console.error(error)
             setValidation('Something went wrong. Please try again later.')
-            setProcessing(false)
+            resetButton()
           })
     }
   }

@@ -3,6 +3,7 @@ import axios from 'axios'
 import userContext from '@/context/userContext'
 import useForm from '@/hooks/useForm'
 import Input from './Input'
+import Button from'./Button'
 
 
 const UserInfoForm = (props) => {
@@ -52,7 +53,7 @@ const UserInfoForm = (props) => {
 
   const formState = useForm(INITIAL_STATE)
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, resetButton) => {
     event.preventDefault()
 
     // If the box was checked on submit, clear all shipping fields
@@ -87,11 +88,13 @@ const UserInfoForm = (props) => {
         // hook
         onSubmitSuccess(formState)
       }
+      resetButton()
     }
 
     const error = (err) => {
       // hook
       onSubmitError(formState, err)
+      resetButton()
     }
 
     // hook
@@ -198,15 +201,19 @@ const UserInfoForm = (props) => {
 
   const renderSubmit = () => {
     if (useSubmit) {
-      return <input
-        className="button button-primary"
-        type="submit"
-      />
+      return (
+        <Button
+          onClick={handleSubmit}
+          submittedText="Submitting"
+        >
+          Submit
+        </Button>
+      )
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} id="userInfoForm">
+    <form id="userInfoForm">
       {renderAddressFields(false)}
 
       <Input

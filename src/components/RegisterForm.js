@@ -4,6 +4,7 @@ import settingsContext from '@/context/settingsContext'
 import userContext from '@/context/userContext'
 import useForm from '@/hooks/useForm'
 import Input from './Input'
+import Button from './Button'
 
 
 const RegisterForm = () => {
@@ -26,17 +27,19 @@ const RegisterForm = () => {
   const formState = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, resetButton) => {
     event.preventDefault()
 
     const success = (response) => {
       localStorage.setItem('token', response.data.token)
       setCurrentUser(response.data.user)
+      resetButton()
       Router.push('/profile')
     }
 
     const error = (err) => {
       console.error(err.response)
+      resetButton()
     }
 
     formState.submitForm('/api/auth/register', { success, error })
@@ -44,7 +47,7 @@ const RegisterForm = () => {
 
 
   return (
-    <form onSubmit={event => handleSubmit(event)} className="register-form">
+    <form className="register-form">
       <h3 className="heading-tertiary u-margin-bottom-small">Register</h3>
 
       <Input
@@ -90,11 +93,12 @@ const RegisterForm = () => {
       <p className="register-form__validation">{formState.values.validation}</p>
 
       <div className="register-form__submit">
-        <input
-          type='submit'
-          value='Register'
-          className='button button-primary'
-        />
+        <Button
+          onClick={handleSubmit}
+          submittedText="Submitting"
+        >
+          Register
+        </Button>
       </div>
     </form>
   )

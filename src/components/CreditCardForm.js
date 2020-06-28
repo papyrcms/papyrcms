@@ -8,30 +8,28 @@ import {
   injectStripe
 } from 'react-stripe-elements'
 import keysContext from '@/context/keysContext'
+import Button from './Button'
 
 
 const CreditCardForm = injectStripe((props) => {
 
   const { className = "", stripe, onSubmit } = props
   const [validation, setValidation] = useState('')
-  const [processing, setProcessing] = useState(false)
 
   if (!stripe) return null
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, resetButton) => {
     event.preventDefault()
-
-    setProcessing(true)
 
     const data = await stripe.createSource({ type: "card" })
 
     if (data.error) {
       setValidation(data.error.message || '')
-      setProcessing(false)
+      resetButton()
       return
     }
 
-    onSubmit(data.source, setProcessing, setValidation)
+    onSubmit(data.source, resetButton, setValidation)
   }
 
   const fieldStyle = {
@@ -68,13 +66,13 @@ const CreditCardForm = injectStripe((props) => {
 
       <p className="credit-card-form__validation">{validation}</p>
 
-      <button
-        className="button button-primary credit-card-form__submit"
-        disabled={processing ? true : false}
+      <Button
+        className="credit-card-form__submit"
         onClick={handleSubmit}
+        submittedText="Processing"
       >
-        {processing ? "Processing" : "Submit"}
-      </button>
+        Submit
+      </Button>
     </div>
   )
 })

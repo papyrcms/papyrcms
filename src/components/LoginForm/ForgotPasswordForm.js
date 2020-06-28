@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Input from '../Input'
+import Button from '../Button'
 
 
 const ForgotPasswordForm = (props) => {
@@ -21,7 +22,7 @@ const ForgotPasswordForm = (props) => {
   })
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, resetButton) => {
 
     event.preventDefault()
 
@@ -29,10 +30,12 @@ const ForgotPasswordForm = (props) => {
     axios.post('/api/auth/forgotPassword', { email })
       .then(response => {
         setValidation(response.data.message)
+        resetButton()
       })
       .catch(error => {
         console.error(error)
         setValidation(error.response.data.message)
+        resetButton()
       })
   }
 
@@ -56,12 +59,13 @@ const ForgotPasswordForm = (props) => {
 
       <p className="forgot-password__validation">{validation}</p>
 
-      <button
-        className="button button-primary forgot-password__submit"
+      <Button
+        className="forgot-password__submit"
         onClick={handleSubmit}
+        submittedText="Sending..."
       >
         Send
-      </button>
+      </Button>
     </div>
   )
 }

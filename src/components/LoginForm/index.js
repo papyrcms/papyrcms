@@ -3,6 +3,7 @@ import Router from 'next/router'
 import userContext from '@/context/userContext'
 import useForm from '@/hooks/useForm'
 import Input from '../Input'
+import Button from '../Button'
 import Modal from '../Modal'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
@@ -18,7 +19,7 @@ const LoginForm = () => {
   const formState = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, resetButton) => {
     event.preventDefault()
 
     const success = (res) => {
@@ -27,12 +28,14 @@ const LoginForm = () => {
       Router.push('/profile')
     }
 
-    formState.submitForm('/api/auth/login', { success })
+    const error = () => resetButton()
+
+    formState.submitForm('/api/auth/login', { success, error })
   }
 
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
+    <form className="login-form">
 
       <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
 
@@ -58,11 +61,12 @@ const LoginForm = () => {
 
       <div className="login-form__bottom">
         <div className="login-form__submit">
-          <input
-            type="submit"
-            className='button button-primary'
-            value="Login"
-          />
+          <Button
+            onClick={handleSubmit}
+            submittedText="Checking"
+          >
+            Login
+          </Button>
         </div>
 
         <Modal

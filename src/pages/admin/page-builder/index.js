@@ -6,6 +6,7 @@ import userContext from '@/context/userContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
 import keys from '@/keys'
 import Input from '@/components/Input'
+import Button from '@/components/Button'
 import Modal from '@/components/Modal'
 import PostsForm from '@/components/PostsForm'
 import Page from '../../[page]'
@@ -253,7 +254,7 @@ const PageBuilder = (props) => {
   }
 
 
-  const handleSubmit = () => {
+  const handleSubmit = (event, resetButton) => {
 
     const { title, url, className, navOrder, sections, id, css } = state
     const postObject = {
@@ -268,31 +269,36 @@ const PageBuilder = (props) => {
     if (id) {
 
       axios.put(`/api/pages/${id}`, postObject).then(response => {
+        resetButton()
         Router.push('/admin/pages')
       }).catch(err => {
+        resetButton()
         setState({ ...state, validation: err.response.data.message })
       })
 
     } else {
 
       axios.post("/api/pages", postObject).then(response => {
+        resetButton()
         Router.push('/admin/pages')
       }).catch(err => {
+        resetButton()
         setState({ ...state, validation: err.response.data.message })
       })
     }
   }
 
 
-  const deletePage = () => {
+  const deletePage = (event, resetButton) => {
 
     const confirm = window.confirm('Are you sure you want to delete this page?')
 
     if (confirm) {
       const { id } = state
       axios.delete(`/api/pages/${id}`).then(response => {
+        resetButton()
         Router.push('/admin/pages')
-      })
+      }).catch(err => resetButton())
     }
   }
 
@@ -301,12 +307,15 @@ const PageBuilder = (props) => {
 
     const { id } = state
     if (id) {
-      return <button
-        className={`button button-delete ${styles["page-builder__section-bottom--delete"]}`}
-        onClick={() => deletePage()}
-      >
-        Delete Page
-      </button>
+      return (
+        <Button
+          type="delete"
+          onClick={deletePage}
+          submittedText="Deleting..."
+        >
+          Delete Page
+        </Button>
+      )
     }
   }
 
@@ -403,12 +412,12 @@ const PageBuilder = (props) => {
         </div>
 
         <div className={styles["page-builder__section-bottom"]}>
-          <button
-            className="button button-primary"
-            onClick={() => handleSubmit()}
+          <Button
+            onClick={handleSubmit}
+            submittedText="Saving..."
           >
             Submit
-          </button>
+          </Button>
 
           {renderDelete()}
         </div>

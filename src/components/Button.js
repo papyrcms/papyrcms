@@ -24,6 +24,7 @@ const Button = (props) => {
   const actualClassName = `button button-${type} ${className}`
   
   const handleClick = (event) => {
+
     setButtonText(submittedText)
     setButtonDisabled(true)
 

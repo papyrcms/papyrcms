@@ -3,6 +3,7 @@ import Router from 'next/router'
 import Link from 'next/link'
 import userContext from '@/context/userContext'
 import Input from '@/components/Input'
+import Button from '@/components/Button'
 import useForm from '@/hooks/useForm'
 import UserInfoForm from '@/components/UserInfoForm'
 import styles from './profile.module.scss'
@@ -25,14 +26,17 @@ const ProfilePage = () => {
   }
 
 
-  const handlePasswordSubmit = (event) => {
+  const handlePasswordSubmit = (event, resetButton) => {
     event.preventDefault()
 
     const success = (response, setValidation) => {
       setValidation(response.data.message)
+      resetButton()
     }
 
-    password.submitForm('/api/auth/changePassword', { success })
+    const error = () => resetButton()
+
+    password.submitForm('/api/auth/changePassword', { success, error })
   }
 
 
@@ -56,12 +60,11 @@ const ProfilePage = () => {
       <div className={styles["profile__credentials"]}>
         <div className={styles["profile__logout"]}>
           <span>Not {!!currentUser.firstName ? currentUser.firstName : currentUser.email}?</span>
-          <button
+          <Button
             onClick={onLogoutClick}
-            className="button button-primary"
           >
             Log Out
-          </button>
+          </Button>
         </div>
         {renderAdmin()}
       </div>
@@ -76,7 +79,7 @@ const ProfilePage = () => {
 
       <div className={styles["profile__password"]}>
         <h3>Reset Password</h3>
-        <form className={styles["profile__form"]} onSubmit={handlePasswordSubmit}>
+        <form className={styles["profile__form"]}>
           <div className="u-form-row">
             <Input
               label="Current Password"
@@ -102,11 +105,12 @@ const ProfilePage = () => {
               required
             />
           </div>
-          <input
-            className="button button-primary"
-            type="submit"
-            value="Reset"
-          />
+          <Button
+            onClick={handlePasswordSubmit}
+            submittedText="Checking"
+          >
+            Reset
+          </Button>
           <p className={styles["profile__validation"]}>{password.values.validation}</p>
         </form>
       </div>

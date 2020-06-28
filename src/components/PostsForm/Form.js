@@ -4,6 +4,7 @@ import _ from 'lodash'
 import RichTextEditor from '../RichTextEditor'
 import Media from '../Media'
 import Input from '../Input'
+import Button from '../Button'
 
 const Form = (props) => {
 
@@ -130,7 +131,6 @@ const Form = (props) => {
     <form
       encType="multipart/form-data"
       className="post-form__form"
-      onSubmit={(event) => handleSubmit(event)}
     >
 
       <div className="u-form-row">
@@ -190,7 +190,14 @@ const Form = (props) => {
 
       <div className="post-form__bottom">
         {renderPublish()}
-        <input id="posts-form-submit" className="button button-primary post-form__submit" type="submit" />
+        <Button
+          id="posts-form-submit"
+          className="post-form__submit"
+          submittedText="Saving..."
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
       </div>
 
     </form>

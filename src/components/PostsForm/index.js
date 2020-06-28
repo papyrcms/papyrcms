@@ -57,7 +57,7 @@ const PostsForm = (props) => {
   } = useForm(INITIAL_STATE)
 
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, resetButton) => {
     event.preventDefault()
 
     const {
@@ -82,11 +82,14 @@ const PostsForm = (props) => {
       }
       
       setPosts(newPosts)
+      resetButton()
       resetForm()
       onSubmit(redirect)
     }
 
-    await submitForm(postRoute, { success }, editing)
+    const error = () => resetButton()
+
+    await submitForm(postRoute, { success, error }, editing)
   }
 
 

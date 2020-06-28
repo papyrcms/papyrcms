@@ -189,7 +189,7 @@ const Init = () => {
 
         <p>{formState.validation}</p>
 
-        <button className="button button-primary" type="submit">Submit</button>
+        <input className="button button-primary" type="submit" />
 
       </form>
     )
