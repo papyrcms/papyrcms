@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Error from 'next/error'
 import Router, { useRouter } from 'next/router'
 import jwt from 'jsonwebtoken'
 import Input from '@/components/Input'
@@ -13,8 +14,8 @@ const ForgotPasswordPage = () => {
   const [validation, setValidation] = useState('')
   const { query } = useRouter()
   const { token } = query
-  if (typeof token !== 'string') return null
 
+  if (typeof token !== 'string') return <Error statusCode={403} />
 
   const handleSubmit = (event) => {
 
@@ -38,7 +39,7 @@ const ForgotPasswordPage = () => {
   }
 
   const data = jwt.decode(token)
-  if (!data) return null
+  if (!data) return <Error statusCode={403} />
 
   const { email } = data
 

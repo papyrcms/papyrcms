@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react'
+import Error from 'next/error'
 import Router from 'next/router'
 import postsContext from '@/context/postsContext'
 import pagesContext from '@/context/pagesContext'
@@ -16,7 +17,7 @@ const Init = () => {
   const { setCurrentUser } = useContext(userContext)
 
   if (posts.length > 0 || pages.length > 0) {
-    return null
+    return <Error statusCode={403} />
   }
 
   const INITIAL_STATE = {

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import Router from 'next/router'
+import Error from 'next/error'
 import Link from 'next/link'
 import userContext from '@/context/userContext'
 import Input from '@/components/Input'
@@ -16,7 +17,7 @@ const ProfilePage = () => {
   const { currentUser, setCurrentUser } = useContext(userContext)
 
 
-  if (!currentUser) return null
+  if (!currentUser) return <Error statusCode={403} />
 
 
   const onLogoutClick = async () => {
