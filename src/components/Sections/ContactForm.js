@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import userContext from '@/context/userContext'
 import Input from '@/components/Input'
+import Button from '@/components/Button'
 import useForm from '@/hooks/useForm'
 
 
@@ -37,21 +38,24 @@ const ContactForm = (props) => {
   } = useForm({ name, email, message: '', validation: '' })
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, resetButton) => {
     event.preventDefault()
 
     const success = (response, setValidation) => {
       setValidation('Thanks for reaching out! I\'ll be in touch.')
+      resetButton()
     }
 
-    submitForm('/api/messages', { success })
+    const error = () => resetButton()
+
+    submitForm('/api/messages', { success, error })
   }
 
 
   return (
     <section className={`${className} contact-form`}>
 
-      <form className="contact-form__form" onSubmit={handleSubmit}>
+      <form className="contact-form__form">
 
         <div className="u-form-row">
           <Input
@@ -92,11 +96,13 @@ const ContactForm = (props) => {
           <p className="contact-form__validation">{errors.message}</p>
         </div>
 
-        <input
-          type="submit"
-          className="button button-primary contact-form__submit"
-          value="Send"
-        />
+        <Button
+          onClick={handleSubmit}
+          className="contact-form__submit"
+          submittedText="Sending"
+        >
+          Send
+        </Button>
 
         <p className="contact-form__validation">{values.validation}</p>
 
