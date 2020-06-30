@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import _ from 'lodash'
 import keys from '@/keys'
 
 
@@ -29,13 +30,29 @@ export const create = async (Model, fields) => {
 
 export const findOne = async (Model, conditions, options = {}) => {
 
-  let record = await Model.findOne(conditions)
+  const record = await Model.findOne(conditions)
 
   if (options.include) {
-    for (const inclusion of options.include) {
+    _.forEach(options.include, inclusion => {
       record.populate(inclusion).execPopulate()
-    }
+    })
   }
 
   return record
+}
+
+
+export const findAll = async (Model, conditions, options) => {
+
+  const records = await Model.find(conditions)
+
+  if (options.include) {
+    _.forEach(records, record => {
+      _.forEach(options.include, inclusion => {
+        record.populate(inclusion).execPopulate()
+      })
+    })
+  }
+
+  return records
 }
