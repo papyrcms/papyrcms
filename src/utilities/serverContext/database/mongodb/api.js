@@ -42,7 +42,7 @@ export const findOne = async (Model, conditions, options = {}) => {
 }
 
 
-export const findAll = async (Model, conditions, options) => {
+export const findAll = async (Model, conditions = {}, options = {}) => {
 
   const records = await Model.find(conditions)
 
@@ -55,4 +55,19 @@ export const findAll = async (Model, conditions, options) => {
   }
 
   return records
+}
+
+
+export const countAll = async (Model) => {
+  return await Model.estimatedDocumentCount()
+}
+
+
+export const update = async (Model, conditions, fields) => {
+  await Model.findOneAndUpdate(conditions, fields)
+}
+
+
+export const destroyAll = async (Model, conditions = {}) => {
+  await Model.deleteMany(conditions)
 }
