@@ -19,7 +19,15 @@ export const init = async () => {
 }
 
 
-export const findOne = async (Model, conditions, options) => {
+export const create = async (Model, fields) => {
+
+  const record = new Model(fields)
+  await record.save()
+  return record
+}
+
+
+export const findOne = async (Model, conditions, options = {}) => {
 
   let record = await Model.findOne(conditions)
 

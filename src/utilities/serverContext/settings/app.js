@@ -1,7 +1,7 @@
 import configureSettings from './configureSettings'
 
 
-export default async () => {
+export default async (database) => {
   const defaultSettings = { enableMenu: false }
-  return await configureSettings("app", defaultSettings)
+  return await configureSettings("app", defaultSettings, database)
 }
