@@ -1,21 +1,8 @@
-import multer from 'multer'
+import formidable from 'formidable'
 import cloudinary from 'cloudinary'
 import serverContext from '@/serverContext'
 import keys from '@/keys'
 
-
-const storage = multer.diskStorage({
-  filename: (req, file, callback) => {
-    callback(null, Date.now() + file.originalname)
-  }
-})
-const fileFilter = (req, file, cb) => {
-  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
-    return cb(new Error('Only image files are allowed!'), false)
-  }
-  cb(null, true)
-}
-const upload = multer({ storage, fileFilter })
 
 const { cloudinaryCloudName, cloudinaryApiKey, cloudinaryApiSecret } = keys
 cloudinary.v2.config({
@@ -40,13 +27,18 @@ export default async (req, res) => {
   }
 
   if (req.method === 'POST') {
-    const err = await upload.single('file')(req, res)
-    if (err) {
-      return await done(401, { message: err.message })
-    }
+    const form = new formidable.IncomingForm();
+    form.parse(req, async (err, fields, files) => {
 
-    const uploadResponse = await cloudinary.v2.uploader.upload(req.file.path, { resource_type: 'auto', angle: 0 })
-    return await done(200, uploadResponse.secure_url)
+      if (err) {
+        return await done(500, err)
+      }
+
+      const uploadResponse = await cloudinary.v2.uploader.upload(files.file.path, { resource_type: 'auto', angle: 0 })
+      return await done(200, uploadResponse.secure_url)
+    })
+
+    return
   }
 
   return await done(404, { message: 'Page not found.' })
