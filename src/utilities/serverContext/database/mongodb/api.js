@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
 import keys from '@/keys'
 
-export default async () => {
+
+export const init = async () => {
   if (mongoose.connection._readyState !== 1) {
     console.log('Connecting to DB')
     const mongooseConfig = {
@@ -15,4 +16,18 @@ export default async () => {
       schema.options.usePushEach = true
     })
   }
+}
+
+
+export const findOne = async (Model, conditions, options) => {
+
+  let record = await Model.findOne(conditions)
+
+  if (options.include) {
+    for (const inclusion of options.include) {
+      record.populate(inclusion).execPopulate()
+    }
+  }
+
+  return record
 }

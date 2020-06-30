@@ -1,12 +1,8 @@
 import jwt from 'jsonwebtoken'
-import User from '@/models/user'
 import keys from '@/keys'
 
-// to initialize the product model
-require('@/models/product')
 
-
-export default async (req) => {
+export default async (req, database) => {
 
   if (req.headers.authorization && req.headers.authorization.includes('bearer ')) {
     const token = req.headers.authorization.replace('bearer ', '')
@@ -15,7 +11,8 @@ export default async (req) => {
       const tokenObject = jwt.verify(token, keys.jwtSecret)
       const { uid } = tokenObject
       if (uid) {
-        return await User.findOne({ _id: uid, isBanned: false }).populate('cart').lean()
+        const { User, findOne } = database
+        return await findOne(User, { _id: uid, isBanned: false }, { include: ['cart'] })
       }
     } catch (err) {}
   }
