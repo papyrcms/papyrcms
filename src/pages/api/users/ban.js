@@ -4,15 +4,16 @@ import User from "@/models/user"
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'PUT') {
     const { userId, isBanned } = req.body
+    const { update, User } = database
 
-    await User.findByIdAndUpdate(userId, { isBanned })
+    await update(User, { _id: userId }, { isBanned })
     return await done(200, { message: 'Success' })
   }
 

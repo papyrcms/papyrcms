@@ -68,6 +68,11 @@ export const update = async (Model, conditions, fields) => {
 }
 
 
+export const destroy = async (Model, conditions) => {
+  await Model.findOneAndDelete(conditions)
+}
+
+
 export const destroyAll = async (Model, conditions = {}) => {
   await Model.deleteMany(conditions)
 }
