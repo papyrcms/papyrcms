@@ -88,13 +88,13 @@ const UserInfoForm = (props) => {
         // hook
         onSubmitSuccess(formState)
       }
-      resetButton()
+      if (resetButton) resetButton()
     }
 
     const error = (err) => {
       // hook
       onSubmitError(formState, err)
-      resetButton()
+      if (resetButton) resetButton()
     }
 
     // hook
@@ -213,7 +213,7 @@ const UserInfoForm = (props) => {
   }
 
   return (
-    <form id="userInfoForm">
+    <form id="userInfoForm" onSubmit={handleSubmit}>
       {renderAddressFields(false)}
 
       <Input

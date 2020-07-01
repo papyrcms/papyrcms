@@ -28,9 +28,9 @@ const Checkout = (props) => {
   const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(() => null)
   const [handleSubmitError, setHandleSubmitError] = useState(() => null)
 
-  const handleCardSubmit = (source, setProcessing, setValidation) => {
+  const handleCardSubmit = (source, resetButton, setValidation) => {
     const errorFunction = () => {
-      setProcessing(false)
+      resetButton()
       setValidation('Something went wrong.')
     }
     setHandleSubmitError(() => errorFunction)
@@ -45,7 +45,7 @@ const Checkout = (props) => {
       }
 
       const success = () => {
-        setProcessing(false)
+        resetButton()
         setValidation('Your order has been sent!')
         if (fromCart) {
           cartState.clearCart()
@@ -53,7 +53,7 @@ const Checkout = (props) => {
       }
 
       const error = (err) => {
-        setProcessing(false)
+        resetButton()
         if (err.response) {
           setValidation(err.response.data.message)
         }
