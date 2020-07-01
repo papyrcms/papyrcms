@@ -2,9 +2,6 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import serverContext from '@/serverContext'
 import keys from '@/keys'
-// import User from '@/models/user'
-// import Post from '@/models/post'
-// import Page from '@/models/page'
 
 
 export default async (req, res) => {

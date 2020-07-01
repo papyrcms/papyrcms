@@ -1,5 +1,4 @@
 import serverContext from "@/serverContext"
-import User from "@/models/user"
 
 
 export default async (req, res) => {
