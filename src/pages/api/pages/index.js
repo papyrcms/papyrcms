@@ -1,25 +1,25 @@
 import _ from 'lodash'
 import serverContext from '@/serverContext'
-import Page from '@/models/page'
 
 
-const getPages = async () => {
-  return await Page.find().sort({ created: -1 }).lean()
+const getPages = async (database) => {
+  const { findAll, Page } = database
+  return await findAll(Page, {}, { sort: { created: -1 } })
 }
 
 
-const createPage = async (body) => {
-  const page = new Page({
+const createPage = async (body, database) => {
+  const pageData = {
     title: body.title,
     className: body.className,
     route: body.route,
     navOrder: body.navOrder,
     css: body.css,
     sections: []
-  })
+  }
 
   // Make sure the page has a route
-  if (!page.route) {
+  if (!pageData.route) {
     throw new Error("Please choose a page route.")
   }
 
@@ -47,17 +47,17 @@ const createPage = async (body) => {
         return pendingTag
       }
     })
-    page.sections.push(JSON.stringify(section))
+    pageData.sections.push(JSON.stringify(section))
   }
 
   // Make sure the page has at least one section
-  if (page.sections.length === 0) {
+  if (pageData.sections.length === 0) {
     throw new Error("Please add at least one section.")
   }
 
   try {
-    await page.save()
-    return page
+    const { create, Page } = database
+    return await create(Page, pageData)
   } catch (err) {
     let message = "There was a problem. Try again later."
     if (err.code === 11000) {
@@ -70,10 +70,10 @@ const createPage = async (body) => {
 
 export default async (req, res) => {
   
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
 
   if (req.method === 'GET') {
-    const pages = await getPages()
+    const pages = await getPages(database)
     return await done(200, pages)
   }
 
@@ -82,7 +82,7 @@ export default async (req, res) => {
     if (!user || !user.isAdmin) {
       return await done(403, { message: 'You are not allowed to do that.' })
     }
-    const page = await createPage(req.body)
+    const page = await createPage(req.body, database)
     return await done(200, page)
   }
 
