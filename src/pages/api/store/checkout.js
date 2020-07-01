@@ -2,14 +2,11 @@ import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
 import Payments from '@/utilities/payments'
 import keys from '@/keys'
-import Order from "@/models/order"
-import Product from "@/models/product"
-import User from "@/models/user"
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
 
   if (req.method === 'POST') {
 
@@ -67,7 +64,7 @@ export default async (req, res) => {
     if (charge) {
 
       // Create an order
-      const order = new Order({ notes })
+      const order = { notes, products: [] }
 
       if (user) {
         order.user = user
@@ -88,11 +85,13 @@ export default async (req, res) => {
       // Start the email message
       let message = 'A new order has been placed for the following items:\n\n'
 
+      const { Product, Order, create, update } = database
+
       // Save the updated products and put in the order
       for (const product of products) {
-        const found = await Product.findById(product._id)
+        const found = await findOne(Product, { _id: product._id })
         found.quantity--
-        found.save()
+        await update(Product, { _id: found._id }, { quantity: found.quantity})
         order.products.push(found)
 
         message += `- ${product.title}\n`
@@ -103,12 +102,12 @@ export default async (req, res) => {
       message += '\nMake sure you send it as soon as possible!'
 
       // Save and send the order
-      order.save()
+      await create(Order, order)
       const mailer = new Mailer()
       mailer.sendEmail({ message }, keys.adminEmail, 'plain', 'New Order!')
 
       if (user && fromCart) {
-        await User.findOneAndUpdate({ _id: user._id }, { cart: [] })
+        await update(User, { _id: user._id }, { cart: [] })
       }
 
       return await done(200, 'All items purchased')
