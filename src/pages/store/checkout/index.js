@@ -29,7 +29,6 @@ const Checkout = (props) => {
   const [handleSubmitError, setHandleSubmitError] = useState(() => null)
 
   const handleCardSubmit = (source, resetButton, setValidation) => {
-
     const errorFunction = () => {
       resetButton()
       setValidation('Something went wrong.')
