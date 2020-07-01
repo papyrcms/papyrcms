@@ -1,15 +1,15 @@
 import serverContext from '@/serverContext'
 import Mailer from "@/utilities/mailer"
 import keys from "@/keys"
-import Message from '@/models/message'
 
 
-const getMessages = async () => {
-  return await Message.find().sort({ created: -1 })
+const getMessages = async (database) => {
+  const { findAll, Message } = database
+  return await findAll(Message, {}, { sort: { created: -1 } })
 }
 
 
-const createMessage = async (body, enableEmailingToAdmin) => {
+const createMessage = async (body, enableEmailingToAdmin, database) => {
 
   const messageBody = {
     name: body.name,
@@ -29,27 +29,26 @@ const createMessage = async (body, enableEmailingToAdmin) => {
     }
   }
 
-  const message = new Message(messageBody)
-  await message.save()
-  return message
+  const { create, Message } = database
+  return await create(Message, messageData)
 }
 
 
 export default async (req, res) => {
 
-  const { user, settings, done } = await serverContext(req, res)
+  const { user, settings, done, database } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     if (!user || !user.isAdmin) {
       return await done(403, { message: 'You are not allowed to do that.' })
     }
-    const messages = await getMessages()
+    const messages = await getMessages(database)
     return await done(200, messages)
   }
 
 
   if (req.method === 'POST') {
-    const message = await createMessage(req.body, settings.enableEmailingToAdmin)
+    const message = await createMessage(req.body, settings.enableEmailingToAdmin, database)
     return await done(200, message)
   }
 
