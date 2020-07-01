@@ -85,7 +85,7 @@ export default async (req, res) => {
       // Start the email message
       let message = 'A new order has been placed for the following items:\n\n'
 
-      const { Product, Order, create, update } = database
+      const { Product, Order, User, findOne, create, update } = database
 
       // Save the updated products and put in the order
       for (const product of products) {
