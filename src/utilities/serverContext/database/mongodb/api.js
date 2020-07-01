@@ -30,31 +30,33 @@ export const create = async (Model, fields) => {
 
 export const findOne = async (Model, conditions, options = {}) => {
 
-  const record = await Model.findOne(conditions)
+  const record = Model.findOne(conditions)
 
   if (options.include) {
     _.forEach(options.include, inclusion => {
-      record.populate(inclusion).execPopulate()
+      record.populate(inclusion)
     })
   }
 
-  return record
+  return await record.exec()
 }
 
 
 export const findAll = async (Model, conditions = {}, options = {}) => {
 
-  const records = await Model.find(conditions)
+  const records = Model.find(conditions)
+
+  if (options.sort) {
+    records.sort(options.sort)
+  }
 
   if (options.include) {
-    _.forEach(records, record => {
-      _.forEach(options.include, inclusion => {
-        record.populate(inclusion).execPopulate()
-      })
+    _.forEach(options.include, inclusion => {
+      records.populate(inclusion)
     })
   }
 
-  return records
+  return await records.exec()
 }
 
 

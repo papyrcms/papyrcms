@@ -1,17 +1,20 @@
 import serverContext from "@/serverContext"
-import Order from "@/models/order"
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
-    const orders = await Order.find().sort({ created: -1 })
-      .populate('user').populate('products').lean()
+    const { Order, findAll } = database
+    const options = {
+      sort: { created: -1 },
+      include: ['user', 'products']
+    }
+    const orders = await findAll(Order, {}, options)
 
     return await done(200, orders)
   }
