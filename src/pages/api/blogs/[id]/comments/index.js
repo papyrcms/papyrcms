@@ -1,11 +1,9 @@
 import serverContext from "@/serverContext"
-import Blog from "@/models/blog"
-import Comment from "@/models/comment"
 
 
 export default async (req, res) => {
 
-  const { user, settings, done } = await serverContext(req, res)
+  const { user, settings, done, database } = await serverContext(req, res)
 
   if (
     (!user || !user.isAdmin) && (
@@ -17,15 +15,18 @@ export default async (req, res) => {
   }
 
   if (req.method === 'POST') {
-    const comment = new Comment({
+
+    const { findOne, create, update, Blog, Comment } = database
+    const commentData = {
       content: req.body.content,
       author: user
-    })
-    const blog = await Blog.findById(req.query.id)
+    }
+    const comment = await create(Comment, commentData)
 
-    comment.save()
-    blog.comments.push(comment)
-    blog.save()
+    const blog = await findOne(Blog, { _id: req.query.id })
+    const newComments = [...blog.comments, comment]
+    await update(Blog, { _id: req.query.id }, { comments: newComments })
+
     return await done(200, comment)
   }
 
