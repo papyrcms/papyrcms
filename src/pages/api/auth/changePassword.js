@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt'
 import serverContext from "@/serverContext"
-import User from "@/models/user"
+import { update } from '@/utilities/serverContext/database/mongodb/api'
 
 
 export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { user, done } = await serverContext(req, res)
+    const { user, done, database } = await serverContext(req, res)
 
     if (!user) {
       return await done(403, { message: 'You must be logged in to do that.' })
@@ -24,7 +24,8 @@ export default async (req, res) => {
       return await done(401, { message: 'You need to fill in your new password.' })
     }
 
-    const foundUser = await User.findById(user._id)
+    const { findOne, update, User } = database
+    const foundUser = await findOne(User, { _id: id })
 
     if (!foundUser) {
       return await done(401, { message: 'Something went wrong. Try again later.' })
@@ -55,8 +56,7 @@ export default async (req, res) => {
       return await done(400, error)
     }
 
-    foundUser.password = passwordHash
-    foundUser.save()
+    await update(User, { _id: id }, { password: passwordHash })
     return await done(200, { message: 'Your password has been saved!' })
   }
 

@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken'
 import keys from '@/keys'
 import serverContext from "@/serverContext"
 import Mailer from '@/utilities/mailer'
-import User from '@/models/user'
 
 
 const verifyEmailSyntax = (email) => {
@@ -16,7 +15,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { settings, done } = await serverContext(req, res)
+    const { settings, done, database } = await serverContext(req, res)
 
     const { firstName, lastName, email, password, passwordConfirm } = req.body
 
@@ -46,16 +45,17 @@ export default async (req, res) => {
       return await done(400, error)
     }
 
-    // Set username and email as the user's email
-    const newUser = new User({
+    const userData = {
       email,
       password: passwordHash,
       firstName,
       lastName
-    })
+    }
+    let newUser
 
     try {
-      await newUser.save()
+      const { create, User } = database
+      newUser = await create(User, userData) 
     } catch (error) {
 
       let message = 'Uh oh, something went wrong.'
@@ -66,7 +66,7 @@ export default async (req, res) => {
     }
 
     if (settings.enableEmailingToUsers) {
-      const mailer = new Mailer()
+      const mailer = new Mailer(database)
       const subject = `Welcome, ${newUser.firstName}!`
 
       await mailer.sendEmail(newUser._doc, newUser.email, 'welcome', subject)

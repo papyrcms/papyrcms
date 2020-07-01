@@ -29,7 +29,7 @@ const createPost = async (body, enableEmailingToUsers, database) => {
   const post = create(Post, postData)
 
   // If a bulk-email post was published, send it
-  const mailer = new Mailer()
+  const mailer = new Mailer(database)
   if (
     enableEmailingToUsers &&
     post.tags.includes(mailer.templateTag) &&

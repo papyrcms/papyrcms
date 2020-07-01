@@ -103,7 +103,7 @@ export default async (req, res) => {
 
       // Save and send the order
       await create(Order, order)
-      const mailer = new Mailer()
+      const mailer = new Mailer(database)
       mailer.sendEmail({ message }, keys.adminEmail, 'plain', 'New Order!')
 
       if (user && fromCart) {

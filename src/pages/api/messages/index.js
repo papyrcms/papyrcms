@@ -19,7 +19,7 @@ const createMessage = async (body, enableEmailingToAdmin, database) => {
   }
 
   if (enableEmailingToAdmin) {
-    const mailer = new Mailer()
+    const mailer = new Mailer(database)
     const subject = `New message from ${messageBody.name}!`
 
     const sent = mailer.sendEmail(messageBody, keys.adminEmail, "contact", subject)
