@@ -36,6 +36,9 @@ export const findOne = async (Model, conditions, options = {}) => {
     _.forEach(options.include, inclusion => {
       record.populate(inclusion)
     })
+    if (options.include.includes('comments')) {
+      record.populate({ path: "comments", populate: { path: "author" } })
+    }
   }
 
   return await record.exec()
@@ -54,6 +57,9 @@ export const findAll = async (Model, conditions = {}, options = {}) => {
     _.forEach(options.include, inclusion => {
       records.populate(inclusion)
     })
+    if (options.include.includes('comments')) {
+      records.populate({ path: "comments", populate: { path: "author" } })
+    }
   }
 
   return await records.exec()

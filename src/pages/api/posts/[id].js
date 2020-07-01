@@ -1,38 +1,28 @@
 import _ from 'lodash'
 import serverContext from "@/serverContext"
-import Post from "@/models/post"
-import Comment from "@/models/comment"
 import Mailer from "@/utilities/mailer"
 
 
-const getPost = async (id) => {
+const getPost = async (id, database) => {
   let post
+  const { Post, findOne } = database
   try {
-    post = await Post.findById(id)
-      .populate("comments")
-      .populate({ path: "comments", populate: { path: "author" } })
-      .lean()
+    post = await findOne(Post, { _id: id }, { include: 'comments' })
   } catch (err) {}
 
   if (!post) {
-    post = await Post.findOne({ slug: id })
-      .populate("comments")
-      .populate({ path: "comments", populate: { path: "author" } })
-      .lean()
+    post = await findOne(Post, { slug: id }, { include: 'comments' })
   }
 
   if (!post) {
-    post = await Post.findOne({ slug: new RegExp(id, 'i') })
-      .populate("comments")
-      .populate({ path: "comments", populate: { path: "author" } })
-      .lean()
+    post = await findOne(Post, { slug: new RegExp(id, 'i') }, { include: 'comments' })
   }
 
   return post
 }
 
 
-const updatePost = async (id, body, enableEmailingToUsers) => {
+const updatePost = async (id, body, enableEmailingToUsers, database) => {
   if (body.tags) {
     const newTags = _.map(_.split(body.tags, ','), tag => {
       let pendingTag = tag
@@ -45,11 +35,13 @@ const updatePost = async (id, body, enableEmailingToUsers) => {
   }
   const postDocument = { _id: id }
   body.slug = body.title.replace(/\s+/g, "-").toLowerCase()
-  await Post.findOneAndUpdate(postDocument, body)
+
+  const { update, findOne } = database
+  await update(Post, postDocument, body)
 
   // If a bulk-email post was published, send it
   const mailer = new Mailer()
-  const post = await Post.findOne(postDocument)
+  const post = await findOne(Post, postDocument)
   if (
     enableEmailingToUsers &&
     post.tags.includes(mailer.templateTag) &&
@@ -63,14 +55,16 @@ const updatePost = async (id, body, enableEmailingToUsers) => {
 }
 
 
-const deletePost = async (id) => {
-  const post = await Post.findById(id)
+const deletePost = async (id, database) => {
+  const { Post, Comment, findOne, destroy } = database
+
+  const post = await findOne(Post, { _id: id })
 
   _.forEach(post.comments, async comment => {
-    await Comment.findOneAndDelete({ _id: comment })
+    await destroy(Comment, { _id: comment })
   })
 
-  await Post.findByIdAndDelete(id)
+  await destroy(Post, { _id: id })
 
   return "post deleted"
 }
@@ -78,10 +72,10 @@ const deletePost = async (id) => {
 
 export default async (req, res) => {
 
-  const { user, settings, done } = await serverContext(req, res)
+  const { user, settings, done, database } = await serverContext(req, res)
 
   if (req.method === 'GET') {
-    const post = await getPost(req.query.id)
+    const post = await getPost(req.query.id, database)
     if ((!post || !post.published) && (!user || !user.isAdmin)) {
       return await done(403, { message: 'You are not allowed to do that.' })
     }
@@ -93,7 +87,7 @@ export default async (req, res) => {
     if (!user || !user.isAdmin) {
       return await done(403, { message: 'You are not allowed to do that.' })
     }
-    const post = await updatePost(req.query.id, req.body, settings.enableEmailingToUsers)
+    const post = await updatePost(req.query.id, req.body, settings.enableEmailingToUsers, database)
     return await done(200, post)
   }
 
@@ -102,7 +96,7 @@ export default async (req, res) => {
     if (!user || !user.isAdmin) {
       return await done(403, { message: 'You are not allowed to do that.' })
     }
-    const message = await deletePost(req.query.id)
+    const message = await deletePost(req.query.id, database)
     return await done(200, message)
   }
 

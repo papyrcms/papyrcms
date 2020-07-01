@@ -1,15 +1,15 @@
 import _ from 'lodash'
 import serverContext from "@/serverContext"
-import Post from "@/models/post"
 import Mailer from "@/utilities/mailer"
 
 
-const getPosts = async () => {
-  return await Post.find().sort({ created: -1 }).lean()
+const getPosts = async (database) => {
+  const { findAll, Post } = database
+  return await findAll(Post, {}, { sort: { created: -1 } })
 }
 
 
-const createPost = async (body, enableEmailingToUsers) => {
+const createPost = async (body, enableEmailingToUsers, database) => {
   if (body.tags) {
     const newTags = _.map(_.split(body.tags, ','), tag => {
       let pendingTag = tag
@@ -21,9 +21,12 @@ const createPost = async (body, enableEmailingToUsers) => {
     body.tags = [...new Set(newTags)]
   }
 
-  let post = new Post(body)
-  post.slug = post.title.replace(/\s+/g, '-').toLowerCase()
-  post = await post.save()
+  const { Post, create } = database
+
+  const postData = {
+    ...body, slug: post.title.replace(/\s+/g, '-').toLowerCase()
+  }
+  const post = create(Post, postData)
 
   // If a bulk-email post was published, send it
   const mailer = new Mailer()
@@ -42,19 +45,19 @@ const createPost = async (body, enableEmailingToUsers) => {
 
 export default async (req, res) => {
 
-  const { user, settings, done } = await serverContext(req, res)
+  const { user, settings, done, database } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
-    const posts = await getPosts()
+    const posts = await getPosts(database)
     return await done(200, posts)
   }
 
 
   if (req.method === 'POST') {
-    const post = await createPost(req.body, settings.enableEmailingToUsers)
+    const post = await createPost(req.body, settings.enableEmailingToUsers, database)
     return await done(200, post)
   }
 

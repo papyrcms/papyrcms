@@ -1,13 +1,13 @@
 import serverContext from '@/serverContext'
-import Post from '@/models/post'
 
 
 export default async (req, res) => {
 
-  const { done } = await serverContext(req, res)
+  const { database, done } = await serverContext(req, res)
 
   if (req.method === 'GET') {
-    const posts = await Post.find({ published: true }).sort({ created: -1 }).lean()
+    const { Post, findAll } = database
+    const posts = await findAll(Post, { published: true }, { sort: { created: -1 } })
     return await done(200, posts)
   }
 
