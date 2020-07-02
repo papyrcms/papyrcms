@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 import serverContext from "@/serverContext"
-import { update } from '@/utilities/serverContext/database/mongodb/api'
 
 
 export default async (req, res) => {
@@ -25,7 +24,7 @@ export default async (req, res) => {
     }
 
     const { findOne, update, User } = database
-    const foundUser = await findOne(User, { _id: id })
+    const foundUser = await findOne(User, { _id: user._id })
 
     if (!foundUser) {
       return await done(401, { message: 'Something went wrong. Try again later.' })
@@ -56,7 +55,7 @@ export default async (req, res) => {
       return await done(400, error)
     }
 
-    await update(User, { _id: id }, { password: passwordHash })
+    await update(User, { _id: user._id }, { password: passwordHash })
     return await done(200, { message: 'Your password has been saved!' })
   }
 
