@@ -36,7 +36,7 @@ const updatePost = async (id, body, enableEmailingToUsers, database) => {
   const postDocument = { _id: id }
   body.slug = body.title.replace(/\s+/g, "-").toLowerCase()
 
-  const { update, findOne } = database
+  const { update, findOne, Post } = database
   await update(Post, postDocument, body)
 
   // If a bulk-email post was published, send it

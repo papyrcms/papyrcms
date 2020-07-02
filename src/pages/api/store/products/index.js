@@ -1,5 +1,4 @@
 import serverContext from "@/serverContext"
-import { create } from "@/utilities/serverContext/database/mongodb/api"
 
 
 const getProducts = async (database) => {
@@ -8,7 +7,7 @@ const getProducts = async (database) => {
 }
 
 
-const createProduct = async (body) => {
+const createProduct = async (body, database) => {
   const {
     title,
     content,

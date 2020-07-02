@@ -24,9 +24,9 @@ const createPost = async (body, enableEmailingToUsers, database) => {
   const { Post, create } = database
 
   const postData = {
-    ...body, slug: post.title.replace(/\s+/g, '-').toLowerCase()
+    ...body, slug: body.title.replace(/\s+/g, '-').toLowerCase()
   }
-  const post = create(Post, postData)
+  const post = await create(Post, postData)
 
   // If a bulk-email post was published, send it
   const mailer = new Mailer(database)

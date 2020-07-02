@@ -30,7 +30,7 @@ const createMessage = async (body, enableEmailingToAdmin, database) => {
   }
 
   const { create, Message } = database
-  return await create(Message, messageData)
+  return await create(Message, messageBody)
 }
 
 
