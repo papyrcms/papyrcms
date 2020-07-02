@@ -1,9 +1,8 @@
 import { expect } from 'chai'
 import axios from 'axios'
-import mongoose from 'mongoose'
 import keys from '../../config/keys'
 import database from "../../utilities/serverContext/database"
-const { mongoURI, rootURL, test, adminEmail } = keys
+const { rootURL, test, adminEmail } = keys
 
 
 const axiosConfig = {
