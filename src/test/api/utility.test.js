@@ -15,7 +15,7 @@ const axiosConfig = {
 describe("/api/utility", () => {
 
   describe("/publicKeys", () => {
-    it("returns the ananlytics id, maps kye, and stripe pub key", async () => {
+    it("returns the ananlytics id, maps key, and stripe pub key", async () => {
       const { data: publicKeys } = await axios.get(`${rootURL}/api/utility/publicKeys`)
       const { googleAnalyticsId, googleMapsKey, stripePublishableKey } = publicKeys
 

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import _ from 'lodash'
-import keys from '@/keys'
+import keys from '../../../../config/keys'
 
 
 export const init = async () => {
