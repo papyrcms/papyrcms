@@ -5,14 +5,14 @@ import keys from '../../../../config/keys'
 
 export const init = async () => {
   if (mongoose.connection._readyState !== 1) {
-    console.log('Connecting to DB')
+    console.log('Connecting to Mongo DB')
     const mongooseConfig = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true
     }
-    await mongoose.connect(keys.mongoURI, mongooseConfig)
+    await mongoose.connect(keys.databaseURI, mongooseConfig)
     mongoose.plugin((schema) => {
       schema.options.usePushEach = true
     })
