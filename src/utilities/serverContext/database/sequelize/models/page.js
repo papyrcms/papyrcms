@@ -16,7 +16,16 @@ const page = (sequelize, DataTypes) => {
     navOrder: { type: DataTypes.INTEGER },
   
     // This will be JSON
-    sections: { type: DataTypes.TEXT },
+    sections: {
+      type: DataTypes.TEXT,
+      get() {
+        const rawValue = this.getDataValue(sections)
+        return JSON.parse(rawValue)
+      },
+      set(value) {
+        this.setDataValue('sections', JSON.stringify(value))
+      }
+    },
     css: { type: DataTypes.TEXT },
   
     created: { type: DataTypes.DATE, default: DataTypes.NOW },

@@ -13,9 +13,27 @@ const blog = (sequelize, DataTypes) => {
     title: { type: DataTypes.TEXT, notEmpty: true },
     slug: { type: DataTypes.TEXT, notEmpty: true },
     content: { type: DataTypes.TEXT, notEmpty: true },
-    tags: { type: DataTypes.TEXT },
+    tags: {
+      type: DataTypes.TEXT,
+      get() {
+        const rawValue = this.getDataValue(tags)
+        return JSON.parse(rawValue)
+      },
+      set(value) {
+        this.setDataValue('tags', JSON.stringify(value))
+      }
+    },
     mainMedia: { type: DataTypes.TEXT },
-    subImages: { type: DataTypes.TEXT },
+    subImages: {
+      type: DataTypes.TEXT,
+      get() {
+        const rawValue = this.getDataValue(subImages)
+        return JSON.parse(rawValue)
+      },
+      set(value) {
+        this.setDataValue('subImages', JSON.stringify(value))
+      }
+    },
     published: { type: DataTypes.BOOLEAN, default: false },
     created: { type: DataTypes.DATE, default: DataTypes.NOW },
 
