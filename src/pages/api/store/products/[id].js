@@ -6,15 +6,15 @@ const getProduct = async (id, database) => {
   const { findOne, Product } = database
 
   try {
-    product = await findOne(Product, { _id: id }, { include: 'comments' })
+    product = await findOne(Product, { _id: id }, { include: ['comments'] })
   } catch (err) {}
 
   if (!product) {
-    product = await findOne(Product, { slug: id }, { include: 'comments' })
+    product = await findOne(Product, { slug: id }, { include: ['comments'] })
   }
 
   if (!product) {
-    product = await findOne(Product, { slug: new RegExp(id, 'i') }, { include: 'comments' })
+    product = await findOne(Product, { slug: new RegExp(id, 'i') }, { include: ['comments'] })
   }
 
   return product

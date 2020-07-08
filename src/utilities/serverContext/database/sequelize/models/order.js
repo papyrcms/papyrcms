@@ -6,11 +6,12 @@ const order = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
-    created: { type: DataTypes.DATE, default: DataTypes.NOW },
+    created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 
     // products: [{
     //   type: mongoose.Schema.Types.ObjectId,
@@ -21,7 +22,7 @@ const order = (sequelize, DataTypes) => {
     //   ref: 'user'
     // },
     notes: { type: DataTypes.TEXT },
-    shipped: { type: DataTypes.BOOLEAN, default: false }
+    shipped: { type: DataTypes.BOOLEAN, defaultValue: false }
   })
 
   return Order

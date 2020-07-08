@@ -1,11 +1,11 @@
 import useSettings from './useSettings'
-import database from './database'
+import initDatabase from './database'
 import authorization from './authorization'
 
 
 export default async (req, res) => {
 
-  await database.init()
+  const database = await initDatabase()
   const user = await authorization(req, database)
   const settings = await useSettings(database)
 

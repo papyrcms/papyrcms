@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import _ from 'lodash'
 import keys from '@/keys'
 
 
@@ -12,7 +13,8 @@ export default async (req, database) => {
       const { uid } = tokenObject
       if (uid) {
         const { User, findOne } = database
-        return await findOne(User, { _id: uid, isBanned: false }, { include: ['cart'] })
+        const user = await findOne(User, { _id: uid, isBanned: false }, { include: ['cart'] })
+        return user
       }
     } catch (err) {}
   }

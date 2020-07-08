@@ -6,7 +6,8 @@ const event = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
@@ -16,7 +17,7 @@ const event = (sequelize, DataTypes) => {
     tags: {
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue(tags)
+        const rawValue = this.getDataValue('tags')
         return JSON.parse(rawValue)
       },
       set(value) {
@@ -27,15 +28,15 @@ const event = (sequelize, DataTypes) => {
     subImages: {
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue(subImages)
+        const rawValue = this.getDataValue('subImages')
         return JSON.parse(rawValue)
       },
       set(value) {
         this.setDataValue('subImages', JSON.stringify(value))
       }
     },
-    published: { type: DataTypes.BOOLEAN, default: false },
-    created: { type: DataTypes.DATE, default: DataTypes.NOW },
+    published: { type: DataTypes.BOOLEAN, defaultValue: false },
+    created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   
     date: { type: DataTypes.DATE, allowNull: false },
     latitude: { type: DataTypes.DOUBLE },

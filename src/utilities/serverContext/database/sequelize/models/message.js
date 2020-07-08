@@ -6,15 +6,16 @@ const message = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
     name: { type: DataTypes.TEXT, allowNull: false },
     email: { type: DataTypes.TEXT, allowNull: false },
     message: { type: DataTypes.TEXT, allowNull: false },
-    emailSent: { type: DataTypes.BOOLEAN, default: false },
-    created: { type: DataTypes.DATE, default: DataTypes.NOW },
+    emailSent: { type: DataTypes.BOOLEAN, defaultValue: false },
+    created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   })
 
   return Message

@@ -19,6 +19,7 @@ const addToCart = async (productId, user, database) => {
 
   const newCart = [...user.cart, product]
   await update(User, { _id: user._id }, { cart: newCart })
+  // await updateCart(database, user._id, newCart)
 
   return newCart
 }

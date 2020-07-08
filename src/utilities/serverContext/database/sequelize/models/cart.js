@@ -5,12 +5,15 @@ const cart = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
 
-    userId: { type: DataTypes.UUIDV1 },
-    productId: { type: DataTypes.UUIDV1 }
+    userId: { type: DataTypes.UUID },
+    productId: { type: DataTypes.UUID }
+    
+  }, {
+    freezeTableName: true
   })
 
   return Cart

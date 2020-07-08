@@ -6,7 +6,8 @@ const post = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
@@ -16,7 +17,7 @@ const post = (sequelize, DataTypes) => {
     tags: {
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue(tags)
+        const rawValue = this.getDataValue('tags')
         return JSON.parse(rawValue)
       },
       set(value) {
@@ -27,21 +28,20 @@ const post = (sequelize, DataTypes) => {
     subImages: {
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue(subImages)
+        const rawValue = this.getDataValue('subImages')
         return JSON.parse(rawValue)
       },
       set(value) {
         this.setDataValue('subImages', JSON.stringify(value))
       }
     },
-    published: { type: DataTypes.BOOLEAN, default: false },
-    created: { type: DataTypes.DATE, default: DataTypes.NOW },
-  
-    // comments: [{
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'comment'
-    // }]
+    published: { type: DataTypes.BOOLEAN, defaultValue: false },
+    created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   })
+
+  Post.buildAssociations = models => {
+    Post.hasMany(models.Comment)
+  }
 
   return Post
 }

@@ -6,7 +6,8 @@ const page = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
@@ -19,7 +20,7 @@ const page = (sequelize, DataTypes) => {
     sections: {
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue(sections)
+        const rawValue = this.getDataValue('sections')
         return JSON.parse(rawValue)
       },
       set(value) {
@@ -28,7 +29,7 @@ const page = (sequelize, DataTypes) => {
     },
     css: { type: DataTypes.TEXT },
   
-    created: { type: DataTypes.DATE, default: DataTypes.NOW },
+    created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   })
 
   return Page

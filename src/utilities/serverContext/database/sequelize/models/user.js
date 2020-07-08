@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+import _ from 'lodash'
 
 
 const user = (sequelize, DataTypes) => {
@@ -6,7 +7,8 @@ const user = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
@@ -37,22 +39,27 @@ const user = (sequelize, DataTypes) => {
     shippingZip: { type: DataTypes.STRING },
     shippingCountry: { type: DataTypes.STRING },
 
-    // Shop info
-    // cart: [{
-    //   type: DataTypes.UUIDV1,
-    //   references: {
-    //     model: Product,
-    //     key: _id
-    //   }
-    // }],
+    // This seems non-ideal, but sequelize will not allow duplicate
+    // many-to-many records in the cart table
+    cart: {
+      type: DataTypes.TEXT,
+      defaultValue: '[]',
+      get() {
+        const rawValue = this.getDataValue('cart')
+        return JSON.parse(rawValue)
+      },
+      set(value) {
+        this.setDataValue('cart', JSON.stringify(value))
+      }
+    },
 
     // Account creation date
-    created: { type: DataTypes.DATE, default: DataTypes.NOW },
+    created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 
     // Etc
-    isAdmin: { type: DataTypes.BOOLEAN, default: false },
-    isSubscribed: { type: DataTypes.BOOLEAN, default: true },
-    isBanned: { type: DataTypes.BOOLEAN, default: false }
+    isAdmin: { type: DataTypes.BOOLEAN, defaultValue: false },
+    isSubscribed: { type: DataTypes.BOOLEAN, defaultValue: true },
+    isBanned: { type: DataTypes.BOOLEAN, defaultValue: false }
   })
 
   return User

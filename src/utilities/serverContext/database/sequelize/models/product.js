@@ -5,7 +5,8 @@ const product = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
@@ -15,7 +16,7 @@ const product = (sequelize, DataTypes) => {
     tags: {
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue(tags)
+        const rawValue = this.getDataValue('tags')
         return JSON.parse(rawValue)
       },
       set(value) {
@@ -26,19 +27,24 @@ const product = (sequelize, DataTypes) => {
     subImages: {
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue(subImages)
+        const rawValue = this.getDataValue('subImages')
         return JSON.parse(rawValue)
       },
       set(value) {
         this.setDataValue('subImages', JSON.stringify(value))
       }
     },
-    published: { type: DataTypes.BOOLEAN, default: false },
-    created: { type: DataTypes.DATE, default: DataTypes.NOW },
+    published: { type: DataTypes.BOOLEAN, defaultValue: false },
+    created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 
     price: { type: DataTypes.DOUBLE, allowNull: false },
-    quantity: { type: DataTypes.DOUBLE, default: 0 }
+    quantity: { type: DataTypes.DOUBLE, defaultValue: 0 }
   })
+
+  Product.buildAssociations = models => {
+    Product.hasMany(models.Comment)
+  }
+
 
   return Product
 }

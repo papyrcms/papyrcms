@@ -6,7 +6,8 @@ const settings = (sequelize, DataTypes) => {
 
     _id: {
       type: DataTypes.UUID,
-      default: DataTypes.UUIDV1,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false,
       primaryKey: true
     },
 
@@ -15,8 +16,8 @@ const settings = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false,
       get() {
-        const rawValue = this.getDataValue(options)
-        return JSON.parse(rawValue)
+        const rawValue = this.getDataValue('options')
+        return rawValue ? JSON.parse(rawValue) : rawValue
       },
       set(value) {
         this.setDataValue('options', JSON.stringify(value))

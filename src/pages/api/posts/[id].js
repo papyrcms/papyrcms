@@ -7,15 +7,15 @@ const getPost = async (id, database) => {
   let post
   const { Post, findOne } = database
   try {
-    post = await findOne(Post, { _id: id }, { include: 'comments' })
+    post = await findOne(Post, { _id: id }, { include: ['comments'] })
   } catch (err) {}
 
   if (!post) {
-    post = await findOne(Post, { slug: id }, { include: 'comments' })
+    post = await findOne(Post, { slug: id }, { include: ['comments'] })
   }
 
   if (!post) {
-    post = await findOne(Post, { slug: new RegExp(id, 'i') }, { include: 'comments' })
+    post = await findOne(Post, { slug: new RegExp(id, 'i') }, { include: ['comments'] })
   }
 
   return post
