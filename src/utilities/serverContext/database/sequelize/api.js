@@ -46,12 +46,21 @@ export const findOne = async (Model, conditions, options = {}) => {
     _.forEach(options.include, inclusion => {
       if (inclusion !== 'cart') {
         const connectedModel = Model.associations[inclusion].target
-        query.include.push({ model: connectedModel, as: inclusion, required: false })
+        const inclusionQuery = {
+          model: connectedModel,
+          as: inclusion,
+          required: false
+        }
+        if (inclusion === 'comments') {
+          inclusionQuery.include = [{
+            model: connectedModel.associations.author.target,
+            required: false,
+            as: 'author'
+          }]
+        }
+        query.include.push(inclusionQuery)
       }
     })
-    if (options.include.includes('comments')) {
-
-    }
   }
 
   const instance = await Model.findOne(query)
@@ -67,7 +76,10 @@ export const findAll = async (Model, conditions = {}, options = {}) => {
   }
   
   if (options.sort) {
-
+    query.order = _.map(options.sort, (value, key) => {
+      value = value < 0 ? 'DESC' : 'ASC'
+      return [key, value]
+    })
   }
 
   if (options.include) {
@@ -75,12 +87,21 @@ export const findAll = async (Model, conditions = {}, options = {}) => {
     _.forEach(options.include, inclusion => {
       if (inclusion !== 'cart') {
         const connectedModel = Model.associations[inclusion].target
-        query.include.push({ model: connectedModel, as: inclusion, required: false })
+        const inclusionQuery = {
+          model: connectedModel,
+          as: inclusion,
+          required: false
+        }
+        if (inclusion === 'comments') {
+          inclusionQuery.include = [{
+            model: connectedModel.associations.author.target,
+            required: false,
+            as: 'author'
+          }]
+        }
+        query.include.push(inclusionQuery)
       }
     })
-    if (options.include.includes('comments')) {
-
-    }
   }
 
   let records = await Model.findAll(query)
