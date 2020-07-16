@@ -24,7 +24,7 @@
     "googleapis": "^52.1.0",
     "handlebars": "^4.7.6",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "mongoose": "^5.9.20",
     "next": "^9.4.4",
