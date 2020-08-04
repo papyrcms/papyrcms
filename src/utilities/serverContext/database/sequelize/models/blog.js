@@ -18,7 +18,7 @@ const blog = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       get() {
         const rawValue = this.getDataValue('tags')
-        return JSON.parse(rawValue)
+        return rawValue ? JSON.parse(rawValue) : rawValue
       },
       set(value) {
         this.setDataValue('tags', JSON.stringify(value))

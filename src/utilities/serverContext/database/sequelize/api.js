@@ -31,6 +31,9 @@ export const init = async () => {
 
 
 export const create = async (Model, fields) => {
+  if (Model.name === 'comment') {
+    fields.authorId = fields.author._id
+  }
   return await Model.create(fields)
 }
 
@@ -116,6 +119,19 @@ export const countAll = async (Model) => {
 
 
 export const update = async (Model, conditions, fields) => {
+
+  _.forEach(fields, async (value, key) => {
+    if (key === 'comments') {
+      const modelType = Model.name
+      const instance = await Model.findOne({ where: conditions })
+      _.forEach(value, async comment => {
+        if (!comment[`${modelType}Id`]) {
+          await comment.update({ [`${modelType}Id`]: instance._id })
+        }
+      })
+    }
+  })
+
   await Model.update(fields, { where: conditions })
 }
 

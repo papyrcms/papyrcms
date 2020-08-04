@@ -23,7 +23,7 @@ export default async (req, res) => {
     }
     const comment = await create(Comment, commentData)
 
-    const blog = await findOne(Blog, { _id: req.query.id })
+    const blog = await findOne(Blog, { _id: req.query.id }, { include: ['comments'] })
     const newComments = [...blog.comments, comment]
     await update(Blog, { _id: req.query.id }, { comments: newComments })
 
