@@ -14,6 +14,7 @@ const settings = (sequelize, DataTypes) => {
     name: { type: DataTypes.STRING, allowNull: false },
     options: {
       type: DataTypes.TEXT,
+      defaultValue: "[]",
       allowNull: false,
       get() {
         const rawValue = this.getDataValue('options')

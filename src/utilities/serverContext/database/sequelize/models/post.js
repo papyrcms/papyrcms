@@ -16,6 +16,7 @@ const post = (sequelize, DataTypes) => {
     content: { type: DataTypes.TEXT },
     tags: {
       type: DataTypes.TEXT,
+      defaultValue: "[]",
       get() {
         const rawValue = this.getDataValue('tags')
         return JSON.parse(rawValue)
@@ -27,6 +28,7 @@ const post = (sequelize, DataTypes) => {
     mainMedia: { type: DataTypes.TEXT },
     subImages: {
       type: DataTypes.TEXT,
+      defaultValue: "[]",
       get() {
         const rawValue = this.getDataValue('subImages')
         return JSON.parse(rawValue)

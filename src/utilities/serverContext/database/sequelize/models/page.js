@@ -19,6 +19,7 @@ const page = (sequelize, DataTypes) => {
     // This will be JSON
     sections: {
       type: DataTypes.TEXT,
+      defaultValue: "[]",
       get() {
         const rawValue = this.getDataValue('sections')
         return JSON.parse(rawValue)

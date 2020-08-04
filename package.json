@@ -25,10 +25,14 @@
     "handlebars": "^4.7.6",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
+    "mariadb": "^2.4.2",
     "moment": "^2.27.0",
     "mongoose": "^5.9.27",
+    "mysql2": "^2.1.0",
     "next": "^9.5.1",
     "nodemailer": "^6.4.11",
+    "pg": "^8.3.0",
+    "pg-hstore": "^2.3.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-ga": "^3.1.2",
@@ -36,7 +40,10 @@
     "react-stripe-elements": "^6.1.2",
     "react-tinymce": "^0.7.0",
     "sanitize-html": "^1.27.2",
-    "stripe": "^8.81.0"
+    "sequelize": "^6.3.4",
+    "sqlite3": "^5.0.0",
+    "stripe": "^8.81.0",
+    "tedious": "^9.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",

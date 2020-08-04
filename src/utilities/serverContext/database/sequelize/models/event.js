@@ -15,6 +15,7 @@ const event = (sequelize, DataTypes) => {
     slug: { type: DataTypes.TEXT, allowNull: false },
     content: { type: DataTypes.TEXT },
     tags: {
+      defaultValue: "[]",
       type: DataTypes.TEXT,
       get() {
         const rawValue = this.getDataValue('tags')
@@ -26,6 +27,7 @@ const event = (sequelize, DataTypes) => {
     },
     mainMedia: { type: DataTypes.TEXT },
     subImages: {
+      defaultValue: "[]",
       type: DataTypes.TEXT,
       get() {
         const rawValue = this.getDataValue('subImages')

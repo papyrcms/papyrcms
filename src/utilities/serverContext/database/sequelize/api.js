@@ -8,7 +8,6 @@ export const init = async () => {
 
   console.log('Connecting to Sequelize DB')
   const sequelize = new Sequelize(keys.databaseURI, {
-    dialect: keys.databaseDriver,
     logging: false
   })
 
@@ -26,7 +25,7 @@ export const init = async () => {
 
   await sequelize.sync()
 
-  return initializedModels
+  return { ...initializedModels }
 }
 
 
@@ -114,7 +113,7 @@ export const findAll = async (Model, conditions = {}, options = {}) => {
 
 
 export const countAll = async (Model) => {
-  Model.count()
+  return await Model.count()
 }
 
 

@@ -20,6 +20,10 @@ export default async () => {
 
     // We use Sequelize for this
     case 'postgres':
+    case 'sqlite':
+    case 'mysql':
+    case 'mariadb':
+    case 'mssql':
       const sequelizeModels = await sequelizeApi.init()
       database = {
         ...sequelizeModels,
