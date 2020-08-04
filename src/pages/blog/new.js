@@ -3,7 +3,7 @@ import Error from 'next/error'
 import userContext from '@/context/userContext'
 import PostsForm from '@/components/PostsForm/'
 
-export default () => {
+const BlogNew = () => {
 
   const { currentUser } = useContext(userContext)
   if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
@@ -16,3 +16,5 @@ export default () => {
     />
   )
 }
+
+export default BlogNew

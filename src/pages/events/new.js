@@ -44,7 +44,7 @@ const coordinatesField = ({ values, errors, handleChange, validateField }) => (
 )
 
 
-export default () => {
+const EventNew = () => {
 
   const { currentUser } = useContext(userContext)
   if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
@@ -63,3 +63,5 @@ export default () => {
     />
   )
 }
+
+export default EventNew

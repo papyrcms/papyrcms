@@ -3,9 +3,11 @@ import LoginForm from '@/components/LoginForm'
 import RegisterForm from '@/components/RegisterForm'
 import styles from './login.module.scss'
 
-export default () => (
+const LoginPage = () => (
   <div className={styles["login-page"]}>
     <LoginForm />
     <RegisterForm />
   </div>
 )
+
+export default LoginPage

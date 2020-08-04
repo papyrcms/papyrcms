@@ -5,7 +5,7 @@ import UserList from './UserList'
 import MessageList from './MessageList'
 
 
-export default () => (
+const AdminDashboard = () => (
   <div className="admin-dashboard">
     <div className="admin-dashboard__left">
       <AdminLinks />
@@ -19,3 +19,5 @@ export default () => (
     </div>
   </div>
 )
+
+export default AdminDashboard

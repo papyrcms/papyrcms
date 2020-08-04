@@ -33,7 +33,7 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => (
   </div>
 )
 
-export default () => {
+const StoreNew = () => {
 
   const { currentUser } = useContext(userContext)
   if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
@@ -51,3 +51,5 @@ export default () => {
     />
   )
 }
+
+export default StoreNew
