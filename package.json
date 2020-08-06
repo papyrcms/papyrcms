@@ -36,13 +36,13 @@
     "react-stripe-elements": "^6.1.2",
     "react-tinymce": "^0.7.0",
     "sanitize-html": "^1.27.2",
-    "stripe": "^8.81.0"
+    "stripe": "^8.83.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "chai": "^4.2.0",
     "esm": "^3.2.25",
-    "mocha": "^8.1.0",
+    "mocha": "^8.1.1",
     "node-sass": "^4.14.1"
   }
 }
