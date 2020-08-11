@@ -20,16 +20,16 @@
     "bcrypt": "^5.0.0",
     "cloudinary": "^1.22.0",
     "formidable": "^1.2.2",
-    "google-map-react": "^2.0.4",
+    "google-map-react": "^2.0.8",
     "googleapis": "^58.0.0",
     "handlebars": "^4.7.6",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "mariadb": "^2.4.2",
     "moment": "^2.27.0",
-    "mongoose": "^5.9.27",
+    "mongoose": "^5.9.28",
     "mysql2": "^2.1.0",
-    "next": "^9.5.1",
+    "next": "^9.5.2",
     "nodemailer": "^6.4.11",
     "pg": "^8.3.0",
     "pg-hstore": "^2.3.3",
@@ -42,14 +42,14 @@
     "sanitize-html": "^1.27.2",
     "sequelize": "^6.3.4",
     "sqlite3": "^5.0.0",
-    "stripe": "^8.81.0",
-    "tedious": "^9.0.1"
+    "stripe": "^8.84.0",
+    "tedious": "^9.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "chai": "^4.2.0",
     "esm": "^3.2.25",
-    "mocha": "^8.1.0",
+    "mocha": "^8.1.1",
     "node-sass": "^4.14.1"
   }
 }

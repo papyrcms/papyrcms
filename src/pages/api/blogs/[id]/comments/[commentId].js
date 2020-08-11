@@ -45,7 +45,7 @@ export default async (req, res) => {
     }
 
     await update(Comment, { _id: req.query.commentId }, { content: req.body.content })
-    const comment = await findOne(Comment, { _id: req.query.commentId }, { include: ['author'] })
+    comment = await findOne(Comment, { _id: req.query.commentId }, { include: ['author'] })
 
     return await done(200, comment)
   }
