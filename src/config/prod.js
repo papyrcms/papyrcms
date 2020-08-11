@@ -16,8 +16,12 @@ export default {
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
   cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
 
+  // deprecated ==================
+  mongoURI: process.env.MONGO_URI,
+  // =============================
+
   databaseDriver: process.env.DATABASE_DRIVER,
-  databaseURI: process.env.DATABASE_URI || process.env.MONGO_URI, // MONGO_URI is deprecated
+  databaseURI: process.env.DATABASE_URI,
   rootURL: process.env.ROOT_URL,
   jwtSecret: process.env.JWT_SECRET
 }

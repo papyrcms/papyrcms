@@ -24,7 +24,7 @@ export default {
   test: {
     oldPass: '',
     newPass: '',
-    token: "",
+    token: '',
     tokenRpc: ''
   }
 }

@@ -162,8 +162,9 @@ Inside the /config directory, create a file called `dev.js`. When not in product
       cloudinaryApiKey: '',
       cloudinaryApiSecret: '',
 
-      // Mongo
-      mongoURI: '',
+      // Database
+      databaseURI: '',
+	  databaseDriver: '',
 
       // Etc
       rootURL: '',
@@ -197,9 +198,17 @@ The following keys can be obtained by signing up for an account at cloudinary.co
 * cloudinaryApiKey
 * cloudinaryApiSecret
 
-#### MongoDB (Required for site use)
-The following key can be obtained by signing up for an account at mlab.com and creating a database, or by using your own local mongo db.
-* mongoURI: The URI used by mongo for your database.
+#### Database (Required for site use)
+* databaseURI: The URI for your database.
+* databaseDriver: The type of database you are using. The Mongoose and Sequelize ORMs are used here, so accepted strings are:
+	* mongodb
+	* mysql
+	* mariadb
+	* postgres
+	* mssql
+	* sqlite
+
+* mongoURI (deprecated): The MongoDB specific URI for your database.
 
 #### Etc (Required for site use)
 * jwtSecret: A random string used to sign JSON Web Tokens.
