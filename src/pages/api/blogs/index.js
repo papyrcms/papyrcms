@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import serverContext from "@/serverContext"
 
 
@@ -12,7 +13,8 @@ const createBlog = async (body, database) => {
   const { create, Blog } = database
   const blogData = {
     ...body,
-    slug: body.title.replace(/\s+/g, '-').toLowerCase()
+    slug: body.title.replace(/\s+/g, '-').toLowerCase(),
+    tags: _.map(_.split(body.tags, ','), tag => tag.trim())
   }
 
   if (body.published) {

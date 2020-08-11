@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import moment from 'moment'
 import serverContext from "@/serverContext"
 
@@ -25,6 +26,7 @@ const getEvent = async (id, database) => {
 const updateEvent = async (id, body, database) => {
   body.date = moment(body.date).toISOString()
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
+  body.tags = _.map(_.split(body.tags, ','), tag => tag.trim())
 
   const { update, findOne, Event } = database
   await update(Event, { _id: id }, body)

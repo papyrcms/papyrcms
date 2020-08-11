@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 
@@ -23,8 +24,10 @@ const getProduct = async (id, database) => {
 
 const updateProduct = async (id, body, database) => {
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
+  body.tags = _.map(_.split(body.tags, ','), tag => tag.trim())
 
   const { update, findOne, Product } = database
+  
   await update(Product, { _id: id }, body)
   return await findOne(Product, { _id: id })
 }

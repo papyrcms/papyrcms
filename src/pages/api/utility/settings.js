@@ -24,7 +24,7 @@ export default async (req, res) => {
           typeof setting.options[key] !== 'undefined' &&
           setting.options[key] !== req.body[key]
         ) {
-          const newSetting = { options: { [key]: req.body[key] } }
+          const newSetting = { options: { ...setting.options, [key]: req.body[key] } }
           await update(Settings, { _id: setting._id }, newSetting)
         }
       }

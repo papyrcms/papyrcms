@@ -36,6 +36,7 @@ const updateBlog = async (id, body, database) => {
   }
 
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
+  body.tags = _.map(_.split(body.tags, ','), tag => tag.trim())
 
   await update(Blog, { _id: id }, body)
   return await findOne(Blog, { _id: id })

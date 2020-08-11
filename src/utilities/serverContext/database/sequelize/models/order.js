@@ -25,6 +25,11 @@ const order = (sequelize, DataTypes) => {
     shipped: { type: DataTypes.BOOLEAN, defaultValue: false }
   })
 
+  Order.buildAssociations = models => {
+    Order.hasMany(models.Product)
+    Order.hasOne(models.User)
+  }
+
   return Order
 }
 

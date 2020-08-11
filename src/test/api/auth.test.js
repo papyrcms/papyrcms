@@ -181,17 +181,17 @@ describe('/api/auth', () => {
   describe('/forgotPassword', () => {
     it('returns an error if the password is not a valid email', async () => {
       // Set emailing to users to true for the next 2 tests
-      const expectedSettings = {
-        enableMenu: true,
-        enableRegistration: true,
-        enableBlog: false,
-        enableCommenting: false,
-        enableEmailingToAdmin: false,
-        enableEmailingToUsers: true,
-        enableEvents: false,
-        enableStore: false
-      }
-      await axios.post(`${rootURL}/api/utility/settings`, expectedSettings, axiosConfig)
+      // const expectedSettings = {
+      //   enableMenu: true,
+      //   enableRegistration: true,
+      //   enableBlog: false,
+      //   enableCommenting: false,
+      //   enableEmailingToAdmin: false,
+      //   enableEmailingToUsers: true,
+      //   enableEvents: false,
+      //   enableStore: false
+      // }
+      // await axios.post(`${rootURL}/api/utility/settings`, expectedSettings, axiosConfig)
 
       try {
         await axios.post(`${rootURL}/api/auth/forgotPassword`, { email: '' })
@@ -205,17 +205,17 @@ describe('/api/auth', () => {
         await axios.post(`${rootURL}/api/auth/forgotPassword`, { email: 'tester@gmail.com' })
       } catch (err) {
         // disable emailing to users now that the tests are finished
-        const expectedSettings = {
-          enableMenu: true,
-          enableRegistration: true,
-          enableBlog: false,
-          enableCommenting: false,
-          enableEmailingToAdmin: false,
-          enableEmailingToUsers: false,
-          enableEvents: false,
-          enableStore: false
-        }
-        await axios.post(`${rootURL}/api/utility/settings`, expectedSettings, axiosConfig)
+        // const expectedSettings = {
+        //   enableMenu: true,
+        //   enableRegistration: true,
+        //   enableBlog: false,
+        //   enableCommenting: false,
+        //   enableEmailingToAdmin: false,
+        //   enableEmailingToUsers: false,
+        //   enableEvents: false,
+        //   enableStore: false
+        // }
+        // await axios.post(`${rootURL}/api/utility/settings`, expectedSettings, axiosConfig)
 
         expect(err.response.status).to.equal(401)
       }

@@ -6,7 +6,7 @@ import * as models from './models'
 
 export const init = async () => {
 
-  console.log('Connecting to Sequelize DB')
+  // console.log('Connecting to Sequelize DB')
   const sequelize = new Sequelize(keys.databaseURI, {
     logging: false
   })
@@ -30,6 +30,7 @@ export const init = async () => {
 
 
 export const create = async (Model, fields) => {
+
   if (Model.name === 'comment') {
     fields.authorId = fields.author._id
   }

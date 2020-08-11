@@ -1,12 +1,12 @@
 import { expect } from 'chai'
 import keys from '../../config/keys'
 import Mailer from '../../utilities/mailer'
-import database from "../../utilities/serverContext/database"
+import getDatabase from "../../utilities/serverContext/database"
 
 
 describe('mailer', () => {
   it('has the correct properties when constructed', async () => {
-    await database.init()
+    const database = await getDatabase()
     const mailer = new Mailer(database)
     expect(mailer.templateTag).to.be.a('string') &&
     expect(mailer.database).to.exist
@@ -14,7 +14,7 @@ describe('mailer', () => {
 
   describe('getAccessToken()', () => {
     it('retrieves an access token', async () => {
-      await database.init()
+      const database = await getDatabase()
       const mailer = new Mailer(database)
       const accessToken = await mailer.getAccessToken()
       expect(accessToken).to.be.a('string')
@@ -23,7 +23,7 @@ describe('mailer', () => {
 
   describe('readHTMLFile()', () => {
     it('gets a string from an html template file', async () => {
-      await database.init()
+      const database = await getDatabase()
       const mailer = new Mailer(database)
       const html = await mailer.readHTMLFile('src/emails/plain.html')
 
@@ -34,7 +34,7 @@ describe('mailer', () => {
 
   describe('createTransporter()', () => {
     it('returns an email transporter', async () => {
-      await database.init()
+      const database = await getDatabase()
       const mailer = new Mailer(database)
       const transporter = await mailer.createTransporter()
 
@@ -44,7 +44,7 @@ describe('mailer', () => {
 
   describe('getEmailTemplateByTag()', () => {
     it('returns a post if there is an email template with the passed tag', async () => {
-      await database.init()
+      const database = await getDatabase()
       const mailer = new Mailer(database)
 
       const template = await mailer.getEmailTemplateByTag('welcome')
@@ -55,7 +55,7 @@ describe('mailer', () => {
     }).timeout(10000)
 
     it('returns null if there is no email template with the passed tag', async () => {
-      await database.init()
+      const database = await getDatabase()
       const mailer = new Mailer(database)
 
       const template = await mailer.getEmailTemplateByTag('fart')
@@ -66,7 +66,7 @@ describe('mailer', () => {
 
   describe('sendEmail()', () => {
     it('does not send an email if it could not find a template', async () => {
-      await database.init()
+      const database = await getDatabase()
       const mailer = new Mailer(database)
 
       const variables = { firstName: 'Scoob' }
@@ -79,7 +79,7 @@ describe('mailer', () => {
     }).timeout(10000)
 
     it('sends an email', async () => {
-      await database.init()
+      const database = await getDatabase()
       const mailer = new Mailer(database)
 
       const variables = { firstName: 'Scoob' }
@@ -94,7 +94,7 @@ describe('mailer', () => {
 
   describe('sendBulkEmail()', () => {
     it('sends an email to all subscribed users', async () => {
-      await database.init()
+      const database = await getDatabase()
       
 
       const { create, destroy, Post } = database

@@ -62,6 +62,10 @@ const user = (sequelize, DataTypes) => {
     isBanned: { type: DataTypes.BOOLEAN, defaultValue: false }
   })
 
+  User.buildAssociations = models => {
+    User.belongsTo(models.Order)
+  }
+
   return User
 }
 

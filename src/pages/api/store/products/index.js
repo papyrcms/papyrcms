@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import serverContext from "@/serverContext"
 
 
@@ -23,7 +24,7 @@ const createProduct = async (body, database) => {
   const productData = {
     title,
     content,
-    tags,
+    tags: _.map(_.split(tags, ','), tag => tag.trim()),
     mainMedia,
     subImages,
     published,

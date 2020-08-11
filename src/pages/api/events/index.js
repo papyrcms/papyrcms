@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import moment from 'moment'
 import serverContext from "@/serverContext"
 
@@ -13,7 +14,8 @@ const createEvent = async (body, database) => {
 
   const eventData = {
     ...body,
-    slug: body.title.replace(/\s+/g, '-').toLowerCase()
+    slug: body.title.replace(/\s+/g, '-').toLowerCase(),
+    tags: _.map(_.split(body.tags, ','), tag => tag.trim())
   }
   const { create, Event } = database
 

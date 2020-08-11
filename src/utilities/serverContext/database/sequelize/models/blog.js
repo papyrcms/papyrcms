@@ -19,7 +19,7 @@ const blog = (sequelize, DataTypes) => {
       defaultValue: "[]",
       get() {
         const rawValue = this.getDataValue('tags')
-        return rawValue ? JSON.parse(rawValue) : rawValue
+        return JSON.parse(rawValue)
       },
       set(value) {
         this.setDataValue('tags', JSON.stringify(value))

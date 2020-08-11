@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import axios from 'axios'
 import keys from '../../config/keys'
-import database from "../../utilities/serverContext/database"
+import getDatabase from "../../utilities/serverContext/database"
 const { rootURL, test, adminEmail } = keys
 
 
@@ -21,7 +21,7 @@ describe('/api/users', () => {
 
   describe('/makeAdmin', () => {
     it('makes a non-admin user an admin', async () => {
-      await database.init()
+      const database = await getDatabase()
       const { findOne, User } = database
       const testUser = await findOne(User, { email: 'test@test.com' })
 
@@ -34,7 +34,7 @@ describe('/api/users', () => {
     }).timeout(10000)
 
     it('make an admin user into a non-admin', async () => {
-      await database.init()
+      const database = await getDatabase()
       const { findOne, User } = database
       const testUser = await findOne(User, { email: 'test@test.com' })
 
@@ -49,7 +49,7 @@ describe('/api/users', () => {
 
   describe('/ban', () => {
     it('makes a non-banned user an banned', async () => {
-      await database.init()
+      const database = await getDatabase()
       const { findOne, User } = database
       const testUser = await findOne(User, { email: 'test@test.com' })
 
@@ -62,7 +62,7 @@ describe('/api/users', () => {
     }).timeout(10000)
 
     it('make a banned user into a non-banned', async () => {
-      await database.init()
+      const database = await getDatabase()
       const { findOne, User } = database
       const testUser = await findOne(User, { email: 'test@test.com' })
 
@@ -77,7 +77,7 @@ describe('/api/users', () => {
 
   describe('/[id]', () => {
     it('does not delete a user if the request was sent by a non-admin', async () => {
-      await database.init()
+      const database = await getDatabase()
       const { findOne, User } = database
       const testUser = await findOne(User, { email: 'test@test.com' })
 
@@ -90,7 +90,7 @@ describe('/api/users', () => {
     }).timeout(10000)
 
     it('does not delete the user who sent the request', async () => {
-      await database.init()
+      const database = await getDatabase()
       const { findOne, User } = database
       const adminUser = await findOne(User, { email: adminEmail })
 
@@ -103,7 +103,7 @@ describe('/api/users', () => {
     }).timeout(10000)
 
     it('deletes a user', async () => {
-      await database.init()
+      const database = await getDatabase()
       const { findOne, User } = database
       const testUser = await findOne(User, { email: 'test@test.com' })
 
