@@ -1,17 +1,17 @@
 import serverContext from "@/serverContext"
-import User from "@/models/user"
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
 
   if (!user || !user.isAdmin) {
     return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
-    const users = await User.find()
+    const { findAll, User } = database
+    const users = await findAll(User)
     return await done(200, users)
   }
 

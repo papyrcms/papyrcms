@@ -1,10 +1,11 @@
 import _ from 'lodash'
 import serverContext from "@/serverContext"
-import Page from "@/models/page"
 
 
-const getPage = async (route) => {
-  const page = await Page.findOne({ route }).lean()
+const getPage = async (route, database) => {
+  const { findOne, Page } = database
+  const page = await findOne(Page, { route })
+  
   if (!page) {
     throw new Error('This page does not exist.')
   }
@@ -13,7 +14,7 @@ const getPage = async (route) => {
 }
 
 
-const updatePage = async (body, id) => {
+const updatePage = async (body, id, database) => {
   const pageData = {
     title: body.title,
     className: body.className,
@@ -61,8 +62,9 @@ const updatePage = async (body, id) => {
   }
 
   try {
-    await Page.findOneAndUpdate({ _id: id }, pageData)
-    return await Page.findOne({ _id: id }).lean()
+    const { update, findOne, Page } = database
+    await update(Page, { _id: id }, pageData)
+    return await findOne(Page, { _id: id })
   } catch (err) {
     let message = 'There was a problem. Try again later.'
     if (err.code === 11000) {
@@ -73,20 +75,21 @@ const updatePage = async (body, id) => {
 }
 
 
-const deletePage = async (id) => {
-  await Page.findByIdAndDelete(id)
+const deletePage = async (id, database) => {
+  const { destroy, Page } = database
+  await destroy(Page, { _id: id })
   return 'Page deleted.'
 }
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
 
 
   if (req.method === 'GET') {
     try {
-      const page = await getPage(req.query.id)
+      const page = await getPage(req.query.id, database)
       return await done(200, page)
     } catch (err) {
       return await done(403, { message: 'You are not allowed to do that.' })
@@ -98,7 +101,7 @@ export default async (req, res) => {
     if (!user || !user.isAdmin) {
       return await done(403, { message: 'You are not allowed to do that.' })
     }
-    const page = await updatePage(req.body, req.query.id)
+    const page = await updatePage(req.body, req.query.id, database)
     return await done(200, page)
   }
 
@@ -107,7 +110,7 @@ export default async (req, res) => {
     if (!user || !user.isAdmin) {
       return await done(403, { message: 'You are not allowed to do that.' })
     }
-    const message = await deletePage(req.query.id)
+    const message = await deletePage(req.query.id, database)
     return await done(200, message)
   }
 

@@ -1,51 +1,56 @@
+import _ from 'lodash'
 import moment from 'moment'
 import serverContext from "@/serverContext"
-import Event from "@/models/event"
 
 
-const getEvent = async (id) => {
+const getEvent = async (id, database) => {
   let event
+  const { findOne, Event } = database
+
   try {
-    event = await Event.findById(id).lean()
+    event = await findOne(Event, { _id: id })
   } catch (err) {}
 
   if (!event) {
-    event = await Event.findOne({ slug: id }).lean()
+    event = await findOne(Event, { slug: id })
   }
 
   if (!event) {
-    event = await Event.findOne({ slug: new RegExp(id, 'i') }).lean()
+    event = await findOne(Event, { slug: new RegExp(id, 'i') })
   }
 
   return event
 }
 
 
-const updateEvent = async (id, body) => {
+const updateEvent = async (id, body, database) => {
   body.date = moment(body.date).toISOString()
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
+  body.tags = _.map(_.split(body.tags, ','), tag => tag.trim())
 
-  await Event.findOneAndUpdate({ _id: id }, body)
-  return await Event.findOne({ _id: id }).lean()
+  const { update, findOne, Event } = database
+  await update(Event, { _id: id }, body)
+  return await findOne(Event, { _id: id })
 }
 
 
-const deleteEvent = async (id) => {
-  await Event.findByIdAndDelete(id)
+const deleteEvent = async (id, database) => {
+  const { destroy, Event } = database
+  await destroy(Event, { _id: id })
   return 'event deleted'
 }
 
 
 export default async (req, res) => {
 
-  const { user, settings, done } = await serverContext(req, res)
+  const { user, settings, done, database } = await serverContext(req, res)
 
   if ((!user || !user.isAdmin) && !settings.enableEvents) {
     return done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === "GET") {
-    const event = await getEvent(req.query.id)
+    const event = await getEvent(req.query.id, database)
     if ((!event || !event.published) && (!user || !user.isAdmin)) {
       return done(403, { message: 'You are not allowed to do that.' })
     }
@@ -57,7 +62,7 @@ export default async (req, res) => {
     if (!user || !user.isAdmin) {
       return done(403, { message: 'You are not allowed to do that.' })
     }
-    const event = await updateEvent(req.query.id, req.body)
+    const event = await updateEvent(req.query.id, req.body, database)
     return done(200, event)
   }
 
@@ -66,7 +71,7 @@ export default async (req, res) => {
     if (!user || !user.isAdmin) {
       return done(403, { message: 'You are not allowed to do that.' })
     }
-    const message = await deleteEvent(req.query.id)
+    const message = await deleteEvent(req.query.id, database)
     return done(200, message)
   }
 

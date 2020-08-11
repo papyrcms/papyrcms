@@ -2,22 +2,21 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import serverContext from '@/serverContext'
 import keys from '@/keys'
-import User from '@/models/user'
-import Post from '@/models/post'
-import Page from '@/models/page'
 
 
 export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { done } = await serverContext(req, res)
+    const { done, database } = await serverContext(req, res)
+
+    const { create, countAll, destroyAll, User, Post, Page } = database
 
     // Since this is the initial site setup,
     // only run if there are no users, posts, or pages
-    const userCount = await User.estimatedDocumentCount()
-    const postCount = await Post.estimatedDocumentCount()
-    const pageCount = await Page.estimatedDocumentCount()
+    const userCount = await countAll(User)
+    const postCount = await countAll(Post)
+    const pageCount = await countAll(Page)
 
     if (
       userCount > 0 ||
@@ -47,14 +46,14 @@ export default async (req, res) => {
         return await done(400, error)
       }
 
-      const user = new User({
+      const userFields = {
         email,
         password: passwordHash,
         firstName: 'Admin',
         lastName: 'User',
         isAdmin: true
-      })
-      await user.save()
+      }
+      const user = await create(User, userFields)
 
       // generate a signed json web token with the contents of user object and return it in the response
       const now = new Date()
@@ -67,34 +66,34 @@ export default async (req, res) => {
       }, keys.jwtSecret)
 
       // Next create the header and footer
-      const header = new Post({
+      const headerFields = {
         title: headerTitle,
         content: headerSubtitle,
         mainMedia: siteLogo,
         tags: ['section-header'],
         published: true
-      })
-      await header.save()
+      }
+      const header = await create(Post, headerFields)
 
-      const footer = new Post({
+      const footerFields = {
         title: footerTitle,
         content: footerSubtitle,
         tags: ['section-footer'],
         published: true
-      })
-      await footer.save()
+      }
+      const footer = await create(Post, footerFields)
 
       // Next, create the first landing page
-      const pagePost = new Post({
+      const pagePostFields = {
         title: pageHeader,
         content: pageContent,
         mainMedia: pageImage,
         tags: ['first-page'],
         published: true
-      })
-      await pagePost.save();
+      }
+      const pagePost = await create(Post, pagePostFields)
 
-      const page = new Page({
+      const pageFields = {
         title: 'Home',
         route: 'home',
         navOrder: 1,
@@ -103,8 +102,8 @@ export default async (req, res) => {
           tags: ["first-page"],
           maxPosts: 1
         })]
-      })
-      await page.save()
+      }
+      const page = await create(Page, pageFields)
 
       return await done(200, {
         posts: [header, footer, pagePost],
@@ -117,9 +116,9 @@ export default async (req, res) => {
       // If something in the process fails, we must
       // undo everything done in the process so the
       // user can try again.
-      await User.deleteMany({})
-      await Post.deleteMany({})
-      await Page.deleteMany({})
+      await destroyAll(User)
+      await destroyAll(Post)
+      await destroyAll(Page)
 
       return await done(500, { error: err.message })
     }

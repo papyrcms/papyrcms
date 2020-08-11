@@ -1,8 +1,7 @@
 import serverContext from '@/serverContext'
-import User from '@/models/user'
 
 
-const updateCurrentUser = async (body, user) => {
+const updateCurrentUser = async (body, user, database) => {
   const {
     userId, firstName, lastName, email, address1, address2,
     city, state, zip, country, shippingFirstName, shippingLastName,
@@ -26,9 +25,11 @@ const updateCurrentUser = async (body, user) => {
     throw new Error("There's a problem with your session. Try logging out and logging back in")
   }
 
+  const { findOne, update, User } = database
+
   // Make sure a user with the email does not already exist
-  const existingUser = await User.findOne({ email })
-  if (existingUser && !existingUser._id.equals(user._id)) {
+  const existingUser = await findOne(User, { email })
+  if (existingUser && !existingUser._id == user._id) {
     throw new Error("Someone is already using this email.")
   }
 
@@ -41,20 +42,21 @@ const updateCurrentUser = async (body, user) => {
   }
 
   // Return the updated user
-  return await User.findOneAndUpdate({ _id: userId }, newUserData)
+  await update(User, { _id: userId }, newUserData)
+  return await findOne(User, { _id: userId })
 }
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
 
   if (req.method === 'GET') {
     return await done(200, user)
   }
   
   if (req.method === 'PUT') {
-    const updatedUser = await updateCurrentUser(req.body, user)
+    const updatedUser = await updateCurrentUser(req.body, user, database)
     return await done(200, updatedUser)
   }
 

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import util from 'util'
 
-export default async () => {
+export default async (database) => {
 
   const files = await util.promisify(fs.readdir)("src/utilities/serverContext/settings")
 
@@ -10,7 +10,7 @@ export default async () => {
   for (const file of files) {
     if (file === 'configureSettings.js') continue
     const settingsMiddleware = require(`./settings/${file}`).default
-    const newSettings = await settingsMiddleware()
+    const newSettings = await settingsMiddleware(database)
     settings = { ...settings, ...newSettings }
   }
 

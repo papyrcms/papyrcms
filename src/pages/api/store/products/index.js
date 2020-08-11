@@ -1,13 +1,14 @@
+import _ from 'lodash'
 import serverContext from "@/serverContext"
-import Product from "@/models/product"
 
 
-const getProducts = async () => {
-  return await Product.find().sort({ created: -1 }).lean()
+const getProducts = async (database) => {
+  const { findAll, Product } = database
+  return await findAll(Product, {}, { sort: { created: -1 } })
 }
 
 
-const createProduct = async (body) => {
+const createProduct = async (body, database) => {
   const {
     title,
     content,
@@ -20,39 +21,40 @@ const createProduct = async (body) => {
     quantity
   } = body
 
-  const product = new Product({
+  const productData = {
     title,
     content,
-    tags,
+    tags: _.map(_.split(tags, ','), tag => tag.trim()),
     mainMedia,
     subImages,
     published,
     created,
     price,
-    quantity
-  })
-  product.slug = title.replace(/\s+/g, '-').toLowerCase()
+    quantity,
+    slug: title.replace(/\s+/g, '-').toLowerCase()
+  }
 
-  product.save()
-  return product
+  const { create, Product } = database
+
+  return await create(Product, productData)
 }
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
-    const products = await getProducts()
+    const products = await getProducts(database)
     return await done(200, products)
   }
 
 
   if (req.method === 'POST') {
-    const product = await createProduct(req.body)
+    const product = await createProduct(req.body, database)
     return await done(200, product)
   }
 

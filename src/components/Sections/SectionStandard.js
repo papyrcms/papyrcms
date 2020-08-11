@@ -223,7 +223,7 @@ const SectionStandard = (props) => {
     maxPosts: 1,
     postTags: ['section-header']
   }  
-  const { posts: [headerPost] } = filterPosts(posts[0], headerSettings)
+  const { posts: [headerPost] } = filterPosts(posts, headerSettings)
   if (headerPost && title) {
     headTitle = `${headerPost.title} | ${title}`
   }  

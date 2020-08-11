@@ -15,7 +15,7 @@ const axiosConfig = {
 describe("/api/utility", () => {
 
   describe("/publicKeys", () => {
-    it("returns the ananlytics id, maps kye, and stripe pub key", async () => {
+    it("returns the ananlytics id, maps key, and stripe pub key", async () => {
       const { data: publicKeys } = await axios.get(`${rootURL}/api/utility/publicKeys`)
       const { googleAnalyticsId, googleMapsKey, stripePublishableKey } = publicKeys
 
@@ -30,12 +30,12 @@ describe("/api/utility", () => {
     const expectedSettings = {
       enableMenu: true,
       enableRegistration: true,
-      enableBlog: false,
-      enableCommenting: false,
-      enableEmailingToAdmin: false,
-      enableEmailingToUsers: false,
-      enableEvents: false,
-      enableStore: false
+      enableBlog: true,
+      enableCommenting: true,
+      enableEmailingToAdmin: true,
+      enableEmailingToUsers: true,
+      enableEvents: true,
+      enableStore: true
     }
 
     it("returns the settings that were posted", async () => {

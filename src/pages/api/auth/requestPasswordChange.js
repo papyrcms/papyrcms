@@ -2,14 +2,13 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import serverContext from "@/serverContext"
 import keys from '@/keys'
-import User from "@/models/user"
 
 
 export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { done } = await serverContext(req, res)
+    const { done, database } = await serverContext(req, res)
 
     const { token, password, confirmPassword } = req.body
 
@@ -18,7 +17,9 @@ export default async (req, res) => {
     }
 
     const data = jwt.verify(token, keys.jwtSecret)
-    const user = await User.findOne({ email: data.email })
+
+    const { findOne, update, User } = database
+    const user = await findOne(User, { email: data.email })
 
     // Set the new password
     let passwordHash
@@ -28,8 +29,8 @@ export default async (req, res) => {
       return await done(400, error)
     }
 
-    user.password = passwordHash
-    user.save()
+    await update(User, { _id: user._id }, { password: passwordHash })
+
     return await done(200, { message: 'Your password has been saved!' })
   }
 

@@ -1,23 +1,24 @@
 import serverContext from "@/serverContext"
-import User from "@/models/user"
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
     return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'DELETE') {
     const { id } = req.query
+    const { destroy, User } = database
 
-    if (user._id.equals(id)) {
+    // Non-strict for DBs with non-string ObjectId types
+    if (user._id == id) {
       return await done(401, { message: 'You cannot delete yourself.' })
     }
 
     try {
-      await User.findOneAndDelete({ _id: id })
+      await destroy(User, { _id: id })
       return await done(200, { message: 'user deleted' })
     } catch (err) {
       return await done(400, { message: err.message })

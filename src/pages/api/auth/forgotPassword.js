@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken'
 import serverContext from "@/serverContext"
 import Mailer from '@/utilities/mailer'
 import keys from '@/keys'
-import User from "@/models/user"
 
 
 const verifyEmailSyntax = (email) => {
@@ -15,7 +14,7 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { user, settings, done } = await serverContext(req, res)
+    const { user, settings, done, database } = await serverContext(req, res)
 
     if (!settings.enableEmailingToUsers && (!user || !user.isAdmin)) {
       return await done(403, { message: "We cannot currently email you." })
@@ -27,7 +26,9 @@ export default async (req, res) => {
       return await done(401, { message: 'Please enter your email address.' })
     }
 
-    const userExists = await User.findOne({ email })
+    // const userExists = await User.findOne({ email })
+    const { findOne, User } = database
+    const userExists = await findOne(User, { email })
 
     if (!userExists) {
       let message = 'That email does not exist in our system.'
@@ -39,7 +40,7 @@ export default async (req, res) => {
       return await done(401, { message })
     }
 
-    const mailer = new Mailer()
+    const mailer = new Mailer(database)
     const subject = "Forgot your password?"
     const variables = {
       passwordResetLink: `${keys.rootURL}/forgotPassword?token=${jwt.sign({ email }, keys.jwtSecret)}`

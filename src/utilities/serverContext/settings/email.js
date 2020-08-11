@@ -1,10 +1,10 @@
 import configureSettings from './configureSettings'
 
 
-export default async () => {
+export default async (database) => {
   const defaultSettings = {
     enableEmailingToAdmin: true,
     enableEmailingToUsers: false
   }
-  return await configureSettings("email", defaultSettings)
+  return await configureSettings("email", defaultSettings, database)
 }

@@ -16,7 +16,8 @@ export default {
   cloudinaryApiSecret: '',
   cloudinaryCloudName: '',
 
-  mongoURI: '',
+  databaseDriver: '',
+  databaseURI: '',
   rootURL: '',
   jwtSecret: '',
 

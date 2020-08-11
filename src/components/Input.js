@@ -67,7 +67,7 @@ const Input = (props) => {
             name={name}
             id={id}
             className={`input__textarea ${validation && 'input__textarea--invalid'}`}
-            value={value}
+            value={value || ''}
             required={!!required}
             onChange={event => onChange(event)}
             onBlur={event => onBlur(event)}
@@ -105,7 +105,7 @@ const Input = (props) => {
           name={name}
           id={id}
           className={`input__input ${validation && 'input__input--invalid'}`}
-          value={value}
+          value={value || ''}
           required={!!required}
           onChange={event => onChange(event)}
           onBlur={event => onBlur(event)}

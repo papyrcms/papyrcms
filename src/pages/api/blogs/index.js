@@ -1,41 +1,46 @@
+import _ from 'lodash'
 import serverContext from "@/serverContext"
-import Blog from "@/models/blog"
 
 
-const getBlogs = async () => {
-  return await Blog.find().sort({ publishDate: -1, created: -1 }).lean()
+const getBlogs = async (database) => {
+  const { findAll, Blog } = database
+  return await findAll(Blog, {}, { sort: { publishDate: -1, created: -1 }})
 }
 
 
-const createBlog = async (body) => {
-  const blog = new Blog(body)
-  blog.slug = blog.title.replace(/\s+/g, '-').toLowerCase()
+const createBlog = async (body, database) => {
 
-  if (blog.published) {
-    blog.publishDate = Date.now()
+  const { create, Blog } = database
+  const blogData = {
+    ...body,
+    slug: body.title.replace(/\s+/g, '-').toLowerCase(),
+    tags: _.map(_.split(body.tags, ','), tag => tag.trim())
   }
 
-  blog.save()
-  return blog
+  if (body.published) {
+    blogData.publishDate = Date.now()
+  }
+
+  return await create(Blog, blogData)
 }
 
 
 export default async (req, res) => {
 
-  const { user, done } = await serverContext(req, res)
+  const { user, done, database } = await serverContext(req, res)
 
   if (!user || !user.isAdmin) {
     return await done(403, { message: "You are not allowed to do that." })
   }
 
   if (req.method === 'GET') {
-    const blogs = await getBlogs()
+    const blogs = await getBlogs(database)
     return await done(200, blogs)
   }
   
   
   if (req.method === 'POST') {
-    const blog = await createBlog(req.body)
+    const blog = await createBlog(req.body, database)
     return await done(200, blog)
   }
 

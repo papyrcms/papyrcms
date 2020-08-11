@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import serverContext from "@/serverContext"
-import User from '@/models/user'
 import keys from '@/keys'
 
 
@@ -9,11 +8,13 @@ export default async (req, res) => {
 
   if (req.method === 'POST') {
 
-    const { done } = await serverContext(req, res)
+    const { done, database } = await serverContext(req, res)
 
     let user
     try {
-      user = await User.findOne({ email: req.body.email })
+      // user = await User.findOne({ email: req.body.email })
+      const { findOne, User } = database
+      user = await findOne(User, { email: req.body.email })
     } catch (error) {
       return await done(401, error)
     }

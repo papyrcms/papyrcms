@@ -1,36 +1,27 @@
 import _ from 'lodash'
 import serverContext from "@/serverContext"
-import Blog from "@/models/blog"
-import Comment from "@/models/comment"
 
 
-const updateComment = async (comment, newContent) => {
-  comment.content = newContent
+const deleteComment = async (blogId, commentId, database) => {
 
-  await comment.save()
-
-  return comment
-}
-
-
-const deleteComment = async (blogId, comment) => {
-  const blog = await Blog.findById(blogId)
+  const { destroy, Comment, findOne, update, Blog } = database
+  const blog = await findOne({ _id: blogId })
   _.forEach(blog.comments, (foundComment, i) => {
-
-    if (comment._id.equals(foundComment._id)) {
+    if (foundComment._id == commentId) {
       blog.comments.splice(i, 1)
     }
   })
-  blog.save()
+  await update(Blog, { _id: blogId }, { comments: blog.comments })
 
-  await Comment.findOneAndDelete({ _id: comment._id })
+  await destroy(Comment, { _id: commentId })
+
   return 'comment deleted'
 }
 
 
 export default async (req, res) => {
 
-  const { user, settings, done } = await serverContext(req, res)
+  const { user, settings, done, database } = await serverContext(req, res)
 
   if (
     (!user || !user.isAdmin) && (
@@ -42,29 +33,35 @@ export default async (req, res) => {
   }
 
   if (req.method === 'PUT') {
-    let comment = await Comment.findById(req.query.commentId).populate("author")
+    const { Comment, findOne, update } = database
+  
+    let comment = await findOne(Comment, { _id: req.query.commentId })
+
     if (
-      !comment.author._id.equals(user._id) ||
+      !comment.author == user._id ||
       !user.isAdmin
     ) {
       return await done(403, { message: "You are not allowed to do that." })
     }
 
-    comment = await updateComment(comment, req.body.content)
+    await update(Comment, { _id: req.query.commentId }, { content: req.body.content })
+    comment = await findOne(Comment, { _id: req.query.commentId }, { include: ['author'] })
+
     return await done(200, comment)
   }
 
 
   if (req.method === 'DELETE') {
-    const comment = await Comment.findById(req.query.commentId).populate("author")
+    let comment = await findOne(Comment, { _id: req.query.commentId })
+
     if (
-      !comment.author._id.equals(user._id) ||
+      !comment.author == user._id ||
       !user.isAdmin
     ) {
       return await done(403, { message: "You are not allowed to do that." })
     }
 
-    const message = await deleteComment(req.query.id, comment)
+    const message = await deleteComment(req.query.id, req.query.commentId, database)
     return await done(200, message)
   }
 

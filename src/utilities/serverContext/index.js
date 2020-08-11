@@ -1,18 +1,18 @@
 import useSettings from './useSettings'
-import database from './database'
+import initDatabase from './database'
 import authorization from './authorization'
 
 
 export default async (req, res) => {
 
-  await database()
-  const user = await authorization(req)
-  const settings = await useSettings()
+  const database = await initDatabase()
+  const user = await authorization(req, database)
+  const settings = await useSettings(database)
 
   // A common wrap-up function
   const done = async (status, data) => {
     return res.status(status).send(data)
   }
 
-  return { user, settings, done }
+  return { user, settings, database, done }
 }
