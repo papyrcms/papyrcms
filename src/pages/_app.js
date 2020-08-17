@@ -11,6 +11,7 @@ import settingsContext from '@/context/settingsContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
 import pagesContext from '@/context/postsContext'
 import '../sass/main.scss'
+import "swagger-ui-react/swagger-ui.css"
 
 
 const App = (props) => {

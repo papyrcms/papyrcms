@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Papyr CMS API",
+    "description": "Connectes to the Papyr CMS backend."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local server"
+    },
+    {
+      "url": "https://drkgrntt.herokuapp.com/api",
+      "description": "Main server"
+    }
+  ],
+  "paths": {
+    "/posts/published": {
+      "get": {
+        "summary": "Gets all published content posts.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blogs/published": {
+      "get": {
+        "summary": "Gets all published blog posts.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/events/published": {
+      "get": {
+        "summary": "Gets all published event posts.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/store/products/published": {
+      "get": {
+        "summary": "Gets all published product posts.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}
