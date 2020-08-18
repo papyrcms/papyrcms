@@ -144,6 +144,10 @@
           },
           "slug": {
             "type": "string"
+          },
+          "publishDate": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -188,6 +192,18 @@
           },
           "slug": {
             "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "latitude": {
+            "type": "number",
+            "format": "double"
+          },
+          "longitude": {
+            "type": "number",
+            "format": "double"
           }
         }
       },
@@ -232,6 +248,13 @@
           },
           "slug": {
             "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "float"
+          },
+          "quantity": {
+            "type": "integer"
           }
         }
       },
