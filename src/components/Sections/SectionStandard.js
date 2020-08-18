@@ -226,7 +226,7 @@ const SectionStandard = (props) => {
   const { posts: [headerPost] } = usePostFilter(posts, headerSettings)
   if (headerPost && title) {
     headTitle = `${headerPost.title} | ${title}`
-  }  
+  }
 
   return (
     <div className={`posts-show ${className || ''}`}>

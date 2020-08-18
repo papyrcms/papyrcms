@@ -12,10 +12,6 @@ const RegisterForm = () => {
   const { settings } = useContext(settingsContext)
   const { setCurrentUser } = useContext(userContext)
 
-  if (!settings.enableRegistration) {
-    return null
-  }
-
   const INITIAL_STATE = {
     firstName: '',
     lastName: '',
@@ -26,6 +22,9 @@ const RegisterForm = () => {
   }
   const formState = useForm(INITIAL_STATE)
 
+  if (!settings.enableRegistration) {
+    return null
+  }  
 
   const handleSubmit = (event, resetButton) => {
     event.preventDefault()

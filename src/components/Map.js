@@ -14,11 +14,11 @@ const Map = (props) => {
     zoom = 14
   } = props
 
+  const { keys } = useContext(keysContext)
+  
   if (!latitude || !longitude) {
     return null
   }
-
-  const { keys } = useContext(keysContext)
 
   return (
     <div className={`map ${className}`}>
