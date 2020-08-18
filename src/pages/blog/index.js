@@ -3,7 +3,7 @@ import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
 import keys from '@/keys'
-import filterPosts from '@/hooks/filterPosts'
+import usePostFilter from '@/hooks/usePostFilter'
 import SectionStrip from '@/Sections/SectionStrip'
 
 
@@ -15,7 +15,7 @@ const BlogPage = (props) => {
     const settings = {
       maxPosts: 5
     }
-    const { posts: filteredBlogs } = filterPosts(blogs, settings)
+    const { posts: filteredBlogs } = usePostFilter(blogs, settings)
     setBlogs(filteredBlogs)
   }, [])
 

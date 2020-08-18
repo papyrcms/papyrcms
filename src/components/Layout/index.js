@@ -3,7 +3,7 @@ import sanitizeHTML from 'sanitize-html'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import postsContext from '@/context/postsContext'
-import filterPosts from '@/hooks/filterPosts'
+import usePostFilter from '@/hooks/usePostFilter'
 import Notification from './Notification'
 import Header from './Header'
 import Footer from './Footer'
@@ -29,7 +29,7 @@ const Layout = (props) => {
       'copyright'
     ]
   }
-  const filtered = filterPosts(posts, settings)
+  const filtered = usePostFilter(posts, settings)
 
   let headerTitle = '',
     headerSubTitle = '',
@@ -82,7 +82,7 @@ const Layout = (props) => {
   })
 
 
-  const notifications = filterPosts(posts, {
+  const notifications = usePostFilter(posts, {
     postTags: ['notification']
   })
 

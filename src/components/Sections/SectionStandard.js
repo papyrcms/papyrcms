@@ -9,7 +9,7 @@ import postsContext from '@/context/postsContext'
 import settingsContext from '@/context/settingsContext'
 import Media from '@/components/Media'
 import PageHead from '@/components/PageHead'
-import filterPosts from '@/hooks/filterPosts'
+import usePostFilter from '@/hooks/usePostFilter'
 
 
 /**
@@ -223,7 +223,7 @@ const SectionStandard = (props) => {
     maxPosts: 1,
     postTags: ['section-header']
   }  
-  const { posts: [headerPost] } = filterPosts(posts, headerSettings)
+  const { posts: [headerPost] } = usePostFilter(posts, headerSettings)
   if (headerPost && title) {
     headTitle = `${headerPost.title} | ${title}`
   }  

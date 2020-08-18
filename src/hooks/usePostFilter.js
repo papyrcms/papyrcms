@@ -1,7 +1,7 @@
 import _ from 'lodash'
 
 
-const filterPosts = (posts, settings) => {
+const usePostFilter = (posts, settings) => {
 
   const filterByPublished = (postsToFilter, filters) => {
     const { showAll } = filters
@@ -87,7 +87,7 @@ const filterPosts = (posts, settings) => {
   }
 
 
-  const filterPosts = (postsToFilter, filters) => {
+  const usePostFilter = (postsToFilter, filters) => {
 
     postsToFilter = filterByPublished(postsToFilter, filters)
     postsToFilter = filterByPostTags(postsToFilter, filters)
@@ -104,15 +104,15 @@ const filterPosts = (posts, settings) => {
   if (Array.isArray(settings)) {
     _.forEach(settings, filters => {
       if (filters.propName) {
-        filtered[filters.propName] = filterPosts(posts, filters)
+        filtered[filters.propName] = usePostFilter(posts, filters)
       }
     })
   } else {
-    filtered['posts'] = filterPosts(posts, settings)
+    filtered['posts'] = usePostFilter(posts, settings)
   }
 
   return filtered
 }
 
 
-export default filterPosts
+export default usePostFilter

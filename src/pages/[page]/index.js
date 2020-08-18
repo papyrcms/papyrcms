@@ -8,7 +8,7 @@ import postsContext from '@/context/postsContext'
 import pagesContext from '@/context/pagesContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
 import PageHead from '@/components/PageHead'
-import filterPosts from '@/hooks/filterPosts'
+import usePostFilter from '@/hooks/usePostFilter'
 import keys from '@/keys'
 import styles from './page.module.scss'
 
@@ -47,7 +47,7 @@ const Page = (props) => {
 
   // Get posts and filter those by the settings
   const { posts } = useContext(postsContext)
-  const filtered = filterPosts(posts, settings)
+  const filtered = usePostFilter(posts, settings)
 
   // Get our section options
   const { sectionOptions } = useContext(sectionOptionsContext)
@@ -101,7 +101,7 @@ const Page = (props) => {
       maxPosts: 1,
       postTags: ['section-header']
     }
-    const { posts: [headerPost] } = filterPosts(posts, headerSettings)
+    const { posts: [headerPost] } = usePostFilter(posts, headerSettings)
     if (!SectionStandard && page.route !== 'home' && page.title && headerPost) {
       title = `${headerPost.title} | ${page.title}`
     }
