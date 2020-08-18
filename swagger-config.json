@@ -411,7 +411,7 @@
             "items": {
               "$ref": "#/components/schemas/Product"
             }
-          },
+          }, 
           "user": {
             "$ref": "#/components/schemas/User"
           },
