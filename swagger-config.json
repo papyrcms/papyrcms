@@ -56,5 +56,373 @@
         }
       }
     }
+  },
+  "components": {
+    "schemas": {
+      "Post": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subImages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "mainMedia": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "Blog": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subImages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "mainMedia": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "Event": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subImages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "mainMedia": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "Product": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "subImages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "mainMedia": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "Comment": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          },
+          "author": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "User": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "shippingFirstName": {
+            "type": "string"
+          },
+          "shippingLastName": {
+            "type": "string"
+          },
+          "shippingEmail": {
+            "type": "string"
+          },
+          "shippingAddress1": {
+            "type": "string"
+          },
+          "shippingAddress2": {
+            "type": "string"
+          },
+          "shippingCity": {
+            "type": "string"
+          },
+          "shippingState": {
+            "type": "string"
+          },
+          "shippingZip": {
+            "type": "string"
+          },
+          "shippingCountry": {
+            "type": "string"
+          },
+          "cart": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          },
+          "isSubscribed": {
+            "type": "boolean"
+          },
+          "isBanned": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Page": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "className": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          },
+          "navOrder": {
+            "type": "integer"
+          },
+          "sections": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "json"
+            }
+          },
+          "css": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Message": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "emailSent": {
+            "type": "boolean"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          }        
+        }
+      },
+      "Order": {
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "shipped": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
   }
 }
