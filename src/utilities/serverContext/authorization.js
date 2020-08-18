@@ -5,8 +5,8 @@ import keys from '@/keys'
 
 export default async (req, database) => {
 
-  if (req.headers.authorization && req.headers.authorization.includes('bearer ')) {
-    const token = req.headers.authorization.replace('bearer ', '')
+  if (req.headers.authorization && req.headers.authorization.toLowerCase().includes('bearer ')) {
+    const token = req.headers.authorization.replace('bearer ', '').replace('Bearer ', '')
 
     try {
       const tokenObject = jwt.verify(token, keys.jwtSecret)
