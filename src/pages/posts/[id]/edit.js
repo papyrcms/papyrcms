@@ -10,8 +10,6 @@ import keys from '@/keys'
 const PostsEdit = (props) => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
-
   const { query } = useRouter()
   const [post, setPost] = useState(props.post)
   useEffect(() => {
@@ -23,6 +21,8 @@ const PostsEdit = (props) => {
     }
     resetPost()
   }, [currentUser])
+  
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
 
   return (

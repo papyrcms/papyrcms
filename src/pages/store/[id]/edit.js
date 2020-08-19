@@ -43,12 +43,10 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => {
 const StoreEdit = (props) => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
-
-
+  
   const [product, setProduct] = useState(props.product)
   const { query } = useRouter()
-
+  
   useEffect(() => {
     const resetProduct = async () => {
       if (currentUser && currentUser.isAdmin) {
@@ -58,6 +56,8 @@ const StoreEdit = (props) => {
     }
     resetProduct()
   }, [currentUser])
+  
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm

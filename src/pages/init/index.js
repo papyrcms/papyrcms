@@ -16,10 +16,6 @@ const Init = () => {
   const { pages, setPages } = useContext(pagesContext)
   const { setCurrentUser } = useContext(userContext)
 
-  if (posts.length > 0 || pages.length > 0) {
-    return <Error statusCode={403} />
-  }
-
   const INITIAL_STATE = {
     email: '',
     password: '',
@@ -41,6 +37,10 @@ const Init = () => {
   useEffect(() => {
     document.getElementById('auth-modal').click()
   }, [])
+
+  if (posts.length > 0 || pages.length > 0) {
+    return <Error statusCode={403} />
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault()

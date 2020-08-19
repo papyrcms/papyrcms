@@ -10,11 +10,9 @@ import keys from '@/keys'
 const BlogEdit = (props) => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
-
   const [blog, setBlog] = useState(props.blog || [])
   const { query } = useRouter()
-
+  
   useEffect(() => {
     if (currentUser && currentUser.isAdmin) {
       const getBlog = async () => {
@@ -24,6 +22,8 @@ const BlogEdit = (props) => {
       getBlog()
     }
   }, [])
+  
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm

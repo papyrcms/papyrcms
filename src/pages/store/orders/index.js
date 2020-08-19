@@ -10,8 +10,6 @@ import styles from './orders.module.scss'
 const Orders = () => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
-
   const [orders, setOrders] = useState([])
   useEffect(() => {
     const resetOrders = async () => {
@@ -22,6 +20,8 @@ const Orders = () => {
     }
     resetOrders()
   }, [currentUser])
+  
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
 
   const renderProducts = (products) => {

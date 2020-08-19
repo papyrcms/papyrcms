@@ -12,8 +12,7 @@ const Pages = () => {
 
   const { pages, setPages } = useContext(pagesContext)
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
-
+  
   useEffect(() => {
     const getPages = async () => {
       const { data: pages } = await axios.get('/api/pages')
@@ -21,7 +20,8 @@ const Pages = () => {
     }
     getPages()
   }, [])
-
+  
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   const renderPages = () => {
 

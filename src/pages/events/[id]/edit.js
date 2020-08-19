@@ -51,11 +51,9 @@ const coordinatesField = ({ values, errors, handleChange, validateField }) => (
 const EventsEdit = (props) => {
 
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
-
   const [event, setEvent] = useState(props.event || {})
   const { query } = useRouter()
-
+  
   useEffect(() => {
     if (currentUser && currentUser.isAdmin) {
       const getEvent = async () => {
@@ -65,6 +63,8 @@ const EventsEdit = (props) => {
       getEvent()
     }
   }, [])
+  
+  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm
