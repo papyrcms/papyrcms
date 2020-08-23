@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-
-
 const blog = (sequelize, DataTypes) => {
   const Blog = sequelize.define('blog', {
 

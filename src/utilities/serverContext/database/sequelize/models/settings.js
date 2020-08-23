@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-
-
 const settings = (sequelize, DataTypes) => {
   const Settings = sequelize.define('settings', {
 

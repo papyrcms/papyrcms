@@ -1,7 +1,3 @@
-import Sequelize from 'sequelize'
-import _ from 'lodash'
-
-
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
 

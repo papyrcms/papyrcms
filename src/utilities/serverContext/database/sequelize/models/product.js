@@ -1,5 +1,3 @@
-import Sequelize from 'sequelize'
-
 const product = (sequelize, DataTypes) => {
   const Product = sequelize.define('product', {
 

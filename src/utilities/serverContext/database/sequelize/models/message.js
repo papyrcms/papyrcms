@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-
-
 const message = (sequelize, DataTypes) => {
   const Message = sequelize.define('message', {
 

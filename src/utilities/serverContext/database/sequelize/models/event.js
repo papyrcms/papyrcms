@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-
-
 const event = (sequelize, DataTypes) => {
   const Event = sequelize.define('event', {
 

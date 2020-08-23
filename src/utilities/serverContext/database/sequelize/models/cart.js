@@ -1,5 +1,3 @@
-import Sequelize from 'sequelize'
-
 const cart = (sequelize, DataTypes) => {
   const Cart = sequelize.define('cart', {
 

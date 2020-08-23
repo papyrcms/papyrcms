@@ -1,6 +1,3 @@
-import Sequelize from 'sequelize'
-
-
 const page = (sequelize, DataTypes) => {
   const Page = sequelize.define('page', {
 
