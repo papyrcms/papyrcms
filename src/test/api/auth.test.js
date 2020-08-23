@@ -23,7 +23,7 @@ describe('/api/auth', () => {
   })
 
   const newUser = {
-    email: 'test@test.com',
+    email: 'test@example.com',
     firstName: 'Test',
     lastName: 'User',
     password: 'abcd1234',

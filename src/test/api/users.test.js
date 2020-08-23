@@ -23,11 +23,11 @@ describe('/api/users', () => {
     it('makes a non-admin user an admin', async () => {
       const database = await getDatabase()
       const { findOne, User } = database
-      const testUser = await findOne(User, { email: 'test@test.com' })
+      const testUser = await findOne(User, { email: 'test@example.com' })
 
       const putData = { userId: testUser._id, isAdmin: true }
       const { status } = await axios.put(`${rootURL}/api/users/makeAdmin`, putData, axiosConfig)
-      const updatedUser = await findOne(User, { email: 'test@test.com' })
+      const updatedUser = await findOne(User, { email: 'test@example.com' })
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isAdmin).to.equal(true)
@@ -36,11 +36,11 @@ describe('/api/users', () => {
     it('make an admin user into a non-admin', async () => {
       const database = await getDatabase()
       const { findOne, User } = database
-      const testUser = await findOne(User, { email: 'test@test.com' })
+      const testUser = await findOne(User, { email: 'test@example.com' })
 
       const putData = { userId: testUser._id, isAdmin: false }
       const { status } = await axios.put(`${rootURL}/api/users/makeAdmin`, putData, axiosConfig)
-      const updatedUser = await findOne(User, { email: 'test@test.com' })
+      const updatedUser = await findOne(User, { email: 'test@example.com' })
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isAdmin).to.equal(false)
@@ -51,11 +51,11 @@ describe('/api/users', () => {
     it('makes a non-banned user an banned', async () => {
       const database = await getDatabase()
       const { findOne, User } = database
-      const testUser = await findOne(User, { email: 'test@test.com' })
+      const testUser = await findOne(User, { email: 'test@example.com' })
 
       const putData = { userId: testUser._id, isBanned: true }
       const { status } = await axios.put(`${rootURL}/api/users/ban`, putData, axiosConfig)
-      const updatedUser = await findOne(User, { email: 'test@test.com' })
+      const updatedUser = await findOne(User, { email: 'test@example.com' })
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isBanned).to.equal(true)
@@ -64,11 +64,11 @@ describe('/api/users', () => {
     it('make a banned user into a non-banned', async () => {
       const database = await getDatabase()
       const { findOne, User } = database
-      const testUser = await findOne(User, { email: 'test@test.com' })
+      const testUser = await findOne(User, { email: 'test@example.com' })
 
       const putData = { userId: testUser._id, isBanned: false }
       const { status } = await axios.put(`${rootURL}/api/users/ban`, putData, axiosConfig)
-      const updatedUser = await findOne(User, { email: 'test@test.com' })
+      const updatedUser = await findOne(User, { email: 'test@example.com' })
 
       expect(status).to.equal(200) &&
       expect(updatedUser.isBanned).to.equal(false)
@@ -79,7 +79,7 @@ describe('/api/users', () => {
     it('does not delete a user if the request was sent by a non-admin', async () => {
       const database = await getDatabase()
       const { findOne, User } = database
-      const testUser = await findOne(User, { email: 'test@test.com' })
+      const testUser = await findOne(User, { email: 'test@example.com' })
 
       try {
         await axios.delete(`${rootURL}/api/users/${testUser._id}`)
@@ -105,10 +105,10 @@ describe('/api/users', () => {
     it('deletes a user', async () => {
       const database = await getDatabase()
       const { findOne, User } = database
-      const testUser = await findOne(User, { email: 'test@test.com' })
+      const testUser = await findOne(User, { email: 'test@example.com' })
 
       const response = await axios.delete(`${rootURL}/api/users/${testUser._id}`, axiosConfig)
-      const deletedUser = await findOne(User, { email: 'test@test.com' })
+      const deletedUser = await findOne(User, { email: 'test@example.com' })
 
       expect(response.data.message).to.equal('user deleted') &&
       expect(deletedUser).to.equal(null)
