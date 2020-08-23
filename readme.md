@@ -247,6 +247,7 @@ So far, end-to-end tests have been written for Papyr CMS using Mocha. They have 
 	- `newPass` is any other string to change the admin user's password to
 	    - This can be the same as `oldPass` in order to run the test back-to-back
 	- `token` is the admin user's JWT. This can be obtained by logging into the admin's account, and entering in the console `localStorage.getItem('token')
-	`tokenRpc` is a token passed in the url when requesting a password change. This can be obtained by requesting a password change for the admin user, and then getting the token from the link provided in the email.
+	- `tokenRpc` is a token passed in the url when requesting a password change. This can be obtained by requesting a password change for the admin user, and then getting the token from the link provided in the email.
+- A content post with the post tags "email-template, welcome" is required.
 
 inb4 - it works on my machine.
