@@ -16,7 +16,7 @@ export default async (req, res) => {
       const { findOne, User } = database
       user = await findOne(User, { email: req.body.email })
     } catch (error) {
-      return await done(401, error)
+      return await done(400, error)
     }
 
     if (!user) {

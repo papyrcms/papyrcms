@@ -11,7 +11,7 @@ const StoreProvider = (props) => {
 
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && currentUser.cart) {
       setCart(currentUser.cart)
     } else {
       const localCart = localStorage.getItem('cart')

@@ -44,6 +44,7 @@ const product = (sequelize, DataTypes) => {
   Product.buildAssociations = models => {
     Product.hasMany(models.Comment)
     Product.belongsTo(models.Order)
+    Product.hasMany(models.Cart)
   }
 
 

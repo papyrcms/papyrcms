@@ -14,6 +14,11 @@ const cart = (sequelize, DataTypes) => {
     freezeTableName: true
   })
 
+  Cart.buildAssociations = models => {
+    Cart.belongsTo(models.User)
+    Cart.belongsTo(models.Product)
+  }
+
   return Cart
 }
 

@@ -1,5 +1,5 @@
 import Blog from './blog'
-// import Cart from './cart'
+import Cart from './cart'
 import Comment from './comment'
 import Event from './event'
 import Message from './message'
@@ -13,7 +13,7 @@ import User from './user'
 
 export {
   Blog,
-  // Cart,
+  Cart,
   Comment,
   Event,
   Message,

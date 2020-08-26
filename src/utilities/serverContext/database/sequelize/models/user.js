@@ -35,20 +35,6 @@ const user = (sequelize, DataTypes) => {
     shippingZip: { type: DataTypes.STRING },
     shippingCountry: { type: DataTypes.STRING },
 
-    // This seems non-ideal, but sequelize will not allow duplicate
-    // many-to-many records in the cart table
-    cart: {
-      type: DataTypes.TEXT,
-      defaultValue: '[]',
-      get() {
-        const rawValue = this.getDataValue('cart')
-        return JSON.parse(rawValue)
-      },
-      set(value) {
-        this.setDataValue('cart', JSON.stringify(value))
-      }
-    },
-
     // Account creation date
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 
@@ -60,6 +46,7 @@ const user = (sequelize, DataTypes) => {
 
   User.buildAssociations = models => {
     User.belongsTo(models.Order)
+    User.hasMany(models.Cart)
   }
 
   return User

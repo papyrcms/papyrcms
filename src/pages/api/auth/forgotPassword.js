@@ -26,7 +26,6 @@ export default async (req, res) => {
       return await done(401, { message: 'Please enter your email address.' })
     }
 
-    // const userExists = await User.findOne({ email })
     const { findOne, User } = database
     const userExists = await findOne(User, { email })
 
