@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 
 const Button = (props) => {
@@ -8,7 +8,7 @@ const Button = (props) => {
     className = '',
     disabled = false,
     onClick = () => {},
-    id = '',
+    id = null,
     style = {},
     title = '',
     children = '',
@@ -20,6 +20,12 @@ const Button = (props) => {
 
   const [buttonDisabled, setButtonDisabled] = useState(disabled)
   const [buttonText, setButtonText] = useState(children)
+
+  // Because use the state "buttonText" instead of children as the actual text,
+  // we should update "buttonText" when "children" changes.
+  useEffect(() => {
+    setButtonText(children)
+  }, [children])
 
   const actualClassName = `button button-${type} ${className}`
   

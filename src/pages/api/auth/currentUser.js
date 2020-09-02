@@ -2,6 +2,7 @@ import serverContext from '@/serverContext'
 
 
 const updateCurrentUser = async (body, user, database) => {
+
   const {
     userId, firstName, lastName, email, address1, address2,
     city, state, zip, country, shippingFirstName, shippingLastName,
@@ -47,6 +48,15 @@ const updateCurrentUser = async (body, user, database) => {
 }
 
 
+const updateUserSubscription = async (body, user, database) => {
+
+  const { User, update, findOne } = database
+  await update(User, { _id: user._id }, { isSubscribed: body.isSubscribed })
+
+  return await findOne(User, { _id: user._id })
+}
+
+
 export default async (req, res) => {
 
   const { user, done, database } = await serverContext(req, res)
@@ -56,7 +66,12 @@ export default async (req, res) => {
   }
   
   if (req.method === 'PUT') {
-    const updatedUser = await updateCurrentUser(req.body, user, database)
+    let updatedUser
+    if (req.body.hasOwnProperty('isSubscribed')) {
+      updatedUser = await updateUserSubscription(req.body, user, database)
+    } else {
+      updatedUser = await updateCurrentUser(req.body, user, database)
+    }
     return await done(200, updatedUser)
   }
 

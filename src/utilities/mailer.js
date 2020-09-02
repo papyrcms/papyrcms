@@ -93,6 +93,13 @@ class Mailer {
 
     if (!transporter) return false
 
+    // TODO - Add an "unsubscribe" button to the bottom of the email
+    // post.content = `${post.content}\n\n<a href="#">Unsubscribe</a>`
+
+    // Temp fix
+    const profileUrl = `${keys.rootURL}/profile`
+    post.content = `${post.content}\n\n<em>You can unsubscribe by going to your <a href="${profileUrl}">profile.</a></em>`
+
     for (const user of subscribedUsers) {
 
       const mailOptions = {

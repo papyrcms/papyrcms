@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import Router from 'next/router'
-import Error from 'next/error'
 import Link from 'next/link'
+import axios from 'axios'
 import userContext from '@/context/userContext'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
@@ -17,7 +17,11 @@ const ProfilePage = () => {
   const { currentUser, setCurrentUser } = useContext(userContext)
 
 
-  if (!currentUser) return <Error statusCode={403} />
+  if (!currentUser) {
+    return (
+      <h3 className={`heading-tertiary ${styles['profile__login']}`}><Link href="/login">Login</Link> to view your profile.</h3>
+    )
+  }
 
 
   const onLogoutClick = async () => {
@@ -54,6 +58,20 @@ const ProfilePage = () => {
     }
   }
 
+
+  const onSubscribeClick = async (event, reset) => {
+
+    try {
+      const response = await axios.put('/api/auth/currentUser', { isSubscribed: !currentUser.isSubscribed })
+      setCurrentUser(response.data)
+    } catch (err) {
+      console.error(err)
+    }
+
+    reset()
+  }
+
+
   return (
     <div className={styles["profile"]}>
       <h1 className="heading-secondary">Profile</h1>
@@ -67,6 +85,17 @@ const ProfilePage = () => {
             Log Out
           </Button>
         </div>
+
+        <div className={styles["profile__logout"]}>
+
+        You are {currentUser.isSubscribed ? '' : 'not '}subscribed.
+        <Button
+          onClick={onSubscribeClick}
+        >
+          {currentUser.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+        </Button>
+        </div>
+
         {renderAdmin()}
       </div>
 
