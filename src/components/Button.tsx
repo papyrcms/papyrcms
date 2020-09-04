@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 
 type Props = {
   className: string
-  disabled: boolean
+  disabled?: boolean
   onClick: Function
-  id: string
-  style: { [key: string]: string }
-  title: string
+  id?: string
+  style?: { [key: string]: string }
+  title?: string
   children: string
-  type: string
+  type?: string
   submittedText?: string
 }
 
