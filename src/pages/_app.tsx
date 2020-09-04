@@ -10,7 +10,7 @@ import postsContext from '@/context/postsContext'
 import keysContext from '@/context/keysContext'
 import settingsContext from '@/context/settingsContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
-import pagesContext from '@/context/postsContext'
+import pagesContext from '@/context/pagesContext'
 import '../sass/main.scss'
 import "swagger-ui-react/swagger-ui.css"
 
