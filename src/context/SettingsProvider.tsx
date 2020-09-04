@@ -1,7 +1,13 @@
+import { Settings } from 'types'
 import React, { useState } from 'react'
 import settingsContext from './settingsContext'
 
-const SettingsProvider = (props) => {
+type Props = {
+  settings: Settings
+  children: any
+}
+
+const SettingsProvider = (props: Props) => {
 
   const [settings, setSettings] = useState(props.settings)
 

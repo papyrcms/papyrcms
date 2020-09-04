@@ -45,9 +45,9 @@ export interface User {
   state?: string
   country?: string
   zip?: string
-  shippingFirstName?: String,
-  shippingLastName?: String,
-  shippingEmail?: String,
+  shippingFirstName?: String
+  shippingLastName?: String
+  shippingEmail?: String
   shippingAddress1?: string
   shippingAddress2?: string
   shippingCity?: string
@@ -91,9 +91,14 @@ export interface Message {
 }
 
 export interface Settings {
-  _id: string
-  name: string
-  options: JSON
+  enableMenu: boolean
+  enableStore: boolean
+  enableBlog: boolean
+  enableEvents: boolean
+  enableCommenting: boolean
+  enableRegistration: boolean
+  enableEmailingToAdmin: boolean
+  enableEmailingToUsers: boolean
 }
 
 export interface SectionOptions {
