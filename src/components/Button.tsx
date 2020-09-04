@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
+type Props = {
+  className: string
+  disabled: boolean
+  onClick: Function
+  id: string
+  style: { [key: string]: string }
+  title: string
+  children: string
+  type: string
+  submittedText?: string
+}
 
-const Button = (props) => {
+const Button = (props: Props) => {
 
   const {
     // Standard button props
@@ -29,7 +40,7 @@ const Button = (props) => {
 
   const actualClassName = `button button-${type} ${className}`
   
-  const handleClick = (event) => {
+  const handleClick = (event: any) => {
 
     setButtonText(submittedText)
     setButtonDisabled(true)
@@ -47,7 +58,7 @@ const Button = (props) => {
       className={actualClassName}
       disabled={buttonDisabled}
       onClick={handleClick}
-      id={id}
+      id={id || undefined}
       title={title}
       style={style}
     >
