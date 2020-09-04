@@ -17,7 +17,7 @@ const ForgotPasswordPage = () => {
 
   if (typeof token !== 'string') return <Error statusCode={403} />
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
 
     event.preventDefault()
 
@@ -39,7 +39,7 @@ const ForgotPasswordPage = () => {
   }
 
   const data = jwt.decode(token)
-  if (!data) return <Error statusCode={403} />
+  if (!data || typeof data === 'string') return <Error statusCode={403} />
 
   const { email } = data
 
@@ -57,7 +57,7 @@ const ForgotPasswordPage = () => {
           name="password"
           type="password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
+          onChange={(event: any) => setPassword(event.target.value)}
         />
 
         <Input
@@ -66,7 +66,7 @@ const ForgotPasswordPage = () => {
           name="confirmPassword"
           type="password"
           value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
+          onChange={(event: any) => setConfirmPassword(event.target.value)}
         />
 
         <p className={styles["forgot-password-page__validation"]}>{validation}</p>
