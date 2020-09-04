@@ -1,3 +1,4 @@
+import { Event } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
@@ -8,7 +9,7 @@ import Map from '@/components/Map'
 import SectionStandard from '@/Sections/SectionStandard'
 
 
-const EventsShow = (props) => {
+const EventsShow = (props: { event: Event }) => {
 
   const { currentUser } = useContext(userContext)
   const [event, setEvent] = useState(props.event || {})
@@ -48,7 +49,7 @@ const EventsShow = (props) => {
 }
 
 
-EventsShow.getInitialProps = async ({ query }) => {
+EventsShow.getInitialProps = async ({ query }: { query: { id: string } }) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)

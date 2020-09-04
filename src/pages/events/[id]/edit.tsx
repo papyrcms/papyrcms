@@ -1,3 +1,4 @@
+import { Event } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
@@ -9,7 +10,15 @@ import keys from '@/keys'
 import Input from '@/components/Input'
 
 
-const dateField = ({ values, errors, handleChange, validateField }) => (
+type Props = {
+  values: any
+  errors: any
+  validateField: Function
+  handleChange: Function
+}
+
+
+const dateField = ({ values, errors, handleChange, validateField }: Props) => (
   <Input
     id="event_date"
     label="Date"
@@ -23,7 +32,7 @@ const dateField = ({ values, errors, handleChange, validateField }) => (
   />
 )
 
-const coordinatesField = ({ values, errors, handleChange, validateField }) => (
+const coordinatesField = ({ values, errors, handleChange, validateField }: Props) => (
   <div className="u-form-row">
     <Input
       id="event_latitude"
@@ -48,7 +57,7 @@ const coordinatesField = ({ values, errors, handleChange, validateField }) => (
 )
 
 
-const EventsEdit = (props) => {
+const EventsEdit = (props: { event: Event }) => {
 
   const { currentUser } = useContext(userContext)
   const [event, setEvent] = useState(props.event || {})
@@ -84,7 +93,7 @@ const EventsEdit = (props) => {
 }
 
 
-EventsEdit.getInitialProps = async ({ query }) => {
+EventsEdit.getInitialProps = async ({ query }: { query: { id: string } }) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)

@@ -1,3 +1,4 @@
+import { Event } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
@@ -6,7 +7,7 @@ import keys from '@/keys'
 import SectionCards from '@/Sections/SectionCards'
 
 
-const EventsAllPage = (props) => {
+const EventsAllPage = (props: { events: Event[] }) => {
 
   const { currentUser } = useContext(userContext)
   const [events, setEvents] = useState(props.events || [])
@@ -22,7 +23,7 @@ const EventsAllPage = (props) => {
   }, [])
 
 
-  const renderDate = (post) => (
+  const renderDate = (post: Event) => (
     <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
   )
 

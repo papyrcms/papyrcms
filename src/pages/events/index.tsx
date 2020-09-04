@@ -1,3 +1,4 @@
+import { Event } from 'types'
 import React from 'react'
 import axios from 'axios'
 import moment from 'moment'
@@ -5,10 +6,10 @@ import keys from '@/keys'
 import SectionStrip from '@/Sections/SectionStrip'
 
 
-const EventsPage = ({ events }) => {
+const EventsPage = ({ events }: { events: Event[] }) => {
 
 
-  const renderDate = (event) => (
+  const renderDate = (event: Event) => (
     <p>{moment(event.date).format('MMMM Do, YYYY')}</p>
   )
 
