@@ -33,18 +33,21 @@ export interface Comment {
 export interface User {
   _id: string
   email: string
-  password: string
   firstName: string
   lastName: string
   isAdmin: boolean
   isSubscribed: boolean
   isBanned: boolean
+  created: string
   address1?: string
   address2?: string
   city?: string
   state?: string
   country?: string
   zip?: string
+  shippingFirstName?: String,
+  shippingLastName?: String,
+  shippingEmail?: String,
   shippingAddress1?: string
   shippingAddress2?: string
   shippingCity?: string

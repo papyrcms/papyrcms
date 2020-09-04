@@ -1,12 +1,14 @@
+import { User } from 'types'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import userContext from './userContext'
 
-const UserProvider = (props) => {
 
-  const [currentUser, setUser] = useState(null)
+const UserProvider = (props: { children: any }) => {
 
-  const setCurrentUser = async user => {
+  const [currentUser, setUser] = useState<User | null>(null)
+
+  const setCurrentUser = async (user?: User) => {
     const token = localStorage.getItem('token')
     axios.defaults.headers.common = {
       Authorization: `bearer ${token}`
@@ -15,7 +17,7 @@ const UserProvider = (props) => {
       const result = await axios.get('/api/auth/currentUser')
       user = result.data
     }
-    setUser(user)
+    if (user) setUser(user)
   }
 
   useEffect(() => {
