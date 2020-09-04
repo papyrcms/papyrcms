@@ -1,3 +1,4 @@
+import { Blog } from 'types'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment'
@@ -7,7 +8,7 @@ import usePostFilter from '@/hooks/usePostFilter'
 import SectionStrip from '@/Sections/SectionStrip'
 
 
-const BlogPage = (props) => {
+const BlogPage = (props: { blogs: Blog[] }) => {
 
   const [blogs, setBlogs] = useState(props.blogs)
 
@@ -30,7 +31,7 @@ const BlogPage = (props) => {
   }
 
 
-  const renderDate = (post) => {
+  const renderDate = (post: Blog) => {
 
     const date = post.published && post.publishDate
       ? post.publishDate

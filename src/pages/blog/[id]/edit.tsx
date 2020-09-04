@@ -1,3 +1,4 @@
+import { Blog } from 'types'
 import React, { useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
@@ -7,7 +8,7 @@ import PostsForm from '@/components/PostsForm'
 import keys from '@/keys'
 
 
-const BlogEdit = (props) => {
+const BlogEdit = (props: { blog: Blog }) => {
 
   const { currentUser } = useContext(userContext)
   const [blog, setBlog] = useState(props.blog || [])
@@ -37,7 +38,7 @@ const BlogEdit = (props) => {
 }
 
 
-BlogEdit.getInitialProps = async ({ query }) => {
+BlogEdit.getInitialProps = async ({ query }: { query: { id: string } }) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: blog } = await axios.get(`${rootUrl}/api/blogs/${query.id}`)

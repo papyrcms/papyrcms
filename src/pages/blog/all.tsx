@@ -1,3 +1,4 @@
+import { Blog } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
@@ -6,7 +7,7 @@ import keys from '@/keys'
 import SectionCards from '@/Sections/SectionCards'
 
 
-const BlogAllPage = (props) => {
+const BlogAllPage = (props: { blogs: Blog[] }) => {
 
   const { currentUser } = useContext(userContext)
   const [blogs, setBlogs] = useState(props.blogs || [])
@@ -21,7 +22,7 @@ const BlogAllPage = (props) => {
     }
   }, [])
 
-  const renderDate = (post) => {
+  const renderDate = (post: Blog) => {
     const date = post.published && post.publishDate
       ? post.publishDate
       : post.created

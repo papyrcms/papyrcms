@@ -1,3 +1,4 @@
+import { Blog } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
@@ -7,7 +8,7 @@ import keys from '@/keys'
 import SectionStandard from '@/Sections/SectionStandard'
 
 
-const BlogShow = (props) => {
+const BlogShow = (props: { blog: Blog }) => {
 
   const { currentUser } = useContext(userContext)
   const [blog, setBlog] = useState(props.blog || {})
@@ -43,7 +44,7 @@ const BlogShow = (props) => {
 }
 
 
-BlogShow.getInitialProps = async ({ query }) => {
+BlogShow.getInitialProps = async ({ query }: { query: { id: string } }) => {
 
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''

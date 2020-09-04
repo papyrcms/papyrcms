@@ -18,6 +18,7 @@ export interface Post {
   mainMedia?: string
   content?: string
   created: string
+  published: boolean
   comments?: Comment[]
 }
 
