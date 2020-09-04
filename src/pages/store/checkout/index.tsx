@@ -1,3 +1,4 @@
+import { Product } from 'types'
 import React, { useState, useContext } from 'react';
 import axios from 'axios'
 import _ from 'lodash'
@@ -9,11 +10,11 @@ import UserInfoForm from '@/components/UserInfoForm'
 import styles from './checkout.module.scss'
 
 
-const Checkout = (props) => {
+const Checkout = (props: { product: Product }) => {
 
   const cartState = useContext(storeContext)
 
-  let cart = []
+  let cart: Product[] = []
   let fromCart = false
 
   // Get the checkout item(s)
@@ -25,10 +26,11 @@ const Checkout = (props) => {
   }
 
   const [orderNotes, setOrderNotes] = useState("")
-  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState(() => null)
-  const [handleSubmitError, setHandleSubmitError] = useState(() => null)
+  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<Function>(() => null)
+  const [handleSubmitError, setHandleSubmitError] = useState<Function>(() => null)
 
-  const handleCardSubmit = (source, resetButton, setValidation) => {
+  const handleCardSubmit = (source: any, resetButton: Function, setValidation: Function) => {
+
     const errorFunction = () => {
       resetButton()
       setValidation('Something went wrong.')
@@ -36,7 +38,7 @@ const Checkout = (props) => {
     setHandleSubmitError(() => errorFunction)
 
 
-    const successFunction = (formState) => {
+    const successFunction = (formState: { submitForm: Function }) => {
       const additionalValues = {
         fromCart,
         source,
@@ -52,7 +54,7 @@ const Checkout = (props) => {
         }
       }
 
-      const error = (err) => {
+      const error = (err: any) => {
         resetButton()
         if (err.response) {
           setValidation(err.response.data.message)
@@ -100,7 +102,7 @@ const Checkout = (props) => {
             label="Additional notes about the order"
             name="orderNotes"
             value={orderNotes}
-            onChange={(event) => setOrderNotes(event.target.value)}
+            onChange={(event: any) => setOrderNotes(event.target.value)}
           />
 
           {renderProductsList()}
@@ -116,7 +118,7 @@ const Checkout = (props) => {
 }
 
 
-Checkout.getInitialProps = async ({ query }) => {
+Checkout.getInitialProps = async ({ query }: { query: { id: string }}) => {
 
   const rootUrl = keys.rootURL ? keys.rootURL : ''
 
