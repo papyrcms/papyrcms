@@ -5,7 +5,15 @@ import PostsForm from '@/components/PostsForm'
 import Input from '@/components/Input'
 
 
-const ProductFields = ({ values, errors, validateField, handleChange }) => (
+type Props = {
+  values: any
+  errors: any
+  validateField: Function
+  handleChange: Function
+}
+
+
+const ProductFields = ({ values, errors, validateField, handleChange }: Props) => (
   <div className="u-form-row">
     <Input
       id="price"

@@ -1,3 +1,4 @@
+import { Product } from 'types'
 import React, {  useContext } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
@@ -34,7 +35,7 @@ const Cart = () => {
     )
   }
 
-  const renderDetails = (product) => {
+  const renderDetails = (product: Product) => {
     let quantity
     let totalCost = 0
 

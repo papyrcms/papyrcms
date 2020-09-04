@@ -1,124 +1,124 @@
 export interface Page {
-  _id: String
-  className: String
-  created: String
-  css?: String
-  navOrder: Number
-  route: String
+  _id: string
+  className: string
+  created: string
+  css?: string
+  navOrder: number
+  route: string
   sections: JSON[]
-  title: String
+  title: string
 }
 
 export interface Post {
-  _id: String
-  title: String
-  tags: String[]
-  slug: String
-  subImages: String[]
-  mainMedia?: String
-  content?: String
-  created: String
+  _id: string
+  title: string
+  tags: string[]
+  slug: string
+  subImages: string[]
+  mainMedia?: string
+  content?: string
+  created: string
   comments?: Comment[]
 }
 
 export interface Comment {
-  _id: String
-  content: String
-  created: String
-  replies: String[]
+  _id: string
+  content: string
+  created: string
+  replies: string[]
   author: User
 }
 
 export interface User {
-  _id: String
-  email: String
-  password: String
-  firstName: String
-  lastName: String
-  isAdmin: Boolean
-  isSubscribed: Boolean
-  isBanned: Boolean
-  address1?: String
-  address2?: String
-  city?: String
-  state?: String
-  country?: String
-  zip?: String
-  shippingAddress1?: String
-  shippingAddress2?: String
-  shippingCity?: String
-  shippingState?: String
-  shippingCountry?: String
-  shippingZip?: String
+  _id: string
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  isAdmin: boolean
+  isSubscribed: boolean
+  isBanned: boolean
+  address1?: string
+  address2?: string
+  city?: string
+  state?: string
+  country?: string
+  zip?: string
+  shippingAddress1?: string
+  shippingAddress2?: string
+  shippingCity?: string
+  shippingState?: string
+  shippingCountry?: string
+  shippingZip?: string
   cart: Product[]
 }
 
 export interface Product extends Post {
-  price: Number
-  quantity: Number
+  price: number
+  quantity: number
 }
 
 export interface Order {
-  created: String
+  created: string
   products: Product[]
   user?: User
-  notes: String
-  shipped: Boolean
+  notes: string
+  shipped: boolean
 }
 
 export interface Blog extends Post {
-  publishDate?: String
+  publishDate?: string
 }
 
 export interface Event extends Post {
-  date: String
-  latitude: Number
-  longitude: Number
+  date: string
+  latitude: number
+  longitude: number
 }
 
 export interface Message {
-  name: String
-  email: String
-  message: String
-  emailSent: Boolean
-  created: String
+  name: string
+  email: string
+  message: string
+  emailSent: boolean
+  created: string
 }
 
 export interface Settings {
-  name: String
+  name: string
   options: JSON
 }
 
 export interface SectionOptions {
-  file: String
-  name: String
-  description: String
-  inputs: String[]
-  maxPosts?: Number
+  file: string
+  name: string
+  description: string
+  inputs: string[]
+  maxPosts?: number
   defaultProps: any
 }
 
 export interface Keys {
-  stripePublishableKey: String
-  stripeSecretKey?: String
-  gmailClientId?: String
-  gmailClientSecret?: String
-  gmailRefreshToken?: String
-  googleAnalyticsId: String
-  googleMapsKey: String
-  siteEmail?: String
-  adminEmail?: String
-  cloudinaryApiKey?: String
-  cloudinaryApiSecret?: String
-  cloudinaryCloudName?: String
-  databaseDriver?: String
-  databaseURI?: String
-  rootURL?: String
-  jwtSecret?: String
+  stripePublishableKey: string
+  stripeSecretKey?: string
+  gmailClientId?: string
+  gmailClientSecret?: string
+  gmailRefreshToken?: string
+  googleAnalyticsId: string
+  googleMapsKey: string
+  siteEmail?: string
+  adminEmail?: string
+  cloudinaryApiKey?: string
+  cloudinaryApiSecret?: string
+  cloudinaryCloudName?: string
+  databaseDriver?: string
+  databaseURI?: string
+  rootURL?: string
+  jwtSecret?: string
   test?: {
-    oldPass?: String
-    newPass?: String
-    token?: String
-    tokenRpc?: String
+    oldPass?: string
+    newPass?: string
+    token?: string
+    tokenRpc?: string
   }
 }
