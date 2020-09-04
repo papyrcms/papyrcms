@@ -31,10 +31,10 @@ const ProfilePage = () => {
   }
 
 
-  const handlePasswordSubmit = (event, resetButton) => {
+  const handlePasswordSubmit = (event: any, resetButton: Function) => {
     event.preventDefault()
 
-    const success = (response, setValidation) => {
+    const success = (response: any, setValidation: Function) => {
       setValidation(response.data.message)
       resetButton()
     }
@@ -59,7 +59,7 @@ const ProfilePage = () => {
   }
 
 
-  const onSubscribeClick = async (event, reset) => {
+  const onSubscribeClick = async (event: any, reset: Function) => {
 
     try {
       const response = await axios.put('/api/auth/currentUser', { isSubscribed: !currentUser.isSubscribed })
@@ -102,7 +102,7 @@ const ProfilePage = () => {
       <div>
         <UserInfoForm
           onSubmitSuccess={() => setInfoValidation('User info has been updated.')}
-          onSubmitError={(formState, err) => setInfoValidation(err.response.data.message)}
+          onSubmitError={(formState: any, err: any) => setInfoValidation(err.response.data.message)}
         />
         <p className={styles["profile__validation"]}>{infoValidation}</p>
       </div>
