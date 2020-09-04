@@ -24,8 +24,8 @@ export interface Post {
 export interface Comment {
   _id: String
   content: String
-  created: String,
-  replies: String[],
+  created: String
+  replies: String[]
   author: User
 }
 
@@ -62,7 +62,7 @@ export interface Order {
   created: String
   products: Product[]
   user?: User
-  notes: String,
+  notes: String
   shipped: Boolean
 }
 
@@ -87,4 +87,38 @@ export interface Message {
 export interface Settings {
   name: String
   options: JSON
+}
+
+export interface SectionOptions {
+  file: String
+  name: String
+  description: String
+  inputs: String[]
+  maxPosts?: Number
+  defaultProps: any
+}
+
+export interface Keys {
+  stripePublishableKey: String
+  stripeSecretKey?: String
+  gmailClientId?: String
+  gmailClientSecret?: String
+  gmailRefreshToken?: String
+  googleAnalyticsId: String
+  googleMapsKey: String
+  siteEmail?: String
+  adminEmail?: String
+  cloudinaryApiKey?: String
+  cloudinaryApiSecret?: String
+  cloudinaryCloudName?: String
+  databaseDriver?: String
+  databaseURI?: String
+  rootURL?: String
+  jwtSecret?: String
+  test?: {
+    oldPass?: String
+    newPass?: String
+    token?: String
+    tokenRpc?: String
+  }
 }

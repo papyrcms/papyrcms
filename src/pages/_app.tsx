@@ -1,3 +1,4 @@
+import { Page, Post, SectionOptions, Keys } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
@@ -13,8 +14,16 @@ import pagesContext from '@/context/postsContext'
 import '../sass/main.scss'
 import "swagger-ui-react/swagger-ui.css"
 
+type Props = {
+  Component: any
+  pages: Page[]
+  posts: Post[]
+  keys: Keys
+  settings: any
+  sectionOptions: SectionOptions
+}
 
-const App = (props) => {
+const App = (props: Props) => {
 
   const { asPath } = useRouter()
   let {
@@ -66,9 +75,9 @@ const App = (props) => {
 }
 
 
-App.getInitialProps = async ({ Component, ctx }) => {
+App.getInitialProps = async ({ Component, ctx }: { Component: any, ctx: any }) => {
 
-  let pageProps = {}
+  let pageProps: any = {}
   const rootUrl = keys.rootURL ? keys.rootURL : ''
 
   // Run getInitialProps for each component
