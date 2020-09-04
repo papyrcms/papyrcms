@@ -1,12 +1,17 @@
+import { Product } from 'types'
 import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import StoreContext from './storeContext'
 import UserContext from './userContext'
 
-const StoreProvider = (props) => {
+type Props = {
+  children: any
+}
 
-  const [cart, setCart] = useState([])
+const StoreProvider = (props: Props) => {
+
+  const [cart, setCart] = useState<Product[]>([])
   const { currentUser } = useContext(UserContext)
 
 
@@ -23,7 +28,7 @@ const StoreProvider = (props) => {
   }, [currentUser])
 
 
-  const addToCart = async (product) => {
+  const addToCart = async (product: Product) => {
     const newCart = [...cart, product]
     if (!currentUser) {
       if (_.filter(cart, inCart => inCart._id === product._id).length < product.quantity) {
@@ -40,7 +45,7 @@ const StoreProvider = (props) => {
     }
   }
 
-  const removeFromCart = async (product) => {
+  const removeFromCart = async (product: Product) => {
     let removed = false
     const newCart = _.filter(cart, item => {
       if (item._id === product._id && !removed) {
