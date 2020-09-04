@@ -18,7 +18,7 @@ type Props = {
   page: Page
 }
 
-const PageComponent = (props: Props) => {
+const PageRenderer = (props: Props) => {
 
   // Determine if this is a page or the preview on the builder
   let page = props.previewPage ? props.previewPage : props.page
@@ -129,7 +129,7 @@ const PageComponent = (props: Props) => {
 }
 
 
-PageComponent.getInitialProps = async ({ query, req }: { query: { page: string }, req: any }) => {
+PageRenderer.getInitialProps = async ({ query, req }: { query: { page: string }, req: any }) => {
 
   if (!query.page) {
     query.page = 'home'
@@ -150,4 +150,4 @@ PageComponent.getInitialProps = async ({ query, req }: { query: { page: string }
 }
 
 
-export default PageComponent
+export default PageRenderer
