@@ -59,6 +59,7 @@ export interface Product extends Post {
 }
 
 export interface Order {
+  _id: string
   created: string
   products: Product[]
   user?: User
@@ -77,6 +78,7 @@ export interface Event extends Post {
 }
 
 export interface Message {
+  _id: string
   name: string
   email: string
   message: string
@@ -85,6 +87,7 @@ export interface Message {
 }
 
 export interface Settings {
+  _id: string
   name: string
   options: JSON
 }
