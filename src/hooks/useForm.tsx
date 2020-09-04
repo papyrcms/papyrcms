@@ -2,15 +2,15 @@ import { useState } from 'react'
 import axios from 'axios'
 
 
-const useForm = (initialState) => {
-  const initialErrors = {}
+const useForm = (initialState: { [key: string]: any }) => {
 
+  const initialErrors: { [key: string]: string } = {}
 
   const [values, setValues] = useState(initialState)
   const [errors, setErrors] = useState(initialErrors)
 
   
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const { type, checked, name, value } = event.target
 
     if (type && type === 'checkbox') {
@@ -21,8 +21,15 @@ const useForm = (initialState) => {
   }
 
 
-  const validateField = (event) => {
-    const { type, required, value, name } = event.target
+  const validateField = (event: any) => {
+
+    type Target = {
+      type: string
+      required: boolean
+      value: any
+      name: string 
+    }
+    const { type, required, value, name }: Target = event.target
 
     const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -38,7 +45,13 @@ const useForm = (initialState) => {
   }
 
 
-  const submitForm = async (url, callbacks = {}, update = false, additionalValues = {}, resetForm = true) => {
+  type Callbacks = {
+    success?: Function
+    error?: Function
+  }
+
+
+  const submitForm = async (url: string, callbacks: Callbacks = {}, update = false, additionalValues = {}, resetForm = true) => {
 
     const success = callbacks.success ? callbacks.success : () => null
     const error = callbacks.error ? callbacks.error : () => null
@@ -56,7 +69,7 @@ const useForm = (initialState) => {
       }
 
       const resetState = resetForm ? initialState : values
-      success(response, (message) => setValues({ ...resetState, validation: message }))
+      success(response, (message: string) => setValues({ ...resetState, validation: message }))
 
     } catch (err) {
 
@@ -71,7 +84,7 @@ const useForm = (initialState) => {
       }
 
       setValues({ ...values, validation: message })
-      error(err, (message) => setValues({ ...initialState, validation: message }))
+      error(err, (message: string) => setValues({ ...initialState, validation: message }))
     }
   }
 
