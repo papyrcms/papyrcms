@@ -1,3 +1,4 @@
+import { Page } from 'types'
 import React, { useContext } from 'react'
 import dynamic from 'next/dynamic'
 import Error from 'next/error'
@@ -12,8 +13,12 @@ import usePostFilter from '@/hooks/usePostFilter'
 import keys from '@/keys'
 import styles from './page.module.scss'
 
+type Props = {
+  previewPage?: Page
+  page: Page
+}
 
-const Page = (props) => {
+const Page = (props: Props) => {
 
   // Determine if this is a page or the preview on the builder
   let page = props.previewPage ? props.previewPage : props.page
@@ -24,7 +29,7 @@ const Page = (props) => {
   const { pages } = useContext(pagesContext)
   if (!page) {
     _.forEach(pages, foundPage => {
-      if (foundPage.route === 'home') foundPage.route === ''
+      if (foundPage.route === 'home') foundPage.route = ''
       if (foundPage.route === query.page) page = foundPage
     })
 
@@ -33,14 +38,14 @@ const Page = (props) => {
   }
 
   // Get our filter settings from the page sections
-  const settings = []
+  const settings: any = []
   _.forEach(page.sections, (section, i) => {
-    section = JSON.parse(section)
+    const parsedSection = JSON.parse(section)
 
     settings.push({
-      propName: `${section.type}-${i}`,
-      maxPosts: section.maxPosts,
-      postTags: section.tags,
+      propName: `${parsedSection.type}-${i}`,
+      maxPosts: parsedSection.maxPosts,
+      postTags: parsedSection.tags,
       strictTags: true
     })
   })
@@ -57,28 +62,28 @@ const Page = (props) => {
     return _.map(page.sections, (section, i) => {
 
       // Parse the section from the page
-      section = JSON.parse(section)
+      const parsedSection = JSON.parse(section)
 
       // Get properties by the section info
-      const key = `${section.type}-${i}`
+      const key = `${parsedSection.type}-${i}`
       const filteredPosts = filtered[key]
-      const emptyMessage = `Create content with the ${_.join(section.tags, ', ')} tags.`
+      const emptyMessage = `Create content with the ${_.join(parsedSection.tags, ', ')} tags.`
 
-      // Get the section component
-      const options = sectionOptions[section.type]
+      // Get the parsedSection component
+      const options = sectionOptions[parsedSection.type]
       const Component = dynamic(() => import(`../../components/Sections/${options.file}`))
 
-      // Return the section component
+      // Return the parsedSection component
       return (
         <Component
           key={key}
-          title={section.title}
-          className={section.className || ''}
+          title={parsedSection.title}
+          className={parsedSection.className || ''}
           post={filteredPosts[0]}
           posts={filteredPosts}
-          emptyTitle={section.title || ''}
+          emptyTitle={parsedSection.title || ''}
           emptyMessage={emptyMessage || ''}
-          alt={section.title || ''}
+          alt={parsedSection.title || ''}
           {...options.defaultProps}
         />
       )
@@ -90,8 +95,8 @@ const Page = (props) => {
 
     let SectionStandard = false
     _.forEach(page.sections, section => {
-      section = JSON.parse(section)
-      if (section.type === 'SectionStandard') {
+      const parsedSection = JSON.parse(section)
+      if (parsedSection.type === 'SectionStandard') {
         SectionStandard = true
       }
     })
@@ -124,7 +129,7 @@ const Page = (props) => {
 }
 
 
-Page.getInitialProps = async ({ query, req }) => {
+Page.getInitialProps = async ({ query, req }: { query: { page: string }, req: any }) => {
 
   if (!query.page) {
     query.page = 'home'

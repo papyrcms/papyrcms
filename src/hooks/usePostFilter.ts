@@ -1,9 +1,22 @@
+import { Post, Blog, Event, Product } from 'types'
 import _ from 'lodash'
 
 
-const usePostFilter = (posts, settings) => {
+type Filters = {
+  propName?: string
+  showAll?: boolean
+  maxPosts?: number
+  postTags?: string[]
+  strictTags?: boolean
+}
 
-  const filterByPublished = (postsToFilter, filters) => {
+
+type GeneralPost = Post | Blog | Event | Product
+
+
+const usePostFilter = (posts: GeneralPost[], settings: Filters | Filters[]) => {
+
+  const filterByPublished = (postsToFilter: GeneralPost[], filters: Filters) => {
     const { showAll } = filters
 
     if (!showAll) {
@@ -14,7 +27,7 @@ const usePostFilter = (posts, settings) => {
   }
 
 
-  const filterByMaxPosts = (postsToFilter, filters) => {
+  const filterByMaxPosts = (postsToFilter: GeneralPost[], filters: Filters) => {
     const { maxPosts } = filters
 
     if (maxPosts) {
@@ -25,7 +38,7 @@ const usePostFilter = (posts, settings) => {
   }
 
 
-  const filterByPostTags = (postsToFilter, filters) => {
+  const filterByPostTags = (postsToFilter: GeneralPost[], filters: Filters) => {
     const { postTags, strictTags } = filters
 
     // Filter posts by postTags
@@ -60,10 +73,10 @@ const usePostFilter = (posts, settings) => {
   }
 
 
-  const orderPosts = (postsToFilter) => {
+  const orderPosts = (postsToFilter: GeneralPost[]) => {
 
-    const orderedPosts = []
-    const unorderedPosts = []
+    const orderedPosts: GeneralPost[] = []
+    const unorderedPosts: GeneralPost[] = []
 
     // for (const post of postsToFilter) {
     _.forEach(postsToFilter, post => {
@@ -87,7 +100,7 @@ const usePostFilter = (posts, settings) => {
   }
 
 
-  const usePostFilter = (postsToFilter, filters) => {
+  const usePostFilter = (postsToFilter: GeneralPost[], filters: Filters) => {
 
     postsToFilter = filterByPublished(postsToFilter, filters)
     postsToFilter = filterByPostTags(postsToFilter, filters)
@@ -99,7 +112,7 @@ const usePostFilter = (posts, settings) => {
 
 
   // Begin the filtering
-  const filtered = {}
+  const filtered: { [key: string]: GeneralPost[] } = {}
 
   if (Array.isArray(settings)) {
     _.forEach(settings, filters => {
