@@ -1,3 +1,4 @@
+import { Product } from 'types'
 import React, { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
@@ -7,8 +8,14 @@ import keys from '@/keys'
 import PostsForm from '@/components/PostsForm'
 import Input from '@/components/Input'
 
+type Props = {
+  values: any
+  errors: any
+  validateField: Function
+  handleChange: Function
+}
 
-const ProductFields = ({ values, errors, validateField, handleChange }) => {
+const ProductFields = ({ values, errors, validateField, handleChange }: Props) => {
 
   return(
     <div className="u-form-row">
@@ -40,7 +47,7 @@ const ProductFields = ({ values, errors, validateField, handleChange }) => {
 }
 
 
-const StoreEdit = (props) => {
+const StoreEdit = (props: { product: Product }) => {
 
   const { currentUser } = useContext(userContext)
   
@@ -76,7 +83,7 @@ const StoreEdit = (props) => {
 }
 
 
-StoreEdit.getInitialProps = async ({ query }) => {
+StoreEdit.getInitialProps = async ({ query }: { query: { id: string } }) => {
 
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''

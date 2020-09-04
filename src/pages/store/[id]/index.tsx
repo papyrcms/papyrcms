@@ -1,3 +1,4 @@
+import { Product } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
@@ -9,7 +10,7 @@ import keys from '@/keys'
 import SectionStandard from '@/Sections/SectionStandard'
 
 
-const StoreShow = (props) => {
+const StoreShow = (props: { product: Product }) => {
 
   const { currentUser } = useContext(userContext)
   const { cart, addToCart } = useContext(storeContext)
@@ -37,7 +38,7 @@ const StoreShow = (props) => {
     )
   }
 
-  const renderAddToCart = (product) => {
+  const renderAddToCart = (product: Product) => {
     const quantityInCart = _.filter(cart, cartProduct => cartProduct._id === product._id).length
     let message = 'Add to cart'
     if (quantityInCart) message += ` (${quantityInCart} now)`
@@ -53,7 +54,7 @@ const StoreShow = (props) => {
   }
 
 
-  const renderCheckout = (product) => {
+  const renderCheckout = (product: Product) => {
     if (product.quantity > 0) {
       return (
         <>
@@ -79,7 +80,7 @@ const StoreShow = (props) => {
 }
 
 
-StoreShow.getInitialProps = async ({ query }) => {
+StoreShow.getInitialProps = async ({ query }: { query: { id: string } }) => {
 
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
