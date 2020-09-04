@@ -13,12 +13,10 @@ const Docs = () => {
     return null
   }
 
+  // Can only import this once the DOM is loaded
   const SwaggerUI = require('swagger-ui-react').default
 
-  return <SwaggerUI
-    spec={spec}
-    // url="https://petstore.swagger.io/v2/swagger.json"
-  />
+  return <SwaggerUI spec={spec} />
 }
 
 export default Docs
