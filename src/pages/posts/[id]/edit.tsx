@@ -1,3 +1,4 @@
+import { Post } from 'types'
 import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
@@ -7,7 +8,7 @@ import PostsForm from '@/components/PostsForm/'
 import keys from '@/keys'
 
 
-const PostsEdit = (props) => {
+const PostsEdit = (props: { post: Post }) => {
 
   const { currentUser } = useContext(userContext)
   const { query } = useRouter()
@@ -36,7 +37,7 @@ const PostsEdit = (props) => {
 }
 
 
-PostsEdit.getInitialProps = async ({ query }) => {
+PostsEdit.getInitialProps = async ({ query }: { query: { id: string }}) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
     const { data: post } = await axios.get(`${rootUrl}/api/posts/${query.id}`)
