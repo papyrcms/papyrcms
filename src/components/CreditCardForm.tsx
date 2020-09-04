@@ -10,15 +10,20 @@ import {
 import keysContext from '@/context/keysContext'
 import Button from './Button'
 
+type CCFProps = {
+  className?: string
+  stripe?: stripe.Stripe
+  onSubmit: Function
+}
 
-const CreditCardForm = injectStripe((props) => {
+const CreditCardForm = injectStripe((props: CCFProps) => {
 
   const { className = "", stripe, onSubmit } = props
   const [validation, setValidation] = useState('')
 
   if (!stripe) return null
 
-  const handleSubmit = async (event, resetButton) => {
+  const handleSubmit = async (event: any, resetButton: Function) => {
     event.preventDefault()
 
     const data = await stripe.createSource({ type: "card" })
@@ -35,9 +40,9 @@ const CreditCardForm = injectStripe((props) => {
   const fieldStyle = {
     base: {
       color: "#333",
-      fontSize: "16px",
-      lineHeight: 1,
-      letterSpacing: "1px",
+      fontSize: '16',
+      lineHeight: '1',
+      letterSpacing: '1',
     }
   }
 
@@ -78,10 +83,16 @@ const CreditCardForm = injectStripe((props) => {
 })
 
 
-const StripeForm = (props) => {
+type FormProps = {
+  className?: string
+  onSubmit: Function
+}
+
+
+const StripeForm = (props: FormProps) => {
 
   const { className, onSubmit } = props
-  const [stripe, setStripe] = useState(null)
+  const [stripe, setStripe] = useState<stripe.Stripe | null>(null)
   const { keys } = useContext(keysContext)
 
   useEffect(() => {
