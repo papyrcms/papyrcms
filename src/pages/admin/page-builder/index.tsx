@@ -1,3 +1,4 @@
+import { Page } from 'types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
@@ -10,18 +11,39 @@ import Input from '@/components/Input'
 import Button from '@/components/Button'
 import Modal from '@/components/Modal'
 import PostsForm from '@/components/PostsForm'
-import Page from '../../[page]'
+import PageComponent from '../../[page]'
 import styles from './page-builder.module.scss'
 
+type Props = {
+  page: Page
+}
 
-const PageBuilder = (props) => {
+const PageBuilder = (props: Props) => {
 
   const { sectionOptions } = useContext(sectionOptionsContext)
 
-  const INITIAL_STATE = {
+  type InitialState = {
+    id: string
+    title: string
+    route: string
+    className: string
+    navOrder: number
+    sections: any[]
+    css: string
+    sectionSelect: 'Standard'
+    validation: string
+    page: {
+      className: string
+      route: string
+      sections: any[]
+      css: string
+    }
+  }
+
+  const INITIAL_STATE: InitialState = {
     id: '',
     title: '',
-    url: '',
+    route: '',
     className: '',
     navOrder: 0,
     sections: [],
@@ -30,7 +52,7 @@ const PageBuilder = (props) => {
     validation: '',
     page: {
       className: '',
-      url: '',
+      route: '',
       sections: [],
       css: ''
     }
@@ -39,7 +61,7 @@ const PageBuilder = (props) => {
   if (props.page) {
     INITIAL_STATE.id = props.page._id
     INITIAL_STATE.title = props.page.title
-    INITIAL_STATE.url = props.page.route
+    INITIAL_STATE.route = props.page.route
     INITIAL_STATE.navOrder = props.page.navOrder
     INITIAL_STATE.className = props.page.className
     INITIAL_STATE.css = props.page.css
@@ -54,14 +76,14 @@ const PageBuilder = (props) => {
   const [state, setState] = useState(INITIAL_STATE)
 
 
-  const removeSection = (index) => {
+  const removeSection = (index: number) => {
     const newSections = _.filter(state.sections, (section, i) => i !== index)
     const newPageSections = _.map(newSections, section => JSON.stringify(section))
     setState({ ...state, sections: newSections, page: { ...state.page, sections: newPageSections } })
   }
 
 
-  const changeSectionState = (index, key, value) => {
+  const changeSectionState = (index: number, key: string, value: string) => {
     const newSections = _.map(state.sections, (section, i) => {
       if (index === i) {
         return { ...section, [key]: value }
@@ -87,7 +109,7 @@ const PageBuilder = (props) => {
   }
 
 
-  const renderTitleInput = (i, section) => {
+  const renderTitleInput = (i: number, section: { type: string, title: string }) => {
 
     const { type, title } = section
 
@@ -98,13 +120,13 @@ const PageBuilder = (props) => {
         label="Section Title"
         name={`title-${i}`}
         value={title}
-        onChange={(event) => changeSectionState(i, 'title', event.target.value)}
+        onChange={(event: any) => changeSectionState(i, 'title', event.target.value)}
       />
     }
   }
 
 
-  const renderClassNameInput = (i, section) => {
+  const renderClassNameInput = (i: number, section: { type: string, className: string}) => {
 
     const { type, className } = section
 
@@ -115,13 +137,13 @@ const PageBuilder = (props) => {
         label="Section Wrapper Class"
         name={`class-name-${i}`}
         value={className}
-        onChange={(event) => changeSectionState(i, 'className', event.target.value)}
+        onChange={(event: any) => changeSectionState(i, 'className', event.target.value)}
       />
     }
   }
 
 
-  const renderTagsInput = (i, section) => {
+  const renderTagsInput = (i: number, section: { type: string, tags: string[] }) => {
 
     const { type, tags } = section
 
@@ -132,13 +154,13 @@ const PageBuilder = (props) => {
         label="Required Post Tags"
         name={`tags-${i}`}
         value={tags}
-        onChange={(event) => changeSectionState(i, 'tags', event.target.value)}
+        onChange={(event: any) => changeSectionState(i, 'tags', event.target.value)}
       />
     }
   }
 
 
-  const renderMaxPostsInput = (i, section) => {
+  const renderMaxPostsInput = (i: number, section: { type: string, maxPosts: number }) => {
 
     const { type, maxPosts } = section
 
@@ -150,13 +172,13 @@ const PageBuilder = (props) => {
         label="Maximum number of posts in this section"
         name={`max-posts-${i}`}
         value={maxPosts}
-        onChange={(event) => changeSectionState(i, 'maxPosts', event.target.value)}
+        onChange={(event: any) => changeSectionState(i, 'maxPosts', event.target.value)}
       />
     }
   }
 
 
-  const moveSection = (oldIndex, newIndex) => {
+  const moveSection = (oldIndex: number, newIndex: number) => {
 
     const { sections } = state
 
@@ -255,12 +277,12 @@ const PageBuilder = (props) => {
   }
 
 
-  const handleSubmit = (event, resetButton) => {
+  const handleSubmit = (event: any, resetButton: Function) => {
 
-    const { title, url, className, navOrder, sections, id, css } = state
+    const { title, route, className, navOrder, sections, id, css } = state
     const postObject = {
       title,
-      route: url,
+      route: route,
       className,
       navOrder,
       sections,
@@ -290,7 +312,7 @@ const PageBuilder = (props) => {
   }
 
 
-  const deletePage = (event, resetButton) => {
+  const deletePage = (event: any, resetButton: Function) => {
 
     const confirm = window.confirm('Are you sure you want to delete this page?')
 
@@ -321,12 +343,12 @@ const PageBuilder = (props) => {
   }
 
 
-  const setPageState = (key, value) => {
+  const setPageState = (key: string, value: string) => {
     setState({ ...state, [key]: value, page: { ...state.page, [key]: value }})
   }
 
 
-  const { title, url, className, navOrder, validation, page, css } = state
+  const { title, route, className, navOrder, validation, page, css } = state
   const { currentUser } = useContext(userContext)
 
   if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
@@ -343,16 +365,16 @@ const PageBuilder = (props) => {
             placeholder="About"
             name="title"
             value={title}
-            onChange={(event) => setPageState('title', event.target.value)}
+            onChange={(event: any) => setPageState('title', event.target.value)}
           />
 
           <Input
-            id="url-input"
+            id="route-input"
             label="Page route"
             placeholder="about"
-            name="url"
-            value={url}
-            onChange={(event) => setPageState('url', event.target.value)}
+            name="route"
+            value={route}
+            onChange={(event: any) => setPageState('route', event.target.value)}
           />
 
           <Input
@@ -361,7 +383,7 @@ const PageBuilder = (props) => {
             name="nav-order"
             value={navOrder}
             type="number"
-            onChange={(event) => setPageState('navOrder', event.target.value)}
+            onChange={(event: any) => setPageState('navOrder', event.target.value)}
           />
 
           <Input
@@ -370,7 +392,7 @@ const PageBuilder = (props) => {
             placeholder="about-page"
             name="wrapper-class"
             value={className}
-            onChange={(event) => setPageState('className', event.target.value)}
+            onChange={(event: any) => setPageState('className', event.target.value)}
           />
         </div>
 
@@ -382,7 +404,7 @@ const PageBuilder = (props) => {
 
           <select
             className={`button button-secondary ${styles["page-builder__section-select--select"]}`}
-            onChange={(event) => setState({ ...state, sectionSelect: (event.target.value) })}
+            onChange={(event: any) => setState({ ...state, sectionSelect: (event.target.value) })}
             value={state.sectionSelect}
           >
             {renderSelectOptions()}
@@ -442,14 +464,14 @@ const PageBuilder = (props) => {
 
       <h3 className={`heading-tertiary ${styles["page-builder__preview--title"]}`}>Page Preview</h3>
       <div className={styles["page-builder__preview"]}>
-        <Page previewPage={page} />
+        <PageComponent previewPage={page} />
       </div>
     </>
   )
 }
 
 
-PageBuilder.getInitialProps = async ({ query }) => {
+PageBuilder.getInitialProps = async ({ query }: { query: { page: string } }) => {
   
   let page
   if (query.page) {

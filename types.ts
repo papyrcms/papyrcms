@@ -2,10 +2,10 @@ export interface Page {
   _id: string
   className: string
   created: string
-  css?: string
+  css: string
   navOrder: number
   route: string
-  sections: JSON[]
+  sections: string[]
   title: string
 }
 
@@ -94,12 +94,14 @@ export interface Settings {
 }
 
 export interface SectionOptions {
-  file: string
-  name: string
-  description: string
-  inputs: string[]
-  maxPosts?: number
-  defaultProps: any
+  [key: string]: {
+    file: string
+    name: string
+    description: string
+    inputs: string[]
+    maxPosts?: number
+    defaultProps: any
+  }
 }
 
 export interface Keys {
