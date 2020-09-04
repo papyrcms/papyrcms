@@ -35,18 +35,17 @@ const Init = () => {
   const formState = useForm(INITIAL_STATE)
 
   useEffect(() => {
-    document.getElementById('auth-modal').click()
+    clickNextModal('auth-modal')
   }, [])
 
   if (posts.length > 0 || pages.length > 0) {
     return <Error statusCode={403} />
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
 
-    console.log(formState)
-    const success = response => {
+    const success = (response: any) => {
       setPosts(response.data.posts)
       setPages(response.data.pages)
 
@@ -55,15 +54,15 @@ const Init = () => {
       Router.push('/profile')
     }
 
-    const error = err => {
-      console.dir(err)
+    const error = (err: any) => {
+      console.dir(err.toString())
     }
 
     await formState.submitForm('/api/utility/init', { success, error })
   }
 
 
-  const personalInfoInputs = (onForm) => {
+  const personalInfoInputs = (onForm?: boolean) => {
     return (
       <div className="u-form-row">
         <Input
@@ -88,7 +87,7 @@ const Init = () => {
   }
 
 
-  const headerInputs = (onForm) => {
+  const headerInputs = (onForm?: boolean) => {
     return (
       <>
         <div className="u-form-row">
@@ -120,7 +119,7 @@ const Init = () => {
   }
 
 
-  const footerInputs = (onForm) => {
+  const footerInputs = (onForm?: boolean) => {
     return (
       <div className="u-form-row">
         <Input
@@ -143,7 +142,7 @@ const Init = () => {
   }
 
 
-  const firstPageInputs = (onForm) => {
+  const firstPageInputs = (onForm?: boolean) => {
     return (
       <>
         <div className="u-form-row">
@@ -188,12 +187,18 @@ const Init = () => {
 
         {firstPageInputs(true)}
 
-        <p>{formState.validation}</p>
+        <p>{formState.values.validation}</p>
 
         <input className="button button-primary" type="submit" />
 
       </form>
     )
+  }
+
+
+  const clickNextModal = (id: string) => {
+    const nextModal = document.getElementById(id)
+    if (nextModal) nextModal.click()
   }
 
 
@@ -205,7 +210,7 @@ const Init = () => {
           closeId="auth-next"
           className={styles['init-page__modal']}
           buttonId="auth-modal"
-          onClose={() => document.getElementById('header-modal').click()}
+          onClose={() => clickNextModal('header-modal')}
         >
           <h3>First, let's get you set up with an admin account. With this account, you can manage the website by going to your admin dashboard. This can be accessed from your profile.</h3>
           {personalInfoInputs()}
@@ -218,7 +223,7 @@ const Init = () => {
           closeId="header-next"
           className={styles['init-page__modal']}
           buttonId="header-modal"
-          onClose={() => document.getElementById('footer-modal').click()}
+          onClose={() => clickNextModal('footer-modal')}
         >
           <h3>Next, we can set some content for your header.</h3>
           {headerInputs()}
@@ -231,7 +236,7 @@ const Init = () => {
           closeId="footer-next"
           className={styles['init-page__modal']}
           buttonId="footer-modal"
-          onClose={() => document.getElementById('page-modal').click()}
+          onClose={() => clickNextModal('page-modal')}
         >
           <h3>Next we can set some content for your footer.</h3>
           {footerInputs()}
@@ -244,7 +249,7 @@ const Init = () => {
           closeId="page-next"
           className={styles['init-page__modal']}
           buttonId="page-modal"
-          onClose={() => document.getElementById('confirm-modal').click()}
+          onClose={() => clickNextModal('confirm-modal')}
         >
           <h3>Now we'll set up your first page. For now, we'll make this your main landing page, but you can change that later from your admin dashboard.</h3>
           {firstPageInputs()}
