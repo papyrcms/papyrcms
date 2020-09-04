@@ -1,9 +1,15 @@
+import { Keys } from 'types'
 import React, { useState } from 'react'
 import keysContext from './keysContext'
 
-const KeysProvider = (props) => {
+type Props = {
+  keys: Keys
+  children: any
+}
 
-  const [keys, setKeys] = useState(props.keys)
+const KeysProvider = (props: Props) => {
+
+  const [keys] = useState(props.keys)
 
   return (
     <keysContext.Provider
