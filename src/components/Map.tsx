@@ -2,10 +2,21 @@ import React, { useContext } from 'react'
 import GoogleMapReact from 'google-map-react'
 import keysContext from '@/context/keysContext'
 
+type Coords = {
+  lat: number
+  lng: number
+}
 
-const Position = () => <div className="map__position" />
+const Position = (coords: Coords) => <div className="map__position" />
 
-const Map = (props) => {
+type Props = {
+  className?: string
+  latitude: number
+  longitude: number
+  zoom?: number
+}
+
+const Map = (props: Props) => {
 
   const {
     className = '',
