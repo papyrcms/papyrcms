@@ -47,7 +47,7 @@ const CreditCardForm = injectStripe((props: CCFProps) => {
   }
 
   return (
-    <div className={`credit-card-form ${className}`}>
+    <div className={`credit-card-form ${className || ''}`}>
       <div className="credit-card-form__section credit-card-form__section--number">
         <label className="credit-card-form__label">Card Number *</label>
         <div className="credit-card-form__input">

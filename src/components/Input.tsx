@@ -1,6 +1,24 @@
 import React from 'react'
 
 
+type Props = {
+  className?: string
+  type?: string
+  placeholder?: string
+  name?: string
+  id?: string
+  label?: string
+  value?: string | number | boolean
+  required?: boolean
+  onChange?: Function
+  onFocus?: Function
+  onBlur?: Function
+  children?: any
+  validation?: string
+  formState?: { [key: string]: any }
+}
+
+
 /**
  * Input is a default text-type input component
  *
@@ -17,7 +35,7 @@ import React from 'react'
  * @prop type - String - The type attribute for the input
  * @prop formState - Object - The object passed from the useForm hook. This will handle most of the other props if they are not set.
  */
-const Input = (props) => {
+const Input = (props: Props) => {
 
   // Instantiate props with defaults
   let {
@@ -67,7 +85,7 @@ const Input = (props) => {
             name={name}
             id={id}
             className={`input__textarea ${validation && 'input__textarea--invalid'}`}
-            value={value || ''}
+            value={value.toString() || ''}
             required={!!required}
             onChange={event => onChange(event)}
             onBlur={event => onBlur(event)}
@@ -105,12 +123,12 @@ const Input = (props) => {
           name={name}
           id={id}
           className={`input__input ${validation && 'input__input--invalid'}`}
-          value={value || ''}
+          value={value.toString() || ''}
           required={!!required}
           onChange={event => onChange(event)}
           onBlur={event => onBlur(event)}
           onFocus={event => onFocus(event)}
-      />
+        />
       </>
     )
   }
