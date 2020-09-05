@@ -26,17 +26,17 @@ const RegisterForm = () => {
     return null
   }  
 
-  const handleSubmit = (event, resetButton) => {
+  const handleSubmit = (event: any, resetButton: Function) => {
     event.preventDefault()
 
-    const success = (response) => {
+    const success = (response: any) => {
       localStorage.setItem('token', response.data.token)
       setCurrentUser(response.data.user)
       resetButton()
       Router.push('/profile')
     }
 
-    const error = (err) => {
+    const error = (err: any) => {
       console.error(err.response)
       resetButton()
     }

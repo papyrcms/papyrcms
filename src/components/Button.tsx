@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 type Props = {
-  className: string
+  className?: string
   disabled?: boolean
   onClick: Function
   id?: string
