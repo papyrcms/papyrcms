@@ -1,13 +1,17 @@
+import { Post } from 'types'
 import React from 'react'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import _ from 'lodash'
 import Media from './Media'
 
+type Props = {
+  posts: Post[]
+}
 
-const PostIndex = (props) => {
+const PostIndex = (props: Props) => {
 
-  const renderTags = (tags) => {
+  const renderTags = (tags: string[]) => {
     return _.map(tags, (tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
@@ -18,25 +22,25 @@ const PostIndex = (props) => {
   }
 
 
-  const renderTagsSection = (tags) => {
-    if (tags[0]) {
+  const renderTagsSection = (tags: string[]) => {
+    if (tags.length > 0) {
       return <p className="post-item__tags">Tags: <em>{renderTags(tags)}</em></p>
     }
   }
 
 
-  const renderMediaSection = (media) => {
+  const renderMediaSection = (media?: string, alt?: string) => {
     if (media) {
       return (
         <div className="post-item__image">
-          <Media src={media} />
+          <Media src={media} alt={alt || ''} />
         </div>
       )
     }
   }
 
 
-  const renderPublishSection = (published) => {
+  const renderPublishSection = (published: boolean) => {
     if (!published) {
       return <p><em>Not published</em></p>
     }
@@ -47,7 +51,7 @@ const PostIndex = (props) => {
 
     const { posts } = props
 
-    if (!posts || !posts[0]) {
+    if (!posts || posts.length === 0) {
       return <h3 className="heading-tertiary">Nothing published yet</h3>
     }
 
@@ -62,7 +66,7 @@ const PostIndex = (props) => {
 
       return (
         <div key={_id} className="post-item">
-          {renderMediaSection(mainMedia)}
+          {renderMediaSection(mainMedia, title)}
           <div className="post-item__details">
             <div className="post-item__top">
               <h3 className="post-item__title heading-tertiary">{title}</h3>
