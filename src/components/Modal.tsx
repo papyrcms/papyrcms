@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react'
 
+type Props = {
+  children: any
+  buttonClasses?: string
+  buttonId?: string
+  buttonText: string
+  className?: string
+  alt?: string
+  src?: string
+  image?: boolean
+  closeId?: string
+  onClose?: Function
+  onOpen?: Function
+}
 
 /**
  * Modal renders a button which, when clicked, displays a modal
@@ -15,22 +28,31 @@ import React, { useState, useEffect } from 'react'
  * @prop onClose - Function - A passed function to run after the modal closes
  * @prop closeId - String - This id will be on an element that can be clicked to close the modal
  */
-const Modal = (props) => {
-
+const Modal = (props: Props) => {
   const {
-    children, buttonClasses, buttonId,
-    buttonText, className, alt, src, closeId,
-    image, onClose = () => {}, onOpen = () => {}
+    children,
+    buttonClasses,
+    buttonId,
+    buttonText,
+    className,
+    alt,
+    src,
+    closeId,
+    image,
+    onClose = () => {},
+    onOpen = () => {},
   } = props
   const [hidden, setHidden] = useState(true)
 
   useEffect(() => {
     if (closeId) {
-      document.getElementById(closeId)
-        .addEventListener('click', () => {
+      const closeButton = document.getElementById(closeId)
+      if (closeButton) {
+        closeButton.addEventListener('click', () => {
           setHidden(true)
           onClose()
         })
+      }
     }
   })
 
@@ -39,12 +61,12 @@ const Modal = (props) => {
       <button
         id={buttonId}
         className={buttonClasses}
-        onClick={event => {
+        onClick={(event) => {
           event.preventDefault()
           setHidden(false)
           onOpen()
         }}
-        style={!buttonText ? {display: 'none'} : null}
+        style={buttonText ? { display: 'none' } : { display: 'block' }}
       >
         {buttonText}
       </button>
@@ -56,10 +78,13 @@ const Modal = (props) => {
           onClose()
         }}
       >
-        <div className="modal__box" onClick={event => event.stopPropagation()}>
+        <div
+          className="modal__box"
+          onClick={(event) => event.stopPropagation()}
+        >
           <button
             className="modal__close"
-            onClick={event => {
+            onClick={(event) => {
               event.preventDefault()
               setHidden(true)
               onClose()
@@ -67,14 +92,11 @@ const Modal = (props) => {
           >
             &#10005;
           </button>
-          <div className={`modal__content ${className}`}>
-            {children}
-          </div>
+          <div className={`modal__content ${className}`}>{children}</div>
         </div>
       </div>
     </>
   )
-
 
   const renderImageModal = () => (
     <>
@@ -82,7 +104,7 @@ const Modal = (props) => {
         className={`${className || ''} modal__image--clickable`}
         src={src}
         alt={alt || ''}
-        onClick={event => {
+        onClick={(event) => {
           event.preventDefault()
           setHidden(false)
           onOpen()
@@ -96,7 +118,10 @@ const Modal = (props) => {
           onClose()
         }}
       >
-        <div className="modal__image--content" onClick={event => event.stopPropagation()}>
+        <div
+          className="modal__image--content"
+          onClick={(event) => event.stopPropagation()}
+        >
           <button
             className="modal__close"
             onClick={() => {
@@ -106,15 +131,11 @@ const Modal = (props) => {
           >
             &#10005;
           </button>
-          <img
-            src={src}
-            alt={alt || ''}
-          />
+          <img src={src} alt={alt || ''} />
         </div>
       </div>
     </>
   )
-
 
   if (image) {
     return renderImageModal()
@@ -122,6 +143,5 @@ const Modal = (props) => {
     return renderStandardModal()
   }
 }
-
 
 export default Modal
