@@ -1,9 +1,38 @@
+import { SectionOptions, Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '@/components/Media'
 
+type Props = {
+  clickableMedia?: boolean
+  mediaLeft?: boolean
+  mediaRight?: boolean
+  readMore?: boolean
+  path?: string
+  emptyMessage?: string
+  className?: string
+  posts: Post[]
+  title?: string
+  contentLength?: number
+
+  // Section hooks
+  beforeTitle?: Function
+  afterTitle?: Function
+  beforePosts?: Function
+  afterPosts?: Function
+
+  // Post hooks
+  beforePostTitle?: Function
+  afterPostTitle?: Function
+  beforePostMedia?: Function
+  afterPostMedia?: Function
+  beforePostContent?: Function
+  afterPostContent?: Function
+  beforePostLink?: Function
+  afterPostLink?: Function
+}
 
 /**
  * SectionStrip will render Posts in a more horizontal style
@@ -34,12 +63,17 @@ import Media from '@/components/Media'
  * @prop beforePostLink - Function - Rendered before the card link
  * @prop afterPostLink - Function - Rendered after the card link
  */
-const SectionStrip = (props) => {
-
+const SectionStrip: React.FC<Props> = (props) => {
   const {
-    clickableMedia, mediaLeft, mediaRight,
-    readMore, path, emptyMessage,
-    className, posts, title,
+    clickableMedia,
+    mediaLeft,
+    mediaRight,
+    readMore,
+    path,
+    emptyMessage,
+    className,
+    posts,
+    title,
 
     // Section hooks
     beforeTitle = () => null,
@@ -55,11 +89,10 @@ const SectionStrip = (props) => {
     beforePostContent = () => null,
     afterPostContent = () => null,
     beforePostLink = () => null,
-    afterPostLink = () => null
+    afterPostLink = () => null,
   } = props
 
-
-  const renderMedia = (post) => {
+  const renderMedia = (post: Post) => {
     if (post.mainMedia) {
       return (
         <>
@@ -76,41 +109,36 @@ const SectionStrip = (props) => {
     }
   }
 
-
-  const renderRightMedia = (post, i) => {
+  const renderRightMedia = (post: Post, i: number) => {
     if (mediaRight && !mediaLeft) {
       return renderMedia(post)
     } else if (
-      (
-        (!mediaRight && !mediaLeft) ||
-        (mediaRight && mediaLeft)
-      ) &&
-      i % 2 !== 0 && post.mainMedia
+      ((!mediaRight && !mediaLeft) || (mediaRight && mediaLeft)) &&
+      i % 2 !== 0 &&
+      post.mainMedia
     ) {
       return renderMedia(post)
     }
   }
 
-
-  const renderLeftMedia = (post, i) => {
+  const renderLeftMedia = (post: Post, i: number) => {
     if (mediaLeft && !mediaRight) {
       return renderMedia(post)
     } else if (
-      (
-        (!mediaRight && !mediaLeft) ||
-        (mediaRight && mediaLeft)
-      ) &&
-      i % 2 === 0 && post.mainMedia
+      ((!mediaRight && !mediaLeft) || (mediaRight && mediaLeft)) &&
+      i % 2 === 0 &&
+      post.mainMedia
     ) {
       return renderMedia(post)
     }
   }
 
-
-  const renderContent = (post) => {
-
+  const renderContent = (post: Post) => {
     const contentLength = props.contentLength || 300
-    let postContent = post.content.length >= contentLength ? `${post.content.substring(0, contentLength).trim()} . . .` : post.content
+    let postContent =
+      post.content && post.content.length >= contentLength
+        ? `${post.content.substring(0, contentLength).trim()} . . .`
+        : post.content
 
     if (!readMore) {
       return (
@@ -129,7 +157,10 @@ const SectionStrip = (props) => {
         {afterPostContent(post)}
 
         {beforePostLink(post)}
-        <Link href={`/${path || 'posts'}/[id]`} as={`/${path || 'posts'}/${post.slug || post._id}`}>
+        <Link
+          href={`/${path || 'posts'}/[id]`}
+          as={`/${path || 'posts'}/${post.slug || post._id}`}
+        >
           <a>Read More</a>
         </Link>
         {afterPostLink(post)}
@@ -137,15 +168,16 @@ const SectionStrip = (props) => {
     )
   }
 
-
   const renderPosts = () => {
-
     if (posts.length === 0) {
-      return <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
+      return (
+        <h3 className="heading-tertiary">
+          {emptyMessage ? emptyMessage : ''}
+        </h3>
+      )
     }
 
     return _.map(posts, (post, i) => {
-
       const postTextClassName = post.mainMedia
         ? 'section-standard__text'
         : 'section-standard__text--wide'
@@ -154,15 +186,11 @@ const SectionStrip = (props) => {
         <div className="section-standard__post" key={post._id}>
           {renderLeftMedia(post, i)}
           <div className={postTextClassName}>
-
             {beforePostTitle(post)}
-            <h3 className="heading-tertiary">
-              {post.title}
-            </h3>
+            <h3 className="heading-tertiary">{post.title}</h3>
             {afterPostTitle(post)}
 
             {renderContent(post)}
-
           </div>
           {renderRightMedia(post, i)}
         </div>
@@ -170,10 +198,8 @@ const SectionStrip = (props) => {
     })
   }
 
-
   return (
     <section className={`${className || ''} section-standard`}>
-
       {beforeTitle()}
       <h2 className="heading-secondary section-standard__header">
         {title}
@@ -183,49 +209,49 @@ const SectionStrip = (props) => {
       {beforePosts()}
       {renderPosts()}
       {afterPosts()}
-
     </section>
   )
 }
 
-
-export const options = {
+export const options: SectionOptions = {
   Strip: {
     file: 'SectionStrip',
     name: 'Strip Section',
-    description: 'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
+    description:
+      'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null,
+    // maxPosts: null,
     defaultProps: {
       readMore: true,
       contentLength: 300,
-    }
+    },
   },
   LeftStrip: {
     file: 'SectionStrip',
     name: 'Left Strip Section',
-    description: 'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
+    description:
+      'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null,
+    // maxPosts: null,
     defaultProps: {
       readMore: true,
       contentLength: 300,
-      mediaLeft: true
-    }
+      mediaLeft: true,
+    },
   },
   RightStrip: {
     file: 'SectionStrip',
     name: 'Right Strip Section',
-    description: 'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
+    description:
+      'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null,
+    // maxPosts: null,
     defaultProps: {
       readMore: true,
       contentLength: 300,
-      mediaRight: true
-    }
-  }
+      mediaRight: true,
+    },
+  },
 }
-
 
 export default SectionStrip

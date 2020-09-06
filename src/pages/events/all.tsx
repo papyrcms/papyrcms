@@ -4,11 +4,9 @@ import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
 import keys from '@/keys'
-import SectionCards from '@/Sections/SectionCards'
-
+import SectionCards from '@/components/Sections/SectionCards'
 
 const EventsAllPage = (props: { events: Event[] }) => {
-
   const { currentUser } = useContext(userContext)
   const [events, setEvents] = useState(props.events || [])
 
@@ -22,32 +20,31 @@ const EventsAllPage = (props: { events: Event[] }) => {
     }
   }, [])
 
-
   const renderDate = (post: Event) => (
     <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
   )
 
-
-  return <SectionCards
-    posts={events}
-    title="Events"
-    perRow={4}
-    readMore
-    path="events"
-    contentLength={200}
-    emptyMessage="There are no events coming up."
-    afterPostTitle={renderDate}
-  />
+  return (
+    <SectionCards
+      posts={events}
+      title="Events"
+      perRow={4}
+      readMore
+      path="events"
+      contentLength={200}
+      emptyMessage="There are no events coming up."
+      afterPostTitle={renderDate}
+    />
+  )
 }
 
-
 EventsAllPage.getInitialProps = async () => {
-
   const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: events } = await axios.get(`${rootUrl}/api/events/published`)
+  const { data: events } = await axios.get(
+    `${rootUrl}/api/events/published`
+  )
 
   return { events }
 }
-
 
 export default EventsAllPage

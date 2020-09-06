@@ -5,7 +5,7 @@ import moment from 'moment'
 import Link from 'next/link'
 import keys from '@/keys'
 import usePostFilter from '@/hooks/usePostFilter'
-import SectionStrip from '@/Sections/SectionStrip'
+import SectionStrip from '@/components/Sections/SectionStrip'
 
 
 const BlogPage = (props: { blogs: Blog[] }) => {

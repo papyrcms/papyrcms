@@ -4,7 +4,7 @@ import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
 import keys from '@/keys'
-import SectionCards from '@/Sections/SectionCards'
+import SectionCards from '@/components/Sections/SectionCards'
 
 
 const BlogAllPage = (props: { blogs: Blog[] }) => {

@@ -6,7 +6,7 @@ import axios from 'axios'
 import storeContext from '@/context/storeContext'
 import userContext from '@/context/userContext'
 import keys from '@/keys'
-import SectionCards from '@/Sections/SectionCards'
+import SectionCards from '@/components/Sections/SectionCards'
 
 type Props = {
   products: Product[]

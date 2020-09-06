@@ -3,7 +3,7 @@ import React from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import keys from '@/keys'
-import SectionStrip from '@/Sections/SectionStrip'
+import SectionStrip from '@/components/Sections/SectionStrip'
 
 
 const EventsPage = ({ events }: { events: Event[] }) => {

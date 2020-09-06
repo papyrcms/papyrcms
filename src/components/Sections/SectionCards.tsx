@@ -1,9 +1,38 @@
+import { SectionOptions, Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '@/components/Media'
 
+type Props = {
+  posts: Post[]
+  contentLength?: number
+  emptyMessage?: string
+  perRow?: number
+  title?: string
+  path?: string
+  readMore?: boolean
+  clickableMedia?: boolean
+
+  // Section hooks
+  beforeTitle?: Function
+  afterTitle?: Function
+  beforePostList?: Function
+  afterPostList?: Function
+  beforePosts?: Function
+  afterPosts?: Function
+
+  // Post hooks
+  beforePostTitle?: Function
+  afterPostTitle?: Function
+  beforePostMedia?: Function
+  afterPostMedia?: Function
+  beforePostContent?: Function
+  afterPostContent?: Function
+  beforePostLink?: Function
+  afterPostLink?: Function
+}
 
 /**
  * SectionCards will display a section of card-like components
@@ -35,11 +64,16 @@ import Media from '@/components/Media'
  * @prop beforePostLink - Function - Rendered before the card link
  * @prop afterPostLink - Function - Rendered after the card link
  */
-const SectionCards = (props) => {
-
+const SectionCards: React.FC<Props> = (props) => {
   const {
-    posts, contentLength, emptyMessage,
-    perRow, title, path, readMore, clickableMedia,
+    posts,
+    contentLength,
+    emptyMessage,
+    perRow,
+    title,
+    path,
+    readMore,
+    clickableMedia,
 
     // Section hooks
     beforeTitle = () => null,
@@ -57,48 +91,54 @@ const SectionCards = (props) => {
     beforePostContent = () => null,
     afterPostContent = () => null,
     beforePostLink = () => null,
-    afterPostLink = () => null
+    afterPostLink = () => null,
   } = props
 
-
-  const renderReadMore = (post) => {
+  const renderReadMore = (post: Post) => {
     if (readMore) {
       const readMorePath = path ? path : 'posts'
 
       return (
-        <Link href={`/${readMorePath || 'posts'}/[id]`} as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}>
+        <Link
+          href={`/${readMorePath || 'posts'}/[id]`}
+          as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}
+        >
           <a className="section-cards__link">Read More</a>
         </Link>
       )
     }
   }
 
-
-  const renderPublishSection = (published) => {
+  const renderPublishSection = (published: boolean) => {
     if (!published) {
-      return <p><em>Not published</em></p>
+      return (
+        <p>
+          <em>Not published</em>
+        </p>
+      )
     }
   }
 
-
-  const renderMediaSection = (post) => {
+  const renderMediaSection = (post: Post) => {
     if (post.mainMedia) {
-      return <Media
-        className="section-cards__image"
-        src={post.mainMedia}
-        alt={post.title}
-        clickable={clickableMedia}
-      />
+      return (
+        <Media
+          className="section-cards__image"
+          src={post.mainMedia}
+          alt={post.title}
+          clickable={clickableMedia}
+        />
+      )
     }
   }
-
 
   const renderPosts = () => {
-
     if (posts.length === 0) {
       return (
         <div className="section-cards__empty-message">
-          <h3 className="heading-tertiary">{emptyMessage ? emptyMessage : ''}</h3>
+          <h3 className="heading-tertiary">
+            {emptyMessage ? emptyMessage : ''}
+          </h3>
         </div>
       )
     }
@@ -106,13 +146,16 @@ const SectionCards = (props) => {
     // Set defaults for characterCount
     const characterCount = contentLength || 300
 
-    return _.map(posts, post => {
-
-      let postContent = post.content.length >= characterCount ? `${post.content.substring(0, characterCount).trim()} . . .` : post.content
+    return _.map(posts, (post) => {
+      let postContent =
+        post.content && post.content.length >= characterCount
+          ? `${post.content
+              .substring(0, characterCount)
+              .trim()} . . .`
+          : post.content
 
       return (
         <li key={post._id} className="section-cards__card">
-
           {beforePostTitle(post)}
           <h3 className="section-cards__title heading-tertiary">
             {post.title}
@@ -134,20 +177,17 @@ const SectionCards = (props) => {
           {beforePostLink(post)}
           {renderReadMore(post)}
           {afterPostLink(post)}
-
         </li>
       )
     })
   }
-
 
   const listCountClass = perRow
     ? `section-cards__list--${perRow}`
     : 'section-cards__list--3'
 
   return (
-    <section className='section-cards'>
-
+    <section className="section-cards">
       {beforeTitle()}
       <h2 className="heading-secondary section-cards__header">
         {title}
@@ -156,45 +196,42 @@ const SectionCards = (props) => {
 
       {beforePostList()}
       <ul className={`section-cards__list ${listCountClass}`}>
-
         {beforePosts()}
         {renderPosts()}
         {afterPosts()}
-
       </ul>
       {afterPostList()}
-
     </section>
   )
 }
 
-
-export const options = {
+export const options: SectionOptions = {
   ThreeCards: {
     file: 'SectionCards',
     name: 'Three Cards Section',
-    description: 'This section will display each post in a vertical style with three posts per row.',
+    description:
+      'This section will display each post in a vertical style with three posts per row.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null,
+    // maxPosts: null,
     defaultProps: {
       contentLength: 120,
       readMore: true,
-      perRow: 3
-    }
+      perRow: 3,
+    },
   },
   FourCards: {
     file: 'SectionCards',
     name: 'Four Cards Section',
-    description: 'This section will display each post in a vertical style with four posts per row.',
+    description:
+      'This section will display each post in a vertical style with four posts per row.',
     inputs: ['className', 'maxPosts', 'tags', 'title'],
-    maxPosts: null,
+    // maxPosts: null,
     defaultProps: {
       contentLength: 120,
       readMore: true,
-      perRow: 4
-    }
-  }
+      perRow: 4,
+    },
+  },
 }
-
 
 export default SectionCards
