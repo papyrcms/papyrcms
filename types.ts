@@ -152,12 +152,25 @@ export interface Models {
   User: User
 }
 
+type Fields = {
+  [key: string]: any
+}
+
+type Conditions = {
+  [key: string]: any
+}
+
+type Options = {
+  sort?: { [key: string]: -1 | 1 }
+  include?: string[]
+}
+
 export interface Database extends Models {
-  findOne: Function
-  findAll: Function
-  update: Function
-  create: Function
-  destroy: Function
-  destroyAll: Function
-  countAll: Function
+  findOne: <M>(model: M, conditions: Conditions, options?: Options) => M
+  findAll: <M>(model: M, conditions?: Conditions, options?: Options) => M[]
+  update: <M>(model: M, conditions: Conditions, fields: Fields) => void
+  create: <M>(model: M, fields: Fields) => M
+  destroy: <M>(model: M, conditions?: Conditions) => void
+  destroyAll: <M>(model: M, conditions: Conditions) => void
+  countAll: <M>(model: M) => number
 }
