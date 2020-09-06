@@ -23,5 +23,5 @@ export default {
   databaseDriver: process.env.DATABASE_DRIVER,
   databaseURI: process.env.DATABASE_URI,
   rootURL: process.env.ROOT_URL,
-  jwtSecret: process.env.JWT_SECRET
+  jwtSecret: process.env.JWT_SECRET,
 }
