@@ -11,13 +11,7 @@ import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
 
 
-/**
- * Layout wrapping all views
- *
- * @prop children - Component - The page rendered
- */
-const Layout = (props) => {
-
+const Layout: React.FC = (props) => {
   let { posts } = useContext(postsContext)
 
   const settings = {
@@ -26,8 +20,8 @@ const Layout = (props) => {
       'section-header',
       'section-footer',
       'site-description',
-      'copyright'
-    ]
+      'copyright',
+    ],
   }
   const filtered = usePostFilter(posts, settings)
 
@@ -42,37 +36,34 @@ const Layout = (props) => {
     keywords = '',
     shareImage = ''
 
-  _.forEach(filtered.posts, post => {
-
+  _.forEach(filtered.posts, (post) => {
     if (post.tags && post.tags.includes('section-header')) {
-
       headerTitle = post.title || ''
       headerSubTitle = post.content || ''
       logo = post.mainMedia || ''
       titleHeaderContent = ''
 
       if (post.content) {
-        titleHeaderContent = ` | ${sanitizeHTML(post.content, { allowedTags: [] })}`
+        titleHeaderContent = ` | ${sanitizeHTML(post.content, {
+          allowedTags: [],
+        })}`
       }
       if (!shareImage) {
-        shareImage = post.mainMedia
+        shareImage = post.mainMedia || ''
       }
-
     } else if (post.tags.includes('section-footer')) {
-
       footerTitle = post.title
-      footerContent = post.content
-
+      footerContent = post.content || ''
     } else if (post.tags.includes('copyright')) {
-
-      footerCopyrightContent = post.content
-
+      footerCopyrightContent = post.content || ''
     } else if (post.tags.includes('site-description')) {
-
-      descriptionContent = sanitizeHTML(post.content, { allowedTags: [] })
-      _.forEach(post.tags, tag => {
+      descriptionContent = sanitizeHTML(post.content || '', {
+        allowedTags: [],
+      })
+      _.forEach(post.tags, (tag) => {
         if (tag !== 'site-description') {
-          keywords = keywords.length === 0 ? tag : `${keywords}, ${tag}`
+          keywords =
+            keywords.length === 0 ? tag : `${keywords}, ${tag}`
         }
       })
       if (post.mainMedia) {
@@ -81,26 +72,18 @@ const Layout = (props) => {
     }
   })
 
-
   const notifications = usePostFilter(posts, {
-    postTags: ['notification']
+    postTags: ['notification'],
   })
 
   const renderNotifications = () => {
     return _.map(notifications.posts, (post) => {
-      return (
-        <Notification
-          key={post._id}
-          post={post}    
-        />
-      )
+      return <Notification key={post._id} post={post} />
     })
   }
 
-
   return (
     <div className="app">
-
       <PageHead
         title={headerTitle}
         titleContent={titleHeaderContent}
@@ -108,41 +91,44 @@ const Layout = (props) => {
         description={descriptionContent}
         keywords={keywords}
       >
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0"
+        />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <link rel="shortcut icon" type="image/x-icon" href={logo} />
         <link rel="apple-touch-icon" sizes="57x57" href={logo} />
         <link rel="apple-touch-icon" sizes="180x180" href={logo} />
-        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Raleway:400,500,600&display=swap"
+          rel="stylesheet"
+        />
         <script src="https://js.stripe.com/v3/"></script>
         <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
       </PageHead>
 
       {renderNotifications()}
 
-      <NavMenu
-        logo={logo}
-      />
+      <NavMenu logo={logo} />
 
       <Header
         mainTitle={headerTitle}
         subTitle={renderHTML(headerSubTitle)}
       />
 
-      <main>
-        {props.children}
-      </main>
+      <main>{props.children}</main>
 
       <Footer
         footerTitle={footerTitle}
         footerContent={renderHTML(footerContent)}
         footerCopyrightContent={renderHTML(footerCopyrightContent)}
       />
-
     </div>
   )
 }
-
 
 export default Layout

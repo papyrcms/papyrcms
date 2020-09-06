@@ -5,20 +5,25 @@ const excludeFooterRoutes = [
   '/posts/create',
   '/posts',
   '/blog/create',
-  '/contact'
+  '/contact',
 ]
 
+type Props = {
+  footerTitle: string
+  footerContent: string
+  footerCopyrightContent: string
+}
 
-const Footer = (props) => {
-
+const Footer: React.FC<Props> = (props) => {
   // TODO: Only include the footer if the current route is not in the array
 
   return (
-    <footer className='footer'>
-
+    <footer className="footer">
       {/* Footer contact form */}
       <div className="cta">
-        <h2 className="cta__title u-margin-bottom-small">{props.footerTitle}</h2>
+        <h2 className="cta__title u-margin-bottom-small">
+          {props.footerTitle}
+        </h2>
         <div className="cta__content">{props.footerContent}</div>
       </div>
 
@@ -28,10 +33,8 @@ const Footer = (props) => {
           {props.footerCopyrightContent}
         </div>
       </div>
-
     </footer>
   )
 }
-
 
 export default Footer

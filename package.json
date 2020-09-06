@@ -55,6 +55,7 @@
     "@types/lodash": "^4.14.161",
     "@types/react": "^16.9.49",
     "@types/react-stripe-elements": "^6.0.4",
+    "@types/sanitize-html": "^1.23.3",
     "chai": "^4.2.0",
     "esm": "^3.2.25",
     "mocha": "^8.1.3",
