@@ -1,18 +1,21 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
 
-
-export default async (req, res) => {
-
-  const { user, settings, done, database } = await serverContext(req, res)
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const { user, settings, done, database } = await serverContext(
+    req,
+    res
+  )
 
   if (req.method === 'GET') {
     return await done(200, settings)
   }
 
-
   if (req.method === 'POST') {
     if (!user || !user.isAdmin) {
-      return await done(403, { message: 'You are not allowed to do that.' })
+      return await done(403, {
+        message: 'You are not allowed to do that.',
+      })
     }
 
     const { Settings, findAll, update } = database
@@ -24,7 +27,9 @@ export default async (req, res) => {
           typeof setting.options[key] !== 'undefined' &&
           setting.options[key] !== req.body[key]
         ) {
-          const newSetting = { options: { ...setting.options, [key]: req.body[key] } }
+          const newSetting = {
+            options: { ...setting.options, [key]: req.body[key] },
+          }
           await update(Settings, { _id: setting._id }, newSetting)
         }
       }

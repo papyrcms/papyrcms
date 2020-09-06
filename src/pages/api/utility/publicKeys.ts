@@ -1,18 +1,17 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import keys from '@/keys'
 
-
-export default (req, res) => {
-
+export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const {
       googleAnalyticsId,
       googleMapsKey,
-      stripePublishableKey
+      stripePublishableKey,
     } = keys
     const publicKeys = {
       googleAnalyticsId,
       googleMapsKey,
-      stripePublishableKey
+      stripePublishableKey,
     }
     return res.status(200).send(publicKeys)
   }

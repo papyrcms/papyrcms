@@ -1,16 +1,21 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import serverContext from '@/serverContext'
 import keys from '@/keys'
 
-
-export default async (req, res) => {
-
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-
     const { done, database } = await serverContext(req, res)
 
-    const { create, countAll, destroyAll, User, Post, Page } = database
+    const {
+      create,
+      countAll,
+      destroyAll,
+      User,
+      Post,
+      Page,
+    } = database
 
     // Since this is the initial site setup,
     // only run if there are no users, posts, or pages
@@ -18,23 +23,27 @@ export default async (req, res) => {
     const postCount = await countAll(Post)
     const pageCount = await countAll(Page)
 
-    if (
-      userCount > 0 ||
-      postCount > 0 ||
-      pageCount > 0
-    ) {
-      return await done(500, { message: 'You can only run this before your site has any data.' })
+    if (userCount > 0 || postCount > 0 || pageCount > 0) {
+      return await done(500, {
+        message:
+          'You can only run this before your site has any data.',
+      })
     }
 
     // We're wrapping this in one big try/catch because
     // if any of it goes wrong, we must undo it all
     try {
-
       const {
-        email, password,
-        headerTitle, headerSubtitle, siteLogo,
-        footerTitle, footerSubtitle,
-        pageHeader, pageImage, pageContent
+        email,
+        password,
+        headerTitle,
+        headerSubtitle,
+        siteLogo,
+        footerTitle,
+        footerSubtitle,
+        pageHeader,
+        pageImage,
+        pageContent,
       } = req.body
 
       // First, the admin user
@@ -51,7 +60,7 @@ export default async (req, res) => {
         password: passwordHash,
         firstName: 'Admin',
         lastName: 'User',
-        isAdmin: true
+        isAdmin: true,
       }
       const user = await create(User, userFields)
 
@@ -59,11 +68,14 @@ export default async (req, res) => {
       const now = new Date()
       const expiry = new Date(now).setDate(now.getDate() + 30)
 
-      const token = jwt.sign({
-        uid: user._id,
-        iat: Math.floor(now.getTime() / 1000),
-        exp: Math.floor(expiry / 1000)
-      }, keys.jwtSecret)
+      const token = jwt.sign(
+        {
+          uid: user._id,
+          iat: Math.floor(now.getTime() / 1000),
+          exp: Math.floor(expiry / 1000),
+        },
+        keys.jwtSecret
+      )
 
       // Next create the header and footer
       const headerFields = {
@@ -71,7 +83,7 @@ export default async (req, res) => {
         content: headerSubtitle,
         mainMedia: siteLogo,
         tags: ['section-header'],
-        published: true
+        published: true,
       }
       const header = await create(Post, headerFields)
 
@@ -79,7 +91,7 @@ export default async (req, res) => {
         title: footerTitle,
         content: footerSubtitle,
         tags: ['section-footer'],
-        published: true
+        published: true,
       }
       const footer = await create(Post, footerFields)
 
@@ -89,7 +101,7 @@ export default async (req, res) => {
         content: pageContent,
         mainMedia: pageImage,
         tags: ['first-page'],
-        published: true
+        published: true,
       }
       const pagePost = await create(Post, pagePostFields)
 
@@ -97,11 +109,13 @@ export default async (req, res) => {
         title: 'Home',
         route: 'home',
         navOrder: 1,
-        sections: [JSON.stringify({
-          type: "Standard",
-          tags: ["first-page"],
-          maxPosts: 1
-        })]
+        sections: [
+          JSON.stringify({
+            type: 'Standard',
+            tags: ['first-page'],
+            maxPosts: 1,
+          }),
+        ],
       }
       const page = await create(Page, pageFields)
 
@@ -109,10 +123,9 @@ export default async (req, res) => {
         posts: [header, footer, pagePost],
         pages: [page],
         token,
-        user
+        user,
       })
     } catch (err) {
-
       // If something in the process fails, we must
       // undo everything done in the process so the
       // user can try again.

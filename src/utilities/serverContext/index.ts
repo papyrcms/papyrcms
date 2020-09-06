@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const settings: Settings = await useSettings(database)
 
   // A common wrap-up function
-  const done = async (status: number, data: { [key: string]: any }) => {
+  const done = async (status: number, data: any) => {
     return res.status(status).send(data)
   }
 

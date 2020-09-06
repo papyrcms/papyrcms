@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
 import cloudinary from 'cloudinary'
 import serverContext from '@/serverContext'
@@ -19,7 +20,7 @@ export const config = {
 }
 
 
-export default async (req, res) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { user, done } = await serverContext(req, res)
   if (!user || !user.isAdmin) {
