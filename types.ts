@@ -161,7 +161,7 @@ type Conditions = {
 }
 
 type Options = {
-  sort?: { [key: string]: -1 | 1 }
+  sort?: { [key: string]: number }
   include?: string[]
 }
 
