@@ -136,3 +136,25 @@ export interface Keys {
     tokenRpc?: string
   }
 }
+
+export interface Database {
+  Blog: Blog
+  Event: Event
+  Message: Message
+  Order: Order
+  Page: Page
+  Post: Post
+  Product: Product
+  Settings: {
+    name: string
+    options: string
+  }
+  User: User
+  findOne: Function
+  findAll: Function
+  update: Function
+  create: Function
+  destroy: Function
+  destroyAll: Function
+  countAll: Function
+}

@@ -1,3 +1,4 @@
+import { Database, Post } from 'types'
 import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
 import handlebars from 'handlebars'
@@ -7,25 +8,23 @@ const OAuth2 = google.auth.OAuth2
 
 // https://medium.com/@nickroach_50526/sending-emails-with-node-js-using-smtp-gmail-and-oauth2-316fe9c790a1
 class Mailer {
+  database: Database
+  templateTag: string
 
-  database
-  templateTag
-
-  constructor(database) {
+  constructor(database: Database) {
     this.database = database
     this.templateTag = 'email-template'
   }
-
 
   async getAccessToken() {
     const oauth2Client = new OAuth2(
       keys.gmailClientId,
       keys.gmailClientSecret,
-      "https://developers.google.com/oauthplayground"
+      'https://developers.google.com/oauthplayground'
     )
 
     oauth2Client.setCredentials({
-      refresh_token: keys.gmailRefreshToken
+      refresh_token: keys.gmailRefreshToken,
     })
 
     try {
@@ -37,9 +36,7 @@ class Mailer {
     }
   }
 
-
   async createTransporter() {
-
     const accessToken = await this.getAccessToken()
 
     if (!accessToken) {
@@ -47,7 +44,7 @@ class Mailer {
     }
 
     return nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: 'smtp.gmail.com',
       port: 465,
       secure: true,
       auth: {
@@ -56,14 +53,12 @@ class Mailer {
         clientId: keys.gmailClientId,
         clientSecret: keys.gmailClientSecret,
         refreshToken: keys.gmailRefreshToken,
-        accessToken
-      }
+        accessToken,
+      },
     })
   }
 
-
-  async getEmailTemplateByTag(tag) {
-
+  async getEmailTemplateByTag(tag: string) {
     // Get all published posts
     const { Post, findAll } = this.database
     const posts = await findAll(Post, { published: true })
@@ -72,7 +67,10 @@ class Mailer {
 
     // Find the first post with the corresponding tag and template tag
     for (const post of posts) {
-      if ( post.tags.includes(this.templateTag) && post.tags.includes(tag)) {
+      if (
+        post.tags.includes(this.templateTag) &&
+        post.tags.includes(tag)
+      ) {
         template = post
         break
       }
@@ -82,11 +80,11 @@ class Mailer {
     return template
   }
 
-
-  async sendBulkEmail(post) {
-
+  async sendBulkEmail(post: Post) {
     const { findAll, User } = this.database
-    const subscribedUsers = await findAll(User, { isSubscribed: true })
+    const subscribedUsers = await findAll(User, {
+      isSubscribed: true,
+    })
 
     // Create an email transporter
     const transporter = await this.createTransporter()
@@ -101,13 +99,12 @@ class Mailer {
     post.content = `${post.content}\n\n<em>You can unsubscribe by going to your <a href="${profileUrl}">profile.</a></em>`
 
     for (const user of subscribedUsers) {
-
       const mailOptions = {
         from: keys.siteEmail,
         to: user.email,
         subject: post.title,
         generateTextFromHTML: true,
-        html: post.content
+        html: post.content,
       }
 
       await transporter.sendMail(mailOptions)
@@ -117,29 +114,36 @@ class Mailer {
     return true
   }
 
-
-  async sendEmail(variables, recipient, templateName, subject = null) {
-
+  async sendEmail(
+    variables: { [key: string]: any },
+    recipient: string,
+    templateName: string,
+    subject?: string
+  ) {
     // Instantiate sent. This will change when the email gets sent
     let sent = false
     let html
     let emailSubject
 
     // First search for a post with a tag that matches the template name
-    let emailTemplatePost = await this.getEmailTemplateByTag(templateName)
+    let emailTemplatePost = await this.getEmailTemplateByTag(
+      templateName
+    )
 
     // If we found a post
     if (emailTemplatePost) {
-
       html = emailTemplatePost.content
-      emailSubject = handlebars.compile(emailTemplatePost.title)(variables)
+      emailSubject = handlebars.compile(emailTemplatePost.title)(
+        variables
+      )
 
-    // If we did not find a custom post, we'll use our static html file
+      // If we did not find a custom post, we'll use our static html file
     } else {
-
       // Read the file with the template name
       try {
-        html = await this.readHTMLFile(`src/emails/${templateName}.html`)
+        html = await this.readHTMLFile(
+          `src/emails/${templateName}.html`
+        )
         emailSubject = subject
       } catch (e) {
         // console.error('There was an error getting the HTML file', e)
@@ -161,7 +165,7 @@ class Mailer {
       to: recipient,
       subject: emailSubject,
       generateTextFromHTML: true,
-      html: htmlToSend
+      html: htmlToSend,
     }
 
     const response = await transporter.sendMail(mailOptions)
@@ -174,8 +178,7 @@ class Mailer {
     return sent
   }
 
-
-  async readHTMLFile(path) {
+  async readHTMLFile(path: string) {
     return await fs.readFileSync(path, { encoding: 'utf-8' })
   }
 }

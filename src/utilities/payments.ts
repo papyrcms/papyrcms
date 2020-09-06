@@ -1,19 +1,20 @@
 import keys from '../config/keys'
 import Stripe from 'stripe'
 
-
 class Payments {
-
-  stripe
+  stripe: Stripe
 
   constructor() {
-    const config = { apiVersion: '2020-03-02' }
+    const config: Stripe.StripeConfig = { apiVersion: '2020-08-27' }
     this.stripe = new Stripe(keys.stripeSecretKey, config)
   }
 
-
-  async makePayment(info) {
-
+  async makePayment(info: {
+    email: string
+    amount: number
+    source: Stripe.Source
+    description: string
+  }) {
     const { email, amount, source, description } = info
 
     if (!email || !amount || !source || !description) {
@@ -25,7 +26,7 @@ class Payments {
       amount: Math.floor(amount * 100), // In cents, needs to be an int
       receipt_email: email,
       currency: 'usd',
-      description
+      description,
     }
 
     try {
