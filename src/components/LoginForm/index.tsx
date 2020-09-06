@@ -7,22 +7,19 @@ import Button from '../Button'
 import Modal from '../Modal'
 import ForgotPasswordForm from './ForgotPasswordForm'
 
-
 const LoginForm = () => {
-
   const { setCurrentUser } = useContext(userContext)
   const INITIAL_STATE = {
     email: '',
     password: '',
-    validation: ''
+    validation: '',
   }
   const formState = useForm(INITIAL_STATE)
 
-
-  const handleSubmit = (event, resetButton) => {
+  const handleSubmit = (event: any, resetButton: Function) => {
     event.preventDefault()
 
-    const success = (res) => {
+    const success = (res: any) => {
       localStorage.setItem('token', res.data.token)
       setCurrentUser(res.data.user)
       Router.push('/profile')
@@ -33,11 +30,11 @@ const LoginForm = () => {
     formState.submitForm('/api/auth/login', { success, error })
   }
 
-
   return (
     <form className="login-form">
-
-      <h3 className="heading-tertiary u-margin-bottom-small">Login</h3>
+      <h3 className="heading-tertiary u-margin-bottom-small">
+        Login
+      </h3>
 
       <Input
         label="Email"
@@ -57,14 +54,13 @@ const LoginForm = () => {
         required
       />
 
-      <p className="login-form__validation">{formState.values.validation}</p>
+      <p className="login-form__validation">
+        {formState.values.validation}
+      </p>
 
       <div className="login-form__bottom">
         <div className="login-form__submit">
-          <Button
-            onClick={handleSubmit}
-            submittedText="Checking"
-          >
+          <Button onClick={handleSubmit} submittedText="Checking">
             Login
           </Button>
         </div>
@@ -76,7 +72,6 @@ const LoginForm = () => {
           <ForgotPasswordForm email={formState.values.email} />
         </Modal>
       </div>
-
     </form>
   )
 }

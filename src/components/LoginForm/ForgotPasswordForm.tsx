@@ -3,48 +3,44 @@ import axios from 'axios'
 import Input from '../Input'
 import Button from '../Button'
 
-
-const ForgotPasswordForm = (props) => {
-
+const ForgotPasswordForm: React.FC<{ email?: string }> = (props) => {
   const [email, setEmail] = useState(props.email || '')
   const [validation, setValidation] = useState('')
   const [editing, setEditing] = useState(false)
 
-
   useEffect(() => {
-    if (
-      !editing &&
-      props.email &&
-      email !== props.email
-    ) {
+    if (!editing && props.email && email !== props.email) {
       setEmail(props.email)
     }
   })
 
-
-  const handleSubmit = (event, resetButton) => {
-
+  const handleSubmit = (event: any, resetButton: Function) => {
     event.preventDefault()
 
     // Send password reset email
-    axios.post('/api/auth/forgotPassword', { email })
-      .then(response => {
+    axios
+      .post('/api/auth/forgotPassword', { email })
+      .then((response) => {
         setValidation(response.data.message)
         resetButton()
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error)
         setValidation(error.response.data.message)
         resetButton()
       })
   }
 
-
   return (
     <div className="forgot-password">
-      <h3 className="heading-tertiary forgot-password__title">Forgot your password?</h3>
+      <h3 className="heading-tertiary forgot-password__title">
+        Forgot your password?
+      </h3>
 
-      <p className="forgot-password__content">Nothing to worry about! Just enter your email in the field below, and we'll send you a link so you can reset it.</p>
+      <p className="forgot-password__content">
+        Nothing to worry about! Just enter your email in the field
+        below, and we'll send you a link so you can reset it.
+      </p>
 
       <Input
         className="forgot-password__input"
@@ -52,9 +48,13 @@ const ForgotPasswordForm = (props) => {
         label="Email"
         name="email"
         value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        onFocus={() => { if (!editing) setEditing(true) }}
-        onBlur={() => { if (editing) setEditing(false) }}
+        onChange={(event: any) => setEmail(event.target.value)}
+        onFocus={() => {
+          if (!editing) setEditing(true)
+        }}
+        onBlur={() => {
+          if (editing) setEditing(false)
+        }}
       />
 
       <p className="forgot-password__validation">{validation}</p>
@@ -69,6 +69,5 @@ const ForgotPasswordForm = (props) => {
     </div>
   )
 }
-
 
 export default ForgotPasswordForm
