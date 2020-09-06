@@ -1,4 +1,4 @@
-const user = (sequelize, DataTypes) => {
+const user = (sequelize: any, DataTypes: any) => {
   const User = sequelize.define('user', {
 
     _id: {
@@ -44,7 +44,7 @@ const user = (sequelize, DataTypes) => {
     isBanned: { type: DataTypes.BOOLEAN, defaultValue: false }
   })
 
-  User.buildAssociations = models => {
+  User.buildAssociations = (models: any) => {
     User.belongsTo(models.Order)
     User.hasMany(models.Cart)
   }
