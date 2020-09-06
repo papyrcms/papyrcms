@@ -5,8 +5,15 @@ import useForm from '@/hooks/useForm'
 import Input from './Input'
 import Button from'./Button'
 
+type Props = {
+  beforeSubmit?: Function
+  onSubmitError?: Function
+  onSubmitSuccess?: Function
+  children?: any
+  useSubmit?: boolean
+}
 
-const UserInfoForm = (props) => {
+const UserInfoForm = (props: Props) => {
 
   let {
     beforeSubmit = () => null,
@@ -44,16 +51,17 @@ const UserInfoForm = (props) => {
 
   // Set currentUser attributes
   if (currentUser) {
-    for (const state in INITIAL_STATE) {
-      if (state in currentUser) {
-        INITIAL_STATE[state] = currentUser[state]
+    for (const key in INITIAL_STATE) {
+      if (key in currentUser) {
+        // @ts-ignore not 100% sure what's going on here.
+        INITIAL_STATE[key] = currentUser[key]
       }
     }
   }
 
   const formState = useForm(INITIAL_STATE)
 
-  const handleSubmit = async (event, resetButton) => {
+  const handleSubmit = async (event: any, resetButton: Function) => {
     event.preventDefault()
 
     // If the box was checked on submit, clear all shipping fields
@@ -91,7 +99,7 @@ const UserInfoForm = (props) => {
       if (resetButton) resetButton()
     }
 
-    const error = (err) => {
+    const error = (err: any) => {
       // hook
       onSubmitError(formState, err)
       if (resetButton) resetButton()
@@ -117,7 +125,7 @@ const UserInfoForm = (props) => {
     }
   }
 
-  const renderAddressFields = (shipping) => {
+  const renderAddressFields = (shipping: boolean) => {
 
     if (shipping && formState.values.shipToBilling) {
       return null
@@ -176,7 +184,7 @@ const UserInfoForm = (props) => {
             name={`${shipping ? 'shippingS' : 's'}tate`}
             label={`${shipping ? 'Shipping ' : ''}State`}
             formState={formState}
-            // required
+            required
           />
         </div>
 
@@ -213,7 +221,7 @@ const UserInfoForm = (props) => {
   }
 
   return (
-    <form id="userInfoForm" onSubmit={handleSubmit}>
+    <form id="userInfoForm">
       {renderAddressFields(false)}
 
       <Input
