@@ -137,7 +137,7 @@ export interface Keys {
   }
 }
 
-export interface Database {
+export interface Models {
   Blog: Blog
   Event: Event
   Message: Message
@@ -150,6 +150,9 @@ export interface Database {
     options: string
   }
   User: User
+}
+
+export interface Database extends Models {
   findOne: Function
   findAll: Function
   update: Function

@@ -1,3 +1,4 @@
+import { Database, Models } from 'types'
 import keys from '../../../config/keys'
 import * as mongooseModels from './mongoose/models'
 import * as mongooseApi from './mongoose/api'
@@ -5,7 +6,7 @@ import * as sequelizeApi from './sequelize/api'
 
 export default async () => {
 
-  let database
+  let database: Database
 
   // For backwards compatibility
   if (
@@ -39,7 +40,7 @@ export default async () => {
     case 'mysql':
     case 'mariadb':
     case 'mssql':
-      const sequelizeModels = await sequelizeApi.init()
+      const sequelizeModels: Models = await sequelizeApi.init()
       database = {
         ...sequelizeModels,
         ...sequelizeApi

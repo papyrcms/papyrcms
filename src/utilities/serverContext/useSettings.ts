@@ -1,9 +1,11 @@
+import { Database } from 'types'
 import fs from 'fs'
 import util from 'util'
 
-export default async (database) => {
-
-  const files = await util.promisify(fs.readdir)("src/utilities/serverContext/settings")
+export default async (database: Database) => {
+  const files = await util.promisify(fs.readdir)(
+    'src/utilities/serverContext/settings'
+  )
 
   let settings = {}
 
