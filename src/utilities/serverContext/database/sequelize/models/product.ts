@@ -1,11 +1,10 @@
-const product = (sequelize, DataTypes) => {
+const product = (sequelize: any, DataTypes: any) => {
   const Product = sequelize.define('product', {
-
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
 
     title: { type: DataTypes.TEXT },
@@ -13,40 +12,43 @@ const product = (sequelize, DataTypes) => {
     content: { type: DataTypes.TEXT },
     tags: {
       type: DataTypes.TEXT,
-      defaultValue: "[]",
+      defaultValue: '[]',
       get() {
-        const rawValue = this.getDataValue('tags')
+        // @ts-ignore
+        const rawValue: string = this.getDataValue('tags')
         return JSON.parse(rawValue)
       },
-      set(value) {
+      set(value: string[]) {
+        // @ts-ignore
         this.setDataValue('tags', JSON.stringify(value))
-      }
+      },
     },
     mainMedia: { type: DataTypes.TEXT },
     subImages: {
       type: DataTypes.TEXT,
-      defaultValue: "[]",
+      defaultValue: '[]',
       get() {
-        const rawValue = this.getDataValue('subImages')
+        // @ts-ignore
+        const rawValue: string = this.getDataValue('subImages')
         return JSON.parse(rawValue)
       },
-      set(value) {
+      set(value: string[]) {
+        // @ts-ignore
         this.setDataValue('subImages', JSON.stringify(value))
-      }
+      },
     },
     published: { type: DataTypes.BOOLEAN, defaultValue: false },
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 
     price: { type: DataTypes.DOUBLE, allowNull: false },
-    quantity: { type: DataTypes.DOUBLE, defaultValue: 0 }
+    quantity: { type: DataTypes.DOUBLE, defaultValue: 0 },
   })
 
-  Product.buildAssociations = models => {
+  Product.buildAssociations = (models: any) => {
     Product.hasMany(models.Comment)
     Product.belongsTo(models.Order)
     Product.hasMany(models.Cart)
   }
-
 
   return Product
 }

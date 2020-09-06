@@ -1,31 +1,30 @@
-const settings = (sequelize, DataTypes) => {
+const settings = (sequelize: any, DataTypes: any) => {
   const Settings = sequelize.define('settings', {
-
     _id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
     },
 
     name: { type: DataTypes.STRING, allowNull: false },
     options: {
       type: DataTypes.TEXT,
-      defaultValue: "[]",
+      defaultValue: '[]',
       allowNull: false,
       get() {
-        const rawValue = this.getDataValue('options')
+        // @ts-ignore
+        const rawValue: string = this.getDataValue('options')
         return rawValue ? JSON.parse(rawValue) : rawValue
       },
-      set(value) {
+      set(value: { [key: string]: any }) {
+        // @ts-ignore
         this.setDataValue('options', JSON.stringify(value))
-      }
-    }
-  
+      },
+    },
   })
 
   return Settings
 }
-
 
 export default settings
