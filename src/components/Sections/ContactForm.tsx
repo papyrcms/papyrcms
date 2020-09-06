@@ -1,15 +1,14 @@
+import { SectionOptions } from 'types'
 import React, { useContext } from 'react'
 import userContext from '@/context/userContext'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
 import useForm from '@/hooks/useForm'
 
-
 /**
  * ContactForm is the main contact form component
  */
-const ContactForm = (props) => {
-
+const ContactForm: React.FC<{ className?: string }> = (props) => {
   const { className } = props
   const { currentUser } = useContext(userContext)
 
@@ -34,15 +33,14 @@ const ContactForm = (props) => {
     handleChange,
     errors,
     validateField,
-    submitForm
+    submitForm,
   } = useForm({ name, email, message: '', validation: '' })
 
-
-  const handleSubmit = (event, resetButton) => {
+  const handleSubmit = (event: any, resetButton: Function) => {
     event.preventDefault()
 
-    const success = (response, setValidation) => {
-      setValidation('Thanks for reaching out! I\'ll be in touch.')
+    const success = (response: any, setValidation: Function) => {
+      setValidation("Thanks for reaching out! I'll be in touch.")
       resetButton()
     }
 
@@ -51,12 +49,9 @@ const ContactForm = (props) => {
     submitForm('/api/messages', { success, error })
   }
 
-
   return (
     <section className={`${className} contact-form`}>
-
       <form className="contact-form__form">
-
         <div className="u-form-row">
           <Input
             id="contact-name"
@@ -83,7 +78,12 @@ const ContactForm = (props) => {
         </div>
 
         <div className="contact-form__field--textarea">
-          <label htmlFor="contact-message" className="contact-form__label">Message</label>
+          <label
+            htmlFor="contact-message"
+            className="contact-form__label"
+          >
+            Message
+          </label>
           <textarea
             id="contact-message"
             className="contact-form__textarea"
@@ -104,24 +104,24 @@ const ContactForm = (props) => {
           Send
         </Button>
 
-        <p className="contact-form__validation">{values.validation}</p>
-
+        <p className="contact-form__validation">
+          {values.validation}
+        </p>
       </form>
     </section>
   )
 }
 
-
-export const options = {
+export const options: SectionOptions = {
   ContactForm: {
     file: 'ContactForm',
     name: 'Contact Form',
-    description: 'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
+    description:
+      'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
     inputs: ['className'],
-    maxPosts: null,
-    defaultProps: {}
-  }
+    // maxPosts: null,
+    defaultProps: {},
+  },
 }
-
 
 export default ContactForm

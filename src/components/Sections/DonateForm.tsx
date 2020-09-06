@@ -1,23 +1,25 @@
+import { SectionOptions } from 'types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import userContext from '@/context/userContext'
 import CreditCardForm from '@/components/CreditCardForm'
 import Input from '@/components/Input'
 
-
-const DonateForm = (props) => {
-
+const DonateForm: React.FC<{ className?: string }> = (props) => {
   const { currentUser } = useContext(userContext)
   const { className } = props
-  const [email, setEmail] = useState(currentUser ? currentUser.email : '')
-  const [amount, setAmount] = useState(1.00)
+  const [email, setEmail] = useState(
+    currentUser ? currentUser.email : ''
+  )
+  const [amount, setAmount] = useState(1.0)
   const [paid, setPaid] = useState(false)
 
-
-  const handleSubmit = (source, resetButton, setValidation) => {
-
+  const handleSubmit = (
+    source: stripe.Source,
+    resetButton: Function,
+    setValidation: Function
+  ) => {
     switch (true) {
-
       case amount < 1:
         setValidation('You must donate at least 1 dollar.')
         resetButton()
@@ -35,15 +37,18 @@ const DonateForm = (props) => {
           email,
         }
 
-        axios.post('/api/utility/donate', donationData)
-          .then(response => {
+        axios
+          .post('/api/utility/donate', donationData)
+          .then((response) => {
             if (response.data.status === 'succeeded') {
               setPaid(true)
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error)
-            setValidation('Something went wrong. Please try again later.')
+            setValidation(
+              'Something went wrong. Please try again later.'
+            )
             resetButton()
           })
     }
@@ -53,8 +58,13 @@ const DonateForm = (props) => {
     return (
       <div className={`donate-form ${className}`}>
         <div className="donate-form__thanks">
-          <h3 className="heading-tertiary">Thank you for your donation!</h3>
-          <p>You will recieve a reciept of your donation via the email you submitted shortly.</p>
+          <h3 className="heading-tertiary">
+            Thank you for your donation!
+          </h3>
+          <p>
+            You will recieve a reciept of your donation via the email
+            you submitted shortly.
+          </p>
         </div>
       </div>
     )
@@ -70,7 +80,7 @@ const DonateForm = (props) => {
             type="email"
             required
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(event: any) => setEmail(event.target.value)}
           />
 
           <Input
@@ -79,7 +89,7 @@ const DonateForm = (props) => {
             type="number"
             required
             value={amount}
-            onChange={(event) => setAmount(event.target.value)}
+            onChange={(event: any) => setAmount(event.target.value)}
           />
         </div>
 
@@ -89,17 +99,16 @@ const DonateForm = (props) => {
   )
 }
 
-
-export const options = {
+export const options: SectionOptions = {
   DonateForm: {
     file: 'DonateForm',
     name: 'Donate Form',
-    description: 'This is a simple donation form where people can donate money to you.',
+    description:
+      'This is a simple donation form where people can donate money to you.',
     inputs: ['className'],
-    maxPosts: null,
-    defaultProps: {}
-  }
+    // maxPosts: null,
+    defaultProps: {},
+  },
 }
-
 
 export default DonateForm
