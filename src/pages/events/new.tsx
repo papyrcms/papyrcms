@@ -1,17 +1,22 @@
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import userContext from '@/context/userContext'
-import PostsForm from '@/components/PostsForm/'
+import PostsForm from '@/components/PostsForm'
 import Input from '@/components/Input'
 
 type Props = {
-  values: any
-  errors: any
+  values: { [key: string]: any }
+  errors: { [key: string]: any }
   validateField: Function
   handleChange: Function
 }
 
-const dateField = ({ values, errors, handleChange, validateField }: Props) => (
+const dateField: React.FC<Props> = ({
+  values,
+  errors,
+  handleChange,
+  validateField,
+}) => (
   <Input
     id="event_date"
     label="Date"
@@ -25,7 +30,12 @@ const dateField = ({ values, errors, handleChange, validateField }: Props) => (
   />
 )
 
-const coordinatesField = ({ values, errors, handleChange, validateField }: Props) => (
+const coordinatesField: React.FC<Props> = ({
+  values,
+  errors,
+  handleChange,
+  validateField,
+}: Props) => (
   <div className="u-form-row">
     <Input
       id="event_latitude"
@@ -49,11 +59,10 @@ const coordinatesField = ({ values, errors, handleChange, validateField }: Props
   </div>
 )
 
-
 const EventNew = () => {
-
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
+  if (!currentUser || !currentUser.isAdmin)
+    return <Error statusCode={403} />
 
   return (
     <PostsForm
@@ -64,7 +73,7 @@ const EventNew = () => {
       additionalState={{
         date: null,
         latitude: null,
-        longitude: null
+        longitude: null,
       }}
     />
   )

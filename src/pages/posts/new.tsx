@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import userContext from '@/context/userContext'
-import PostsForm from '@/components/PostsForm/'
+import PostsForm from '@/components/PostsForm'
 
 const PostNew = () => {
 
