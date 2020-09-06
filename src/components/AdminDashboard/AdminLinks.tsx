@@ -2,9 +2,7 @@ import React, { useContext } from 'react'
 import Link from 'next/link'
 import settingsContext from '@/context/settingsContext'
 
-
 const AdminLinks = () => {
-
   const { settings } = useContext(settingsContext)
 
   const renderStoreMenuItems = () => {
@@ -27,7 +25,6 @@ const AdminLinks = () => {
     }
   }
 
-
   const renderBlogMenuItems = () => {
     if (settings.enableBlog) {
       return (
@@ -44,7 +41,6 @@ const AdminLinks = () => {
     }
   }
 
-
   const renderEventMenuItems = () => {
     if (settings.enableEvents) {
       return (
@@ -60,7 +56,6 @@ const AdminLinks = () => {
       )
     }
   }
-
 
   return (
     <>
@@ -86,6 +81,5 @@ const AdminLinks = () => {
     </>
   )
 }
-
 
 export default AdminLinks

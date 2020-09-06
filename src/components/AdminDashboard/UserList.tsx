@@ -1,13 +1,12 @@
+import { User } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import userContext from '@/context/userContext'
 import Modal from '../Modal'
 
-
 const UserList = () => {
-
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState<User[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const { currentUser } = useContext(userContext)
 
@@ -21,38 +20,36 @@ const UserList = () => {
     getUsers()
   }, [currentUser])
 
+  const deleteUser = (user: User) => {
+    const confirm = window.confirm(
+      `Are you sure you want to delete ${user.email}`
+    )
 
-  const deleteUser = (user) => {
-
-    const confirm = window.confirm(`Are you sure you want to delete ${user.email}`)
-
-    if (
-      confirm &&
-      currentUser &&
-      user._id !== currentUser._id
-    ) {
-
-      axios.delete(`/api/users/${user._id}`)
-        .then(response => {
-
-          const newUsers = _.filter(users, foundUser => user._id !== foundUser._id)
+    if (confirm && currentUser && user._id !== currentUser._id) {
+      axios
+        .delete(`/api/users/${user._id}`)
+        .then((response) => {
+          const newUsers = _.filter(
+            users,
+            (foundUser) => user._id !== foundUser._id
+          )
           setUsers(newUsers)
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error)
         })
     }
   }
 
-
-  const changeAdminStatus = (user) => {
-
+  const changeAdminStatus = (user: User) => {
     if (currentUser && user._id !== currentUser._id) {
-
-      axios.put('/api/users/makeAdmin', { userId: user._id, isAdmin: !user.isAdmin })
-        .then(response => {
-
-          const newUsers = _.map(users, foundUser => {
+      axios
+        .put('/api/users/makeAdmin', {
+          userId: user._id,
+          isAdmin: !user.isAdmin,
+        })
+        .then((response) => {
+          const newUsers = _.map(users, (foundUser) => {
             if (user._id === foundUser._id) {
               foundUser.isAdmin = !user.isAdmin
             }
@@ -60,21 +57,21 @@ const UserList = () => {
           })
           setUsers(newUsers)
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error)
         })
     }
   }
 
-
-  const changeBannedStatus = (user) => {
-
+  const changeBannedStatus = (user: User) => {
     if (currentUser && user._id !== currentUser._id) {
-
-      axios.put('/api/users/ban', { userId: user._id, isBanned: !user.isBanned })
-        .then(response => {
-
-          const newUsers = _.map(users, foundUser => {
+      axios
+        .put('/api/users/ban', {
+          userId: user._id,
+          isBanned: !user.isBanned,
+        })
+        .then((response) => {
+          const newUsers = _.map(users, (foundUser) => {
             if (user._id === foundUser._id) {
               foundUser.isBanned = !user.isBanned
             }
@@ -82,14 +79,13 @@ const UserList = () => {
           })
           setUsers(newUsers)
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error)
         })
     }
   }
 
-
-  const renderUserOptions = (user) => {
+  const renderUserOptions = (user: User) => {
     if (currentUser && user._id !== currentUser._id) {
       return (
         <div className="user-list__options">
@@ -118,13 +114,15 @@ const UserList = () => {
     }
   }
 
-
-  const renderUserInfo = (user) => {
-
+  const renderUserInfo = (user: User) => {
     const visible = user._id === selectedUser ? true : false
 
     return (
-      <div className={`user-list__info${visible ? ' user-list__info--visible' : ''}`}>
+      <div
+        className={`user-list__info${
+          visible ? ' user-list__info--visible' : ''
+        }`}
+      >
         <ul className="user-list__details">
           <li>First Name: {user.firstName}</li>
           <li>Last Name: {user.lastName}</li>
@@ -138,9 +136,8 @@ const UserList = () => {
     )
   }
 
-
   const renderUsers = () => {
-    return _.map(users, user => {
+    return _.map(users, (user) => {
       return (
         <li key={user._id} className="user-list__user">
           <div className="user-list__item">
@@ -164,17 +161,12 @@ const UserList = () => {
       buttonText={`View Users (${users.length})`}
     >
       <div className="user-list">
-
         <h3 className="heading-tertiary">Users</h3>
 
-        <ul className="user-list__list">
-          {renderUsers()}
-        </ul>
-
+        <ul className="user-list__list">{renderUsers()}</ul>
       </div>
     </Modal>
   )
 }
-
 
 export default UserList
