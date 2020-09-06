@@ -1,5 +1,10 @@
-const configureSettings = async (name, defaultOptions, database) => {
+import { Database } from 'types'
 
+const configureSettings = async (
+  name: string,
+  defaultOptions: { [key: string]: any },
+  database: Database
+) => {
   const { Settings, findOne, create } = database
   let appSettings
 
@@ -10,13 +15,14 @@ const configureSettings = async (name, defaultOptions, database) => {
   if (settings) {
     appSettings = settings
   } else {
-
     // If we did not find one, create one
-    appSettings = await create(Settings, { name, options: defaultOptions })
+    appSettings = await create(Settings, {
+      name,
+      options: defaultOptions,
+    })
   }
 
   return appSettings.options
 }
-
 
 export default configureSettings

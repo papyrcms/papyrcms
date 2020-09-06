@@ -7,10 +7,10 @@ export default async (database: Database) => {
     'src/utilities/serverContext/settings'
   )
 
-  let settings = {}
+  let settings: any = {}
 
   for (const file of files) {
-    if (file === 'configureSettings.js') continue
+    if (file === 'configureSettings.ts') continue
     const settingsMiddleware = require(`./settings/${file}`).default
     const newSettings = await settingsMiddleware(database)
     settings = { ...settings, ...newSettings }
