@@ -1,4 +1,4 @@
-const blog = (sequelize, DataTypes) => {
+const blog = (sequelize: any, DataTypes: any) => {
   const Blog = sequelize.define('blog', {
 
     _id: {
@@ -15,10 +15,12 @@ const blog = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       defaultValue: "[]",
       get() {
-        const rawValue = this.getDataValue('tags')
+        // @ts-ignore
+        const rawValue: string = this.getDataValue('tags')
         return JSON.parse(rawValue)
       },
-      set(value) {
+      set(value: string[]) {
+        // @ts-ignore
         this.setDataValue('tags', JSON.stringify(value))
       }
     },
@@ -27,10 +29,12 @@ const blog = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       defaultValue: "[]",
       get() {
-        const rawValue = this.getDataValue('subImages')
+        // @ts-ignore
+        const rawValue: string = this.getDataValue('subImages')
         return JSON.parse(rawValue)
       },
-      set(value) {
+      set(value: string[]) {
+        // @ts-ignore
         this.setDataValue('subImages', JSON.stringify(value))
       }
     },
@@ -40,7 +44,7 @@ const blog = (sequelize, DataTypes) => {
     publishDate: { type: DataTypes.DATE },
   })
 
-  Blog.buildAssociations = models => {
+  Blog.buildAssociations = (models: any) => {
     Blog.hasMany(models.Comment)
   }
 

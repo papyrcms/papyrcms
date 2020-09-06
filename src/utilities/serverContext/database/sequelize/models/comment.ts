@@ -1,4 +1,4 @@
-const comment = (sequelize, DataTypes) => {
+const comment = (sequelize: any, DataTypes: any) => {
   const Comment = sequelize.define('comment', {
 
     _id: {
@@ -12,7 +12,7 @@ const comment = (sequelize, DataTypes) => {
     created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
   })
 
-  Comment.buildAssociations = models => {
+  Comment.buildAssociations = (models: any) => {
     Comment.belongsTo(models.Product)
     Comment.belongsTo(models.Post)
     Comment.belongsTo(models.Blog)

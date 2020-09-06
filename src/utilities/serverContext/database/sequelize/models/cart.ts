@@ -1,4 +1,4 @@
-const cart = (sequelize, DataTypes) => {
+const cart = (sequelize: any, DataTypes: any) => {
   const Cart = sequelize.define('cart', {
 
     _id: {
@@ -14,7 +14,7 @@ const cart = (sequelize, DataTypes) => {
     freezeTableName: true
   })
 
-  Cart.buildAssociations = models => {
+  Cart.buildAssociations = (models: any) => {
     Cart.belongsTo(models.User)
     Cart.belongsTo(models.Product)
   }

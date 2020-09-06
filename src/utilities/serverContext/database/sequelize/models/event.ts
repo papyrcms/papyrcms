@@ -1,4 +1,4 @@
-const event = (sequelize, DataTypes) => {
+const event = (sequelize: any, DataTypes: any) => {
   const Event = sequelize.define('event', {
 
     _id: {
@@ -15,10 +15,12 @@ const event = (sequelize, DataTypes) => {
       defaultValue: "[]",
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue('tags')
+        // @ts-ignore
+        const rawValue: string = this.getDataValue('tags')
         return JSON.parse(rawValue)
       },
-      set(value) {
+      set(value: string[]) {
+        // @ts-ignore
         this.setDataValue('tags', JSON.stringify(value))
       }
     },
@@ -27,10 +29,12 @@ const event = (sequelize, DataTypes) => {
       defaultValue: "[]",
       type: DataTypes.TEXT,
       get() {
-        const rawValue = this.getDataValue('subImages')
+        // @ts-ignore
+        const rawValue: string = this.getDataValue('subImages')
         return JSON.parse(rawValue)
       },
-      set(value) {
+      set(value: string[]) {
+        // @ts-ignore
         this.setDataValue('subImages', JSON.stringify(value))
       }
     },

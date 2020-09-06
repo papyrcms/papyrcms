@@ -1,4 +1,4 @@
-const message = (sequelize, DataTypes) => {
+const message = (sequelize: any, DataTypes: any) => {
   const Message = sequelize.define('message', {
 
     _id: {

@@ -1,4 +1,4 @@
-const order = (sequelize, DataTypes) => {
+const order = (sequelize: any, DataTypes: any) => {
   const Order = sequelize.define('order', {
 
     _id: {
@@ -14,7 +14,7 @@ const order = (sequelize, DataTypes) => {
     shipped: { type: DataTypes.BOOLEAN, defaultValue: false }
   })
 
-  Order.buildAssociations = models => {
+  Order.buildAssociations = (models: any) => {
     Order.hasMany(models.Product)
     Order.hasOne(models.User)
   }
