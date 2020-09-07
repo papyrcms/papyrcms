@@ -112,9 +112,9 @@ const PageBuilder = (props: Props) => {
         }
 
         if (typeof section.tags === 'string') {
-          section.tags = _.map(_.split(section.tags, ','), (tag) =>
-            tag.trim()
-          )
+          // section.tags = _.map(_.split(section.tags, ','), (tag) =>
+          //   tag.trim()
+          // )
         }
 
         return JSON.stringify(section)
@@ -172,7 +172,7 @@ const PageBuilder = (props: Props) => {
 
   const renderTagsInput = (
     i: number,
-    section: { type: string; tags: string[] }
+    section: { type: string; tags: string }
   ) => {
     const { type, tags } = section
 
@@ -182,7 +182,8 @@ const PageBuilder = (props: Props) => {
           id={`${type}-${i}--tags-${i}`}
           label="Required Post Tags"
           name={`tags-${i}`}
-          value={_.join(tags, ', ')}
+          // value={_.join(tags, ', ')}
+          value={tags}
           onChange={(event: any) =>
             changeSectionState(i, 'tags', event.target.value)
           }
@@ -524,7 +525,7 @@ const PageBuilder = (props: Props) => {
             onChange={(event) =>
               setPageState('css', event.target.value)
             }
-            value={css}
+            value={css || ''}
           />
         </div>
 
