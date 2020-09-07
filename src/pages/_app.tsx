@@ -17,7 +17,7 @@ import { initGA, logPageView } from '@/utilities/analytics'
 import postsContext from '@/context/postsContext'
 import blogsContext from '@/context/blogsContext'
 import eventsContext from '@/context/eventsContext'
-import productsContext from '@/context/productsContext'
+import storeContext from '@/context/storeContext'
 import keysContext from '@/context/keysContext'
 import settingsContext from '@/context/settingsContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
@@ -66,7 +66,7 @@ const App = (props: Props) => {
   const postContext = useContext(postsContext)
   const blogContext = useContext(blogsContext)
   const eventContext = useContext(eventsContext)
-  const productContext = useContext(productsContext)
+  const productContext = useContext(storeContext)
   const pageContext = useContext(pagesContext)
   const keyContext = useContext(keysContext)
   const settingContext = useContext(settingsContext)
@@ -146,12 +146,16 @@ App.getInitialProps = async ({
     }
 
     if (settings.enableEvents) {
-      const { data: events } = await axios.get(`${rootUrl}/api/events/published`)
+      const { data: events } = await axios.get(
+        `${rootUrl}/api/events/published`
+      )
       pageProps.events = events
     }
 
     if (settings.enableStore) {
-      const { data: products } = await axios.get(`${rootUrl}/api/store/products/published`)
+      const { data: products } = await axios.get(
+        `${rootUrl}/api/store/products/published`
+      )
       pageProps.products = products
     }
   }

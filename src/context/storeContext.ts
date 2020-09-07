@@ -6,11 +6,15 @@ type StoreContext = {
   addToCart: Function
   removeFromCart: Function
   clearCart: Function
+  products: Product[]
+  setProducts: Function
 }
 
 export default createContext<StoreContext>({
   cart: [],
   addToCart: (product: Product) => {},
   removeFromCart: (product: Product) => {},
-  clearCart: () => {}
+  clearCart: () => {},
+  products: [],
+  setProducts: (products: Product[]) => {},
 })

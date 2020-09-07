@@ -3,15 +3,15 @@ import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
 import axios from 'axios'
-import storeContext from '@/context/storeContext'
 import userContext from '@/context/userContext'
-import productsContext from '@/context/productsContext'
+import storeContext from '@/context/storeContext'
 import SectionCards from '@/components/Sections/SectionCards'
 
 const StorePage = () => {
-  const { cart, addToCart } = useContext(storeContext)
+  const { cart, addToCart, products, setProducts } = useContext(
+    storeContext
+  )
   const { currentUser } = useContext(userContext)
-  const { products, setProducts } = useContext(productsContext)
 
   useEffect(() => {
     if (currentUser?.isAdmin) {

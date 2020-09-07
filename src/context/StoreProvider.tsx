@@ -6,14 +6,13 @@ import StoreContext from './storeContext'
 import UserContext from './userContext'
 
 type Props = {
-  children: any
+  products: Product[]
 }
 
-const StoreProvider = (props: Props) => {
-
+const StoreProvider: React.FC<Props> = (props) => {
+  const [products, setProducts] = useState(props.products)
   const [cart, setCart] = useState<Product[]>([])
   const { currentUser } = useContext(UserContext)
-
 
   useEffect(() => {
     if (currentUser?.cart) {
@@ -27,11 +26,13 @@ const StoreProvider = (props: Props) => {
     }
   }, [currentUser])
 
-
   const addToCart = async (product: Product) => {
     const newCart = [...cart, product]
     if (!currentUser) {
-      if (_.filter(cart, inCart => inCart._id === product._id).length < product.quantity) {
+      if (
+        _.filter(cart, (inCart) => inCart._id === product._id)
+          .length < product.quantity
+      ) {
         localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart)
       }
@@ -47,7 +48,7 @@ const StoreProvider = (props: Props) => {
 
   const removeFromCart = async (product: Product) => {
     let removed = false
-    const newCart = _.filter(cart, item => {
+    const newCart = _.filter(cart, (item) => {
       if (item._id === product._id && !removed) {
         removed = true
         return false
@@ -56,7 +57,10 @@ const StoreProvider = (props: Props) => {
     })
 
     if (!currentUser) {
-      if (_.filter(cart, inCart => inCart._id === product._id).length > 0) {
+      if (
+        _.filter(cart, (inCart) => inCart._id === product._id)
+          .length > 0
+      ) {
         localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart)
       }
@@ -83,7 +87,9 @@ const StoreProvider = (props: Props) => {
         cart,
         addToCart,
         removeFromCart,
-        clearCart
+        clearCart,
+        products,
+        setProducts,
       }}
     >
       {props.children}

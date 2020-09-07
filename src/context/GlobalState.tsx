@@ -16,7 +16,6 @@ import StoreProvider from './StoreProvider'
 import PostsProvider from './PostsProvider'
 import BlogsProvider from './BlogsProvider'
 import EventsProvider from './EventsProvider'
-import ProductsProvider from './ProductsProvider'
 import PagesProvider from './PagesProvider'
 
 type Props = {
@@ -39,9 +38,9 @@ const GlobalState: React.FC<Props> = (props) => (
             <PostsProvider posts={props.posts}>
               <BlogsProvider blogs={props.blogs}>
                 <EventsProvider events={props.events}>
-                  <ProductsProvider products={props.products}>
-                    <StoreProvider>{props.children}</StoreProvider>
-                  </ProductsProvider>
+                  <StoreProvider products={props.products}>
+                    {props.children}
+                  </StoreProvider>
                 </EventsProvider>
               </BlogsProvider>
             </PostsProvider>

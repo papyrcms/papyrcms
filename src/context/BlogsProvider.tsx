@@ -8,14 +8,13 @@ type Props = {
 }
 
 const BlogsProvider = (props: Props) => {
-
   const [blogs, setBlogs] = useState(props.blogs)
 
   return (
     <blogsContext.Provider
       value={{
         blogs,
-        setBlogs
+        setBlogs,
       }}
     >
       {props.children}
