@@ -15,11 +15,10 @@ import styles from './page.module.scss'
 
 type Props = {
   previewPage?: Page
-  page: Page
+  page?: Page
 }
 
 const PageRenderer = (props: Props) => {
-
   // Determine if this is a page or the preview on the builder
   let page = props.previewPage ? props.previewPage : props.page
 
@@ -28,13 +27,15 @@ const PageRenderer = (props: Props) => {
   const { query } = useRouter()
   const { pages } = useContext(pagesContext)
   if (!page) {
-    _.forEach(pages, foundPage => {
+    _.forEach(pages, (foundPage) => {
       if (foundPage.route === '') foundPage.route = 'home'
       if (foundPage.route === query.page) page = foundPage
     })
 
     // If the page was still not found, don't return anything
-    if (!page) return <Error statusCode={404} />
+    if (!page) {
+      return <Error statusCode={404} />
+    }
   }
 
   // Get our filter settings from the page sections
@@ -46,7 +47,7 @@ const PageRenderer = (props: Props) => {
       propName: `${parsedSection.type}-${i}`,
       maxPosts: parsedSection.maxPosts,
       postTags: parsedSection.tags,
-      strictTags: true
+      strictTags: true,
     })
   })
 
@@ -57,21 +58,24 @@ const PageRenderer = (props: Props) => {
   // Get our section options
   const { sectionOptions } = useContext(sectionOptionsContext)
 
-  const renderSections = () => {
-
+  const renderSections = (page: Page) => {
     return _.map(page.sections, (section, i) => {
-
       // Parse the section from the page
       const parsedSection = JSON.parse(section)
 
       // Get properties by the section info
       const key = `${parsedSection.type}-${i}`
       const filteredPosts = filtered[key]
-      const emptyMessage = `Create content with the ${_.join(parsedSection.tags, ', ')} tags.`
+      const emptyMessage = `Create content with the ${_.join(
+        parsedSection.tags,
+        ', '
+      )} tags.`
 
       // Get the parsedSection component
       const options = sectionOptions[parsedSection.type]
-      const Component = dynamic(() => import(`../../components/Sections/${options.file}`))
+      const Component = dynamic(
+        () => import(`../../components/Sections/${options.file}`)
+      )
 
       // Return the parsedSection component
       return (
@@ -90,11 +94,9 @@ const PageRenderer = (props: Props) => {
     })
   }
 
-
-  const renderPageHead = () => {
-
+  const renderPageHead = (page: Page) => {
     let SectionStandard = false
-    _.forEach(page.sections, section => {
+    _.forEach(page.sections, (section) => {
       const parsedSection = JSON.parse(section)
       if (parsedSection.type === 'SectionStandard') {
         SectionStandard = true
@@ -104,10 +106,17 @@ const PageRenderer = (props: Props) => {
     let title
     const headerSettings = {
       maxPosts: 1,
-      postTags: ['section-header']
+      postTags: ['section-header'],
     }
-    const { posts: [headerPost] } = usePostFilter(posts, headerSettings)
-    if (!SectionStandard && page.route !== 'home' && page.title && headerPost) {
+    const {
+      posts: [headerPost],
+    } = usePostFilter(posts, headerSettings)
+    if (
+      !SectionStandard &&
+      page.route !== 'home' &&
+      page.title &&
+      headerPost
+    ) {
       title = `${headerPost.title} | ${page.title}`
     }
 
@@ -120,17 +129,21 @@ const PageRenderer = (props: Props) => {
 
   return (
     <>
-      {renderPageHead()}
+      {renderPageHead(page)}
       <div className={`${styles.page} ${page.className}`}>
-        {renderSections()}
+        {renderSections(page)}
       </div>
     </>
   )
 }
 
-
-PageRenderer.getInitialProps = async ({ query, req }: { query: { page: string }, req: any }) => {
-
+PageRenderer.getInitialProps = async ({
+  query,
+  req,
+}: {
+  query: { page: string }
+  req: any
+}) => {
   if (!query.page) {
     query.page = 'home'
   }
@@ -139,7 +152,9 @@ PageRenderer.getInitialProps = async ({ query, req }: { query: { page: string },
   if (!!req) {
     try {
       const rootUrl = keys.rootURL ? keys.rootURL : ''
-      const { data } = await axios.get(`${rootUrl}/api/pages/${query.page}`)
+      const { data } = await axios.get(
+        `${rootUrl}/api/pages/${query.page}`
+      )
       page = data
     } catch {
       return {}
@@ -148,6 +163,5 @@ PageRenderer.getInitialProps = async ({ query, req }: { query: { page: string },
 
   return { page }
 }
-
 
 export default PageRenderer
