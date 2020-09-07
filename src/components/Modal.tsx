@@ -66,7 +66,11 @@ const Modal = (props: Props) => {
           setHidden(false)
           onOpen()
         }}
-        style={buttonText ? { display: 'none' } : { display: 'block' }}
+        style={
+          buttonText
+            ? { display: 'inline-block' }
+            : { display: 'none' }
+        }
       >
         {buttonText}
       </button>
@@ -92,7 +96,9 @@ const Modal = (props: Props) => {
           >
             &#10005;
           </button>
-          <div className={`modal__content ${className}`}>{children}</div>
+          <div className={`modal__content ${className}`}>
+            {children}
+          </div>
         </div>
       </div>
     </>
