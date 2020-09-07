@@ -4,7 +4,7 @@ import RegisterForm from '@/components/RegisterForm'
 import styles from './login.module.scss'
 
 const LoginPage = () => (
-  <div className={styles["login-page"]}>
+  <div className={styles.main}>
     <LoginForm />
     <RegisterForm />
   </div>
