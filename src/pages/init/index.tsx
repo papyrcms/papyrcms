@@ -9,9 +9,7 @@ import Input from '@/components/Input'
 import Modal from '@/components/Modal'
 import styles from './init.module.scss'
 
-
 const Init = () => {
-
   const { posts, setPosts } = useContext(postsContext)
   const { pages, setPages } = useContext(pagesContext)
   const { setCurrentUser } = useContext(userContext)
@@ -58,9 +56,11 @@ const Init = () => {
       console.dir(err.toString())
     }
 
-    await formState.submitForm('/api/utility/init', { success, error })
+    await formState.submitForm('/api/utility/init', {
+      success,
+      error,
+    })
   }
-
 
   const personalInfoInputs = (onForm?: boolean) => {
     return (
@@ -85,7 +85,6 @@ const Init = () => {
       </div>
     )
   }
-
 
   const headerInputs = (onForm?: boolean) => {
     return (
@@ -118,7 +117,6 @@ const Init = () => {
     )
   }
 
-
   const footerInputs = (onForm?: boolean) => {
     return (
       <div className="u-form-row">
@@ -140,7 +138,6 @@ const Init = () => {
       </div>
     )
   }
-
 
   const firstPageInputs = (onForm?: boolean) => {
     return (
@@ -174,11 +171,9 @@ const Init = () => {
     )
   }
 
-
   const renderForm = () => {
     return (
-      <form onSubmit={handleSubmit} className={styles["init-page"]}>
-
+      <form onSubmit={handleSubmit} className={styles.main}>
         {personalInfoInputs(true)}
 
         {headerInputs(true)}
@@ -190,29 +185,30 @@ const Init = () => {
         <p>{formState.values.validation}</p>
 
         <input className="button button-primary" type="submit" />
-
       </form>
     )
   }
-
 
   const clickNextModal = (id: string) => {
     const nextModal = document.getElementById(id)
     if (nextModal) nextModal.click()
   }
 
-
   const renderModals = () => {
-    const buttonClasses = `button button-primary ${styles['init-page__modal--button']}`
+    const buttonClasses = `button button-primary ${styles.button}`
     return (
       <>
         <Modal
           closeId="auth-next"
-          className={styles['init-page__modal']}
+          className={styles.modal}
           buttonId="auth-modal"
           onClose={() => clickNextModal('header-modal')}
         >
-          <h3>First, let's get you set up with an admin account. With this account, you can manage the website by going to your admin dashboard. This can be accessed from your profile.</h3>
+          <h3>
+            First, let's get you set up with an admin account. With
+            this account, you can manage the website by going to your
+            admin dashboard. This can be accessed from your profile.
+          </h3>
           {personalInfoInputs()}
           <button className={buttonClasses} id="auth-next">
             Next
@@ -221,7 +217,7 @@ const Init = () => {
 
         <Modal
           closeId="header-next"
-          className={styles['init-page__modal']}
+          className={styles.modal}
           buttonId="header-modal"
           onClose={() => clickNextModal('footer-modal')}
         >
@@ -234,7 +230,7 @@ const Init = () => {
 
         <Modal
           closeId="footer-next"
-          className={styles['init-page__modal']}
+          className={styles.modal}
           buttonId="footer-modal"
           onClose={() => clickNextModal('page-modal')}
         >
@@ -247,11 +243,15 @@ const Init = () => {
 
         <Modal
           closeId="page-next"
-          className={styles['init-page__modal']}
+          className={styles.modal}
           buttonId="page-modal"
           onClose={() => clickNextModal('confirm-modal')}
         >
-          <h3>Now we'll set up your first page. For now, we'll make this your main landing page, but you can change that later from your admin dashboard.</h3>
+          <h3>
+            Now we'll set up your first page. For now, we'll make this
+            your main landing page, but you can change that later from
+            your admin dashboard.
+          </h3>
           {firstPageInputs()}
           <button className={buttonClasses} id="page-next">
             Next
@@ -260,10 +260,13 @@ const Init = () => {
 
         <Modal
           closeId="confirm-next"
-          className={styles['init-page__modal']}
+          className={styles.modal}
           buttonId="confirm-modal"
         >
-          <h3>Before we submit all of this, go ahead and look over everything to make sure it looks okay.</h3>
+          <h3>
+            Before we submit all of this, go ahead and look over
+            everything to make sure it looks okay.
+          </h3>
           <button className={buttonClasses} id="confirm-next">
             Okay
           </button>
@@ -272,7 +275,6 @@ const Init = () => {
     )
   }
 
-
   return (
     <>
       {renderModals()}
@@ -280,6 +282,5 @@ const Init = () => {
     </>
   )
 }
-
 
 export default Init

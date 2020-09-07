@@ -1,9 +1,7 @@
 @import 'src/sass/abstracts/_mixins.scss';
 @import 'src/sass/abstracts/_variables.scss';
 
-
-.init-page {
-
+.main {
   background-color: $color-grey-light;
   padding: 5rem 15vw;
 
@@ -16,14 +14,14 @@
     padding: 5rem 3vw;
     padding-bottom: 10rem;
   }
+}
 
-  &__modal {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    &--button {
-      align-self: flex-end;
-    }
-  }
+.button {
+  align-self: flex-end;
 }

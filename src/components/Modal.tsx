@@ -4,7 +4,7 @@ type Props = {
   children: any
   buttonClasses?: string
   buttonId?: string
-  buttonText: string
+  buttonText?: string
   className?: string
   alt?: string
   src?: string
@@ -14,20 +14,6 @@ type Props = {
   onOpen?: Function
 }
 
-/**
- * Modal renders a button which, when clicked, displays a modal
- *
- * @prop children - Component - The content inside the modal
- * @prop buttonClasses - String - The classes to give the button
- * @prop buttonText - String - The text inside the button
- * @prop image - Boolean - Whether or not this should display an image or content
- * @prop className - String - The className given to the non-modal image
- * @prop alt - String - The alt given to the image
- * @prop src - String - the src of the image
- * @prop onOpen - Function - A passed function to run after the modal opens
- * @prop onClose - Function - A passed function to run after the modal closes
- * @prop closeId - String - This id will be on an element that can be clicked to close the modal
- */
 const Modal = (props: Props) => {
   const {
     children,
