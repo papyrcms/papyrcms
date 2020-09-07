@@ -144,7 +144,7 @@ const SectionStandard: React.FC<Props> = (props) => {
 
   const renderTags = (post: Post) => {
     return _.map(post.tags, (tag, i) => {
-      if (i < tags.length - 1) {
+      if (i < post.tags.length - 1) {
         return <span key={tag}>{tag}, </span>
       } else {
         return <span key={tag}>{tag}</span>
@@ -250,7 +250,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     })
   }
 
-  const [{ title, tags, mainMedia, content }] = posts
+  const [{ title, tags, mainMedia, content }] = props.posts
   let postContent = content || ''
 
   let headTitle
@@ -456,7 +456,9 @@ const CommentComp: React.FC<CommentProps> = (props) => {
           detached={formDetached}
           onDetachClick={() => setFormDetached(!formDetached)}
           content={formContent}
-          onChange={(newContent: string) => setFormContent(newContent)}
+          onChange={(newContent: string) =>
+            setFormContent(newContent)
+          }
           onSubmit={handleSubmit}
         />
       </div>
