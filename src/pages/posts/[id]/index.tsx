@@ -6,23 +6,22 @@ import userContext from '@/context/userContext'
 import keys from '@/keys'
 import SectionStandard from '@/Sections/SectionStandard'
 
-
 const PostsShow = (props: { post: Post }) => {
-
   const { currentUser } = useContext(userContext)
   const { query } = useRouter()
   const [post, setPost] = useState(props.post)
 
   useEffect(() => {
     const resetPost = async () => {
-      if (currentUser && currentUser.isAdmin) {
-        const { data: foundPost } = await axios.get(`/api/posts/${query.id}`)
+      if (currentUser?.isAdmin) {
+        const { data: foundPost } = await axios.get(
+          `/api/posts/${query.id}`
+        )
         setPost(foundPost)
       }
     }
     resetPost()
   }, [currentUser])
-
 
   return (
     <SectionStandard
@@ -33,17 +32,21 @@ const PostsShow = (props: { post: Post }) => {
   )
 }
 
-
-PostsShow.getInitialProps = async ({ query }: { query: { id: string } }) => {
+PostsShow.getInitialProps = async ({
+  query,
+}: {
+  query: { id: string }
+}) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const { data: post } = await axios.get(`${rootUrl}/api/posts/${query.id}`)
+    const { data: post } = await axios.get(
+      `${rootUrl}/api/posts/${query.id}`
+    )
 
     return { post }
   } catch (err) {
     return {}
   }
 }
-
 
 export default PostsShow

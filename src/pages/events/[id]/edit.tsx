@@ -9,7 +9,6 @@ import PostsForm from '@/components/PostsForm'
 import keys from '@/keys'
 import Input from '@/components/Input'
 
-
 type Props = {
   values: any
   errors: any
@@ -17,8 +16,12 @@ type Props = {
   handleChange: Function
 }
 
-
-const dateField = ({ values, errors, handleChange, validateField }: Props) => (
+const dateField = ({
+  values,
+  errors,
+  handleChange,
+  validateField,
+}: Props) => (
   <Input
     id="event_date"
     label="Date"
@@ -32,7 +35,12 @@ const dateField = ({ values, errors, handleChange, validateField }: Props) => (
   />
 )
 
-const coordinatesField = ({ values, errors, handleChange, validateField }: Props) => (
+const coordinatesField = ({
+  values,
+  errors,
+  handleChange,
+  validateField,
+}: Props) => (
   <div className="u-form-row">
     <Input
       id="event_latitude"
@@ -56,24 +64,25 @@ const coordinatesField = ({ values, errors, handleChange, validateField }: Props
   </div>
 )
 
-
 const EventsEdit = (props: { event: Event }) => {
-
   const { currentUser } = useContext(userContext)
   const [event, setEvent] = useState(props.event || {})
   const { query } = useRouter()
-  
+
   useEffect(() => {
-    if (currentUser && currentUser.isAdmin) {
+    if (currentUser?.isAdmin) {
       const getEvent = async () => {
-        const { data: event } = await axios.get(`/api/events/${query.id}`)
+        const { data: event } = await axios.get(
+          `/api/events/${query.id}`
+        )
         setEvent(event)
       }
       getEvent()
     }
   }, [])
-  
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
+
+  if (!currentUser || !currentUser.isAdmin)
+    return <Error statusCode={403} />
 
   return (
     <PostsForm
@@ -84,7 +93,7 @@ const EventsEdit = (props: { event: Event }) => {
       editing
       additionalFields={[coordinatesField, dateField]}
       additionalState={{
-        date: moment(event.date).format("YYYY-MM-DD"),
+        date: moment(event.date).format('YYYY-MM-DD'),
         latitude: event.latitude,
         longitude: event.longitude,
       }}
@@ -92,17 +101,21 @@ const EventsEdit = (props: { event: Event }) => {
   )
 }
 
-
-EventsEdit.getInitialProps = async ({ query }: { query: { id: string } }) => {
+EventsEdit.getInitialProps = async ({
+  query,
+}: {
+  query: { id: string }
+}) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const { data: event } = await axios.get(`${rootUrl}/api/events/${query.id}`)
+    const { data: event } = await axios.get(
+      `${rootUrl}/api/events/${query.id}`
+    )
 
     return { event }
   } catch (err) {
     return {}
   }
 }
-
 
 export default EventsEdit

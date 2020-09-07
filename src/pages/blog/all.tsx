@@ -11,7 +11,7 @@ const BlogAllPage = () => {
   const { blogs, setBlogs } = useContext(blogsContext)
 
   useEffect(() => {
-    if (currentUser && currentUser.isAdmin) {
+    if (currentUser?.isAdmin) {
       const getBlogs = async () => {
         const { data: blogs } = await axios.get('/api/blogs')
         setBlogs(blogs)

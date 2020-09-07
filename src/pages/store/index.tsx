@@ -14,7 +14,7 @@ const StorePage = () => {
   const { products, setProducts } = useContext(productsContext)
 
   useEffect(() => {
-    if (currentUser && currentUser.isAdmin) {
+    if (currentUser?.isAdmin) {
       const getProducts = async () => {
         const { data: products } = await axios.get(
           '/api/store/products'

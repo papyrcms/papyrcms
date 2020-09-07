@@ -15,15 +15,19 @@ type Props = {
   handleChange: Function
 }
 
-const ProductFields = ({ values, errors, validateField, handleChange }: Props) => {
-
-  return(
+const ProductFields = ({
+  values,
+  errors,
+  validateField,
+  handleChange,
+}: Props) => {
+  return (
     <div className="u-form-row">
       <Input
         id="price"
         label="Price"
         name="price"
-        value={values.price || 0.00}
+        value={values.price || 0.0}
         validation={errors.price}
         onBlur={validateField}
         onChange={handleChange}
@@ -46,25 +50,26 @@ const ProductFields = ({ values, errors, validateField, handleChange }: Props) =
   )
 }
 
-
 const StoreEdit = (props: { product: Product }) => {
-
   const { currentUser } = useContext(userContext)
-  
+
   const [product, setProduct] = useState(props.product)
   const { query } = useRouter()
-  
+
   useEffect(() => {
     const resetProduct = async () => {
-      if (currentUser && currentUser.isAdmin) {
-        const { data: product } = await axios.get(`/api/store/products/${query.id}`)
+      if (currentUser?.isAdmin) {
+        const { data: product } = await axios.get(
+          `/api/store/products/${query.id}`
+        )
         setProduct(product)
       }
     }
     resetProduct()
   }, [currentUser])
-  
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
+
+  if (!currentUser || !currentUser.isAdmin)
+    return <Error statusCode={403} />
 
   return (
     <PostsForm
@@ -76,24 +81,27 @@ const StoreEdit = (props: { product: Product }) => {
       additionalFields={[ProductFields]}
       additionalState={{
         price: product.price,
-        quantity: product.quantity
+        quantity: product.quantity,
       }}
     />
   )
 }
 
-
-StoreEdit.getInitialProps = async ({ query }: { query: { id: string } }) => {
-
+StoreEdit.getInitialProps = async ({
+  query,
+}: {
+  query: { id: string }
+}) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const { data: product } = await axios.get(`${rootUrl}/api/store/products/${query.id}`)
+    const { data: product } = await axios.get(
+      `${rootUrl}/api/store/products/${query.id}`
+    )
 
     return { product }
   } catch (err) {
     return {}
   }
 }
-
 
 export default StoreEdit

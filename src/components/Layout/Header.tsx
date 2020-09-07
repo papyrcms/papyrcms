@@ -67,7 +67,7 @@ const Header: React.FC<Props> = (props) => {
   }
 
   const renderAdminItems = () => {
-    if (currentUser && currentUser.isAdmin) {
+    if (currentUser?.isAdmin) {
       return (
         <Link href="/posts/new">
           <a
@@ -82,7 +82,7 @@ const Header: React.FC<Props> = (props) => {
   }
 
   const renderNav = () => {
-    if (settings.enableMenu || (currentUser && currentUser.isAdmin)) {
+    if (settings.enableMenu || currentUser?.isAdmin) {
       return (
         <ul className="header__menu">
           {renderAuthenticator()}

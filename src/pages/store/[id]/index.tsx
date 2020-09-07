@@ -9,9 +9,7 @@ import storeContext from '@/context/storeContext'
 import keys from '@/keys'
 import SectionStandard from '@/Sections/SectionStandard'
 
-
 const StoreShow = (props: { product: Product }) => {
-
   const { currentUser } = useContext(userContext)
   const { cart, addToCart } = useContext(storeContext)
   const [product, setProduct] = useState(props.product)
@@ -19,14 +17,15 @@ const StoreShow = (props: { product: Product }) => {
 
   useEffect(() => {
     const resetProduct = async () => {
-      if (currentUser && currentUser.isAdmin) {
-        const { data: product } = await axios.get(`/api/store/products/${query.id}`)
+      if (currentUser?.isAdmin) {
+        const { data: product } = await axios.get(
+          `/api/store/products/${query.id}`
+        )
         setProduct(product)
       }
     }
     resetProduct()
   }, [currentUser])
-
 
   const renderProductDetails = () => {
     return (
@@ -39,20 +38,25 @@ const StoreShow = (props: { product: Product }) => {
   }
 
   const renderAddToCart = (product: Product) => {
-    const quantityInCart = _.filter(cart, cartProduct => cartProduct._id === product._id).length
+    const quantityInCart = _.filter(
+      cart,
+      (cartProduct) => cartProduct._id === product._id
+    ).length
     let message = 'Add to cart'
     if (quantityInCart) message += ` (${quantityInCart} now)`
 
     return (
-      <a onClick={async event => {
-        event.preventDefault()
-        await addToCart(product)
-      }} href="#">
+      <a
+        onClick={async (event) => {
+          event.preventDefault()
+          await addToCart(product)
+        }}
+        href="#"
+      >
         {message}
       </a>
     )
   }
-
 
   const renderCheckout = (product: Product) => {
     if (product.quantity > 0) {
@@ -79,17 +83,20 @@ const StoreShow = (props: { product: Product }) => {
   )
 }
 
-
-StoreShow.getInitialProps = async ({ query }: { query: { id: string } }) => {
-
+StoreShow.getInitialProps = async ({
+  query,
+}: {
+  query: { id: string }
+}) => {
   try {
     const rootUrl = keys.rootURL ? keys.rootURL : ''
-    const { data: product } = await axios.get(`${rootUrl}/api/store/products/${query.id}`)
+    const { data: product } = await axios.get(
+      `${rootUrl}/api/store/products/${query.id}`
+    )
     return { product }
   } catch (err) {
     return {}
   }
 }
-
 
 export default StoreShow

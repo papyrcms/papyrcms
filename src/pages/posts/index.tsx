@@ -12,7 +12,7 @@ const Posts = () => {
   const { posts, setPosts } = useContext(postsContext)
   useEffect(() => {
     const resetPosts = async () => {
-      if (currentUser && currentUser.isAdmin) {
+      if (currentUser?.isAdmin) {
         const { data: foundPosts } = await axios.get('/api/posts')
         setPosts(foundPosts)
       }

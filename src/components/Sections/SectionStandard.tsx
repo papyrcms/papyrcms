@@ -124,7 +124,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   }
 
   const renderAuthOptions = (post: Post) => {
-    if (currentUser && currentUser.isAdmin && renderAuthButtons) {
+    if (currentUser?.isAdmin && renderAuthButtons) {
       return (
         <div className="post__buttons">
           <button
@@ -158,8 +158,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     if (
       post.tags &&
       post.tags[0] &&
-      currentUser &&
-      currentUser.isAdmin
+      currentUser?.isAdmin
     ) {
       return (
         <p className="post__tags">

@@ -11,7 +11,7 @@ const EventsAllPage = () => {
   const { events, setEvents } = useContext(eventsContext)
 
   useEffect(() => {
-    if (currentUser && currentUser.isAdmin) {
+    if (currentUser?.isAdmin) {
       const getEvents = async () => {
         const { data: events } = await axios.get('/api/events')
         setEvents(events)

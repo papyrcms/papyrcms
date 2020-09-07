@@ -12,7 +12,7 @@ const UserList = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      if (currentUser && currentUser.isAdmin) {
+      if (currentUser?.isAdmin) {
         const { data: users } = await axios.get('/api/users')
         setUsers(users)
       }

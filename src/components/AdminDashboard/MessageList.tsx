@@ -11,7 +11,7 @@ const MessageList = () => {
   const { currentUser } = useContext(userContext)
   useEffect(() => {
     const getMessages = async () => {
-      if (currentUser && currentUser.isAdmin) {
+      if (currentUser?.isAdmin) {
         const { data: messages } = await axios.get('/api/messages')
         setMessages(messages)
       }
