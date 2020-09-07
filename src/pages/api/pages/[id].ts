@@ -92,7 +92,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, done, database } = await serverContext(req, res)
 
   if (typeof req.query.id !== 'string') {
-    return await done(500, 'id was not a string')
+    return await done(500, { message: 'id was not a string' })
   }
 
   if (req.method === 'GET') {

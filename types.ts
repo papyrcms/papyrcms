@@ -73,6 +73,7 @@ export interface Order {
 
 export interface Blog extends Post {
   publishDate?: string
+  comments: Comment[]
 }
 
 export interface Event extends Post {
