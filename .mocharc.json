@@ -1,4 +1,4 @@
 {
-  "spec": ["./src/test/*/*.test.js"],
-  "require": ["esm"]
+  "spec": ["./src/test/*/*.test.ts"],
+  "require": ["ts-node/register"]
 }

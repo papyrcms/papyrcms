@@ -4,82 +4,103 @@ import _ from 'lodash'
 import keys from '../../config/keys'
 const { rootURL, test } = keys
 
-
 const axiosConfig = {
   withCredentials: true,
   headers: {
-    Authorization: `bearer ${test.token}`
-  }
+    Authorization: `Bearer ${test.token}`,
+  },
 }
-
 
 const post = {
   title: 'Mocha Test Post',
   content: 'This is some test post content.',
   tags: 'test, post',
   published: true,
-  mainMedia: 'some-picture.jpg'
+  mainMedia: 'some-picture.jpg',
 }
-
 
 describe('/api/posts', () => {
   it('creates and returns a post', async () => {
-    const { data: created, status } = await axios.post(`${rootURL}/api/posts`, post, axiosConfig)
+    const { data: created, status } = await axios.post(
+      `${rootURL}/api/posts`,
+      post,
+      axiosConfig
+    )
 
     expect(status).to.equal(200) &&
-    expect(created.title).to.equal(post.title) &&
-    expect(created.content).to.equal(post.content) &&
-    expect(created.mainMedia).to.equal(post.mainMedia) &&
-    expect(created.tags).to.be.an('array')
+      expect(created.title).to.equal(post.title) &&
+      expect(created.content).to.equal(post.content) &&
+      expect(created.mainMedia).to.equal(post.mainMedia) &&
+      expect(created.tags).to.be.an('array')
   }).timeout(10000)
 
   it('returns an array of all posts', async () => {
-    const { data: posts, status } = await axios.get(`${rootURL}/api/posts`, axiosConfig)
+    const { data: posts, status } = await axios.get(
+      `${rootURL}/api/posts`,
+      axiosConfig
+    )
 
-    expect(status).to.equal(200) &&
-    expect(posts).to.be.an('array')
+    expect(status).to.equal(200) && expect(posts).to.be.an('array')
   }).timeout(10000)
 
   describe('/published', () => {
     it('returns an array of only published posts', async () => {
-      const { data: posts, status } = await axios.get(`${rootURL}/api/posts/published`)
+      const { data: posts, status } = await axios.get(
+        `${rootURL}/api/posts/published`
+      )
       let allArePublished = true
-      _.forEach(posts, found => {
+      _.forEach(posts, (found) => {
         if (!found.published) allArePublished = false
       })
 
       expect(status).to.equal(200) &&
-      expect(posts).to.be.an('array') &&
-      expect(allArePublished).to.equal(true)
+        expect(posts).to.be.an('array') &&
+        expect(allArePublished).to.equal(true)
     }).timeout(10000)
   })
 
   describe('/[id]', () => {
     it('gets a post by its slug', async () => {
-      const { data: found, status } = await axios.get(`${rootURL}/api/posts/mocha-test-post`)
+      const { data: found, status } = await axios.get(
+        `${rootURL}/api/posts/mocha-test-post`
+      )
 
       expect(status).to.equal(200) &&
-      expect(found.title).to.equal(post.title) &&
-      expect(found.content).to.equal(post.content) &&
-      expect(found.mainMedia).to.equal(post.mainMedia) &&
-      expect(found.tags).to.be.an('array')
+        expect(found.title).to.equal(post.title) &&
+        expect(found.content).to.equal(post.content) &&
+        expect(found.mainMedia).to.equal(post.mainMedia) &&
+        expect(found.tags).to.be.an('array')
     }).timeout(10000)
 
     it('returns an updated post', async () => {
-      const { data: found } = await axios.get(`${rootURL}/api/posts/mocha-test-post`)
-      const updatedPost = { ...found, content: 'This is updated test content.' }
-      const { data: updated, status } = await axios.put(`${rootURL}/api/posts/${found._id}`, updatedPost, axiosConfig)
+      const { data: found } = await axios.get(
+        `${rootURL}/api/posts/mocha-test-post`
+      )
+      const updatedPost = {
+        ...found,
+        content: 'This is updated test content.',
+      }
+      const { data: updated, status } = await axios.put(
+        `${rootURL}/api/posts/${found._id}`,
+        updatedPost,
+        axiosConfig
+      )
 
       expect(status).to.equal(200) &&
-      expect(updated.title).to.equal(updatedPost.title) &&
-      expect(updated.content).to.equal(updatedPost.content) &&
-      expect(updated.mainMedia).to.equal(updatedPost.mainMedia) &&
-      expect(updated.tags).to.be.an('array')
+        expect(updated.title).to.equal(updatedPost.title) &&
+        expect(updated.content).to.equal(updatedPost.content) &&
+        expect(updated.mainMedia).to.equal(updatedPost.mainMedia) &&
+        expect(updated.tags).to.be.an('array')
     }).timeout(10000)
 
     it('deletes a post', async () => {
-      const { data: found } = await axios.get(`${rootURL}/api/posts/mocha-test-post`)
-      const { status } = await axios.delete(`${rootURL}/api/posts/${found._id}`, axiosConfig)
+      const { data: found } = await axios.get(
+        `${rootURL}/api/posts/mocha-test-post`
+      )
+      const { status } = await axios.delete(
+        `${rootURL}/api/posts/${found._id}`,
+        axiosConfig
+      )
 
       expect(status).to.equal(200)
     }).timeout(10000)
