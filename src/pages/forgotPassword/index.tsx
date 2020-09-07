@@ -6,9 +6,7 @@ import jwt from 'jsonwebtoken'
 import Input from '@/components/Input'
 import styles from './forgotPassword.module.scss'
 
-
 const ForgotPasswordPage = () => {
-
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [validation, setValidation] = useState('')
@@ -18,39 +16,41 @@ const ForgotPasswordPage = () => {
   if (typeof token !== 'string') return <Error statusCode={403} />
 
   const handleSubmit = (event: any) => {
-
     event.preventDefault()
 
     const params = {
       password,
       confirmPassword,
-      token
+      token,
     }
 
-    axios.post('/api/auth/requestPasswordChange', params)
-      .then(response => {
+    axios
+      .post('/api/auth/requestPasswordChange', params)
+      .then((response) => {
         setValidation(response.data.message)
         Router.push('/login')
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error)
         setValidation(error.response.data.message)
       })
   }
 
   const data = jwt.decode(token)
-  if (!data || typeof data === 'string') return <Error statusCode={403} />
+  if (!data || typeof data === 'string')
+    return <Error statusCode={403} />
 
   const { email } = data
 
   return (
-    <div className={styles["forgot-password-page"]}>
-      <h3 className={`heading-tertiary u-margin-bottom-small ${styles['forgot-password-page__title']}`}>Reset Password for {email}</h3>
-
-      <form
-        onSubmit={handleSubmit}
-        className={styles["forgot-password-page__form"]}
+    <div className={styles.main}>
+      <h3
+        className={`heading-tertiary u-margin-bottom-small ${styles.title}`}
       >
+        Reset Password for {email}
+      </h3>
+
+      <form onSubmit={handleSubmit} className={styles.form}>
         <Input
           id="password"
           label="New Password"
@@ -66,19 +66,17 @@ const ForgotPasswordPage = () => {
           name="confirmPassword"
           type="password"
           value={confirmPassword}
-          onChange={(event: any) => setConfirmPassword(event.target.value)}
+          onChange={(event: any) =>
+            setConfirmPassword(event.target.value)
+          }
         />
 
-        <p className={styles["forgot-password-page__validation"]}>{validation}</p>
+        <p className={styles.valiation}>{validation}</p>
 
-        <input
-          className="button button-primary"
-          type="submit"
-        />
+        <input className="button button-primary" type="submit" />
       </form>
     </div>
   )
 }
-
 
 export default ForgotPasswordPage
