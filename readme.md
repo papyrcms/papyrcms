@@ -1,5 +1,6 @@
 # Papyr CMS
-Papyr CMS is a Javascript CMS using Node and React with the NextJS framework that is easily extendable. It requires a litle configuration of variables to run.
+[![Papyr CMS](https://res.cloudinary.com/papyrcms/image/upload/v1599403018/uwccvcfobimgoivckksr.png "Papyr CMS")](https://res.cloudinary.com/papyrcms/image/upload/v1599403018/uwccvcfobimgoivckksr.png "Papyr CMS")
+Papyr CMS is a Typescript CMS using Node and React with the NextJS framework that is easily extendable. It requires a litle configuration of variables to run.
 
 ## Running the CMS
 
