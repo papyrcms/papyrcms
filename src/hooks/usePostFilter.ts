@@ -1,4 +1,4 @@
-import { Post, Blog, Event, Product } from 'types'
+import { Post } from 'types'
 import _ from 'lodash'
 
 type Filters = {
@@ -9,14 +9,12 @@ type Filters = {
   strictTags?: boolean
 }
 
-type GeneralPost = Post | Blog | Event | Product
-
-const usePostFilter = (
-  posts: GeneralPost[],
+const usePostFilter = <T extends Post>(
+  posts: T[],
   settings: Filters | Filters[]
 ) => {
   const filterByPublished = (
-    postsToFilter: GeneralPost[],
+    postsToFilter: T[],
     filters: Filters
   ) => {
     const { showAll } = filters
@@ -32,7 +30,7 @@ const usePostFilter = (
   }
 
   const filterByMaxPosts = (
-    postsToFilter: GeneralPost[],
+    postsToFilter: T[],
     filters: Filters
   ) => {
     const { maxPosts } = filters
@@ -45,7 +43,7 @@ const usePostFilter = (
   }
 
   const filterByPostTags = (
-    postsToFilter: GeneralPost[],
+    postsToFilter: T[],
     filters: Filters
   ) => {
     const { postTags, strictTags } = filters
@@ -80,9 +78,9 @@ const usePostFilter = (
     return postsToFilter
   }
 
-  const orderPosts = (postsToFilter: GeneralPost[]) => {
-    const orderedPosts: GeneralPost[] = []
-    const unorderedPosts: GeneralPost[] = []
+  const orderPosts = (postsToFilter: T[]) => {
+    const orderedPosts: T[] = []
+    const unorderedPosts: T[] = []
 
     // for (const post of postsToFilter) {
     _.forEach(postsToFilter, (post) => {
@@ -108,8 +106,8 @@ const usePostFilter = (
     )
   }
 
-  const usePostFilter = (
-    postsToFilter: GeneralPost[],
+  const filterPosts = (
+    postsToFilter: T[],
     filters: Filters
   ) => {
     postsToFilter = filterByPublished(postsToFilter, filters)
@@ -121,16 +119,16 @@ const usePostFilter = (
   }
 
   // Begin the filtering
-  const filtered: { [key: string]: GeneralPost[] } = {}
+  const filtered: { [key: string]: T[] } = {}
 
   if (Array.isArray(settings)) {
     _.forEach(settings, (filters) => {
       if (filters.propName) {
-        filtered[filters.propName] = usePostFilter(posts, filters)
+        filtered[filters.propName] = filterPosts(posts, filters)
       }
     })
   } else {
-    filtered['posts'] = usePostFilter(posts, settings)
+    filtered['posts'] = filterPosts(posts, settings)
   }
 
   return filtered

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
 type Props = {
-  children: any
   buttonClasses?: string
   buttonId?: string
   buttonText?: string
@@ -14,7 +13,7 @@ type Props = {
   onOpen?: Function
 }
 
-const Modal = (props: Props) => {
+const Modal: React.FC<Props> = (props) => {
   const {
     children,
     buttonClasses,

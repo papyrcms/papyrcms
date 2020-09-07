@@ -149,8 +149,9 @@ export interface Models {
   Post: Post
   Product: Product
   Settings: {
+    _id: string
     name: string
-    options: string
+    options: any
   }
   User: User
 }
@@ -173,7 +174,7 @@ export interface Database extends Models {
   findAll: <M>(model: M, conditions?: Conditions, options?: Options) => M[]
   update: <M>(model: M, conditions: Conditions, fields: Fields) => void
   create: <M>(model: M, fields: Fields) => M
-  destroy: <M>(model: M, conditions?: Conditions) => void
-  destroyAll: <M>(model: M, conditions: Conditions) => void
+  destroy: <M>(model: M, conditions: Conditions) => void
+  destroyAll: <M>(model: M, conditions?: Conditions) => void
   countAll: <M>(model: M) => number
 }

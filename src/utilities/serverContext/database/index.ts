@@ -28,6 +28,7 @@ export default async () => {
     // We use Mongoose for this
     case 'mongodb':
       await mongooseApi.init()
+      // @ts-ignore
       database = {
         ...mongooseModels,
         ...mongooseApi
@@ -41,6 +42,7 @@ export default async () => {
     case 'mariadb':
     case 'mssql':
       const sequelizeModels: Models = await sequelizeApi.init()
+      // @ts-ignore
       database = {
         ...sequelizeModels,
         ...sequelizeApi
