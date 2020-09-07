@@ -9,20 +9,23 @@ import useForm from '@/hooks/useForm'
 import UserInfoForm from '@/components/UserInfoForm'
 import styles from './profile.module.scss'
 
-
 const ProfilePage = () => {
-
   const [infoValidation, setInfoValidation] = useState('')
-  const password = useForm({ oldPass: '', newPass: '', confirmPass: '', validation: '' })
+  const password = useForm({
+    oldPass: '',
+    newPass: '',
+    confirmPass: '',
+    validation: '',
+  })
   const { currentUser, setCurrentUser } = useContext(userContext)
-
 
   if (!currentUser) {
     return (
-      <h3 className={`heading-tertiary ${styles['profile__login']}`}><Link href="/login">Login</Link> to view your profile.</h3>
+      <h3 className={`heading-tertiary ${styles['profile__login']}`}>
+        <Link href="/login">Login</Link> to view your profile.
+      </h3>
     )
   }
-
 
   const onLogoutClick = async () => {
     Router.push('/')
@@ -30,8 +33,10 @@ const ProfilePage = () => {
     await setCurrentUser(null)
   }
 
-
-  const handlePasswordSubmit = (event: any, resetButton: Function) => {
+  const handlePasswordSubmit = (
+    event: any,
+    resetButton: Function
+  ) => {
     event.preventDefault()
 
     const success = (response: any, setValidation: Function) => {
@@ -41,9 +46,11 @@ const ProfilePage = () => {
 
     const error = () => resetButton()
 
-    password.submitForm('/api/auth/changePassword', { success, error })
+    password.submitForm('/api/auth/changePassword', {
+      success,
+      error,
+    })
   }
-
 
   const renderAdmin = () => {
     if (currentUser.isAdmin) {
@@ -51,18 +58,20 @@ const ProfilePage = () => {
         <div>
           <p>You are an admin.</p>
           <Link href="/admin" as="/admin">
-            <button className="button button-primary">Admin Dashboard</button>
+            <button className="button button-primary">
+              Admin Dashboard
+            </button>
           </Link>
         </div>
       )
     }
   }
 
-
   const onSubscribeClick = async (event: any, reset: Function) => {
-
     try {
-      const response = await axios.put('/api/auth/currentUser', { isSubscribed: !currentUser.isSubscribed })
+      const response = await axios.put('/api/auth/currentUser', {
+        isSubscribed: !currentUser.isSubscribed,
+      })
       setCurrentUser(response.data)
     } catch (err) {
       console.error(err)
@@ -71,29 +80,27 @@ const ProfilePage = () => {
     reset()
   }
 
-
   return (
-    <div className={styles["profile"]}>
+    <div className={styles.main}>
       <h1 className="heading-secondary">Profile</h1>
 
-      <div className={styles["profile__credentials"]}>
-        <div className={styles["profile__logout"]}>
-          <span>Not {!!currentUser.firstName ? currentUser.firstName : currentUser.email}?</span>
-          <Button
-            onClick={onLogoutClick}
-          >
-            Log Out
-          </Button>
+      <div className={styles.credentials}>
+        <div className={styles.logout}>
+          <span>
+            Not{' '}
+            {!!currentUser.firstName
+              ? currentUser.firstName
+              : currentUser.email}
+            ?
+          </span>
+          <Button onClick={onLogoutClick}>Log Out</Button>
         </div>
 
-        <div className={styles["profile__logout"]}>
-
-        You are {currentUser.isSubscribed ? '' : 'not '}subscribed.
-        <Button
-          onClick={onSubscribeClick}
-        >
-          {currentUser.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-        </Button>
+        <div className={styles.unsubscribe}>
+          You are {currentUser.isSubscribed ? '' : 'not '}subscribed.
+          <Button onClick={onSubscribeClick}>
+            {currentUser.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+          </Button>
         </div>
 
         {renderAdmin()}
@@ -101,15 +108,19 @@ const ProfilePage = () => {
 
       <div>
         <UserInfoForm
-          onSubmitSuccess={() => setInfoValidation('User info has been updated.')}
-          onSubmitError={(formState: any, err: any) => setInfoValidation(err.response.data.message)}
+          onSubmitSuccess={() =>
+            setInfoValidation('User info has been updated.')
+          }
+          onSubmitError={(formState: any, err: any) =>
+            setInfoValidation(err.response.data.message)
+          }
         />
-        <p className={styles["profile__validation"]}>{infoValidation}</p>
+        <p className={styles.validation}>{infoValidation}</p>
       </div>
 
-      <div className={styles["profile__password"]}>
+      <div className={styles.password}>
         <h3>Reset Password</h3>
-        <form className={styles["profile__form"]}>
+        <form className={styles.form}>
           <div className="u-form-row">
             <Input
               label="Current Password"
@@ -141,12 +152,13 @@ const ProfilePage = () => {
           >
             Reset
           </Button>
-          <p className={styles["profile__validation"]}>{password.values.validation}</p>
+          <p className={styles.validation}>
+            {password.values.validation}
+          </p>
         </form>
       </div>
     </div>
   )
 }
-
 
 export default ProfilePage

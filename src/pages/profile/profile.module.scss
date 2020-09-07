@@ -1,8 +1,7 @@
 @import 'src/sass/abstracts/_mixins.scss';
 @import 'src/sass/abstracts/_variables.scss';
 
-
-.profile {
+.main {
   display: grid;
   grid-gap: 3rem;
   grid-template-columns: 1fr;
@@ -15,36 +14,36 @@
   & > *:not(:first-child) {
     padding-bottom: 3.5rem;
   }
+}
 
-  &__login {
-    text-align: center;
-    padding: 8rem;
-  }
+.login {
+  text-align: center;
+  padding: 8rem;
+}
 
-  &__credentials {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-    font-style: italic;
-  }
+.credentials {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  font-style: italic;
+}
 
-  &__logout {
-    display: flex;
-    flex-direction: column;
-  }
+.logout, .unsubscribe {
+  display: flex;
+  flex-direction: column;
+}
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 
-  &__validation {
-    color: $color-error;
-    letter-spacing: .1rem;
-    font-size: 1.4rem;
-    font-style: italic;
-    margin-top: 1rem;
-  }
+.validation {
+  color: $color-error;
+  letter-spacing: 0.1rem;
+  font-size: 1.4rem;
+  font-style: italic;
+  margin-top: 1rem;
 }
