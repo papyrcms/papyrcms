@@ -11,8 +11,8 @@ const AdminPage = () => {
   if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
 
   return (
-    <div className={styles["admin-page"]}>
-      <h2 className={`heading-secondary ${styles["admin-page__title"]}`}>Admin Dashboard</h2>
+    <div className={styles.main}>
+      <h2 className={`heading-secondary ${styles.title}`}>Admin Dashboard</h2>
       <AdminDashboard />
     </div>
   )

@@ -1,9 +1,7 @@
 @import 'src/sass/abstracts/_mixins.scss';
 @import 'src/sass/abstracts/_variables.scss';
 
-
-.admin-page {
-
+.main {
   background-color: $color-grey-light;
   padding: 5rem 15vw;
 
@@ -16,8 +14,8 @@
     padding: 5rem 3vw;
     padding-bottom: 10rem;
   }
+}
 
-  &__title {
-    border-bottom: .1rem solid $color-grey;
-  }
+.title {
+  border-bottom: 0.1rem solid $color-grey;
 }
