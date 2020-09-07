@@ -7,7 +7,7 @@ import keys from '@/keys'
 export default async (req: NextApiRequest, database: Database) => {
   if (
     req.headers.authorization &&
-    req.headers.authorization.toLowerCase().includes('Bearer ')
+    req.headers.authorization.includes('Bearer ')
   ) {
     const token = req.headers.authorization
       .replace('Bearer ', '')

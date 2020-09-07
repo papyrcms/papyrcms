@@ -9,6 +9,7 @@ type UserContext = {
 export default createContext<UserContext>({
   currentUser: {
     _id: '',
+    password: '',
 
     // Personal Info
     email: '',
