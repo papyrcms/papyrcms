@@ -34,9 +34,10 @@ const SectionSlideshow: React.FC<Props> = (props) => {
   const [ticker, setTicker] = useState<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    setTicker(setInterval(incrimentCounter, timer || 5000))
+    const interval = setInterval(incrimentCounter, timer || 5000)
+    setTicker(interval)
     return () => {
-      if (ticker) clearInterval(ticker)
+      clearInterval(interval)
     }
   }, [])
 
