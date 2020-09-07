@@ -67,13 +67,13 @@ const Orders = () => {
       return (
         <li key={_id} className={styles["order"]}>
           <p>This has {!shipped && 'not '}been shipped.</p>
-          <div className={styles["order__info"]}>
+          <div className={styles.info}>
 
             { // Address info is based on a user bound to the order
             // If the user was logged out, this breaks.
             // The address should already be in the notes 100% of the time anyway
 
-             /* <div className="order__info--address">
+             /* <div className={styles.infoAddress}>
               <h3 className="heading-tertiary">Ship to:</h3>
               <p>
                 {user.shippingFirstName || user.firstName}
@@ -95,31 +95,31 @@ const Orders = () => {
               <p>{user.shippingCountry || user.country}</p>
             </div> */}
 
-            <div className={styles["order__info--products"]}>
+            <div className={styles.infoProducts}>
               <h3 className="heading-tertiary">Products:</h3>
               <ul className={styles["order__products"]}>{renderProducts(products)}</ul>
             </div>
 
-            <div className={styles["order__info--notes"]}>
+            <div className={styles.infoNotes}>
               <h3 className="heading-tertiary">Order Notes:</h3>
               <p>{notes || 'none'}</p>
             </div>
 
-            <div className={styles["order__info--created"]}>
+            <div className={styles.infoCreated}>
               <h3 className="heading-tertiary">Created:</h3>
               <p>{moment(created).format('MMMM Do, YYYY')}</p>
             </div>
           </div>
 
-          <div className={styles["order__actions"]}>
+          <div className={styles.actions}>
             <button
-              className={`${styles["order__ship"]} button button-primary`}
+              className={`${styles.ship} button button-primary`}
               onClick={() => markShipped(order)}
             >
               Mark {order.shipped && 'not '}shipped
             </button>
             <button
-              className={`${styles["order__delete"]} button button-delete`}
+              className={`${styles.delete} button button-delete`}
               onClick={() => deleteOrder(order)}
             >
               Delete
@@ -131,9 +131,9 @@ const Orders = () => {
   }
 
   return (
-    <div className={styles["orders"]}>
+    <div className={styles.main}>
       <h2 className="heading-secondary u-margin-bottom-small">Orders</h2>
-      <ul className={styles["orders__list"]}>
+      <ul>
         {renderOrders()}
       </ul>
     </div>
