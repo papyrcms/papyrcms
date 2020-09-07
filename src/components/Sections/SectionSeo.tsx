@@ -26,14 +26,12 @@ const SectionSeo: React.FC<Props> = (props) => {
   } = props.post
 
   return (
-    <>
-      <PageHead
-        title={title}
-        image={mainMedia}
-        description={sanitizeHTML(content, { allowedTags: [] })}
-        keywords={_.join(tags, ', ')}
-      />
-    </>
+    <PageHead
+      title={title}
+      image={mainMedia}
+      description={sanitizeHTML(content, { allowedTags: [] })}
+      keywords={_.join(tags, ', ')}
+    />
   )
 }
 
