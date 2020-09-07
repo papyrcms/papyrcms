@@ -141,6 +141,7 @@ export interface Models {
   Blog: Blog
   Event: Event
   Message: Message
+  Comment: Comment
   Order: Order
   Page: Page
   Post: Post

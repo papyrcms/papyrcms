@@ -1,30 +1,35 @@
+import { Database } from 'types'
+import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
-import serverContext from "@/serverContext"
-import Mailer from "@/utilities/mailer"
+import serverContext from '@/serverContext'
+import Mailer from '@/utilities/mailer'
 
-
-const getPosts = async (database) => {
+const getPosts = async (database: Database) => {
   const { findAll, Post } = database
   return await findAll(Post, {}, { sort: { created: -1 } })
 }
 
-
-const createPost = async (body, enableEmailingToUsers, database) => {
+const createPost = async (
+  body: any,
+  enableEmailingToUsers: boolean,
+  database: Database
+) => {
   if (body.tags) {
-    const newTags = _.map(_.split(body.tags, ','), tag => {
+    let newTags = _.map(_.split(body.tags, ','), (tag) => {
       let pendingTag = tag
       pendingTag = pendingTag.trim()
 
       if (!!pendingTag) return pendingTag
     })
-
-    body.tags = [...new Set(newTags)]
+    newTags = _.filter(newTags, (tag) => !!tag)
+    body.tags = _.uniq(newTags)
   }
 
   const { Post, create } = database
 
   const postData = {
-    ...body, slug: body.title.replace(/\s+/g, '-').toLowerCase()
+    ...body,
+    slug: body.title.replace(/\s+/g, '-').toLowerCase(),
   }
   const post = await create(Post, postData)
 
@@ -42,12 +47,15 @@ const createPost = async (body, enableEmailingToUsers, database) => {
   return post
 }
 
-
-export default async (req, res) => {
-
-  const { user, settings, done, database } = await serverContext(req, res)
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+  const { user, settings, done, database } = await serverContext(
+    req,
+    res
+  )
   if (!user || !user.isAdmin) {
-    return await done(403, { message: "You are not allowed to do that." })
+    return await done(403, {
+      message: 'You are not allowed to do that.',
+    })
   }
 
   if (req.method === 'GET') {
@@ -55,9 +63,12 @@ export default async (req, res) => {
     return await done(200, posts)
   }
 
-
   if (req.method === 'POST') {
-    const post = await createPost(req.body, settings.enableEmailingToUsers, database)
+    const post = await createPost(
+      req.body,
+      settings.enableEmailingToUsers,
+      database
+    )
     return await done(200, post)
   }
 
