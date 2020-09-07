@@ -54,7 +54,7 @@ const PageBuilder = (props: Props) => {
       _id: 'fake_id',
       created: new Date().toISOString(),
       title: 'Page Preview',
-      navOrder: 0
+      navOrder: 0,
     },
   }
 
@@ -251,32 +251,20 @@ const PageBuilder = (props: Props) => {
         return (
           <div key={`${type}-${i}`}>
             <hr />
-            <div
-              className={`${type} ${styles['page-builder__section']}`}
-            >
-              <h3 className={`heading-tertiary ${type}__title`}>
-                {name}
-              </h3>
-              <p
-                className={`${type}__description ${styles['page-builder__section--description']}`}
-              >
+            <div className={styles.section}>
+              <h3 className="heading-tertiary">{name}</h3>
+              <p className={styles.sectionDescription}>
                 {description}
               </p>
-              <div
-                className={`${type}__inputs ${styles['page-builder__section--inputs']}`}
-              >
+              <div className={styles.sectionInputs}>
                 {renderTitleInput(i, section)}
                 {renderClassNameInput(i, section)}
                 {renderTagsInput(i, section)}
                 {renderMaxPostsInput(i, section)}
               </div>
 
-              <div
-                className={`${type}__buttons ${styles['page-builder__section--buttons']}`}
-              >
-                <div
-                  className={`${type}__move ${styles['page-builder__section--move']}`}
-                >
+              <div className={styles.sectionButtons}>
+                <div className={styles.sectionMove}>
                   <button
                     onClick={() => moveSection(i, i - 1)}
                     title="Move up"
@@ -447,10 +435,10 @@ const PageBuilder = (props: Props) => {
 
   return (
     <>
-      <div className={styles['page-builder']}>
+      <div className={styles.builder}>
         <h2 className="heading-secondary">Page Builder</h2>
 
-        <div className={styles['page-builder__info']}>
+        <div className={styles.info}>
           <Input
             id="title-input"
             label="Page Title"
@@ -501,9 +489,9 @@ const PageBuilder = (props: Props) => {
         <hr />
         <br />
 
-        <div className={styles['page-builder__section-select']}>
+        <div className={styles.sectionSelect}>
           <select
-            className={`button button-secondary ${styles['page-builder__section-select--select']}`}
+            className={`button button-secondary ${styles.sectionSelector}`}
             onChange={(event: any) =>
               setState({
                 ...state,
@@ -523,16 +511,16 @@ const PageBuilder = (props: Props) => {
           </button>
         </div>
 
-        <div className={styles['page-builder__css']}>
+        <div className={styles.css}>
           <label
-            className={styles['page-builder__css--label']}
+            className={styles.cssLabel}
             htmlFor="page-builder__css"
           >
             Custom CSS
           </label>
           <textarea
             id="page-builder__css"
-            className={styles['page-builder__css--textarea']}
+            className={styles.cssTextarea}
             onChange={(event) =>
               setPageState('css', event.target.value)
             }
@@ -540,18 +528,16 @@ const PageBuilder = (props: Props) => {
           />
         </div>
 
-        <div className={styles['page-builder__section-bottom']}>
+        <div className={styles.sectionBottom}>
           <Button onClick={handleSubmit} submittedText="Saving...">
             Submit
           </Button>
 
           {renderDelete()}
         </div>
-        <p className={styles['page-builder__validation']}>
-          {validation}
-        </p>
+        <p className={styles.validation}>{validation}</p>
 
-        <div className={styles['page-builder__content-modal']}>
+        <div className={styles.contentModal}>
           <Modal
             buttonText="Add Content"
             buttonClasses="button button-primary"
@@ -560,18 +546,16 @@ const PageBuilder = (props: Props) => {
             <PostsForm
               pageTitle="New Content"
               onSubmit={() => null}
-              className={styles['page-builder__posts-form']}
+              className={styles.postForm}
             />
           </Modal>
         </div>
       </div>
 
-      <h3
-        className={`heading-tertiary ${styles['page-builder__preview--title']}`}
-      >
+      <h3 className={`heading-tertiary ${styles.previewTitle}`}>
         Page Preview
       </h3>
-      <div className={styles['page-builder__preview']}>
+      <div>
         <PageRenderer previewPage={page} />
       </div>
     </>

@@ -1,8 +1,7 @@
 @import 'src/sass/abstracts/_mixins.scss';
 @import 'src/sass/abstracts/_variables.scss';
 
-
-.page-builder {
+.builder {
   padding: 5rem 20vw;
   padding-bottom: 10rem;
   background-color: $color-grey-light;
@@ -16,126 +15,120 @@
     padding: 5rem 3vw;
     padding-bottom: 10rem;
   }
+}
 
-  &__posts-form {
-    padding: 0;
+.postForm {
+  padding: 0;
+}
+
+.contentModal {
+  display: flex;
+  justify-content: center;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  align-items: end;
+
+  @include respond(phone) {
+    grid-template-columns: 1fr;
   }
+}
 
-  &__content-modal {
-    display: flex;
-    justify-content: center;
+.sectionSelect {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  @include respond(phone) {
+    display: block;
   }
+}
 
-  &__info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 1rem;
-    align-items: end;
-
-    @include respond(phone) {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__section-select {
-    display: flex;
-    justify-content: space-between;
+.sectionSelector {
+  @include respond(phone) {
     margin-bottom: 1rem;
-
-    @include respond(phone) {
-      display: block;
-
-      &--select {
-        margin-bottom: 1rem;
-      }
-    }
   }
+}
 
+.css {
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+}
 
-  &__css {
-    width: 100%;
-    margin-top: 2rem;
-    display: flex;
+.cssLabel {
+  @include inputLabelStyle();
+}
+
+.cssTextarea {
+  @include inputBorderStyle();
+
+  height: 15rem;
+  resize: vertical;
+  padding: 1rem;
+  font-size: 1.6rem;
+  color: $color-grey-dark;
+  letter-spacing: 0.1rem;
+}
+
+.sectionBottom {
+  display: flex;
+  justify-content: space-between;
+  border-top: 0.1rem solid $color-grey;
+  border-bottom: 0.1rem solid $color-grey;
+  padding: 2rem 0;
+  margin: 2rem 0;
+
+  @include respond(phone) {
     flex-direction: column;
-
-    &--label {
-      @include inputLabelStyle();
-    }
-
-    &--textarea {
-      @include inputBorderStyle();
-
-      height: 15rem;
-      resize: vertical;
-      padding: 1rem;
-      font-size: 1.6rem;
-      color: $color-grey-dark;
-      letter-spacing: .1rem;
-    }
+    align-items: flex-start;
   }
+}
 
+.section {
+  margin: 3rem 0;
+}
 
-  &__section-bottom {
-    display: flex;
-    justify-content: space-between;
-    border-top: .1rem solid $color-grey;
-    border-bottom: .1rem solid $color-grey;
-    padding: 2rem 0;
-    margin: 2rem 0;
+.sectionDescription {
+  margin-bottom: 2rem;
+}
 
-    @include respond(phone) {
-      flex-direction: column;
-      align-items: flex-start;
+.sectionInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  align-items: end;
 
-      &--delete {
-        margin-top: 1rem;
-      }
-    }
+  @include respond(phone) {
+    grid-template-columns: 1fr;
   }
+}
 
-  &__section {
-    margin: 3rem 0;
+.sectionButtons {
+  display: flex;
+  justify-content: space-between;
+}
 
-    &--description {
-      margin-bottom: 2rem;
-    }
+.sectionMove > * {
+  font-size: 3rem;
+  padding: 0.1rem 1.5rem;
+  margin-right: 1rem;
+}
 
-    &--inputs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 1rem;
-      align-items: end;
+.validation {
+  text-align: center;
+  color: red;
+  font-style: italic;
+  max-width: 40rem;
+  margin: 0 auto;
+}
 
-      @include respond(phone) {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    &--buttons {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    &--move > * {
-      font-size: 3rem;
-      padding: .1rem 1.5rem;
-      margin-right: 1rem;
-    }
-  }
-
-  &__validation {
-    text-align: center;
-    color: red;
-    font-style: italic;
-    max-width: 40rem;
-    margin: 0 auto;
-  }
-
-  &__preview {
-    &--title {
-      background-color: $color-grey-light;
-      text-align: center;
-      border-bottom: .1rem solid $color-grey;
-    }
-  }
+.previewTitle {
+  background-color: $color-grey-light;
+  text-align: center;
+  border-bottom: 0.1rem solid $color-grey;
 }
