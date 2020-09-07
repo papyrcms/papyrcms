@@ -81,16 +81,8 @@ const PageHead = (props: Props) => {
     if (image) {
       return (
         <>
-          <meta
-            key="og-image"
-            property="og:image"
-            content={image}
-          />
-          <meta
-            key="og-url"
-            property="og:url"
-            content={image}
-          />
+          <meta key="og-image" property="og:image" content={image} />
+          <meta key="og-url" property="og:url" content={image} />
           <meta
             key="og-image-type"
             property="og:image:type"
@@ -115,11 +107,7 @@ const PageHead = (props: Props) => {
     if (keywords) {
       return (
         <>
-          <meta
-            key="keywords"
-            name="keywords"
-            content={keywords}
-          />
+          <meta key="keywords" name="keywords" content={keywords} />
         </>
       )
     }
