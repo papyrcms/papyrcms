@@ -22,14 +22,14 @@ const PageRenderer = (props: Props) => {
 
   // Determine if this is a page or the preview on the builder
   let page = props.previewPage ? props.previewPage : props.page
-  
+
   // On a client load, we are not fetching the page from the server,
   // So we'll get it from the pages in our pages context
   const { query } = useRouter()
   const { pages } = useContext(pagesContext)
   if (!page) {
     _.forEach(pages, foundPage => {
-      if (foundPage.route === 'home') foundPage.route = ''
+      if (foundPage.route === '') foundPage.route = 'home'
       if (foundPage.route === query.page) page = foundPage
     })
 

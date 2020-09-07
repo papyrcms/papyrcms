@@ -211,6 +211,7 @@ const SectionStandard: React.FC<Props> = (props) => {
 
   const renderPosts = () => {
     return _.map(props.posts, (post) => {
+      if (!post) return null
       return (
         <div key={post._id}>
           {beforePost(post)}
