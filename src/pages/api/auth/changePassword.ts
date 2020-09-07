@@ -1,33 +1,40 @@
+import { Database } from 'types'
+import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
-import serverContext from "@/serverContext"
+import serverContext from '@/serverContext'
 
-
-export default async (req, res) => {
-
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-
     const { user, done, database } = await serverContext(req, res)
 
     if (!user) {
-      return await done(403, { message: 'You must be logged in to do that.' })
+      return await done(403, {
+        message: 'You must be logged in to do that.',
+      })
     }
 
     const { oldPass, newPass, confirmPass } = req.body
 
     // Make sure password fields are filled out
     if (!oldPass) {
-      return await done(401, { message: 'You need to fill in your current password.' })
+      return await done(401, {
+        message: 'You need to fill in your current password.',
+      })
     }
 
     if (!newPass) {
-      return await done(401, { message: 'You need to fill in your new password.' })
+      return await done(401, {
+        message: 'You need to fill in your new password.',
+      })
     }
 
     const { findOne, update, User } = database
     const foundUser = await findOne(User, { _id: user._id })
 
     if (!foundUser) {
-      return await done(401, { message: 'Something went wrong. Try again later.' })
+      return await done(401, {
+        message: 'Something went wrong. Try again later.',
+      })
     }
 
     // Make sure the entered password is the user's password
@@ -39,12 +46,16 @@ export default async (req, res) => {
     }
 
     if (!result) {
-      return await done(401, { message: 'The current password you entered is incorrect.' })
+      return await done(401, {
+        message: 'The current password you entered is incorrect.',
+      })
     }
 
     // Check to see new password fields match
     if (newPass !== confirmPass) {
-      return await done(401, { message: 'The new password fields do not match.' })
+      return await done(401, {
+        message: 'The new password fields do not match.',
+      })
     }
 
     // Set the new password
@@ -56,7 +67,9 @@ export default async (req, res) => {
     }
 
     await update(User, { _id: user._id }, { password: passwordHash })
-    return await done(200, { message: 'Your password has been saved!' })
+    return await done(200, {
+      message: 'Your password has been saved!',
+    })
   }
 
   return res.status(404).send({ message: 'Page not found.' })

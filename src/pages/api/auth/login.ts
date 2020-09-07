@@ -1,13 +1,11 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import serverContext from "@/serverContext"
+import serverContext from '@/serverContext'
 import keys from '@/keys'
 
-
-export default async (req, res) => {
-
+export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-
     const { done, database } = await serverContext(req, res)
 
     let user
@@ -21,7 +19,7 @@ export default async (req, res) => {
 
     if (!user) {
       return await done(400, {
-        message: 'Email or password is incorrect.'
+        message: 'Email or password is incorrect.',
       })
     }
 
@@ -33,18 +31,23 @@ export default async (req, res) => {
     }
 
     if (!result) {
-      return await done(401, { message: 'Email or password is incorrect.' })
+      return await done(401, {
+        message: 'Email or password is incorrect.',
+      })
     }
 
     // generate a signed json web token with the contents of user object and return it in the response
     const now = new Date()
     const expiry = new Date(now).setDate(now.getDate() + 30)
 
-    const token = jwt.sign({
-      uid: user._id,
-      iat: Math.floor(now.getTime()/1000),
-      exp: Math.floor(expiry/1000)
-    }, keys.jwtSecret)
+    const token = jwt.sign(
+      {
+        uid: user._id,
+        iat: Math.floor(now.getTime() / 1000),
+        exp: Math.floor(expiry / 1000),
+      },
+      keys.jwtSecret
+    )
 
     return await done(200, { user, token })
   }
