@@ -22,6 +22,7 @@ type Props = {
   emptyTitle?: string
   emptyMessage?: string
   renderAuthButtons?: boolean
+  setPageHead?: boolean
 
   // Hook functions
   beforePost?: Function
@@ -80,6 +81,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     emptyTitle,
     emptyMessage,
     renderAuthButtons = true,
+    setPageHead = true,
 
     // Hook functions
     beforePost = () => null,
@@ -250,23 +252,25 @@ const SectionStandard: React.FC<Props> = (props) => {
     })
   }
 
-  const [{ title, tags, mainMedia, content }] = props.posts
-  let postContent = content || ''
+  const renderPageHead = (passedPosts: Post[]) => {
+    if (!setPageHead) return null
 
-  let headTitle
-  const headerSettings = {
-    maxPosts: 1,
-    postTags: ['section-header'],
-  }
-  const {
-    posts: [headerPost],
-  } = usePostFilter(posts, headerSettings)
-  if (headerPost && title) {
-    headTitle = `${headerPost.title} | ${title}`
-  }
+    const [{ title, tags, mainMedia, content }] = passedPosts
+    let postContent = content || ''
 
-  return (
-    <div className={`posts-show ${className || ''}`}>
+    let headTitle
+    const headerSettings = {
+      maxPosts: 1,
+      postTags: ['section-header'],
+    }
+    const {
+      posts: [headerPost],
+    } = usePostFilter(posts, headerSettings)
+    if (headerPost && title) {
+      headTitle = `${headerPost.title} | ${title}`
+    }
+
+    return (
       <PageHead
         title={headTitle}
         image={mainMedia}
@@ -275,6 +279,12 @@ const SectionStandard: React.FC<Props> = (props) => {
           .replace('</p>', '')}
         keywords={tags.toString()}
       />
+    )
+  }
+
+  return (
+    <div className={`posts-show ${className || ''}`}>
+      {renderPageHead(props.posts)}
 
       {renderPosts()}
     </div>
@@ -555,6 +565,7 @@ export const options: SectionOptions = {
       apiPath: '/api/posts',
       redirectRoute: 'posts',
       renderAuthButtons: false,
+      setPageHead: false,
     },
   },
 }
