@@ -121,7 +121,7 @@ const PageRenderer = (props: Props) => {
   return (
     <>
       {renderPageHead()}
-      <div className={`${styles['page']} ${page.className}`}>
+      <div className={`${styles.page} ${page.className}`}>
         {renderSections()}
       </div>
     </>
