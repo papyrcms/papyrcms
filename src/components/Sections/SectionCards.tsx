@@ -207,7 +207,7 @@ const SectionCards: React.FC<Props> = (props) => {
 
 export const options: SectionOptions = {
   ThreeCards: {
-    file: 'SectionCards',
+    component: 'SectionCards',
     name: 'Three Cards Section',
     description:
       'This section will display each post in a vertical style with three posts per row.',
@@ -220,7 +220,7 @@ export const options: SectionOptions = {
     },
   },
   FourCards: {
-    file: 'SectionCards',
+    component: 'SectionCards',
     name: 'Four Cards Section',
     description:
       'This section will display each post in a vertical style with four posts per row.',

@@ -554,7 +554,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
 
 export const options: SectionOptions = {
   Standard: {
-    file: 'SectionStandard',
+    component: 'SectionStandard',
     name: 'Standard Section',
     description:
       'This is the simplest section. It will only take one post with the required tags.',

@@ -13,7 +13,6 @@ type Props = {
  * It will appear invisible but effect SEO for the page
  */
 const SectionSeo: React.FC<Props> = (props) => {
-
   if (!props.post) {
     return null
   }
@@ -37,7 +36,7 @@ const SectionSeo: React.FC<Props> = (props) => {
 
 export const options: SectionOptions = {
   SectionSeo: {
-    file: 'SectionSeo',
+    component: 'SectionSeo',
     name: 'Page SEO',
     description: '',
     inputs: ['tags'],

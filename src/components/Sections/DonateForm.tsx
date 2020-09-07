@@ -101,7 +101,7 @@ const DonateForm: React.FC<{ className?: string }> = (props) => {
 
 export const options: SectionOptions = {
   DonateForm: {
-    file: 'DonateForm',
+    component: 'DonateForm',
     name: 'Donate Form',
     description:
       'This is a simple donation form where people can donate money to you.',

@@ -114,7 +114,7 @@ const ContactForm: React.FC<{ className?: string }> = (props) => {
 
 export const options: SectionOptions = {
   ContactForm: {
-    file: 'ContactForm',
+    component: 'ContactForm',
     name: 'Contact Form',
     description:
       'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',

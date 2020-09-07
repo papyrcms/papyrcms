@@ -12,6 +12,7 @@ import PageHead from '@/components/PageHead'
 import usePostFilter from '@/hooks/usePostFilter'
 import keys from '@/keys'
 import styles from './page.module.scss'
+import * as Sections from '@/components/Sections/'
 
 type Props = {
   previewPage?: Page
@@ -73,9 +74,9 @@ const PageRenderer = (props: Props) => {
 
       // Get the parsedSection component
       const options = sectionOptions[parsedSection.type]
-      const Component = dynamic(
-        () => import(`../../components/Sections/${options.file}`)
-      )
+
+      // @ts-ignore Not sure how to fix this
+      const Component: React.FC = Sections[options.component]
 
       // Return the parsedSection component
       return (

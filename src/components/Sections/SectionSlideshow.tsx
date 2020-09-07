@@ -92,7 +92,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
 
 export const options: SectionOptions = {
   Slideshow: {
-    file: 'SectionSlideshow',
+    component: 'SectionSlideshow',
     name: 'Slideshow Section',
     description:
       'This section will display a slideshow of each post at 5 second intervals.',

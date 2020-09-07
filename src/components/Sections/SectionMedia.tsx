@@ -63,7 +63,7 @@ const SectionMedia: React.FC<Props> = (props) => {
 
 export const options: SectionOptions = {
   Parallax: {
-    file: 'SectionMedia',
+    component: 'SectionMedia',
     name: 'Parallax Section',
     description:
       'This section will display a post with the parallax effect on the media.',
@@ -74,7 +74,7 @@ export const options: SectionOptions = {
     },
   },
   Media: {
-    file: 'SectionMedia',
+    component: 'SectionMedia',
     name: 'Media Section',
     description: 'This section will display a post media normally.',
     inputs: ['className', 'tags', 'title'],

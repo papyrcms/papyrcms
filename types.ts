@@ -105,7 +105,7 @@ export interface Settings {
 
 export interface SectionOptions {
   [key: string]: {
-    file: string
+    component: string
     name: string
     description: string
     inputs: string[]
