@@ -1,34 +1,32 @@
 @import 'src/sass/abstracts/_mixins.scss';
 @import 'src/sass/abstracts/_variables.scss';
 
-
-.posts-all-page {
-
+.main {
   @include sectionStyle();
   padding-top: 0;
+}
 
-  &__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
 
-    border-bottom: .1rem solid $color-grey-dark;
-    margin-bottom: 2rem;
+  border-bottom: 0.1rem solid $color-grey-dark;
+  margin-bottom: 2rem;
 
-    @include respond(tab-port) {
-      margin-bottom: 0;
-      flex-direction: column;
-    }
+  @include respond(tab-port) {
+    margin-bottom: 0;
+    flex-direction: column;
   }
+}
 
-  &__input {
-    max-width: 40rem;
-  }
+.input {
+  max-width: 40rem;
+}
 
-  &__header {
-    @include respond(phone) {
-      letter-spacing: .3rem;
-    }
+.header {
+  @include respond(phone) {
+    letter-spacing: 0.3rem;
   }
 }
