@@ -189,7 +189,7 @@ const SectionStandard: React.FC<Props> = (props) => {
 
   const renderComments = (post: Post) => {
     return (
-      <Comment
+      <CommentComp
         post={post}
         comments={post.comments || []}
         enableCommenting={!!enableCommenting}
@@ -249,7 +249,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     })
   }
 
-  const { title, tags, mainMedia, content } = posts[0]
+  const [{ title, tags, mainMedia, content }] = posts
   let postContent = content || ''
 
   let headTitle
@@ -289,7 +289,7 @@ type CommentProps = {
   afterCommentForm?: Function
 }
 
-const Comment: React.FC<CommentProps> = (props) => {
+const CommentComp: React.FC<CommentProps> = (props) => {
   const {
     enableCommenting,
     post,
