@@ -1,16 +1,14 @@
 import { Blog } from 'types'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
-import keys from '@/keys'
+import blogsContext from '@/context/blogsContext'
 import SectionCards from '@/components/Sections/SectionCards'
 
-
-const BlogAllPage = (props: { blogs: Blog[] }) => {
-
+const BlogAllPage = () => {
   const { currentUser } = useContext(userContext)
-  const [blogs, setBlogs] = useState(props.blogs || [])
+  const { blogs, setBlogs } = useContext(blogsContext)
 
   useEffect(() => {
     if (currentUser && currentUser.isAdmin) {
@@ -19,36 +17,38 @@ const BlogAllPage = (props: { blogs: Blog[] }) => {
         setBlogs(blogs)
       }
       getBlogs()
+    } else if (blogs.length === 0) {
+      const fetchBlogs = async () => {
+        const { data: foundBlogs } = await axios.get(
+          '/api/blogs/published'
+        )
+        setBlogs(foundBlogs)
+      }
+      fetchBlogs()
     }
-  }, [])
+  }, [currentUser, blogs])
 
   const renderDate = (post: Blog) => {
-    const date = post.published && post.publishDate
-      ? post.publishDate
-      : post.created
+    const date =
+      post.published && post.publishDate
+        ? post.publishDate
+        : post.created
 
     return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }
 
-  return <SectionCards
-    title="Blog"
-    perRow={4}
-    path="blog"
-    contentLength={100}
-    emptyMessage="There are no blogs yet."
-    readMore
-    posts={blogs}
-    afterPostTitle={renderDate}
-  />
+  return (
+    <SectionCards
+      title="Blog"
+      perRow={4}
+      path="blog"
+      contentLength={100}
+      emptyMessage="There are no blogs yet."
+      readMore
+      posts={blogs}
+      afterPostTitle={renderDate}
+    />
+  )
 }
-
-
-BlogAllPage.getInitialProps = async () => {
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: blogs } = await axios.get(`${rootUrl}/api/blogs/published`)
-
-  return { blogs }
-}
-
 
 export default BlogAllPage

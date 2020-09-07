@@ -1,14 +1,14 @@
 import { Event } from 'types'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
-import keys from '@/keys'
+import eventsContext from '@/context/eventsContext'
 import SectionCards from '@/components/Sections/SectionCards'
 
-const EventsAllPage = (props: { events: Event[] }) => {
+const EventsAllPage = () => {
   const { currentUser } = useContext(userContext)
-  const [events, setEvents] = useState(props.events || [])
+  const { events, setEvents } = useContext(eventsContext)
 
   useEffect(() => {
     if (currentUser && currentUser.isAdmin) {
@@ -17,8 +17,16 @@ const EventsAllPage = (props: { events: Event[] }) => {
         setEvents(events)
       }
       getEvents()
+    } else if (events.length === 0) {
+      const fetchEvents = async () => {
+        const { data: foundEvents } = await axios.get(
+          '/api/events/published'
+        )
+        setEvents(foundEvents)
+      }
+      fetchEvents()
     }
-  }, [])
+  }, [events, currentUser])
 
   const renderDate = (post: Event) => (
     <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
@@ -36,15 +44,6 @@ const EventsAllPage = (props: { events: Event[] }) => {
       afterPostTitle={renderDate}
     />
   )
-}
-
-EventsAllPage.getInitialProps = async () => {
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: events } = await axios.get(
-    `${rootUrl}/api/events/published`
-  )
-
-  return { events }
 }
 
 export default EventsAllPage

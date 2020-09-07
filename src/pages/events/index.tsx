@@ -1,38 +1,40 @@
 import { Event } from 'types'
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
-import keys from '@/keys'
+import eventsContext from '@/context/eventsContext'
 import SectionStrip from '@/components/Sections/SectionStrip'
 
+const EventsPage = () => {
+  const { events, setEvents } = useContext(eventsContext)
 
-const EventsPage = ({ events }: { events: Event[] }) => {
-
+  useEffect(() => {
+    const fetchEvents = async () => {
+      if (events.length === 0) {
+        const { data: foundEvents } = await axios.get(
+          '/api/events/published'
+        )
+        setEvents(foundEvents)
+      }
+    }
+    fetchEvents()
+  }, [])
 
   const renderDate = (event: Event) => (
     <p>{moment(event.date).format('MMMM Do, YYYY')}</p>
   )
 
-
-  return <SectionStrip
-    posts={events}
-    title="Events"
-    mediaLeft
-    readMore
-    path="events"
-    emptyMessage="There are no events coming up."
-    beforePostContent={renderDate}
-  />
+  return (
+    <SectionStrip
+      posts={events}
+      title="Events"
+      mediaLeft
+      readMore
+      path="events"
+      emptyMessage="There are no events coming up."
+      beforePostContent={renderDate}
+    />
+  )
 }
-
-
-EventsPage.getInitialProps = async () => {
-
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
-  const { data: events } = await axios.get(`${rootUrl}/api/events/published`)
-
-  return { events }
-}
-
 
 export default EventsPage

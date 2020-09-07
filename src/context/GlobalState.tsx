@@ -1,10 +1,22 @@
-import { Keys, Settings, SectionOptions, Page, Post } from 'types'
+import {
+  Keys,
+  Settings,
+  SectionOptions,
+  Page,
+  Post,
+  Blog,
+  Event,
+  Product,
+} from 'types'
 import KeysProvider from './KeysProvider'
 import SettingsProvider from './SettingsProvider'
 import SectionOptionsProvider from './SectionOptionsProvider'
 import UserProvider from './UserProvider'
 import StoreProvider from './StoreProvider'
 import PostsProvider from './PostsProvider'
+import BlogsProvider from './BlogsProvider'
+import EventsProvider from './EventsProvider'
+import ProductsProvider from './ProductsProvider'
 import PagesProvider from './PagesProvider'
 
 type Props = {
@@ -13,19 +25,25 @@ type Props = {
   sectionOptions: SectionOptions
   pages: Page[]
   posts: Post[]
-  children: any
+  blogs: Blog[]
+  events: Event[]
+  products: Product[]
 }
 
-const GlobalState = (props: Props) => (
+const GlobalState: React.FC<Props> = (props) => (
   <KeysProvider keys={props.keys}>
     <SettingsProvider settings={props.settings}>
       <SectionOptionsProvider sectionOptions={props.sectionOptions}>
         <UserProvider>
           <PagesProvider pages={props.pages}>
             <PostsProvider posts={props.posts}>
-              <StoreProvider>
-                {props.children}
-              </StoreProvider>
+              <BlogsProvider blogs={props.blogs}>
+                <EventsProvider events={props.events}>
+                  <ProductsProvider products={props.products}>
+                    <StoreProvider>{props.children}</StoreProvider>
+                  </ProductsProvider>
+                </EventsProvider>
+              </BlogsProvider>
             </PostsProvider>
           </PagesProvider>
         </UserProvider>
@@ -33,6 +51,5 @@ const GlobalState = (props: Props) => (
     </SettingsProvider>
   </KeysProvider>
 )
-
 
 export default GlobalState
