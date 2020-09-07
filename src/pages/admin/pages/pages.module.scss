@@ -1,10 +1,8 @@
 @import 'src/sass/abstracts/_mixins.scss';
 @import 'src/sass/abstracts/_variables.scss';
 
-
-.pages-page {
+.main {
   padding: 5rem 20vw;
-  padding-bottom: 10rem;
   background-color: $color-grey-light;
 
   @include respond(tab-port) {
@@ -18,26 +16,21 @@
   }
 }
 
-.pages {
+.page {
+  list-style: none;
+  display: flex;
 
-  &__page {
-    list-style: none;
-    display: flex;
-
-    @include respond(phone) {
-      flex-direction: column;
-      border-bottom: .1rem solid $color-grey;
-      padding: 1rem 0;
-    }
+  @include respond(phone) {
+    flex-direction: column;
+    border-bottom: 0.1rem solid $color-grey;
+    padding: 1rem 0;
   }
+}
 
-  &__link {
-    &-divider {
-      margin: 0 1rem;
+.linkDivider {
+  margin: 0 1rem;
 
-      @include respond(phone) {
-        display: none;
-      }
-    }
+  @include respond(phone) {
+    display: none;
   }
 }
