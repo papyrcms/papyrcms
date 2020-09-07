@@ -50,7 +50,9 @@ describe('mailer', () => {
       const template = await mailer.getEmailTemplateByTag('welcome')
 
       expect(template).to.exist &&
+      // @ts-ignore
       expect(template.tags).to.include('welcome') &&
+      // @ts-ignore
       expect(template.tags).to.include(mailer.templateTag)
     }).timeout(10000)
 
