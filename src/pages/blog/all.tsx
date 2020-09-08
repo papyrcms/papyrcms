@@ -2,9 +2,12 @@ import { Blog } from 'types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
+import PageHead from '@/components/PageHead'
 import userContext from '@/context/userContext'
 import blogsContext from '@/context/blogsContext'
+import postsContext from '@/context/postsContext'
 import SectionCards from '@/components/Sections/SectionCards'
+import usePostFilter from '@/hooks/usePostFilter'
 
 const BlogAllPage = () => {
   const { currentUser } = useContext(userContext)
@@ -37,17 +40,34 @@ const BlogAllPage = () => {
     return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }
 
+  const { posts } = useContext(postsContext)
+
+  let headTitle = 'Blog'
+  const headerSettings = {
+    maxPosts: 1,
+    postTags: ['section-header'],
+  }
+  const {
+    posts: [headerPost],
+  } = usePostFilter(posts, headerSettings)
+  if (headerPost) {
+    headTitle = `${headerPost.title} | ${headTitle}`
+  }
+
   return (
-    <SectionCards
-      title="Blog"
-      perRow={4}
-      path="blog"
-      contentLength={100}
-      emptyMessage="There are no blogs yet."
-      readMore
-      posts={blogs}
-      afterPostTitle={renderDate}
-    />
+    <>
+      <PageHead title={headTitle} />
+      <SectionCards
+        title="Blog"
+        perRow={4}
+        path="blog"
+        contentLength={100}
+        emptyMessage="There are no blogs yet."
+        readMore
+        posts={blogs}
+        afterPostTitle={renderDate}
+      />
+    </>
   )
 }
 

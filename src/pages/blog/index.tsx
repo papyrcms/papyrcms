@@ -3,9 +3,11 @@ import React, { useContext, useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
+import PageHead from '@/components/PageHead'
 import usePostFilter from '@/hooks/usePostFilter'
 import SectionStrip from '@/components/Sections/SectionStrip'
 import blogsContext from '@/context/blogsContext'
+import postsContext from '@/context/postsContext'
 
 const BlogPage = () => {
   const { blogs, setBlogs } = useContext(blogsContext)
@@ -48,17 +50,34 @@ const BlogPage = () => {
     return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }
 
+  const { posts } = useContext(postsContext)
+
+  let headTitle = "Blog"
+  const headerSettings = {
+    maxPosts: 1,
+    postTags: ['section-header'],
+  }
+  const {
+    posts: [headerPost],
+  } = usePostFilter(posts, headerSettings)
+  if (headerPost) {
+    headTitle = `${headerPost.title} | Blog`
+  }
+
   return (
-    <SectionStrip
-      posts={filteredBlogs}
-      title="Blog"
-      mediaLeft
-      readMore
-      path="blog"
-      emptyMessage="There are no blogs yet."
-      beforePostContent={renderDate}
-      afterPosts={renderAllBlogsLink}
-    />
+    <>
+      <PageHead title={headTitle}/>
+      <SectionStrip
+        posts={filteredBlogs}
+        title="Blog"
+        mediaLeft
+        readMore
+        path="blog"
+        emptyMessage="There are no blogs yet."
+        beforePostContent={renderDate}
+        afterPosts={renderAllBlogsLink}
+      />
+    </>
   )
 }
 
