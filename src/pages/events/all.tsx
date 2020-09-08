@@ -4,7 +4,10 @@ import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
 import eventsContext from '@/context/eventsContext'
+import postsContext from '@/context/postsContext'
+import PageHead from '@/components/PageHead'
 import SectionCards from '@/components/Sections/SectionCards'
+import usePostFilter from '@/hooks/usePostFilter'
 
 const EventsAllPage = () => {
   const { currentUser } = useContext(userContext)
@@ -32,17 +35,34 @@ const EventsAllPage = () => {
     <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
   )
 
+  const { posts } = useContext(postsContext)
+
+  let headTitle = 'Events'
+  const headerSettings = {
+    maxPosts: 1,
+    postTags: ['section-header'],
+  }
+  const {
+    posts: [headerPost],
+  } = usePostFilter(posts, headerSettings)
+  if (headerPost) {
+    headTitle = `${headerPost.title} | ${headTitle}`
+  }
+
   return (
-    <SectionCards
-      posts={events}
-      title="Events"
-      perRow={4}
-      readMore
-      path="events"
-      contentLength={200}
-      emptyMessage="There are no events coming up."
-      afterPostTitle={renderDate}
-    />
+    <>
+      <PageHead title={headTitle} />
+      <SectionCards
+        posts={events}
+        title="Events"
+        perRow={4}
+        readMore
+        path="events"
+        contentLength={200}
+        emptyMessage="There are no events coming up."
+        afterPostTitle={renderDate}
+      />
+    </>
   )
 }
 

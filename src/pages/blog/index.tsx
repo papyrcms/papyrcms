@@ -61,7 +61,7 @@ const BlogPage = () => {
     posts: [headerPost],
   } = usePostFilter(posts, headerSettings)
   if (headerPost) {
-    headTitle = `${headerPost.title} | Blog`
+    headTitle = `${headerPost.title} | ${headTitle}`
   }
 
   return (
