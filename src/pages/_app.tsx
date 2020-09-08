@@ -7,21 +7,13 @@ import {
   SectionOptions,
   Keys,
 } from 'types'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Layout from '@/components/Layout/'
 import keys from '@/keys'
 import GlobalState from '@/context/GlobalState'
 import { initGA, logPageView } from '@/utilities/analytics'
-import postsContext from '@/context/postsContext'
-import blogsContext from '@/context/blogsContext'
-import eventsContext from '@/context/eventsContext'
-import storeContext from '@/context/storeContext'
-import keysContext from '@/context/keysContext'
-import settingsContext from '@/context/settingsContext'
-import sectionOptionsContext from '@/context/sectionOptionsContext'
-import pagesContext from '@/context/pagesContext'
 import '../sass/main.scss'
 import 'swagger-ui-react/swagger-ui.css'
 
@@ -41,11 +33,11 @@ const App = (props: Props) => {
   const { asPath } = useRouter()
   let {
     Component,
-    pages,
-    posts,
-    blogs,
-    events,
-    products,
+    pages = [],
+    posts = [],
+    blogs = [],
+    events = [],
+    products = [],
     keys,
     settings,
     sectionOptions,
@@ -62,24 +54,6 @@ const App = (props: Props) => {
       logPageView()
     }
   }, [asPath])
-
-  const postContext = useContext(postsContext)
-  const blogContext = useContext(blogsContext)
-  const eventContext = useContext(eventsContext)
-  const productContext = useContext(storeContext)
-  const pageContext = useContext(pagesContext)
-  const keyContext = useContext(keysContext)
-  const settingContext = useContext(settingsContext)
-  const sectionOptionContext = useContext(sectionOptionsContext)
-
-  posts = posts || postContext.posts
-  blogs = blogs || blogContext.blogs
-  events = events || eventContext.events
-  products = products || productContext.products
-  pages = pages || pageContext.pages
-  keys = keys || keyContext.keys
-  settings = settings || settingContext.settings
-  sectionOptions = sectionOptions || sectionOptionContext
 
   return (
     <GlobalState
