@@ -5,6 +5,9 @@ import _ from 'lodash'
 import axios from 'axios'
 import userContext from '@/context/userContext'
 import storeContext from '@/context/storeContext'
+import postsContext from '@/context/postsContext'
+import usePostFilter from '@/hooks/usePostFilter'
+import PageHead from '@/components/PageHead'
 import SectionCards from '@/components/Sections/SectionCards'
 
 const StorePage = () => {
@@ -80,19 +83,36 @@ const StorePage = () => {
     }
   }
 
+  const { posts } = useContext(postsContext)
+
+  let headTitle = 'Store'
+  const headerSettings = {
+    maxPosts: 1,
+    postTags: ['section-header'],
+  }
+  const {
+    posts: [headerPost],
+  } = usePostFilter(posts, headerSettings)
+  if (headerPost) {
+    headTitle = `${headerPost.title} | ${headTitle}`
+  }
+
   return (
-    <SectionCards
-      posts={products}
-      title="Store"
-      clickableMedia
-      perRow={4}
-      readMore={true}
-      path="store"
-      contentLength={200}
-      emptyMessage="There are no products yet."
-      afterPostMedia={renderPriceAndQuantity}
-      afterPostLink={renderCheckout}
-    />
+    <>
+      <PageHead title={headTitle} />
+      <SectionCards
+        posts={products}
+        title="Store"
+        clickableMedia
+        perRow={4}
+        readMore={true}
+        path="store"
+        contentLength={200}
+        emptyMessage="There are no products yet."
+        afterPostMedia={renderPriceAndQuantity}
+        afterPostLink={renderCheckout}
+      />
+    </>
   )
 }
 
