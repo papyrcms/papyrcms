@@ -98,7 +98,7 @@ const SectionStrip: React.FC<Props> = (props) => {
         <>
           {beforePostMedia(post)}
           <Media
-            className="section-standard__image"
+            className="section-strip__image"
             src={post.mainMedia}
             alt={post.title}
             clickable={clickableMedia}
@@ -179,11 +179,11 @@ const SectionStrip: React.FC<Props> = (props) => {
 
     return _.map(posts, (post, i) => {
       const postTextClassName = post.mainMedia
-        ? 'section-standard__text'
-        : 'section-standard__text--wide'
+        ? 'section-strip__text'
+        : 'section-strip__text--wide'
 
       return (
-        <div className="section-standard__post" key={post._id}>
+        <div className="section-strip__post" key={post._id}>
           {renderLeftMedia(post, i)}
           <div className={postTextClassName}>
             {beforePostTitle(post)}
@@ -199,9 +199,9 @@ const SectionStrip: React.FC<Props> = (props) => {
   }
 
   return (
-    <section className={`${className || ''} section-standard`}>
+    <section className={`${className || ''} section-strip`}>
       {beforeTitle()}
-      <h2 className="heading-secondary section-standard__header">
+      <h2 className="heading-secondary section-strip__header">
         {title}
       </h2>
       {afterTitle()}
