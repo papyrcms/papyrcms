@@ -29,10 +29,7 @@ const usePostFilter = <T extends Post>(
     return postsToFilter
   }
 
-  const filterByMaxPosts = (
-    postsToFilter: T[],
-    filters: Filters
-  ) => {
+  const filterByMaxPosts = (postsToFilter: T[], filters: Filters) => {
     const { maxPosts } = filters
 
     if (maxPosts) {
@@ -42,10 +39,7 @@ const usePostFilter = <T extends Post>(
     return _.filter(postsToFilter, (post) => !!post)
   }
 
-  const filterByPostTags = (
-    postsToFilter: T[],
-    filters: Filters
-  ) => {
+  const filterByPostTags = (postsToFilter: T[], filters: Filters) => {
     const { postTags, strictTags } = filters
 
     // Filter posts by postTags
@@ -106,10 +100,7 @@ const usePostFilter = <T extends Post>(
     )
   }
 
-  const filterPosts = (
-    postsToFilter: T[],
-    filters: Filters
-  ) => {
+  const filterPosts = (postsToFilter: T[], filters: Filters) => {
     postsToFilter = filterByPublished(postsToFilter, filters)
     postsToFilter = filterByPostTags(postsToFilter, filters)
     postsToFilter = orderPosts(postsToFilter)
