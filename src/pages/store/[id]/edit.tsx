@@ -67,8 +67,7 @@ const StoreEdit = (props: { product: Product }) => {
     resetProduct()
   }, [currentUser])
 
-  if (!currentUser || !currentUser.isAdmin)
-    return <Error statusCode={403} />
+  if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm

@@ -23,8 +23,7 @@ const PostsEdit = (props: { post: Post }) => {
     resetPost()
   }, [currentUser])
 
-  if (!currentUser || !currentUser.isAdmin)
-    return <Error statusCode={403} />
+  if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm

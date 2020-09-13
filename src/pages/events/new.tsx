@@ -60,8 +60,7 @@ const coordinatesField: React.FC<Props> = ({
 
 const EventNew = () => {
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin)
-    return <Error statusCode={403} />
+  if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm

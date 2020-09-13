@@ -80,8 +80,7 @@ const EventsEdit = (props: { event: Event }) => {
     }
   }, [])
 
-  if (!currentUser || !currentUser.isAdmin)
-    return <Error statusCode={403} />
+  if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   return (
     <PostsForm

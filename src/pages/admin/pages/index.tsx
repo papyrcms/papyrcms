@@ -18,8 +18,7 @@ const Pages = () => {
     getPages()
   }, [])
 
-  if (!currentUser || !currentUser.isAdmin)
-    return <Error statusCode={403} />
+  if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   const renderPages = () => {
     return _.map(pages, (page) => (

@@ -22,8 +22,7 @@ const Orders = () => {
     resetOrders()
   }, [currentUser])
 
-  if (!currentUser || !currentUser.isAdmin)
-    return <Error statusCode={403} />
+  if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   const renderProducts = (products: Product[]) => {
     return _.map(products, (product) => {

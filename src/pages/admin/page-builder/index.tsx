@@ -427,8 +427,7 @@ const PageBuilder = (props: Props) => {
   } = state
   const { currentUser } = useContext(userContext)
 
-  if (!currentUser || !currentUser.isAdmin)
-    return <Error statusCode={403} />
+  if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   return (
     <>
