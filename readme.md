@@ -12,7 +12,7 @@ If this is the first time your site has been launched and there are no users, pa
 
 If your site has some content already existing, but you do not have an admin account yet, you can register an account by going to yourWebsiteName.com/login and filling out the registration form. Once you have done this, you will need to be made an admin in the database.
 
-If you do have an admin account, simply navigate to yourWebsiteName.com/login and fill out the login form
+If you do have an admin account, simply navigate to yourWebsiteName.com/login and fill out the login form.
 
 ### Admin Dashboard
 

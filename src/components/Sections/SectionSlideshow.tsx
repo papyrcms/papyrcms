@@ -1,7 +1,7 @@
 import { SectionOptions, Post } from 'types'
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
-import SectionMedia from '@/Sections/SectionMedia'
+import { SectionMedia } from '@/Sections'
 
 type Props = {
   timer?: number

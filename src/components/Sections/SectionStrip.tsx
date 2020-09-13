@@ -3,7 +3,7 @@ import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
-import Media from '@/components/Media'
+import { Media } from '@/components'
 
 type Props = {
   clickableMedia?: boolean

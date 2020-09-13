@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Error from 'next/error'
 import axios from 'axios'
 import userContext from '@/context/userContext'
-import PostsForm from '@/components/PostsForm'
+import { PostsForm } from '@/components'
 import keys from '@/keys'
 
 const PostsEdit = (props: { post: Post }) => {

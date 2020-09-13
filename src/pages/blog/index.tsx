@@ -3,9 +3,9 @@ import React, { useContext, useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
-import PageHead from '@/components/PageHead'
-import usePostFilter from '@/hooks/usePostFilter'
-import SectionStrip from '@/components/Sections/SectionStrip'
+import { PageHead } from '@/components'
+import { usePostFilter } from '@/hooks'
+import { SectionStrip } from '@/Sections'
 import blogsContext from '@/context/blogsContext'
 import postsContext from '@/context/postsContext'
 
@@ -52,7 +52,7 @@ const BlogPage = () => {
 
   const { posts } = useContext(postsContext)
 
-  let headTitle = "Blog"
+  let headTitle = 'Blog'
   const headerSettings = {
     maxPosts: 1,
     postTags: ['section-header'],
@@ -66,7 +66,7 @@ const BlogPage = () => {
 
   return (
     <>
-      <PageHead title={headTitle}/>
+      <PageHead title={headTitle} />
       <SectionStrip
         posts={filteredBlogs}
         title="Blog"

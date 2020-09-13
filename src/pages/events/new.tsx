@@ -1,8 +1,7 @@
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import userContext from '@/context/userContext'
-import PostsForm from '@/components/PostsForm'
-import Input from '@/components/Input'
+import { PostsForm, Input } from '@/components'
 
 type Props = {
   values: { [key: string]: any }

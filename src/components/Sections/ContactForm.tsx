@@ -1,9 +1,8 @@
 import { SectionOptions } from 'types'
 import React, { useContext } from 'react'
 import userContext from '@/context/userContext'
-import Input from '@/components/Input'
-import Button from '@/components/Button'
-import useForm from '@/hooks/useForm'
+import { Input, Button } from '@/components'
+import { useForm } from '@/hooks'
 
 /**
  * ContactForm is the main contact form component

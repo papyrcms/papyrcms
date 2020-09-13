@@ -3,13 +3,12 @@ import sanitizeHTML from 'sanitize-html'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import postsContext from '@/context/postsContext'
-import usePostFilter from '@/hooks/usePostFilter'
+import { usePostFilter } from '@/hooks'
 import Notification from './Notification'
 import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
-
 
 const Layout: React.FC = (props) => {
   let { posts } = useContext(postsContext)

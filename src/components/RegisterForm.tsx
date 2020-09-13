@@ -2,13 +2,11 @@ import React, { useContext } from 'react'
 import Router from 'next/router'
 import settingsContext from '@/context/settingsContext'
 import userContext from '@/context/userContext'
-import useForm from '@/hooks/useForm'
+import { useForm } from '@/hooks'
 import Input from './Input'
 import Button from './Button'
 
-
 const RegisterForm = () => {
-
   const { settings } = useContext(settingsContext)
   const { setCurrentUser } = useContext(userContext)
 
@@ -18,13 +16,13 @@ const RegisterForm = () => {
     email: '',
     password: '',
     passwordConfirm: '',
-    validation: ''
+    validation: '',
   }
   const formState = useForm(INITIAL_STATE)
 
   if (!settings.enableRegistration) {
     return null
-  }  
+  }
 
   const handleSubmit = (event: any, resetButton: Function) => {
     event.preventDefault()
@@ -44,10 +42,11 @@ const RegisterForm = () => {
     formState.submitForm('/api/auth/register', { success, error })
   }
 
-
   return (
     <form className="register-form">
-      <h3 className="heading-tertiary u-margin-bottom-small">Register</h3>
+      <h3 className="heading-tertiary u-margin-bottom-small">
+        Register
+      </h3>
 
       <Input
         label="First Name"
@@ -89,19 +88,17 @@ const RegisterForm = () => {
         required
       />
 
-      <p className="register-form__validation">{formState.values.validation}</p>
+      <p className="register-form__validation">
+        {formState.values.validation}
+      </p>
 
       <div className="register-form__submit">
-        <Button
-          onClick={handleSubmit}
-          submittedText="Submitting"
-        >
+        <Button onClick={handleSubmit} submittedText="Submitting">
           Register
         </Button>
       </div>
     </form>
   )
 }
-
 
 export default RegisterForm

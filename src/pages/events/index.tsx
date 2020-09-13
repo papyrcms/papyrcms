@@ -4,9 +4,9 @@ import axios from 'axios'
 import moment from 'moment'
 import postsContext from '@/context/postsContext'
 import eventsContext from '@/context/eventsContext'
-import SectionStrip from '@/components/Sections/SectionStrip'
-import PageHead from '@/components/PageHead'
-import usePostFilter from '@/hooks/usePostFilter'
+import { SectionStrip } from '@/Sections'
+import { PageHead } from '@/components'
+import { usePostFilter } from '@/hooks'
 
 const EventsPage = () => {
   const { events, setEvents } = useContext(eventsContext)

@@ -7,11 +7,11 @@ import _ from 'lodash'
 import postsContext from '@/context/postsContext'
 import pagesContext from '@/context/pagesContext'
 import sectionOptionsContext from '@/context/sectionOptionsContext'
-import PageHead from '@/components/PageHead'
-import usePostFilter from '@/hooks/usePostFilter'
+import { PageHead } from '@/components'
+import { usePostFilter } from '@/hooks'
 import keys from '@/keys'
 import styles from './page.module.scss'
-import * as Sections from '@/components/Sections/'
+import * as Sections from '@/Sections'
 
 type Props = {
   previewPage?: Page

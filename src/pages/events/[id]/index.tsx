@@ -5,8 +5,8 @@ import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
 import keys from '@/keys'
-import Map from '@/components/Map'
-import SectionStandard from '@/Sections/SectionStandard'
+import { Map } from '@/components'
+import { SectionStandard } from '@/Sections'
 
 const EventsShow = (props: { event: Event }) => {
   const { currentUser } = useContext(userContext)

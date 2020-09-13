@@ -3,7 +3,7 @@ import axios from 'axios'
 import Error from 'next/error'
 import Router, { useRouter } from 'next/router'
 import jwt from 'jsonwebtoken'
-import Input from '@/components/Input'
+import { Input } from '@/components'
 import styles from './forgotPassword.module.scss'
 
 const ForgotPasswordPage = () => {

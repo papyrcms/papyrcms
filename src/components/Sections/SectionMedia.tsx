@@ -1,7 +1,7 @@
 import { Post, SectionOptions } from 'types'
 import React from 'react'
 import renderHTML from 'react-render-html'
-import Media from '@/components/Media'
+import { Media } from '@/components'
 
 type Props = {
   post: Post

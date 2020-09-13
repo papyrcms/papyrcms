@@ -2,7 +2,7 @@ import { SectionOptions, Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
-import Map from '@/components/Map'
+import { Map } from '@/components'
 
 type Props = {
   posts: Post[]

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import userContext from '@/context/userContext'
 import storeContext from '@/context/storeContext'
 import keys from '@/keys'
-import SectionStandard from '@/Sections/SectionStandard'
+import { SectionStandard } from '@/Sections'
 
 const StoreShow = (props: { product: Product }) => {
   const { currentUser } = useContext(userContext)

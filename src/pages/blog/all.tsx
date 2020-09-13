@@ -2,12 +2,12 @@ import { Blog } from 'types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
-import PageHead from '@/components/PageHead'
+import { PageHead } from '@/components'
 import userContext from '@/context/userContext'
 import blogsContext from '@/context/blogsContext'
 import postsContext from '@/context/postsContext'
-import SectionCards from '@/components/Sections/SectionCards'
-import usePostFilter from '@/hooks/usePostFilter'
+import { SectionCards } from '@/Sections'
+import { usePostFilter } from '@/hooks'
 
 const BlogAllPage = () => {
   const { currentUser } = useContext(userContext)

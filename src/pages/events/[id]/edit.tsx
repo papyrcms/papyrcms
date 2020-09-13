@@ -5,9 +5,8 @@ import Error from 'next/error'
 import axios from 'axios'
 import moment from 'moment'
 import userContext from '@/context/userContext'
-import PostsForm from '@/components/PostsForm'
+import { PostsForm, Input } from '@/components'
 import keys from '@/keys'
-import Input from '@/components/Input'
 
 type Props = {
   values: any

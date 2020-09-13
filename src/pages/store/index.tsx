@@ -6,9 +6,9 @@ import axios from 'axios'
 import userContext from '@/context/userContext'
 import storeContext from '@/context/storeContext'
 import postsContext from '@/context/postsContext'
-import usePostFilter from '@/hooks/usePostFilter'
-import PageHead from '@/components/PageHead'
-import SectionCards from '@/components/Sections/SectionCards'
+import { usePostFilter } from '@/hooks'
+import { PageHead } from '@/components'
+import { SectionCards } from '@/Sections'
 
 const StorePage = () => {
   const { cart, addToCart, products, setProducts } = useContext(

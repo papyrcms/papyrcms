@@ -1,12 +1,12 @@
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import userContext from '@/context/userContext'
-import PostsForm from '@/components/PostsForm'
+import { PostsForm } from '@/components'
 
 const BlogNew = () => {
-
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
+  if (!currentUser || !currentUser.isAdmin)
+    return <Error statusCode={403} />
 
   return (
     <PostsForm

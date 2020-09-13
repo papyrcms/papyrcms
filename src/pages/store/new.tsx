@@ -1,9 +1,7 @@
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import userContext from '@/context/userContext'
-import PostsForm from '@/components/PostsForm'
-import Input from '@/components/Input'
-
+import { PostsForm, Input } from '@/components'
 
 type Props = {
   values: any
@@ -12,14 +10,18 @@ type Props = {
   handleChange: Function
 }
 
-
-const ProductFields = ({ values, errors, validateField, handleChange }: Props) => (
+const ProductFields = ({
+  values,
+  errors,
+  validateField,
+  handleChange,
+}: Props) => (
   <div className="u-form-row">
     <Input
       id="price"
       label="Price"
       name="price"
-      value={values.price || 0.00}
+      value={values.price || 0.0}
       onChange={handleChange}
       validation={errors.price}
       onBlur={validateField}
@@ -42,9 +44,9 @@ const ProductFields = ({ values, errors, validateField, handleChange }: Props) =
 )
 
 const StoreNew = () => {
-
   const { currentUser } = useContext(userContext)
-  if (!currentUser || !currentUser.isAdmin) return <Error statusCode={403} />
+  if (!currentUser || !currentUser.isAdmin)
+    return <Error statusCode={403} />
 
   return (
     <PostsForm
@@ -53,8 +55,8 @@ const StoreNew = () => {
       redirectRoute="/store"
       additionalFields={[ProductFields]}
       additionalState={{
-        price: 0.00,
-        quantity: 0
+        price: 0.0,
+        quantity: 0,
       }}
     />
   )

@@ -10,7 +10,7 @@ import {
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import Layout from '@/components/Layout/'
+import { Layout } from '@/components'
 import keys from '@/keys'
 import GlobalState from '@/context/GlobalState'
 import { initGA, logPageView } from '@/utilities/analytics'

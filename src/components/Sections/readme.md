@@ -1,6 +1,6 @@
 # Sections
 
-Sections are what populate a Papyr website. Aptly named, sections are components made up of smaller components that are the pieces of a landing page. They can be (and are) use as any other component, but are also specifically designed to be read by the page renderer.
+Sections are what populate a Papyr website. Aptly named, sections are components made up of smaller components that are the pieces of a landing page. They can be (and are) used as any other component, but are also specifically designed to be read by the page renderer.
 
 Sections are made of two pieces: the component and the options. In order to have the section work with the page renderer, it is important to export the component from `/src/components/Sections/index.ts`, and to export the `options` object as "options" from the section file.
 

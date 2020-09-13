@@ -3,10 +3,8 @@ import Router from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import userContext from '@/context/userContext'
-import Input from '@/components/Input'
-import Button from '@/components/Button'
-import useForm from '@/hooks/useForm'
-import UserInfoForm from '@/components/UserInfoForm'
+import { Input, Button, UserInfoForm } from '@/components'
+import { useForm } from '@/hooks'
 import styles from './profile.module.scss'
 
 const ProfilePage = () => {

@@ -4,9 +4,8 @@ import Router from 'next/router'
 import postsContext from '@/context/postsContext'
 import pagesContext from '@/context/pagesContext'
 import userContext from '@/context/userContext'
-import useForm from '@/hooks/useForm'
-import Input from '@/components/Input'
-import Modal from '@/components/Modal'
+import { useForm } from '@/hooks'
+import { Input, Modal } from '@/components'
 import styles from './init.module.scss'
 
 const Init = () => {

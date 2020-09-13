@@ -10,6 +10,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   let sectionOptions = {}
 
   for (const file of files) {
+    if (!file.includes('.tsx')) continue
+
     const {
       options,
     } = require(`../../../components/Sections/${file}`)

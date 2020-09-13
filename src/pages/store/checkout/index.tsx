@@ -4,9 +4,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import keys from '@/keys'
 import storeContext from '@/context/storeContext'
-import CreditCardForm from '@/components/CreditCardForm'
-import Input from '@/components/Input'
-import UserInfoForm from '@/components/UserInfoForm'
+import { CreditCardForm, Input, UserInfoForm } from '@/components'
 import styles from './checkout.module.scss'
 
 const Checkout = (props: { product: Product }) => {

@@ -2,7 +2,7 @@ import { SectionOptions, Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import sanitizeHTML from 'sanitize-html'
-import PageHead from '@/components/PageHead'
+import { PageHead } from '@/components'
 
 type Props = {
   post: Post

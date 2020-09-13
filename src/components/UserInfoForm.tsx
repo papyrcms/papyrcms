@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import axios from 'axios'
 import userContext from '@/context/userContext'
-import useForm from '@/hooks/useForm'
+import { useForm } from '@/hooks'
 import Input from './Input'
-import Button from'./Button'
+import Button from './Button'
 
 type Props = {
   beforeSubmit?: Function
@@ -14,13 +14,12 @@ type Props = {
 }
 
 const UserInfoForm = (props: Props) => {
-
   let {
     beforeSubmit = () => null,
     onSubmitError = () => null,
     onSubmitSuccess = () => null,
     children,
-    useSubmit = true
+    useSubmit = true,
   } = props
 
   const { currentUser, setCurrentUser } = useContext(userContext)
@@ -46,7 +45,7 @@ const UserInfoForm = (props: Props) => {
     shippingZip: '',
     shippingCountry: '',
 
-    shipToBilling: true
+    shipToBilling: true,
   }
 
   // Set currentUser attributes
@@ -76,18 +75,20 @@ const UserInfoForm = (props: Props) => {
         shippingCity: '',
         shippingState: '',
         shippingZip: '',
-        shippingCountry: ''
+        shippingCountry: '',
       })
     }
 
     const success = () => {
       if (currentUser) {
-        axios.get('/api/auth/currentUser')
-          .then(res => {
+        axios
+          .get('/api/auth/currentUser')
+          .then((res) => {
             setCurrentUser(res.data)
             // hook
             onSubmitSuccess(formState, res.data)
-          }).catch(err => {
+          })
+          .catch((err) => {
             console.error(err)
             // hook
             onSubmitError(formState, err)
@@ -118,15 +119,14 @@ const UserInfoForm = (props: Props) => {
         false
       )
 
-    // If we are using this form without a current user,
-    // bypass the submit and run the submit hook with no response
+      // If we are using this form without a current user,
+      // bypass the submit and run the submit hook with no response
     } else {
       success()
     }
   }
 
   const renderAddressFields = (shipping: boolean) => {
-
     if (shipping && formState.values.shipToBilling) {
       return null
     }
@@ -210,10 +210,7 @@ const UserInfoForm = (props: Props) => {
   const renderSubmit = () => {
     if (useSubmit) {
       return (
-        <Button
-          onClick={handleSubmit}
-          submittedText="Submitting"
-        >
+        <Button onClick={handleSubmit} submittedText="Submitting">
           Submit
         </Button>
       )
@@ -239,6 +236,5 @@ const UserInfoForm = (props: Props) => {
     </form>
   )
 }
-
 
 export default UserInfoForm

@@ -8,9 +8,8 @@ import renderHTML from 'react-render-html'
 import userContext from '@/context/userContext'
 import postsContext from '@/context/postsContext'
 import settingsContext from '@/context/settingsContext'
-import Media from '@/components/Media'
-import PageHead from '@/components/PageHead'
-import usePostFilter from '@/hooks/usePostFilter'
+import { Media, PageHead } from '@/components'
+import { usePostFilter } from '@/hooks'
 
 type Props = {
   posts?: Post[]
@@ -155,11 +154,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   }
 
   const renderTagsSection = (post: Post) => {
-    if (
-      post.tags &&
-      post.tags[0] &&
-      currentUser?.isAdmin
-    ) {
+    if (post.tags && post.tags[0] && currentUser?.isAdmin) {
       return (
         <p className="post__tags">
           Tags: <em>{renderTags(post)}</em>

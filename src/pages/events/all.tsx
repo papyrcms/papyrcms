@@ -5,9 +5,9 @@ import moment from 'moment'
 import userContext from '@/context/userContext'
 import eventsContext from '@/context/eventsContext'
 import postsContext from '@/context/postsContext'
-import PageHead from '@/components/PageHead'
-import SectionCards from '@/components/Sections/SectionCards'
-import usePostFilter from '@/hooks/usePostFilter'
+import { PageHead } from '@/components'
+import { SectionCards } from '@/Sections'
+import { usePostFilter } from '@/hooks'
 
 const EventsAllPage = () => {
   const { currentUser } = useContext(userContext)
