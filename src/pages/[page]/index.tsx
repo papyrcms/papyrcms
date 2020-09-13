@@ -4,9 +4,11 @@ import Error from 'next/error'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import _ from 'lodash'
-import postsContext from '@/context/postsContext'
-import pagesContext from '@/context/pagesContext'
-import sectionOptionsContext from '@/context/sectionOptionsContext'
+import {
+  postsContext,
+  pagesContext,
+  sectionOptionsContext,
+} from '@/context'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import keys from '@/keys'

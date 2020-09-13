@@ -2,7 +2,7 @@ import { User } from 'types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import Modal from '../Modal'
 
 const UserList = () => {

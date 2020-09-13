@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import _ from 'lodash'
 import Router from 'next/router'
 import Form from './Form'
-import postsContext from '@/context/postsContext'
+import { postsContext } from '@/context'
 import { useForm } from '@/hooks'
 
 type Props = {

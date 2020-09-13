@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Error from 'next/error'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import { AdminDashboard } from '@/components'
 import styles from './admin.module.scss'
 

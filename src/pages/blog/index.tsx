@@ -6,8 +6,7 @@ import Link from 'next/link'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import { SectionStrip } from '@/Sections'
-import blogsContext from '@/context/blogsContext'
-import postsContext from '@/context/postsContext'
+import { blogsContext, postsContext } from '@/context'
 
 const BlogPage = () => {
   const { blogs, setBlogs } = useContext(blogsContext)

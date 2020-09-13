@@ -4,7 +4,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import moment from 'moment'
 import Modal from '../Modal'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 
 const MessageList = () => {
   const [messages, setMessages] = useState<Message[]>([])

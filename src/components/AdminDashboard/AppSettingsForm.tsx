@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import settingsContext from '@/context/settingsContext'
+import { settingsContext } from '@/context'
 
-const AppSettingsForm = () => {
+const AppSettingsForm: React.FC = () => {
   const [verification, setVerification] = useState('')
   const { settings, setSettings } = useContext(settingsContext)
   const [formSettings, setFormSettings] = useState(settings)

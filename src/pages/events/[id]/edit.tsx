@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Error from 'next/error'
 import axios from 'axios'
 import moment from 'moment'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import { PostsForm, Input } from '@/components'
 import keys from '@/keys'
 

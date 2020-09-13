@@ -5,9 +5,9 @@ import {
   CardCVCElement,
   CardExpiryElement,
   CardNumberElement,
-  injectStripe
+  injectStripe,
 } from 'react-stripe-elements'
-import keysContext from '@/context/keysContext'
+import { keysContext } from '@/context'
 import Button from './Button'
 
 type CCFProps = {
@@ -17,8 +17,7 @@ type CCFProps = {
 }
 
 const CreditCardForm = injectStripe((props: CCFProps) => {
-
-  const { className = "", stripe, onSubmit } = props
+  const { className = '', stripe, onSubmit } = props
   const [validation, setValidation] = useState('')
 
   if (!stripe) return null
@@ -26,7 +25,7 @@ const CreditCardForm = injectStripe((props: CCFProps) => {
   const handleSubmit = async (event: any, resetButton: Function) => {
     event.preventDefault()
 
-    const data = await stripe.createSource({ type: "card" })
+    const data = await stripe.createSource({ type: 'card' })
 
     if (data.error) {
       setValidation(data.error.message || '')
@@ -39,24 +38,28 @@ const CreditCardForm = injectStripe((props: CCFProps) => {
 
   const fieldStyle = {
     base: {
-      color: "#333",
+      color: '#333',
       fontSize: '16',
       lineHeight: '1',
       letterSpacing: '1',
-    }
+    },
   }
 
   return (
     <div className={`credit-card-form ${className || ''}`}>
       <div className="credit-card-form__section credit-card-form__section--number">
-        <label className="credit-card-form__label">Card Number *</label>
+        <label className="credit-card-form__label">
+          Card Number *
+        </label>
         <div className="credit-card-form__input">
           <CardNumberElement style={fieldStyle} />
         </div>
       </div>
 
       <div className="credit-card-form__section credit-card-form__section--expiration">
-        <label className="credit-card-form__label">Card Expiration *</label>
+        <label className="credit-card-form__label">
+          Card Expiration *
+        </label>
         <div className="credit-card-form__input">
           <CardExpiryElement style={fieldStyle} />
         </div>
@@ -82,15 +85,12 @@ const CreditCardForm = injectStripe((props: CCFProps) => {
   )
 })
 
-
 type FormProps = {
   className?: string
   onSubmit: Function
 }
 
-
 const StripeForm = (props: FormProps) => {
-
   const { className, onSubmit } = props
   const [stripe, setStripe] = useState<stripe.Stripe | null>(null)
   const { keys } = useContext(keysContext)
@@ -108,6 +108,5 @@ const StripeForm = (props: FormProps) => {
     </StripeProvider>
   )
 }
-
 
 export default StripeForm

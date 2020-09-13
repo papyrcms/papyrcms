@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import GoogleMapReact from 'google-map-react'
-import keysContext from '@/context/keysContext'
+import { keysContext } from '@/context'
 
 type Coords = {
   lat: number
@@ -16,17 +16,11 @@ type Props = {
   zoom?: number
 }
 
-const Map = (props: Props) => {
-
-  const {
-    className = '',
-    latitude,
-    longitude,
-    zoom = 14
-  } = props
+const Map: React.FC<Props> = (props) => {
+  const { className = '', latitude, longitude, zoom = 14 } = props
 
   const { keys } = useContext(keysContext)
-  
+
   if (!latitude || !longitude) {
     return null
   }
@@ -38,14 +32,10 @@ const Map = (props: Props) => {
         defaultCenter={{ lat: latitude, lng: longitude }}
         defaultZoom={zoom}
       >
-        <Position
-          lat={latitude}
-          lng={longitude}
-        />
+        <Position lat={latitude} lng={longitude} />
       </GoogleMapReact>
     </div>
   )
 }
-
 
 export default Map

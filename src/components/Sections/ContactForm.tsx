@@ -1,6 +1,6 @@
 import { SectionOptions } from 'types'
 import React, { useContext } from 'react'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import { Input, Button } from '@/components'
 import { useForm } from '@/hooks'
 

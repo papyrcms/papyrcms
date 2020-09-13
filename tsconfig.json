@@ -4,7 +4,7 @@
     "paths": {
       "@/serverContext": ["src/utilities/serverContext"],
       "@/keys": ["src/config/keys"],
-      "@/context/*": ["src/context/*"],
+      "@/context": ["src/context/"],
       "@/hooks": ["src/hooks/"],
       "@/utilities/*": ["src/utilities/*"],
       "@/components": ["src/components/"],

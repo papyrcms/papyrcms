@@ -2,7 +2,7 @@ import { Product } from 'types'
 import React, { useContext } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
-import storeContext from '@/context/storeContext'
+import { storeContext } from '@/context'
 import { SectionStrip } from '@/Sections'
 
 const Cart = () => {

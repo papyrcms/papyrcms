@@ -4,7 +4,7 @@ import Error from 'next/error'
 import axios from 'axios'
 import _ from 'lodash'
 import moment from 'moment'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import styles from './orders.module.scss'
 
 const Orders = () => {

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import postsContext from '@/context/postsContext'
-import userContext from '@/context/userContext'
+import { postsContext, userContext } from '@/context'
 import { PostIndex, Input } from '@/components'
 import styles from './posts.module.scss'
 

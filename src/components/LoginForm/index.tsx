@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Router from 'next/router'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import { useForm } from '@/hooks'
 import Input from '../Input'
 import Button from '../Button'

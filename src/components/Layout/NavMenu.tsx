@@ -1,12 +1,11 @@
 import React, { useContext } from 'react'
 import _ from 'lodash'
 import Link from 'next/link'
-import settingsContext from '@/context/settingsContext'
-import pagesContext from '@/context/pagesContext'
+import { settingsContext, pagesContext } from '@/context'
 
 const onClick = () => {
   const checkbox = document.getElementById('nav-menu-checkbox')
-  if (checkbox) checkbox.classList.toggle('checked')
+  checkbox?.classList.toggle('checked')
 }
 
 type LinkProps = {

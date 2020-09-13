@@ -1,8 +1,6 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import settingsContext from '@/context/settingsContext'
-import storeContext from '@/context/storeContext'
-import userContext from '@/context/userContext'
+import { settingsContext, storeContext, userContext } from '@/context'
 
 type Props = {
   mainTitle: string

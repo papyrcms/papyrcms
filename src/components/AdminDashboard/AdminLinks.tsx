@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import settingsContext from '@/context/settingsContext'
+import { settingsContext } from '@/context'
 
-const AdminLinks = () => {
+const AdminLinks: React.FC = () => {
   const { settings } = useContext(settingsContext)
 
   const renderStoreMenuItems = () => {

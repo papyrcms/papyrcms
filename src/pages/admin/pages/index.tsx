@@ -3,8 +3,7 @@ import Link from 'next/link'
 import Error from 'next/error'
 import _ from 'lodash'
 import axios from 'axios'
-import userContext from '@/context/userContext'
-import pagesContext from '@/context/pagesContext'
+import { userContext, pagesContext } from '@/context'
 import styles from './pages.module.scss'
 
 const Pages = () => {

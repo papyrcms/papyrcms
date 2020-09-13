@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 import axios from 'axios'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import { PostsForm } from '@/components'
 import keys from '@/keys'
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import axios from 'axios'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import { useForm } from '@/hooks'
 import Input from './Input'
 import Button from './Button'
@@ -13,7 +13,7 @@ type Props = {
   useSubmit?: boolean
 }
 
-const UserInfoForm = (props: Props) => {
+const UserInfoForm: React.FC<Props> = (props) => {
   let {
     beforeSubmit = () => null,
     onSubmitError = () => null,

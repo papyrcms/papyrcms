@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import keys from '@/keys'
-import storeContext from '@/context/storeContext'
+import { storeContext } from '@/context'
 import { CreditCardForm, Input, UserInfoForm } from '@/components'
 import styles from './checkout.module.scss'
 

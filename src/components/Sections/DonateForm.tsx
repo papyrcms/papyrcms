@@ -1,7 +1,7 @@
 import { SectionOptions } from 'types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
-import userContext from '@/context/userContext'
+import { userContext } from '@/context'
 import { CreditCardForm, Input } from '@/components'
 
 const DonateForm: React.FC<{ className?: string }> = (props) => {
