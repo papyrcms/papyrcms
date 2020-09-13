@@ -6,6 +6,7 @@ import { postsContext, eventsContext } from '@/context'
 import { SectionStrip } from '@/Sections'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
+import styles from './events.module.scss'
 
 const EventsPage = () => {
   const { events, setEvents } = useContext(eventsContext)
@@ -41,7 +42,7 @@ const EventsPage = () => {
   }
 
   return (
-    <>
+    <div className={styles.events}>
       <PageHead title={headTitle} />
       <SectionStrip
         posts={events}
@@ -52,7 +53,7 @@ const EventsPage = () => {
         emptyMessage="There are no events coming up."
         beforePostContent={renderDate}
       />
-    </>
+    </div>
   )
 }
 

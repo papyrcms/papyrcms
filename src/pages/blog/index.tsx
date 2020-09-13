@@ -7,6 +7,7 @@ import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import { SectionStrip } from '@/Sections'
 import { blogsContext, postsContext } from '@/context'
+import styles from './blog.module.scss'
 
 const BlogPage = () => {
   const { blogs, setBlogs } = useContext(blogsContext)
@@ -64,7 +65,7 @@ const BlogPage = () => {
   }
 
   return (
-    <>
+    <div className={styles.blog}>
       <PageHead title={headTitle} />
       <SectionStrip
         posts={filteredBlogs}
@@ -76,7 +77,7 @@ const BlogPage = () => {
         beforePostContent={renderDate}
         afterPosts={renderAllBlogsLink}
       />
-    </>
+    </div>
   )
 }
 

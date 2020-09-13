@@ -2,7 +2,7 @@
 @import 'src/sass/abstracts/_variables.scss';
 @import 'src/sass/base/_animations';
 
-.page {
+.store {
   background-color: $color-grey-light;
   & > * {
     animation: moveInBottom 0.6s ease-out;

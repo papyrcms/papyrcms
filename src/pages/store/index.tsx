@@ -7,6 +7,7 @@ import { userContext, storeContext, postsContext } from '@/context'
 import { usePostFilter } from '@/hooks'
 import { PageHead } from '@/components'
 import { SectionCards } from '@/Sections'
+import styles from './store.module.scss'
 
 const StorePage = () => {
   const { cart, addToCart, products, setProducts } = useContext(
@@ -96,7 +97,7 @@ const StorePage = () => {
   }
 
   return (
-    <>
+    <div className={styles.store}>
       <PageHead title={headTitle} />
       <SectionCards
         posts={products}
@@ -110,7 +111,7 @@ const StorePage = () => {
         afterPostMedia={renderPriceAndQuantity}
         afterPostLink={renderCheckout}
       />
-    </>
+    </div>
   )
 }
 
