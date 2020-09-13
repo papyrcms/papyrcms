@@ -17,16 +17,20 @@ type Props = {
  * @prop alt - String - The alt property for a passed image
  */
 const Media = (props: Props) => {
-
   const { src, className, alt, parallax, clickable } = props
 
   // If there is no src, return nothing
-  if (src === '' || !src)
-    return null
+  if (src === '' || !src) return null
 
   // If it's a parallax image, we need the image in the style
-  if (parallax)
-    return <div className={className || ''} style={{ backgroundImage: `url(${src})` }} />
+  if (parallax) {
+    return (
+      <div
+        className={className || ''}
+        style={{ backgroundImage: `url(${src})` }}
+      />
+    )
+  }
 
   // If the src is a video, make it a video
   if (!!src.match(/\.(mp4|webm)$/i))
@@ -49,14 +53,7 @@ const Media = (props: Props) => {
       />
     )
 
-  return (
-    <img
-      className={className || ''}
-      src={src}
-      alt={alt || ''}
-    />
-  )
+  return <img className={className || ''} src={src} alt={alt || ''} />
 }
-
 
 export default Media

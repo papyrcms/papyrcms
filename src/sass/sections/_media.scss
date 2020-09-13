@@ -1,5 +1,4 @@
 .section-media {
-
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -17,9 +16,9 @@
     transform: translate(-50%, -50%);
     color: $color-white;
     text-transform: uppercase;
-    letter-spacing: .2rem;
+    letter-spacing: 0.2rem;
     text-align: center;
-    text-shadow: .2rem .2rem $color-black;
+    text-shadow: 0.2rem 0.2rem $color-black;
     width: 75%;
     z-index: 10;
 
@@ -28,21 +27,21 @@
       &:visited {
         padding: 1rem 3.5rem;
         text-transform: uppercase;
-        letter-spacing: .2rem;
+        letter-spacing: 0.2rem;
         font-size: 1.5rem;
         cursor: pointer;
-        border-radius: .3rem;
+        border-radius: 0.3rem;
         text-decoration: none;
         text-shadow: none;
-        border: .2rem solid $color-cta;
+        border: 0.2rem solid $color-cta;
         color: $color-white;
         background-color: $color-cta;
-        transition: all .3s;
+        transition: all 0.3s;
 
         &:hover {
           color: $color-cta;
           background-color: transparent;
-          border: .2rem solid $color-cta;
+          border: 0.2rem solid $color-cta;
         }
       }
     }
@@ -82,7 +81,8 @@
       background-attachment: fixed;
 
       @include respond(phone) {
-        background-attachment: scroll; // fixed can break on some phones
+        background-position: top left;
+        background-attachment: scroll; // fixed can break on phones
       }
     }
   }
