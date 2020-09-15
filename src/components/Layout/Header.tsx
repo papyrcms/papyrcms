@@ -1,22 +1,35 @@
+import { Page } from 'types'
 import React, { useContext } from 'react'
+import _ from 'lodash'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { settingsContext, storeContext, userContext } from '@/context'
+import {
+  settingsContext,
+  storeContext,
+  userContext,
+  pagesContext,
+} from '@/context'
 
 type Props = {
   mainTitle: string
   subTitle: string
 }
 
-/**
- * Header displayed in every view
- *
- * @prop mainTitle - String - Text displayed in big letters
- * @prop subTitle - String - Smaller text displayed under the main Title
- */
 const Header: React.FC<Props> = (props) => {
   const { mainTitle, subTitle } = props
   const { currentUser } = useContext(userContext)
   const { settings } = useContext(settingsContext)
+  const { pages } = useContext(pagesContext)
+  const { query } = useRouter()
+
+  const page = _.find(pages, (foundPage) => {
+    if (foundPage.route === '') foundPage.route = 'home'
+    if (foundPage.route === query.page) return true
+  }) as Page
+
+  if (page?.omitDefaultHeader) {
+    return null
+  }
 
   const renderAuthenticator = () => {
     if (currentUser) {

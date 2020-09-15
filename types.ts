@@ -4,6 +4,8 @@ export interface Page {
   created: string
   css: string
   navOrder: number
+  omitDefaultHeader: boolean
+  omitDefaultFooter: boolean
   route: string
   sections: string[]
   title: string
@@ -170,9 +172,21 @@ type Options = {
 }
 
 export interface Database extends Models {
-  findOne: <M>(model: M, conditions: Conditions, options?: Options) => M
-  findAll: <M>(model: M, conditions?: Conditions, options?: Options) => M[]
-  update: <M>(model: M, conditions: Conditions, fields: Fields) => void
+  findOne: <M>(
+    model: M,
+    conditions: Conditions,
+    options?: Options
+  ) => M
+  findAll: <M>(
+    model: M,
+    conditions?: Conditions,
+    options?: Options
+  ) => M[]
+  update: <M>(
+    model: M,
+    conditions: Conditions,
+    fields: Fields
+  ) => void
   create: <M>(model: M, fields: Fields) => M
   destroy: <M>(model: M, conditions: Conditions) => void
   destroyAll: <M>(model: M, conditions?: Conditions) => void

@@ -24,6 +24,8 @@ const updatePage = async (
     className: body.className,
     route: body.route,
     navOrder: body.navOrder,
+    omitDefaultHeader: body.omitDefaultHeader,
+    omitDefaultFooter: body.omitDefaultFooter,
     css: body.css,
     sections: [] as string[],
   }

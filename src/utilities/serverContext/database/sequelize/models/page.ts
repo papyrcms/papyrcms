@@ -11,6 +11,8 @@ const page = (sequelize: any, DataTypes: any) => {
     className: { type: DataTypes.STRING },
     route: { type: DataTypes.STRING, allowNull: false, unique: true },
     navOrder: { type: DataTypes.INTEGER },
+    omitDefaultHeader: { type: DataTypes.BOOLEAN },
+    omitDefaultFooter: { type: DataTypes.BOOLEAN },
 
     // This will be JSON
     sections: {

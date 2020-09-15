@@ -1,12 +1,8 @@
-import React from 'react'
-
-const excludeFooterRoutes = [
-  '/admin',
-  '/posts/create',
-  '/posts',
-  '/blog/create',
-  '/contact',
-]
+import React, { useContext } from 'react'
+import _ from 'lodash'
+import { useRouter } from 'next/router'
+import { Page } from 'types'
+import { pagesContext } from '@/context'
 
 type Props = {
   footerTitle: string
@@ -15,7 +11,17 @@ type Props = {
 }
 
 const Footer: React.FC<Props> = (props) => {
-  // TODO: Only include the footer if the current route is not in the array
+  const { pages } = useContext(pagesContext)
+  const { query } = useRouter()
+
+  const page = _.find(pages, (foundPage) => {
+    if (foundPage.route === '') foundPage.route = 'home'
+    if (foundPage.route === query.page) return true
+  }) as Page
+
+  if (page?.omitDefaultFooter) {
+    return null
+  }
 
   return (
     <footer className="footer">

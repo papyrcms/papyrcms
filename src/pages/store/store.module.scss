@@ -5,6 +5,6 @@
 .store {
   background-color: $color-grey-light;
   & > * {
-    animation: moveInBottom 0.6s ease-out;
+    animation: fadeIn 0.6s ease-out;
   }
 }

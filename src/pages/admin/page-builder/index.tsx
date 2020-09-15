@@ -23,6 +23,8 @@ const PageBuilder = (props: Props) => {
     route: string
     className: string
     navOrder: number
+    omitDefaultHeader: boolean
+    omitDefaultFooter: boolean
     sections: any[]
     css: string
     sectionSelect: 'Standard'
@@ -36,6 +38,8 @@ const PageBuilder = (props: Props) => {
     route: '',
     className: '',
     navOrder: 0,
+    omitDefaultHeader: false,
+    omitDefaultFooter: false,
     sections: [],
     css: '',
     sectionSelect: 'Standard',
@@ -47,6 +51,8 @@ const PageBuilder = (props: Props) => {
       css: '',
 
       // For type safety
+      omitDefaultFooter: false,
+      omitDefaultHeader: false,
       _id: 'fake_id',
       created: new Date().toISOString(),
       title: 'Page Preview',
@@ -60,6 +66,8 @@ const PageBuilder = (props: Props) => {
     INITIAL_STATE.route = props.page.route
     INITIAL_STATE.navOrder = props.page.navOrder
     INITIAL_STATE.className = props.page.className
+    INITIAL_STATE.omitDefaultHeader = !!props.page.omitDefaultHeader
+    INITIAL_STATE.omitDefaultFooter = !!props.page.omitDefaultFooter
     INITIAL_STATE.css = props.page.css
     INITIAL_STATE.sections = _.map(props.page.sections, (section) => {
       const parsedSection = JSON.parse(section)
@@ -332,6 +340,8 @@ const PageBuilder = (props: Props) => {
       route,
       className,
       navOrder,
+      omitDefaultHeader,
+      omitDefaultFooter,
       sections,
       id,
       css,
@@ -341,6 +351,8 @@ const PageBuilder = (props: Props) => {
       route: route,
       className,
       navOrder,
+      omitDefaultFooter,
+      omitDefaultHeader,
       sections,
       css,
     }
@@ -421,6 +433,8 @@ const PageBuilder = (props: Props) => {
     route,
     className,
     navOrder,
+    omitDefaultFooter,
+    omitDefaultHeader,
     validation,
     page,
     css,
@@ -476,6 +490,26 @@ const PageBuilder = (props: Props) => {
             value={className}
             onChange={(event: any) =>
               setPageState('className', event.target.value)
+            }
+          />
+
+          <Input
+            id="omit-default-header-input"
+            label="Omit Default Header"
+            type="checkbox"
+            value={omitDefaultHeader}
+            onChange={(event: any) =>
+              setPageState('omitDefaultHeader', event.target.checked)
+            }
+          />
+
+          <Input
+            id="omit-default-footer-input"
+            label="Omit Default Footer"
+            type="checkbox"
+            value={omitDefaultFooter}
+            onChange={(event: any) =>
+              setPageState('omitDefaultFooter', event.target.checked)
             }
           />
         </div>

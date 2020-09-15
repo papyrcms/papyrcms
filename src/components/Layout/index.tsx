@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
-import { postsContext } from '@/context'
+import { postsContext, pagesContext } from '@/context'
 import { usePostFilter } from '@/hooks'
 import Notification from './Notification'
 import Header from './Header'
@@ -11,7 +11,7 @@ import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
 
 const Layout: React.FC = (props) => {
-  let { posts } = useContext(postsContext)
+  const { posts } = useContext(postsContext)
 
   const settings = {
     maxPosts: 4,

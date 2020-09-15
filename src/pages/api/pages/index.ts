@@ -14,6 +14,8 @@ const createPage = async (body: any, database: Database) => {
     className: body.className,
     route: body.route,
     navOrder: body.navOrder,
+    omitDefaultHeader: body.omitDefaultHeader,
+    omitDefaultFooter: body.omitDefaultFooter,
     css: body.css,
     sections: [] as string[],
   }
