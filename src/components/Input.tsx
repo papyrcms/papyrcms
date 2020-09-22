@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 type Props = {
   className?: string
   type?: string
@@ -17,7 +16,6 @@ type Props = {
   validation?: string
   formState?: { [key: string]: any }
 }
-
 
 /**
  * Input is a default text-type input component
@@ -36,7 +34,6 @@ type Props = {
  * @prop formState - Object - The object passed from the useForm hook. This will handle most of the other props if they are not set.
  */
 const Input = (props: Props) => {
-
   // Instantiate props with defaults
   let {
     className = '',
@@ -52,7 +49,7 @@ const Input = (props: Props) => {
     onBlur = () => null,
     children = null,
     validation = '',
-    formState
+    formState,
   } = props
 
   // Set formstate vars, but don't overwrite if passed explicitely
@@ -63,16 +60,17 @@ const Input = (props: Props) => {
     if (!onBlur()) onBlur = formState.validateField
   }
 
-
   // Render label if present
   const renderLabel = () => {
     if (label) {
-      return <label className="input__label" htmlFor={id}>
-        {label}{required && ' *'}
-      </label>
+      return (
+        <label className="input__label" htmlFor={id}>
+          {label}
+          {required && ' *'}
+        </label>
+      )
     }
   }
-
 
   // Render the input
   const renderInput = () => {
@@ -84,16 +82,17 @@ const Input = (props: Props) => {
             placeholder={placeholder}
             name={name}
             id={id}
-            className={`input__textarea ${validation && 'input__textarea--invalid'}`}
-            value={value.toString() || ''}
+            className={`input__textarea ${
+              validation && 'input__textarea--invalid'
+            }`}
+            value={value?.toString() || ''}
             required={!!required}
-            onChange={event => onChange(event)}
-            onBlur={event => onBlur(event)}
-            onFocus={event => onFocus(event)}
+            onChange={(event) => onChange(event)}
+            onBlur={(event) => onBlur(event)}
+            onFocus={(event) => onFocus(event)}
           />
         </>
       )
-
     } else if (type === 'checkbox') {
       return (
         <>
@@ -105,9 +104,9 @@ const Input = (props: Props) => {
             className="input__checkbox"
             checked={!!value}
             required={!!required}
-            onChange={event => onChange(event)}
-            onBlur={event => onBlur(event)}
-            onFocus={event => onFocus(event)}
+            onChange={(event) => onChange(event)}
+            onBlur={(event) => onBlur(event)}
+            onFocus={(event) => onFocus(event)}
           />
           {renderLabel()}
         </>
@@ -122,17 +121,18 @@ const Input = (props: Props) => {
           placeholder={placeholder}
           name={name}
           id={id}
-          className={`input__input ${validation && 'input__input--invalid'}`}
-          value={value.toString() || ''}
+          className={`input__input ${
+            validation && 'input__input--invalid'
+          }`}
+          value={value?.toString() || ''}
           required={!!required}
-          onChange={event => onChange(event)}
-          onBlur={event => onBlur(event)}
-          onFocus={event => onFocus(event)}
+          onChange={(event) => onChange(event)}
+          onBlur={(event) => onBlur(event)}
+          onFocus={(event) => onFocus(event)}
         />
       </>
     )
   }
-
 
   return (
     <div className={`input ${className}`}>
@@ -142,6 +142,5 @@ const Input = (props: Props) => {
     </div>
   )
 }
-
 
 export default Input
