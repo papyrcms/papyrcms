@@ -8,13 +8,20 @@ export const init = async () => {
   // console.log('Connecting to Sequelize DB')
   const sequelize = new Sequelize.Sequelize(keys.databaseURI, {
     logging: false,
+    ssl: process.env.NODE_ENV === 'production',
+    dialect: keys.databaseDriver,
+    protocol: keys.databaseDriver,
+    dialectOptions: {
+      ssl: {
+        require: process.env.NODE_ENV === 'production',
+        rejectUnauthorized: false,
+      },
+    },
   })
 
   const initializedModels: any = {}
-  _.forEach(models, (model) => {
-    const modelName =
-      model.name.charAt(0).toUpperCase() + model.name.slice(1)
-    initializedModels[modelName] = model(sequelize, Sequelize)
+  _.forEach(models, (model, key) => {
+    initializedModels[key] = model(sequelize, Sequelize)
   })
 
   _.forEach(initializedModels, (model) => {
