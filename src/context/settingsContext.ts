@@ -10,12 +10,15 @@ export default createContext<SettingsContext>({
   settings: {
     enableMenu: false,
     enableStore: false,
+    storeMenuLocation: 0,
     enableBlog: false,
+    blogMenuLocation: 0,
     enableEvents: false,
+    eventsMenuLocation: 0,
     enableCommenting: false,
     enableRegistration: false,
     enableEmailingToAdmin: false,
-    enableEmailingToUsers: false
+    enableEmailingToUsers: false,
   },
-  setSettings: (settings: Settings) => {}
+  setSettings: (settings: Settings) => {},
 })

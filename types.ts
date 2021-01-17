@@ -97,8 +97,11 @@ export interface Message {
 export interface Settings {
   enableMenu: boolean
   enableStore: boolean
+  storeMenuLocation: number
   enableBlog: boolean
+  blogMenuLocation: number
   enableEvents: boolean
+  eventsMenuLocation: number
   enableCommenting: boolean
   enableRegistration: boolean
   enableEmailingToAdmin: boolean

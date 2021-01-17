@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import _ from 'lodash'
 import Link from 'next/link'
 import { settingsContext, pagesContext } from '@/context'
+import { Page } from 'types'
 
 const onClick = () => {
   const checkbox = document.getElementById('nav-menu-checkbox')
@@ -44,45 +45,42 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
   const { pages } = useContext(pagesContext)
   const { settings } = useContext(settingsContext)
 
-  const renderBlogItem = () => {
+  const renderMenuItems = () => {
+    let menuPages = [...pages]
+
     if (settings.enableBlog) {
-      return (
-        <NavLink href="/blog" exact>
-          Blog
-        </NavLink>
-      )
+      menuPages.push({
+        _id: 'blog',
+        title: 'Blog',
+        route: 'blog',
+        navOrder: settings.blogMenuLocation,
+      } as Page)
     }
-  }
 
-  const renderEventsItem = () => {
     if (settings.enableEvents) {
-      return (
-        <NavLink href="/events" exact>
-          Events
-        </NavLink>
-      )
+      menuPages.push({
+        _id: 'events',
+        title: 'Events',
+        route: 'events',
+        navOrder: settings.eventsMenuLocation,
+      } as Page)
     }
-  }
 
-  const renderStoreItem = () => {
-    if (settings['enableStore']) {
-      return (
-        <NavLink href="/store" exact>
-          Store
-        </NavLink>
-      )
+    if (settings.enableStore) {
+      menuPages.push({
+        _id: 'store',
+        title: 'Store',
+        route: 'store',
+        navOrder: settings.storeMenuLocation,
+      } as Page)
     }
-  }
 
-  const renderFirstMenuItems = () => {
-    const navPages = _.filter(pages, (page) => {
-      return (
-        page.navOrder &&
-        page.navOrder !== 0 &&
-        page.navOrder <= 5 &&
-        page.title
-      )
-    }).sort((a, b) =>
+    menuPages = _.filter(
+      menuPages,
+      (page) => !!page.title && !!page.navOrder
+    )
+
+    menuPages.sort((a, b) =>
       typeof a === 'object' &&
       typeof b === 'object' &&
       a.navOrder > b.navOrder
@@ -90,7 +88,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
         : -1
     )
 
-    return _.map(navPages, (page) => {
+    return _.map(menuPages, (page) => {
       if (typeof page === 'object') {
         const href = page.route === 'home' ? '/' : `/${page.route}`
         return (
@@ -102,28 +100,28 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
     })
   }
 
-  const renderLastMenuItems = () => {
-    const navPages = _.filter(pages, (page) => {
-      return page.navOrder && page.navOrder > 5 && page.title
-    }).sort((a, b) =>
-      typeof a === 'object' &&
-      typeof b === 'object' &&
-      a.navOrder > b.navOrder
-        ? 1
-        : -1
-    )
+  // const renderLastMenuItems = () => {
+  //   const navPages = _.filter(pages, (page) => {
+  //     return page.navOrder && page.navOrder > 5 && page.title
+  //   }).sort((a, b) =>
+  //     typeof a === 'object' &&
+  //     typeof b === 'object' &&
+  //     a.navOrder > b.navOrder
+  //       ? 1
+  //       : -1
+  //   )
 
-    return _.map(navPages, (page) => {
-      if (typeof page === 'object') {
-        const href = page.route === 'home' ? '/' : `/${page.route}`
-        return (
-          <NavLink href={href} key={page._id}>
-            {page.title}
-          </NavLink>
-        )
-      }
-    })
-  }
+  //   return _.map(navPages, (page) => {
+  //     if (typeof page === 'object') {
+  //       const href = page.route === 'home' ? '/' : `/${page.route}`
+  //       return (
+  //         <NavLink href={href} key={page._id}>
+  //           {page.title}
+  //         </NavLink>
+  //       )
+  //     }
+  //   })
+  // }
 
   const renderLogo = () => {
     if (props.logo) {
@@ -150,11 +148,12 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
             className="nav-menu__item nav-menu__item--hamburger"
           />
 
-          {renderFirstMenuItems()}
+          {/* {renderFirstMenuItems()}
           {renderBlogItem()}
           {renderEventsItem()}
           {renderStoreItem()}
-          {renderLastMenuItems()}
+          {renderLastMenuItems()} */}
+          {renderMenuItems()}
         </div>
       </ul>
     </nav>

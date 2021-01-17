@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import { settingsContext } from '@/context'
+import Input from '../Input'
 
 const AppSettingsForm: React.FC = () => {
   const [verification, setVerification] = useState('')
@@ -30,6 +31,54 @@ const AppSettingsForm: React.FC = () => {
     }
   }
 
+  const renderSettingsInput = (
+    newSetting: any,
+    key: string,
+    label: string
+  ) => {
+    switch (typeof newSetting) {
+      case 'number':
+        return (
+          <>
+            <Input
+              label={label}
+              id={key}
+              type="number"
+              value={newSetting}
+              onChange={(event: any) =>
+                setFormSettings({
+                  ...formSettings,
+                  [key]: parseInt(event.target.value),
+                })
+              }
+            />
+          </>
+        )
+
+      case 'boolean':
+      default:
+        return (
+          <>
+            <input
+              className="app-settings-form__checkbox"
+              type="checkbox"
+              id={key}
+              checked={newSetting ? true : false}
+              onChange={() =>
+                setFormSettings({
+                  ...formSettings,
+                  [key]: !newSetting,
+                })
+              }
+            />
+            <label className="app-settings-form__label" htmlFor={key}>
+              {label}
+            </label>
+          </>
+        )
+    }
+  }
+
   const renderSettingsInputs = () => {
     return _.map(settings, (setting, key) => {
       // Format label
@@ -41,21 +90,7 @@ const AppSettingsForm: React.FC = () => {
 
       return (
         <div className="app-settings-form__field" key={key}>
-          <input
-            className="app-settings-form__checkbox"
-            type="checkbox"
-            id={key}
-            checked={newSetting ? true : false}
-            onChange={() =>
-              setFormSettings({
-                ...formSettings,
-                [key]: !newSetting,
-              })
-            }
-          />
-          <label className="app-settings-form__label" htmlFor={key}>
-            {label}
-          </label>
+          {renderSettingsInput(newSetting, key, label)}
         </div>
       )
     })
