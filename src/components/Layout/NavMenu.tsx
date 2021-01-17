@@ -17,15 +17,8 @@ type LinkProps = {
 }
 
 const NavLink: React.FC<LinkProps> = (props) => {
-  let href
-  if (props.exact) {
-    href = props.href
-  } else {
-    href = props.href === '/' ? '/' : '/[page]'
-  }
-
   return (
-    <Link href={href} as={props.href}>
+    <Link href={props.href}>
       <a
         className="nav-menu__item"
         title={props.title || props.children}
@@ -99,29 +92,6 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
       }
     })
   }
-
-  // const renderLastMenuItems = () => {
-  //   const navPages = _.filter(pages, (page) => {
-  //     return page.navOrder && page.navOrder > 5 && page.title
-  //   }).sort((a, b) =>
-  //     typeof a === 'object' &&
-  //     typeof b === 'object' &&
-  //     a.navOrder > b.navOrder
-  //       ? 1
-  //       : -1
-  //   )
-
-  //   return _.map(navPages, (page) => {
-  //     if (typeof page === 'object') {
-  //       const href = page.route === 'home' ? '/' : `/${page.route}`
-  //       return (
-  //         <NavLink href={href} key={page._id}>
-  //           {page.title}
-  //         </NavLink>
-  //       )
-  //     }
-  //   })
-  // }
 
   const renderLogo = () => {
     if (props.logo) {
