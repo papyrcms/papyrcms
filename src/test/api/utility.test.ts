@@ -33,12 +33,15 @@ describe('/api/utility', () => {
     const expectedSettings = {
       enableMenu: true,
       enableRegistration: true,
+      blogMenuLocation: 1,
       enableBlog: true,
       enableCommenting: true,
       enableEmailingToAdmin: true,
       enableEmailingToUsers: true,
       enableEvents: true,
+      eventsMenuLocation: 10,
       enableStore: true,
+      storeMenuLocation: 100,
     }
 
     it('returns the settings that were posted', async () => {
