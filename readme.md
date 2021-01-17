@@ -48,7 +48,7 @@ Pages are how you can design the different pages of your site. They all consist 
 - Page Wrapper Classname
   - You can enter some text here to add a class to the page if you want to add your own custom CSS.
 
-Each page is also made up of [Sections](https://github.com/drkgrntt/papyr-cms/blob/master/src/components/Sections/readme.md). Each section will have the following attributes (if they apply to the section):
+Each page is also made up of [Sections](https://github.com/drkgrntt/papyr-cms/blob/master/docs/sections.md). Each section will have the following attributes (if they apply to the section):
 
 - Section Title
   - This will be a title or header for the section.
@@ -56,7 +56,7 @@ Each page is also made up of [Sections](https://github.com/drkgrntt/papyr-cms/bl
   - You can enter some text here to add a class to the section if you want to add your own custom CSS.
 - Required post tags
   - This is a comma-separated list of post tags in order to determine which content post(s) will fill out your section.
-Maximum number of posts
+    Maximum number of posts
   - This is the maximum number of posts that will appear in the section.
 
 There are several types of sections you can choose from. Below is a basic overview of the sections:
@@ -150,6 +150,7 @@ First (obviously), clone the repository and run `npm install` to get your node_m
 ### config/dev.js
 
 Inside the /config directory, create a file called `dev.js`. When not in production, the app will refer to this file for all of its "keys". If you reference the sibling file `prod.js`, you will see that in production, environment variables are used. In `dev.js`, paste the following object, and add all of your own values.
+
 ```
     module.exports = {
       // Stripe
@@ -268,6 +269,7 @@ So far, end-to-end tests have been written for Papyr CMS using Mocha. They have 
 
 - An admin user needs to exist.
 - In `dev.js`, add the following block of code:
+
 ```
   test: {
   oldPass: "",
@@ -277,11 +279,11 @@ So far, end-to-end tests have been written for Papyr CMS using Mocha. They have 
   }
 ```
 
-  - `oldPass` is the admin user's password
-  - `newPass` is any other string to change the admin user's password to
-    - This can be the same as `oldPass` in order to run the test back-to-back
-  - `token` is the admin user's JWT. This can be obtained by logging into the admin's account, and entering in the console `localStorage.getItem('token')
-  - `tokenRpc` is a token passed in the url when requesting a password change. This can be obtained by requesting a password change for the admin user, and then getting the token from the link provided in the email.
+- `oldPass` is the admin user's password
+- `newPass` is any other string to change the admin user's password to
+  - This can be the same as `oldPass` in order to run the test back-to-back
+- `token` is the admin user's JWT. This can be obtained by logging into the admin's account, and entering in the console `localStorage.getItem('token')
+- `tokenRpc` is a token passed in the url when requesting a password change. This can be obtained by requesting a password change for the admin user, and then getting the token from the link provided in the email.
 - A content post with the post tags "email-template, welcome" is required.
 
 inb4 - it works on my machine.
