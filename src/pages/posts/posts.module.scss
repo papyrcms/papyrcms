@@ -9,15 +9,16 @@
 .top {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   padding: 1rem 0;
 
   border-bottom: 0.1rem solid $color-grey-dark;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
 
-  @include respond(tab-port) {
-    margin-bottom: 0;
-    flex-direction: column;
+  @include respond(tab-land) {
+    flex-direction: row;
+    margin-bottom: 2rem;
   }
 }
 
@@ -26,7 +27,5 @@
 }
 
 .header {
-  @include respond(phone) {
-    letter-spacing: 0.3rem;
-  }
+  letter-spacing: 0.3rem;
 }

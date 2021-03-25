@@ -1,5 +1,4 @@
 .donate-form {
-
   @include sectionStyle();
 
   &__thanks {
@@ -7,17 +6,16 @@
   }
 
   &__form {
-
     max-width: $max-text-width;
     margin: 0 auto;
 
     &--top {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       grid-gap: $gap-width;
 
-      @include respond(phone) {
-        grid-template-columns: 1fr;
+      @include respond(tab-port) {
+        grid-template-columns: 1fr 1fr;
       }
     }
   }

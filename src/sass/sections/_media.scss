@@ -48,19 +48,19 @@
   }
 
   &__title {
-    font-size: 4rem;
+    font-size: 3rem;
 
-    @include respond(phone) {
-      font-size: 3rem;
+    @include respond(tab-port) {
+      font-size: 4rem;
     }
   }
 
   &__subtext {
-    font-size: 2rem;
+    font-size: 1.6rem;
+    font-weight: 400;
 
-    @include respond(phone) {
-      font-size: 1.6rem;
-      font-weight: 400;
+    @include respond(tab-port) {
+      font-size: 2rem;
     }
   }
 
@@ -75,20 +75,20 @@
       min-height: 80vh;
       min-width: 100%;
       position: relative;
-      background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
-      background-attachment: fixed;
+      background-position: top left;
+      background-attachment: scroll; // fixed can break on phones
 
-      @include respond(phone) {
-        background-position: top left;
-        background-attachment: scroll; // fixed can break on phones
+      @include respond(tab-port) {
+        background-position: center;
+        background-attachment: fixed;
       }
     }
   }
 
   &__empty {
-    padding: 5rem 10vw;
+    padding: 5rem 3vw;
     padding-bottom: 10rem;
 
     @include respond(tab-port) {
@@ -96,8 +96,8 @@
       padding-bottom: 10rem;
     }
 
-    @include respond(phone) {
-      padding: 5rem 3vw;
+    @include respond(tab-land) {
+      padding: 5rem 10vw;
       padding-bottom: 10rem;
     }
   }

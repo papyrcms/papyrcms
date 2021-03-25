@@ -1,12 +1,11 @@
 .user-list {
-
   &__list {
     list-style-type: none;
   }
 
   &__user {
-    border-bottom: .1rem solid $color-grey;
-    padding: .5rem;
+    border-bottom: 0.1rem solid $color-grey;
+    padding: 0.5rem;
   }
 
   &__item {
@@ -15,15 +14,14 @@
   }
 
   &__check-info {
-    
   }
 
   &__info {
-    margin-left: 3rem;
+    margin-left: 0;
     overflow: hidden;
 
-    @include respond(phone) {
-      margin-left: 0;
+    @include respond(tab-port) {
+      margin-left: 3rem;
     }
 
     display: flex;
@@ -32,26 +30,27 @@
 
     height: 0;
     z-index: -10;
-    transition: .3s;
-    
+    transition: 0.3s;
+
     &--visible {
       height: 14rem;
     }
   }
 
   &__options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
     .button {
-      margin-left: .5rem;
+      margin-left: 0;
+      margin-bottom: 0.5rem;
     }
 
-    @include respond(phone) {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-
+    @include respond(tab-port) {
+      display: block;
       .button {
-        margin-left: 0;
-        margin-bottom: 0.5rem;
+        margin-left: 0.5rem;
       }
     }
   }

@@ -3,16 +3,10 @@
 
 .main {
   background-color: $color-grey-light;
-  padding: 5rem 15vw;
+  padding: 5rem 5vw;
 
-  @include respond(tab-port) {
-    padding: 5rem 5vw;
-    padding-bottom: 10rem;
-  }
-
-  @include respond(phone) {
-    padding: 5rem 3vw;
-    padding-bottom: 10rem;
+  @include respond(tab-land) {
+    padding: 5rem 15vw;
   }
 }
 

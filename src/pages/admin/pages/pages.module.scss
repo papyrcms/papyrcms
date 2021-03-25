@@ -2,7 +2,7 @@
 @import 'src/sass/abstracts/_variables.scss';
 
 .main {
-  padding: 5rem 20vw;
+  padding: 5rem 3vw;
   background-color: $color-grey-light;
 
   @include respond(tab-port) {
@@ -10,8 +10,8 @@
     padding-bottom: 10rem;
   }
 
-  @include respond(phone) {
-    padding: 5rem 3vw;
+  @include respond(tab-land) {
+    padding: 5rem 20vw;
     padding-bottom: 10rem;
   }
 }
@@ -19,18 +19,22 @@
 .page {
   list-style: none;
   display: flex;
+  flex-direction: column;
+  border-bottom: 0.1rem solid $color-grey;
+  padding: 1rem 0;
 
-  @include respond(phone) {
-    flex-direction: column;
-    border-bottom: 0.1rem solid $color-grey;
-    padding: 1rem 0;
+  @include respond(tab-port) {
+    flex-direction: row;
+    border: none;
+    padding: 0;
   }
 }
 
 .linkDivider {
-  margin: 0 1rem;
+  display: none;
 
-  @include respond(phone) {
-    display: none;
+  @include respond(tab-port) {
+    display: block;
+    margin: 0 1rem;
   }
 }

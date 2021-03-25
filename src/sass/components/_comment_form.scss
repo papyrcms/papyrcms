@@ -1,5 +1,4 @@
 .comment-form {
-
   &__text-editor {
     height: 15rem;
     width: 100%;
@@ -11,7 +10,7 @@
   }
 
   &.detached {
-    width: 50%;
+    width: 90%;
     border-top: none;
     align-self: flex-end;
     padding: 0;
@@ -22,8 +21,8 @@
     bottom: 1rem;
     right: 1rem;
 
-    @include respond(phone) {
-      width: 90%;
+    @include respond(tab-port) {
+      width: 50%;
     }
   }
 
@@ -32,16 +31,16 @@
   }
 
   &.detached > &__text-editor {
-    margin: .5rem 0;
+    margin: 0.5rem 0;
   }
 
   &.detached &__detach {
     font-weight: 700;
-    border: .2rem solid $color-grey;
-    background-color: rgba($color-grey, .2);
+    border: 0.2rem solid $color-grey;
+    background-color: rgba($color-grey, 0.2);
     padding: 0 1rem;
     line-height: 2;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
   }
 
   &__label {
@@ -55,7 +54,6 @@
   }
 
   &__detach {
-
     &--label {
       font-style: italic;
     }
@@ -71,12 +69,12 @@
       width: 2.5rem;
       height: 2.5rem;
       margin-left: $gap-width;
-      border: .2rem solid $color-grey-dark;
+      border: 0.2rem solid $color-grey-dark;
       border-radius: 50%;
       cursor: pointer;
       background-color: $color-grey-light;
-      transform: translateY(.75rem);
-      transition: all .2s;
+      transform: translateY(0.75rem);
+      transition: all 0.2s;
     }
 
     &--input:checked + * > &--span {

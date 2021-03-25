@@ -1,46 +1,34 @@
 .section-cards {
-
   @include sectionStyle();
 
   &__list {
-
     list-style-type: none;
     display: grid;
-
-    &--3 {
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: $gap-width;
-    }
-
-    &--4 {
-      grid-template-columns: repeat(4, 1fr);
-      grid-gap: $gap-width;
-
-      @include respond(tab-land) {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+    grid-template-columns: 1fr;
+    grid-gap: 5rem;
 
     @include respond(tab-port) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @include respond(phone) {
-      grid-template-columns: 1fr;
-      grid-gap: 5rem;
+    &--3,
+    &--4 {
+      @include respond(tab-land) {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: $gap-width;
+      }
+    }
+
+    &--4 {
+      @include respond(desktop) {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
   }
 
   &__header {
     margin-bottom: $gap-width;
-
-    @include respond(tab-port) {
-      letter-spacing: .5rem;
-    }
-
-    @include respond(phone) {
-      letter-spacing: .3rem;
-    }
+    letter-spacing: 0.3rem;
   }
 
   &__card {
@@ -49,14 +37,9 @@
   }
 
   &__title {
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     font-size: 2rem;
     font-weight: 500;
-
-    @include respond(phone) {
-      font-size: 3rem;
-      font-weight: 400;
-    }
   }
 
   &__image {
@@ -64,10 +47,10 @@
     box-shadow: $shadow-low;
     justify-self: center;
     backface-visibility: hidden;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
-      transform: scale(1.008) translate(.2rem, -.3rem);
+      transform: scale(1.008) translate(0.2rem, -0.3rem);
       box-shadow: $shadow-high;
     }
   }

@@ -7,14 +7,7 @@
 
   &__header {
     margin-bottom: $gap-width;
-
-    @include respond(tab-port) {
-      letter-spacing: 0.5rem;
-    }
-
-    @include respond(phone) {
-      letter-spacing: 0.3rem;
-    }
+    letter-spacing: 0.3rem;
   }
 
   &__title {
@@ -24,7 +17,7 @@
     margin-bottom: $gap-width * 3;
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     grid-gap: $gap-width;
     align-items: center;
 
@@ -32,17 +25,18 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @include respond(phone) {
-      grid-template-columns: 1fr;
+    @include respond(tab-land) {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
   &__text {
     @include contentStyle();
 
-    grid-column: span 2;
+    grid-column: span 1;
     height: 100%;
     padding-top: 0;
+    order: 1;
 
     h3 {
       line-height: 1;
@@ -50,11 +44,11 @@
     }
 
     @include respond(tab-port) {
-      grid-column: span 1;
+      order: unset;
     }
 
-    @include respond(phone) {
-      order: 1;
+    @include respond(tab-land) {
+      grid-column: span 2;
     }
 
     &--wide {

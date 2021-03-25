@@ -1,6 +1,9 @@
 .header {
-
-  background: linear-gradient(45deg, lighten($color-primary, 10%), darken($color-primary, 30%));
+  background: linear-gradient(
+    45deg,
+    lighten($color-primary, 10%),
+    darken($color-primary, 30%)
+  );
   height: 40rem;
 
   &__container {
@@ -11,42 +14,43 @@
 
     max-width: $max-section-width;
     margin: 0 auto;
-    padding: 0 10rem;
     height: 100%;
+    padding: 6rem 0;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
 
-    @include respond(tab-land) {
-      text-align: center;
-      justify-content: center;
-      flex-direction: column;
+    @include respond(tab-port) {
+      padding: 0 10rem;
     }
 
-    @include respond(phone) {
-      padding: 6rem 0;
+    @include respond(tab-land) {
+      justify-content: space-between;
+      flex-direction: row;
     }
   }
 
   &__menu-item {
-
     &:not(:last-child) {
-      border-right: .1rem solid $color-grey-light;
+      border-right: 0.1rem solid $color-grey-light;
     }
 
     @include respond(phone) {
-      letter-spacing: .2rem;
+      letter-spacing: 0.2rem;
     }
 
     &--1 {
-      animation: moveInRight 1s ease-out .3s;
+      animation: moveInRight 1s ease-out 0.3s;
       animation-fill-mode: backwards;
     }
 
     &--2 {
-      animation: moveInRight 1s ease-out .6s;
+      animation: moveInRight 1s ease-out 0.6s;
       animation-fill-mode: backwards;
     }
 
     &--3 {
-      animation: moveInRight 1s ease-out .9s;
+      animation: moveInRight 1s ease-out 0.9s;
       animation-fill-mode: backwards;
     }
 
@@ -63,9 +67,9 @@
     color: $color-grey-light;
     list-style-type: none;
     display: inline-block;
-    letter-spacing: .3rem;
+    letter-spacing: 0.3rem;
     padding: 1rem 2rem;
-    transition: all .4s;
+    transition: all 0.4s;
 
     &:hover {
       background-color: $color-grey-light;

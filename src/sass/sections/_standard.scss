@@ -3,19 +3,11 @@
 }
 
 .post {
-
   max-width: $max-text-width;
   margin: 0 auto;
 
   &__title {
-    @include respond(tab-port) {
-      letter-spacing: .4rem;
-    }
-
-    @include respond(phone) {
-      // font-size: 2.5rem;
-      letter-spacing: .3rem;
-    }
+    letter-spacing: 0.3rem;
   }
 
   &__tags {
@@ -34,7 +26,8 @@
     max-height: 50rem;
     text-align: center;
 
-    img, video {
+    img,
+    video {
       max-width: 100%;
       max-height: 40rem;
       object-fit: contain;
@@ -55,10 +48,7 @@
 
     & > * {
       margin-left: 2rem;
-
-      @include respond(phone) {
-        padding: .5rem 1rem;
-      }
+      padding: 0.5rem 1rem;
     }
   }
 }

@@ -1,11 +1,10 @@
 .credit-card-form {
-
   display: grid;
   grid-gap: 2rem;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
 
-  @include respond(phone) {
-    grid-template-columns: 1fr;
+  @include respond(tab-port) {
+    grid-template-columns: 1fr 1fr;
   }
 
   &__section {
@@ -13,10 +12,10 @@
     flex-direction: column;
 
     &--number {
-      grid-column: span 2;
+      grid-column: span 1;
 
-      @include respond(phone) {
-        grid-column: span 1;
+      @include respond(tab-port) {
+        grid-column: span 2;
       }
     }
   }
@@ -34,22 +33,22 @@
 
   &__validation {
     color: $color-tertiary;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     font-size: 1.4rem;
     font-style: italic;
-    grid-column: span 2;
+    grid-column: span 1;
 
-    @include respond(phone) {
-      grid-column: span 1;
+    @include respond(tab-port) {
+      grid-column: span 2;
     }
   }
 
   &__submit {
-    grid-column: span 2;
+    grid-column: span 1;
     justify-self: end;
 
-    @include respond(phone) {
-      grid-column: span 1;
+    @include respond(tab-port) {
+      grid-column: span 2;
     }
   }
 }

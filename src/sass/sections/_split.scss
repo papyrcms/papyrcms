@@ -7,13 +7,10 @@
 
   &__header {
     margin-bottom: $gap-width;
+    letter-spacing: 0.3rem;
 
     @include respond(tab-port) {
       letter-spacing: 0.5rem;
-    }
-
-    @include respond(phone) {
-      letter-spacing: 0.3rem;
     }
   }
 
@@ -22,14 +19,14 @@
 
   &__post {
     margin-bottom: $gap-width * 3;
+    grid-template-columns: 1fr;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
     grid-gap: $gap-width;
     align-items: center;
 
-    @include respond(phone) {
-      grid-template-columns: 1fr;
+    @include respond(tab-port) {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
@@ -39,6 +36,7 @@
     grid-column: span 1;
     height: 100%;
     padding-top: 0;
+    order: 1;
 
     h3 {
       line-height: 1;
@@ -46,11 +44,7 @@
     }
 
     @include respond(tab-port) {
-      grid-column: span 1;
-    }
-
-    @include respond(phone) {
-      order: 1;
+      order: unset;
     }
 
     &--wide {

@@ -1,10 +1,9 @@
 .admin-dashboard {
-
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
 
-  @include respond(phone) {
-    grid-template-columns: 1fr;
+  @include respond(tab-port) {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   &__left {
@@ -12,8 +11,8 @@
     flex-direction: column;
     align-items: center;
 
-    border-bottom: .1rem solid $color-grey;
-    padding-bottom: .1rem;
+    border-bottom: 0.1rem solid $color-grey;
+    padding-bottom: 0.1rem;
     background-color: $color-grey-light-2;
   }
 

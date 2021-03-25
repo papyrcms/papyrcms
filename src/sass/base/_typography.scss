@@ -12,9 +12,15 @@ body {
   display: inline-block;
   font-family: 'Raleway', sans-serif;
 
+  @include respond(tab-land) {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
   &--main {
-    font-size: 6.5rem;
-    letter-spacing: .7rem;
+    font-size: 4.5rem;
+    letter-spacing: 0.5rem;
     font-weight: 600;
     display: block;
     line-height: 1;
@@ -22,27 +28,24 @@ body {
 
     animation: moveInLeft 1s ease-out;
 
-    @include respond(phone) {
-      font-size: 4.5rem;
-      letter-spacing: .5rem;
+    @include respond(tab-port) {
+      font-size: 6.5rem;
+      letter-spacing: 0.7rem;
     }
   }
 
   &--sub {
     font-size: 2rem;
-    letter-spacing: .5rem;
     font-weight: 500;
     display: block;
+    letter-spacing: 0.3rem;
+    margin-bottom: 2rem;
 
-    animation: moveInLeft 1s ease-out .4s;
+    animation: moveInLeft 1s ease-out 0.4s;
     animation-fill-mode: backwards;
 
-    @include respond(tab-land) {
-      margin-bottom: 2rem;
-    }
-
-    @include respond(phone) {
-      letter-spacing: .3rem;
+    @include respond(tab-port) {
+      letter-spacing: 0.5rem;
     }
   }
 }
@@ -54,14 +57,14 @@ body {
   font-weight: 700;
   display: block;
   color: $color-grey-dark;
-  letter-spacing: .4rem;
+  letter-spacing: 0.4rem;
   line-height: 1;
 }
 
 .heading-tertiary,
 .heading-tertiary--dark {
   text-transform: uppercase;
-  letter-spacing: .5rem;
+  letter-spacing: 0.5rem;
   font-size: 2.5rem;
   font-weight: 400;
   font-style: italic;

@@ -1,5 +1,4 @@
 .section-slideshow {
-
   position: relative;
   height: 100%;
   width: 100%;
@@ -7,7 +6,7 @@
   display: block;
 
   &__button {
-    margin: .2rem;
+    margin: 0.2rem;
   }
 
   &__buttons {
@@ -15,11 +14,11 @@
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    opacity: .6;
+    opacity: 0.6;
   }
 
   &__empty {
-    padding: 5rem 10vw;
+    padding: 5rem 3vw;
     padding-bottom: 10rem;
 
     @include respond(tab-port) {
@@ -27,8 +26,8 @@
       padding-bottom: 10rem;
     }
 
-    @include respond(phone) {
-      padding: 5rem 3vw;
+    @include respond(tab-land) {
+      padding: 5rem 10vw;
       padding-bottom: 10rem;
     }
   }

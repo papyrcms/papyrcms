@@ -5,29 +5,27 @@
   z-index: 999;
 
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
-  @include respond(phone) {
-    justify-content: center;
-    // position: relative;
-    // background: linear-gradient(169deg, lighten($color-primary, 10%), darken($color-primary, 30%));
-    // margin-bottom: -.1rem;
-    background: transparent;
+  @include respond(tab-port) {
+    justify-content: space-between;
+    align-items: center;
   }
 
   &__logo {
-    max-width: 3rem;
-    max-height: 4rem;
-    cursor: pointer;
-    margin: 1.5rem 3rem;
+    display: none;
 
-    img {
-      width: 100%;
-      height: 100%;
-    }
+    @include respond(tab-port) {
+      display: block;
+      max-width: 3rem;
+      max-height: 3rem;
+      cursor: pointer;
+      margin: 0 1rem;
 
-    @include respond(phone) {
-      display: none;
+      img {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 
@@ -40,41 +38,43 @@
 
     transition: 0.3s;
 
-    @include respond(phone) {
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    @include respond(tab-port) {
+      flex-direction: row;
+      width: auto;
     }
   }
 
   &__item {
-    padding: 0.5rem 2vw;
     cursor: pointer;
     text-decoration: none;
     letter-spacing: 0.1rem;
     transition: all 0.4s;
     color: $color-grey-light-2;
     width: 100%;
+    padding: 0;
 
     display: flex;
     align-items: center;
 
     &:not(:last-child) {
-      border-right: 0.1rem solid $color-grey-light;
+      border-right: none;
+      position: relative;
 
-      @include respond(phone) {
-        border-right: none;
-        position: relative;
+      @include respond(tab-port) {
+        border-right: 0.1rem solid $color-grey-light;
       }
     }
 
-    @include respond(phone) {
-      font-size: 2.5rem;
-      padding: 0;
+    li {
+      margin: 0 auto;
+    }
 
-      li {
-        margin: 0 auto;
-      }
+    @include respond(tab-port) {
+      padding: 0.5rem 2vw;
     }
 
     &:hover:not(.nav-menu__item--hamburger) {
@@ -83,77 +83,89 @@
     }
 
     &--hamburger {
-      display: none;
+      display: flex;
+      margin: 3.5rem;
+      margin-top: 2.5rem;
 
-      @include respond(phone) {
-        display: flex;
-        margin: 3.5rem;
-        margin-top: 2.5rem;
+      &,
+      &::before,
+      &::after {
+        display: block;
+        border-bottom: 0.2rem solid $color-grey-light;
+        width: 3rem;
+        padding-bottom: 1rem;
+      }
 
-        &,
-        &::before,
-        &::after {
-          display: block;
-          border-bottom: 0.2rem solid $color-grey-light;
-          width: 3rem;
-          padding-bottom: 1rem;
-        }
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        transition: all 0.3s;
+      }
 
-        &::before,
-        &::after {
-          content: '';
-          position: absolute;
-          left: 0;
-          transition: all 0.3s;
-        }
+      &::before {
+        top: -1.2rem;
+      }
+      &::after {
+        top: 1.3rem;
+      }
 
-        &::before {
-          top: -1.2rem;
-        }
-        &::after {
-          top: 1.3rem;
-        }
+      & ~ .nav-menu__item {
+        z-index: -1;
+        height: 0;
+        opacity: 0;
+        transition: all 0.5s;
 
-        & ~ .nav-menu__item {
-          z-index: -1;
-          height: 0;
-          opacity: 0;
-          transition: all 0.5s;
+        @include respond(tab-port) {
+          z-index: 1;
+          height: auto;
+          opacity: 1;
         }
+      }
+
+      @include respond(tab-port) {
+        display: none;
       }
     }
   }
 }
 
-@include respond(phone) {
-  .checked {
-    background-color: rgba($color-grey-dark, 0.9);
+.checked {
+  background-color: rgba($color-grey-dark, 0.9);
 
-    .nav-menu__item--hamburger {
-      border-bottom: none;
-      margin-top: 0.5rem;
-      margin-bottom: 5rem;
+  @include respond(tab-port) {
+    background-color: transparent;
+  }
 
-      &::before {
-        top: 3rem;
-        left: 0.3rem;
-        transform: rotate(135deg);
-      }
+  .nav-menu__item--hamburger {
+    border-bottom: none;
+    margin-top: 0.5rem;
+    margin-bottom: 5rem;
 
-      &::after {
-        top: 3rem;
-        left: -0.4rem;
-        transform: rotate(-135deg);
-      }
+    &::before {
+      top: 3rem;
+      left: 0.3rem;
+      transform: rotate(135deg);
+    }
 
-      & ~ .nav-menu__item {
-        opacity: 1;
-        height: 4rem;
-        z-index: 1;
-        padding: 0.5rem 2vw;
+    &::after {
+      top: 3rem;
+      left: -0.4rem;
+      transform: rotate(-135deg);
+    }
 
-        &:last-of-type {
-          margin-bottom: 1rem;
+    & ~ .nav-menu__item {
+      opacity: 1;
+      height: 4rem;
+      z-index: 1;
+      padding: 0.5rem 2vw;
+
+      &:last-of-type {
+        margin-bottom: 1rem;
+
+        @include respond(tab-port) {
+          margin: 0;
         }
       }
     }

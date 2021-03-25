@@ -1,15 +1,14 @@
 .section-maps {
-
   @include sectionStyle();
 
   &__content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-gap: $gap-width;
     align-items: center;
 
-    @include respond(tab-port) {
-      grid-template-columns: 1fr;
+    @include respond(tab-land) {
+      grid-template-columns: 1fr 1fr;
     }
   }
 

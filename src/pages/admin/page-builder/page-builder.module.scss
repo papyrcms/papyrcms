@@ -2,7 +2,7 @@
 @import 'src/sass/abstracts/_variables.scss';
 
 .builder {
-  padding: 5rem 20vw;
+  padding: 5rem 3vw;
   padding-bottom: 10rem;
   background-color: $color-grey-light;
 
@@ -11,8 +11,8 @@
     padding-bottom: 10rem;
   }
 
-  @include respond(phone) {
-    padding: 5rem 3vw;
+  @include respond(tab-land) {
+    padding: 5rem 20vw;
     padding-bottom: 10rem;
   }
 }
@@ -28,28 +28,31 @@
 
 .info {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 1rem;
   align-items: end;
 
-  @include respond(phone) {
-    grid-template-columns: 1fr;
+  @include respond(tab-land) {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
 .sectionSelect {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   margin-bottom: 1rem;
 
-  @include respond(phone) {
-    display: block;
+  @include respond(tab-port) {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 
 .sectionSelector {
-  @include respond(phone) {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
+
+  @include respond(tab-port) {
+    margin: 0;
   }
 }
 
@@ -77,15 +80,17 @@
 
 .sectionBottom {
   display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
   border-top: 0.1rem solid $color-grey;
   border-bottom: 0.1rem solid $color-grey;
   padding: 2rem 0;
   margin: 2rem 0;
 
-  @include respond(phone) {
-    flex-direction: column;
-    align-items: flex-start;
+  @include respond(tab-land) {
+    flex-direction: row;
+    align-items: unset;
   }
 }
 
@@ -99,12 +104,12 @@
 
 .sectionInputs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 1rem;
   align-items: end;
 
-  @include respond(phone) {
-    grid-template-columns: 1fr;
+  @include respond(tab-port) {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
