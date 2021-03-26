@@ -19,10 +19,17 @@
   &__right {
     justify-self: center;
     grid-column: span 2;
-    margin-left: 2rem;
+
+    display: grid;
+    grid-auto-flow: row;
+    justify-items: start;
+
+    @include respond(tab-port) {
+      margin-left: 2rem;
+    }
 
     & > * {
-      margin-bottom: 5rem;
+      margin-bottom: 2rem;
     }
   }
 }

@@ -76,24 +76,17 @@ const ContactForm: React.FC<{ className?: string }> = (props) => {
           />
         </div>
 
-        <div className="contact-form__field--textarea">
-          <label
-            htmlFor="contact-message"
-            className="contact-form__label"
-          >
-            Message
-          </label>
-          <textarea
-            id="contact-message"
-            className="contact-form__textarea"
-            name="message"
-            value={values.message}
-            onBlur={validateField}
-            onChange={handleChange}
-            required
-          />
-          <p className="contact-form__validation">{errors.message}</p>
-        </div>
+        <Input
+          name="message"
+          value={values.message}
+          validation={errors.message}
+          onBlur={validateField}
+          onChange={handleChange}
+          required
+          id="contact-message"
+          label="Message"
+          type="textarea"
+        />
 
         <Button
           onClick={handleSubmit}

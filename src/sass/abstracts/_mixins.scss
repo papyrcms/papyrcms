@@ -7,21 +7,17 @@
 }
 
 @mixin sectionStyle {
-  padding: 5rem 2rem;
+  padding: 1.5rem;
   max-width: $max-section-width;
   margin: 0 auto;
   background-color: $color-grey-light;
 
   @include respond(tab-port) {
-    padding: 5rem 3rem;
+    padding: 2.5rem;
   }
 
   @include respond(tab-land) {
-    padding: 7rem 5rem;
-  }
-
-  @include respond(phone) {
-    padding: 10rem 10rem;
+    padding: 3.5rem;
   }
 }
 
@@ -33,19 +29,16 @@
 }
 
 @mixin inputLabelStyle {
-  text-transform: uppercase;
   font-size: 1.5rem;
-  letter-spacing: 0.2rem;
-  font-style: italic;
-  margin-left: 0.2rem;
+  letter-spacing: 0.1rem;
 }
 
 @mixin inputBorderStyle {
-  border-top: 0.2rem solid $color-grey;
-  border-left: 0.2rem solid $color-grey;
-  border-bottom: 0.2rem solid $color-grey-light;
-  border-right: 0.2rem solid $color-grey-light;
-  border-radius: 0.7rem;
+  border-top: 0.1rem solid $color-grey;
+  border-left: 0.1rem solid $color-grey;
+  border-bottom: 0.1rem solid $color-grey-light;
+  border-right: 0.1rem solid $color-grey-light;
+  border-radius: 0.3rem;
 }
 
 @mixin contentStyle {
@@ -88,23 +81,23 @@
 // max-width: px / 16
 @mixin respond($breakpoint) {
   @if $breakpoint == tab-port {
-    @media (min-width: 37.5em) {
+    @media (min-width: 28.125em) {
       @content;
-    } // 600px
+    } // 450px
   }
   @if $breakpoint == tab-land {
-    @media (min-width: 56.25em) {
+    @media (min-width: 46.875em) {
       @content;
-    } // 900px
+    } // 750px
   }
   @if $breakpoint == desktop {
-    @media (min-width: 75em) {
+    @media (min-width: 65.625em) {
       @content;
-    } // 1200px
+    } // 1050px
   }
   @if $breakpoint == big-desktop {
-    @media (min-width: 93.75em) {
+    @media (min-width: 84.375em) {
       @content;
-    } // 1500px
+    } // 1350px
   }
 }

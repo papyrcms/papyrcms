@@ -32,9 +32,7 @@ const LoginForm = () => {
 
   return (
     <form className="login-form">
-      <h3 className="heading-tertiary u-margin-bottom-small">
-        Login
-      </h3>
+      <h3 className="heading-tertiary">Login</h3>
 
       <Input
         label="Email"

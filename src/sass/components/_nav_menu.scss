@@ -20,12 +20,16 @@
       max-width: 3rem;
       max-height: 3rem;
       cursor: pointer;
-      margin: 0 1rem;
+      margin: 0.5rem 1.5rem;
 
       img {
         width: 100%;
         height: 100%;
       }
+    }
+
+    @include respond(tab-land) {
+      margin: 1.5rem 3rem;
     }
   }
 
@@ -52,10 +56,10 @@
     cursor: pointer;
     text-decoration: none;
     letter-spacing: 0.1rem;
-    transition: all 0.4s;
     color: $color-grey-light-2;
     width: 100%;
     padding: 0;
+    transition: all 0.4s;
 
     display: flex;
     align-items: center;
@@ -74,7 +78,11 @@
     }
 
     @include respond(tab-port) {
-      padding: 0.5rem 2vw;
+      padding: 0.5rem 1.5rem;
+    }
+
+    @include respond(tab-land) {
+      padding: 1.5rem 3rem;
     }
 
     &:hover:not(.nav-menu__item--hamburger) {
@@ -121,6 +129,7 @@
           z-index: 1;
           height: auto;
           opacity: 1;
+          transition: none;
         }
       }
 
@@ -159,7 +168,15 @@
       opacity: 1;
       height: 4rem;
       z-index: 1;
-      padding: 0.5rem 2vw;
+      padding: 0.5rem 2rem;
+
+      @include respond(tab-port) {
+        padding: 0.5rem 1.5rem;
+      }
+
+      @include respond(tab-land) {
+        padding: 3rem 3rem;
+      }
 
       &:last-of-type {
         margin-bottom: 1rem;

@@ -12,17 +12,17 @@
   &.detached {
     width: 90%;
     border-top: none;
-    align-self: flex-end;
     padding: 0;
     margin: 0;
     position: fixed;
     z-index: 10;
     transform: translateZ(0);
     bottom: 1rem;
-    right: 1rem;
+    align-self: center;
 
     @include respond(tab-port) {
       width: 50%;
+      right: 1rem;
     }
   }
 
@@ -35,8 +35,8 @@
   }
 
   &.detached &__detach {
-    font-weight: 700;
-    border: 0.2rem solid $color-grey;
+    font-weight: 500;
+    border: 0.1rem solid $color-grey;
     background-color: rgba($color-grey, 0.2);
     padding: 0 1rem;
     line-height: 2;
@@ -66,14 +66,14 @@
 
     &--span {
       display: inline-block;
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 1.6rem;
+      height: 1.6rem;
       margin-left: $gap-width;
-      border: 0.2rem solid $color-grey-dark;
+      border: 0.1rem solid $color-grey-dark;
       border-radius: 50%;
       cursor: pointer;
       background-color: $color-grey-light;
-      transform: translateY(0.75rem);
+      transform: translateY(0.3rem);
       transition: all 0.2s;
     }
 

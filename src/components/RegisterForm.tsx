@@ -43,9 +43,7 @@ const RegisterForm = () => {
 
   return (
     <form className="register-form">
-      <h3 className="heading-tertiary u-margin-bottom-small">
-        Register
-      </h3>
+      <h3 className="heading-tertiary">Register</h3>
 
       <Input
         label="First Name"

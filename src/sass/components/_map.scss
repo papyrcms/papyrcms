@@ -1,5 +1,4 @@
 .map {
-
   width: 100%;
   height: 40rem;
   max-width: $max-text-width;
@@ -9,7 +8,7 @@
     background-color: red;
     width: 1.3rem;
     height: 1.3rem;
-    border: .1rem solid $color-black;
+    border: 0.1rem solid $color-black;
     border-radius: 50%;
   }
 }

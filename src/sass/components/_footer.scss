@@ -1,6 +1,6 @@
 .footer {
   background-color: $color-grey-light-2;
-  min-height: 20rem;
+  min-height: 15rem;
   padding: 2rem;
   position: relative;
   text-align: center;
@@ -19,11 +19,9 @@
   &__title {
     font-size: 4rem;
     font-weight: 500;
-    letter-spacing: .2rem;
   }
 
   &__content {
-    margin-bottom: 3rem;
   }
 }
 

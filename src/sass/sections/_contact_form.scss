@@ -1,5 +1,4 @@
 .contact-form {
-
   @include sectionStyle();
 
   &__form {
@@ -13,34 +12,6 @@
     & > * {
       margin-bottom: $gap-width;
     }
-  }
-
-  &__field {
-    &--textarea {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-
-    @include respond(tab-port) {
-      grid-column: span 2;
-    }
-  }
-
-  &__label {
-    @include inputLabelStyle();
-  }
-
-  &__textarea {
-    @include inputBorderStyle();
-    height: 15rem;
-    resize: vertical;
-    padding: 1rem;
-    margin: 1rem 0;
-    font-size: 2rem;
-    color: $color-grey-dark;
-    letter-spacing: .1rem;
-    font-family: 'Montserrat', 'Lato', sans-serif;
   }
 
   &__submit {

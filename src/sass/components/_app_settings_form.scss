@@ -1,10 +1,8 @@
 .app-settings-form {
-
   display: flex;
   flex-direction: column;
 
   &__title {
-
   }
 
   &__verification {
@@ -24,7 +22,6 @@
   }
 
   &__label {
-    letter-spacing: .1rem;
     cursor: pointer;
   }
 

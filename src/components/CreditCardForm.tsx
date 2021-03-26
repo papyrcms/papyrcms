@@ -39,7 +39,7 @@ const CreditCardForm = injectStripe((props: CCFProps) => {
   const fieldStyle = {
     base: {
       color: '#333',
-      fontSize: '16',
+      fontSize: '18',
       lineHeight: '1',
       letterSpacing: '1',
     },

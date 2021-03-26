@@ -7,7 +7,6 @@
   margin: 0 auto;
 
   &__title {
-    letter-spacing: 0.3rem;
   }
 
   &__tags {
@@ -22,7 +21,6 @@
   &__image {
     max-width: 100%;
     width: 100%;
-    padding-bottom: 2rem;
     max-height: 50rem;
     text-align: center;
 
@@ -31,10 +29,6 @@
       max-width: 100%;
       max-height: 40rem;
       object-fit: contain;
-
-      @include respond(phone) {
-        width: 100%;
-      }
     }
   }
 
@@ -48,7 +42,6 @@
 
     & > * {
       margin-left: 2rem;
-      padding: 0.5rem 1rem;
     }
   }
 }

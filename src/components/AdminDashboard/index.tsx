@@ -13,7 +13,6 @@ const AdminDashboard = () => (
     <div className="admin-dashboard__right">
       <AppSettingsForm />
       <UserList />
-      <br />
       <MessageList />
     </div>
   </div>

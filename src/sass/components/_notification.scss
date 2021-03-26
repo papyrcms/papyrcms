@@ -1,12 +1,11 @@
 .notification {
-
   background-color: $color-notice;
   padding: 1rem 3rem;
-  border-bottom: .1rem solid $color-grey;
+  border-bottom: 0.1rem solid $color-grey;
   display: flex;
   transition: 1s;
   max-height: 10rem;
-  
+
   &--hidden {
     max-height: 0;
     border: 0;
@@ -14,7 +13,7 @@
     padding: 0 3rem;
     transition: 1s;
   }
-  
+
   &__content {
     flex: 1;
   }
@@ -24,7 +23,6 @@
   }
 
   &__text {
-
   }
 
   &__close {

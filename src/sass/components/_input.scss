@@ -1,22 +1,22 @@
 .input {
-
   width: 100%;
 
   &__label {
     @include inputLabelStyle();
   }
 
-  &__input, &__textarea {
+  &__input,
+  &__textarea {
     width: 100%;
     padding: 1rem;
-    margin: 1rem 0;
-    font-size: 2rem;
+    font-size: 1.8rem;
+    font-family: 'Raleway';
     color: $color-grey-dark;
-    letter-spacing: .1rem;
+    letter-spacing: 0.1rem;
     @include inputBorderStyle();
 
     &--invalid {
-      border: .2rem solid $color-error;
+      border: 0.2rem solid $color-error;
     }
   }
 
@@ -39,6 +39,6 @@
     font-size: 1.4rem;
     color: $color-error;
     margin-bottom: 1rem;
-    font-style: italic
+    font-style: italic;
   }
 }

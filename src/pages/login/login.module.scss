@@ -1,10 +1,10 @@
 @import 'src/sass/abstracts/_mixins.scss';
 @import 'src/sass/abstracts/_variables.scss';
 
-
 .main {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
+  padding: 5rem 0;
 }

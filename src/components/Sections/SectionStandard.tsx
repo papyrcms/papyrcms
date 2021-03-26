@@ -214,7 +214,7 @@ const SectionStandard: React.FC<Props> = (props) => {
             {renderPublishSection(post)}
 
             {beforeTitle(post)}
-            <h2 className="heading-secondary post__title u-margin-bottom-small">
+            <h2 className="heading-secondary post__title">
               {post.title}
             </h2>
             {afterTitle(post)}
@@ -535,7 +535,7 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
             className="comment-form__detach--label"
             htmlFor="detach-checkbox"
           >
-            {detached ? 'Attach' : 'Detach'} comment form
+            {detached ? 'Attach' : 'Detach'}
             <span className="comment-form__checkbox--span"></span>
           </label>
         </div>

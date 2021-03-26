@@ -1,5 +1,4 @@
 .modal {
-
   position: fixed;
   left: 0;
   top: 0;
@@ -9,7 +8,7 @@
   background-color: $color-grey;
   background-color: rgba($color-grey-dark, 0.7);
   z-index: 10;
-  transition: .3s;
+  transition: 0.3s;
 
   display: flex;
   justify-content: center;
@@ -18,11 +17,10 @@
   &--hidden {
     opacity: 0;
     z-index: -10;
-    transition: .3s;
+    transition: 0.3s;
   }
 
   &__image {
-
     &--content {
       position: fixed;
       min-width: 50%;
@@ -62,29 +60,30 @@
       cursor: pointer;
     }
   }
-  
+
   &__box {
     position: fixed;
     background-color: $color-grey-light;
     padding: 2rem;
-    border: .1rem solid $color-grey;
-    width: 50%;
+    border: 0.1rem solid $color-grey;
     min-height: 50%;
     max-height: calc(100vh - 21rem);
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     z-index: 100;
     overflow-y: auto;
-
-    @include respond(tab-land) {
-      width: 65%;
-    }
+    max-width: 50rem;
+    width: 90%;
 
     @include respond(tab-port) {
-      width: 80%;
+      width: 75%;
     }
 
-    @include respond(phone) {
-      width: 90%;
+    @include respond(tab-land) {
+      width: 60%;
+    }
+
+    @include respond(desktop) {
+      width: 45%;
     }
   }
 

@@ -1,6 +1,6 @@
 .credit-card-form {
   display: grid;
-  grid-gap: 2rem;
+  grid-gap: 1rem;
   grid-template-columns: 1fr;
 
   @include respond(tab-port) {
@@ -28,12 +28,10 @@
     @include inputBorderStyle();
     padding: 1rem;
     background-color: $color-white;
-    margin-top: 1rem;
   }
 
   &__validation {
     color: $color-tertiary;
-    letter-spacing: 0.1rem;
     font-size: 1.4rem;
     font-style: italic;
     grid-column: span 1;

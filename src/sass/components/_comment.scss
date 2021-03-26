@@ -1,8 +1,7 @@
 .comments {
-
   &__title {
     color: $color-grey-dark;
-    border-bottom: .1rem solid $color-grey-dark;
+    border-bottom: 0.1rem solid $color-grey-dark;
   }
 
   &__none {
@@ -14,7 +13,7 @@
 .comment {
   padding-bottom: 2rem;
   margin-bottom: 2rem;
-  border-bottom: .1rem solid $color-grey-dark;
+  border-bottom: 0.1rem solid $color-grey-dark;
 
   &__content {
     @include contentStyle();

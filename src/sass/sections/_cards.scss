@@ -5,22 +5,19 @@
     list-style-type: none;
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 5rem;
+    grid-gap: 2rem;
 
     @include respond(tab-port) {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    &--3,
-    &--4 {
-      @include respond(tab-land) {
+    @include respond(tab-land) {
+      &--3 {
         grid-template-columns: repeat(3, 1fr);
         grid-gap: $gap-width;
       }
-    }
 
-    &--4 {
-      @include respond(desktop) {
+      &--4 {
         grid-template-columns: repeat(4, 1fr);
       }
     }
@@ -28,7 +25,6 @@
 
   &__header {
     margin-bottom: $gap-width;
-    letter-spacing: 0.3rem;
   }
 
   &__card {
@@ -37,9 +33,6 @@
   }
 
   &__title {
-    letter-spacing: 0.1rem;
-    font-size: 2rem;
-    font-weight: 500;
   }
 
   &__image {
