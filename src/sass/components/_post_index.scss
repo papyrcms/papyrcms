@@ -37,6 +37,7 @@
       max-height: 25rem;
       border-radius: 0.5rem;
       margin-left: auto;
+      margin-right: 2rem;
     }
   }
 
@@ -51,8 +52,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-
-    border-bottom: 0.1rem solid $color-grey-dark;
   }
 
   &__tags {
@@ -61,12 +60,7 @@
   &__content {
     border-left: none;
     margin: 2rem 0;
-    padding-left: 3rem;
     @include contentStyle();
-
-    @include respond(tab-port) {
-      border-left: 0.1rem solid $color-grey-dark;
-    }
   }
 
   &__link {
