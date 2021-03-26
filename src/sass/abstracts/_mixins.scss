@@ -7,17 +7,17 @@
 }
 
 @mixin sectionStyle {
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
   max-width: $max-section-width;
   margin: 0 auto;
   background-color: $color-grey-light;
 
   @include respond(tab-port) {
-    padding: 2.5rem;
+    padding: 3.5rem 2.5rem;
   }
 
   @include respond(tab-land) {
-    padding: 3.5rem;
+    padding: 5rem 3.5rem;
   }
 }
 
