@@ -21,7 +21,7 @@
     flex-direction: column;
 
     @include respond(tab-port) {
-      padding: 0 10rem;
+      padding: 0 4rem;
     }
 
     @include respond(tab-land) {
