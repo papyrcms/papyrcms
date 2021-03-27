@@ -11,14 +11,17 @@ html {
   font-size: 50%;
 
   // @include respond(tab-port) {
-  //   font-size: 54.16%;
+  //   font-size: 52.5%;
   // }
   // @include respond(tab-land) {
-  //   font-size: 50%;
+  //   font-size: 55%;
   // }
   // @include respond(desktop) {
-  //   font-size: 50%;
+  //   font-size: 57.5%;
   // }
+  @include respond(big-desktop) {
+    font-size: 60%;
+  }
 }
 
 body {
