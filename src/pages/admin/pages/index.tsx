@@ -7,7 +7,7 @@ import { userContext, pagesContext } from '@/context'
 import styles from './pages.module.scss'
 
 const Pages = () => {
-  const { pages, setPages } = useContext(pagesContext)
+  let { pages, setPages } = useContext(pagesContext)
   const { currentUser } = useContext(userContext)
 
   useEffect(() => {
@@ -21,6 +21,10 @@ const Pages = () => {
   if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   const renderPages = () => {
+    pages = _.sortBy(pages, [
+      (page) => !!page.navOrder,
+      (page) => page.navOrder,
+    ])
     return _.map(pages, (page) => (
       <li className={styles.page} key={page._id}>
         <div>
@@ -40,6 +44,7 @@ const Pages = () => {
           >
             <a>/admin/pages/{page.route}</a>
           </Link>
+          {' - '} Menu: {page.navOrder}
         </div>
       </li>
     ))

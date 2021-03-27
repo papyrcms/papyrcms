@@ -2,18 +2,8 @@
 @import 'src/sass/abstracts/_variables.scss';
 
 .main {
-  padding: 5rem 3vw;
+  @include sectionStyle();
   background-color: $color-grey-light;
-
-  @include respond(tab-port) {
-    padding: 5rem 5vw;
-    padding-bottom: 10rem;
-  }
-
-  @include respond(tab-land) {
-    padding: 5rem 20vw;
-    padding-bottom: 10rem;
-  }
 }
 
 .page {
