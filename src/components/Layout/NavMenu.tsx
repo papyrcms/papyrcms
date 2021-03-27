@@ -29,11 +29,22 @@ const NavLink: React.FC<LinkProps> = (props) => {
   )
 }
 
-/**
- * NavMenu displayed at the top of every view.
- *
- * @prop logo - String - The source for the logo image displayed at the top right
- */
+const Submenu: React.FC<{ pages: Page[] }> = ({ pages }) => {
+  pages = _.sortBy(pages, (page) => page.navOrder)
+  return (
+    <div className="nav-menu__submenu">
+      {_.map(pages, (page) => {
+        const href = page.route === 'home' ? '/' : `/${page.route}`
+        return (
+          <NavLink href={href} key={page._id}>
+            {page.title}
+          </NavLink>
+        )
+      })}
+    </div>
+  )
+}
+
 const NavMenu: React.FC<{ logo?: string }> = (props) => {
   const { pages } = useContext(pagesContext)
   const { settings } = useContext(settingsContext)
@@ -73,22 +84,55 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
       (page) => !!page.title && !!page.navOrder
     )
 
-    menuPages.sort((a, b) =>
+    // Sort into submenu items
+    interface MenuItem {
+      page?: Page
+      pages?: Page[]
+      index: number
+    }
+    const menuItems: MenuItem[] = _.reduce(
+      menuPages,
+      (items, page) => {
+        const menuItem = _.find(
+          items,
+          (item) => item.index === Math.floor(page.navOrder)
+        )
+        if (!menuItem) {
+          items.push({
+            page,
+            index: Math.floor(page.navOrder),
+          })
+        } else if (menuItem) {
+          if (!menuItem.pages && menuItem.page) {
+            menuItem.pages = []
+            menuItem.pages.push(menuItem.page)
+            delete menuItem.page
+          }
+          ;(menuItem.pages as Page[]).push(page)
+        }
+        return items
+      },
+      [] as MenuItem[]
+    )
+
+    menuItems.sort((a, b) =>
       typeof a === 'object' &&
       typeof b === 'object' &&
-      a.navOrder > b.navOrder
+      a.index > b.index
         ? 1
         : -1
     )
 
-    return _.map(menuPages, (page) => {
-      if (typeof page === 'object') {
+    return _.map(menuItems, ({ page, pages }) => {
+      if (page) {
         const href = page.route === 'home' ? '/' : `/${page.route}`
         return (
           <NavLink href={href} key={page._id}>
             {page.title}
           </NavLink>
         )
+      } else if (pages) {
+        return <Submenu pages={pages} key={pages[0]._id} />
       }
     })
   }
@@ -117,12 +161,6 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
             onClick={onClick}
             className="nav-menu__item nav-menu__item--hamburger"
           />
-
-          {/* {renderFirstMenuItems()}
-          {renderBlogItem()}
-          {renderEventsItem()}
-          {renderStoreItem()}
-          {renderLastMenuItems()} */}
           {renderMenuItems()}
         </div>
       </ul>
