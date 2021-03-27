@@ -132,6 +132,7 @@ export interface Keys {
   cloudinaryApiKey?: string
   cloudinaryApiSecret?: string
   cloudinaryCloudName?: string
+  tinyMceKey?: string
   databaseDriver?: string
   databaseURI?: string
   rootURL?: string

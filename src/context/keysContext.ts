@@ -5,6 +5,7 @@ export default createContext<{ keys: Keys }>({
   keys: {
     stripePublishableKey: '',
     googleMapsKey: '',
-    googleAnalyticsId: ''
-  }
+    googleAnalyticsId: '',
+    tinyMceKey: '',
+  },
 })

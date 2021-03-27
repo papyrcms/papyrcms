@@ -16,7 +16,6 @@ type Props = {
  * @prop onChange - Function - The event handler when the content is changed
  */
 const TextEditor = (props: Props) => {
-
   const [useEditor, setUseEditor] = useState(false)
   useEffect(() => {
     setUseEditor(true)

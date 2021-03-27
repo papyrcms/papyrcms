@@ -12,6 +12,8 @@ export default {
   siteEmail: process.env.SITE_EMAIL,
   adminEmail: process.env.ADMIN_EMAIL,
 
+  tinyMceKey: process.env.TINY_MCE_KEY,
+
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
   cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
   cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,

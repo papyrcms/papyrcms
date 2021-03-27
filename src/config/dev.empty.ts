@@ -16,6 +16,8 @@ export default {
   cloudinaryApiSecret: '',
   cloudinaryCloudName: '',
 
+  tinyMceKey: '',
+
   databaseDriver: '',
   databaseURI: '',
   rootURL: '',
@@ -25,6 +27,6 @@ export default {
     oldPass: '',
     newPass: '',
     token: '',
-    tokenRpc: ''
-  }
+    tokenRpc: '',
+  },
 }

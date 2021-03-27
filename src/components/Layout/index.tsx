@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
-import { postsContext, pagesContext } from '@/context'
+import { postsContext, keysContext } from '@/context'
 import { usePostFilter } from '@/hooks'
 import Notification from './Notification'
 import Header from './Header'
@@ -11,6 +11,7 @@ import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
 
 const Layout: React.FC = (props) => {
+  const { keys } = useContext(keysContext)
   const { posts } = useContext(postsContext)
 
   const settings = {
@@ -108,7 +109,10 @@ const Layout: React.FC = (props) => {
           rel="stylesheet"
         />
         <script src="https://js.stripe.com/v3/"></script>
-        <script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+        <script
+          src={`https://cdn.tiny.cloud/1/${keys.tinyMceKey}/tinymce/5/tinymce.min.js`}
+          referrerPolicy="origin"
+        ></script>
       </PageHead>
 
       {renderNotifications()}

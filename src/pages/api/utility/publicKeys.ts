@@ -7,11 +7,13 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
       googleAnalyticsId,
       googleMapsKey,
       stripePublishableKey,
+      tinyMceKey,
     } = keys
     const publicKeys = {
       googleAnalyticsId,
       googleMapsKey,
       stripePublishableKey,
+      tinyMceKey,
     }
     return res.status(200).send(publicKeys)
   }
