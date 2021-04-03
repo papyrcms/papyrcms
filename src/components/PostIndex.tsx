@@ -10,7 +10,6 @@ type Props = {
 }
 
 const PostIndex = (props: Props) => {
-
   const renderTags = (tags: string[]) => {
     return _.map(tags, (tag, i) => {
       if (i < tags.length - 1) {
@@ -21,13 +20,15 @@ const PostIndex = (props: Props) => {
     })
   }
 
-
   const renderTagsSection = (tags: string[]) => {
     if (tags.length > 0) {
-      return <p className="post-item__tags">Tags: <em>{renderTags(tags)}</em></p>
+      return (
+        <p className="post-item__tags">
+          Tags: <em>{renderTags(tags)}</em>
+        </p>
+      )
     }
   }
-
 
   const renderMediaSection = (media?: string, alt?: string) => {
     if (media) {
@@ -39,29 +40,34 @@ const PostIndex = (props: Props) => {
     }
   }
 
-
   const renderPublishSection = (published: boolean) => {
     if (!published) {
-      return <p><em>Not published</em></p>
+      return (
+        <p>
+          <em>Not published</em>
+        </p>
+      )
     }
   }
 
-
   const renderPosts = () => {
-
     const { posts } = props
 
     if (!posts || posts.length === 0) {
-      return <h3 className="heading-tertiary">Nothing published yet</h3>
+      return (
+        <h3 className="heading-tertiary">Nothing published yet</h3>
+      )
     }
 
-    return _.map(posts, post => {
-
+    return _.map(posts, (post) => {
       const { _id, title, tags, mainMedia, content, published } = post
 
       let postContent = ''
       if (content) {
-        postContent = content.length >= 200 ? `${content.substring(0, 200).trim()} . . .` : content
+        postContent =
+          content.length >= 200
+            ? `${content.substring(0, 200).trim()} . . .`
+            : content
       }
 
       return (
@@ -69,7 +75,9 @@ const PostIndex = (props: Props) => {
           {renderMediaSection(mainMedia, title)}
           <div className="post-item__details">
             <div className="post-item__top">
-              <h3 className="post-item__title heading-tertiary">{title}</h3>
+              <h3 className="post-item__title heading-tertiary">
+                {title}
+              </h3>
               {renderTagsSection(tags)}
               {renderPublishSection(published)}
             </div>
@@ -87,9 +95,7 @@ const PostIndex = (props: Props) => {
     })
   }
 
-
   return <div className="post-index">{renderPosts()}</div>
 }
-
 
 export default PostIndex
