@@ -10,6 +10,7 @@ import {
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import '@fortawesome/fontawesome-free/js/all'
 import { Layout } from '@/components'
 import keys from '@/keys'
 import { GlobalState } from '@/context'

@@ -17,6 +17,7 @@
   "author": "drkgrntt",
   "license": "ISC",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "cloudinary": "^1.23.0",
