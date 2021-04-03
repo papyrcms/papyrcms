@@ -2,8 +2,9 @@ import React, { useContext } from 'react'
 import axios from 'axios'
 import { userContext } from '@/context'
 import { useForm } from '@/hooks'
-import Input from './Input'
-import Button from './Button'
+import Input from '../Input'
+import Button from '../Button'
+import styles from './UserInfoForm.module.scss'
 
 type Props = {
   beforeSubmit?: Function
