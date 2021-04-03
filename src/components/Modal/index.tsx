@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import styles from './Modal.module.scss'
 
 type Props = {
   buttonClasses?: string
@@ -61,18 +62,20 @@ const Modal: React.FC<Props> = (props) => {
       </button>
 
       <div
-        className={`modal ${hidden ? 'modal--hidden' : ''}`}
+        className={`${styles.background} ${
+          hidden ? styles.hidden : ''
+        }`}
         onClick={() => {
           setHidden(true)
           onClose()
         }}
       >
         <div
-          className="modal__box"
+          className={styles.box}
           onClick={(event) => event.stopPropagation()}
         >
           <button
-            className="modal__close"
+            className={styles.close}
             onClick={(event) => {
               event.preventDefault()
               setHidden(true)
@@ -81,7 +84,7 @@ const Modal: React.FC<Props> = (props) => {
           >
             &#10005;
           </button>
-          <div className={`modal__content ${className}`}>
+          <div className={`${styles.content} ${className}`}>
             {children}
           </div>
         </div>
@@ -92,7 +95,7 @@ const Modal: React.FC<Props> = (props) => {
   const renderImageModal = () => (
     <>
       <img
-        className={`${className || ''} modal__image--clickable`}
+        className={`${className || ''} ${styles.clickableImage}`}
         src={src}
         alt={alt || ''}
         onClick={(event) => {
@@ -103,18 +106,20 @@ const Modal: React.FC<Props> = (props) => {
       />
 
       <div
-        className={`modal${hidden ? ' modal--hidden' : ''}`}
+        className={`${styles.background} ${
+          hidden ? styles.hidden : ''
+        }`}
         onClick={() => {
           setHidden(true)
           onClose()
         }}
       >
         <div
-          className="modal__image--content"
+          className={styles.imageContent}
           onClick={(event) => event.stopPropagation()}
         >
           <button
-            className="modal__close"
+            className={styles.close}
             onClick={() => {
               setHidden(true)
               onClose()
