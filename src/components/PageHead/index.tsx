@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+import styles from './PageHead.module.scss'
 
 type Props = {
   title?: string
