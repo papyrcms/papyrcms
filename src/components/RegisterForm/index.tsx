@@ -2,8 +2,9 @@ import React, { useContext } from 'react'
 import Router from 'next/router'
 import { settingsContext, userContext } from '@/context'
 import { useForm } from '@/hooks'
-import Input from './Input'
-import Button from './Button'
+import Input from '../Input'
+import Button from '../Button'
+import styles from './RegisterForm.module.scss'
 
 const RegisterForm = () => {
   const { settings } = useContext(settingsContext)
@@ -42,7 +43,7 @@ const RegisterForm = () => {
   }
 
   return (
-    <form className="register-form">
+    <form className={styles.form}>
       <h3 className="heading-tertiary">Register</h3>
 
       <Input
@@ -85,11 +86,11 @@ const RegisterForm = () => {
         required
       />
 
-      <p className="register-form__validation">
+      <p className={styles.validation}>
         {formState.values.validation}
       </p>
 
-      <div className="register-form__submit">
+      <div className={styles.submit}>
         <Button onClick={handleSubmit} submittedText="Submitting">
           Register
         </Button>

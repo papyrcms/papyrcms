@@ -1,4 +1,6 @@
-.register-form {
+@import 'src/sass/abstracts/_variables.scss';
+
+.form {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -11,16 +13,16 @@
   color: $color-grey-dark;
   border-radius: 0.3rem;
   box-shadow: $shadow-high;
+}
 
-  &__validation {
-    color: $color-tertiary;
-    letter-spacing: 0.1rem;
-    font-size: 1.4rem;
-    font-style: italic;
-  }
+.validation {
+  color: $color-tertiary;
+  letter-spacing: 0.1rem;
+  font-size: 1.4rem;
+  font-style: italic;
+}
 
-  &__submit {
-    align-self: flex-end;
-    margin-top: auto;
-  }
+.submit {
+  align-self: flex-end;
+  margin-top: auto;
 }
