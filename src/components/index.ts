@@ -12,6 +12,7 @@ import PageHead from './PageHead'
 import PostIndex from './PostIndex'
 import RegisterForm from './RegisterForm'
 import RichTextEditor from './RichTextEditor'
+import Tooltip from './Tooltip'
 import UserInfoForm from './UserInfoForm'
 
 export {
@@ -29,5 +30,6 @@ export {
   PostIndex,
   RegisterForm,
   RichTextEditor,
+  Tooltip,
   UserInfoForm,
 }

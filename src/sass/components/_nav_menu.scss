@@ -1,5 +1,5 @@
 .nav-menu {
-  background: transparent;
+  background-color: transparent;
   position: absolute;
   width: 100%;
   z-index: 999;
@@ -34,17 +34,32 @@
   }
 
   &__submenu {
-    transition: all 0.3s;
-
     @include respond(tab-port) {
-      & > .nav-menu__item:not(:first-of-type) {
-        opacity: 0;
+      & > .nav-menu__item {
+        &:not(:first-of-type) {
+          opacity: 0;
+          height: 0;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
       }
 
       &:hover {
-        .nav-menu__item {
-          background-color: rgba($color-grey-dark, 0.6);
+        & > .nav-menu__item {
           opacity: 1;
+          height: auto;
+          background-color: rgba($color-grey-dark, 0.6);
+          padding-top: 0.5rem;
+          padding-bottom: 0.5rem;
+
+          @include respond(tab-land) {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+          }
+
+          &:not(:first-of-type) {
+            border-right: none;
+          }
         }
       }
     }
@@ -57,6 +72,7 @@
     align-items: center;
     position: relative;
     font-size: 1.8rem;
+    transition: all 0.3s;
 
     flex-direction: column;
     width: 100%;
@@ -158,11 +174,8 @@
 
 @media (max-width: 28.125em) {
   .checked {
+    transition: all 0.3s;
     background-color: rgba($color-grey-dark, 0.9);
-
-    // @include respond(tab-port) {
-    //   background-color: transparent;
-    // }
 
     .nav-menu__items {
       padding-bottom: 1rem;
@@ -191,14 +204,6 @@
         height: 4rem;
         z-index: 1;
         padding: 0.5rem 2rem;
-
-        // @include respond(tab-port) {
-        //   padding: 0.5rem 1.5rem;
-        // }
-
-        // @include respond(tab-land) {
-        //   padding: 3rem 3rem;
-        // }
       }
 
       & ~ .nav-menu__submenu {

@@ -1,4 +1,5 @@
 import React from 'react'
+import Tooltip from './Tooltip'
 
 type Props = {
   className?: string
@@ -14,25 +15,10 @@ type Props = {
   onBlur?: Function
   children?: any
   validation?: string
+  tooltip?: string
   formState?: { [key: string]: any }
 }
 
-/**
- * Input is a default text-type input component
- *
- * @prop id - String - The id and for attributes for the input and label respectively
- * @prop label - String - The label text
- * @prop name - String - The name attribute for the input
- * @prop value - String - The value attribute for the input
- * @prop onChange - Function - The onChange attribute for the input
- * @prop onFocus - Function - The onFocus attribute for the input
- * @prop onBlur - Function - The onBlur attribute for the input
- * @prop placeholder - String - The placeholder attribute for the input
- * @prop children - Any - Anything additional to add under the input
- * @prop className - String - Wrapper class
- * @prop type - String - The type attribute for the input
- * @prop formState - Object - The object passed from the useForm hook. This will handle most of the other props if they are not set.
- */
 const Input = (props: Props) => {
   // Instantiate props with defaults
   let {
@@ -50,6 +36,7 @@ const Input = (props: Props) => {
     children = null,
     validation = '',
     formState,
+    tooltip,
   } = props
 
   // Set formstate vars, but don't overwrite if passed explicitely
@@ -64,10 +51,13 @@ const Input = (props: Props) => {
   const renderLabel = () => {
     if (label) {
       return (
-        <label className="input__label" htmlFor={id}>
-          {label}
-          {required && ' *'}
-        </label>
+        <div className="input__label">
+          <label htmlFor={id}>
+            {label}
+            {required && ' *'}
+          </label>{' '}
+          {tooltip && <Tooltip text={tooltip} />}
+        </div>
       )
     }
   }

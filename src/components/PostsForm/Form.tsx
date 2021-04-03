@@ -157,6 +157,20 @@ const Form: React.FC<Props> = (props) => {
     }
   }
 
+  const tagsTooltip = `Useful Tags:
+  * section-header
+  * section-footer
+  * copyright
+  * site-description
+  * notification
+  * latitude
+  * longitude
+  * email-template
+  * welcome
+  * forgot-password
+  * bulk-email
+  * order-{number}`
+
   return (
     <form encType="multipart/form-data" className="post-form__form">
       <div className="u-form-row">
@@ -169,6 +183,7 @@ const Form: React.FC<Props> = (props) => {
         />
 
         <Input
+          tooltip={tagsTooltip}
           id="post_tags"
           label="Tags"
           name="tags"

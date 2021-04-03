@@ -1,0 +1,49 @@
+@import 'src/sass/abstracts/_variables.scss';
+
+.wrapper {
+  position: relative;
+}
+
+.icon {
+  cursor: pointer;
+  color: $color-grey-dark;
+
+  &:hover {
+    & ~ .container {
+      display: block;
+    }
+  }
+}
+
+.container {
+  display: none;
+  white-space: pre-wrap;
+  background-color: rgba($color-grey-dark, 0.9);
+  padding: 0.5rem 1rem;
+  color: $color-white;
+  border-radius: 0.3rem;
+  min-width: 20rem;
+  max-width: 40rem;
+
+  position: absolute;
+  left: 2.5rem;
+  bottom: 0;
+
+  &:before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 0.5rem solid transparent;
+    border-bottom: 0.5rem solid transparent;
+
+    border-right: 0.7rem solid rgba($color-grey-dark, 0.9);
+
+    position: absolute;
+    bottom: 0.5rem;
+    left: -0.7rem;
+  }
+
+  &:hover {
+    display: block;
+  }
+}
