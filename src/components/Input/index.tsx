@@ -1,5 +1,6 @@
 import React from 'react'
-import Tooltip from './Tooltip'
+import Tooltip from '../Tooltip'
+import styles from './Input.module.scss'
 
 type Props = {
   className?: string
@@ -51,7 +52,7 @@ const Input = (props: Props) => {
   const renderLabel = () => {
     if (label) {
       return (
-        <div className="input__label">
+        <div className={styles.label}>
           <label htmlFor={id}>
             {label}
             {required && ' *'}
@@ -72,8 +73,8 @@ const Input = (props: Props) => {
             placeholder={placeholder}
             name={name}
             id={id}
-            className={`input__textarea ${
-              validation && 'input__textarea--invalid'
+            className={`${styles.textarea} ${
+              validation && styles.invalid
             }`}
             value={value?.toString() || ''}
             required={!!required}
@@ -91,7 +92,7 @@ const Input = (props: Props) => {
             placeholder={placeholder}
             name={name}
             id={id}
-            className="input__checkbox"
+            className={styles.checkbox}
             checked={!!value}
             required={!!required}
             onChange={(event) => onChange(event)}
@@ -111,8 +112,8 @@ const Input = (props: Props) => {
           placeholder={placeholder}
           name={name}
           id={id}
-          className={`input__input ${
-            validation && 'input__input--invalid'
+          className={`${styles.input} ${
+            validation && styles.invalid
           }`}
           value={value?.toString() || ''}
           required={!!required}
@@ -125,9 +126,9 @@ const Input = (props: Props) => {
   }
 
   return (
-    <div className={`input ${className}`}>
+    <div className={`${styles.container} ${className}`}>
       {renderInput()}
-      <p className="input__validation">{validation}</p>
+      <p className={styles.validation}>{validation}</p>
       {children}
     </div>
   )

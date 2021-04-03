@@ -1,0 +1,47 @@
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
+.container {
+  width: 100%;
+}
+
+.label {
+  @include inputLabelStyle();
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.8rem;
+  font-family: 'Raleway';
+  color: $color-grey-dark;
+  letter-spacing: 0.1rem;
+  @include inputBorderStyle();
+}
+
+.invalid {
+  border: 0.2rem solid $color-error;
+}
+
+.input {
+  height: 4rem;
+}
+
+.textarea {
+  height: 10rem;
+  resize: vertical;
+}
+
+.checkbox {
+  vertical-align: middle;
+  height: 1.7rem;
+  width: 1.7rem;
+}
+
+.validation {
+  font-size: 1.4rem;
+  color: $color-error;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
