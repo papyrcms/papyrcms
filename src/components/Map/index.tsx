@@ -1,13 +1,16 @@
 import React, { useContext } from 'react'
 import GoogleMapReact from 'google-map-react'
 import { keysContext } from '@/context'
+import styles from './Map.module.scss'
 
 type Coords = {
   lat: number
   lng: number
 }
 
-const Position = (coords: Coords) => <div className="map__position" />
+const Position = (coords: Coords) => (
+  <div className={styles.position} />
+)
 
 type Props = {
   className?: string
@@ -26,7 +29,7 @@ const Map: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={`map ${className}`}>
+    <div className={`${styles.container} ${className}`}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: keys['googleMapsKey'] }}
         defaultCenter={{ lat: latitude, lng: longitude }}
