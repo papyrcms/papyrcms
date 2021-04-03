@@ -8,7 +8,8 @@ import {
   injectStripe,
 } from 'react-stripe-elements'
 import { keysContext } from '@/context'
-import Button from './Button'
+import Button from '../Button'
+import styles from './CreditCardForm.module.scss'
 
 type CCFProps = {
   className?: string
@@ -46,36 +47,32 @@ const CreditCardForm = injectStripe((props: CCFProps) => {
   }
 
   return (
-    <div className={`credit-card-form ${className || ''}`}>
-      <div className="credit-card-form__section credit-card-form__section--number">
-        <label className="credit-card-form__label">
-          Card Number *
-        </label>
-        <div className="credit-card-form__input">
+    <div className={`${styles.form} ${className || ''}`}>
+      <div className={`${styles.section} ${styles.number}`}>
+        <label className={styles.label}>Card Number *</label>
+        <div className={styles.input}>
           <CardNumberElement style={fieldStyle} />
         </div>
       </div>
 
-      <div className="credit-card-form__section credit-card-form__section--expiration">
-        <label className="credit-card-form__label">
-          Card Expiration *
-        </label>
-        <div className="credit-card-form__input">
+      <div className={styles.section}>
+        <label className={styles.label}>Card Expiration *</label>
+        <div className={styles.input}>
           <CardExpiryElement style={fieldStyle} />
         </div>
       </div>
 
-      <div className="credit-card-form__section credit-card-form__section--cvc">
-        <label className="credit-card-form__label">Card CVC *</label>
-        <div className="credit-card-form__input">
+      <div className={styles.section}>
+        <label className={styles.label}>Card CVC *</label>
+        <div className={styles.input}>
           <CardCVCElement style={fieldStyle} />
         </div>
       </div>
 
-      <p className="credit-card-form__validation">{validation}</p>
+      <p className={styles.validation}>{validation}</p>
 
       <Button
-        className="credit-card-form__submit"
+        className={styles.submit}
         onClick={handleSubmit}
         submittedText="Processing"
       >

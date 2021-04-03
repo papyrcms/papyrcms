@@ -1,0 +1,55 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.form {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr;
+
+  @include respond(tab-port) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.number {
+  grid-column: span 1;
+
+  @include respond(tab-port) {
+    grid-column: span 2;
+  }
+}
+
+.label {
+  @include inputLabelStyle();
+}
+
+.input {
+  @include inputBorderStyle();
+  padding: 1rem;
+  background-color: $color-white;
+}
+
+.validation {
+  color: $color-tertiary;
+  font-size: 1.4rem;
+  font-style: italic;
+  grid-column: span 1;
+
+  @include respond(tab-port) {
+    grid-column: span 2;
+  }
+}
+
+.submit {
+  grid-column: span 1;
+  justify-self: end;
+
+  @include respond(tab-port) {
+    grid-column: span 2;
+  }
+}
