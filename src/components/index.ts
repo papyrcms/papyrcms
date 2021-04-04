@@ -19,6 +19,7 @@ import UserInfoForm from './UserInfoForm'
 import ContactForm from './ContactForm'
 import DonateForm from './DonateForm'
 import SectionCards from './SectionCards'
+import SectionMaps from './SectionMaps'
 
 export {
   AdminDashboard,
@@ -41,4 +42,5 @@ export {
   ContactForm,
   DonateForm,
   SectionCards,
+  SectionMaps,
 }

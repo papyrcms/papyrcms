@@ -1,14 +1,15 @@
-import { SectionOptions, Post } from 'types'
+import { Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import { Map } from '@/components'
+import styles from './SectionMaps.module.scss'
 
 type Props = {
   posts: Post[]
   emptyTitle?: string
   emptyMessage?: string
-  mapLocation?: string
+  mapLocation?: 'start' | 'end'
 }
 
 /**
@@ -48,7 +49,7 @@ const SectionMaps: React.FC<Props> = (props) => {
   // @ts-ignore posts are assgned in the forEach
   if (!contentPost || !longitudePost || !latitudePost) {
     return (
-      <section className="section-maps">
+      <section className={styles.section}>
         <h2 className="heading-secondary">{emptyTitle}</h2>
         <h3 className="heading-tertiary">{emptyMessage}</h3>
       </section>
@@ -66,38 +67,20 @@ const SectionMaps: React.FC<Props> = (props) => {
   const { title, content } = contentPost
 
   return (
-    <section className="section-maps">
-      <h2 className="heading-secondary section-maps__title">
-        {title}
-      </h2>
+    <section className={styles.section}>
+      <h2 className={`heading-secondary ${styles.title}`}>{title}</h2>
 
-      <div className="section-maps__content">
+      <div className={styles.content}>
         {mapLocation === 'start' ? renderMap() : null}
 
-        <div className="section-maps__text">
-          <div className="section-maps__subtext">
-            {renderHTML(content)}
-          </div>
+        <div className={styles.text}>
+          <div className={styles.subtext}>{renderHTML(content)}</div>
         </div>
 
         {mapLocation === 'end' ? renderMap() : null}
       </div>
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  Map: {
-    component: 'SectionMaps',
-    name: 'Map Section',
-    description:
-      'This section will display a google map at the location specified by the latitude and longitude posts, along with the content of the main post.',
-    inputs: ['className', 'tags', 'title'],
-    maxPosts: 3,
-    defaultProps: {
-      mapLocation: 'end',
-    },
-  },
 }
 
 export default SectionMaps
