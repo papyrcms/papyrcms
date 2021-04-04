@@ -1,7 +1,8 @@
-import { SectionOptions, Post } from 'types'
+import { Post } from 'types'
 import React, { useState, useEffect } from 'react'
 import _ from 'lodash'
 import { SectionMedia } from '@/components'
+import styles from './SectionSlideshow.module.scss'
 
 type Props = {
   timer?: number
@@ -21,8 +22,8 @@ const SectionSlideshow: React.FC<Props> = (props) => {
 
   if (posts.length === 0) {
     return (
-      <section className="section-slideshow">
-        <div className="section-slideshow__empty">
+      <section className={styles.section}>
+        <div className={styles.empty}>
           <h2 className="heading-secondary">{emptyTitle}</h2>
           <h3 className="heading-tertiary">{emptyMessage}</h3>
         </div>
@@ -49,13 +50,13 @@ const SectionSlideshow: React.FC<Props> = (props) => {
 
   const renderSlides = () => {
     return _.map(posts, (post, i) => {
-      const slideClassName = counter !== i ? 'slide--hidden' : ''
+      const slideClassName = counter !== i ? styles.hidden : ''
 
       return (
         <SectionMedia
           key={post._id}
           post={post}
-          className={`${slideClassName} slide`}
+          className={`${slideClassName} ${styles.slide}`}
           alt={post.title}
         />
       )
@@ -70,7 +71,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
             if (ticker) clearInterval(ticker)
             setCounter(i)
           }}
-          className="section-slideshow__button"
+          className={styles.button}
           type="radio"
           checked={counter === i ? true : false}
           onChange={() => {}}
@@ -81,27 +82,11 @@ const SectionSlideshow: React.FC<Props> = (props) => {
   }
 
   return (
-    <section className="section-slideshow">
+    <section className={styles.section}>
       {renderSlides()}
-      <div className="section-slideshow__buttons">
-        {renderButtons()}
-      </div>
+      <div className={styles.buttons}>{renderButtons()}</div>
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  Slideshow: {
-    component: 'SectionSlideshow',
-    name: 'Slideshow Section',
-    description:
-      'This section will display a slideshow of each post at 5 second intervals.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    // maxPosts: null,
-    defaultProps: {
-      timer: 5000,
-    },
-  },
 }
 
 export default SectionSlideshow

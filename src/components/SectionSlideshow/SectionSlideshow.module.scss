@@ -1,0 +1,50 @@
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
+.section {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  min-height: 65vh;
+  display: block;
+}
+
+.button {
+  margin: 0.2rem;
+}
+
+.buttons {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.6;
+}
+
+.empty {
+  padding: 5rem 3vw;
+  padding-bottom: 10rem;
+
+  @include respond(tab-port) {
+    padding: 5rem 5vw;
+    padding-bottom: 10rem;
+  }
+
+  @include respond(tab-land) {
+    padding: 5rem 10vw;
+    padding-bottom: 10rem;
+  }
+}
+
+.slide {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  transition: all 1.5s ease;
+}
+
+.hidden {
+  opacity: 0;
+  transition: all 1.5s ease;
+}

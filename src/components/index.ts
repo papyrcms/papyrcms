@@ -22,6 +22,7 @@ import SectionCards from './SectionCards'
 import SectionMaps from './SectionMaps'
 import SectionMedia from './SectionMedia'
 import SectionSeo from './SectionSeo'
+import SectionSlideshow from './SectionSlideshow'
 
 export {
   AdminDashboard,
@@ -47,4 +48,5 @@ export {
   SectionMaps,
   SectionMedia,
   SectionSeo,
+  SectionSlideshow,
 }
