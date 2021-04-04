@@ -1,0 +1,18 @@
+@import 'src/sass/abstracts/_variables.scss';
+
+.link {
+  &:link,
+  &:visited {
+    width: 100%;
+    text-align: center;
+    padding: 1.2rem 2rem;
+    text-decoration: none;
+    color: $color-grey-dark;
+    transition: all 0.4s;
+    font-size: 2rem;
+  }
+
+  &:hover {
+    background-color: $color-grey-light;
+  }
+}
