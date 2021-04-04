@@ -83,7 +83,7 @@ const Layout: React.FC = (props) => {
   }
 
   return (
-    <div className="app">
+    <div className="papyr-app">
       <PageHead
         title={headerTitle}
         titleContent={titleHeaderContent}

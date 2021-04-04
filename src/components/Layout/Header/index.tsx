@@ -9,6 +9,7 @@ import {
   userContext,
   pagesContext,
 } from '@/context'
+import styles from './Header.module.scss'
 
 type Props = {
   mainTitle: string
@@ -37,7 +38,7 @@ const Header: React.FC<Props> = (props) => {
         <Link href="/profile">
           <a
             title="Profile"
-            className="header__menu-item header__menu-item--1"
+            className={`${styles.item} ${styles.menu1}`}
           >
             <li>Profile</li>
           </a>
@@ -47,10 +48,7 @@ const Header: React.FC<Props> = (props) => {
 
     return (
       <Link href="/login">
-        <a
-          title="Login"
-          className="header__menu-item header__menu-item--1"
-        >
+        <a title="Login" className={`${styles.item} ${styles.menu1}`}>
           <li>Login</li>
         </a>
       </Link>
@@ -68,7 +66,7 @@ const Header: React.FC<Props> = (props) => {
         <Link href="/store/cart">
           <a
             title="Cart"
-            className="header__menu-item header__menu-item--2"
+            className={`${styles.item} ${styles.menu2}`}
           >
             <li>{menuText}</li>
           </a>
@@ -83,7 +81,7 @@ const Header: React.FC<Props> = (props) => {
         <Link href="/posts/new">
           <a
             title="Content"
-            className="header__menu-item header__menu-item--3"
+            className={`${styles.item} ${styles.menu3}`}
           >
             <li>Add Content</li>
           </a>
@@ -95,7 +93,7 @@ const Header: React.FC<Props> = (props) => {
   const renderNav = () => {
     if (settings.enableMenu || currentUser?.isAdmin) {
       return (
-        <ul className="header__menu">
+        <ul className={styles.menu}>
           {renderAuthenticator()}
           {renderCart()}
           {/* {renderAdminItems()} */}
@@ -118,8 +116,8 @@ const Header: React.FC<Props> = (props) => {
   }
 
   return (
-    <header className="header">
-      <div className="header__container">
+    <header className={styles.header}>
+      <div className={styles.container}>
         <h1 className="heading-primary">{renderTitle()}</h1>
         {renderNav()}
       </div>
