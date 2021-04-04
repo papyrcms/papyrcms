@@ -3,7 +3,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import { userContext } from '@/context'
-import Modal from '../Modal'
+import Modal from '../../Modal'
+import styles from './UserList.module.scss'
 
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([])
@@ -88,23 +89,23 @@ const UserList = () => {
   const renderUserOptions = (user: User) => {
     if (currentUser && user._id !== currentUser._id) {
       return (
-        <div className="user-list__options">
+        <div className={styles.options}>
           <button
-            className="button button-small button-edit"
+            className="button-edit button-small"
             onClick={() => changeAdminStatus(user)}
           >
             {user.isAdmin ? 'Revoke' : 'Make'} Admin
           </button>
 
           <button
-            className="button button-small button-delete"
+            className="button-delete button-small"
             onClick={() => changeBannedStatus(user)}
           >
             {user.isBanned ? 'Unban' : 'Ban'}
           </button>
 
           <button
-            className="button button-small button-delete"
+            className="button-delete button-small"
             onClick={() => deleteUser(user)}
           >
             Delete
@@ -119,11 +120,9 @@ const UserList = () => {
 
     return (
       <div
-        className={`user-list__info${
-          visible ? ' user-list__info--visible' : ''
-        }`}
+        className={`${styles.info} ${visible ? styles.visible : ''}`}
       >
-        <ul className="user-list__details">
+        <ul className={styles.details}>
           <li>First Name: {user.firstName}</li>
           <li>Last Name: {user.lastName}</li>
           <li>Subscribed: {user.isSubscribed.toString()}</li>
@@ -139,12 +138,12 @@ const UserList = () => {
   const renderUsers = () => {
     return _.map(users, (user) => {
       return (
-        <li key={user._id} className="user-list__user">
-          <div className="user-list__item">
-            <span className="user-list__email">{user.email}</span>
+        <li key={user._id} className={styles.user}>
+          <div className={styles.item}>
+            <span className={styles.email}>{user.email}</span>
             <button
               onClick={() => setSelectedUser(user._id)}
-              className="user-list__check-info button button-small button-secondary"
+              className="button-secondary button-small"
             >
               Info
             </button>
@@ -157,13 +156,13 @@ const UserList = () => {
 
   return (
     <Modal
-      buttonClasses="button button-primary"
+      buttonClasses="button-primary"
       buttonText={`View Users (${users.length})`}
     >
-      <div className="user-list">
+      <div>
         <h3 className="heading-tertiary">Users</h3>
 
-        <ul className="user-list__list">{renderUsers()}</ul>
+        <ul className={styles.list}>{renderUsers()}</ul>
       </div>
     </Modal>
   )

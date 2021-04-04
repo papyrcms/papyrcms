@@ -1,0 +1,55 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.list {
+  list-style-type: none;
+}
+
+.user {
+  border-bottom: 0.1rem solid $color-grey;
+  padding: 0.5rem;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info {
+  margin-left: 0;
+  overflow: hidden;
+
+  @include respond(tab-port) {
+    margin-left: 3rem;
+  }
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  height: 0;
+  z-index: -10;
+  transition: 0.3s;
+}
+
+.visible {
+  height: 14rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .button {
+    margin-left: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  @include respond(tab-port) {
+    display: block;
+    .button {
+      margin-left: 0.5rem;
+    }
+  }
+}
