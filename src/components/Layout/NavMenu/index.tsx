@@ -3,10 +3,11 @@ import _ from 'lodash'
 import Link from 'next/link'
 import { settingsContext, pagesContext } from '@/context'
 import { Page } from 'types'
+import styles from './NavMenu.module.scss'
 
 const onClick = () => {
   const checkbox = document.getElementById('nav-menu-checkbox')
-  checkbox?.classList.toggle('checked')
+  checkbox?.classList.toggle(styles.checked)
 }
 
 type LinkProps = {
@@ -20,7 +21,7 @@ const NavLink: React.FC<LinkProps> = (props) => {
   return (
     <Link href={props.href}>
       <a
-        className="nav-menu__item"
+        className={styles.item}
         title={props.title || props.children}
       >
         <li onClick={onClick}>{props.children}</li>
@@ -32,7 +33,7 @@ const NavLink: React.FC<LinkProps> = (props) => {
 const Submenu: React.FC<{ pages: Page[] }> = ({ pages }) => {
   pages = _.sortBy(pages, (page) => page.navOrder)
   return (
-    <div className="nav-menu__submenu">
+    <div className={styles.submenu}>
       {_.map(pages, (page) => {
         const href = page.route === 'home' ? '/' : `/${page.route}`
         return (
@@ -142,7 +143,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
       return (
         <Link href="/">
           <a title="Home">
-            <div className="nav-menu__logo">
+            <div className={styles.logo}>
               <img src={props.logo} alt="site logo" />
             </div>
           </a>
@@ -153,13 +154,13 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
 
   return (
     <nav>
-      <ul className="nav-menu">
+      <ul className={styles.menu}>
         {renderLogo()}
 
-        <div className="nav-menu__items" id="nav-menu-checkbox">
+        <div className={styles.items} id="nav-menu-checkbox">
           <span
             onClick={onClick}
-            className="nav-menu__item nav-menu__item--hamburger"
+            className={`${styles.item} ${styles.hamburger}`}
           />
           {renderMenuItems()}
         </div>
