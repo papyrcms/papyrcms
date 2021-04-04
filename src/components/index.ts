@@ -20,6 +20,7 @@ import ContactForm from './ContactForm'
 import DonateForm from './DonateForm'
 import SectionCards from './SectionCards'
 import SectionMaps from './SectionMaps'
+import SectionMedia from './SectionMedia'
 
 export {
   AdminDashboard,
@@ -43,4 +44,5 @@ export {
   DonateForm,
   SectionCards,
   SectionMaps,
+  SectionMedia,
 }

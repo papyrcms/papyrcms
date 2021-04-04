@@ -1,7 +1,8 @@
-import { Post, SectionOptions } from 'types'
+import { Post } from 'types'
 import React from 'react'
 import renderHTML from 'react-render-html'
 import { Media } from '@/components'
+import styles from './SectionMedia.module.scss'
 
 type Props = {
   post: Post
@@ -26,8 +27,8 @@ const SectionMedia: React.FC<Props> = (props) => {
     const { emptyTitle, emptyMessage } = props
 
     return (
-      <section className="section-media">
-        <div className="section-media__empty">
+      <section className={styles.section}>
+        <div className={styles.empty}>
           <h2 className="heading-secondary">{emptyTitle}</h2>
           <h3 className="heading-tertiary">{emptyMessage}</h3>
         </div>
@@ -40,47 +41,23 @@ const SectionMedia: React.FC<Props> = (props) => {
 
   return (
     <section
-      className={`${className} section-media${
-        fixed ? '--fixed' : ''
+      className={`${className} ${
+        fixed ? styles.fixed : styles.section
       }`}
     >
-      <div className="section-media__text">
-        <h2 className="section-media__title">{title}</h2>
-        <div className="section-media__subtext">
-          {renderHTML(content)}
-        </div>
+      <div className={styles.text}>
+        <h2 className={styles.title}>{title}</h2>
+        <div className={styles.subtext}>{renderHTML(content)}</div>
       </div>
 
       <Media
-        className={`section-media__media${fixed ? '--fixed' : ''}`}
+        className={fixed ? styles.fixedMedia : styles.media}
         src={mainMedia || ''}
         alt={alt}
         parallax={fixed}
       />
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  Parallax: {
-    component: 'SectionMedia',
-    name: 'Parallax Section',
-    description:
-      'This section will display a post with the parallax effect on the media.',
-    inputs: ['className', 'tags', 'title'],
-    maxPosts: 1,
-    defaultProps: {
-      fixed: true,
-    },
-  },
-  Media: {
-    component: 'SectionMedia',
-    name: 'Media Section',
-    description: 'This section will display a post media normally.',
-    inputs: ['className', 'tags', 'title'],
-    maxPosts: 1,
-    defaultProps: {},
-  },
 }
 
 export default SectionMedia
