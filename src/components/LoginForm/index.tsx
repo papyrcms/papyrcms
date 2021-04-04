@@ -6,6 +6,7 @@ import Input from '../Input'
 import Button from '../Button'
 import Modal from '../Modal'
 import ForgotPasswordForm from './ForgotPasswordForm'
+import styles from './LoginForm.module.scss'
 
 const LoginForm = () => {
   const { setCurrentUser } = useContext(userContext)
@@ -31,7 +32,7 @@ const LoginForm = () => {
   }
 
   return (
-    <form className="login-form">
+    <form className={styles.form}>
       <h3 className="heading-tertiary">Login</h3>
 
       <Input
@@ -52,19 +53,19 @@ const LoginForm = () => {
         required
       />
 
-      <p className="login-form__validation">
+      <p className={styles.validation}>
         {formState.values.validation}
       </p>
 
-      <div className="login-form__bottom">
-        <div className="login-form__submit">
+      <div className={styles.bottom}>
+        <div className={styles.submit}>
           <Button onClick={handleSubmit} submittedText="Checking">
             Login
           </Button>
         </div>
 
         <Modal
-          buttonClasses="login-form__forgot-password"
+          buttonClasses={styles.link}
           buttonText="Forgot Password?"
         >
           <ForgotPasswordForm email={formState.values.email} />
