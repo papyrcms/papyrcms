@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { useRouter } from 'next/router'
 import { Page } from 'types'
 import { pagesContext } from '@/context'
+import styles from './Footer.module.scss'
 
 type Props = {
   footerTitle: string
@@ -24,18 +25,16 @@ const Footer: React.FC<Props> = (props) => {
   }
 
   return (
-    <footer className="footer">
+    <footer className={styles.footer}>
       {/* Footer contact form */}
-      <div className="cta">
-        <h2 className="cta__title u-margin-bottom-small">
-          {props.footerTitle}
-        </h2>
-        <div className="cta__content">{props.footerContent}</div>
+      <div className={styles.cta}>
+        <h2 className={styles.ctaTitle}>{props.footerTitle}</h2>
+        <div>{props.footerContent}</div>
       </div>
 
       {/* Credit section */}
-      <div className="credit">
-        <div className="credit__text">
+      <div className={styles.credit}>
+        <div className={styles.creditText}>
           {props.footerCopyrightContent}
         </div>
       </div>
