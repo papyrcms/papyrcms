@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import { settingsContext } from '@/context'
-import Input from '../Input'
+import Input from '../../Input'
+import styles from './AppSettingsForm.module.scss'
 
 const AppSettingsForm: React.FC = () => {
   const [verification, setVerification] = useState('')
@@ -60,7 +61,7 @@ const AppSettingsForm: React.FC = () => {
         return (
           <>
             <input
-              className="app-settings-form__checkbox"
+              className={styles.checkbox}
               type="checkbox"
               id={key}
               checked={newSetting ? true : false}
@@ -71,7 +72,7 @@ const AppSettingsForm: React.FC = () => {
                 })
               }
             />
-            <label className="app-settings-form__label" htmlFor={key}>
+            <label className={styles.label} htmlFor={key}>
               {label}
             </label>
           </>
@@ -89,7 +90,7 @@ const AppSettingsForm: React.FC = () => {
       const newSetting = formSettings[key]
 
       return (
-        <div className="app-settings-form__field" key={key}>
+        <div className={styles.field} key={key}>
           {renderSettingsInput(newSetting, key, label)}
         </div>
       )
@@ -97,18 +98,14 @@ const AppSettingsForm: React.FC = () => {
   }
 
   return (
-    <form className="app-settings-form" onSubmit={handleSubmit}>
-      <h3 className="heading-tertiary app-settings-form__title">
-        App Settings
-      </h3>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <h3 className="heading-tertiary">App Settings</h3>
 
-      <p className="app-settings-form__verification">
-        {verification}
-      </p>
+      <p className={styles.verification}>{verification}</p>
 
       {renderSettingsInputs()}
 
-      <div className="app-settings-form__submit">
+      <div className={styles.submit}>
         <input type="submit" className="button button-primary" />
       </div>
     </form>

@@ -1,0 +1,30 @@
+@import 'src/sass/abstracts/_variables.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.verification {
+  color: $color-tertiary;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: 1rem;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+}
+
+.label {
+  cursor: pointer;
+}
+
+.submit {
+  margin-top: 2rem;
+}
