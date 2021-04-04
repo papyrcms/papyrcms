@@ -6,7 +6,7 @@ import axios from 'axios'
 import { userContext, storeContext, postsContext } from '@/context'
 import { usePostFilter } from '@/hooks'
 import { PageHead } from '@/components'
-import { SectionCards } from '@/Sections'
+import { SectionCards } from '@/sections'
 import styles from './store.module.scss'
 
 const StorePage = () => {

@@ -1,8 +1,8 @@
-import { SectionOptions } from 'types'
 import React, { useContext } from 'react'
 import { userContext } from '@/context'
 import { Input, Button } from '@/components'
 import { useForm } from '@/hooks'
+import styles from './ContactForm.module.scss'
 
 /**
  * ContactForm is the main contact form component
@@ -49,8 +49,8 @@ const ContactForm: React.FC<{ className?: string }> = (props) => {
   }
 
   return (
-    <section className={`${className} contact-form`}>
-      <form className="contact-form__form">
+    <section className={`${className} ${styles.section}`}>
+      <form className={styles.form}>
         <div className="u-form-row">
           <Input
             id="contact-name"
@@ -90,30 +90,16 @@ const ContactForm: React.FC<{ className?: string }> = (props) => {
 
         <Button
           onClick={handleSubmit}
-          className="contact-form__submit"
+          className={styles.submit}
           submittedText="Sending"
         >
           Send
         </Button>
 
-        <p className="contact-form__validation">
-          {values.validation}
-        </p>
+        <p className={styles.validation}>{values.validation}</p>
       </form>
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  ContactForm: {
-    component: 'ContactForm',
-    name: 'Contact Form',
-    description:
-      'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
-    inputs: ['className'],
-    // maxPosts: null,
-    defaultProps: {},
-  },
 }
 
 export default ContactForm

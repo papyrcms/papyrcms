@@ -15,6 +15,9 @@ import RichTextEditor from './RichTextEditor'
 import Tooltip from './Tooltip'
 import UserInfoForm from './UserInfoForm'
 
+// Sections
+import ContactForm from './ContactForm'
+
 export {
   AdminDashboard,
   Layout,
@@ -32,4 +35,6 @@ export {
   RichTextEditor,
   Tooltip,
   UserInfoForm,
+  // Sections
+  ContactForm,
 }

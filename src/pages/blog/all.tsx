@@ -4,7 +4,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { PageHead } from '@/components'
 import { userContext, blogsContext, postsContext } from '@/context'
-import { SectionCards } from '@/Sections'
+import { SectionCards } from '@/sections'
 import { usePostFilter } from '@/hooks'
 
 const BlogAllPage = () => {

@@ -5,7 +5,7 @@ import moment from 'moment'
 import Link from 'next/link'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
-import { SectionStrip } from '@/Sections'
+import { SectionStrip } from '@/sections'
 import { blogsContext, postsContext } from '@/context'
 import styles from './blog.module.scss'
 

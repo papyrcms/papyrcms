@@ -1,0 +1,28 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.section {
+  @include sectionStyle();
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  max-width: $max-text-width;
+  margin: 0 auto;
+
+  & > * {
+    margin-bottom: $gap-width;
+  }
+}
+
+.submit {
+  align-self: flex-start;
+}
+
+.validation {
+  align-self: flex-start;
+  color: $color-error;
+}
