@@ -1,0 +1,62 @@
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
+.section {
+  @include sectionStyle();
+}
+
+.list {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+
+  @include respond(tab-port) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond(tab-land) {
+    &3 {
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: $gap-width;
+    }
+
+    &4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+.header {
+  margin-bottom: $gap-width;
+}
+
+.card {
+  display: grid;
+  align-content: start;
+}
+
+.image {
+  width: 100%;
+  box-shadow: $shadow-low;
+  justify-self: center;
+  backface-visibility: hidden;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.008) translate(0.2rem, -0.3rem);
+    box-shadow: $shadow-high;
+  }
+}
+
+.content {
+  @include contentStyle();
+}
+
+.link {
+  align-self: end;
+}
+
+.empty {
+  grid-column: span 4;
+}

@@ -1,4 +1,3 @@
-import SectionCards from './SectionCards'
 import SectionMaps from './SectionMaps'
 import SectionMedia from './SectionMedia'
 import SectionSeo from './SectionSeo'
@@ -8,7 +7,6 @@ import SectionStrip from './SectionStrip'
 import SectionSplit from './SectionSplit'
 
 export {
-  SectionCards,
   SectionMaps,
   SectionMedia,
   SectionSeo,

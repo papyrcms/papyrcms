@@ -1,9 +1,10 @@
-import { SectionOptions, Post } from 'types'
+import { Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import { Media } from '@/components'
+import styles from './SectionCards.module.scss'
 
 type Props = {
   posts: Post[]
@@ -34,36 +35,6 @@ type Props = {
   afterPostLink?: Function
 }
 
-/**
- * SectionCards will display a section of card-like components
- *
- * @prop title - String - The title to display above the cards
- * @prop perRow - Integer - How many cards will fit on one row at full width - must be 3 or 4
- * @prop readMore - Boolean - If true, a link to the full post will render at the bottom of each card
- * @prop path - String - The path to use for the read more link before the post id ('/{path}/a1s2d3f4g5h6j7')
- * @prop contentLength - String - How many characters to show in the card content
- * @prop emptyMessage - String - Message to display if there are no posts
- * @prop posts - Array [Object - The post to be rendered as a card]
- * @prop clickableMedia - Boolean - If true, the media will display as a modal when clicked
- *
- * Section Hooks
- * @prop beforeTitle - Function - Rendered before the section title
- * @prop afterTitle - Function - Rendered after the section title
- * @prop beforePostList - Function - Rendered before the section card list
- * @prop beforePostList - Function - Rendered before the section card list
- * @prop beforePosts - Function - Rendered before the section cards
- * @prop beforePosts - Function - Rendered before the section cards
- *
- * Post Hooks
- * @prop beforePostTitle - Function - Rendered before the card title
- * @prop afterPostTitle - Function - Rendered after the card title
- * @prop beforePostMedia - Function - Rendered before the card media
- * @prop afterPostMedia - Function - Rendered after the card media
- * @prop beforePostContent - Function - Rendered before the card content
- * @prop afterPostContent - Function - Rendered after the card content
- * @prop beforePostLink - Function - Rendered before the card link
- * @prop afterPostLink - Function - Rendered after the card link
- */
 const SectionCards: React.FC<Props> = (props) => {
   const {
     posts,
@@ -103,7 +74,7 @@ const SectionCards: React.FC<Props> = (props) => {
           href={`/${readMorePath || 'posts'}/[id]`}
           as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}
         >
-          <a className="section-cards__link">Read More</a>
+          <a className={styles.link}>Read More</a>
         </Link>
       )
     }
@@ -123,7 +94,7 @@ const SectionCards: React.FC<Props> = (props) => {
     if (post.mainMedia) {
       return (
         <Media
-          className="section-cards__image"
+          className={styles.image}
           src={post.mainMedia}
           alt={post.title}
           clickable={clickableMedia}
@@ -135,7 +106,7 @@ const SectionCards: React.FC<Props> = (props) => {
   const renderPosts = () => {
     if (posts.length === 0) {
       return (
-        <div className="section-cards__empty-message">
+        <div className={styles.empty}>
           <h3 className="heading-tertiary">
             {emptyMessage ? emptyMessage : ''}
           </h3>
@@ -155,11 +126,9 @@ const SectionCards: React.FC<Props> = (props) => {
           : post.content
 
       return (
-        <li key={post._id} className="section-cards__card">
+        <li key={post._id} className={styles.card}>
           {beforePostTitle(post)}
-          <h3 className="section-cards__title heading-tertiary">
-            {post.title}
-          </h3>
+          <h3 className="heading-tertiary">{post.title}</h3>
           {afterPostTitle(post)}
 
           {renderPublishSection(post.published)}
@@ -169,7 +138,7 @@ const SectionCards: React.FC<Props> = (props) => {
           {afterPostMedia(post)}
 
           {beforePostContent(post)}
-          <div className="section-cards__content">
+          <div className={styles.content}>
             {renderHTML(postContent)}
           </div>
           {afterPostContent(post)}
@@ -183,19 +152,19 @@ const SectionCards: React.FC<Props> = (props) => {
   }
 
   const listCountClass = perRow
-    ? `section-cards__list--${perRow}`
-    : 'section-cards__list--3'
+    ? styles[`list${perRow}`]
+    : styles.list3
 
   return (
-    <section className="section-cards">
+    <section className={styles.section}>
       {beforeTitle()}
-      <h2 className="heading-secondary section-cards__header">
+      <h2 className={`heading-secondary ${styles.header}`}>
         {title}
       </h2>
       {afterTitle()}
 
       {beforePostList()}
-      <ul className={`section-cards__list ${listCountClass}`}>
+      <ul className={`${styles.list} ${listCountClass}`}>
         {beforePosts()}
         {renderPosts()}
         {afterPosts()}
@@ -203,35 +172,6 @@ const SectionCards: React.FC<Props> = (props) => {
       {afterPostList()}
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  ThreeCards: {
-    component: 'SectionCards',
-    name: 'Three Cards Section',
-    description:
-      'This section will display each post in a vertical style with three posts per row.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    // maxPosts: null,
-    defaultProps: {
-      contentLength: 120,
-      readMore: true,
-      perRow: 3,
-    },
-  },
-  FourCards: {
-    component: 'SectionCards',
-    name: 'Four Cards Section',
-    description:
-      'This section will display each post in a vertical style with four posts per row.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    // maxPosts: null,
-    defaultProps: {
-      contentLength: 120,
-      readMore: true,
-      perRow: 4,
-    },
-  },
 }
 
 export default SectionCards
