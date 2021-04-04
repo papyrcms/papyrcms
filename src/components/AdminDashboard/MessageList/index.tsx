@@ -3,8 +3,9 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import moment from 'moment'
-import Modal from '../Modal'
+import Modal from '../../Modal'
 import { userContext } from '@/context'
+import styles from './MessageList.module.scss'
 
 const MessageList = () => {
   const [messages, setMessages] = useState<Message[]>([])
@@ -47,24 +48,18 @@ const MessageList = () => {
         const localReadableDate = moment(created).format('LLLL')
 
         return (
-          <div key={_id} className="message-list__message">
-            <p className="message-list__date">
-              Sent: {localReadableDate}
-            </p>
+          <div key={_id} className={styles.message}>
+            <p>Sent: {localReadableDate}</p>
 
-            <div className="message-list__info">
-              <span className="message-list__info--name">
-                From: {name}
-              </span>
-              <span className="message-list__info--email">
-                Email: {email}
-              </span>
+            <div className={styles.info}>
+              <span>From: {name}</span>
+              <span>Email: {email}</span>
             </div>
 
-            <div className="message-list__content">{message}</div>
+            <div className={styles.content}>{message}</div>
 
             <button
-              className="button button-tertiary button-small"
+              className="button-tertiary button-small"
               onClick={() => deleteMessage(_id)}
             >
               Delete
@@ -77,10 +72,10 @@ const MessageList = () => {
 
   return (
     <Modal
-      buttonClasses="button button-primary"
+      buttonClasses="button-primary"
       buttonText={`View Messages (${messages.length})`}
     >
-      <div className="message-list">
+      <div>
         <h3 className="heading-tertiary">Messages</h3>
         {renderMessages()}
       </div>
