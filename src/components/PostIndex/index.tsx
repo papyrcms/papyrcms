@@ -3,7 +3,8 @@ import React from 'react'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import _ from 'lodash'
-import Media from './Media'
+import Media from '../Media'
+import styles from './PostIndex.module.scss'
 
 type Props = {
   posts: Post[]
@@ -23,7 +24,7 @@ const PostIndex = (props: Props) => {
   const renderTagsSection = (tags: string[]) => {
     if (tags.length > 0) {
       return (
-        <p className="post-item__tags">
+        <p className={styles.tags}>
           Tags: <em>{renderTags(tags)}</em>
         </p>
       )
@@ -33,7 +34,7 @@ const PostIndex = (props: Props) => {
   const renderMediaSection = (media?: string, alt?: string) => {
     if (media) {
       return (
-        <div className="post-item__image">
+        <div className={styles.image}>
           <Media src={media} alt={alt || ''} />
         </div>
       )
@@ -71,20 +72,20 @@ const PostIndex = (props: Props) => {
       }
 
       return (
-        <div key={_id} className="post-item">
+        <div key={_id} className={styles.post}>
           {renderMediaSection(mainMedia, title)}
-          <div className="post-item__details">
-            <div className="post-item__top">
-              <h3 className="post-item__title heading-tertiary">
+          <div className={styles.details}>
+            <div className={styles.top}>
+              <h3 className={`${styles.title} heading-tertiary`}>
                 {title}
               </h3>
               {renderTagsSection(tags)}
               {renderPublishSection(published)}
             </div>
-            <div className="post-item__content">
+            <div className={styles.content}>
               {renderHTML(postContent)}
             </div>
-            <div className="post-item__link">
+            <div className={styles.link}>
               <Link href={`/posts/[id]`} as={`/posts/${_id}`}>
                 <a className="button button-primary">Read More</a>
               </Link>
@@ -95,7 +96,7 @@ const PostIndex = (props: Props) => {
     })
   }
 
-  return <div className="post-index">{renderPosts()}</div>
+  return <div>{renderPosts()}</div>
 }
 
 export default PostIndex

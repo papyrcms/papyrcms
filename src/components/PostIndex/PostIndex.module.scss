@@ -1,0 +1,70 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.post {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+  border-bottom: 0.1rem solid $color-grey-dark;
+  padding-bottom: 2rem;
+  color: $color-grey-dark;
+
+  &:not(:first-of-type) {
+    padding-top: 1rem;
+
+    @include respond(tab-port) {
+      padding-top: 3rem;
+    }
+
+    @include respond(tab-land) {
+      padding-top: 5rem;
+    }
+  }
+}
+
+.image {
+  display: none;
+
+  @include respond(tab-port) {
+    display: block;
+    max-width: 33.333333%;
+    height: 100%;
+    margin-right: 3rem;
+    align-self: center;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    max-height: 25rem;
+    border-radius: 0.5rem;
+    margin-left: auto;
+    margin-right: 2rem;
+  }
+}
+
+.details {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.content {
+  border-left: none;
+  margin: 2rem 0;
+  @include contentStyle();
+}
+
+.link {
+  align-self: flex-end;
+  margin-top: auto;
+}
