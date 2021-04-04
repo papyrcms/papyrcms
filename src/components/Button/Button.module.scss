@@ -1,0 +1,26 @@
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
+.primary {
+  @include buttonStyle(primary);
+}
+
+.secondary {
+  @include buttonStyle(secondary);
+}
+
+.tertiary {
+  @include buttonStyle(tertiary);
+}
+
+.cta {
+  @include buttonStyle(cta);
+}
+
+.edit {
+  @include buttonStyle(edit);
+}
+
+.delete {
+  @include buttonStyle(delete);
+}

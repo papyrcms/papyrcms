@@ -64,3 +64,36 @@
     }
   }
 }
+
+.button {
+  @include buttonStyle();
+}
+
+.button-small {
+  padding: 0.5rem 1.75rem !important;
+  font-size: 1.2rem !important;
+}
+
+.button-primary {
+  @include buttonStyle(primary);
+}
+
+.button-secondary {
+  @include buttonStyle(secondary);
+}
+
+.button-tertiary {
+  @include buttonStyle(tertiary);
+}
+
+.button-cta {
+  @include buttonStyle(cta);
+}
+
+.button-edit {
+  @include buttonStyle(edit);
+}
+
+.button-delete {
+  @include buttonStyle(delete);
+}

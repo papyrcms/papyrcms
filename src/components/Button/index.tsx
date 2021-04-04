@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import styles from './Button.module.scss'
 
 type Props = {
-  className?: string
+  className?:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'cta'
+    | 'edit'
+    | 'delete'
   disabled?: boolean
   onClick: Function
   id?: string
@@ -13,7 +20,6 @@ type Props = {
 }
 
 const Button = (props: Props) => {
-
   const {
     // Standard button props
     className = '',
@@ -26,7 +32,7 @@ const Button = (props: Props) => {
 
     // Custom button props
     type = 'primary', // I know type is a standard prop, but it's a stupid standard prop
-    submittedText = children
+    submittedText = children,
   } = props
 
   const [buttonDisabled, setButtonDisabled] = useState(disabled)
@@ -38,10 +44,9 @@ const Button = (props: Props) => {
     setButtonText(children)
   }, [children])
 
-  const actualClassName = `button button-${type} ${className}`
-  
-  const handleClick = (event: any) => {
+  const actualClassName = `${styles[type]} ${className}`
 
+  const handleClick = (event: any) => {
     setButtonText(submittedText)
     setButtonDisabled(true)
 
@@ -66,6 +71,5 @@ const Button = (props: Props) => {
     </button>
   )
 }
-
 
 export default Button

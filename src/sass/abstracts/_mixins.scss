@@ -78,6 +78,104 @@
   }
 }
 
+@mixin buttonStyle($type: primary, $size: normal) {
+  padding: 1rem 3.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  font-size: 1.5rem;
+  border: 0.2rem solid $color-black;
+  background-color: $color-white;
+  color: $color-black;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 0.3rem;
+
+  &:hover {
+    color: $color-white;
+    background-color: transparent;
+    border: 0.2rem solid $color-white;
+  }
+
+  @if $type == primary {
+    border: 0.2rem solid $color-primary;
+    color: $color-white;
+    background-color: $color-primary;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-primary;
+      background-color: transparent;
+      border: 0.2rem solid $color-primary;
+    }
+  }
+
+  @if $type == secondary {
+    border: 0.2rem solid $color-secondary;
+    color: $color-white;
+    background-color: $color-secondary;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-secondary;
+      background-color: transparent;
+      border: 0.2rem solid $color-secondary;
+    }
+  }
+
+  @if $type == tertiary {
+    border: 0.2rem solid $color-tertiary;
+    color: $color-white;
+    background-color: $color-tertiary;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-tertiary;
+      background-color: transparent;
+      border: 0.2rem solid $color-tertiary;
+    }
+  }
+
+  @if $type == cta {
+    border: 0.2rem solid $color-cta;
+    color: $color-white;
+    background-color: $color-cta;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-cta;
+      background-color: transparent;
+      border: 0.2rem solid $color-cta;
+    }
+  }
+
+  @if $type == edit {
+    border: 0.2rem solid $color-edit;
+    color: $color-white;
+    background-color: $color-edit;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-edit;
+      background-color: transparent;
+      border: 0.2rem solid $color-edit;
+    }
+  }
+
+  @if $type == delete {
+    border: 0.2rem solid $color-delete;
+    color: $color-white;
+    background-color: $color-delete;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-delete;
+      background-color: transparent;
+      border: 0.2rem solid $color-delete;
+    }
+  }
+}
+
 // max-width: px / 16
 @mixin respond($breakpoint) {
   @if $breakpoint == tab-port {
