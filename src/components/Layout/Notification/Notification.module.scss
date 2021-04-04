@@ -1,0 +1,41 @@
+@import 'src/sass/abstracts/_variables.scss';
+
+.container {
+  background-color: $color-notice;
+  padding: 1rem 3rem;
+  border-bottom: 0.1rem solid $color-grey;
+  display: flex;
+  transition: 1s;
+  max-height: 10rem;
+}
+
+.hidden {
+  max-height: 0;
+  border: 0;
+  opacity: 0;
+  padding: 0 3rem;
+  transition: 1s;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 1.7rem;
+}
+
+.text {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.close {
+  background: none;
+  border: none;
+  float: right;
+  font-size: 2.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 100;
+}

@@ -1,6 +1,7 @@
 import { Post } from 'types'
 import React, { useState, useEffect } from 'react'
 import renderHTML from 'react-render-html'
+import styles from './Notification.module.scss'
 
 type Props = {
   post: Post
@@ -26,7 +27,9 @@ const Notification: React.FC<Props> = (props) => {
       localStorage.setItem('closedNotifications', JSON.stringify([]))
       localClosedNotifications = []
     } else {
-      localClosedNotifications = JSON.parse(localClosedNotificationsJson)
+      localClosedNotifications = JSON.parse(
+        localClosedNotificationsJson
+      )
       setClosedNotifications(localClosedNotifications)
     }
 
@@ -47,20 +50,13 @@ const Notification: React.FC<Props> = (props) => {
 
   return (
     <div
-      className={`notification ${
-        hidden ? 'notification--hidden' : ''
-      }`}
+      className={`${styles.container} ${hidden ? styles.hidden : ''}`}
     >
-      <div className="notification__content">
-        <h4 className="notification__title">{title}</h4>
-        <div className="notification__text">
-          {renderHTML(content)}
-        </div>
+      <div className={styles.content}>
+        <h4 className={styles.title}>{title}</h4>
+        <div className={styles.text}>{renderHTML(content)}</div>
       </div>
-      <button
-        className="notification__close"
-        onClick={closeNotification}
-      >
+      <button className={styles.close} onClick={closeNotification}>
         &#10005;
       </button>
     </div>
