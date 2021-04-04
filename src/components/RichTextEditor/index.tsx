@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import TinyMCE from 'react-tinymce'
+import styles from 'RichTextEditor.module.scss'
 
 type Props = {
   name: string
@@ -8,13 +9,6 @@ type Props = {
   onChange: Function
 }
 
-/**
- * RichTextEditor is a react-wrapped component using Tiny MCE
- *
- * @prop content - String - The text content inside the editor
- * @prop className - String - The class applied to the editor wrapper
- * @prop onChange - Function - The event handler when the content is changed
- */
 const TextEditor = (props: Props) => {
   const [useEditor, setUseEditor] = useState(false)
   useEffect(() => {
