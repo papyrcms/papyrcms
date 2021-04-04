@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Input from '../Input'
-import Button from '../Button'
+import Input from '../../Input'
+import Button from '../../Button'
+import styles from './ForgotPasswordForm.module.scss'
 
 const ForgotPasswordForm: React.FC<{ email?: string }> = (props) => {
   const [email, setEmail] = useState(props.email || '')
@@ -32,18 +33,18 @@ const ForgotPasswordForm: React.FC<{ email?: string }> = (props) => {
   }
 
   return (
-    <div className="forgot-password">
+    <div className={styles.container}>
       <h3 className="heading-tertiary forgot-password__title">
         Forgot your password?
       </h3>
 
-      <p className="forgot-password__content">
+      <p>
         Nothing to worry about! Just enter your email in the field
         below, and we'll send you a link so you can reset it.
       </p>
 
       <Input
-        className="forgot-password__input"
+        className={styles.input}
         id="email_forgot_password"
         label="Email"
         name="email"
@@ -57,10 +58,10 @@ const ForgotPasswordForm: React.FC<{ email?: string }> = (props) => {
         }}
       />
 
-      <p className="forgot-password__validation">{validation}</p>
+      <p className={styles.validation}>{validation}</p>
 
       <Button
-        className="forgot-password__submit"
+        className={styles.submit}
         onClick={handleSubmit}
         submittedText="Sending..."
       >

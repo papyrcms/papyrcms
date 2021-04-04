@@ -2,20 +2,20 @@ import React, { useState, useEffect } from 'react'
 import styles from './Button.module.scss'
 
 type Props = {
-  className?:
-    | 'primary'
-    | 'secondary'
-    | 'tertiary'
-    | 'cta'
-    | 'edit'
-    | 'delete'
+  className?: string
   disabled?: boolean
   onClick: Function
   id?: string
   style?: { [key: string]: string }
   title?: string
   children: string
-  type?: string
+  type?:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'cta'
+    | 'edit'
+    | 'delete'
   submittedText?: string
 }
 
