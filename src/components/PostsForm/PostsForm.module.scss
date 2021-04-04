@@ -1,0 +1,6 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.container {
+  @include sectionStyle();
+}

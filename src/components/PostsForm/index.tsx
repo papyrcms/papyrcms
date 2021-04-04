@@ -5,6 +5,7 @@ import Router from 'next/router'
 import Form from './Form'
 import { postsContext } from '@/context'
 import { useForm } from '@/hooks'
+import styles from './PostsForm.module.scss'
 
 type Props = {
   post?: Post
@@ -18,20 +19,6 @@ type Props = {
   additionalState?: { [key: string]: any }
 }
 
-/**
- * PostsForm is an extendable form to be able to save and edit
- * posts of varying types
- *
- * @prop pageTitle: String - The title displayed above the form
- * @prop className: String - The wrapper class name for the form
- * @prop post: Object - The post being edited if editing
- * @prop onSubmit: Function - Event that happens after submitting
- * @prop apiEndpoint: String - The api endpoint to post/put the request to
- * @prop redirectRoute: String - The route to redirect to after submitting
- * @prop editing: Boolean - If the form is an edit form. This will use axios.put instead of axois.post
- * @prop additionalFields: Array[Component] - Additional form fields to render to the form
- * @prop additionalState: Object - Additional state data to accompany any additional fields
- */
 const PostsForm: React.FC<Props> = (props) => {
   const { posts, setPosts } = useContext(postsContext)
 
@@ -115,7 +102,7 @@ const PostsForm: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={`post-form ${className}`}>
+    <div className={`${styles.container} ${className}`}>
       <h2 className="heading-secondary">
         {pageTitle ? pageTitle : 'New Post'}
       </h2>

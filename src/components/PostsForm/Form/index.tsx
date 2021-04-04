@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
-import RichTextEditor from '../RichTextEditor'
-import Media from '../Media'
-import Input from '../Input'
-import Button from '../Button'
+import RichTextEditor from '../../RichTextEditor'
+import Media from '../../Media'
+import Input from '../../Input'
+import Button from '../../Button'
+import styles from './Form.module.scss'
 
 type FieldProps = {
   values: { [key: string]: any }
@@ -36,10 +37,10 @@ const Form: React.FC<Props> = (props) => {
   const [dots, setDots] = useState('')
 
   const renderPublish = () => (
-    <div className="post-form__publish">
+    <div className={styles.publish}>
       <input
         id="publish-checkbox"
-        className="post-form__checkbox--input"
+        className={styles.checkbox}
         type="checkbox"
         name="published"
         checked={values.published}
@@ -49,9 +50,8 @@ const Form: React.FC<Props> = (props) => {
           })
         }
       />
-      <label htmlFor="publish-checkbox" className="post-form__label">
-        Publish Post{' '}
-        <span className="post-form__checkbox--span"></span>
+      <label htmlFor="publish-checkbox" className={styles.label}>
+        Publish <span className={styles.dot}></span>
       </label>
     </div>
   )
@@ -87,7 +87,7 @@ const Form: React.FC<Props> = (props) => {
             uploaded to ensure it uploads properly.
           </p>
           <input
-            className="post-form__input"
+            className={styles.input}
             type="file"
             name="file"
             onChange={handleFileInputChange}
@@ -133,7 +133,7 @@ const Form: React.FC<Props> = (props) => {
     } else {
       return (
         <Media
-          className="post-form__image"
+          className={styles.image}
           alt="Uploaded Image"
           src={values.mainMedia}
         />
@@ -172,7 +172,7 @@ const Form: React.FC<Props> = (props) => {
   * order-{number}`
 
   return (
-    <form encType="multipart/form-data" className="post-form__form">
+    <form encType="multipart/form-data" className={styles.form}>
       <div className="u-form-row">
         <Input
           id="post_title"
@@ -193,8 +193,8 @@ const Form: React.FC<Props> = (props) => {
         />
       </div>
 
-      <div className="post-form__label-section">
-        <label className="post-form__label">Media</label>
+      <div className={styles.labelSection}>
+        <label className={styles.label}>Media</label>
         <span>
           <input
             type="radio"
@@ -219,21 +219,21 @@ const Form: React.FC<Props> = (props) => {
       {renderMedia()}
       {renderAdditionalFields()}
 
-      <label className="post-form__label">Content</label>
+      <label className={styles.label}>Content</label>
       <RichTextEditor
-        className="post-form__text-editor"
+        className={styles.editor}
         content={values.content}
         name="content"
         onChange={handleChange}
       />
 
-      <p className="post-form__validation">{values.validation}</p>
+      <p className={styles.validation}>{values.validation}</p>
 
-      <div className="post-form__bottom">
+      <div className={styles.button}>
         {renderPublish()}
         <Button
           id="posts-form-submit"
-          className="post-form__submit"
+          className={styles.submit}
           submittedText="Saving..."
           onClick={handleSubmit}
         >
