@@ -1,8 +1,9 @@
-import { SectionOptions, Post } from 'types'
+import { Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import sanitizeHTML from 'sanitize-html'
 import { PageHead } from '@/components'
+import styles from './SectionSeo.module.scss'
 
 type Props = {
   post: Post
@@ -32,17 +33,6 @@ const SectionSeo: React.FC<Props> = (props) => {
       keywords={_.join(tags, ', ')}
     />
   )
-}
-
-export const options: SectionOptions = {
-  SectionSeo: {
-    component: 'SectionSeo',
-    name: 'Page SEO',
-    description: '',
-    inputs: ['tags'],
-    maxPosts: 1,
-    defaultProps: {},
-  },
 }
 
 export default SectionSeo

@@ -21,6 +21,7 @@ import DonateForm from './DonateForm'
 import SectionCards from './SectionCards'
 import SectionMaps from './SectionMaps'
 import SectionMedia from './SectionMedia'
+import SectionSeo from './SectionSeo'
 
 export {
   AdminDashboard,
@@ -45,4 +46,5 @@ export {
   SectionCards,
   SectionMaps,
   SectionMedia,
+  SectionSeo,
 }
