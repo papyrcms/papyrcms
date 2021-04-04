@@ -1,0 +1,25 @@
+@import 'src/sass/abstracts/_mixins.scss';
+@import 'src/sass/abstracts/_variables.scss';
+
+.container {
+  @include sectionStyle();
+}
+
+.thanks {
+  text-align: center;
+}
+
+.form {
+  max-width: $max-text-width;
+  margin: 0 auto;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: $gap-width;
+
+  @include respond(tab-port) {
+    grid-template-columns: 1fr 1fr;
+  }
+}

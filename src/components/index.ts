@@ -17,6 +17,7 @@ import UserInfoForm from './UserInfoForm'
 
 // Sections
 import ContactForm from './ContactForm'
+import DonateForm from './DonateForm'
 
 export {
   AdminDashboard,
@@ -37,4 +38,5 @@ export {
   UserInfoForm,
   // Sections
   ContactForm,
+  DonateForm,
 }

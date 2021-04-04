@@ -1,8 +1,8 @@
-import { SectionOptions } from 'types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { userContext } from '@/context'
 import { CreditCardForm, Input } from '@/components'
+import styles from './DonateForm.module.scss'
 
 const DonateForm: React.FC<{ className?: string }> = (props) => {
   const { currentUser } = useContext(userContext)
@@ -55,8 +55,8 @@ const DonateForm: React.FC<{ className?: string }> = (props) => {
 
   if (paid) {
     return (
-      <div className={`donate-form ${className}`}>
-        <div className="donate-form__thanks">
+      <div className={`${styles.container} ${className}`}>
+        <div className={styles.thanks}>
           <h3 className="heading-tertiary">
             Thank you for your donation!
           </h3>
@@ -70,8 +70,8 @@ const DonateForm: React.FC<{ className?: string }> = (props) => {
   }
 
   return (
-    <section className={`donate-form ${className}`}>
-      <form className="donate-form__form">
+    <section className={`${styles.container} ${className}`}>
+      <form className={styles.form}>
         <div className="u-form-row">
           <Input
             id="donation_email"
@@ -96,18 +96,6 @@ const DonateForm: React.FC<{ className?: string }> = (props) => {
       </form>
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  DonateForm: {
-    component: 'DonateForm',
-    name: 'Donate Form',
-    description:
-      'This is a simple donation form where people can donate money to you.',
-    inputs: ['className'],
-    // maxPosts: null,
-    defaultProps: {},
-  },
 }
 
 export default DonateForm
