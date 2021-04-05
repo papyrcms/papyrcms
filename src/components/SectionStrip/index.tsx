@@ -1,9 +1,10 @@
-import { SectionOptions, Post } from 'types'
+import { Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import { Media } from '@/components'
+import styles from './SectionStrip.module.scss'
 
 type Props = {
   clickableMedia?: boolean
@@ -98,7 +99,7 @@ const SectionStrip: React.FC<Props> = (props) => {
         <>
           {beforePostMedia(post)}
           <Media
-            className="section-strip__image"
+            className={styles.image}
             src={post.mainMedia}
             alt={post.title}
             clickable={clickableMedia}
@@ -179,11 +180,11 @@ const SectionStrip: React.FC<Props> = (props) => {
 
     return _.map(posts, (post, i) => {
       const postTextClassName = post.mainMedia
-        ? 'section-strip__text'
-        : 'section-strip__text--wide'
+        ? styles.text
+        : styles.wide
 
       return (
-        <div className="section-strip__post" key={post._id}>
+        <div className={styles.post} key={post._id}>
           {renderLeftMedia(post, i)}
           <div className={postTextClassName}>
             {beforePostTitle(post)}
@@ -199,9 +200,9 @@ const SectionStrip: React.FC<Props> = (props) => {
   }
 
   return (
-    <section className={`${className || ''} section-strip`}>
+    <section className={`${className || ''} ${styles.section}`}>
       {beforeTitle()}
-      <h2 className="heading-secondary section-strip__header">
+      <h2 className={`heading-secondary ${styles.header}`}>
         {title}
       </h2>
       {afterTitle()}
@@ -211,47 +212,6 @@ const SectionStrip: React.FC<Props> = (props) => {
       {afterPosts()}
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  Strip: {
-    component: 'SectionStrip',
-    name: 'Strip Section',
-    description:
-      'This section will display each post in a horizontal style with the media alternating rendering on the left and right sides per post.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    // maxPosts: null,
-    defaultProps: {
-      readMore: true,
-      contentLength: 300,
-    },
-  },
-  LeftStrip: {
-    component: 'SectionStrip',
-    name: 'Left Strip Section',
-    description:
-      'This section will display each post in a horizontal style with the media rendering on the left side of the posts.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    // maxPosts: null,
-    defaultProps: {
-      readMore: true,
-      contentLength: 300,
-      mediaLeft: true,
-    },
-  },
-  RightStrip: {
-    component: 'SectionStrip',
-    name: 'Right Strip Section',
-    description:
-      'This section will display each post in a horizontal style with the media rendering on the right side of the posts.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    // maxPosts: null,
-    defaultProps: {
-      readMore: true,
-      contentLength: 300,
-      mediaRight: true,
-    },
-  },
 }
 
 export default SectionStrip
