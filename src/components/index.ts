@@ -25,6 +25,7 @@ import SectionSeo from './SectionSeo'
 import SectionSlideshow from './SectionSlideshow'
 import SectionSplit from './SectionSplit'
 import SectionStrip from './SectionStrip'
+import SectionStandard from './SectionStandard'
 
 export {
   AdminDashboard,
@@ -53,4 +54,5 @@ export {
   SectionSlideshow,
   SectionSplit,
   SectionStrip,
+  SectionStandard,
 }

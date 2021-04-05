@@ -1,0 +1,47 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.section {
+  @include sectionStyle();
+}
+
+.post {
+  max-width: $max-text-width;
+  margin: 0 auto;
+}
+
+.tags {
+  display: flex;
+  justify-content: flex-end;
+
+  & > em {
+    margin-left: 1rem;
+  }
+}
+
+.image {
+  max-width: 100%;
+  width: 100%;
+  max-height: 50rem;
+  text-align: center;
+
+  img,
+  video {
+    max-width: 100%;
+    max-height: 40rem;
+    object-fit: contain;
+  }
+}
+
+.content {
+  @include contentStyle();
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  & > * {
+    margin-left: 2rem;
+  }
+}

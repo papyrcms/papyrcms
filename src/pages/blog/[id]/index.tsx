@@ -5,7 +5,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { userContext } from '@/context'
 import keys from '@/keys'
-import { SectionStandard } from '@/sections'
+import { SectionStandard } from '@/components'
 
 const BlogShow = (props: { blog: Blog }) => {
   const { currentUser } = useContext(userContext)

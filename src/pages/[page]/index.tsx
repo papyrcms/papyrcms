@@ -13,7 +13,6 @@ import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import keys from '@/keys'
 import styles from './page.module.scss'
-import * as Sections from '@/sections'
 import * as Components from '@/components'
 
 type Props = {
@@ -78,11 +77,7 @@ const PageRenderer = (props: Props) => {
       const options = sectionOptions[parsedSection.type]
 
       // @ts-ignore Not sure how to fix this
-      let Component: React.FC = Sections[options.component]
-      if (!Component) {
-        // @ts-ignore Not sure how to fix this
-        Component = Components[options.component]
-      }
+      let Component: React.FC = Components[options.component]
 
       // Return the parsedSection component
       return (

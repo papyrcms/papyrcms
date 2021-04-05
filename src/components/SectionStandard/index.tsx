@@ -1,4 +1,4 @@
-import { Post, Comment, SectionOptions } from 'types'
+import { Post, Comment } from 'types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
@@ -8,6 +8,7 @@ import renderHTML from 'react-render-html'
 import { userContext, postsContext, settingsContext } from '@/context'
 import { Media, PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
+import styles from './SectionStandard.module.scss'
 
 type Props = {
   posts?: Post[]
@@ -123,9 +124,9 @@ const SectionStandard: React.FC<Props> = (props) => {
   const renderAuthOptions = (post: Post) => {
     if (currentUser?.isAdmin && renderAuthButtons) {
       return (
-        <div className="post__buttons">
+        <div className={styles.buttons}>
           <button
-            className="button button-delete"
+            className="button-delete"
             onClick={() => onDeleteClick(post)}
           >
             Delete
@@ -134,7 +135,7 @@ const SectionStandard: React.FC<Props> = (props) => {
             href={`/${path}/[id]/edit`}
             as={`/${path}/${post._id}/edit`}
           >
-            <button className="button button-edit">Edit</button>
+            <button className="button-edit">Edit</button>
           </Link>
         </div>
       )
@@ -154,7 +155,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   const renderTagsSection = (post: Post) => {
     if (post.tags && post.tags[0] && currentUser?.isAdmin) {
       return (
-        <p className="post__tags">
+        <p className={styles.tags}>
           Tags: <em>{renderTags(post)}</em>
         </p>
       )
@@ -164,7 +165,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   const renderMainMedia = (post: Post) => {
     if (post.mainMedia) {
       return (
-        <div className="post__image">
+        <div className={styles.image}>
           <Media src={post.mainMedia} alt={post.title} />
         </div>
       )
@@ -196,7 +197,7 @@ const SectionStandard: React.FC<Props> = (props) => {
 
   if (posts.length === 0 || Object.keys(posts).length == 0) {
     return (
-      <div className={`posts-show ${className || ''}`}>
+      <div className={`${styles.section} ${className || ''}`}>
         <h2 className="heading-secondary">{emptyTitle}</h2>
         <h3 className="heading-tertiary">{emptyMessage}</h3>
       </div>
@@ -210,13 +211,11 @@ const SectionStandard: React.FC<Props> = (props) => {
         <div key={post._id}>
           {beforePost(post)}
 
-          <div className="post">
+          <div className={styles.post}>
             {renderPublishSection(post)}
 
             {beforeTitle(post)}
-            <h2 className="heading-secondary post__title">
-              {post.title}
-            </h2>
+            <h2 className="heading-secondary">{post.title}</h2>
             {afterTitle(post)}
 
             {renderTagsSection(post)}
@@ -226,7 +225,7 @@ const SectionStandard: React.FC<Props> = (props) => {
             {afterMainMedia(post)}
 
             {beforeContent(post)}
-            <div className="post__content">
+            <div className={styles.content}>
               {renderHTML(post.content || '')}
             </div>
             {afterContent(post)}
@@ -275,7 +274,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={`posts-show ${className || ''}`}>
+    <div className={`${styles.section} ${className || ''}`}>
       {renderPageHead(props.posts)}
 
       {renderPosts()}
@@ -542,24 +541,6 @@ const CommentForm: React.FC<CommentFormProps> = (props) => {
       </div>
     </form>
   )
-}
-
-export const options: SectionOptions = {
-  Standard: {
-    component: 'SectionStandard',
-    name: 'Standard Section',
-    description:
-      'This is the simplest section. It will only take one post with the required tags.',
-    inputs: ['className', 'tags', 'maxPosts', 'title'],
-    maxPosts: 1,
-    defaultProps: {
-      path: 'posts',
-      apiPath: '/api/posts',
-      redirectRoute: 'posts',
-      renderAuthButtons: false,
-      setPageHead: false,
-    },
-  },
 }
 
 export default SectionStandard

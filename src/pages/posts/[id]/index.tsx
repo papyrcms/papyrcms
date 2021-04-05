@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { userContext } from '@/context'
 import keys from '@/keys'
-import { SectionStandard } from '@/sections'
+import { SectionStandard } from '@/components'
 
 const PostsShow = (props: { post: Post }) => {
   const { currentUser } = useContext(userContext)

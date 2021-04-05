@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { useRouter } from 'next/router'
 import { userContext, storeContext } from '@/context'
 import keys from '@/keys'
-import { SectionStandard } from '@/sections'
+import { SectionStandard } from '@/components'
 
 const StoreShow = (props: { product: Product }) => {
   const { currentUser } = useContext(userContext)

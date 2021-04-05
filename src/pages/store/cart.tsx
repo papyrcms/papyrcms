@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'
 import { storeContext } from '@/context'
-import { SectionStrip } from '@/sections'
+import { SectionStrip } from '@/components'
 
 const Cart = () => {
   const { cart, removeFromCart } = useContext(storeContext)
