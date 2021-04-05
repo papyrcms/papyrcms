@@ -1,0 +1,81 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.editor {
+  height: 15rem;
+  width: 100%;
+  @include inputBorderStyle();
+}
+
+.login {
+  text-align: center;
+}
+
+.detached {
+  width: 90%;
+  border-top: none;
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  z-index: 10;
+  transform: translateZ(0);
+  bottom: 1rem;
+  align-self: center;
+
+  @include respond(tab-port) {
+    width: 50%;
+    right: 1rem;
+  }
+}
+
+.detached > .label {
+  display: none;
+}
+
+.detached > .editor {
+  margin: 0.5rem 0;
+}
+
+.detached .detach {
+  font-weight: 500;
+  border: 0.1rem solid $color-grey;
+  background-color: rgba($color-grey, 0.2);
+  padding: 0 1rem;
+  line-height: 2;
+  border-radius: 0.5rem;
+}
+
+.label {
+  @include inputLabelStyle();
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.detach {
+  font-style: italic;
+}
+
+.input {
+  display: none;
+}
+
+.span {
+  display: inline-block;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-left: $gap-width;
+  border: 0.1rem solid $color-grey-dark;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: $color-grey-light;
+  transform: translateY(0.3rem);
+  transition: all 0.2s;
+}
+
+.input:checked + * > .span {
+  background-color: $color-primary;
+}
