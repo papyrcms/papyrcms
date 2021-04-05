@@ -1,0 +1,52 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.title {
+  color: $color-grey-dark;
+  border-bottom: 0.1rem solid $color-grey-dark;
+}
+
+.none {
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.comment {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 0.1rem solid $color-grey-dark;
+}
+
+.content {
+  @include contentStyle();
+}
+
+.author {
+  font-style: italic;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 2rem;
+
+  & > * {
+    margin-right: 2rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.editing {
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 1rem;
+}
+
+.state {
+  font-style: italic;
+  margin-right: 1rem;
+}
