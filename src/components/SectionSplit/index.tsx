@@ -1,9 +1,10 @@
-import { SectionOptions, Post } from 'types'
+import { Post } from 'types'
 import React from 'react'
 import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import { Media } from '@/components'
+import styles from './SectionSplit.module.scss'
 
 type Props = {
   clickableMedia?: boolean
@@ -69,7 +70,7 @@ const SectionSplit: React.FC<Props> = (props) => {
         <>
           {beforePostMedia(post)}
           <Media
-            className="section-split__image"
+            className={styles.image}
             src={post.mainMedia}
             alt={post.title}
             clickable={clickableMedia}
@@ -150,11 +151,11 @@ const SectionSplit: React.FC<Props> = (props) => {
 
     return _.map(posts, (post, i) => {
       const postTextClassName = post.mainMedia
-        ? 'section-split__text'
-        : 'section-split__text--wide'
+        ? styles.text
+        : styles.wide
 
       return (
-        <div className="section-split__post" key={post._id}>
+        <div className={styles.post} key={post._id}>
           {renderLeftMedia(post, i)}
           <div className={postTextClassName}>
             {beforePostTitle(post)}
@@ -170,9 +171,9 @@ const SectionSplit: React.FC<Props> = (props) => {
   }
 
   return (
-    <section className={`${className || ''} section-split`}>
+    <section className={`${className || ''} ${styles.section}`}>
       {beforeTitle()}
-      <h2 className="heading-secondary section-split__header">
+      <h2 className={`heading-secondary ${styles.header}`}>
         {title}
       </h2>
       {afterTitle()}
@@ -182,44 +183,6 @@ const SectionSplit: React.FC<Props> = (props) => {
       {afterPosts()}
     </section>
   )
-}
-
-export const options: SectionOptions = {
-  Split: {
-    component: 'SectionSplit',
-    name: 'Split Section',
-    description:
-      'This section will display an image, a title, and some content, split down the middle with the image on one side and the text on the other, alternating which order by each row.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    defaultProps: {
-      readMore: true,
-      contentLength: 500,
-    },
-  },
-  LeftSplit: {
-    component: 'SectionSplit',
-    name: 'Left Split Section',
-    description:
-      'This section will display an image, a title, and some content, split down the middle with the image on one side and the text on the other, with the image on the left side.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    defaultProps: {
-      readMore: true,
-      contentLength: 500,
-      mediaLeft: true,
-    },
-  },
-  RightSplit: {
-    component: 'SectionSplit',
-    name: 'Right Split Section',
-    description:
-      'This section will display an image, a title, and some content, split down the middle with the image on one side and the text on the other, with the image on the right side.',
-    inputs: ['className', 'maxPosts', 'tags', 'title'],
-    defaultProps: {
-      readMore: true,
-      contentLength: 500,
-      mediaRight: true,
-    },
-  },
 }
 
 export default SectionSplit

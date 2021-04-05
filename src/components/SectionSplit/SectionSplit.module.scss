@@ -1,0 +1,55 @@
+@import 'src/sass/abstracts/_variables.scss';
+@import 'src/sass/abstracts/_mixins.scss';
+
+.section {
+  @include sectionStyle();
+}
+
+.header {
+  margin-bottom: $gap-width;
+}
+
+.post {
+  margin-bottom: $gap-width * 2;
+  grid-template-columns: 1fr;
+
+  display: grid;
+  grid-gap: $gap-width;
+  align-items: center;
+
+  @include respond(tab-port) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.text {
+  @include contentStyle();
+
+  grid-column: span 1;
+  height: 100%;
+  padding-top: 0;
+  order: 1;
+
+  @include respond(tab-port) {
+    order: unset;
+  }
+}
+
+.wide {
+  grid-column: span 3;
+  max-width: $max-text-width;
+}
+
+.image {
+  grid-column: span 1;
+
+  width: 100%;
+  box-shadow: $shadow-low;
+  backface-visibility: hidden;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.008) translate(0.2rem, -0.3rem);
+    box-shadow: $shadow-high;
+  }
+}
