@@ -1,7 +1,6 @@
 import { Database, Post } from 'types'
 import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
-import handlebars from 'handlebars'
 import fs from 'fs'
 import keys from '../config/keys'
 const OAuth2 = google.auth.OAuth2
@@ -132,8 +131,9 @@ class Mailer {
 
     // If we found a post
     if (emailTemplatePost) {
-      html = emailTemplatePost.content
-      emailSubject = handlebars.compile(emailTemplatePost.title)(
+      html = emailTemplatePost.content ?? ''
+      emailSubject = this.parseHTML(
+        emailTemplatePost.title,
         variables
       )
 
@@ -147,13 +147,17 @@ class Mailer {
         emailSubject = subject
       } catch (e) {
         // console.error('There was an error getting the HTML file', e)
-        return false
+        // return false
       }
     }
 
+    // If at this point we have no html, use the plain template
+    if (!html) {
+      html = await this.readHTMLFile('src/emails/plain.html')
+    }
+
     // Fill in the variables to the template
-    const template = handlebars.compile(html)
-    const htmlToSend = template(variables)
+    const htmlToSend = this.parseHTML(html, variables)
 
     // Create an email transporter
     const transporter = await this.createTransporter()
@@ -180,6 +184,13 @@ class Mailer {
 
   async readHTMLFile(path: string) {
     return await fs.readFileSync(path, { encoding: 'utf-8' })
+  }
+
+  parseHTML(html: string, variables: Record<string, any>): string {
+    return Object.keys(variables).reduce((currentHtml, key) => {
+      const value = variables[key]
+      return currentHtml.replace('{{' + key + '}}', value)
+    }, html)
   }
 }
 
