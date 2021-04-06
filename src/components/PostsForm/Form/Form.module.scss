@@ -52,18 +52,18 @@
 
 .dot {
   display: inline-block;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 0.2rem solid $color-grey-dark;
+  width: 2rem;
+  height: 2rem;
+  border: 0.1rem solid $color-grey-dark;
   border-radius: 50%;
   cursor: pointer;
   background-color: $color-grey-light;
-  transform: translateY(0.75rem);
-  margin-left: 2rem;
+  transform: translateY(0.45rem);
+  margin-left: 1rem;
   transition: all 0.2s;
 }
 
-.dot:checked + * > .dot {
+.checkbox:checked + * > .dot {
   background-color: $color-primary;
 }
 
