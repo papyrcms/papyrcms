@@ -163,6 +163,7 @@ const Form: React.FC<Props> = (props) => {
   * copyright
   * site-description
   * notification
+  * persist
   * latitude
   * longitude
   * email-template

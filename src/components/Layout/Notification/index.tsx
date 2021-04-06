@@ -11,20 +11,31 @@ const Notification: React.FC<Props> = (props) => {
   const { post } = props
   const { _id, title, content } = post
   const [hidden, setHidden] = useState(true)
+  const [storage, setStorage] = useState<Storage | null>(null)
 
   const [closedNotifications, setClosedNotifications] = useState<
     string[]
   >([])
 
   useEffect(() => {
-    let localClosedNotificationsJson = localStorage.getItem(
+    if (post.tags.includes('persist')) {
+      setStorage(sessionStorage)
+    } else {
+      setStorage(localStorage)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!storage) return
+
+    let localClosedNotificationsJson = storage.getItem(
       'closedNotifications'
     )
 
     let localClosedNotifications
 
     if (!localClosedNotificationsJson) {
-      localStorage.setItem('closedNotifications', JSON.stringify([]))
+      storage.setItem('closedNotifications', JSON.stringify([]))
       localClosedNotifications = []
     } else {
       localClosedNotifications = JSON.parse(
@@ -36,13 +47,13 @@ const Notification: React.FC<Props> = (props) => {
     if (!localClosedNotifications.includes(_id)) {
       setHidden(false)
     }
-  }, [])
+  }, [storage])
 
   const closeNotification = () => {
     const newClosedNotifications = [...closedNotifications, _id]
     setHidden(true)
     setClosedNotifications(newClosedNotifications)
-    localStorage.setItem(
+    storage?.setItem(
       'closedNotifications',
       JSON.stringify(newClosedNotifications)
     )
