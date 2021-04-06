@@ -409,11 +409,7 @@ const PageBuilder = (props: Props) => {
     const { id } = state
     if (id) {
       return (
-        <Button
-          type="delete"
-          onClick={deletePage}
-          submittedText="Deleting..."
-        >
+        <Button type="delete" onClick={deletePage}>
           Delete Page
         </Button>
       )
@@ -559,9 +555,7 @@ const PageBuilder = (props: Props) => {
         </div>
 
         <div className={styles.sectionBottom}>
-          <Button onClick={handleSubmit} submittedText="Saving...">
-            Submit
-          </Button>
+          <Button onClick={handleSubmit}>Submit</Button>
 
           {renderDelete()}
         </div>

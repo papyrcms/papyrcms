@@ -60,11 +60,7 @@ const ForgotPasswordForm: React.FC<{ email?: string }> = (props) => {
 
       <p className={styles.validation}>{validation}</p>
 
-      <Button
-        className={styles.submit}
-        onClick={handleSubmit}
-        submittedText="Sending..."
-      >
+      <Button className={styles.submit} onClick={handleSubmit}>
         Send
       </Button>
     </div>

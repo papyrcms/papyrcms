@@ -71,11 +71,7 @@ const CreditCardForm = injectStripe((props: CCFProps) => {
 
       <p className={styles.validation}>{validation}</p>
 
-      <Button
-        className={styles.submit}
-        onClick={handleSubmit}
-        submittedText="Processing"
-      >
+      <Button className={styles.submit} onClick={handleSubmit}>
         Submit
       </Button>
     </div>

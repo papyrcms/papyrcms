@@ -144,12 +144,7 @@ const ProfilePage = () => {
               required
             />
           </div>
-          <Button
-            onClick={handlePasswordSubmit}
-            submittedText="Checking"
-          >
-            Reset
-          </Button>
+          <Button onClick={handlePasswordSubmit}>Reset</Button>
           <p className={styles.validation}>
             {password.values.validation}
           </p>

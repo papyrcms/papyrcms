@@ -88,11 +88,7 @@ const ContactForm: React.FC<{ className?: string }> = (props) => {
           type="textarea"
         />
 
-        <Button
-          onClick={handleSubmit}
-          className={styles.submit}
-          submittedText="Sending"
-        >
+        <Button onClick={handleSubmit} className={styles.submit}>
           Send
         </Button>
 

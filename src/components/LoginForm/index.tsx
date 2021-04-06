@@ -59,9 +59,7 @@ const LoginForm = () => {
 
       <div className={styles.bottom}>
         <div className={styles.submit}>
-          <Button onClick={handleSubmit} submittedText="Checking">
-            Login
-          </Button>
+          <Button onClick={handleSubmit}>Login</Button>
         </div>
 
         <Modal

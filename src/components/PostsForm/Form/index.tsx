@@ -234,7 +234,6 @@ const Form: React.FC<Props> = (props) => {
         <Button
           id="posts-form-submit"
           className={styles.submit}
-          submittedText="Saving..."
           onClick={handleSubmit}
         >
           Submit

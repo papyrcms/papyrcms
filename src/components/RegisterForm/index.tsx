@@ -91,9 +91,7 @@ const RegisterForm = () => {
       </p>
 
       <div className={styles.submit}>
-        <Button onClick={handleSubmit} submittedText="Submitting">
-          Register
-        </Button>
+        <Button onClick={handleSubmit}>Register</Button>
       </div>
     </form>
   )

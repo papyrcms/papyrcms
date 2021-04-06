@@ -3,6 +3,7 @@ import Layout from './Layout/'
 import LoginForm from './LoginForm/'
 import PostsForm from './PostsForm/'
 import Button from './Button'
+import Loader from './Loader'
 import CreditCardForm from './CreditCardForm'
 import Input from './Input'
 import Map from './Map'
@@ -30,6 +31,7 @@ import SectionStandard from './SectionStandard'
 export {
   AdminDashboard,
   Layout,
+  Loader,
   LoginForm,
   PostsForm,
   Button,

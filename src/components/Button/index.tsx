@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import Loader from '../Loader'
 import styles from './Button.module.scss'
 
 type Props = {
@@ -16,10 +17,9 @@ type Props = {
     | 'cta'
     | 'edit'
     | 'delete'
-  submittedText?: string
 }
 
-const Button = (props: Props) => {
+const Button: React.FC<Props> = (props) => {
   const {
     // Standard button props
     className = '',
@@ -28,31 +28,23 @@ const Button = (props: Props) => {
     id = null,
     style = {},
     title = '',
-    children = '',
 
     // Custom button props
     type = 'primary', // I know type is a standard prop, but it's a stupid standard prop
-    submittedText = children,
   } = props
 
   const [buttonDisabled, setButtonDisabled] = useState(disabled)
-  const [buttonText, setButtonText] = useState(children)
-
-  // Because use the state "buttonText" instead of children as the actual text,
-  // we should update "buttonText" when "children" changes.
-  useEffect(() => {
-    setButtonText(children)
-  }, [children])
+  const [isLoading, setIsLoading] = useState(false)
 
   const actualClassName = `${styles[type]} ${className}`
 
   const handleClick = (event: any) => {
-    setButtonText(submittedText)
     setButtonDisabled(true)
+    setIsLoading(true)
 
     const reset = () => {
-      setButtonText(children)
       setButtonDisabled(false)
+      setIsLoading(false)
     }
 
     onClick(event, reset)
@@ -67,7 +59,7 @@ const Button = (props: Props) => {
       title={title}
       style={style}
     >
-      {buttonText}
+      {isLoading ? <Loader /> : props.children}
     </button>
   )
 }

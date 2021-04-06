@@ -210,11 +210,7 @@ const UserInfoForm: React.FC<Props> = (props) => {
 
   const renderSubmit = () => {
     if (useSubmit) {
-      return (
-        <Button onClick={handleSubmit} submittedText="Submitting">
-          Submit
-        </Button>
-      )
+      return <Button onClick={handleSubmit}>Submit</Button>
     }
   }
 
