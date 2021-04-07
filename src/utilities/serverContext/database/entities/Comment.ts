@@ -17,7 +17,7 @@ export class Comment extends BaseEntity {
   @Index()
   id!: string
 
-  @Column()
+  @Column('text')
   content!: string
 
   @Column()

@@ -18,7 +18,7 @@ export class Order extends BaseEntity {
   @Index()
   id!: string
 
-  @Column()
+  @Column('text')
   notes?: string
 
   @Column({ default: false })

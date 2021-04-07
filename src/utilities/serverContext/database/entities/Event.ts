@@ -23,7 +23,7 @@ export class Event extends BaseEntity {
   @Index()
   slug!: string
 
-  @Column({ default: '' })
+  @Column('text', { default: '' })
   content!: string
 
   @Column({ default: '' })

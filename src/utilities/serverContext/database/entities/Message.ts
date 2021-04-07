@@ -20,7 +20,7 @@ export class Blog extends BaseEntity {
   @Column()
   email!: string
 
-  @Column()
+  @Column('text')
   message!: string
 
   @Column()
