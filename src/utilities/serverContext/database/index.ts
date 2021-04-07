@@ -1,56 +1,23 @@
-import { Database, Models } from 'types'
-import keys from '../../../config/keys'
-import * as mongooseModels from './mongoose/models'
-import * as mongooseApi from './mongoose/api'
-import * as sequelizeApi from './sequelize/api'
+import 'reflect-metadata'
+import path from 'path'
+import { createConnection } from 'typeorm'
+import { __prod__ } from '../../../constants'
+import keys from '@/keys'
 
-export default async () => {
+const init = async () => {
+  const entityPath = keys.databaseDriver === 'mongodb' ? 'mongo' : ''
 
-  let database: Database
-
-  // For backwards compatibility
-  if (
-    keys.mongoURI &&
-    (
-      !keys.databaseURI ||
-      !keys.databaseDriver
-    )
-  ) {
-    const depricationNotice = 'MONGO_URI/mongoURI is deprecated. Please set the DATABASE_DRIVER/databaseDriver to "mongodb" and change the variable name MONGO_URI/mongoURI to DATABASE_URI/databaseURI'
-    console.warn(depricationNotice)
-
-    keys.databaseDriver = 'mongodb'
-    keys.databaseURI = keys.mongoURI
-  }
-
-  switch (keys.databaseDriver) {
-    
-    // We use Mongoose for this
-    case 'mongodb':
-      await mongooseApi.init()
-      // @ts-ignore
-      database = {
-        ...mongooseModels,
-        ...mongooseApi
-      }
-      break
-
-    // We use Sequelize for this
-    case 'postgres':
-    case 'sqlite':
-    case 'mysql':
-    case 'mariadb':
-    case 'mssql':
-      const sequelizeModels: Models = await sequelizeApi.init()
-      // @ts-ignore
-      database = {
-        ...sequelizeModels,
-        ...sequelizeApi
-      }
-      break
-
-    default: throw new Error('You need a valid database driver.')
-  }
-
-  return database
+  await createConnection({
+    type: keys.databaseDriver,
+    url: keys.databaseURI,
+    synchronize: true,
+    logging: !__prod__,
+    entities: [path.join(__dirname, entityPath, '*.js')],
+    migrations: [],
+    subscribers: [],
+    extra: {
+      ssl: __prod__,
+      rejectUnauthorized: !__prod__,
+    },
+  })
 }
