@@ -1,4 +1,4 @@
-import { SectionOptions } from 'types'
+import { SectionOptions } from '@/types'
 import React, { useState } from 'react'
 import sectionOptionsContext from './sectionOptionsContext'
 
@@ -8,14 +8,15 @@ type Props = {
 }
 
 const SectionOptionsProvider = (props: Props) => {
-
-  const [sectionOptions, setSectionOptions] = useState(props.sectionOptions)
+  const [sectionOptions, setSectionOptions] = useState(
+    props.sectionOptions
+  )
 
   return (
     <sectionOptionsContext.Provider
       value={{
         sectionOptions,
-        setSectionOptions
+        setSectionOptions,
       }}
     >
       {props.children}

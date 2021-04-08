@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import _ from 'lodash'
 import Link from 'next/link'
 import { settingsContext, pagesContext } from '@/context'
-import { Page } from 'types'
+import { Page } from '@/types'
 import styles from './NavMenu.module.scss'
 
 const onClick = () => {

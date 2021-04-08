@@ -6,7 +6,7 @@ import {
   Product,
   SectionOptions,
   Keys,
-} from 'types'
+} from '@/types'
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'

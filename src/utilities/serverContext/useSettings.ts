@@ -1,4 +1,4 @@
-import { Database } from 'types'
+import { Database } from '@/types'
 import fs from 'fs'
 import util from 'util'
 
@@ -10,7 +10,7 @@ export default async (database: Database) => {
   let settings: any = {}
 
   for (const file of files) {
-     if (file === 'configureSettings.ts') continue
+    if (file === 'configureSettings.ts') continue
     const settingsMiddleware = require(`./settings/${file}`).default
     const newSettings = await settingsMiddleware(database)
     settings = { ...settings, ...newSettings }

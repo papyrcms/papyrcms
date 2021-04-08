@@ -1,4 +1,4 @@
-import { Database, Event } from 'types'
+import { Database, Event } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import moment from 'moment'

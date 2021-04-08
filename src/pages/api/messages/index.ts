@@ -1,4 +1,4 @@
-import { Database } from 'types'
+import { Database } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'

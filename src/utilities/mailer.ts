@@ -1,4 +1,4 @@
-import { Database, Post } from 'types'
+import { Database, Post } from '@/types'
 import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
 import fs from 'fs'

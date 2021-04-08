@@ -1,4 +1,4 @@
-import { Post } from 'types'
+import { Post } from '@/types'
 import React from 'react'
 import _ from 'lodash'
 import sanitizeHTML from 'sanitize-html'

@@ -8,6 +8,8 @@
       "@/hooks": ["src/hooks/"],
       "@/utilities/*": ["src/utilities/*"],
       "@/components": ["src/components/"],
+      "@/types": ["src/types"],
+      "@/constants": ["src/constants"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

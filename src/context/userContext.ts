@@ -1,4 +1,4 @@
-import { User } from 'types'
+import { User } from '@/types'
 import { createContext } from 'react'
 
 type UserContext = {
@@ -44,7 +44,7 @@ export default createContext<UserContext>({
     // Etc
     isAdmin: false,
     isSubscribed: false,
-    isBanned: false
+    isBanned: false,
   },
-  setCurrentUser: (user: User) => {}
+  setCurrentUser: (user: User) => {},
 })

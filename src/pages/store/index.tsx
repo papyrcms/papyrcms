@@ -1,4 +1,4 @@
-import { Product } from 'types'
+import { Product } from '@/types'
 import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import _ from 'lodash'

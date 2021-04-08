@@ -1,4 +1,4 @@
-import { User, Product } from 'types'
+import { User, Product } from '@/types'
 import * as Sequelize from 'sequelize'
 import _ from 'lodash'
 import keys from '../../../../config/keys'

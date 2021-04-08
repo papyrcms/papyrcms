@@ -1,4 +1,4 @@
-import { User } from 'types'
+import { User } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'

@@ -1,4 +1,4 @@
-import { Database, User } from 'types'
+import { Database, User } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
 

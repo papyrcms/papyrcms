@@ -1,4 +1,4 @@
-import { Keys } from 'types'
+import { Keys } from '@/types'
 import React, { useState } from 'react'
 import keysContext from './keysContext'
 
@@ -8,13 +8,12 @@ type Props = {
 }
 
 const KeysProvider = (props: Props) => {
-
   const [keys] = useState(props.keys)
 
   return (
     <keysContext.Provider
       value={{
-        keys: keys
+        keys: keys,
       }}
     >
       {props.children}

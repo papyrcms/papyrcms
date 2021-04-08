@@ -1,4 +1,4 @@
-import { Blog } from 'types'
+import { Blog } from '@/types'
 import React, { useState } from 'react'
 import blogsContext from './blogsContext'
 

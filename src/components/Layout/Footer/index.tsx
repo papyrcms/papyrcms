@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import _ from 'lodash'
 import { useRouter } from 'next/router'
-import { Page } from 'types'
+import { Page } from '@/types'
 import { pagesContext } from '@/context'
 import styles from './Footer.module.scss'
 

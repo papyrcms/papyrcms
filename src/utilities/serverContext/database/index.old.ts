@@ -1,22 +1,16 @@
-import { Database, Models } from 'types'
+import { Database, Models } from '@/types'
 import keys from '../../../config/keys'
 import * as mongooseModels from './mongoose/models'
 import * as mongooseApi from './mongoose/api'
 import * as sequelizeApi from './sequelize/api'
 
 export default async () => {
-
   let database: Database
 
   // For backwards compatibility
-  if (
-    keys.mongoURI &&
-    (
-      !keys.databaseURI ||
-      !keys.databaseDriver
-    )
-  ) {
-    const depricationNotice = 'MONGO_URI/mongoURI is deprecated. Please set the DATABASE_DRIVER/databaseDriver to "mongodb" and change the variable name MONGO_URI/mongoURI to DATABASE_URI/databaseURI'
+  if (keys.mongoURI && (!keys.databaseURI || !keys.databaseDriver)) {
+    const depricationNotice =
+      'MONGO_URI/mongoURI is deprecated. Please set the DATABASE_DRIVER/databaseDriver to "mongodb" and change the variable name MONGO_URI/mongoURI to DATABASE_URI/databaseURI'
     console.warn(depricationNotice)
 
     keys.databaseDriver = 'mongodb'
@@ -24,14 +18,13 @@ export default async () => {
   }
 
   switch (keys.databaseDriver) {
-    
     // We use Mongoose for this
     case 'mongodb':
       await mongooseApi.init()
       // @ts-ignore
       database = {
         ...mongooseModels,
-        ...mongooseApi
+        ...mongooseApi,
       }
       break
 
@@ -45,11 +38,12 @@ export default async () => {
       // @ts-ignore
       database = {
         ...sequelizeModels,
-        ...sequelizeApi
+        ...sequelizeApi,
       }
       break
 
-    default: throw new Error('You need a valid database driver.')
+    default:
+      throw new Error('You need a valid database driver.')
   }
 
   return database

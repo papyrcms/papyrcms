@@ -1,4 +1,4 @@
-import { Product } from 'types'
+import { Product } from '@/types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
@@ -22,12 +22,14 @@ const Checkout = (props: { product: Product }) => {
   }
 
   const [orderNotes, setOrderNotes] = useState('')
-  const [handleSubmitSuccess, setHandleSubmitSuccess] = useState<
-    Function
-  >(() => null)
-  const [handleSubmitError, setHandleSubmitError] = useState<
-    Function
-  >(() => null)
+  const [
+    handleSubmitSuccess,
+    setHandleSubmitSuccess,
+  ] = useState<Function>(() => null)
+  const [
+    handleSubmitError,
+    setHandleSubmitError,
+  ] = useState<Function>(() => null)
 
   const handleCardSubmit = (
     source: any,

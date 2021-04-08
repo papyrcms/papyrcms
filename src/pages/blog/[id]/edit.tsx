@@ -1,4 +1,4 @@
-import { Blog } from 'types'
+import { Blog } from '@/types'
 import React, { useEffect, useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'

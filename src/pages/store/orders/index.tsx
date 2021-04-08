@@ -1,4 +1,4 @@
-import { Product, Order } from 'types'
+import { Product, Order } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import Error from 'next/error'
 import axios from 'axios'

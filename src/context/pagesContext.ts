@@ -1,4 +1,4 @@
-import { Page } from 'types'
+import { Page } from '@/types'
 import { createContext } from 'react'
 
 type PageContext = {
@@ -8,5 +8,5 @@ type PageContext = {
 
 export default createContext<PageContext>({
   pages: [],
-  setPages: (pages: Page[]) => {}
+  setPages: (pages: Page[]) => {},
 })

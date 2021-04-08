@@ -7,7 +7,7 @@ import {
   Blog,
   Event,
   Product,
-} from 'types'
+} from '@/types'
 import KeysProvider from './KeysProvider'
 import SettingsProvider from './SettingsProvider'
 import SectionOptionsProvider from './SectionOptionsProvider'

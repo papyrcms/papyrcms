@@ -5,14 +5,12 @@ import { __prod__ } from '../../../constants'
 import keys from '@/keys'
 
 const init = async () => {
-  const entityPath = keys.databaseDriver === 'mongodb' ? 'mongo' : ''
-
   await createConnection({
     type: keys.databaseDriver,
     url: keys.databaseURI,
     synchronize: true,
     logging: !__prod__,
-    entities: [path.join(__dirname, entityPath, '*.js')],
+    entities: [path.join(__dirname, 'entities', '*.ts')],
     migrations: [],
     subscribers: [],
     extra: {

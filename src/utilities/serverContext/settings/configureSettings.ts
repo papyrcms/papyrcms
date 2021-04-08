@@ -1,4 +1,4 @@
-import { Database } from 'types'
+import { Database } from '@/types'
 
 const configureSettings = async (
   name: string,

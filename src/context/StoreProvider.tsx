@@ -1,4 +1,4 @@
-import { Product } from 'types'
+import { Product } from '@/types'
 import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import _ from 'lodash'

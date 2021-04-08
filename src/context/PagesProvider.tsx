@@ -1,4 +1,4 @@
-import { Page } from 'types'
+import { Page } from '@/types'
 import React, { useState } from 'react'
 import pagesContext from './pagesContext'
 
@@ -8,14 +8,13 @@ type Props = {
 }
 
 const PagesProvider = (props: Props) => {
-
   const [pages, setPages] = useState(props.pages)
 
   return (
     <pagesContext.Provider
       value={{
         pages,
-        setPages
+        setPages,
       }}
     >
       {props.children}

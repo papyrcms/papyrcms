@@ -1,4 +1,4 @@
-import { SectionOptions } from 'types'
+import { SectionOptions } from '@/types'
 import { createContext } from 'react'
 
 type SectionOptionsContext = {
@@ -8,5 +8,5 @@ type SectionOptionsContext = {
 
 export default createContext<SectionOptionsContext>({
   sectionOptions: {},
-  setSectionOptions: (sectionOptions: SectionOptions) => {}
+  setSectionOptions: (sectionOptions: SectionOptions) => {},
 })

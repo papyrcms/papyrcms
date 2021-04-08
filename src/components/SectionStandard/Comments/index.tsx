@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { Post, Comment } from 'types'
+import { Post, Comment } from '@/types'
 import axios from 'axios'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'

@@ -1,4 +1,4 @@
-import { Database, Post } from 'types'
+import { Database, Post } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'

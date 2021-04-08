@@ -1,4 +1,4 @@
-import { Page } from 'types'
+import { Page } from '@/types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'

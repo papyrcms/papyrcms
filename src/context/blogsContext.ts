@@ -1,4 +1,4 @@
-import { Blog } from 'types'
+import { Blog } from '@/types'
 import { createContext } from 'react'
 
 type BlogContext = {
@@ -8,5 +8,5 @@ type BlogContext = {
 
 export default createContext<BlogContext>({
   blogs: [],
-  setBlogs: (blogs: Blog[]) => {}
+  setBlogs: (blogs: Blog[]) => {},
 })

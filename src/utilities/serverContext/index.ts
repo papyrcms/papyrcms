@@ -1,4 +1,4 @@
-import { Database, User, Settings } from 'types'
+import { Database, User, Settings } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import useSettings from './useSettings'
 import initDatabase from './database'

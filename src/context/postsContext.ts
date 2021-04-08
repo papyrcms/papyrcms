@@ -1,4 +1,4 @@
-import { Post } from 'types'
+import { Post } from '@/types'
 import { createContext } from 'react'
 
 type PostContext = {
@@ -8,5 +8,5 @@ type PostContext = {
 
 export default createContext<PostContext>({
   posts: [],
-  setPosts: (posts: Post[]) => {}
+  setPosts: (posts: Post[]) => {},
 })

@@ -1,4 +1,4 @@
-import { Event } from 'types'
+import { Event } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'

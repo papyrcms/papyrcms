@@ -1,4 +1,4 @@
-import { Database } from 'types'
+import { Database } from '@/types'
 import { NextApiRequest } from 'next'
 import jwt from 'jsonwebtoken'
 import _ from 'lodash'
@@ -9,12 +9,11 @@ export default async (req: NextApiRequest, database: Database) => {
     req.headers.authorization &&
     req.headers.authorization.includes('Bearer ')
   ) {
-    const token = req.headers.authorization
-      .replace('Bearer ', '')
+    const token = req.headers.authorization.replace('Bearer ', '')
 
     try {
       const tokenObject = jwt.verify(token, keys.jwtSecret)
-      
+
       if (typeof tokenObject === 'string')
         throw new Error('Invalid token')
 

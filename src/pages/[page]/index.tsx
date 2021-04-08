@@ -1,4 +1,4 @@
-import { Page } from 'types'
+import { Page } from '@/types'
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import { useRouter } from 'next/router'

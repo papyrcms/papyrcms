@@ -1,4 +1,4 @@
-import { Blog } from 'types'
+import { Blog } from '@/types'
 import React, { useContext, useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment'

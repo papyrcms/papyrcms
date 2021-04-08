@@ -1,4 +1,4 @@
-import { Post } from 'types'
+import { Post } from '@/types'
 import React, { useState, useEffect } from 'react'
 import renderHTML from 'react-render-html'
 import styles from './Notification.module.scss'

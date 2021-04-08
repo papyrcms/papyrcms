@@ -1,4 +1,4 @@
-import { Event } from 'types'
+import { Event } from '@/types'
 import { createContext } from 'react'
 
 type EventContext = {
@@ -8,5 +8,5 @@ type EventContext = {
 
 export default createContext<EventContext>({
   events: [],
-  setEvents: (events: Event[]) => {}
+  setEvents: (events: Event[]) => {},
 })

@@ -1,4 +1,4 @@
-import { Post } from 'types'
+import { Post } from '@/types'
 import React, { useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'

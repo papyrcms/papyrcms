@@ -1,4 +1,4 @@
-import { SectionOptions } from 'types'
+import { SectionOptions } from '@/types'
 
 export const options: SectionOptions = {
   Strip: {

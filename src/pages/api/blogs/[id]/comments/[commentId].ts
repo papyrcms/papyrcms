@@ -1,4 +1,4 @@
-import { Database } from 'types'
+import { Database } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'
@@ -31,7 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     typeof req.query.commentId !== 'string'
   ) {
     return await done(500, {
-      message: 'id was not a string'
+      message: 'id was not a string',
     })
   }
 
