@@ -11,7 +11,7 @@ import {
 import { Settings } from './Settings'
 
 @Entity()
-export class Options extends BaseEntity {
+export class Option extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Index()
   id!: string

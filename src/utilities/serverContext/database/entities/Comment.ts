@@ -5,6 +5,7 @@ import {
   Entity,
   Index,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
@@ -37,6 +38,18 @@ export class Comment extends BaseEntity {
     onDelete: 'CASCADE',
   })
   author!: User
+
+  @Column()
+  @Index()
+  replyToId?: string
+
+  @OneToMany(() => Comment, (comment) => comment.replies)
+  replyTo?: Comment
+
+  @ManyToOne(() => Comment, (comment) => comment.replyTo, {
+    onDelete: 'CASCADE',
+  })
+  replies?: Comment[]
 
   @CreateDateColumn()
   createdAt!: Date

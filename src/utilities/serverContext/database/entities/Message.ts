@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 
 @Entity()
-export class Blog extends BaseEntity {
+export class Message extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   @Index()
   id!: string

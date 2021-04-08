@@ -16,6 +16,10 @@ export class Section extends BaseEntity {
   @Index()
   id!: string
 
+  @Column()
+  @Index()
+  pageId!: string
+
   @OneToMany(() => Page, (page) => page.sections)
   page!: Page
 

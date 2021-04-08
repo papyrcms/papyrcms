@@ -22,7 +22,7 @@ export class Order extends BaseEntity {
   notes?: string
 
   @Column({ default: false })
-  shipped!: boolean
+  isShipped!: boolean
 
   @Column()
   userId?: string

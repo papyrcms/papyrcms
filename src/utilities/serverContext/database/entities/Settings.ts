@@ -8,7 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Options } from './Options'
+import { Option } from './Option'
 
 @Entity()
 export class Settings extends BaseEntity {
@@ -19,10 +19,10 @@ export class Settings extends BaseEntity {
   @Column()
   name!: string
 
-  @ManyToOne(() => Options, (options) => options.settings, {
+  @ManyToOne(() => Option, (option) => option.settings, {
     onDelete: 'CASCADE',
   })
-  options!: Options[]
+  options!: Option[]
 
   @CreateDateColumn()
   createdAt!: Date

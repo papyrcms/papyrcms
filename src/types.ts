@@ -1,47 +1,36 @@
 export interface Page {
-  _id: string
+  id: string
+  title: string
   className: string
-  created: string
-  css: string
+  route: string
   navOrder: number
+  css: string
   omitDefaultHeader: boolean
   omitDefaultFooter: boolean
-  route: string
-  sections: string[]
-  title: string
+  sections: Section[]
+  updatedAt: Date
+  createdAt: Date
 }
 
-export interface Post {
-  _id: string
-  title: string
+export interface Section {
+  id: string
+  order: number
+  type: string
   tags: string[]
-  slug: string
-  subImages: string[]
-  mainMedia?: string
-  content?: string
-  created: string
-  published: boolean
-  comments?: Comment[]
-}
-
-export interface Comment {
-  _id: string
-  content: string
-  created: string
-  replies: string[]
-  author: User
+  title: string
+  className: string
+  updatedAt: Date
+  createdAt: Date
 }
 
 export interface User {
-  _id: string
+  id: string
   email: string
-  password: string
   firstName: string
   lastName: string
   isAdmin: boolean
   isSubscribed: boolean
   isBanned: boolean
-  created: string
   address1?: string
   address2?: string
   city?: string
@@ -58,6 +47,41 @@ export interface User {
   shippingCountry?: string
   shippingZip?: string
   cart: Product[]
+  updatedAt: Date
+  createdAt: Date
+}
+
+export interface Post {
+  id: string
+  title: string
+  tags: string[]
+  slug: string
+  media: string
+  content: string
+  published: boolean
+  updatedAt: Date
+  createdAt: Date
+}
+
+export interface Blog extends Post {
+  publishDate?: Date
+  comments: Comment[]
+}
+
+export interface Comment {
+  id: string
+  content: string
+  replies: Comment[]
+  author: User
+  updatedAt: Date
+  createdAt: Date
+}
+
+export interface Event extends Post {
+  date: Date
+  latitude?: number
+  longitude?: number
+  address?: string
 }
 
 export interface Product extends Post {
@@ -66,32 +90,23 @@ export interface Product extends Post {
 }
 
 export interface Order {
-  _id: string
-  created: string
+  id: string
+  notes: string
   products: Product[]
   user?: User
-  notes: string
-  shipped: boolean
-}
-
-export interface Blog extends Post {
-  publishDate?: string
-  comments: Comment[]
-}
-
-export interface Event extends Post {
-  date: string
-  latitude: number
-  longitude: number
+  isShipped: boolean
+  updatedAt: Date
+  createdAt: Date
 }
 
 export interface Message {
-  _id: string
+  id: string
   name: string
   email: string
   message: string
   emailSent: boolean
-  created: string
+  updatedAt: Date
+  createdAt: Date
 }
 
 export interface Settings {
@@ -155,7 +170,7 @@ export interface Models {
   Post: Post
   Product: Product
   Settings: {
-    _id: string
+    id: string
     name: string
     options: any
   }
