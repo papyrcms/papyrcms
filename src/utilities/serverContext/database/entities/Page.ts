@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Section } from './Section'
+import * as types from '@/types'
 
 @Entity()
 export class Page extends BaseEntity {
@@ -48,4 +49,30 @@ export class Page extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  async toModel(): Promise<types.Page> {
+    let sectionEntities = await Section.find({
+      where: {
+        pageId: this.id,
+      },
+      order: { order: 'ASC' },
+    })
+    const sections = sectionEntities.map((section) =>
+      section.toModel()
+    )
+
+    return {
+      id: this.id,
+      title: this.title,
+      className: this.className,
+      route: this.route,
+      navOrder: this.navOrder,
+      css: this.css,
+      omitDefaultHeader: this.omitDefaultHeader,
+      omitDefaultFooter: this.omitDefaultFooter,
+      sections,
+      updatedAt: new Date(this.updatedAt),
+      createdAt: new Date(this.createdAt),
+    }
+  }
 }

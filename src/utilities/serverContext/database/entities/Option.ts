@@ -17,6 +17,15 @@ export class Option extends BaseEntity {
   id!: string
 
   @Column()
+  key!: string
+
+  @Column()
+  value!: string
+
+  @Column()
+  type!: 'string' | 'int' | 'float' | 'boolean'
+
+  @Column()
   settingsId!: string
 
   @OneToMany(() => Settings, (settings) => settings.options)
@@ -27,4 +36,17 @@ export class Option extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  getParsedValue(): any {
+    switch (this.type) {
+      case 'string':
+        return this.value
+      case 'int':
+        return parseInt(this.value)
+      case 'float':
+        return parseFloat(this.key)
+      case 'boolean':
+        return this.value.toLowerCase() === 'true'
+    }
+  }
 }

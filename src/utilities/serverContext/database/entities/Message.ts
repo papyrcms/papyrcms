@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import * as types from '@/types'
 
 @Entity()
 export class Message extends BaseEntity {
@@ -31,4 +32,16 @@ export class Message extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  toModel(): types.Message {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      message: this.message,
+      emailSent: this.emailSent,
+      updatedAt: new Date(this.updatedAt),
+      createdAt: new Date(this.createdAt),
+    }
+  }
 }

@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import * as types from '@/types'
 
 @Entity()
 export class Post extends BaseEntity {
@@ -31,11 +32,25 @@ export class Post extends BaseEntity {
   media!: string
 
   @Column({ default: false })
-  published!: boolean
+  isPublished!: boolean
 
   @CreateDateColumn()
   createdAt!: Date
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  toModel(): types.Post {
+    return {
+      id: this.id,
+      title: this.title,
+      tags: this.tags.split(',').map((tag) => tag.trim()),
+      slug: this.slug,
+      media: this.media,
+      content: this.content,
+      isPublished: this.isPublished,
+      updatedAt: new Date(this.updatedAt),
+      createdAt: new Date(this.createdAt),
+    }
+  }
 }

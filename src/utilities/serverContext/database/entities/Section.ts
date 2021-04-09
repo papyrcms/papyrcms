@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Page } from './Page'
+import * as types from '@/types'
 
 @Entity()
 export class Section extends BaseEntity {
@@ -46,4 +47,17 @@ export class Section extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  toModel(): types.Section {
+    return {
+      id: this.id,
+      order: this.order,
+      type: this.type,
+      tags: this.tags.split(',').map((tag) => tag.trim()),
+      title: this.title,
+      className: this.className,
+      updatedAt: new Date(this.updatedAt),
+      createdAt: new Date(this.createdAt),
+    }
+  }
 }

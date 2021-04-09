@@ -37,9 +37,9 @@ export interface User {
   state?: string
   country?: string
   zip?: string
-  shippingFirstName?: String
-  shippingLastName?: String
-  shippingEmail?: String
+  shippingFirstName?: string
+  shippingLastName?: string
+  shippingEmail?: string
   shippingAddress1?: string
   shippingAddress2?: string
   shippingCity?: string
@@ -58,13 +58,13 @@ export interface Post {
   slug: string
   media: string
   content: string
-  published: boolean
+  isPublished: boolean
   updatedAt: Date
   createdAt: Date
 }
 
 export interface Blog extends Post {
-  publishDate?: Date
+  publishedAt?: Date
   comments: Comment[]
 }
 
@@ -110,6 +110,14 @@ export interface Message {
 }
 
 export interface Settings {
+  id: string
+  name: string
+  options: Record<string, any>
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface AppSettings {
   enableMenu: boolean
   enableStore: boolean
   storeMenuLocation: number

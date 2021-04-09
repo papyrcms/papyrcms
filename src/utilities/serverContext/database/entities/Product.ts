@@ -10,6 +10,7 @@ import {
 } from 'typeorm'
 import { CartProduct } from './CartProduct'
 import { OrderedProduct } from './OrderedProduct'
+import * as types from '@/types'
 
 @Entity()
 export class Product extends BaseEntity {
@@ -34,7 +35,7 @@ export class Product extends BaseEntity {
   media!: string
 
   @Column({ default: false })
-  published!: boolean
+  isPublished!: boolean
 
   @Column('double', { default: 0.0 })
   price!: number
@@ -56,4 +57,20 @@ export class Product extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  toModel(): types.Product {
+    return {
+      id: this.id,
+      title: this.title,
+      tags: this.tags.split(',').map((tag) => tag.trim()),
+      slug: this.slug,
+      media: this.media,
+      content: this.content,
+      isPublished: this.isPublished,
+      price: this.price,
+      quantity: this.quantity,
+      updatedAt: new Date(this.updatedAt),
+      createdAt: new Date(this.createdAt),
+    }
+  }
 }

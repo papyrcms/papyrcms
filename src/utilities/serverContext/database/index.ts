@@ -1,10 +1,10 @@
 import 'reflect-metadata'
 import path from 'path'
-import { createConnection } from 'typeorm'
+import { BaseEntity, createConnection } from 'typeorm'
 import { __prod__ } from '../../../constants'
 import keys from '@/keys'
 
-const init = async () => {
+export const init = async () => {
   await createConnection({
     type: keys.databaseDriver,
     url: keys.databaseURI,
@@ -19,3 +19,20 @@ const init = async () => {
     },
   })
 }
+
+export const create = async (
+  entity: BaseEntity,
+  fields: Record<string, any>
+) => {}
+
+export const findOne = async () => {}
+
+export const findAll = async () => {}
+
+export const update = async () => {}
+
+export const destroy = async () => {}
+
+export const destroyAll = async () => {}
+
+export const countAll = async () => {}

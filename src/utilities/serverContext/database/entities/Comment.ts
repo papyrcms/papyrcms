@@ -11,6 +11,7 @@ import {
 } from 'typeorm'
 import { Blog } from './Blog'
 import { User } from './User'
+import * as types from '@/types'
 
 @Entity()
 export class Comment extends BaseEntity {
@@ -56,4 +57,33 @@ export class Comment extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  async toModel(): Promise<types.Comment> {
+    const commentEntities = await Comment.find({
+      where: {
+        replyToId: this.id,
+      },
+      order: { createdAt: 'DESC' },
+    })
+    const replies: types.Comment[] = []
+    for (const comment of commentEntities) {
+      replies.push(await comment.toModel())
+    }
+
+    const authorEntity = await User.findOne({
+      where: {
+        id: this.authorId,
+      },
+    })
+    const author = (await authorEntity?.toModel()) as types.User
+
+    return {
+      id: this.id,
+      content: this.content,
+      replies,
+      author,
+      updatedAt: new Date(this.updatedAt),
+      createdAt: new Date(this.createdAt),
+    }
+  }
 }

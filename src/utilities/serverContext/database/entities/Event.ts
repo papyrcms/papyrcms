@@ -4,11 +4,10 @@ import {
   CreateDateColumn,
   Entity,
   Index,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { Comment } from './Comment'
+import * as types from '@/types'
 
 @Entity()
 export class Event extends BaseEntity {
@@ -33,7 +32,7 @@ export class Event extends BaseEntity {
   media!: string
 
   @Column({ default: false })
-  published!: boolean
+  isPublished!: boolean
 
   @Column()
   date!: Date
@@ -52,4 +51,22 @@ export class Event extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt!: Date
+
+  toModel(): types.Event {
+    return {
+      id: this.id,
+      title: this.title,
+      tags: this.tags.split(',').map((tag) => tag.trim()),
+      slug: this.slug,
+      media: this.media,
+      content: this.content,
+      isPublished: this.isPublished,
+      latitude: this.latitude,
+      longitude: this.longitude,
+      address: this.address,
+      date: new Date(this.date),
+      updatedAt: new Date(this.updatedAt),
+      createdAt: new Date(this.createdAt),
+    }
+  }
 }
