@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,9 +7,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import * as types from '@/types'
+import { PapyrEntity } from './PapyrEntity'
 
 @Entity()
-export class Message extends BaseEntity {
+export class Message extends PapyrEntity {
   @PrimaryGeneratedColumn('uuid')
   @Index()
   id!: string

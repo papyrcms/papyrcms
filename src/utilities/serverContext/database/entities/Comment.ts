@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -12,9 +11,10 @@ import {
 import { Blog } from './Blog'
 import { User } from './User'
 import * as types from '@/types'
+import { PapyrEntity } from './PapyrEntity'
 
 @Entity()
-export class Comment extends BaseEntity {
+export class Comment extends PapyrEntity {
   @PrimaryGeneratedColumn('uuid')
   @Index()
   id!: string

@@ -1,5 +1,4 @@
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
@@ -12,11 +11,10 @@ import {
 import { User } from './User'
 import { OrderedProduct } from './OrderedProduct'
 import * as types from '@/types'
-import products from 'src/pages/api/store/products'
-import { Product } from '.'
+import { PapyrEntity } from './PapyrEntity'
 
 @Entity()
-export class Order extends BaseEntity {
+export class Order extends PapyrEntity {
   @PrimaryGeneratedColumn('uuid')
   @Index()
   id!: string
