@@ -75,4 +75,32 @@ export class Page extends BaseEntity {
       createdAt: new Date(this.createdAt),
     }
   }
+
+  static async saveFromModel(page: types.Page): Promise<types.Page> {
+    let foundPage = await Page.findOne({
+      where: {
+        id: page.id,
+      },
+    })
+
+    if (!foundPage) {
+      foundPage = Page.create()
+    }
+
+    foundPage.title = page.title
+    foundPage.className = page.className
+    foundPage.route = page.route
+    foundPage.navOrder = page.navOrder
+    foundPage.css = page.css
+    foundPage.omitDefaultHeader = page.omitDefaultHeader
+    foundPage.omitDefaultFooter = page.omitDefaultFooter
+
+    foundPage = await foundPage.save()
+
+    for (const section of page.sections) {
+      await Section.saveFromModel(section)
+    }
+
+    return await foundPage.toModel()
+  }
 }

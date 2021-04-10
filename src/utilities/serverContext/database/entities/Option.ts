@@ -17,6 +17,7 @@ export class Option extends BaseEntity {
   id!: string
 
   @Column()
+  @Index({ unique: true })
   key!: string
 
   @Column()

@@ -69,4 +69,33 @@ export class Event extends BaseEntity {
       createdAt: new Date(this.createdAt),
     }
   }
+
+  static async saveFromModel(
+    event: types.Event
+  ): Promise<types.Event> {
+    let foundEvent = await Event.findOne({
+      where: {
+        id: event.id,
+      },
+    })
+
+    if (!foundEvent) {
+      foundEvent = Event.create()
+    }
+
+    foundEvent.title = event.title
+    foundEvent.slug = event.slug
+    foundEvent.tags = event.tags.join(', ')
+    foundEvent.media = event.media
+    foundEvent.content = event.content
+    foundEvent.isPublished = event.isPublished
+    foundEvent.latitude = event.latitude
+    foundEvent.longitude = event.longitude
+    foundEvent.address = event.address
+    foundEvent.date = event.date
+
+    foundEvent = await foundEvent.save()
+
+    return await foundEvent.toModel()
+  }
 }

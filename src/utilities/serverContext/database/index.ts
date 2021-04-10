@@ -3,6 +3,8 @@ import path from 'path'
 import { BaseEntity, createConnection } from 'typeorm'
 import { __prod__ } from '../../../constants'
 import keys from '@/keys'
+import * as types from '@/types'
+import * as entities from './entities'
 
 export const init = async () => {
   await createConnection({
@@ -18,6 +20,19 @@ export const init = async () => {
       rejectUnauthorized: !__prod__,
     },
   })
+}
+
+const entityMap = {
+  Blog: entities.Blog,
+  Comment: entities.Comment,
+  Event: entities.Event,
+  Message: entities.Message,
+  Order: entities.Order,
+  Page: entities.Page,
+  Post: entities.Post,
+  Product: entities.Product,
+  Settings: entities.Settings,
+  User: entities.User,
 }
 
 export const create = async (

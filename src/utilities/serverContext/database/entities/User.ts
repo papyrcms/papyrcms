@@ -140,4 +140,74 @@ export class User extends BaseEntity {
       createdAt: new Date(this.createdAt),
     }
   }
+
+  static async saveFromModel(user: types.User): Promise<types.User> {
+    let foundUser = await User.findOne({
+      where: {
+        id: user.id,
+      },
+    })
+
+    if (!foundUser) {
+      foundUser = User.create()
+    }
+
+    foundUser.email = user.email
+    foundUser.firstName = user.firstName
+    foundUser.lastName = user.lastName
+    foundUser.isAdmin = user.isAdmin
+    foundUser.isSubscribed = user.isSubscribed
+    foundUser.isBanned = user.isBanned
+    foundUser.address1 = user.address1
+    foundUser.address2 = user.address2
+    foundUser.city = user.city
+    foundUser.state = user.state
+    foundUser.country = user.country
+    foundUser.zip = user.zip
+    foundUser.shippingFirstName = user.shippingFirstName
+    foundUser.shippingLastName = user.shippingLastName
+    foundUser.shippingEmail = user.shippingEmail
+    foundUser.shippingAddress1 = user.shippingAddress1
+    foundUser.shippingAddress2 = user.shippingAddress2
+    foundUser.shippingCity = user.shippingCity
+    foundUser.shippingState = user.shippingState
+    foundUser.shippingCountry = user.shippingCountry
+    foundUser.shippingZip = user.shippingZip
+    foundUser = await foundUser.save()
+
+    // Add to cart/Remove from cart
+    // Note: This assumes products will only ever be added OR removed
+    // from the cart in one transaction. Should that change, this needs redone
+    const cartProducts = await CartProduct.find({
+      where: {
+        userId: user.id,
+      },
+    })
+    if (cartProducts.length > user.cart.length) {
+      // Remove from cart
+      for (const cartProduct of cartProducts) {
+        const removedFromCart = !user.cart.some(
+          (product) => product.id === cartProduct.productId
+        )
+        if (removedFromCart) {
+          await cartProduct.remove()
+        }
+      }
+    } else {
+      // Add to cart
+      for (const product of user.cart) {
+        const addedToCart = !cartProducts.some(
+          (cartProduct) => cartProduct.productId === product.id
+        )
+        if (addedToCart) {
+          await CartProduct.create({
+            userId: user.id,
+            productId: product.id,
+          }).save()
+        }
+      }
+    }
+
+    return await foundUser.toModel()
+  }
 }

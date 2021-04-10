@@ -53,4 +53,27 @@ export class Post extends BaseEntity {
       createdAt: new Date(this.createdAt),
     }
   }
+
+  static async saveFromModel(post: types.Post): Promise<types.Post> {
+    let foundPost = await Post.findOne({
+      where: {
+        id: post.id,
+      },
+    })
+
+    if (!foundPost) {
+      foundPost = Post.create()
+    }
+
+    foundPost.title = post.title
+    foundPost.slug = post.slug
+    foundPost.tags = post.tags.join(', ')
+    foundPost.media = post.media
+    foundPost.content = post.content
+    foundPost.isPublished = post.isPublished
+
+    foundPost = await foundPost.save()
+
+    return await foundPost.toModel()
+  }
 }

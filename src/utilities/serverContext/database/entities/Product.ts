@@ -73,4 +73,30 @@ export class Product extends BaseEntity {
       createdAt: new Date(this.createdAt),
     }
   }
+
+  static async saveFromModel(
+    product: types.Product
+  ): Promise<types.Product> {
+    let foundProduct = await Product.findOne({
+      where: {
+        id: product.id,
+      },
+    })
+
+    if (!foundProduct) {
+      foundProduct = Product.create()
+    }
+
+    foundProduct.title = product.title
+    foundProduct.slug = product.slug
+    foundProduct.tags = product.tags.join(', ')
+    foundProduct.media = product.media
+    foundProduct.isPublished = product.isPublished
+    foundProduct.price = product.price
+    foundProduct.quantity = product.quantity
+
+    foundProduct = await foundProduct.save()
+
+    return await foundProduct.toModel()
+  }
 }

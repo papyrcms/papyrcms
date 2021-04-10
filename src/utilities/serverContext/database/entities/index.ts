@@ -1,5 +1,6 @@
 import { Blog } from './Blog'
 import { CartProduct } from './CartProduct'
+import { Comment } from './Comment'
 import { Event } from './Event'
 import { Message } from './Message'
 import { Option } from './Option'
@@ -15,6 +16,7 @@ import { User } from './User'
 export {
   Blog,
   CartProduct,
+  Comment,
   Event,
   Message,
   Option,

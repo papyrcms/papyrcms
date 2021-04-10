@@ -18,7 +18,7 @@ export class Settings extends BaseEntity {
   id!: string
 
   @Column()
-  @Index()
+  @Index({ unique: true })
   name!: string
 
   @ManyToOne(() => Option, (option) => option.settings, {

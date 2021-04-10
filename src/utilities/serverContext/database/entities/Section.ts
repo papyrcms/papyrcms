@@ -60,4 +60,28 @@ export class Section extends BaseEntity {
       createdAt: new Date(this.createdAt),
     }
   }
+
+  static async saveFromModel(
+    section: types.Section
+  ): Promise<types.Section> {
+    let foundSection = await Section.findOne({
+      where: {
+        id: section.id,
+      },
+    })
+
+    if (!foundSection) {
+      foundSection = Section.create()
+    }
+
+    foundSection.order = section.order
+    foundSection.type = section.type
+    foundSection.tags = section.tags.join(', ')
+    foundSection.title = section.title
+    foundSection.className = section.className
+
+    foundSection = await foundSection.save()
+
+    return await foundSection.toModel()
+  }
 }

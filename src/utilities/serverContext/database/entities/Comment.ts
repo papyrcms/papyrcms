@@ -86,4 +86,24 @@ export class Comment extends BaseEntity {
       createdAt: new Date(this.createdAt),
     }
   }
+
+  static async saveFromModel(
+    comment: types.Comment
+  ): Promise<types.Comment> {
+    let foundComment = await Comment.findOne({
+      where: {
+        id: comment.id,
+      },
+    })
+
+    if (!foundComment) {
+      foundComment = Comment.create()
+    }
+
+    foundComment.content = comment.content
+
+    foundComment = await foundComment.save()
+
+    return await foundComment.toModel()
+  }
 }
