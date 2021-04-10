@@ -8,6 +8,16 @@ import * as entities from './entities'
 import { PapyrEntity } from './entities/PapyrEntity'
 
 export const init = async () => {
+  // For backwards compatibility
+  if (keys.mongoURI && (!keys.databaseURI || !keys.databaseDriver)) {
+    const depricationNotice =
+      'MONGO_URI/mongoURI is deprecated. Please set the DATABASE_DRIVER/databaseDriver to "mongodb" and change the variable name MONGO_URI/mongoURI to DATABASE_URI/databaseURI'
+    console.warn(depricationNotice)
+
+    keys.databaseDriver = 'mongodb'
+    keys.databaseURI = keys.mongoURI
+  }
+
   await createConnection({
     type: keys.databaseDriver,
     url: keys.databaseURI,
