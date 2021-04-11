@@ -86,7 +86,7 @@ const EventsEdit = (props: { event: Event }) => {
     <PostsForm
       pageTitle="Edit Event"
       post={event}
-      apiEndpoint={`/api/events/${event._id}`}
+      apiEndpoint={`/api/events/${event.id}`}
       redirectRoute="/events/all"
       editing
       additionalFields={[coordinatesField, dateField]}

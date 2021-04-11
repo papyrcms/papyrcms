@@ -26,7 +26,7 @@ const Pages = () => {
       (page) => page.navOrder,
     ])
     return _.map(pages, (page) => (
-      <li className={styles.page} key={page._id}>
+      <li className={styles.page} key={page.id}>
         <div>
           Visit page{' - '}
           <Link href="/[page]" as={`/${page.route}`}>

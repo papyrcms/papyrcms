@@ -116,7 +116,7 @@ const UserInfoForm: React.FC<Props> = (props) => {
         '/api/auth/currentUser',
         { success, error },
         true,
-        { userId: currentUser._id },
+        { userId: currentUser.id },
         false
       )
 

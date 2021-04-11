@@ -72,7 +72,7 @@ const PostsForm: React.FC<Props> = (props) => {
       let newPosts = []
       if (editing && post) {
         newPosts = _.map(posts, (mappedPost) => {
-          if (mappedPost._id === post._id) return response.data
+          if (mappedPost.id === post.id) return response.data
           return mappedPost
         })
       } else {

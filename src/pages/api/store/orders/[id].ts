@@ -8,13 +8,13 @@ const updateOrder = async (
   database: Database
 ) => {
   const { update, findOne, Order } = database
-  await update(Order, { _id: id }, { shipped: body.shipped })
-  return await findOne(Order, { _id: id })
+  await update(Order, { id: id }, { shipped: body.shipped })
+  return await findOne(Order, { id: id })
 }
 
 const deleteOrder = async (id: string, database: Database) => {
   const { destroy, Order } = database
-  await destroy(Order, { _id: id })
+  await destroy(Order, { id: id })
   return 'order deleted'
 }
 

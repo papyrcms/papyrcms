@@ -28,7 +28,7 @@ describe('/api/users', () => {
         email: 'test@example.com',
       })
 
-      const putData = { userId: testUser._id, isAdmin: true }
+      const putData = { userId: testUser.id, isAdmin: true }
       const { status } = await axios.put(
         `${rootURL}/api/users/makeAdmin`,
         putData,
@@ -49,7 +49,7 @@ describe('/api/users', () => {
         email: 'test@example.com',
       })
 
-      const putData = { userId: testUser._id, isAdmin: false }
+      const putData = { userId: testUser.id, isAdmin: false }
       const { status } = await axios.put(
         `${rootURL}/api/users/makeAdmin`,
         putData,
@@ -72,7 +72,7 @@ describe('/api/users', () => {
         email: 'test@example.com',
       })
 
-      const putData = { userId: testUser._id, isBanned: true }
+      const putData = { userId: testUser.id, isBanned: true }
       const { status } = await axios.put(
         `${rootURL}/api/users/ban`,
         putData,
@@ -93,7 +93,7 @@ describe('/api/users', () => {
         email: 'test@example.com',
       })
 
-      const putData = { userId: testUser._id, isBanned: false }
+      const putData = { userId: testUser.id, isBanned: false }
       const { status } = await axios.put(
         `${rootURL}/api/users/ban`,
         putData,
@@ -117,7 +117,7 @@ describe('/api/users', () => {
       })
 
       try {
-        await axios.delete(`${rootURL}/api/users/${testUser._id}`)
+        await axios.delete(`${rootURL}/api/users/${testUser.id}`)
         expect(1).to.equal(2)
       } catch (err) {
         expect(err.response.status).to.equal(403)
@@ -131,7 +131,7 @@ describe('/api/users', () => {
 
       try {
         await axios.delete(
-          `${rootURL}/api/users/${adminUser._id}`,
+          `${rootURL}/api/users/${adminUser.id}`,
           axiosConfig
         )
         expect(1).to.equal(2)
@@ -148,7 +148,7 @@ describe('/api/users', () => {
       })
 
       const response = await axios.delete(
-        `${rootURL}/api/users/${testUser._id}`,
+        `${rootURL}/api/users/${testUser.id}`,
         axiosConfig
       )
       const deletedUser = await findOne(User, {

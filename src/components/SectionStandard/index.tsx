@@ -107,11 +107,11 @@ const SectionStandard: React.FC<Props> = (props) => {
       const deleteRedirect = redirectRoute ? redirectRoute : '/posts'
 
       axios
-        .delete(`${deletePath}/${post._id}`)
+        .delete(`${deletePath}/${post.id}`)
         .then((res) => {
           const newPosts = _.filter(
             posts,
-            (filtered) => filtered._id !== post._id
+            (filtered) => filtered.id !== post.id
           )
           setPosts(newPosts)
           Router.push(deleteRedirect)
@@ -134,7 +134,7 @@ const SectionStandard: React.FC<Props> = (props) => {
           </button>
           <Link
             href={`/${path}/[id]/edit`}
-            as={`/${path}/${post._id}/edit`}
+            as={`/${path}/${post.id}/edit`}
           >
             <button className="button-edit">Edit</button>
           </Link>
@@ -209,7 +209,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     return _.map(props.posts, (post) => {
       if (!post) return null
       return (
-        <div key={post._id}>
+        <div key={post.id}>
           {beforePost(post)}
 
           <div className={styles.post}>

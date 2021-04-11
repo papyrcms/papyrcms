@@ -39,7 +39,7 @@ const StoreShow = (props: { product: Product }) => {
   const renderAddToCart = (product: Product) => {
     const quantityInCart = _.filter(
       cart,
-      (cartProduct) => cartProduct._id === product._id
+      (cartProduct) => cartProduct.id === product.id
     ).length
     let message = 'Add to cart'
     if (quantityInCart) message += ` (${quantityInCart} now)`
@@ -63,7 +63,7 @@ const StoreShow = (props: { product: Product }) => {
         <>
           {renderAddToCart(product)}
           <br />
-          <Link href={`/store/checkout?id=${product._id}`}>
+          <Link href={`/store/checkout?id=${product.id}`}>
             <a>Buy it now</a>
           </Link>
         </>

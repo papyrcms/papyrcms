@@ -45,7 +45,7 @@ const Comments: React.FC<Props> = (props) => {
 
     if (!editing) {
       axios
-        .post(`${apiPath}/${post._id}/comments`, commentObject)
+        .post(`${apiPath}/${post.id}/comments`, commentObject)
         .then((res) => {
           setComments([...comments, res.data])
           setFormContent('')
@@ -56,12 +56,12 @@ const Comments: React.FC<Props> = (props) => {
     } else {
       axios
         .put(
-          `${apiPath}/${post._id}/comments/${editing}`,
+          `${apiPath}/${post.id}/comments/${editing}`,
           commentObject
         )
         .then((res) => {
           const newComments = _.map(comments, (comment) => {
-            if (comment._id === editing) {
+            if (comment.id === editing) {
               comment = res.data
             }
             return comment
@@ -83,11 +83,11 @@ const Comments: React.FC<Props> = (props) => {
 
     if (confirm) {
       axios
-        .delete(`${apiPath}/${post._id}/comments/${comment._id}`)
+        .delete(`${apiPath}/${post.id}/comments/${comment.id}`)
         .then((res) => {
           const newComments = _.filter(
             comments,
-            (comm) => comm._id !== comment._id
+            (comm) => comm.id !== comment.id
           )
           setComments(newComments)
         })
@@ -100,7 +100,7 @@ const Comments: React.FC<Props> = (props) => {
   const renderAuthOptions = (comment: Comment) => {
     if (
       currentUser &&
-      (currentUser._id === comment.author._id || currentUser.isAdmin)
+      (currentUser.id === comment.author.id || currentUser.isAdmin)
     ) {
       return (
         <div className={styles.buttons}>
@@ -113,7 +113,7 @@ const Comments: React.FC<Props> = (props) => {
           <button
             className="button-edit button-small"
             onClick={() => {
-              setEditing(comment._id)
+              setEditing(comment.id)
               setFormContent(comment.content)
             }}
           >
@@ -130,10 +130,10 @@ const Comments: React.FC<Props> = (props) => {
     }
 
     return _.map(comments, (comment) => {
-      const { content, author, _id } = comment
+      const { content, author, id } = comment
 
       return (
-        <div className={styles.comment} key={_id}>
+        <div className={styles.comment} key={id}>
           <p className={styles.content}>{renderHTML(content)}</p>
           <p className={styles.author}>
             &mdash;{' '}

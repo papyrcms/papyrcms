@@ -76,7 +76,7 @@ describe('/api/pages', () => {
         title: 'Updated Test Page Title',
       }
       const { data: updated, status } = await axios.put(
-        `${rootURL}/api/pages/${found._id}`,
+        `${rootURL}/api/pages/${found.id}`,
         updatedPage,
         axiosConfig
       )
@@ -95,7 +95,7 @@ describe('/api/pages', () => {
         `${rootURL}/api/pages/${page.route}`
       )
       const { status } = await axios.delete(
-        `${rootURL}/api/pages/${found._id}`,
+        `${rootURL}/api/pages/${found.id}`,
         axiosConfig
       )
 

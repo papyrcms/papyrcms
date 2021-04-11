@@ -9,7 +9,7 @@ const getEvent = async (id: string, database: Database) => {
   const { findOne, Event } = database
 
   try {
-    event = await findOne(Event, { _id: id })
+    event = await findOne(Event, { id: id })
   } catch (err) {}
 
   if (!event) {
@@ -33,13 +33,13 @@ const updateEvent = async (
   body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
 
   const { update, findOne, Event } = database
-  await update(Event, { _id: id }, body)
-  return await findOne(Event, { _id: id })
+  await update(Event, { id: id }, body)
+  return await findOne(Event, { id: id })
 }
 
 const deleteEvent = async (id: string, database: Database) => {
   const { destroy, Event } = database
-  await destroy(Event, { _id: id })
+  await destroy(Event, { id: id })
   return 'event deleted'
 }
 

@@ -131,7 +131,7 @@ const SectionSplit: React.FC<Props> = (props) => {
         {beforePostLink(post)}
         <Link
           href={`/${path || 'posts'}/[id]`}
-          as={`/${path || 'posts'}/${post.slug || post._id}`}
+          as={`/${path || 'posts'}/${post.slug || post.id}`}
         >
           <a>Read More</a>
         </Link>
@@ -155,7 +155,7 @@ const SectionSplit: React.FC<Props> = (props) => {
         : styles.wide
 
       return (
-        <div className={styles.post} key={post._id}>
+        <div className={styles.post} key={post.id}>
           {renderLeftMedia(post, i)}
           <div className={postTextClassName}>
             {beforePostTitle(post)}

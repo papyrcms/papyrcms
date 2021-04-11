@@ -33,7 +33,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return await done(400, error)
     }
 
-    await update(User, { _id: user._id }, { password: passwordHash })
+    await update(User, { id: user.id }, { password: passwordHash })
 
     return await done(200, {
       message: 'Your password has been saved!',

@@ -14,14 +14,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { destroy, User } = database
 
     // Non-strict for DBs with non-string ObjectId types
-    if (user._id == id) {
+    if (user.id == id) {
       return await done(401, {
         message: 'You cannot delete yourself.',
       })
     }
 
     try {
-      await destroy(User, { _id: id })
+      await destroy(User, { id: id })
       return await done(200, { message: 'user deleted' })
     } catch (err) {
       return await done(400, { message: err.message })

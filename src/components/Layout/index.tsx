@@ -78,7 +78,7 @@ const Layout: React.FC = (props) => {
 
   const renderNotifications = () => {
     return _.map(notifications.posts, (post) => {
-      return <Notification key={post._id} post={post} />
+      return <Notification key={post.id} post={post} />
     })
   }
 

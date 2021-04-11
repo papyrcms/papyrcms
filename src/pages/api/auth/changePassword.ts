@@ -29,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     const { findOne, update, User } = database
-    const foundUser = await findOne(User, { _id: user._id })
+    const foundUser = await findOne(User, { id: user.id })
 
     if (!foundUser) {
       return await done(401, {
@@ -66,7 +66,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return await done(400, error)
     }
 
-    await update(User, { _id: user._id }, { password: passwordHash })
+    await update(User, { id: user.id }, { password: passwordHash })
     return await done(200, {
       message: 'Your password has been saved!',
     })

@@ -10,7 +10,7 @@ const getProduct = async (id: string, database: Database) => {
   try {
     product = await findOne(
       Product,
-      { _id: id },
+      { id: id },
       { include: ['comments'] }
     )
   } catch (err) {}
@@ -44,13 +44,13 @@ const updateProduct = async (
 
   const { update, findOne, Product } = database
 
-  await update(Product, { _id: id }, body)
-  return await findOne(Product, { _id: id })
+  await update(Product, { id: id }, body)
+  return await findOne(Product, { id: id })
 }
 
 const deleteProduct = async (id: string, database: Database) => {
   const { destroy, Product } = database
-  await destroy(Product, { _id: id })
+  await destroy(Product, { id: id })
   return 'product deleted'
 }
 

@@ -54,7 +54,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
 
       return (
         <SectionMedia
-          key={post._id}
+          key={post.id}
           post={post}
           className={`${slideClassName} ${styles.slide}`}
           alt={post.title}
@@ -75,7 +75,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
           type="radio"
           checked={counter === i ? true : false}
           onChange={() => {}}
-          key={post._id}
+          key={post.id}
         />
       )
     })

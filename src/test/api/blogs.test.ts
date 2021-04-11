@@ -85,7 +85,7 @@ describe('/api/blogs', () => {
         content: 'This is updated test blog content.',
       }
       const { data: updated, status } = await axios.put(
-        `${rootURL}/api/blogs/${found._id}`,
+        `${rootURL}/api/blogs/${found.id}`,
         updatedBlog,
         axiosConfig
       )
@@ -103,7 +103,7 @@ describe('/api/blogs', () => {
         axiosConfig
       )
       const { status } = await axios.delete(
-        `${rootURL}/api/blogs/${found._id}`,
+        `${rootURL}/api/blogs/${found.id}`,
         axiosConfig
       )
 

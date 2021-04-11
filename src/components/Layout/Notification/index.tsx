@@ -9,7 +9,7 @@ type Props = {
 
 const Notification: React.FC<Props> = (props) => {
   const { post } = props
-  const { _id, title, content } = post
+  const { id, title, content } = post
   const [hidden, setHidden] = useState(true)
   const [storage, setStorage] = useState<Storage | null>(null)
 
@@ -44,13 +44,13 @@ const Notification: React.FC<Props> = (props) => {
       setClosedNotifications(localClosedNotifications)
     }
 
-    if (!localClosedNotifications.includes(_id)) {
+    if (!localClosedNotifications.includes(id)) {
       setHidden(false)
     }
   }, [storage])
 
   const closeNotification = () => {
-    const newClosedNotifications = [...closedNotifications, _id]
+    const newClosedNotifications = [...closedNotifications, id]
     setHidden(true)
     setClosedNotifications(newClosedNotifications)
     storage?.setItem(

@@ -81,7 +81,7 @@ describe('/api/posts', () => {
         content: 'This is updated test content.',
       }
       const { data: updated, status } = await axios.put(
-        `${rootURL}/api/posts/${found._id}`,
+        `${rootURL}/api/posts/${found.id}`,
         updatedPost,
         axiosConfig
       )
@@ -98,7 +98,7 @@ describe('/api/posts', () => {
         `${rootURL}/api/posts/mocha-test-post`
       )
       const { status } = await axios.delete(
-        `${rootURL}/api/posts/${found._id}`,
+        `${rootURL}/api/posts/${found.id}`,
         axiosConfig
       )
 

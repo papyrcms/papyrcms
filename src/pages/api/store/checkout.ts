@@ -130,11 +130,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       // Save the updated products and put in the order
       for (const product of products) {
-        const found = await findOne(Product, { _id: product._id })
+        const found = await findOne(Product, { id: product.id })
         found.quantity--
         await update(
           Product,
-          { _id: found._id },
+          { id: found.id },
           { quantity: found.quantity }
         )
         order.products.push(found)
@@ -157,7 +157,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       )
 
       if (user && fromCart) {
-        await update(User, { _id: user._id }, { cart: [] })
+        await update(User, { id: user.id }, { cart: [] })
       }
 
       return await done(200, 'All items purchased')

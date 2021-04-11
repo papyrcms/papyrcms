@@ -29,7 +29,7 @@ const PostsEdit = (props: { post: Post }) => {
     <PostsForm
       pageTitle="Edit Post"
       post={post}
-      apiEndpoint={`/api/posts/${post._id}`}
+      apiEndpoint={`/api/posts/${post.id}`}
       editing
     />
   )

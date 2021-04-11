@@ -72,7 +72,7 @@ const SectionCards: React.FC<Props> = (props) => {
       return (
         <Link
           href={`/${readMorePath || 'posts'}/[id]`}
-          as={`/${readMorePath || 'posts'}/${post.slug || post._id}`}
+          as={`/${readMorePath || 'posts'}/${post.slug || post.id}`}
         >
           <a className={styles.link}>Read More</a>
         </Link>
@@ -126,7 +126,7 @@ const SectionCards: React.FC<Props> = (props) => {
           : post.content
 
       return (
-        <li key={post._id} className={styles.card}>
+        <li key={post.id} className={styles.card}>
           {beforePostTitle(post)}
           <h3 className="heading-tertiary">{post.title}</h3>
           {afterPostTitle(post)}

@@ -37,7 +37,7 @@ const Submenu: React.FC<{ pages: Page[] }> = ({ pages }) => {
       {_.map(pages, (page) => {
         const href = page.route === 'home' ? '/' : `/${page.route}`
         return (
-          <NavLink href={href} key={page._id}>
+          <NavLink href={href} key={page.id}>
             {page.title}
           </NavLink>
         )
@@ -55,7 +55,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
 
     if (settings.enableBlog) {
       menuPages.push({
-        _id: 'blog',
+        id: 'blog',
         title: 'Blog',
         route: 'blog',
         navOrder: settings.blogMenuLocation,
@@ -64,7 +64,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
 
     if (settings.enableEvents) {
       menuPages.push({
-        _id: 'events',
+        id: 'events',
         title: 'Events',
         route: 'events',
         navOrder: settings.eventsMenuLocation,
@@ -73,7 +73,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
 
     if (settings.enableStore) {
       menuPages.push({
-        _id: 'store',
+        id: 'store',
         title: 'Store',
         route: 'store',
         navOrder: settings.storeMenuLocation,
@@ -128,12 +128,12 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
       if (page) {
         const href = page.route === 'home' ? '/' : `/${page.route}`
         return (
-          <NavLink href={href} key={page._id}>
+          <NavLink href={href} key={page.id}>
             {page.title}
           </NavLink>
         )
       } else if (pages) {
-        return <Submenu pages={pages} key={pages[0]._id} />
+        return <Submenu pages={pages} key={pages[0].id} />
       }
     })
   }

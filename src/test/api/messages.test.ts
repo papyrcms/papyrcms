@@ -45,7 +45,7 @@ describe('/api/messages', () => {
       )
       const [message] = messages
       const { status } = await axios.delete(
-        `${rootURL}/api/messages/${message._id}`,
+        `${rootURL}/api/messages/${message.id}`,
         axiosConfig
       )
       expect(status).to.equal(200)

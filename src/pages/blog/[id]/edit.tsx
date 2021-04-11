@@ -30,7 +30,7 @@ const BlogEdit = (props: { blog: Blog }) => {
     <PostsForm
       pageTitle="Edit Blog Post"
       post={blog}
-      apiEndpoint={`/api/blogs/${blog._id}`}
+      apiEndpoint={`/api/blogs/${blog.id}`}
       redirectRoute="/blog/all"
       editing
     />

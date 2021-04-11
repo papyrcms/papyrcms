@@ -91,7 +91,7 @@ describe('/api/store', () => {
           content: 'This is updated test product content.',
         }
         const { data: updated, status } = await axios.put(
-          `${rootURL}/api/store/products/${found._id}`,
+          `${rootURL}/api/store/products/${found.id}`,
           updatedProduct,
           axiosConfig
         )
@@ -115,7 +115,7 @@ describe('/api/store', () => {
           axiosConfig
         )
         const { status } = await axios.delete(
-          `${rootURL}/api/store/products/${found._id}`,
+          `${rootURL}/api/store/products/${found.id}`,
           axiosConfig
         )
 
@@ -133,7 +133,7 @@ describe('/api/store', () => {
           axiosConfig
         )
         const { data: cart, status } = await axios.put(
-          `${rootURL}/api/store/cart/${created._id}`,
+          `${rootURL}/api/store/cart/${created.id}`,
           {},
           axiosConfig
         )
@@ -151,7 +151,7 @@ describe('/api/store', () => {
           axiosConfig
         )
         const { data: cart, status } = await axios.delete(
-          `${rootURL}/api/store/cart/${found._id}`,
+          `${rootURL}/api/store/cart/${found.id}`,
           axiosConfig
         )
         const { data: user } = await axios.get(
@@ -159,7 +159,7 @@ describe('/api/store', () => {
           axiosConfig
         )
         await axios.delete(
-          `${rootURL}/api/store/products/${found._id}`,
+          `${rootURL}/api/store/products/${found.id}`,
           axiosConfig
         )
 
@@ -177,7 +177,7 @@ describe('/api/store', () => {
         axiosConfig
       )
       const { data: cart } = await axios.put(
-        `${rootURL}/api/store/cart/${created._id}`,
+        `${rootURL}/api/store/cart/${created.id}`,
         {},
         axiosConfig
       )
@@ -226,7 +226,7 @@ describe('/api/store', () => {
         const [order] = orders
 
         const { data: updatedOrder, status } = await axios.put(
-          `${rootURL}/api/store/orders/${order._id}`,
+          `${rootURL}/api/store/orders/${order.id}`,
           { shipped: true },
           axiosConfig
         )
@@ -243,7 +243,7 @@ describe('/api/store', () => {
         const [order] = orders
 
         const { data: response, status } = await axios.delete(
-          `${rootURL}/api/store/orders/${order._id}`,
+          `${rootURL}/api/store/orders/${order.id}`,
           axiosConfig
         )
 

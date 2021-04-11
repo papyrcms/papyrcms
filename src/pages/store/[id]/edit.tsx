@@ -73,7 +73,7 @@ const StoreEdit = (props: { product: Product }) => {
     <PostsForm
       pageTitle="Edit Product"
       post={product}
-      apiEndpoint={`/api/store/products/${product._id}`}
+      apiEndpoint={`/api/store/products/${product.id}`}
       redirectRoute="/store"
       editing
       additionalFields={[ProductFields]}

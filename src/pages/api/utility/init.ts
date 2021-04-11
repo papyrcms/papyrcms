@@ -70,7 +70,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
       const token = jwt.sign(
         {
-          uid: user._id,
+          uid: user.id,
           iat: Math.floor(now.getTime() / 1000),
           exp: Math.floor(expiry / 1000),
         },

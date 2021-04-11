@@ -31,7 +31,7 @@ const MessageList = () => {
         .then((res) => {
           const newMessages = _.filter(
             messages,
-            (message) => message._id !== id
+            (message) => message.id !== id
           )
           setMessages(newMessages)
         })
@@ -44,11 +44,11 @@ const MessageList = () => {
   const renderMessages = () => {
     return _.map(
       messages,
-      ({ name, email, message, created, _id }) => {
+      ({ name, email, message, created, id }) => {
         const localReadableDate = moment(created).format('LLLL')
 
         return (
-          <div key={_id} className={styles.message}>
+          <div key={id} className={styles.message}>
             <p>Sent: {localReadableDate}</p>
 
             <div className={styles.info}>
@@ -60,7 +60,7 @@ const MessageList = () => {
 
             <button
               className="button-tertiary button-small"
-              onClick={() => deleteMessage(_id)}
+              onClick={() => deleteMessage(id)}
             >
               Delete
             </button>

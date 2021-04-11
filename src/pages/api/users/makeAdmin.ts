@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { userId, isAdmin } = req.body
     const { update, User } = database
 
-    await update(User, { _id: userId }, { isAdmin })
+    await update(User, { id: userId }, { isAdmin })
     return await done(200, { message: 'Success' })
   }
 

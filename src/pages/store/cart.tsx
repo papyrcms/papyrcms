@@ -12,7 +12,7 @@ const Cart = () => {
   for (const product of cart) {
     const unique =
       uniqueProducts.filter((prod) => {
-        return prod._id == product._id
+        return prod.id == product.id
       }).length === 0
     if (unique) {
       uniqueProducts.push(product)
@@ -40,7 +40,7 @@ const Cart = () => {
     let totalCost = 0
 
     quantity = _.filter(cart, (item) => {
-      if (item._id === product._id) {
+      if (item.id === product.id) {
         totalCost += item.price
         return true
       }

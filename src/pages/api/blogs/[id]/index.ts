@@ -9,7 +9,7 @@ const getBlog = async (id: string, database: Database) => {
 
   // Search for the blog by its id
   try {
-    blog = await findOne(Blog, { _id: id }, { include: ['comments'] })
+    blog = await findOne(Blog, { id: id }, { include: ['comments'] })
   } catch (err) {}
 
   // Then search by its slug
@@ -40,7 +40,7 @@ const updateBlog = async (
 ) => {
   const { findOne, update, Blog } = database
 
-  const oldBlog = await findOne(Blog, { _id: id })
+  const oldBlog = await findOne(Blog, { id: id })
 
   if (!oldBlog.published && body.published) {
     body.publishDate = Date.now()
@@ -49,20 +49,20 @@ const updateBlog = async (
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
   body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
 
-  await update(Blog, { _id: id }, body)
-  return await findOne(Blog, { _id: id })
+  await update(Blog, { id: id }, body)
+  return await findOne(Blog, { id: id })
 }
 
 const deleteBlog = async (id: string, database: Database) => {
   const { findOne, destroy, Blog, Comment } = database
 
-  const blog = await findOne(Blog, { _id: id })
+  const blog = await findOne(Blog, { id: id })
 
   _.forEach(blog.comments, async (comment) => {
-    await destroy(Comment, { _id: comment })
+    await destroy(Comment, { id: comment })
   })
 
-  await destroy(Blog, { _id: id })
+  await destroy(Blog, { id: id })
 
   return 'blog deleted'
 }

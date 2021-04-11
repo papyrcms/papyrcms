@@ -26,13 +26,13 @@ const UserList = () => {
       `Are you sure you want to delete ${user.email}`
     )
 
-    if (confirm && currentUser && user._id !== currentUser._id) {
+    if (confirm && currentUser && user.id !== currentUser.id) {
       axios
-        .delete(`/api/users/${user._id}`)
+        .delete(`/api/users/${user.id}`)
         .then((response) => {
           const newUsers = _.filter(
             users,
-            (foundUser) => user._id !== foundUser._id
+            (foundUser) => user.id !== foundUser.id
           )
           setUsers(newUsers)
         })
@@ -43,15 +43,15 @@ const UserList = () => {
   }
 
   const changeAdminStatus = (user: User) => {
-    if (currentUser && user._id !== currentUser._id) {
+    if (currentUser && user.id !== currentUser.id) {
       axios
         .put('/api/users/makeAdmin', {
-          userId: user._id,
+          userId: user.id,
           isAdmin: !user.isAdmin,
         })
         .then((response) => {
           const newUsers = _.map(users, (foundUser) => {
-            if (user._id === foundUser._id) {
+            if (user.id === foundUser.id) {
               foundUser.isAdmin = !user.isAdmin
             }
             return foundUser
@@ -65,15 +65,15 @@ const UserList = () => {
   }
 
   const changeBannedStatus = (user: User) => {
-    if (currentUser && user._id !== currentUser._id) {
+    if (currentUser && user.id !== currentUser.id) {
       axios
         .put('/api/users/ban', {
-          userId: user._id,
+          userId: user.id,
           isBanned: !user.isBanned,
         })
         .then((response) => {
           const newUsers = _.map(users, (foundUser) => {
-            if (user._id === foundUser._id) {
+            if (user.id === foundUser.id) {
               foundUser.isBanned = !user.isBanned
             }
             return foundUser
@@ -87,7 +87,7 @@ const UserList = () => {
   }
 
   const renderUserOptions = (user: User) => {
-    if (currentUser && user._id !== currentUser._id) {
+    if (currentUser && user.id !== currentUser.id) {
       return (
         <div className={styles.options}>
           <button
@@ -116,7 +116,7 @@ const UserList = () => {
   }
 
   const renderUserInfo = (user: User) => {
-    const visible = user._id === selectedUser ? true : false
+    const visible = user.id === selectedUser ? true : false
 
     return (
       <div
@@ -138,11 +138,11 @@ const UserList = () => {
   const renderUsers = () => {
     return _.map(users, (user) => {
       return (
-        <li key={user._id} className={styles.user}>
+        <li key={user.id} className={styles.user}>
           <div className={styles.item}>
             <span className={styles.email}>{user.email}</span>
             <button
-              onClick={() => setSelectedUser(user._id)}
+              onClick={() => setSelectedUser(user.id)}
               className="button-secondary button-small"
             >
               Info

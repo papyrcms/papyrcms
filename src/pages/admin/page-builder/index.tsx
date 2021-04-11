@@ -53,7 +53,7 @@ const PageBuilder = (props: Props) => {
       // For type safety
       omitDefaultFooter: false,
       omitDefaultHeader: false,
-      _id: 'fake_id',
+      id: 'fakeid',
       created: new Date().toISOString(),
       title: 'Page Preview',
       navOrder: 0,
@@ -61,7 +61,7 @@ const PageBuilder = (props: Props) => {
   }
 
   if (props.page) {
-    INITIAL_STATE.id = props.page._id
+    INITIAL_STATE.id = props.page.id
     INITIAL_STATE.title = props.page.title
     INITIAL_STATE.route = props.page.route
     INITIAL_STATE.navOrder = props.page.navOrder

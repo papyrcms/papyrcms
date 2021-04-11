@@ -26,13 +26,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     const blog = await findOne(
       Blog,
-      { _id: req.query.id },
+      { id: req.query.id },
       { include: ['comments'] }
     )
     const newComments = [...blog.comments, comment]
     await update(
       Blog,
-      { _id: req.query.id },
+      { id: req.query.id },
       { comments: newComments }
     )
 

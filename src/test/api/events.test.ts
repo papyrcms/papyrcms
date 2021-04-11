@@ -89,7 +89,7 @@ describe('/api/events', () => {
         content: 'This is updated test event content.',
       }
       const { data: updated, status } = await axios.put(
-        `${rootURL}/api/events/${found._id}`,
+        `${rootURL}/api/events/${found.id}`,
         updatedEvent,
         axiosConfig
       )
@@ -107,7 +107,7 @@ describe('/api/events', () => {
         axiosConfig
       )
       const { status } = await axios.delete(
-        `${rootURL}/api/events/${found._id}`,
+        `${rootURL}/api/events/${found.id}`,
         axiosConfig
       )
 

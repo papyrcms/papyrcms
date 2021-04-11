@@ -72,8 +72,8 @@ const updatePage = async (
 
   try {
     const { update, findOne, Page } = database
-    await update(Page, { _id: id }, pageData)
-    return await findOne(Page, { _id: id })
+    await update(Page, { id: id }, pageData)
+    return await findOne(Page, { id: id })
   } catch (err) {
     let message = 'There was a problem. Try again later.'
     if (err.code === 11000) {
@@ -86,7 +86,7 @@ const updatePage = async (
 
 const deletePage = async (id: string, database: Database) => {
   const { destroy, Page } = database
-  await destroy(Page, { _id: id })
+  await destroy(Page, { id: id })
   return 'Page deleted.'
 }
 

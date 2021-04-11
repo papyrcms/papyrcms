@@ -81,7 +81,7 @@ const Checkout = (props: { product: Product }) => {
   const renderProductsList = () => {
     return _.map(cart, (product, i) => {
       return (
-        <p key={product._id + i.toString()}>
+        <p key={product.id + i.toString()}>
           {product.title}: ${product.price.toFixed(2)}
         </p>
       )

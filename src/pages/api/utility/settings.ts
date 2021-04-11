@@ -30,7 +30,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           const newSetting = {
             options: { ...setting.options, [key]: req.body[key] },
           }
-          await update(Settings, { _id: setting._id }, newSetting)
+          await update(Settings, { id: setting.id }, newSetting)
         }
       }
     }

@@ -9,7 +9,7 @@ const getPost = async (id: string, database: Database) => {
   const { Post, findOne } = database
 
   try {
-    post = await findOne(Post, { _id: id }, { include: ['comments'] })
+    post = await findOne(Post, { id: id }, { include: ['comments'] })
   } catch (err) {}
 
   if (!post) {
@@ -47,7 +47,7 @@ const updatePost = async (
     newTags = _.filter(newTags, (tag) => !!tag)
     body.tags = _.uniq(newTags)
   }
-  const postDocument = { _id: id }
+  const postDocument = { id: id }
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
 
   const { update, findOne, Post } = database
@@ -71,13 +71,13 @@ const updatePost = async (
 const deletePost = async (id: string, database: Database) => {
   const { Post, Comment, findOne, destroy } = database
 
-  const post = await findOne(Post, { _id: id })
+  const post = await findOne(Post, { id: id })
 
   _.forEach(post.comments, async (comment) => {
-    await destroy(Comment, { _id: comment })
+    await destroy(Comment, { id: comment })
   })
 
-  await destroy(Post, { _id: id })
+  await destroy(Post, { id: id })
 
   return 'post deleted'
 }

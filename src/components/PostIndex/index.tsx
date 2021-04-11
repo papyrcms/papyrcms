@@ -61,7 +61,7 @@ const PostIndex = (props: Props) => {
     }
 
     return _.map(posts, (post) => {
-      const { _id, title, tags, mainMedia, content, published } = post
+      const { id, title, tags, mainMedia, content, published } = post
 
       let postContent = ''
       if (content) {
@@ -72,7 +72,7 @@ const PostIndex = (props: Props) => {
       }
 
       return (
-        <div key={_id} className={styles.post}>
+        <div key={id} className={styles.post}>
           {renderMediaSection(mainMedia, title)}
           <div className={styles.details}>
             <div className={styles.top}>
@@ -86,7 +86,7 @@ const PostIndex = (props: Props) => {
               {renderHTML(postContent)}
             </div>
             <div className={styles.link}>
-              <Link href={`/posts/[id]`} as={`/posts/${_id}`}>
+              <Link href={`/posts/[id]`} as={`/posts/${id}`}>
                 <a className="button button-primary">Read More</a>
               </Link>
             </div>
