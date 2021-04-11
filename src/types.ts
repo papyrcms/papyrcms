@@ -32,6 +32,7 @@ export class Section extends DbModel {
   type!: string
   tags!: string[]
   title!: string
+  maxPosts!: number
   className!: string
   updatedAt!: Date
   createdAt!: Date

@@ -28,8 +28,8 @@ const EventsShow = (props: { event: Event }) => {
   const renderMap = () => (
     <Map
       className="u-padding-top-medium"
-      latitude={event.latitude}
-      longitude={event.longitude}
+      latitude={event.latitude || 0}
+      longitude={event.longitude || 0}
       zoom={16}
     />
   )

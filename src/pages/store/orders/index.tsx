@@ -37,7 +37,7 @@ const Orders = () => {
   const markShipped = (shippedOrder: Order) => {
     const newOrder = {
       ...shippedOrder,
-      shipped: !shippedOrder.shipped,
+      shipped: !shippedOrder.isShipped,
     }
     axios
       .put(`/api/store/orders/${shippedOrder.id}`, newOrder)
@@ -77,11 +77,18 @@ const Orders = () => {
 
   const renderOrders = () => {
     return _.map(orders, (order) => {
-      const { created, user, products, id, notes, shipped } = order
+      const {
+        createdAt,
+        user,
+        products,
+        id,
+        notes,
+        isShipped,
+      } = order
 
       return (
         <li key={id} className={styles['order']}>
-          <p>This has {!shipped && 'not '}been shipped.</p>
+          <p>This has {!isShipped && 'not '}been shipped.</p>
           <div className={styles.info}>
             {
               // Address info is based on a user bound to the order
@@ -124,7 +131,7 @@ const Orders = () => {
 
             <div className={styles.infoCreated}>
               <h3 className="heading-tertiary">Created:</h3>
-              <p>{moment(created).format('MMMM Do, YYYY')}</p>
+              <p>{moment(createdAt).format('MMMM Do, YYYY')}</p>
             </div>
           </div>
 
@@ -133,7 +140,7 @@ const Orders = () => {
               className={`${styles.ship} button button-primary`}
               onClick={() => markShipped(order)}
             >
-              Mark {order.shipped && 'not '}shipped
+              Mark {order.isShipped && 'not '}shipped
             </button>
             <button
               className={`${styles.delete} button button-delete`}

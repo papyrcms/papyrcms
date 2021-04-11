@@ -1,4 +1,4 @@
-import { Page } from '@/types'
+import { Page, Section } from '@/types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
@@ -47,14 +47,15 @@ const PageBuilder = (props: Props) => {
     page: {
       className: '',
       route: '',
-      sections: [] as string[],
+      sections: [] as Section[],
       css: '',
 
       // For type safety
       omitDefaultFooter: false,
       omitDefaultHeader: false,
       id: 'fakeid',
-      created: new Date().toISOString(),
+      updatedAt: new Date(),
+      createdAt: new Date(),
       title: 'Page Preview',
       navOrder: 0,
     },
@@ -70,9 +71,10 @@ const PageBuilder = (props: Props) => {
     INITIAL_STATE.omitDefaultFooter = !!props.page.omitDefaultFooter
     INITIAL_STATE.css = props.page.css
     INITIAL_STATE.sections = _.map(props.page.sections, (section) => {
-      const parsedSection = JSON.parse(section)
-      parsedSection.tags = _.join(parsedSection.tags, ', ')
-      return parsedSection
+      return {
+        ...section,
+        tags: _.join(section.tags, ', '),
+      }
     })
     INITIAL_STATE.page = props.page
   }
@@ -84,13 +86,10 @@ const PageBuilder = (props: Props) => {
       state.sections,
       (section, i) => i !== index
     )
-    const newPageSections = _.map(newSections, (section) =>
-      JSON.stringify(section)
-    )
     setState({
       ...state,
       sections: newSections,
-      page: { ...state.page, sections: newPageSections },
+      page: { ...state.page, sections: newSections },
     })
   }
 
@@ -108,10 +107,9 @@ const PageBuilder = (props: Props) => {
 
     const newPageSections = _.map(
       state.page.sections,
-      (jsonSection, i) => {
-        const section = JSON.parse(jsonSection)
-
+      (section, i) => {
         if (index === i) {
+          // @ts-ignore
           section[key] = value
         }
 
@@ -121,7 +119,7 @@ const PageBuilder = (props: Props) => {
           // )
         }
 
-        return JSON.stringify(section)
+        return section
       }
     )
 
@@ -234,14 +232,11 @@ const PageBuilder = (props: Props) => {
       0,
       newSections.splice(oldIndex, 1)[0]
     )
-    const newPageSections = _.map(newSections, (section) =>
-      JSON.stringify(section)
-    )
 
     setState({
       ...state,
       sections: [...newSections],
-      page: { ...state.page, sections: newPageSections },
+      page: { ...state.page, sections: [...newSections] },
     })
   }
 
@@ -325,7 +320,7 @@ const PageBuilder = (props: Props) => {
       state.page.sections,
       (section) => section
     )
-    newPageSections.push(JSON.stringify(newSection))
+    newPageSections.push(newSection as any)
 
     setState({
       ...state,

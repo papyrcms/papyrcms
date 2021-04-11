@@ -43,12 +43,10 @@ const PageRenderer = (props: Props) => {
   // Get our filter settings from the page sections
   const settings: any = []
   _.forEach(page.sections, (section, i) => {
-    const parsedSection = JSON.parse(section)
-
     settings.push({
-      propName: `${parsedSection.type}-${i}`,
-      maxPosts: parsedSection.maxPosts,
-      postTags: parsedSection.tags,
+      propName: `${section.type}-${i}`,
+      maxPosts: section.maxPosts,
+      postTags: section.tags,
       strictTags: true,
     })
   })
@@ -62,34 +60,31 @@ const PageRenderer = (props: Props) => {
 
   const renderSections = (page: Page) => {
     return _.map(page.sections, (section, i) => {
-      // Parse the section from the page
-      const parsedSection = JSON.parse(section)
-
       // Get properties by the section info
-      const key = `${parsedSection.type}-${i}`
+      const key = `${section.type}-${i}`
       const filteredPosts = filtered[key]
       const emptyMessage = `Create content with the ${_.join(
-        parsedSection.tags,
+        section.tags,
         ', '
       )} tags.`
 
-      // Get the parsedSection component
-      const options = sectionOptions[parsedSection.type]
+      // Get the section component
+      const options = sectionOptions[section.type]
 
       // @ts-ignore Not sure how to fix this
       let Component: React.FC = Components[options.component]
 
-      // Return the parsedSection component
+      // Return the section component
       return (
         <Component
           key={key}
-          title={parsedSection.title}
-          className={parsedSection.className || ''}
+          title={section.title}
+          className={section.className || ''}
           post={filteredPosts[0]}
           posts={filteredPosts}
-          emptyTitle={parsedSection.title || ''}
+          emptyTitle={section.title || ''}
           emptyMessage={emptyMessage || ''}
-          alt={parsedSection.title || ''}
+          alt={section.title || ''}
           {...options.defaultProps}
         />
       )
@@ -99,8 +94,7 @@ const PageRenderer = (props: Props) => {
   const renderPageHead = (page: Page) => {
     let SectionStandard = false
     _.forEach(page.sections, (section) => {
-      const parsedSection = JSON.parse(section)
-      if (parsedSection.type === 'SectionStandard') {
+      if (section.type === 'SectionStandard') {
         SectionStandard = true
       }
     })

@@ -43,9 +43,9 @@ const BlogPage = () => {
 
   const renderDate = (post: Blog) => {
     const date =
-      post.published && post.publishDate
-        ? post.publishDate
-        : post.created
+      post.isPublished && post.publishedAt
+        ? post.publishedAt
+        : post.createdAt
 
     return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }

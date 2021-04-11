@@ -26,9 +26,9 @@ const BlogShow = (props: { blog: Blog }) => {
 
   const renderDate = () => {
     const date =
-      blog.published && blog.publishDate
-        ? blog.publishDate
-        : blog.created
+      blog.isPublished && blog.publishedAt
+        ? blog.publishedAt
+        : blog.createdAt
 
     return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }
