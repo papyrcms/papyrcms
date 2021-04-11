@@ -5,11 +5,10 @@ import _ from 'lodash'
 import keys from '@/keys'
 
 export default async (req: NextApiRequest, database: Database) => {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.includes('Bearer ')
-  ) {
-    const token = req.headers.authorization.replace('Bearer ', '')
+  if (req.headers.authorization?.toLowerCase().includes('bearer ')) {
+    const token = req.headers.authorization
+      .toLowerCase()
+      .replace('bearer ', '')
 
     try {
       const tokenObject = jwt.verify(token, keys.jwtSecret) as {
