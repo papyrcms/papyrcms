@@ -1,12 +1,16 @@
-import { Database } from '@/types'
+import { Database, Message } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
 import keys from '@/keys'
 
 const getMessages = async (database: Database) => {
-  const { findAll, Message } = database
-  return await findAll(Message, {}, { sort: { created: -1 } })
+  const { findAll, EntityType } = database
+  const messages = await findAll<Message>(EntityType.Message)
+  messages.sort((a, b) =>
+    (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
+  )
+  return messages
 }
 
 const createMessage = async (
@@ -19,7 +23,7 @@ const createMessage = async (
     email: body.email,
     message: body.message,
     emailSent: false,
-  }
+  } as Message
 
   if (enableEmailingToAdmin) {
     const mailer = new Mailer(database)
@@ -37,8 +41,8 @@ const createMessage = async (
     }
   }
 
-  const { create, Message } = database
-  return await create(Message, messageBody)
+  const { save, EntityType } = database
+  return await save(EntityType.Message, messageBody)
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
