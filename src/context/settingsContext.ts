@@ -1,8 +1,8 @@
-import { Settings } from '@/types'
+import { AppSettings } from '@/types'
 import { createContext } from 'react'
 
 type SettingsContext = {
-  settings: Settings
+  settings: AppSettings
   setSettings: Function
 }
 
@@ -20,5 +20,5 @@ export default createContext<SettingsContext>({
     enableEmailingToAdmin: false,
     enableEmailingToUsers: false,
   },
-  setSettings: (settings: Settings) => {},
+  setSettings: (settings: AppSettings) => {},
 })

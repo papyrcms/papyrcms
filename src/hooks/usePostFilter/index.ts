@@ -22,7 +22,7 @@ const usePostFilter = <T extends Post>(
     if (!showAll) {
       postsToFilter = _.filter(
         postsToFilter,
-        (post) => post.published
+        (post) => post.isPublished
       )
     }
 

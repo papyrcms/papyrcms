@@ -8,8 +8,7 @@ type UserContext = {
 
 export default createContext<UserContext>({
   currentUser: {
-    _id: '',
-    password: '',
+    id: '',
 
     // Personal Info
     email: '',
@@ -39,7 +38,8 @@ export default createContext<UserContext>({
     cart: [],
 
     // Account creation date
-    created: new Date().toISOString(),
+    updatedAt: new Date(),
+    createdAt: new Date(),
 
     // Etc
     isAdmin: false,

@@ -30,15 +30,15 @@ const StoreProvider: React.FC<Props> = (props) => {
     const newCart = [...cart, product]
     if (!currentUser) {
       if (
-        _.filter(cart, (inCart) => inCart._id === product._id)
-          .length < product.quantity
+        _.filter(cart, (inCart) => inCart.id === product.id).length <
+        product.quantity
       ) {
         localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart)
       }
     } else {
       try {
-        await axios.put(`/api/store/cart/${product._id}`)
+        await axios.put(`/api/store/cart/${product.id}`)
         setCart(newCart)
       } catch (err) {
         console.error(err)
@@ -49,7 +49,7 @@ const StoreProvider: React.FC<Props> = (props) => {
   const removeFromCart = async (product: Product) => {
     let removed = false
     const newCart = _.filter(cart, (item) => {
-      if (item._id === product._id && !removed) {
+      if (item.id === product.id && !removed) {
         removed = true
         return false
       }
@@ -58,15 +58,15 @@ const StoreProvider: React.FC<Props> = (props) => {
 
     if (!currentUser) {
       if (
-        _.filter(cart, (inCart) => inCart._id === product._id)
-          .length > 0
+        _.filter(cart, (inCart) => inCart.id === product.id).length >
+        0
       ) {
         localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart)
       }
     } else {
       try {
-        await axios.delete(`/api/store/cart/${product._id}`)
+        await axios.delete(`/api/store/cart/${product.id}`)
         setCart(newCart)
       } catch (err) {
         console.error(err)
