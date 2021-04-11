@@ -121,7 +121,7 @@ describe('mailer', () => {
         content: 'This is some test post content.',
         tags: 'test, post',
         published: true,
-        mainMedia: 'some-picture.jpg',
+        media: 'some-picture.jpg',
       }
       const post = await save<Post>(EntityType.Post, postData as any)
 

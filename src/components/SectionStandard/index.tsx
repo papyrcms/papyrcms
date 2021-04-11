@@ -28,8 +28,8 @@ type Props = {
   afterPost?: Function
   beforeTitle?: Function
   afterTitle?: Function
-  beforeMainMedia?: Function
-  afterMainMedia?: Function
+  beforemedia?: Function
+  aftermedia?: Function
   beforeContent?: Function
   afterContent?: Function
   beforeComments?: Function
@@ -56,8 +56,8 @@ type Props = {
  * @prop afterPost - Function - Rendered after each post
  * @prop beforeTitle - Function - Rendered before each post title
  * @prop afterTitle - Function - Rendered after each post title
- * @prop beforeMainMedia - Function - Rendered before each post main media
- * @prop afterMainMedia - Function - Rendered after each post main media
+ * @prop beforemedia - Function - Rendered before each post main media
+ * @prop aftermedia - Function - Rendered after each post main media
  * @prop beforeContent - Function - Rendered before each post content
  * @prop afterContent - Function - Rendered after each post content
  * @prop beforeComments - Function - Rendered before each post comments
@@ -87,8 +87,8 @@ const SectionStandard: React.FC<Props> = (props) => {
     afterPost = () => null,
     beforeTitle = () => null,
     afterTitle = () => null,
-    beforeMainMedia = () => null,
-    afterMainMedia = () => null,
+    beforemedia = () => null,
+    aftermedia = () => null,
     beforeContent = () => null,
     afterContent = () => null,
     beforeComments = () => null,
@@ -163,11 +163,11 @@ const SectionStandard: React.FC<Props> = (props) => {
     }
   }
 
-  const renderMainMedia = (post: Post) => {
-    if (post.mainMedia) {
+  const rendermedia = (post: Post) => {
+    if (post.media) {
       return (
         <div className={styles.image}>
-          <Media src={post.mainMedia} alt={post.title} />
+          <Media src={post.media} alt={post.title} />
         </div>
       )
     }
@@ -221,9 +221,9 @@ const SectionStandard: React.FC<Props> = (props) => {
 
             {renderTagsSection(post)}
 
-            {beforeMainMedia(post)}
-            {renderMainMedia(post)}
-            {afterMainMedia(post)}
+            {beforemedia(post)}
+            {rendermedia(post)}
+            {aftermedia(post)}
 
             {beforeContent(post)}
             <div className={styles.content}>
@@ -247,7 +247,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   const renderPageHead = (passedPosts: Post[]) => {
     if (!setPageHead) return null
 
-    const [{ title, tags, mainMedia, content }] = passedPosts
+    const [{ title, tags, media, content }] = passedPosts
     let postContent = content || ''
 
     let headTitle
@@ -265,7 +265,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     return (
       <PageHead
         title={headTitle}
-        image={mainMedia}
+        image={media}
         description={postContent
           .replace('<p>', '')
           .replace('</p>', '')}

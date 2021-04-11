@@ -42,7 +42,7 @@ const PostsForm: React.FC<Props> = (props) => {
     ...additionalState,
     title: post ? post.title : '',
     tags: post ? mapTagsToString(post.tags) : '',
-    mainMedia: post ? post.mainMedia : '',
+    media: post ? post.media : '',
     content: post ? post.content : '',
     published: post ? post.published : false,
     validation: '',

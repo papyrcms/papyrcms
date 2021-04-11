@@ -16,7 +16,7 @@ const product = {
   content: 'This is some test product content.',
   tags: 'test, product',
   published: true,
-  mainMedia: 'some-picture.jpg',
+  media: 'some-picture.jpg',
   price: 2.99,
   quantity: 10,
 }
@@ -33,7 +33,7 @@ describe('/api/store', () => {
       expect(status).to.equal(200) &&
         expect(created.title).to.equal(product.title) &&
         expect(created.content).to.equal(product.content) &&
-        expect(created.mainMedia).to.equal(product.mainMedia) &&
+        expect(created.media).to.equal(product.media) &&
         expect(created.price).to.equal(product.price) &&
         expect(created.quantity).to.equal(product.quantity) &&
         expect(created.tags).to.be.an('array')
@@ -76,7 +76,7 @@ describe('/api/store', () => {
         expect(status).to.equal(200) &&
           expect(found.title).to.equal(product.title) &&
           expect(found.content).to.equal(product.content) &&
-          expect(found.mainMedia).to.equal(product.mainMedia) &&
+          expect(found.media).to.equal(product.media) &&
           expect(found.price).to.equal(product.price) &&
           expect(found.tags).to.be.an('array')
       }).timeout(10000)
@@ -99,9 +99,7 @@ describe('/api/store', () => {
         expect(status).to.equal(200) &&
           expect(updated.title).to.equal(updatedProduct.title) &&
           expect(updated.content).to.equal(updatedProduct.content) &&
-          expect(updated.mainMedia).to.equal(
-            updatedProduct.mainMedia
-          ) &&
+          expect(updated.media).to.equal(updatedProduct.media) &&
           expect(updated.price).to.equal(updatedProduct.price) &&
           expect(updated.quantity).to.equal(
             updatedProduct.quantity

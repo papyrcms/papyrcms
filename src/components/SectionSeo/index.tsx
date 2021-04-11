@@ -20,7 +20,7 @@ const SectionSeo: React.FC<Props> = (props) => {
 
   const {
     title = '',
-    mainMedia = '',
+    media = '',
     tags = [],
     content = '',
   } = props.post
@@ -28,7 +28,7 @@ const SectionSeo: React.FC<Props> = (props) => {
   return (
     <PageHead
       title={title}
-      image={mainMedia}
+      image={media}
       description={sanitizeHTML(content, { allowedTags: [] })}
       keywords={_.join(tags, ', ')}
     />

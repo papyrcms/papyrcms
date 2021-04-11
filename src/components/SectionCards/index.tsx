@@ -91,11 +91,11 @@ const SectionCards: React.FC<Props> = (props) => {
   }
 
   const renderMediaSection = (post: Post) => {
-    if (post.mainMedia) {
+    if (post.media) {
       return (
         <Media
           className={styles.image}
-          src={post.mainMedia}
+          src={post.media}
           alt={post.title}
           clickable={clickableMedia}
         />

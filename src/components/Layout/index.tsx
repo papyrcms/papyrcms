@@ -40,7 +40,7 @@ const Layout: React.FC = (props) => {
     if (post.tags && post.tags.includes('section-header')) {
       headerTitle = post.title || ''
       headerSubTitle = post.content || ''
-      logo = post.mainMedia || ''
+      logo = post.media || ''
       titleHeaderContent = ''
 
       if (post.content) {
@@ -49,7 +49,7 @@ const Layout: React.FC = (props) => {
         })}`
       }
       if (!shareImage) {
-        shareImage = post.mainMedia || ''
+        shareImage = post.media || ''
       }
     } else if (post.tags.includes('section-footer')) {
       footerTitle = post.title
@@ -66,8 +66,8 @@ const Layout: React.FC = (props) => {
             keywords.length === 0 ? tag : `${keywords}, ${tag}`
         }
       })
-      if (post.mainMedia) {
-        shareImage = post.mainMedia
+      if (post.media) {
+        shareImage = post.media
       }
     }
   })

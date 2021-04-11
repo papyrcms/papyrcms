@@ -36,7 +36,7 @@ const SectionMedia: React.FC<Props> = (props) => {
     )
   }
 
-  const { title, content, mainMedia } = props.post
+  const { title, content, media } = props.post
   const { fixed, alt, className } = props
 
   return (
@@ -52,7 +52,7 @@ const SectionMedia: React.FC<Props> = (props) => {
 
       <Media
         className={fixed ? styles.fixedMedia : styles.media}
-        src={mainMedia || ''}
+        src={media || ''}
         alt={alt}
         parallax={fixed}
       />

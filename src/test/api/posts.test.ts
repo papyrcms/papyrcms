@@ -16,7 +16,7 @@ const post = {
   content: 'This is some test post content.',
   tags: 'test, post',
   published: true,
-  mainMedia: 'some-picture.jpg',
+  media: 'some-picture.jpg',
 }
 
 describe('/api/posts', () => {
@@ -30,7 +30,7 @@ describe('/api/posts', () => {
     expect(status).to.equal(200) &&
       expect(created.title).to.equal(post.title) &&
       expect(created.content).to.equal(post.content) &&
-      expect(created.mainMedia).to.equal(post.mainMedia) &&
+      expect(created.media).to.equal(post.media) &&
       expect(created.tags).to.be.an('array')
   }).timeout(10000)
 
@@ -68,7 +68,7 @@ describe('/api/posts', () => {
       expect(status).to.equal(200) &&
         expect(found.title).to.equal(post.title) &&
         expect(found.content).to.equal(post.content) &&
-        expect(found.mainMedia).to.equal(post.mainMedia) &&
+        expect(found.media).to.equal(post.media) &&
         expect(found.tags).to.be.an('array')
     }).timeout(10000)
 
@@ -89,7 +89,7 @@ describe('/api/posts', () => {
       expect(status).to.equal(200) &&
         expect(updated.title).to.equal(updatedPost.title) &&
         expect(updated.content).to.equal(updatedPost.content) &&
-        expect(updated.mainMedia).to.equal(updatedPost.mainMedia) &&
+        expect(updated.media).to.equal(updatedPost.media) &&
         expect(updated.tags).to.be.an('array')
     }).timeout(10000)
 

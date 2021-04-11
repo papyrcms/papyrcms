@@ -16,7 +16,7 @@ const blog = {
   content: 'This is some test blog content.',
   tags: 'test, blog',
   published: true,
-  mainMedia: 'some-picture.jpg',
+  media: 'some-picture.jpg',
   publishDate: new Date('2014-03-01').toISOString(),
 }
 
@@ -31,7 +31,7 @@ describe('/api/blogs', () => {
     expect(status).to.equal(200) &&
       expect(created.title).to.equal(blog.title) &&
       expect(created.content).to.equal(blog.content) &&
-      expect(created.mainMedia).to.equal(blog.mainMedia) &&
+      expect(created.media).to.equal(blog.media) &&
       expect(created.tags).to.be.an('array')
   }).timeout(10000)
 
@@ -71,7 +71,7 @@ describe('/api/blogs', () => {
       expect(status).to.equal(200) &&
         expect(found.title).to.equal(blog.title) &&
         expect(found.content).to.equal(blog.content) &&
-        expect(found.mainMedia).to.equal(blog.mainMedia) &&
+        expect(found.media).to.equal(blog.media) &&
         expect(found.tags).to.be.an('array')
     }).timeout(10000)
 
@@ -93,7 +93,7 @@ describe('/api/blogs', () => {
       expect(status).to.equal(200) &&
         expect(updated.title).to.equal(updatedBlog.title) &&
         expect(updated.content).to.equal(updatedBlog.content) &&
-        expect(updated.mainMedia).to.equal(updatedBlog.mainMedia) &&
+        expect(updated.media).to.equal(updatedBlog.media) &&
         expect(updated.tags).to.be.an('array')
     }).timeout(10000)
 

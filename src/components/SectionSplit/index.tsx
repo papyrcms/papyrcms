@@ -65,13 +65,13 @@ const SectionSplit: React.FC<Props> = (props) => {
   } = props
 
   const renderMedia = (post: Post) => {
-    if (post.mainMedia) {
+    if (post.media) {
       return (
         <>
           {beforePostMedia(post)}
           <Media
             className={styles.image}
-            src={post.mainMedia}
+            src={post.media}
             alt={post.title}
             clickable={clickableMedia}
           />
@@ -87,7 +87,7 @@ const SectionSplit: React.FC<Props> = (props) => {
     } else if (
       ((!mediaRight && !mediaLeft) || (mediaRight && mediaLeft)) &&
       i % 2 !== 0 &&
-      post.mainMedia
+      post.media
     ) {
       return renderMedia(post)
     }
@@ -99,7 +99,7 @@ const SectionSplit: React.FC<Props> = (props) => {
     } else if (
       ((!mediaRight && !mediaLeft) || (mediaRight && mediaLeft)) &&
       i % 2 === 0 &&
-      post.mainMedia
+      post.media
     ) {
       return renderMedia(post)
     }
@@ -150,9 +150,7 @@ const SectionSplit: React.FC<Props> = (props) => {
     }
 
     return _.map(posts, (post, i) => {
-      const postTextClassName = post.mainMedia
-        ? styles.text
-        : styles.wide
+      const postTextClassName = post.media ? styles.text : styles.wide
 
       return (
         <div className={styles.post} key={post.id}>

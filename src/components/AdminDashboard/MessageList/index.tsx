@@ -44,8 +44,8 @@ const MessageList = () => {
   const renderMessages = () => {
     return _.map(
       messages,
-      ({ name, email, message, created, id }) => {
-        const localReadableDate = moment(created).format('LLLL')
+      ({ name, email, message, createdAt, id }) => {
+        const localReadableDate = moment(createdAt).format('LLLL')
 
         return (
           <div key={id} className={styles.message}>

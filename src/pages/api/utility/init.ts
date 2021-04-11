@@ -81,7 +81,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const headerFields = {
         title: headerTitle,
         content: headerSubtitle,
-        mainMedia: siteLogo,
+        media: siteLogo,
         tags: ['section-header'],
         published: true,
       }
@@ -99,7 +99,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const pagePostFields = {
         title: pageHeader,
         content: pageContent,
-        mainMedia: pageImage,
+        media: pageImage,
         tags: ['first-page'],
         published: true,
       }

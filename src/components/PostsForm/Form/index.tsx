@@ -59,7 +59,7 @@ const Form: React.FC<Props> = (props) => {
   const handleFileInputChange = (event: any) => {
     if (!event.target.files) return
 
-    handleChange({ target: { value: '', name: 'mainMedia' } })
+    handleChange({ target: { value: '', name: 'media' } })
     setUploadedMedia(true)
 
     let formData = new FormData()
@@ -69,7 +69,7 @@ const Form: React.FC<Props> = (props) => {
       .post('/api/utility/upload', formData)
       .then((res) => {
         const event = {
-          target: { value: res.data, name: 'mainMedia' },
+          target: { value: res.data, name: 'media' },
         }
         handleChange(event)
       })
@@ -97,8 +97,8 @@ const Form: React.FC<Props> = (props) => {
     } else {
       return (
         <Input
-          name="mainMedia"
-          value={values.mainMedia}
+          name="media"
+          value={values.media}
           onChange={handleChange}
         />
       )
@@ -106,7 +106,7 @@ const Form: React.FC<Props> = (props) => {
   }
 
   const renderDots = () => {
-    if (uploadedMedia && !values.mainMedia) {
+    if (uploadedMedia && !values.media) {
       setTimeout(() => {
         switch (dots) {
           case ' .':
@@ -126,7 +126,7 @@ const Form: React.FC<Props> = (props) => {
   }
 
   const renderMedia = () => {
-    if (uploadedMedia && !values.mainMedia) {
+    if (uploadedMedia && !values.media) {
       return (
         <h3 className="heading-tertiary">Loading{renderDots()}</h3>
       )
@@ -135,7 +135,7 @@ const Form: React.FC<Props> = (props) => {
         <Media
           className={styles.image}
           alt="Uploaded Image"
-          src={values.mainMedia}
+          src={values.media}
         />
       )
     }

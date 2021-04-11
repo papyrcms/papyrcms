@@ -61,7 +61,7 @@ const PostIndex = (props: Props) => {
     }
 
     return _.map(posts, (post) => {
-      const { id, title, tags, mainMedia, content, published } = post
+      const { id, title, tags, media, content, published } = post
 
       let postContent = ''
       if (content) {
@@ -73,7 +73,7 @@ const PostIndex = (props: Props) => {
 
       return (
         <div key={id} className={styles.post}>
-          {renderMediaSection(mainMedia, title)}
+          {renderMediaSection(media, title)}
           <div className={styles.details}>
             <div className={styles.top}>
               <h3 className={`${styles.title} heading-tertiary`}>
