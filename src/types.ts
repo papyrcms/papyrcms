@@ -1,4 +1,15 @@
-export class DbModel {
+import * as database from '@/utilities/serverContext/database'
+
+export interface Database {
+  EntityType: typeof database.EntityType
+  findOne: typeof database.findOne
+  findAll: typeof database.findAll
+  destroy: typeof database.destroy
+  destroyAll: typeof database.destroyAll
+  countAll: typeof database.countAll
+}
+
+export abstract class DbModel {
   id!: string
 }
 
@@ -162,39 +173,4 @@ export class Keys {
     token?: string
     tokenRpc?: string
   }
-}
-
-type Fields = {
-  [key: string]: any
-}
-
-type Conditions = {
-  [key: string]: any
-}
-
-type Options = {
-  sort?: { [key: string]: number }
-  include?: string[]
-}
-
-export class Database {
-  findOne!: <M>(
-    model: M,
-    conditions: Conditions,
-    options?: Options
-  ) => M
-  findAll!: <M>(
-    model: M,
-    conditions?: Conditions,
-    options?: Options
-  ) => M[]
-  update!: <M>(
-    model: M,
-    conditions: Conditions,
-    fields: Fields
-  ) => void
-  create!: <M>(model: M, fields: Fields) => M
-  destroy!: <M>(model: M, conditions: Conditions) => void
-  destroyAll!: <M>(model: M, conditions?: Conditions) => void
-  countAll!: <M>(model: M) => number
 }

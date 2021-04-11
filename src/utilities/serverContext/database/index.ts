@@ -6,8 +6,9 @@ import keys from '@/keys'
 import * as types from '@/types'
 import * as entities from './entities'
 import { PapyrEntity } from './entities/PapyrEntity'
+import { Connection } from 'typeorm'
 
-export const init = async () => {
+export const init = async (): Promise<Connection> => {
   // For backwards compatibility
   if (keys.mongoURI && (!keys.databaseURI || !keys.databaseDriver)) {
     const depricationNotice =
@@ -18,7 +19,7 @@ export const init = async () => {
     keys.databaseURI = keys.mongoURI
   }
 
-  await createConnection({
+  return await createConnection({
     type: keys.databaseDriver,
     url: keys.databaseURI,
     synchronize: true,
@@ -33,108 +34,106 @@ export const init = async () => {
   })
 }
 
-// TODO - Not a fan of how this works. Not sure there's a better way
-const getEntityFromModel = (
-  model: types.DbModel
-): typeof PapyrEntity | undefined => {
-  switch (true) {
-    case model instanceof types.Blog:
-      return entities.Blog
-    case model instanceof types.Comment:
-      return entities.Comment
-    case model instanceof types.Event:
-      return entities.Event
-    case model instanceof types.Message:
-      return entities.Message
-    case model instanceof types.Order:
-      return entities.Order
-    case model instanceof types.Page:
-      return entities.Page
-    case model instanceof types.Post:
-      return entities.Post
-    case model instanceof types.Product:
-      return entities.Product
-    case model instanceof types.Settings:
-      return entities.Settings
-    case model instanceof types.User:
-      return entities.User
-  }
+export enum EntityType {
+  Blog,
+  Comment,
+  Event,
+  Message,
+  Order,
+  Page,
+  Post,
+  Product,
+  Settings,
+  User,
 }
 
-export const findOne = async (
-  model: types.DbModel
-): Promise<types.DbModel | undefined> => {
-  const entity = getEntityFromModel(model)
-  const foundEntity = await entity?.findOne({
-    where: { id: model.id },
-  })
-  return await foundEntity?.toModel()
+const EntityMap: Record<EntityType, typeof PapyrEntity> = {
+  [EntityType.Blog]: entities.Blog,
+  [EntityType.Comment]: entities.Comment,
+  [EntityType.Event]: entities.Event,
+  [EntityType.Message]: entities.Message,
+  [EntityType.Order]: entities.Order,
+  [EntityType.Page]: entities.Page,
+  [EntityType.Post]: entities.Post,
+  [EntityType.Product]: entities.Product,
+  [EntityType.Settings]: entities.Settings,
+  [EntityType.User]: entities.User,
 }
 
-export const findAll = async (
-  model: types.DbModel
-): Promise<types.DbModel[]> => {
-  const entity = getEntityFromModel(model)
-  const foundEntities = await entity?.find({
-    where: { id: model.id },
+// Might need this later
+const ModelMap: Record<EntityType, typeof types.DbModel> = {
+  [EntityType.Blog]: types.Blog,
+  [EntityType.Comment]: types.Comment,
+  [EntityType.Event]: types.Event,
+  [EntityType.Message]: types.Message,
+  [EntityType.Order]: types.Order,
+  [EntityType.Page]: types.Page,
+  [EntityType.Post]: types.Post,
+  [EntityType.Product]: types.Product,
+  [EntityType.Settings]: types.Settings,
+  [EntityType.User]: types.User,
+}
+
+export const findOne = async <M extends types.DbModel>(
+  entityType: EntityType,
+  conditions: Record<string, any>
+): Promise<M | undefined> => {
+  const entity = EntityMap[entityType]
+  const foundEntity = await entity.findOne({
+    where: conditions,
   })
-  const entityModels: types.DbModel[] = []
+  return (await foundEntity?.toModel()) as M
+}
+
+export const findAll = async <M extends types.DbModel>(
+  entityType: EntityType,
+  conditions?: Record<string, any>
+): Promise<M[]> => {
+  const entity = EntityMap[entityType]
+  const foundEntities = await entity.find({
+    where: conditions ?? {},
+  })
+  const entityModels: M[] = []
 
   if (!foundEntities) return entityModels
 
   for (const foundEntity of foundEntities) {
-    entityModels.push(await foundEntity.toModel())
+    entityModels.push((await foundEntity.toModel()) as M)
   }
   return entityModels
 }
 
-/**
- * @deprecated Use save(model) instead
- */
-export const create = async (
+export const save = async <M extends types.DbModel>(
+  entityType: EntityType,
   model: types.DbModel
-): Promise<types.DbModel | undefined> => {
-  return await save(model)
-}
-
-/**
- * @deprecated Use save(model) instead
- */
-export const update = async (
-  model: types.DbModel
-): Promise<types.DbModel | undefined> => {
-  return await save(model)
-}
-
-export const save = async (
-  model: types.DbModel
-): Promise<types.DbModel | undefined> => {
-  const entity = getEntityFromModel(model)
-  return await entity?.saveFromModel(model)
+): Promise<M | undefined> => {
+  const entity = EntityMap[entityType]
+  return (await entity.saveFromModel(model)) as M
 }
 
 export const destroy = async (
+  entityType: EntityType,
   model: types.DbModel
 ): Promise<boolean> => {
-  const entity = getEntityFromModel(model)
-  const foundEntity = await entity?.findOne({
+  const entity = EntityMap[entityType]
+  const foundEntity = await entity.findOne({
     where: { id: model.id },
   })
   return !!(await foundEntity?.remove())
 }
 
 export const destroyAll = async (
-  model: types.DbModel,
-  conditions?: FindConditions<PapyrEntity>
+  entityType: EntityType,
+  conditions?: Record<string, any>
 ): Promise<boolean> => {
-  const entity = getEntityFromModel(model)
-  return !!(await entity?.delete(conditions || {}))
+  const entity = EntityMap[entityType]
+  return !!(await entity.delete(conditions ?? {}))
 }
 
 export const countAll = async (
-  model: types.DbModel,
-  conditions?: FindConditions<PapyrEntity>
+  entityType: EntityType,
+  conditions?: Record<string, any>
 ): Promise<number | undefined> => {
-  const entity = getEntityFromModel(model)
-  return await entity?.count(conditions || {})
+  const entity = EntityMap[entityType]
+  return await entity.count(conditions ?? {})
 }
