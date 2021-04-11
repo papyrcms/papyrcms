@@ -142,7 +142,7 @@ export const destroyAll = async (
 export const countAll = async (
   entityType: EntityType,
   conditions?: Record<string, any>
-): Promise<number | undefined> => {
+): Promise<number> => {
   const entity = EntityMap[entityType]
   return await entity.count(conditions ?? {})
 }

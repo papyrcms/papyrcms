@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
+import { Settings } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, settings, done, database } = await serverContext(
@@ -18,8 +19,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const { Settings, findAll, update } = database
-    const settings = await findAll(Settings)
+    const { EntityType, findAll, save } = database
+    const settings = await findAll<Settings>(EntityType.Settings)
 
     for (const setting of settings) {
       for (const key in req.body) {
@@ -28,9 +29,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           setting.options[key] !== req.body[key]
         ) {
           const newSetting = {
+            ...setting,
             options: { ...setting.options, [key]: req.body[key] },
           }
-          await update(Settings, { id: setting.id }, newSetting)
+          await save(EntityType.Settings, newSetting)
         }
       }
     }

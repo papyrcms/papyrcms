@@ -11,7 +11,7 @@ export interface Database {
 }
 
 export abstract class DbModel {
-  id!: string
+  id?: string
 }
 
 export class Page extends DbModel {
@@ -23,8 +23,8 @@ export class Page extends DbModel {
   omitDefaultHeader!: boolean
   omitDefaultFooter!: boolean
   sections!: Section[]
-  updatedAt!: Date
-  createdAt!: Date
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 export class Section extends DbModel {
@@ -34,17 +34,17 @@ export class Section extends DbModel {
   title!: string
   maxPosts!: number
   className!: string
-  updatedAt!: Date
-  createdAt!: Date
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 export class User extends DbModel {
   email!: string
   firstName!: string
   lastName!: string
-  isAdmin!: boolean
-  isSubscribed!: boolean
-  isBanned!: boolean
+  isAdmin?: boolean
+  isSubscribed?: boolean
+  isBanned?: boolean
   address1?: string
   address2?: string
   city?: string
@@ -60,9 +60,9 @@ export class User extends DbModel {
   shippingState?: string
   shippingCountry?: string
   shippingZip?: string
-  cart!: Product[]
-  updatedAt!: Date
-  createdAt!: Date
+  cart?: Product[]
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 export class Post extends DbModel {
@@ -72,8 +72,8 @@ export class Post extends DbModel {
   media!: string
   content!: string
   isPublished!: boolean
-  updatedAt!: Date
-  createdAt!: Date
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 export class Blog extends Post {
@@ -85,8 +85,8 @@ export class Comment extends DbModel {
   content!: string
   replies!: Comment[]
   author!: User
-  updatedAt!: Date
-  createdAt!: Date
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 export class Event extends Post {
@@ -106,8 +106,8 @@ export class Order extends DbModel {
   products!: Product[]
   user?: User
   isShipped!: boolean
-  updatedAt!: Date
-  createdAt!: Date
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 export class Message extends DbModel {
@@ -115,15 +115,15 @@ export class Message extends DbModel {
   email!: string
   message!: string
   emailSent!: boolean
-  updatedAt!: Date
-  createdAt!: Date
+  updatedAt?: Date
+  createdAt?: Date
 }
 
 export class Settings extends DbModel {
   name!: string
   options!: Record<string, any>
-  createdAt!: Date
-  updatedAt!: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export class AppSettings {
