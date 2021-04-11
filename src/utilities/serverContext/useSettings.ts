@@ -1,13 +1,14 @@
 import { Database } from '@/types'
 import fs from 'fs'
 import util from 'util'
+import path from 'path'
 
 export default async (database: Database) => {
   const files = await util.promisify(fs.readdir)(
-    'src/utilities/serverContext/settings'
+    path.join('src', 'utilities', 'serverContext', 'settings')
   )
 
-  let settings: any = {}
+  let settings: Record<string, any> = {}
 
   for (const file of files) {
     if (file === 'configureSettings.ts') continue

@@ -24,7 +24,16 @@ export const init = async (): Promise<Connection> => {
     url: keys.databaseURI,
     synchronize: true,
     logging: !__prod__,
-    entities: [path.join(__dirname, 'entities', '*.ts')],
+    entities: [
+      path.join(
+        'src',
+        'utilities',
+        'serverContext',
+        'database',
+        'entities',
+        '*.ts'
+      ),
+    ],
     migrations: [],
     subscribers: [],
     extra: {

@@ -50,4 +50,19 @@ export class Option extends BaseEntity {
         return this.value.toLowerCase() === 'true'
     }
   }
+
+  static getValueType(
+    value: any
+  ): 'string' | 'int' | 'float' | 'boolean' {
+    switch (typeof value) {
+      case 'string':
+        return 'string'
+      case 'boolean':
+        return 'boolean'
+      case 'number':
+        return value % 1 === 0 ? 'int' : 'float'
+      default:
+        return 'string'
+    }
+  }
 }

@@ -2,6 +2,7 @@ import * as database from '@/utilities/serverContext/database'
 
 export interface Database {
   EntityType: typeof database.EntityType
+  save: typeof database.save
   findOne: typeof database.findOne
   findAll: typeof database.findAll
   destroy: typeof database.destroy

@@ -1,28 +1,30 @@
-import { Database } from '@/types'
+import { Database, Settings } from '@/types'
 
 const configureSettings = async (
   name: string,
-  defaultOptions: { [key: string]: any },
+  defaultOptions: Record<string, any>,
   database: Database
 ) => {
-  const { Settings, findOne, create } = database
+  const { EntityType, findOne, save } = database
   let appSettings
 
   // Search for the provided settings document
-  const settings = await findOne(Settings, { name })
+  const settings = await findOne<Settings>(EntityType.Settings, {
+    name,
+  })
 
   // If we found one
   if (settings) {
     appSettings = settings
   } else {
     // If we did not find one, create one
-    appSettings = await create(Settings, {
+    appSettings = await save<Settings>(EntityType.Settings, {
       name,
       options: defaultOptions,
-    })
+    } as Settings)
   }
 
-  return appSettings.options
+  return appSettings?.options
 }
 
 export default configureSettings

@@ -51,4 +51,39 @@ export class Settings extends PapyrEntity {
       updatedAt: new Date(this.updatedAt),
     }
   }
+
+  static async saveFromModel(
+    settings: types.Settings
+  ): Promise<types.Settings> {
+    let foundSettings = await Settings.findOne({
+      where: {
+        id: settings.id,
+      },
+      relations: ['options'],
+    })
+
+    if (!foundSettings) {
+      foundSettings = Settings.create()
+      foundSettings.options = []
+    }
+
+    foundSettings.name = settings.name
+    foundSettings = await foundSettings.save()
+
+    for (const key of Object.keys(settings.options)) {
+      let foundOption = foundSettings.options.find(
+        (option) => option.key === key
+      )
+      if (!foundOption) {
+        foundOption = Option.create()
+      }
+      foundOption.key = key
+      foundOption.value = settings.options[key].toString()
+      foundOption.type = Option.getValueType(settings.options[key])
+      foundOption.settingsId = foundSettings.id
+      await foundOption.save()
+    }
+
+    return await foundSettings.toModel()
+  }
 }

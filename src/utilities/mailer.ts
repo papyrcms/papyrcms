@@ -1,4 +1,4 @@
-import { Database, Post } from '@/types'
+import { Database, Post, User } from '@/types'
 import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
 import fs from 'fs'
@@ -59,8 +59,10 @@ class Mailer {
 
   async getEmailTemplateByTag(tag: string) {
     // Get all published posts
-    const { Post, findAll } = this.database
-    const posts = await findAll(Post, { published: true })
+    const { EntityType, findAll } = this.database
+    const posts = await findAll<Post>(EntityType.Post, {
+      published: true,
+    })
 
     let template = null
 
@@ -80,8 +82,8 @@ class Mailer {
   }
 
   async sendBulkEmail(post: Post) {
-    const { findAll, User } = this.database
-    const subscribedUsers = await findAll(User, {
+    const { findAll, EntityType } = this.database
+    const subscribedUsers = await findAll<User>(EntityType.User, {
       isSubscribed: true,
     })
 
