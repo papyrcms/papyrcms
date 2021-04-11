@@ -3,6 +3,7 @@ import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
 import Payments from '@/utilities/payments'
 import keys from '@/keys'
+import { Product } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, done, database } = await serverContext(req, res)
@@ -119,24 +120,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       let message =
         'A new order has been placed for the following items:\n\n'
 
-      const {
-        Product,
-        Order,
-        User,
-        findOne,
-        create,
-        update,
-      } = database
+      const { EntityType, findOne, save } = database
 
       // Save the updated products and put in the order
       for (const product of products) {
-        const found = await findOne(Product, { id: product.id })
+        const found = await findOne<Product>(EntityType.Product, {
+          id: product.id,
+        })
+        if (!found) continue
         found.quantity--
-        await update(
-          Product,
-          { id: found.id },
-          { quantity: found.quantity }
-        )
+        await save<Product>(EntityType.Product, found)
         order.products.push(found)
 
         message += `- ${product.title}\n`
@@ -147,7 +140,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       message += '\nMake sure you send it as soon as possible!'
 
       // Save and send the order
-      await create(Order, order)
+      await save(EntityType.Order, order)
       const mailer = new Mailer(database)
       mailer.sendEmail(
         { message },
@@ -157,7 +150,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       )
 
       if (user && fromCart) {
-        await update(User, { id: user.id }, { cart: [] })
+        user.cart = []
+        await save(EntityType.User, user)
       }
 
       return await done(200, 'All items purchased')

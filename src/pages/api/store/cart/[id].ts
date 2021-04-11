@@ -1,4 +1,4 @@
-import { User, Database } from '@/types'
+import { User, Database, Product } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'
@@ -8,8 +8,12 @@ const addToCart = async (
   user: User,
   database: Database
 ) => {
-  const { findOne, Product, update, User } = database
-  const product = await findOne(Product, { id: productId })
+  const { findOne, save, EntityType } = database
+  const product = await findOne<Product>(EntityType.Product, {
+    id: productId,
+  })
+
+  if (!product) throw new Error('Product not found')
 
   // If we are out of stock
   if (product.quantity <= 0) {
@@ -24,10 +28,10 @@ const addToCart = async (
     throw new Error('You cannot buy more than what is available.')
   }
 
-  const newCart = [...user.cart, product]
-  await update(User, { id: user.id }, { cart: newCart })
+  user.cart?.push(product)
+  await save(EntityType.User, user)
 
-  return newCart
+  return user.cart
 }
 
 const removeFromCart = async (
@@ -36,9 +40,9 @@ const removeFromCart = async (
   database: Database
 ) => {
   let removed = false
-  const cart = _.filter(user.cart, (product) => {
+  user.cart = _.filter(user.cart, (product) => {
     // If one has not been removed and it has the passed id, remove it
-    if (product.id == productId && !removed) {
+    if (product.id === productId && !removed) {
       removed = true
       return false
     }
@@ -46,10 +50,10 @@ const removeFromCart = async (
     return true
   })
 
-  const { update, User } = database
-  await update(User, { id: user.id }, { cart })
+  const { save, EntityType } = database
+  await save(EntityType.User, user)
 
-  return cart
+  return user.cart
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

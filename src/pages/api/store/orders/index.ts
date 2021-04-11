@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
+import { Order } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, done, database } = await serverContext(req, res)
@@ -10,12 +11,11 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'GET') {
-    const { Order, findAll } = database
-    const options = {
-      sort: { created: -1 },
-      include: ['user', 'products'],
-    }
-    const orders = await findAll(Order, {}, options)
+    const { EntityType, findAll } = database
+    const orders = await findAll<Order>(EntityType.Order)
+    orders.sort((a, b) =>
+      (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
+    )
 
     return await done(200, orders)
   }

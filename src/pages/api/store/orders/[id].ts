@@ -1,4 +1,4 @@
-import { Database } from '@/types'
+import { Database, Order } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
 
@@ -7,14 +7,19 @@ const updateOrder = async (
   body: any,
   database: Database
 ) => {
-  const { update, findOne, Order } = database
-  await update(Order, { id: id }, { shipped: body.shipped })
-  return await findOne(Order, { id: id })
+  const { save, findOne, EntityType } = database
+  const order = await findOne<Order>(EntityType.Order, { id })
+  if (!order) throw new Error('Order not found')
+
+  order.isShipped = body.isShipped
+  return await save<Order>(EntityType.Order, order)
 }
 
 const deleteOrder = async (id: string, database: Database) => {
-  const { destroy, Order } = database
-  await destroy(Order, { id: id })
+  const { findOne, destroy, EntityType } = database
+  const order = await findOne<Order>(EntityType.Order, { id })
+  if (!order) throw new Error('Order not found')
+  await destroy(EntityType.Order, order)
   return 'order deleted'
 }
 

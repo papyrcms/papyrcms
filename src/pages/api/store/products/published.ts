@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
+import { Product } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, settings, done, database } = await serverContext(
@@ -13,11 +14,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'GET') {
-    const { findAll, Product } = database
-    const products = await findAll(
-      Product,
-      { published: true },
-      { sort: { created: -1 } }
+    const { findAll, EntityType } = database
+    const products = await findAll<Product>(EntityType.Product, {
+      isPublished: true,
+    })
+    products.sort((a, b) =>
+      (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
     )
     return await done(200, products)
   }

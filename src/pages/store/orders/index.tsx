@@ -37,7 +37,7 @@ const Orders = () => {
   const markShipped = (shippedOrder: Order) => {
     const newOrder = {
       ...shippedOrder,
-      shipped: !shippedOrder.isShipped,
+      isShipped: !shippedOrder.isShipped,
     }
     axios
       .put(`/api/store/orders/${shippedOrder.id}`, newOrder)

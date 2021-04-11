@@ -5,30 +5,20 @@ import serverContext from '@/serverContext'
 
 const getProduct = async (id: string, database: Database) => {
   let product: Product | undefined
-  const { findOne, Product } = database
+  const { findOne, EntityType } = database
 
   try {
-    product = await findOne(
-      Product,
-      { id: id },
-      { include: ['comments'] }
-    )
+    product = await findOne<Product>(EntityType.Product, { id })
   } catch (err) {}
 
   if (!product) {
-    product = await findOne(
-      Product,
-      { slug: id },
-      { include: ['comments'] }
-    )
+    product = await findOne<Product>(EntityType.Product, { slug: id })
   }
 
   if (!product) {
-    product = await findOne(
-      Product,
-      { slug: new RegExp(id, 'i') },
-      { include: ['comments'] }
-    )
+    product = await findOne<Product>(EntityType.Product, {
+      slug: new RegExp(id, 'i'),
+    })
   }
 
   return product
@@ -39,18 +29,25 @@ const updateProduct = async (
   body: any,
   database: Database
 ) => {
+  const { save, EntityType } = database
+  const product = await getProduct(id, database)
+
+  if (!product) throw new Error('Product not found')
+
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
   body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
+  const newProduct = { ...product, ...body }
 
-  const { update, findOne, Product } = database
-
-  await update(Product, { id: id }, body)
-  return await findOne(Product, { id: id })
+  return await save(EntityType.Product, newProduct)
 }
 
 const deleteProduct = async (id: string, database: Database) => {
-  const { destroy, Product } = database
-  await destroy(Product, { id: id })
+  const product = await getProduct(id, database)
+  if (!product) throw new Error('Product not found')
+
+  const { destroy, EntityType } = database
+  await destroy(EntityType.Product, product)
+
   return 'product deleted'
 }
 
@@ -71,7 +68,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const product = await getProduct(req.query.id, database)
     if (
-      (!product || !product.published) &&
+      (!product || !product.isPublished) &&
       (!user || !user.isAdmin)
     ) {
       return await done(403, {

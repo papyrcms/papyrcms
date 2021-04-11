@@ -1,11 +1,15 @@
-import { Database } from '@/types'
+import { Database, Product } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getProducts = async (database: Database) => {
-  const { findAll, Product } = database
-  return await findAll(Product, {}, { sort: { created: -1 } })
+  const { findAll, EntityType } = database
+  const products = await findAll<Product>(EntityType.Product)
+  products.sort((a, b) =>
+    (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
+  )
+  return products
 }
 
 const createProduct = async (body: any, database: Database) => {
@@ -15,7 +19,7 @@ const createProduct = async (body: any, database: Database) => {
     tags,
     media,
     subImages,
-    published,
+    isPublished,
     created,
     price,
     quantity,
@@ -27,16 +31,16 @@ const createProduct = async (body: any, database: Database) => {
     tags: _.map(_.split(tags, ','), (tag) => tag.trim()),
     media,
     subImages,
-    published,
+    isPublished,
     created,
     price,
     quantity,
     slug: title.replace(/\s+/g, '-').toLowerCase(),
-  }
+  } as Product
 
-  const { create, Product } = database
+  const { save, EntityType } = database
 
-  return await create(Product, productData)
+  return await save<Product>(EntityType.Product, productData)
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
