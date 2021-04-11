@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
+import { User } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, done, database } = await serverContext(req, res)
@@ -11,17 +12,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'DELETE') {
     const { id } = req.query
-    const { destroy, User } = database
+    const { destroy, findOne, EntityType } = database
 
-    // Non-strict for DBs with non-string ObjectId types
-    if (user.id == id) {
+    if (user.id === id) {
       return await done(401, {
         message: 'You cannot delete yourself.',
       })
     }
 
     try {
-      await destroy(User, { id: id })
+      const toDelete = await findOne<User>(EntityType.User, { id })
+      if (!toDelete) throw new Error('User not found')
+      await destroy(EntityType.User, toDelete)
       return await done(200, { message: 'user deleted' })
     } catch (err) {
       return await done(400, { message: err.message })

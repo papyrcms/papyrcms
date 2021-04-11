@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
+import { User } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, done, database } = await serverContext(req, res)
@@ -11,9 +12,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'PUT') {
     const { userId, isAdmin } = req.body
-    const { update, User } = database
+    const { findOne, save, EntityType } = database
 
-    await update(User, { id: userId }, { isAdmin })
+    const userToSave = await findOne<User>(EntityType.User, {
+      id: userId,
+    })
+    if (!userToSave)
+      return await done(400, { message: 'User not found' })
+
+    userToSave.isAdmin = isAdmin
+    await save<User>(EntityType.User, userToSave)
+
     return await done(200, { message: 'Success' })
   }
 
