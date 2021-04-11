@@ -24,17 +24,16 @@ describe('payments', () => {
         email: adminEmail,
         amount: 1,
         source: { id: 'tok_discover' } as Stripe.Source,
-        description: 'test payment'
+        description: 'test payment',
       }
       const charge = await payments.makePayment(info)
 
-      expect(charge).to.exist &&
       // @ts-ignore
       expect(charge.object).to.equal('charge') &&
-      // @ts-ignore
-      expect(charge.status).to.equal('succeeded') &&
-      // @ts-ignore
-      expect(charge.amount).to.equal(100)
+        // @ts-ignore
+        expect(charge.status).to.equal('succeeded') &&
+        // @ts-ignore
+        expect(charge.amount).to.equal(100)
     }).timeout(10000)
   })
 })
