@@ -44,7 +44,7 @@ const PostsForm: React.FC<Props> = (props) => {
     tags: post ? mapTagsToString(post.tags) : '',
     media: post ? post.media : '',
     content: post ? post.content : '',
-    published: post ? post.isPublished : false,
+    isPublished: post ? post.isPublished : false,
     validation: '',
   }
   const {

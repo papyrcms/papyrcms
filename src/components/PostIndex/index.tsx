@@ -61,7 +61,7 @@ const PostIndex = (props: Props) => {
     }
 
     return _.map(posts, (post) => {
-      const { id, title, tags, media, content, published } = post
+      const { id, title, tags, media, content, isPublished } = post
 
       let postContent = ''
       if (content) {
@@ -80,7 +80,7 @@ const PostIndex = (props: Props) => {
                 {title}
               </h3>
               {renderTagsSection(tags)}
-              {renderPublishSection(published)}
+              {renderPublishSection(isPublished)}
             </div>
             <div className={styles.content}>
               {renderHTML(postContent)}

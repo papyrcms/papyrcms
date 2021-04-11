@@ -125,9 +125,9 @@ const UserList = () => {
         <ul className={styles.details}>
           <li>First Name: {user.firstName}</li>
           <li>Last Name: {user.lastName}</li>
-          <li>Subscribed: {user.isSubscribed.toString()}</li>
-          <li>Admin: {user.isAdmin.toString()}</li>
-          <li>Banned: {user.isBanned.toString()}</li>
+          <li>Subscribed: {(!!user.isSubscribed).toString()}</li>
+          <li>Admin: {(!!user.isAdmin).toString()}</li>
+          <li>Banned: {(!!user.isBanned).toString()}</li>
         </ul>
 
         {renderUserOptions(user)}

@@ -1,6 +1,6 @@
 import {
   Keys,
-  Settings,
+  AppSettings,
   SectionOptions,
   Page,
   Post,
@@ -20,7 +20,7 @@ import PagesProvider from './PagesProvider'
 
 type Props = {
   keys: Keys
-  settings: Settings
+  settings: AppSettings
   sectionOptions: SectionOptions
   pages: Page[]
   posts: Post[]

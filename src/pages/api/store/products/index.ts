@@ -26,6 +26,7 @@ const createProduct = async (body: any, database: Database) => {
   } = body
 
   const productData = {
+    id: '',
     title,
     content,
     tags: _.map(_.split(tags, ','), (tag) => tag.trim()),

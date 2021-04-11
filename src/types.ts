@@ -11,7 +11,7 @@ export interface Database {
 }
 
 export abstract class DbModel {
-  id?: string
+  id!: string
 }
 
 export class Page extends DbModel {
@@ -43,9 +43,9 @@ export class User extends DbModel {
   password!: string
   firstName!: string
   lastName!: string
-  isAdmin?: boolean
-  isSubscribed?: boolean
-  isBanned?: boolean
+  isAdmin!: boolean
+  isSubscribed!: boolean
+  isBanned!: boolean
   address1?: string
   address2?: string
   city?: string

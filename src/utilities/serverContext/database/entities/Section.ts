@@ -53,6 +53,7 @@ export class Section extends PapyrEntity {
       id: this.id,
       order: this.order,
       type: this.type,
+      maxPosts: this.maxPosts,
       tags: this.tags.split(',').map((tag) => tag.trim()),
       title: this.title,
       className: this.className,
