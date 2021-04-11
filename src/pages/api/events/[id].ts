@@ -6,18 +6,20 @@ import serverContext from '@/serverContext'
 
 const getEvent = async (id: string, database: Database) => {
   let event: Event | undefined
-  const { findOne, Event } = database
+  const { findOne, EntityType } = database
 
   try {
-    event = await findOne(Event, { id: id })
+    event = await findOne<Event>(EntityType.Event, { id })
   } catch (err) {}
 
   if (!event) {
-    event = await findOne(Event, { slug: id })
+    event = await findOne<Event>(EntityType.Event, { slug: id })
   }
 
   if (!event) {
-    event = await findOne(Event, { slug: new RegExp(id, 'i') })
+    event = await findOne<Event>(EntityType.Event, {
+      slug: new RegExp(id, 'i'),
+    })
   }
 
   return event
@@ -32,14 +34,17 @@ const updateEvent = async (
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
   body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
 
-  const { update, findOne, Event } = database
-  await update(Event, { id: id }, body)
-  return await findOne(Event, { id: id })
+  const { save, findOne, EntityType } = database
+  const event = await findOne<Event>(EntityType.Event, { id })
+  if (!event) throw new Error('Event not found')
+  return await save(EntityType.Event, { ...event, ...body })
 }
 
 const deleteEvent = async (id: string, database: Database) => {
-  const { destroy, Event } = database
-  await destroy(Event, { id: id })
+  const { findOne, destroy, EntityType } = database
+  const event = await findOne<Event>(EntityType.Event, { id })
+  if (!event) throw new Error('Event not found')
+  await destroy(EntityType.Event, event)
   return 'event deleted'
 }
 
@@ -58,7 +63,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     const event = await getEvent(req.query.id, database)
-    if ((!event || !event.published) && (!user || !user.isAdmin)) {
+    if ((!event || !event.isPublished) && (!user || !user.isAdmin)) {
       return done(403, { message: 'You are not allowed to do that.' })
     }
     return done(200, event)

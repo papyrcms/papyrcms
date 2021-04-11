@@ -1,12 +1,14 @@
-import { Database } from '@/types'
+import { Database, Event } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import moment from 'moment'
 import serverContext from '@/serverContext'
 
 const getEvents = async (database: Database) => {
-  const { findAll, Event } = database
-  return await findAll(Event, {}, { sort: { date: 1 } })
+  const { findAll, EntityType } = database
+  const events = await findAll<Event>(EntityType.Event)
+  events.sort((a, b) => ((a.date || 0) > (b.date || 0) ? -1 : 1))
+  return events
 }
 
 const createEvent = async (body: any, database: Database) => {
@@ -17,9 +19,8 @@ const createEvent = async (body: any, database: Database) => {
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
     tags: _.map(_.split(body.tags, ','), (tag) => tag.trim()),
   }
-  const { create, Event } = database
-
-  return create(Event, eventData)
+  const { save, EntityType } = database
+  return await save<Event>(EntityType.Event, eventData)
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
