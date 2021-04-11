@@ -1,32 +1,22 @@
-import { Database } from '@/types'
+import { Database, Section, Page } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getPages = async (database: Database) => {
-  const { findAll, Page } = database
-  return await findAll(Page, {}, { sort: { created: -1 } })
+  const { findAll, EntityType } = database
+  const pages = await findAll<Page>(EntityType.Page)
+  return pages
 }
 
 const createPage = async (body: any, database: Database) => {
-  const pageData = {
-    title: body.title,
-    className: body.className,
-    route: body.route,
-    navOrder: body.navOrder,
-    omitDefaultHeader: body.omitDefaultHeader,
-    omitDefaultFooter: body.omitDefaultFooter,
-    css: body.css,
-    sections: [] as string[],
-  }
-
   // Make sure the page has a route
-  if (!pageData.route) {
+  if (!body.route) {
     throw new Error('Please choose a page route.')
   }
 
   // Map tags string to an array
-  for (const section of body.sections) {
+  body.sections.forEach((section: Section) => {
     // Make sure the section has tags
     if (
       !section.tags &&
@@ -45,24 +35,27 @@ const createPage = async (body: any, database: Database) => {
       )
     }
 
-    section.tags = _.map(_.split(section.tags, ','), (tag) => {
-      let pendingTag = tag
-      pendingTag = pendingTag.trim()
-      if (!!pendingTag) {
-        return pendingTag
+    const tags = _.map(
+      _.split((section.tags as unknown) as string, ','),
+      (tag) => {
+        let pendingTag = tag
+        pendingTag = pendingTag.trim()
+        if (!!pendingTag) {
+          return pendingTag
+        }
       }
-    })
-    pageData.sections.push(JSON.stringify(section))
-  }
+    )
+    section.tags = _.filter(tags, (tag) => !!tag) as string[]
+  })
 
   // Make sure the page has at least one section
-  if (pageData.sections.length === 0) {
+  if (body.sections.length === 0) {
     throw new Error('Please add at least one section.')
   }
 
   try {
-    const { create, Page } = database
-    return await create(Page, pageData)
+    const { save, EntityType } = database
+    return await save<Page>(EntityType.Page, body)
   } catch (err) {
     let message = 'There was a problem. Try again later.'
     if (err.code === 11000) {

@@ -8,10 +8,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   let sectionOptions = {}
 
   const components = await util.promisify(fs.readdir)(
-    'src/components'
+    path.join('src', 'components')
   )
   _.forEach(components, (component) => {
-    if (fs.existsSync(`src/components/${component}/options.ts`)) {
+    const hasOptions = fs.existsSync(
+      path.join('src', 'components', component, 'options.ts')
+    )
+    if (hasOptions) {
       const {
         options,
       } = require(`../../../components/${component}/options`)

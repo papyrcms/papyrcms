@@ -1,11 +1,11 @@
-import { Database } from '@/types'
+import { Database, Page, Section } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getPage = async (route: string, database: Database) => {
-  const { findOne, Page } = database
-  const page = await findOne(Page, { route })
+  const { findOne, EntityType } = database
+  const page = await findOne<Page>(EntityType.Page, { route })
 
   if (!page) {
     throw new Error('This page does not exist.')
@@ -19,23 +19,12 @@ const updatePage = async (
   id: string,
   database: Database
 ) => {
-  const pageData = {
-    title: body.title,
-    className: body.className,
-    route: body.route,
-    navOrder: body.navOrder,
-    omitDefaultHeader: body.omitDefaultHeader,
-    omitDefaultFooter: body.omitDefaultFooter,
-    css: body.css,
-    sections: [] as string[],
-  }
-
-  if (!pageData.route) {
+  if (!body.route) {
     throw new Error('Please choose a page route.')
   }
 
   // Map tags string to an array
-  for (const section of body.sections) {
+  body.sections.forEach((section: Section) => {
     // Make sure the section has tags
     if (
       !section.tags &&
@@ -54,26 +43,29 @@ const updatePage = async (
       )
     }
 
-    section.tags = _.map(_.split(section.tags, ','), (tag) => {
-      let pendingTag = tag
-      pendingTag = pendingTag.trim()
-      if (!!pendingTag) {
-        return pendingTag
+    const tags = _.map(
+      _.split((section.tags as unknown) as string, ','),
+      (tag) => {
+        let pendingTag = tag
+        pendingTag = pendingTag.trim()
+        if (!!pendingTag) {
+          return pendingTag
+        }
       }
-    })
-    const newSection = JSON.stringify(section)
-    pageData.sections.push(newSection)
-  }
+    )
+    body.section.tags = _.filter(tags, (tag) => !!tag) as string[]
+  })
 
   // Make sure the page has at least one section
-  if (pageData.sections.length === 0) {
+  if (body.sections.length === 0) {
     throw new Error('Please add at least one section.')
   }
 
   try {
-    const { update, findOne, Page } = database
-    await update(Page, { id: id }, pageData)
-    return await findOne(Page, { id: id })
+    const { save, findOne, EntityType } = database
+    const page = await findOne<Page>(EntityType.Page, { id })
+    if (!page) throw new Error('Page not found')
+    return await save<Page>(EntityType.Page, { ...page, ...body })
   } catch (err) {
     let message = 'There was a problem. Try again later.'
     if (err.code === 11000) {
@@ -85,8 +77,10 @@ const updatePage = async (
 }
 
 const deletePage = async (id: string, database: Database) => {
-  const { destroy, Page } = database
-  await destroy(Page, { id: id })
+  const { findOne, destroy, EntityType } = database
+  const page = await findOne<Page>(EntityType.Page, { id })
+  if (!page) throw new Error('Page not found')
+  await destroy(EntityType.Page, page)
   return 'Page deleted.'
 }
 
