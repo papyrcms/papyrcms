@@ -131,7 +131,7 @@ const SectionCards: React.FC<Props> = (props) => {
           <h3 className="heading-tertiary">{post.title}</h3>
           {afterPostTitle(post)}
 
-          {renderPublishSection(post.published)}
+          {renderPublishSection(post.isPublished)}
 
           {beforePostMedia(post)}
           {renderMediaSection(post)}

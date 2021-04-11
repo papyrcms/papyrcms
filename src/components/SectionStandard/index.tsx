@@ -1,4 +1,4 @@
-import { Post } from '@/types'
+import { Blog, Post } from '@/types'
 import React, { useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
@@ -174,7 +174,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   }
 
   const renderPublishSection = (post: Post) => {
-    if (!post.published) {
+    if (!post.isPublished) {
       return (
         <p>
           <em>Not published</em>
@@ -187,7 +187,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     return (
       <Comments
         post={post}
-        comments={post.comments || []}
+        comments={(post as Blog).comments || []}
         enableCommenting={!!enableCommenting}
         apiPath={apiPath}
         beforeCommentForm={beforeCommentForm}
