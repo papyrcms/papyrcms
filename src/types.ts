@@ -40,6 +40,7 @@ export class Section extends DbModel {
 
 export class User extends DbModel {
   email!: string
+  password!: string
   firstName!: string
   lastName!: string
   isAdmin?: boolean

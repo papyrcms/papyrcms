@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
 import keys from '@/keys'
+import { User } from '@/types'
 
 const verifyEmailSyntax = (email: string) => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -30,8 +31,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const { findOne, User } = database
-    const userExists = await findOne(User, { email })
+    const { findOne, EntityType } = database
+    const userExists = await findOne<User>(EntityType.User, { email })
 
     if (!userExists) {
       let message = 'That email does not exist in our system.'

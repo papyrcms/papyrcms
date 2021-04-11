@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import keys from '@/keys'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
+import { User } from '@/types'
 
 const verifyEmailSyntax = (email: string) => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -61,12 +62,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       password: passwordHash,
       firstName,
       lastName,
-    }
+    } as User
     let newUser
 
     try {
-      const { create, User } = database
-      newUser = await create(User, userData)
+      const { save, EntityType } = database
+      newUser = await save<User>(EntityType.User, userData)
+      if (!newUser) throw new Error()
     } catch (error) {
       let message = 'Uh oh, something went wrong.'
       if (error.code == 11000) {

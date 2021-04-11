@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import serverContext from '@/serverContext'
 import keys from '@/keys'
+import { User } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -16,14 +17,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const data = jwt.verify(token, keys.jwtSecret)
+    const data = jwt.verify(token, keys.jwtSecret) as {
+      email: string
+    }
     if (typeof data === 'string') {
       return await done(500, { message: 'Invalid token' })
     }
 
-    const { findOne, update, User } = database
-    // @ts-ignore
-    const user = await findOne(User, { email: data.email })
+    const { findOne, save, EntityType } = database
+    const user = await findOne<User>(EntityType.User, {
+      email: data.email,
+    })
+    if (!user) return await done(400, { message: 'User not found' })
 
     // Set the new password
     let passwordHash
@@ -33,7 +38,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return await done(400, error)
     }
 
-    await update(User, { id: user.id }, { password: passwordHash })
+    user.password = passwordHash
+    await save(EntityType.User, user)
 
     return await done(200, {
       message: 'Your password has been saved!',

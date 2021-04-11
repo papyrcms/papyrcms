@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import serverContext from '@/serverContext'
 import keys from '@/keys'
+import { User } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -10,9 +11,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     let user
     try {
-      // user = await User.findOne({ email: req.body.email })
-      const { findOne, User } = database
-      user = await findOne(User, { email: req.body.email })
+      const { findOne, EntityType } = database
+      user = await findOne<User>(EntityType.User, {
+        email: req.body.email,
+      })
     } catch (error) {
       return await done(400, error)
     }

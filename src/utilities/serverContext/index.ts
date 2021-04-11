@@ -12,6 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   // A common wrap-up function
   const done = async (status: number, data: any) => {
     await connection.close()
+    if (data.password) delete data.password
     return res.status(status).send(data)
   }
 

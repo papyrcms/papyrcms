@@ -1,4 +1,4 @@
-import { Database } from '@/types'
+import { Database, User } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
 import serverContext from '@/serverContext'
@@ -28,8 +28,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       })
     }
 
-    const { findOne, update, User } = database
-    const foundUser = await findOne(User, { id: user.id })
+    const { findOne, save, EntityType } = database
+    const foundUser = await findOne<User>(EntityType.User, {
+      id: user.id,
+    })
 
     if (!foundUser) {
       return await done(401, {
@@ -66,7 +68,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       return await done(400, error)
     }
 
-    await update(User, { id: user.id }, { password: passwordHash })
+    user.password = passwordHash
+    await save(EntityType.User, user)
     return await done(200, {
       message: 'Your password has been saved!',
     })

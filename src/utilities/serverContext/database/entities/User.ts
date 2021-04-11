@@ -115,6 +115,7 @@ export class User extends PapyrEntity {
     return {
       id: this.id,
       email: this.email,
+      password: this.password,
       firstName: this.firstName,
       lastName: this.lastName,
       isAdmin: this.isAdmin,
@@ -153,11 +154,12 @@ export class User extends PapyrEntity {
     }
 
     foundUser.email = user.email
+    foundUser.password = user.password
     foundUser.firstName = user.firstName
     foundUser.lastName = user.lastName
-    foundUser.isAdmin = user.isAdmin
-    foundUser.isSubscribed = user.isSubscribed
-    foundUser.isBanned = user.isBanned
+    foundUser.isAdmin = !!user.isAdmin
+    foundUser.isSubscribed = !!user.isSubscribed
+    foundUser.isBanned = !!user.isBanned
     foundUser.address1 = user.address1
     foundUser.address2 = user.address2
     foundUser.city = user.city
@@ -183,6 +185,11 @@ export class User extends PapyrEntity {
         userId: user.id,
       },
     })
+
+    if (!user.cart) {
+      user.cart = []
+    }
+
     if (cartProducts.length > user.cart.length) {
       // Remove from cart
       for (const cartProduct of cartProducts) {

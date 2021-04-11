@@ -47,19 +47,18 @@ const updateCurrentUser = async (
   }
 
   // Make sure the user submitting the form is the logged in on the server
-  if (userId.toString() !== user.id.toString()) {
+  if (userId !== user.id) {
     throw new Error(
       "There's a problem with your session. Try logging out and logging back in"
     )
   }
 
-  const { findOne, update, User } = database
+  const { findOne, save, EntityType } = database
 
   // Make sure a user with the email does not already exist
-  const existingUser = await findOne(User, { email })
+  const existingUser = await findOne<User>(EntityType.User, { email })
 
-  // @ts-ignore I don't know what it thinks is going on here
-  if (existingUser && !existingUser.id == user.id) {
+  if (existingUser && existingUser.id !== user.id) {
     throw new Error('Someone is already using this email.')
   }
 
@@ -86,8 +85,10 @@ const updateCurrentUser = async (
   }
 
   // Return the updated user
-  await update(User, { id: userId }, newUserData)
-  return await findOne(User, { id: userId })
+  return await save<User>(EntityType.User, {
+    ...user,
+    ...newUserData,
+  })
 }
 
 const updateUserSubscription = async (
@@ -95,14 +96,9 @@ const updateUserSubscription = async (
   user: User,
   database: Database
 ) => {
-  const { User, update, findOne } = database
-  await update(
-    User,
-    { id: user.id },
-    { isSubscribed: body.isSubscribed }
-  )
-
-  return await findOne(User, { id: user.id })
+  const { EntityType, save } = database
+  user.isSubscribed = body.isSubscribed
+  return await save<User>(EntityType.User, user)
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
