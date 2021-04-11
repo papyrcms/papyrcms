@@ -6,26 +6,20 @@ import Mailer from '@/utilities/mailer'
 
 const getPost = async (id: string, database: Database) => {
   let post: Post | undefined
-  const { Post, findOne } = database
+  const { EntityType, findOne } = database
 
   try {
-    post = await findOne(Post, { id: id }, { include: ['comments'] })
+    post = await findOne<Post>(EntityType.Post, { id })
   } catch (err) {}
 
   if (!post) {
-    post = await findOne(
-      Post,
-      { slug: id },
-      { include: ['comments'] }
-    )
+    post = await findOne<Post>(EntityType.Post, { slug: id })
   }
 
   if (!post) {
-    post = await findOne(
-      Post,
-      { slug: new RegExp(id, 'i') },
-      { include: ['comments'] }
-    )
+    post = await findOne<Post>(EntityType.Post, {
+      slug: new RegExp(id, 'i'),
+    })
   }
 
   return post
@@ -47,37 +41,36 @@ const updatePost = async (
     newTags = _.filter(newTags, (tag) => !!tag)
     body.tags = _.uniq(newTags)
   }
-  const postDocument = { id: id }
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
 
-  const { update, findOne, Post } = database
-  await update(Post, postDocument, body)
+  const { save, findOne, EntityType } = database
+  const post = await findOne<Post>(EntityType.Post, { id })
+  const updated = await save<Post>(EntityType.Post, {
+    ...post,
+    ...body,
+  })
+  if (!updated) throw new Error('Post not updated')
 
   // If a bulk-email post was published, send it
   const mailer = new Mailer(database)
-  const post = await findOne(Post, postDocument)
   if (
     enableEmailingToUsers &&
-    post.tags.includes(mailer.templateTag) &&
-    post.tags.includes('bulk-email') &&
-    post.published
+    updated.tags.includes(mailer.templateTag) &&
+    updated.tags.includes('bulk-email') &&
+    updated.isPublished
   ) {
-    await mailer.sendBulkEmail(post)
+    await mailer.sendBulkEmail(updated)
   }
 
   return post
 }
 
 const deletePost = async (id: string, database: Database) => {
-  const { Post, Comment, findOne, destroy } = database
+  const { EntityType, findOne, destroy } = database
+  const post = await findOne(EntityType.Post, { id })
+  if (!post) throw new Error('Post not found')
 
-  const post = await findOne(Post, { id: id })
-
-  _.forEach(post.comments, async (comment) => {
-    await destroy(Comment, { id: comment })
-  })
-
-  await destroy(Post, { id: id })
+  await destroy(EntityType.Post, post)
 
   return 'post deleted'
 }
@@ -94,7 +87,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     const post = await getPost(req.query.id, database)
-    if ((!post || !post.published) && (!user || !user.isAdmin)) {
+    if ((!post || !post.isPublished) && (!user || !user.isAdmin)) {
       return await done(403, {
         message: 'You are not allowed to do that.',
       })

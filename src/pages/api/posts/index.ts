@@ -1,12 +1,16 @@
-import { Database } from '@/types'
+import { Database, Post } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
 
 const getPosts = async (database: Database) => {
-  const { findAll, Post } = database
-  return await findAll(Post, {}, { sort: { created: -1 } })
+  const { findAll, EntityType } = database
+  const posts = await findAll<Post>(EntityType.Post)
+  posts.sort((a, b) =>
+    (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
+  )
+  return posts
 }
 
 const createPost = async (
@@ -25,13 +29,14 @@ const createPost = async (
     body.tags = _.uniq(newTags)
   }
 
-  const { Post, create } = database
+  const { EntityType, save } = database
 
   const postData = {
     ...body,
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
   }
-  const post = await create(Post, postData)
+  const post = await save<Post>(EntityType.Post, postData)
+  if (!post) throw new Error('Post not created')
 
   // If a bulk-email post was published, send it
   const mailer = new Mailer(database)
@@ -39,7 +44,7 @@ const createPost = async (
     enableEmailingToUsers &&
     post.tags.includes(mailer.templateTag) &&
     post.tags.includes('bulk-email') &&
-    post.published
+    post.isPublished
   ) {
     await mailer.sendBulkEmail(post)
   }
