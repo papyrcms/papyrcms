@@ -15,7 +15,7 @@ const event = {
   title: 'Mocha Test Event',
   content: 'This is some test event content.',
   tags: 'test, event',
-  published: true,
+  isPublished: true,
   media: 'some-picture.jpg',
   date: new Date('2024-03-01').toISOString(),
   latitude: 123,
@@ -56,7 +56,7 @@ describe('/api/events', () => {
       )
       let allArePublished = true
       _.forEach(events, (found) => {
-        if (!found.published) allArePublished = false
+        if (!found.isPublished) allArePublished = false
       })
 
       expect(status).to.equal(200) &&

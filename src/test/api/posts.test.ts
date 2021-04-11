@@ -15,7 +15,7 @@ const post = {
   title: 'Mocha Test Post',
   content: 'This is some test post content.',
   tags: 'test, post',
-  published: true,
+  isPublished: true,
   media: 'some-picture.jpg',
 }
 
@@ -50,7 +50,7 @@ describe('/api/posts', () => {
       )
       let allArePublished = true
       _.forEach(posts, (found) => {
-        if (!found.published) allArePublished = false
+        if (!found.isPublished) allArePublished = false
       })
 
       expect(status).to.equal(200) &&

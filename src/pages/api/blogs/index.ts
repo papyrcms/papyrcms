@@ -1,30 +1,34 @@
-import { Database } from '@/types'
+import { Database, Blog } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getBlogs = async (database: Database) => {
-  const { findAll, Blog } = database
-  return await findAll(
-    Blog,
-    {},
-    { sort: { publishDate: -1, created: -1 } }
-  )
+  const { findAll, EntityType } = database
+  const blogs = await findAll<Blog>(EntityType.Blog)
+  blogs.sort((a, b) => {
+    if (a.publishedAt && b.publishedAt)
+      return a.publishedAt < b.publishedAt ? -1 : 1
+    if (a.publishedAt) return 1
+    if (b.publishedAt) return -1
+    return (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
+  })
+  return blogs
 }
 
 const createBlog = async (body: any, database: Database) => {
-  const { create, Blog } = database
+  const { save, EntityType } = database
   const blogData = {
     ...body,
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
     tags: _.map(_.split(body.tags, ','), (tag) => tag.trim()),
   }
 
-  if (body.published) {
-    blogData.publishDate = Date.now()
+  if (body.isPublished) {
+    blogData.publishedAt = new Date()
   }
 
-  return await create(Blog, blogData)
+  return await save(EntityType.Blog, blogData)
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

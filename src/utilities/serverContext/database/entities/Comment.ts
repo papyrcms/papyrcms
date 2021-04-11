@@ -80,6 +80,7 @@ export class Comment extends PapyrEntity {
     return {
       id: this.id,
       content: this.content,
+      blogId: this.blogId,
       replies,
       author,
       updatedAt: new Date(this.updatedAt),
@@ -101,6 +102,8 @@ export class Comment extends PapyrEntity {
     }
 
     foundComment.content = comment.content
+    foundComment.authorId = comment.author.id as string
+    foundComment.blogId = comment.blogId
 
     foundComment = await foundComment.save()
 

@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // introducting other DBs. We'll see though
     const { findAll, EntityType } = database
     const conditions = {
-      published: true,
+      isPublished: true,
       date: { $gte: dateFilter },
     }
     const events = await findAll<Event>(EntityType.Event, conditions)

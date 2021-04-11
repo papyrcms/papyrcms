@@ -15,7 +15,7 @@ const product = {
   title: 'Mocha Test Product',
   content: 'This is some test product content.',
   tags: 'test, product',
-  published: true,
+  isPublished: true,
   media: 'some-picture.jpg',
   price: 2.99,
   quantity: 10,
@@ -57,7 +57,7 @@ describe('/api/store', () => {
         )
         let allArePublished = true
         _.forEach(products, (found) => {
-          if (!found.published) allArePublished = false
+          if (!found.isPublished) allArePublished = false
         })
 
         expect(status).to.equal(200) &&

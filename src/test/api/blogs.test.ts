@@ -15,7 +15,7 @@ const blog = {
   title: 'Mocha Test Blog',
   content: 'This is some test blog content.',
   tags: 'test, blog',
-  published: true,
+  isPublished: true,
   media: 'some-picture.jpg',
   publishDate: new Date('2014-03-01').toISOString(),
 }
@@ -52,7 +52,7 @@ describe('/api/blogs', () => {
       )
       let allArePublished = true
       _.forEach(blogs, (found) => {
-        if (!found.published) allArePublished = false
+        if (!found.isPublished) allArePublished = false
       })
 
       expect(status).to.equal(200) &&

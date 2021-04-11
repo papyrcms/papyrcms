@@ -61,7 +61,7 @@ class Mailer {
     // Get all published posts
     const { EntityType, findAll } = this.database
     const posts = await findAll<Post>(EntityType.Post, {
-      published: true,
+      isPublished: true,
     })
 
     let template = null

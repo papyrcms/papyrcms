@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
+import { Comment } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, settings, done, database } = await serverContext(
@@ -17,23 +18,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'POST') {
-    const { findOne, create, update, Blog, Comment } = database
+    const { save, EntityType } = database
     const commentData = {
       content: req.body.content,
       author: user,
-    }
-    const comment = await create(Comment, commentData)
+      blogId: req.query.id,
+    } as Comment
 
-    const blog = await findOne(
-      Blog,
-      { id: req.query.id },
-      { include: ['comments'] }
-    )
-    const newComments = [...blog.comments, comment]
-    await update(
-      Blog,
-      { id: req.query.id },
-      { comments: newComments }
+    const comment = await save<Comment>(
+      EntityType.Comment,
+      commentData
     )
 
     return await done(200, comment)

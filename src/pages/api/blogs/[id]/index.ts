@@ -5,29 +5,23 @@ import serverContext from '@/serverContext'
 
 const getBlog = async (id: string, database: Database) => {
   let blog: Blog | undefined
-  const { findOne, Blog } = database
+  const { findOne, EntityType } = database
 
   // Search for the blog by its id
   try {
-    blog = await findOne(Blog, { id: id }, { include: ['comments'] })
+    blog = await findOne<Blog>(EntityType.Blog, { id })
   } catch (err) {}
 
   // Then search by its slug
   if (!blog) {
-    blog = await findOne(
-      Blog,
-      { slug: id },
-      { include: ['comments'] }
-    )
+    blog = await findOne<Blog>(EntityType.Blog, { slug: id })
   }
 
   // Then search by something resembling its slug
   if (!blog) {
-    blog = await findOne(
-      Blog,
-      { slug: new RegExp(id, 'i') },
-      { include: ['comments'] }
-    )
+    blog = await findOne<Blog>(EntityType.Blog, {
+      slug: new RegExp(id, 'i'),
+    })
   }
 
   return blog
@@ -38,31 +32,27 @@ const updateBlog = async (
   body: any,
   database: Database
 ) => {
-  const { findOne, update, Blog } = database
+  const { findOne, save, EntityType } = database
 
-  const oldBlog = await findOne(Blog, { id: id })
+  const oldBlog = await findOne<Blog>(EntityType.Blog, { id: id })
+  if (!oldBlog) throw new Error('Blog not found')
 
-  if (!oldBlog.published && body.published) {
-    body.publishDate = Date.now()
+  if (!oldBlog.isPublished && body.isPublished) {
+    body.publishDate = new Date()
   }
 
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
   body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
 
-  await update(Blog, { id: id }, body)
-  return await findOne(Blog, { id: id })
+  return await save<Blog>(EntityType.Blog, { ...oldBlog, ...body })
 }
 
 const deleteBlog = async (id: string, database: Database) => {
-  const { findOne, destroy, Blog, Comment } = database
+  const { findOne, destroy, EntityType } = database
 
-  const blog = await findOne(Blog, { id: id })
-
-  _.forEach(blog.comments, async (comment) => {
-    await destroy(Comment, { id: comment })
-  })
-
-  await destroy(Blog, { id: id })
+  const blog = await findOne<Blog>(EntityType.Blog, { id: id })
+  if (!blog) throw new Error('Blog not found')
+  await destroy(EntityType.Blog, blog)
 
   return 'blog deleted'
 }
@@ -84,7 +74,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     const blog = await getBlog(req.query.id, database)
-    if ((!blog || !blog.published) && (!user || !user.isAdmin)) {
+    if ((!blog || !blog.isPublished) && (!user || !user.isAdmin)) {
       return await done(403, {
         message: 'You are not allowed to do that.',
       })

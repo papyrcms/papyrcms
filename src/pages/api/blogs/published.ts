@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
+import { Blog } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { user, settings, done, database } = await serverContext(
@@ -12,12 +13,18 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'GET') {
-    const { findAll, Blog } = database
-    const blogs = await findAll(
-      Blog,
-      { published: true },
-      { sort: { publishDate: -1, created: -1 } }
-    )
+    const { findAll, EntityType } = database
+    const blogs = await findAll<Blog>(EntityType.Blog, {
+      isPublished: true,
+    })
+    blogs.sort((a, b) => {
+      if (a.publishedAt && b.publishedAt)
+        return a.publishedAt < b.publishedAt ? -1 : 1
+      if (a.publishedAt) return 1
+      if (b.publishedAt) return -1
+      return (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
+    })
+
     return done(200, blogs)
   }
 

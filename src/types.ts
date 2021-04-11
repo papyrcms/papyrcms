@@ -85,6 +85,7 @@ export class Comment extends DbModel {
   content!: string
   replies!: Comment[]
   author!: User
+  blogId!: string
   updatedAt?: Date
   createdAt?: Date
 }
