@@ -30,13 +30,11 @@ export class Order extends PapyrEntity {
   @Column()
   userId?: string
 
-  @JoinColumn()
   @ManyToOne(() => User, (user) => user.orders, {
     onDelete: 'CASCADE',
   })
   user?: Partial<User>
 
-  @JoinColumn()
   @OneToMany(
     () => OrderedProduct,
     (orderedProduct) => orderedProduct.product

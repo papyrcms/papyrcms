@@ -94,15 +94,12 @@ export class User extends PapyrEntity {
   @Column({ default: false })
   isBanned!: boolean
 
-  @JoinColumn()
   @OneToMany(() => CartProduct, (cartProduct) => cartProduct.user)
   cart!: Partial<CartProduct[]>
 
-  @JoinColumn()
   @OneToMany(() => Comment, (comment) => comment.author)
   comments!: Partial<Comment[]>
 
-  @JoinColumn()
   @OneToMany(() => Order, (order) => order.user)
   orders!: Partial<Order[]>
 

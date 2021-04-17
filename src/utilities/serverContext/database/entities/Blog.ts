@@ -40,7 +40,6 @@ export class Blog extends PapyrEntity {
   @Column()
   publishedAt?: Date
 
-  @JoinColumn()
   @OneToMany(() => Comment, (comment) => comment.blog)
   comments!: Partial<Comment[]>
 

@@ -36,7 +36,6 @@ export class Comment extends PapyrEntity {
   @Index()
   authorId!: string
 
-  @JoinColumn()
   @ManyToOne(() => User, (user) => user.comments, {
     onDelete: 'CASCADE',
   })
@@ -46,11 +45,9 @@ export class Comment extends PapyrEntity {
   @Index()
   replyToId?: string
 
-  @JoinColumn()
   @OneToMany(() => Comment, (comment) => comment.replies)
   replyTo?: Partial<Comment>
 
-  @JoinColumn()
   @ManyToOne(() => Comment, (comment) => comment.replyTo, {
     onDelete: 'CASCADE',
   })

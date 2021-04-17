@@ -22,7 +22,6 @@ export class Settings extends PapyrEntity {
   @Index({ unique: true })
   name!: string
 
-  @JoinColumn()
   @ManyToOne(() => Option, (option) => option.settings, {
     onDelete: 'CASCADE',
   })

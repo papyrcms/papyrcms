@@ -30,7 +30,6 @@ export class Option extends BaseEntity {
   @Column()
   settingsId!: string
 
-  @JoinColumn()
   @OneToMany(() => Settings, (settings) => settings.options)
   settings!: Partial<Settings>
 

@@ -22,7 +22,6 @@ export class Section extends PapyrEntity {
   @Index('uuid')
   pageId!: string
 
-  @JoinColumn()
   @OneToMany(() => Page, (page) => page.sections)
   page!: Partial<Page>
 

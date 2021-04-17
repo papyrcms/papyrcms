@@ -22,7 +22,6 @@ export class OrderedProduct extends BaseEntity {
   @Index()
   productId!: string
 
-  @JoinColumn()
   @ManyToOne(() => Product, (product) => product.productOrders, {
     onDelete: 'CASCADE',
   })
@@ -32,7 +31,6 @@ export class OrderedProduct extends BaseEntity {
   @Index()
   orderId!: string
 
-  @JoinColumn()
   @ManyToOne(() => Order, (order) => order.orderedProducts, {
     onDelete: 'CASCADE',
   })

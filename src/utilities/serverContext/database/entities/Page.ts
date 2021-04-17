@@ -40,7 +40,6 @@ export class Page extends PapyrEntity {
   @Column({ default: false })
   omitDefaultFooter!: boolean
 
-  @JoinColumn()
   @ManyToOne(() => Section, (section) => section.page, {
     onDelete: 'CASCADE',
   })
