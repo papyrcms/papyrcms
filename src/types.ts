@@ -29,6 +29,7 @@ export class Page extends DbModel {
 
 export class Section extends DbModel {
   order!: number
+  pageId!: string
   type!: string
   tags!: string[]
   title!: string

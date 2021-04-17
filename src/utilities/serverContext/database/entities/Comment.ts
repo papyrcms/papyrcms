@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -35,22 +36,25 @@ export class Comment extends PapyrEntity {
   @Index()
   authorId!: string
 
+  @JoinColumn()
   @ManyToOne(() => User, (user) => user.comments, {
     onDelete: 'CASCADE',
   })
-  author!: User
+  author!: Partial<User>
 
   @Column()
   @Index()
   replyToId?: string
 
+  @JoinColumn()
   @OneToMany(() => Comment, (comment) => comment.replies)
-  replyTo?: Comment
+  replyTo?: Partial<Comment>
 
+  @JoinColumn()
   @ManyToOne(() => Comment, (comment) => comment.replyTo, {
     onDelete: 'CASCADE',
   })
-  replies?: Comment[]
+  replies?: Partial<Comment[]>
 
   @CreateDateColumn()
   createdAt!: Date

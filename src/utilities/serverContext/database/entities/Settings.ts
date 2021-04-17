@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -21,10 +22,11 @@ export class Settings extends PapyrEntity {
   @Index({ unique: true })
   name!: string
 
+  @JoinColumn()
   @ManyToOne(() => Option, (option) => option.settings, {
     onDelete: 'CASCADE',
   })
-  options!: Option[]
+  options!: Partial<Option[]>
 
   @CreateDateColumn()
   createdAt!: Date
@@ -72,7 +74,7 @@ export class Settings extends PapyrEntity {
 
     for (const key of Object.keys(settings.options)) {
       let foundOption = foundSettings.options.find(
-        (option) => option.key === key
+        (option) => option?.key === key
       )
       if (!foundOption) {
         foundOption = Option.create()

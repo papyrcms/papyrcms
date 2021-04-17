@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
@@ -21,19 +22,21 @@ export class OrderedProduct extends BaseEntity {
   @Index()
   productId!: string
 
+  @JoinColumn()
   @ManyToOne(() => Product, (product) => product.productOrders, {
     onDelete: 'CASCADE',
   })
-  product!: Product
+  product!: Partial<Product>
 
   @PrimaryColumn()
   @Index()
   orderId!: string
 
+  @JoinColumn()
   @ManyToOne(() => Order, (order) => order.orderedProducts, {
     onDelete: 'CASCADE',
   })
-  order!: Order
+  order!: Partial<Order>
 
   @CreateDateColumn()
   createdAt!: Date

@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -18,11 +19,12 @@ export class Section extends PapyrEntity {
   id!: string
 
   @Column()
-  @Index()
+  @Index('uuid')
   pageId!: string
 
+  @JoinColumn()
   @OneToMany(() => Page, (page) => page.sections)
-  page!: Page
+  page!: Partial<Page>
 
   @Column('int')
   order!: number
@@ -52,6 +54,7 @@ export class Section extends PapyrEntity {
     return {
       id: this.id,
       order: this.order,
+      pageId: this.pageId,
       type: this.type,
       maxPosts: this.maxPosts,
       tags: this.tags.split(',').map((tag) => tag.trim()),
@@ -75,6 +78,7 @@ export class Section extends PapyrEntity {
       foundSection = Section.create()
     }
 
+    foundSection.pageId = section.pageId
     foundSection.order = section.order
     foundSection.type = section.type
     foundSection.tags = section.tags.join(', ')

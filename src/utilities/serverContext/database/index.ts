@@ -1,12 +1,31 @@
 import 'reflect-metadata'
-import path from 'path'
-import { createConnection, FindConditions } from 'typeorm'
+import { createConnection, getConnection } from 'typeorm'
 import { __prod__ } from '../../../constants'
 import keys from '@/keys'
 import * as types from '@/types'
-import * as entities from './entities'
-import { PapyrEntity } from './entities/PapyrEntity'
 import { Connection } from 'typeorm'
+import { PapyrEntity } from './entities/PapyrEntity'
+import { Message } from './entities/Message'
+import { Post } from './entities/Post'
+import { Event } from './entities/Event'
+import { User } from './entities/User'
+import { Comment } from './entities/Comment'
+import { Blog } from './entities/Blog'
+import { Order } from './entities/Order'
+import { Option } from './entities/Option'
+import { Section } from './entities/Section'
+import { Page } from './entities/Page'
+import { Product } from './entities/Product'
+import { Settings } from './entities/Settings'
+import { OrderedProduct } from './entities/OrderedProduct'
+import { CartProduct } from './entities/CartProduct'
+
+// let connectionReadyPromise
+// const context = require.context(
+//   'src/utilities/serverContext/database/entities'
+// )
+// const entityFileNames = context.keys()
+// const entities = entityFileNames.map((file) => context(file).default)
 
 export const init = async (): Promise<Connection> => {
   // For backwards compatibility
@@ -19,20 +38,34 @@ export const init = async (): Promise<Connection> => {
     keys.databaseURI = keys.mongoURI
   }
 
-  return await createConnection({
+  // try {
+  //   const staleConnection = getConnection()
+  //   await staleConnection.close()
+  // } catch (error) {
+  //   // no stale connection to clean up
+  // }
+
+  const connection = await createConnection({
     type: keys.databaseDriver,
     url: keys.databaseURI,
     synchronize: true,
-    logging: !__prod__,
+    logging: false, //!__prod__,
+    // entities,
     entities: [
-      path.join(
-        'src',
-        'utilities',
-        'serverContext',
-        'database',
-        'entities',
-        '*.ts'
-      ),
+      Message,
+      Post,
+      Event,
+      User,
+      Comment,
+      Blog,
+      Order,
+      Option,
+      Section,
+      Page,
+      Product,
+      Settings,
+      OrderedProduct,
+      CartProduct,
     ],
     migrations: [],
     subscribers: [],
@@ -41,6 +74,10 @@ export const init = async (): Promise<Connection> => {
       rejectUnauthorized: !__prod__,
     },
   })
+
+  // connectionReadyPromise = connection
+
+  return connection
 }
 
 export enum EntityType {
@@ -57,16 +94,16 @@ export enum EntityType {
 }
 
 const EntityMap: Record<EntityType, typeof PapyrEntity> = {
-  [EntityType.Blog]: entities.Blog,
-  [EntityType.Comment]: entities.Comment,
-  [EntityType.Event]: entities.Event,
-  [EntityType.Message]: entities.Message,
-  [EntityType.Order]: entities.Order,
-  [EntityType.Page]: entities.Page,
-  [EntityType.Post]: entities.Post,
-  [EntityType.Product]: entities.Product,
-  [EntityType.Settings]: entities.Settings,
-  [EntityType.User]: entities.User,
+  [EntityType.Blog]: Blog,
+  [EntityType.Comment]: Comment,
+  [EntityType.Event]: Event,
+  [EntityType.Message]: Message,
+  [EntityType.Order]: Order,
+  [EntityType.Page]: Page,
+  [EntityType.Post]: Post,
+  [EntityType.Product]: Product,
+  [EntityType.Settings]: Settings,
+  [EntityType.User]: User,
 }
 
 // Might need this later

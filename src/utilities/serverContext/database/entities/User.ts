@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,6 +13,7 @@ import { CartProduct } from './CartProduct'
 import { Comment } from './Comment'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { Product } from './Product'
 
 @Entity()
 export class User extends PapyrEntity {
@@ -92,14 +94,17 @@ export class User extends PapyrEntity {
   @Column({ default: false })
   isBanned!: boolean
 
+  @JoinColumn()
   @OneToMany(() => CartProduct, (cartProduct) => cartProduct.user)
-  cart!: CartProduct[]
+  cart!: Partial<CartProduct[]>
 
+  @JoinColumn()
   @OneToMany(() => Comment, (comment) => comment.author)
-  comments!: Comment[]
+  comments!: Partial<Comment[]>
 
+  @JoinColumn()
   @OneToMany(() => Order, (order) => order.user)
-  orders!: Order[]
+  orders!: Partial<Order[]>
 
   async toModel(): Promise<types.User> {
     const connectedProducts = await CartProduct.find({
@@ -109,7 +114,7 @@ export class User extends PapyrEntity {
       relations: ['product'],
     })
     const cart = connectedProducts.map((connectedProduct) =>
-      connectedProduct.product.toModel()
+      (connectedProduct.product as Product).toModel()
     )
 
     return {

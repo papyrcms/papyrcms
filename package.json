@@ -6,7 +6,7 @@
     "node": "15.0.1"
   },
   "scripts": {
-    "dev": "next -p 5000",
+    "dev": "next dev -p 5000",
     "test": "NODE_ENV=test TS_NODE_TRANSPILE_ONLY=true TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha",
     "build": "next build",
     "start": "NODE_ENV=production next start -p $PORT",
@@ -65,6 +65,8 @@
     "@types/react": "^17.0.3",
     "@types/react-stripe-elements": "^6.0.4",
     "@types/sanitize-html": "^1.27.2",
+    "@types/webpack-env": "^1.16.0",
+    "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "chai": "^4.3.4",
     "mocha": "^8.3.2",
     "node-sass": "^5.0.0",

@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -39,10 +40,11 @@ export class Page extends PapyrEntity {
   @Column({ default: false })
   omitDefaultFooter!: boolean
 
+  @JoinColumn()
   @ManyToOne(() => Section, (section) => section.page, {
     onDelete: 'CASCADE',
   })
-  sections!: Section[]
+  sections!: Partial<Section[]>
 
   @CreateDateColumn()
   createdAt!: Date

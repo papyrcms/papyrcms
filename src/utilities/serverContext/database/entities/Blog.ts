@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -39,8 +40,9 @@ export class Blog extends PapyrEntity {
   @Column()
   publishedAt?: Date
 
+  @JoinColumn()
   @OneToMany(() => Comment, (comment) => comment.blog)
-  comments!: Comment[]
+  comments!: Partial<Comment[]>
 
   @CreateDateColumn()
   createdAt!: Date

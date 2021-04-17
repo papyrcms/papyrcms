@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -12,6 +13,7 @@ import { User } from './User'
 import { OrderedProduct } from './OrderedProduct'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { Product } from './Product'
 
 @Entity()
 export class Order extends PapyrEntity {
@@ -28,16 +30,18 @@ export class Order extends PapyrEntity {
   @Column()
   userId?: string
 
+  @JoinColumn()
   @ManyToOne(() => User, (user) => user.orders, {
     onDelete: 'CASCADE',
   })
-  user?: User
+  user?: Partial<User>
 
+  @JoinColumn()
   @OneToMany(
     () => OrderedProduct,
     (orderedProduct) => orderedProduct.product
   )
-  orderedProducts!: OrderedProduct[]
+  orderedProducts!: Partial<OrderedProduct[]>
 
   @CreateDateColumn()
   createdAt!: Date
@@ -53,7 +57,7 @@ export class Order extends PapyrEntity {
       relations: ['product'],
     })
     const products = orderedProducts.map((orderedProduct) => {
-      return orderedProduct.product.toModel()
+      return (orderedProduct.product as Product).toModel()
     })
 
     const userEntity = await User.findOne({

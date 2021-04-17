@@ -24,7 +24,7 @@ export class CartProduct extends BaseEntity {
   @ManyToOne(() => Product, (product) => product.carts, {
     onDelete: 'CASCADE',
   })
-  product!: Product
+  product!: Partial<Product>
 
   @PrimaryColumn()
   @Index()
@@ -33,7 +33,7 @@ export class CartProduct extends BaseEntity {
   @ManyToOne(() => User, (user) => user.cart, {
     onDelete: 'CASCADE',
   })
-  user!: User
+  user!: Partial<User>
 
   @CreateDateColumn()
   createdAt!: Date

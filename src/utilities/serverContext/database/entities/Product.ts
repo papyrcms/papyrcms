@@ -37,20 +37,20 @@ export class Product extends PapyrEntity {
   @Column({ default: false })
   isPublished!: boolean
 
-  @Column('double', { default: 0.0 })
+  @Column('float', { default: 0.0 })
   price!: number
 
   @Column('int', { default: 0 })
   quantity!: number
 
   @OneToMany(() => CartProduct, (cartProduct) => cartProduct.product)
-  carts!: CartProduct[]
+  carts!: Partial<CartProduct[]>
 
   @OneToMany(
     () => OrderedProduct,
     (orderedProduct) => orderedProduct.product
   )
-  productOrders!: OrderedProduct[]
+  productOrders!: Partial<OrderedProduct[]>
 
   @CreateDateColumn()
   createdAt!: Date

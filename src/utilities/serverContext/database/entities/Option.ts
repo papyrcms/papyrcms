@@ -4,6 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -29,8 +30,9 @@ export class Option extends BaseEntity {
   @Column()
   settingsId!: string
 
+  @JoinColumn()
   @OneToMany(() => Settings, (settings) => settings.options)
-  settings!: Settings
+  settings!: Partial<Settings>
 
   @CreateDateColumn()
   createdAt!: Date
