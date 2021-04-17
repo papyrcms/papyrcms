@@ -99,7 +99,11 @@ export class Page extends PapyrEntity {
 
     foundPage = await foundPage.save()
 
+    let i = 0
     for (const section of page.sections) {
+      section.pageId = foundPage.id
+      if (!section.order) section.order = i
+      i++
       await Section.saveFromModel(section)
     }
 

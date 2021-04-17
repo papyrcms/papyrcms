@@ -82,6 +82,7 @@ export class Section extends PapyrEntity {
     foundSection.order = section.order
     foundSection.type = section.type
     foundSection.tags = section.tags.join(', ')
+    foundSection.maxPosts = section.maxPosts
     foundSection.title = section.title
     foundSection.className = section.className
 
