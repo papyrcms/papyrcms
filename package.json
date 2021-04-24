@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "NODE_OPTIONS=\"--inspect\" next dev -p 5000",
-    "test": "NODE_ENV=test TS_NODE_TRANSPILE_ONLY=true TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha",
+    "test": "NODE_ENV=test TS_NODE_TRANSPILE_ONLY=true TS_NODE_PROJECT='./tsconfig.test.json' mocha",
     "build": "next build",
     "start": "NODE_ENV=production next start -p $PORT",
     "reinstall": "rm -rf node_modules/ && npm install"

@@ -1,10 +1,13 @@
 import 'reflect-metadata'
-import { getConnectionManager, getRepository } from 'typeorm'
+import {
+  Connection,
+  getConnectionManager,
+  getRepository,
+} from 'typeorm'
 import { __prod__ } from '../../../constants'
-import keys from '@/keys'
-import * as types from '@/types'
+import keys from '../../../config/keys'
+import * as types from '../../../types'
 import * as entities from './entities'
-import { Connection } from 'typeorm'
 import { PapyrEntity } from './entities/PapyrEntity'
 
 export const init = async (
