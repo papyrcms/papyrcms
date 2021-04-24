@@ -1,20 +1,15 @@
 import { Database, User } from '@/types'
 import { NextApiRequest } from 'next'
 import jwt from 'jsonwebtoken'
-import _ from 'lodash'
 import keys from '@/keys'
 
 export default async (req: NextApiRequest, database: Database) => {
   if (req.headers.authorization?.toLowerCase().includes('bearer ')) {
-    const token = req.headers.authorization
-      .toLowerCase()
-      .replace('bearer ', '')
-
     try {
+      const [_, token] = req.headers.authorization.split(' ')
       const tokenObject = jwt.verify(token, keys.jwtSecret) as {
         uid: string
       }
-
       const { uid } = tokenObject
       if (uid) {
         const user = await database.findOne<User>(

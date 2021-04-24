@@ -2,8 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
-  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -104,7 +104,8 @@ export class User extends PapyrEntity {
   orders!: Partial<Order[]>
 
   async toModel(): Promise<types.User> {
-    const connectedProducts = await CartProduct.find({
+    const cartProdRepo = getRepository<CartProduct>('CartProduct')
+    const connectedProducts = await cartProdRepo.find({
       where: {
         userId: this.id,
       },
@@ -145,14 +146,17 @@ export class User extends PapyrEntity {
   }
 
   static async saveFromModel(user: types.User): Promise<types.User> {
-    let foundUser = await User.findOne({
+    const userRepo = getRepository<User>('User')
+    const cartProdRepo = getRepository<CartProduct>('CartProduct')
+
+    let foundUser = await userRepo.findOne({
       where: {
         id: user.id,
       },
     })
 
     if (!foundUser) {
-      foundUser = User.create()
+      foundUser = userRepo.create()
     }
 
     foundUser.email = user.email
@@ -182,7 +186,7 @@ export class User extends PapyrEntity {
     // Add to cart/Remove from cart
     // Note: This assumes products will only ever be added OR removed
     // from the cart in one transaction. Should that change, this needs redone
-    const cartProducts = await CartProduct.find({
+    const cartProducts = await cartProdRepo.find({
       where: {
         userId: user.id,
       },
@@ -209,10 +213,12 @@ export class User extends PapyrEntity {
           (cartProduct) => cartProduct.productId === product.id
         )
         if (addedToCart) {
-          await CartProduct.create({
-            userId: user.id,
-            productId: product.id,
-          }).save()
+          await cartProdRepo
+            .create({
+              userId: user.id,
+              productId: product.id,
+            })
+            .save()
         }
       }
     }

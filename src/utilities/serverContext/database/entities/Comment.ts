@@ -2,8 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
-  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -60,7 +60,9 @@ export class Comment extends PapyrEntity {
   updatedAt!: Date
 
   async toModel(): Promise<types.Comment> {
-    const commentEntities = await Comment.find({
+    const commentRepo = getRepository<Comment>('Comment')
+    const userRepo = getRepository<User>('User')
+    const commentEntities = await commentRepo.find({
       where: {
         replyToId: this.id,
       },
@@ -71,7 +73,7 @@ export class Comment extends PapyrEntity {
       replies.push(await comment.toModel())
     }
 
-    const authorEntity = await User.findOne({
+    const authorEntity = await userRepo.findOne({
       where: {
         id: this.authorId,
       },
@@ -92,14 +94,15 @@ export class Comment extends PapyrEntity {
   static async saveFromModel(
     comment: types.Comment
   ): Promise<types.Comment> {
-    let foundComment = await Comment.findOne({
+    const commentRepo = getRepository<Comment>('Comment')
+    let foundComment = await commentRepo.findOne({
       where: {
         id: comment.id,
       },
     })
 
     if (!foundComment) {
-      foundComment = Comment.create()
+      foundComment = commentRepo.create()
     }
 
     foundComment.content = comment.content

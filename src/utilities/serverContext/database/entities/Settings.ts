@@ -2,8 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -34,7 +34,8 @@ export class Settings extends PapyrEntity {
   updatedAt!: Date
 
   async toModel(): Promise<types.Settings> {
-    const optionEntities = await Option.find({
+    const optionRepo = getRepository<Option>('Option')
+    const optionEntities = await optionRepo.find({
       where: {
         settingsId: this.id,
       },
@@ -56,16 +57,25 @@ export class Settings extends PapyrEntity {
   static async saveFromModel(
     settings: types.Settings
   ): Promise<types.Settings> {
-    let foundSettings = await Settings.findOne({
+    const settingsRepo = getRepository<Settings>('Settings')
+    const optionsRepo = getRepository<Option>('Option')
+
+    let foundSettings = await settingsRepo.findOne({
       where: {
         id: settings.id,
       },
-      relations: ['options'],
+      // relations: ['options'],
     })
 
     if (!foundSettings) {
-      foundSettings = Settings.create()
+      foundSettings = settingsRepo.create()
       foundSettings.options = []
+    } else {
+      foundSettings.options = await optionsRepo.find({
+        where: {
+          settingsId: settings.id,
+        },
+      })
     }
 
     foundSettings.name = settings.name
@@ -76,7 +86,7 @@ export class Settings extends PapyrEntity {
         (option) => option?.key === key
       )
       if (!foundOption) {
-        foundOption = Option.create()
+        foundOption = optionsRepo.create()
       }
       foundOption.key = key
       foundOption.value = settings.options[key].toString()

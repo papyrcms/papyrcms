@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -55,14 +56,15 @@ export class Post extends PapyrEntity {
   }
 
   static async saveFromModel(post: types.Post): Promise<types.Post> {
-    let foundPost = await Post.findOne({
+    const postRepo = getRepository<Post>('Post')
+    let foundPost = await postRepo.findOne({
       where: {
         id: post.id,
       },
     })
 
     if (!foundPost) {
-      foundPost = Post.create()
+      foundPost = postRepo.create()
     }
 
     foundPost.title = post.title

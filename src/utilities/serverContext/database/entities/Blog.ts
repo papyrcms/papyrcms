@@ -2,8 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
-  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -50,7 +50,8 @@ export class Blog extends PapyrEntity {
   updatedAt!: Date
 
   async toModel(): Promise<types.Blog> {
-    const commentEntities = await Comment.find({
+    const commentRepo = getRepository<Comment>('Comment')
+    const commentEntities = await commentRepo.find({
       where: {
         blogId: this.id,
       },
@@ -79,14 +80,15 @@ export class Blog extends PapyrEntity {
   }
 
   static async saveFromModel(blog: types.Blog): Promise<types.Blog> {
-    let foundBlog = await Blog.findOne({
+    const blogRepo = getRepository<Blog>('Blog')
+    let foundBlog = await blogRepo.findOne({
       where: {
         id: blog.id,
       },
     })
 
     if (!foundBlog) {
-      foundBlog = Blog.create()
+      foundBlog = blogRepo.create()
     }
 
     foundBlog.title = blog.title

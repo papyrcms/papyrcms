@@ -4,7 +4,6 @@ import {
   CreateDateColumn,
   Entity,
   Index,
-  JoinColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,

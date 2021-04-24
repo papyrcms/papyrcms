@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -77,14 +78,15 @@ export class Product extends PapyrEntity {
   static async saveFromModel(
     product: types.Product
   ): Promise<types.Product> {
-    let foundProduct = await Product.findOne({
+    const productRepo = getRepository<Product>('Product')
+    let foundProduct = await productRepo.findOne({
       where: {
         id: product.id,
       },
     })
 
     if (!foundProduct) {
-      foundProduct = Product.create()
+      foundProduct = productRepo.create()
     }
 
     foundProduct.title = product.title

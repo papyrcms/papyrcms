@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -48,14 +49,15 @@ export class Message extends PapyrEntity {
   static async saveFromModel(
     event: types.Message
   ): Promise<types.Message> {
-    let foundMessage = await Message.findOne({
+    const messageRepo = getRepository<Message>('Message')
+    let foundMessage = await messageRepo.findOne({
       where: {
         id: event.id,
       },
     })
 
     if (!foundMessage) {
-      foundMessage = Message.create()
+      foundMessage = messageRepo.create()
     }
 
     foundMessage.name = event.name

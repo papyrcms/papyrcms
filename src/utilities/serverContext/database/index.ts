@@ -1,33 +1,15 @@
 import 'reflect-metadata'
-import { createConnection, getConnection } from 'typeorm'
+import { getConnectionManager, getRepository } from 'typeorm'
 import { __prod__ } from '../../../constants'
 import keys from '@/keys'
 import * as types from '@/types'
+import * as entities from './entities'
 import { Connection } from 'typeorm'
 import { PapyrEntity } from './entities/PapyrEntity'
-import { Message } from './entities/Message'
-import { Post } from './entities/Post'
-import { Event } from './entities/Event'
-import { User } from './entities/User'
-import { Comment } from './entities/Comment'
-import { Blog } from './entities/Blog'
-import { Order } from './entities/Order'
-import { Option } from './entities/Option'
-import { Section } from './entities/Section'
-import { Page } from './entities/Page'
-import { Product } from './entities/Product'
-import { Settings } from './entities/Settings'
-import { OrderedProduct } from './entities/OrderedProduct'
-import { CartProduct } from './entities/CartProduct'
 
-// let connectionReadyPromise
-// const context = require.context(
-//   'src/utilities/serverContext/database/entities'
-// )
-// const entityFileNames = context.keys()
-// const entities = entityFileNames.map((file) => context(file).default)
-
-export const init = async (): Promise<Connection> => {
+export const init = async (
+  connectionName: string = 'default'
+): Promise<Connection> => {
   // For backwards compatibility
   if (keys.mongoURI && (!keys.databaseURI || !keys.databaseDriver)) {
     const depricationNotice =
@@ -38,46 +20,66 @@ export const init = async (): Promise<Connection> => {
     keys.databaseURI = keys.mongoURI
   }
 
-  // try {
-  //   const staleConnection = getConnection()
-  //   await staleConnection.close()
-  // } catch (error) {
-  //   // no stale connection to clean up
-  // }
-
-  const connection = await createConnection({
+  const connectionOptions = {
+    name: connectionName,
     type: keys.databaseDriver,
     url: keys.databaseURI,
     synchronize: true,
-    logging: false, //!__prod__,
-    // entities,
-    entities: [
-      Message,
-      Post,
-      Event,
-      User,
-      Comment,
-      Blog,
-      Order,
-      Option,
-      Section,
-      Page,
-      Product,
-      Settings,
-      OrderedProduct,
-      CartProduct,
-    ],
+    logging: false, // !__prod__,
+    entities: Object.values(entities),
     migrations: [],
     subscribers: [],
     extra: {
       ssl: __prod__,
       rejectUnauthorized: !__prod__,
     },
-  })
+  }
 
-  // connectionReadyPromise = connection
+  const connectionManager = getConnectionManager()
+  if (connectionManager.has(connectionName)) {
+    const connection = connectionManager.get(connectionName)
 
-  return connection
+    if (!connection.isConnected) {
+      await connection.connect()
+    }
+
+    if (!__prod__) {
+      await updateConnectionEntities(
+        connection,
+        connectionOptions.entities
+      )
+    }
+
+    return connection
+  }
+
+  return await connectionManager.create(connectionOptions).connect()
+}
+
+const updateConnectionEntities = async (
+  connection: Connection,
+  entities: any[]
+) => {
+  if (!entitiesChanged(connection.options.entities || [], entities))
+    return
+
+  // @ts-ignore
+  connection.options.entities = entities
+
+  // @ts-ignore
+  connection.buildMetadatas()
+
+  if (connection.options.synchronize) {
+    await connection.synchronize()
+  }
+}
+
+const entitiesChanged = (prevEntities: any[], newEntities: any[]) => {
+  if (prevEntities.length !== newEntities.length) return true
+  for (let i = 0; i < prevEntities.length; i++) {
+    if (prevEntities[i] !== newEntities[i]) return true
+  }
+  return false
 }
 
 export enum EntityType {
@@ -94,40 +96,26 @@ export enum EntityType {
 }
 
 const EntityMap: Record<EntityType, typeof PapyrEntity> = {
-  [EntityType.Blog]: Blog,
-  [EntityType.Comment]: Comment,
-  [EntityType.Event]: Event,
-  [EntityType.Message]: Message,
-  [EntityType.Order]: Order,
-  [EntityType.Page]: Page,
-  [EntityType.Post]: Post,
-  [EntityType.Product]: Product,
-  [EntityType.Settings]: Settings,
-  [EntityType.User]: User,
-}
-
-// Might need this later
-const ModelMap: Record<EntityType, typeof types.DbModel> = {
-  [EntityType.Blog]: types.Blog,
-  [EntityType.Comment]: types.Comment,
-  [EntityType.Event]: types.Event,
-  [EntityType.Message]: types.Message,
-  [EntityType.Order]: types.Order,
-  [EntityType.Page]: types.Page,
-  [EntityType.Post]: types.Post,
-  [EntityType.Product]: types.Product,
-  [EntityType.Settings]: types.Settings,
-  [EntityType.User]: types.User,
+  [EntityType.Blog]: entities.Blog,
+  [EntityType.Comment]: entities.Comment,
+  [EntityType.Event]: entities.Event,
+  [EntityType.Message]: entities.Message,
+  [EntityType.Order]: entities.Order,
+  [EntityType.Page]: entities.Page,
+  [EntityType.Post]: entities.Post,
+  [EntityType.Product]: entities.Product,
+  [EntityType.Settings]: entities.Settings,
+  [EntityType.User]: entities.User,
 }
 
 export const findOne = async <M extends types.DbModel>(
   entityType: EntityType,
   conditions: Record<string, any>
 ): Promise<M | undefined> => {
-  const entity = EntityMap[entityType]
-  const foundEntity = await entity.findOne({
+  const repository = getRepository(EntityType[entityType])
+  const foundEntity = (await repository.findOne({
     where: conditions,
-  })
+  })) as PapyrEntity
   return (await foundEntity?.toModel()) as M
 }
 
@@ -135,10 +123,10 @@ export const findAll = async <M extends types.DbModel>(
   entityType: EntityType,
   conditions?: Record<string, any>
 ): Promise<M[]> => {
-  const entity = EntityMap[entityType]
-  const foundEntities = await entity.find({
+  const repository = getRepository(EntityType[entityType])
+  const foundEntities = (await repository.find({
     where: conditions ?? {},
-  })
+  })) as PapyrEntity[]
   const entityModels: M[] = []
 
   if (!foundEntities) return entityModels
@@ -161,10 +149,10 @@ export const destroy = async (
   entityType: EntityType,
   model: types.DbModel
 ): Promise<boolean> => {
-  const entity = EntityMap[entityType]
-  const foundEntity = await entity.findOne({
+  const repository = getRepository(EntityType[entityType])
+  const foundEntity = (await repository.findOne({
     where: { id: model.id },
-  })
+  })) as PapyrEntity
   return !!(await foundEntity?.remove())
 }
 
@@ -172,14 +160,14 @@ export const destroyAll = async (
   entityType: EntityType,
   conditions?: Record<string, any>
 ): Promise<boolean> => {
-  const entity = EntityMap[entityType]
-  return !!(await entity.delete(conditions ?? {}))
+  const repository = getRepository(EntityType[entityType])
+  return !!(await repository.delete(conditions ?? {}))
 }
 
 export const countAll = async (
   entityType: EntityType,
   conditions?: Record<string, any>
 ): Promise<number> => {
-  const entity = EntityMap[entityType]
-  return await entity.count(conditions ?? {})
+  const repository = getRepository(EntityType[entityType])
+  return await repository.count(conditions ?? {})
 }

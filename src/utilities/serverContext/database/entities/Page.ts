@@ -2,8 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   Index,
-  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -52,7 +52,8 @@ export class Page extends PapyrEntity {
   updatedAt!: Date
 
   async toModel(): Promise<types.Page> {
-    let sectionEntities = await Section.find({
+    const sectionRepo = getRepository<Section>('Section')
+    let sectionEntities = await sectionRepo.find({
       where: {
         pageId: this.id,
       },
@@ -78,14 +79,15 @@ export class Page extends PapyrEntity {
   }
 
   static async saveFromModel(page: types.Page): Promise<types.Page> {
-    let foundPage = await Page.findOne({
+    const pageRepo = getRepository<Page>('Page')
+    let foundPage = await pageRepo.findOne({
       where: {
         id: page.id,
       },
     })
 
     if (!foundPage) {
-      foundPage = Page.create()
+      foundPage = pageRepo.create()
     }
 
     foundPage.title = page.title

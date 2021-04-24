@@ -1,16 +1,15 @@
 {
   "name": "papyr-cms",
-  "version": "2.2.0",
-  "description": "A dynamic CMS template made with Next.js",
+  "version": "3.0.0",
+  "description": "A dynamic CMS template made with NextJS and Typescript",
   "engines": {
     "node": "15.0.1"
   },
   "scripts": {
-    "dev": "next dev -p 5000",
+    "dev": "NODE_OPTIONS=\"--inspect\" next dev -p 5000",
     "test": "NODE_ENV=test TS_NODE_TRANSPILE_ONLY=true TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' mocha",
     "build": "next build",
     "start": "NODE_ENV=production next start -p $PORT",
-    "deploy": "git remote | xargs -L1 -I R git push R master",
     "reinstall": "rm -rf node_modules/ && npm install"
   },
   "keywords": [],
