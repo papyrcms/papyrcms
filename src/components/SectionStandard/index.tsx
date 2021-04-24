@@ -69,7 +69,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   const { currentUser } = useContext(userContext)
   const { posts, setPosts } = useContext(postsContext)
 
-  if (!props.posts) return null
+  if (!props.posts?.find((p) => !!p)) return null
 
   const {
     enableCommenting,
@@ -96,6 +96,15 @@ const SectionStandard: React.FC<Props> = (props) => {
     beforeCommentForm = () => null,
     afterCommentForm = () => null,
   } = props
+
+  if (posts.length === 0 || Object.keys(posts).length == 0) {
+    return (
+      <div className={`${styles.section} ${className || ''}`}>
+        <h2 className="heading-secondary">{emptyTitle}</h2>
+        <h3 className="heading-tertiary">{emptyMessage}</h3>
+      </div>
+    )
+  }
 
   const onDeleteClick = (post: Post) => {
     const confirm = window.confirm(
@@ -196,15 +205,6 @@ const SectionStandard: React.FC<Props> = (props) => {
     )
   }
 
-  if (posts.length === 0 || Object.keys(posts).length == 0) {
-    return (
-      <div className={`${styles.section} ${className || ''}`}>
-        <h2 className="heading-secondary">{emptyTitle}</h2>
-        <h3 className="heading-tertiary">{emptyMessage}</h3>
-      </div>
-    )
-  }
-
   const renderPosts = () => {
     return _.map(props.posts, (post) => {
       if (!post) return null
@@ -245,7 +245,7 @@ const SectionStandard: React.FC<Props> = (props) => {
   }
 
   const renderPageHead = (passedPosts: Post[]) => {
-    if (!setPageHead) return null
+    if (!setPageHead || !passedPosts.length) return null
 
     const [{ title, tags, media, content }] = passedPosts
     let postContent = content || ''

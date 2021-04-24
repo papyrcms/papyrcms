@@ -20,14 +20,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       date.getTime() - 2 * 24 * 60 * 60 * 1000
     )
 
-    // TODO - the date condition might need to be revisited when
-    // introducting other DBs. We'll see though
     const { findAll, EntityType } = database
     const conditions = {
       isPublished: true,
-      date: { $gte: dateFilter },
+      // date: { $gte: dateFilter },
     }
-    const events = await findAll<Event>(EntityType.Event, conditions)
+    let events = await findAll<Event>(EntityType.Event, conditions)
+    // TODO: apply this filter in the db query
+    events = events.filter(
+      (event) => event.date.getTime() >= dateFilter
+    )
     events.sort((a, b) => ((a.date || 0) > (b.date || 0) ? -1 : 1))
 
     return await done(200, events)
