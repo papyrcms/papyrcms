@@ -49,7 +49,7 @@ const AppSettingsForm: React.FC = () => {
               onChange={(event: any) =>
                 setFormSettings({
                   ...formSettings,
-                  [key]: parseInt(event.target.value),
+                  [key]: parseFloat(event.target.value),
                 })
               }
             />

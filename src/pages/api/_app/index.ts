@@ -55,8 +55,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const pages = await findAll<Page>(EntityType.Page)
     response.pages = pages
 
+    const conditions = { isPublished: true }
+
     // Posts
-    const posts = await findAll<Post>(EntityType.Post)
+    const posts = await findAll<Post>(EntityType.Post, conditions)
     posts.sort((a, b) =>
       (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
     )
@@ -64,12 +66,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Blogs
     if (settings.enableBlog) {
-      const blogs = await findAll<Blog>(EntityType.Blog)
+      const blogs = await findAll<Blog>(EntityType.Blog, conditions)
       blogs.sort((a, b) => {
         if (a.publishedAt && b.publishedAt)
-          return a.publishedAt < b.publishedAt ? -1 : 1
-        if (a.publishedAt) return 1
-        if (b.publishedAt) return -1
+          return a.publishedAt > b.publishedAt ? -1 : 1
+        if (a.publishedAt) return -1
+        if (b.publishedAt) return 1
         return (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
       })
       response.blogs = blogs
@@ -77,14 +79,26 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Events
     if (settings.enableEvents) {
-      const events = await findAll<Event>(EntityType.Event)
+      const events = await findAll<Event>(
+        EntityType.Event,
+        conditions
+      )
       events.sort((a, b) => ((a.date || 0) > (b.date || 0) ? -1 : 1))
-      response.events = events
+      const date = new Date()
+      const dateFilter = date.setTime(
+        date.getTime() - 2 * 24 * 60 * 60 * 1000
+      )
+      response.events = events.filter(
+        (event) => event.date.getTime() >= dateFilter
+      )
     }
 
     // Products
     if (settings.enableStore) {
-      const products = await findAll<Product>(EntityType.Product)
+      const products = await findAll<Product>(
+        EntityType.Product,
+        conditions
+      )
       products.sort((a, b) =>
         (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
       )

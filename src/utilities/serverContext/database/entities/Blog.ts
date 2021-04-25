@@ -37,7 +37,7 @@ export class Blog extends PapyrEntity {
   @Column({ default: false })
   isPublished!: boolean
 
-  @Column()
+  @Column({ nullable: true })
   publishedAt?: Date
 
   @OneToMany(() => Comment, (comment) => comment.blog)

@@ -8,9 +8,9 @@ const getBlogs = async (database: Database) => {
   const blogs = await findAll<Blog>(EntityType.Blog)
   blogs.sort((a, b) => {
     if (a.publishedAt && b.publishedAt)
-      return a.publishedAt < b.publishedAt ? -1 : 1
-    if (a.publishedAt) return 1
-    if (b.publishedAt) return -1
+      return a.publishedAt > b.publishedAt ? -1 : 1
+    if (a.publishedAt) return -1
+    if (b.publishedAt) return 1
     return (a.createdAt || 0) < (b.createdAt || 0) ? -1 : 1
   })
   return blogs
