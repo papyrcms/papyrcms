@@ -1,4 +1,8 @@
-import React, { useContext } from 'react'
+import React, {
+  MutableRefObject,
+  ReactElement,
+  useContext,
+} from 'react'
 import axios from 'axios'
 import { userContext } from '@/context'
 import { useForm } from '@/hooks'
@@ -7,6 +11,7 @@ import Button from '../Button'
 import styles from './UserInfoForm.module.scss'
 
 type Props = {
+  submitRef?: MutableRefObject<HTMLButtonElement>
   beforeSubmit?: Function
   onSubmitError?: Function
   onSubmitSuccess?: Function
@@ -21,6 +26,7 @@ const UserInfoForm: React.FC<Props> = (props) => {
     onSubmitSuccess = () => null,
     children,
     useSubmit = true,
+    submitRef,
   } = props
 
   const { currentUser, setCurrentUser } = useContext(userContext)
@@ -211,6 +217,14 @@ const UserInfoForm: React.FC<Props> = (props) => {
   const renderSubmit = () => {
     if (useSubmit) {
       return <Button onClick={handleSubmit}>Submit</Button>
+    } else {
+      return (
+        <button
+          onClick={(event: any) => handleSubmit(event, () => {})}
+          hidden
+          ref={submitRef}
+        ></button>
+      )
     }
   }
 

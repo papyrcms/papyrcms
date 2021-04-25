@@ -1,5 +1,10 @@
 import { Product } from '@/types'
-import React, { useState, useContext } from 'react'
+import React, {
+  useState,
+  useContext,
+  useRef,
+  MutableRefObject,
+} from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import keys from '@/keys'
@@ -30,6 +35,8 @@ const Checkout = (props: { product: Product }) => {
     handleSubmitError,
     setHandleSubmitError,
   ] = useState<Function>(() => null)
+
+  const userInfoRef = useRef<HTMLButtonElement>()
 
   const handleCardSubmit = (
     source: any,
@@ -74,8 +81,9 @@ const Checkout = (props: { product: Product }) => {
     }
     setHandleSubmitSuccess(() => successFunction)
 
-    const userInfoForm = document.getElementById('userInfoForm')
-    if (userInfoForm) userInfoForm.dispatchEvent(new Event('submit'))
+    // const userInfoForm = document.getElementById('userInfoForm')
+    // if (userInfoForm) userInfoForm.dispatchEvent(new Event('submit'))
+    userInfoRef.current?.click()
   }
 
   const renderProductsList = () => {
@@ -104,6 +112,9 @@ const Checkout = (props: { product: Product }) => {
         <h2 className="heading-secondary">Checkout</h2>
 
         <UserInfoForm
+          submitRef={
+            userInfoRef as MutableRefObject<HTMLButtonElement>
+          }
           useSubmit={false}
           onSubmitSuccess={handleSubmitSuccess}
           onSubmitError={handleSubmitError}

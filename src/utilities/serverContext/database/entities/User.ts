@@ -197,21 +197,31 @@ export class User extends PapyrEntity {
     }
 
     if (cartProducts.length > user.cart.length) {
+      // Currently, this should only ever be one or all
+      let productsToRemove = cartProducts.length - user.cart.length
       // Remove from cart
       for (const cartProduct of cartProducts) {
-        const removedFromCart = !user.cart.some(
-          (product) => product.id === cartProduct.productId
-        )
+        const removedFromCart =
+          user.cart.filter(
+            (product) => cartProduct.productId === product.id
+          ).length <
+          cartProducts.filter(
+            (cartProd) => cartProd.productId === cartProduct.productId
+          ).length
         if (removedFromCart) {
+          productsToRemove--
           await cartProduct.remove()
         }
+        if (!productsToRemove) break
       }
     } else {
       // Add to cart
       for (const product of user.cart) {
-        const addedToCart = !cartProducts.some(
-          (cartProduct) => cartProduct.productId === product.id
-        )
+        const addedToCart =
+          cartProducts.filter(
+            (cartProduct) => cartProduct.productId === product.id
+          ).length <
+          user.cart.filter((prod) => prod.id === product.id).length
         if (addedToCart) {
           await cartProdRepo
             .create({
@@ -219,6 +229,8 @@ export class User extends PapyrEntity {
               productId: product.id,
             })
             .save()
+          // Only ever add one at a time
+          break
         }
       }
     }
