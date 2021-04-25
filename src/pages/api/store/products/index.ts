@@ -13,35 +13,18 @@ const getProducts = async (database: Database) => {
 }
 
 const createProduct = async (body: any, database: Database) => {
-  const {
-    title,
-    content,
-    tags,
-    media,
-    subImages,
-    isPublished,
-    created,
-    price,
-    quantity,
-  } = body
+  const { title, tags } = body
 
   const productData = {
-    id: '',
-    title,
-    content,
+    ...body,
     tags: _.map(_.split(tags, ','), (tag) => tag.trim()),
-    media,
-    subImages,
-    isPublished,
-    created,
-    price,
-    quantity,
     slug: title.replace(/\s+/g, '-').toLowerCase(),
   } as Product
 
   const { save, EntityType } = database
+  const product = await save<Product>(EntityType.Product, productData)
 
-  return await save<Product>(EntityType.Product, productData)
+  return product
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

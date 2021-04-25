@@ -225,12 +225,12 @@ describe('/api/store', () => {
 
         const { data: updatedOrder, status } = await axios.put(
           `${rootURL}/api/store/orders/${order.id}`,
-          { shipped: true },
+          { isShipped: true },
           axiosConfig
         )
 
         expect(status).to.equal(200) &&
-          expect(updatedOrder.shipped).to.equal(true)
+          expect(updatedOrder.isShipped).to.equal(true)
       }).timeout(10000)
 
       it('deletes the order', async () => {

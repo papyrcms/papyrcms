@@ -20,12 +20,13 @@ describe('/api/utility', () => {
         googleAnalyticsId,
         googleMapsKey,
         stripePublishableKey,
+        tinyMceKey,
       } = publicKeys
 
-      expect(publicKeys).to.exist &&
-        expect(googleAnalyticsId).to.be.a('string') &&
+      expect(googleAnalyticsId).to.be.a('string') &&
         expect(googleMapsKey).to.be.a('string') &&
-        expect(stripePublishableKey).to.be.a('string')
+        expect(stripePublishableKey).to.be.a('string') &&
+        expect(tinyMceKey).to.be.a('string')
     }).timeout(10000)
   })
 
@@ -81,8 +82,7 @@ describe('/api/utility', () => {
         info
       )
 
-      expect(charge).to.exist &&
-        expect(charge.object).to.equal('charge') &&
+      expect(charge.object).to.equal('charge') &&
         expect(charge.status).to.equal('succeeded') &&
         expect(charge.amount).to.equal(100)
     }).timeout(10000)

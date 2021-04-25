@@ -159,7 +159,7 @@ describe('/api/users', () => {
       })
 
       expect(response.data.message).to.equal('user deleted') &&
-        expect(deletedUser).to.equal(null)
+        expect(deletedUser).to.equal(undefined)
     }).timeout(10000)
   })
 })

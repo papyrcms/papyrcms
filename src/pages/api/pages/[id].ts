@@ -53,7 +53,7 @@ const updatePage = async (
         }
       }
     )
-    body.section.tags = _.filter(tags, (tag) => !!tag) as string[]
+    section.tags = _.filter(tags, (tag) => !!tag) as string[]
   })
 
   // Make sure the page has at least one section

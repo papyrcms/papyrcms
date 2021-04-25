@@ -149,7 +149,7 @@ class Mailer {
         emailSubject = subject
       } catch (e) {
         // console.error('There was an error getting the HTML file', e)
-        // return false
+        return false
       }
     }
 

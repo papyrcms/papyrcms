@@ -42,11 +42,14 @@ const Form: React.FC<Props> = (props) => {
         id="publish-checkbox"
         className={styles.checkbox}
         type="checkbox"
-        name="published"
+        name="isPublished"
         checked={values.isPublished}
         onChange={(event) =>
           handleChange({
-            target: { name: 'published', value: !values.isPublished },
+            target: {
+              name: 'isPublished',
+              value: !values.isPublished,
+            },
           })
         }
       />

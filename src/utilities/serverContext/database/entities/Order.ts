@@ -27,7 +27,7 @@ export class Order extends PapyrEntity {
   @Column({ default: false })
   isShipped!: boolean
 
-  @Column()
+  @Column({ nullable: true })
   userId?: string
 
   @ManyToOne(() => User, (user) => user.orders, {

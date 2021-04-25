@@ -90,6 +90,7 @@ export class Product extends PapyrEntity {
     }
 
     foundProduct.title = product.title
+    foundProduct.content = product.content
     foundProduct.slug = product.slug
     foundProduct.tags = product.tags.join(', ')
     foundProduct.media = product.media

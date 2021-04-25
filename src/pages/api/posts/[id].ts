@@ -62,7 +62,7 @@ const updatePost = async (
     await mailer.sendBulkEmail(updated)
   }
 
-  return post
+  return updated
 }
 
 const deletePost = async (id: string, database: Database) => {
