@@ -28,7 +28,7 @@ export class Page extends PapyrEntity {
   @Index()
   route!: string
 
-  @Column('int', { default: 0 })
+  @Column('float', { default: 0 })
   navOrder!: number
 
   @Column('text', { default: '' })
