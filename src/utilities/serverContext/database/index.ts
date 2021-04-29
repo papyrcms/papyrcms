@@ -27,14 +27,16 @@ export const init = async (
     name: connectionName,
     type: keys.databaseDriver,
     url: keys.databaseURI,
-    synchronize: true,
+    synchronize: true, // !__prod__,
     logging: false, // !__prod__,
     entities: Object.values(entities),
     migrations: [],
     subscribers: [],
+    ssl: __prod__,
     extra: {
-      ssl: __prod__,
-      rejectUnauthorized: !__prod__,
+      ssl: {
+        rejectUnauthorized: !__prod__,
+      },
     },
   }
 
