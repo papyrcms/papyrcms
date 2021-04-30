@@ -91,6 +91,9 @@ const Layout: React.FC = (props) => {
         description={descriptionContent}
         keywords={keywords}
       >
+        <style>
+          {typeof window !== 'undefined' ? FontAwesome.dom.css() : ''}
+        </style>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"

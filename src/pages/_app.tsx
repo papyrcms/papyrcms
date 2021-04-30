@@ -55,6 +55,7 @@ const App = (props: Props) => {
     if (gaInitialized) {
       logPageView()
     }
+    FontAwesome.config.autoAddCss = false
   }, [asPath])
 
   return (
