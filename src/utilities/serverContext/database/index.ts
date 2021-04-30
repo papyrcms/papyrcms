@@ -35,7 +35,7 @@ export const init = async (
     ssl: __prod__,
     extra: {
       ssl: {
-        rejectUnauthorized: !__prod__,
+        rejectUnauthorized: false, // !__prod__,
       },
     },
   }
