@@ -2,11 +2,11 @@ export default {
   stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
 
-  gmailClientId: process.env.GMAIL_CLIENTid,
+  gmailClientId: process.env.GMAIL_CLIENT_ID,
   gmailClientSecret: process.env.GMAIL_CLIENT_SECRET,
   gmailRefreshToken: process.env.GMAIL_REFRESH_TOKEN,
 
-  googleAnalyticsId: process.env.GOOGLE_ANALYTICSid,
+  googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
   googleMapsKey: process.env.GOOGLE_MAPS_KEY,
 
   siteEmail: process.env.SITE_EMAIL,
