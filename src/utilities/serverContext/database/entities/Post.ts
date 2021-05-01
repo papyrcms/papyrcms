@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Post extends PapyrEntity {
@@ -23,7 +24,7 @@ export class Post extends PapyrEntity {
   @Index()
   slug!: string
 
-  @Column('text', { default: '' })
+  @DbAwareColumn({ type: 'text' })
   content!: string
 
   @Column({ default: '' })
@@ -71,7 +72,7 @@ export class Post extends PapyrEntity {
     foundPost.slug = post.slug
     foundPost.tags = post.tags.join(', ')
     foundPost.media = post.media
-    foundPost.content = post.content
+    foundPost.content = post.content || ''
     foundPost.isPublished = post.isPublished
 
     foundPost = await foundPost.save()

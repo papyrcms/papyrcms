@@ -11,6 +11,7 @@ import {
 import { Section } from './Section'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Page extends PapyrEntity {
@@ -25,13 +26,12 @@ export class Page extends PapyrEntity {
   className!: string
 
   @Column({ default: '', unique: true })
-  @Index()
   route!: string
 
   @Column('float', { default: 0 })
   navOrder!: number
 
-  @Column('text', { default: '' })
+  @DbAwareColumn({ type: 'text' })
   css!: string
 
   @Column({ default: false })
@@ -94,7 +94,7 @@ export class Page extends PapyrEntity {
     foundPage.className = page.className
     foundPage.route = page.route
     foundPage.navOrder = page.navOrder
-    foundPage.css = page.css
+    foundPage.css = page.css || ''
     foundPage.omitDefaultHeader = page.omitDefaultHeader
     foundPage.omitDefaultFooter = page.omitDefaultFooter
 

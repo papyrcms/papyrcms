@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Event extends PapyrEntity {
@@ -23,7 +24,7 @@ export class Event extends PapyrEntity {
   @Index()
   slug!: string
 
-  @Column('text', { default: '' })
+  @DbAwareColumn({ type: 'text' })
   content!: string
 
   @Column({ default: '' })
@@ -89,7 +90,7 @@ export class Event extends PapyrEntity {
     foundEvent.slug = event.slug
     foundEvent.tags = event.tags.join(', ')
     foundEvent.media = event.media
-    foundEvent.content = event.content
+    foundEvent.content = event.content || ''
     foundEvent.isPublished = event.isPublished
     foundEvent.latitude = event.latitude
     foundEvent.longitude = event.longitude

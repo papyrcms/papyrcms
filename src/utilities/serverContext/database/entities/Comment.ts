@@ -13,6 +13,7 @@ import { Blog } from './Blog'
 import { User } from './User'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Comment extends PapyrEntity {
@@ -20,7 +21,7 @@ export class Comment extends PapyrEntity {
   @Index()
   id!: string
 
-  @Column('text')
+  @DbAwareColumn({ type: 'text' })
   content!: string
 
   @Column()

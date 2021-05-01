@@ -12,6 +12,7 @@ import { CartProduct } from './CartProduct'
 import { OrderedProduct } from './OrderedProduct'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Product extends PapyrEntity {
@@ -26,7 +27,7 @@ export class Product extends PapyrEntity {
   @Index()
   slug!: string
 
-  @Column('text', { default: '' })
+  @DbAwareColumn({ type: 'text' })
   content!: string
 
   @Column({ default: '' })
@@ -90,7 +91,7 @@ export class Product extends PapyrEntity {
     }
 
     foundProduct.title = product.title
-    foundProduct.content = product.content
+    foundProduct.content = product.content || ''
     foundProduct.slug = product.slug
     foundProduct.tags = product.tags.join(', ')
     foundProduct.media = product.media

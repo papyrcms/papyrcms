@@ -11,6 +11,7 @@ import {
 import { Comment } from './Comment'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Blog extends PapyrEntity {
@@ -25,7 +26,7 @@ export class Blog extends PapyrEntity {
   @Index()
   slug!: string
 
-  @Column('text', { default: '' })
+  @DbAwareColumn({ type: 'text' })
   content!: string
 
   @Column({ default: '' })
@@ -95,7 +96,7 @@ export class Blog extends PapyrEntity {
     foundBlog.slug = blog.slug
     foundBlog.tags = blog.tags.join(', ')
     foundBlog.media = blog.media
-    foundBlog.content = blog.content
+    foundBlog.content = blog.content || ''
     foundBlog.isPublished = blog.isPublished
 
     foundBlog.publishedAt =

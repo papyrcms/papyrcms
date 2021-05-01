@@ -14,6 +14,7 @@ import { OrderedProduct } from './OrderedProduct'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
 import { Product } from './Product'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Order extends PapyrEntity {
@@ -21,7 +22,7 @@ export class Order extends PapyrEntity {
   @Index()
   id!: string
 
-  @Column('text')
+  @DbAwareColumn({ type: 'text' })
   notes?: string
 
   @Column({ default: false })

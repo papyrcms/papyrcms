@@ -21,7 +21,6 @@ export class User extends PapyrEntity {
   @Index()
   id!: string
 
-  @Index()
   @Column({ unique: true })
   email!: string
 

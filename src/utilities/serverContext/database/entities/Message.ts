@@ -9,6 +9,7 @@ import {
 } from 'typeorm'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwareColumn } from '../utilities'
 
 @Entity()
 export class Message extends PapyrEntity {
@@ -22,7 +23,7 @@ export class Message extends PapyrEntity {
   @Column()
   email!: string
 
-  @Column('text')
+  @DbAwareColumn({ type: 'text' })
   message!: string
 
   @Column()
