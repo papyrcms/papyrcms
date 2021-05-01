@@ -29,6 +29,11 @@ const Init = () => {
 
   const formState = useForm(INITIAL_STATE)
 
+  const clickNextModal = (id: string) => {
+    const nextModal = document.getElementById(id)
+    if (nextModal) nextModal.click()
+  }
+
   useEffect(() => {
     clickNextModal('auth-modal')
   }, [])
@@ -184,11 +189,6 @@ const Init = () => {
         <input className="button button-primary" type="submit" />
       </form>
     )
-  }
-
-  const clickNextModal = (id: string) => {
-    const nextModal = document.getElementById(id)
-    if (nextModal) nextModal.click()
   }
 
   const renderModals = () => {
