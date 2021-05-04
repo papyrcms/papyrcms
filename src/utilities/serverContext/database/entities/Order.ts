@@ -3,10 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   getRepository,
-  Index,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { User } from './User'
@@ -14,12 +12,15 @@ import { OrderedProduct } from './OrderedProduct'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
 import { Product } from './Product'
-import { DbAwareColumn } from '../utilities'
+import {
+  DbAwareColumn,
+  DbAwarePGC,
+  sanitizeConditions,
+} from '../utilities'
 
 @Entity()
 export class Order extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @DbAwareColumn({ type: 'text' })
@@ -54,24 +55,39 @@ export class Order extends PapyrEntity {
     )
     const userRepo = getRepository<User>('User')
     const orderedProducts = await orderedProdRepo.find({
-      where: {
-        orderId: this.id,
-      },
+      where: sanitizeConditions({
+        orderId: this.id.toString(),
+      }),
       relations: ['product'],
     })
+
+    // Fake join if necessary (mongo)
+    if (orderedProducts.some((cp) => !cp.product)) {
+      const productRepo = getRepository<Product>('Product')
+      for (const orderedProduct of orderedProducts) {
+        if (orderedProduct.product) continue
+
+        orderedProduct.product = (await productRepo.findOne({
+          where: sanitizeConditions({
+            id: orderedProduct.productId,
+          }),
+        })) as Product
+      }
+    }
+
     const products = orderedProducts.map((orderedProduct) => {
       return (orderedProduct.product as Product).toModel()
     })
 
     const userEntity = await userRepo.findOne({
-      where: {
+      where: sanitizeConditions({
         id: this.userId,
-      },
+      }),
     })
     const user = await userEntity?.toModel()
 
     return {
-      id: this.id,
+      id: this.id.toString(),
       notes: this.notes || '',
       products,
       user,
@@ -88,11 +104,14 @@ export class Order extends PapyrEntity {
     const orderedProdRepo = getRepository<OrderedProduct>(
       'OrderedProduct'
     )
-    let foundOrder = await orderRepo.findOne({
-      where: {
-        id: order.id,
-      },
-    })
+    let foundOrder
+    if (order.id) {
+      foundOrder = await orderRepo.findOne({
+        where: sanitizeConditions({
+          id: order.id,
+        }),
+      })
+    }
 
     if (!foundOrder) {
       foundOrder = orderRepo.create()
@@ -108,8 +127,8 @@ export class Order extends PapyrEntity {
       for (const product of order.products) {
         await orderedProdRepo
           .create({
-            orderId: foundOrder?.id,
-            productId: product.id,
+            orderId: foundOrder.id.toString(),
+            productId: product.id.toString(),
           })
           .save()
       }

@@ -2,23 +2,20 @@ import {
   BaseEntity,
   CreateDateColumn,
   Entity,
-  Index,
   ManyToOne,
   PrimaryColumn,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { Product } from './Product'
 import { Order } from './Order'
+import { DbAwarePGC } from '../utilities'
 
 @Entity()
 export class OrderedProduct extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @PrimaryColumn()
-  @Index()
   productId!: string
 
   @ManyToOne(() => Product, (product) => product.productOrders, {
@@ -27,7 +24,6 @@ export class OrderedProduct extends BaseEntity {
   product!: Partial<Product>
 
   @PrimaryColumn()
-  @Index()
   orderId!: string
 
   @ManyToOne(() => Order, (order) => order.orderedProducts, {

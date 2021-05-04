@@ -5,17 +5,16 @@ import {
   getRepository,
   Index,
   ManyToOne,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { Option } from './Option'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwarePGC, sanitizeConditions } from '../utilities'
 
 @Entity()
 export class Settings extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column()
@@ -36,9 +35,9 @@ export class Settings extends PapyrEntity {
   async toModel(): Promise<types.Settings> {
     const optionRepo = getRepository<Option>('Option')
     const optionEntities = await optionRepo.find({
-      where: {
-        settingsId: this.id,
-      },
+      where: sanitizeConditions({
+        settingsId: this.id.toString(),
+      }),
     })
     const options = optionEntities.reduce((options, option) => {
       options[option.key] = option.getParsedValue()
@@ -46,7 +45,7 @@ export class Settings extends PapyrEntity {
     }, {} as Record<string, any>)
 
     return {
-      id: this.id,
+      id: this.id.toString(),
       name: this.name,
       options,
       createdAt: new Date(this.createdAt),
@@ -59,22 +58,25 @@ export class Settings extends PapyrEntity {
   ): Promise<types.Settings> {
     const settingsRepo = getRepository<Settings>('Settings')
     const optionsRepo = getRepository<Option>('Option')
-
-    let foundSettings = await settingsRepo.findOne({
-      where: {
-        id: settings.id,
-      },
-      // relations: ['options'],
-    })
+    let foundSettings
+    debugger
+    if (settings.id) {
+      foundSettings = await settingsRepo.findOne({
+        where: sanitizeConditions({
+          id: settings.id,
+        }),
+        // relations: ['options'],
+      })
+    }
 
     if (!foundSettings) {
       foundSettings = settingsRepo.create()
       foundSettings.options = []
     } else {
       foundSettings.options = await optionsRepo.find({
-        where: {
-          settingsId: settings.id,
-        },
+        where: sanitizeConditions({
+          settingsId: settings.id.toString(),
+        }),
       })
     }
 
@@ -91,7 +93,7 @@ export class Settings extends PapyrEntity {
       foundOption.key = key
       foundOption.value = settings.options[key].toString()
       foundOption.type = Option.getValueType(settings.options[key])
-      foundOption.settingsId = foundSettings.id
+      foundOption.settingsId = foundSettings.id.toString()
       await foundOption.save()
     }
 

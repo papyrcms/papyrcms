@@ -3,18 +3,19 @@ import {
   CreateDateColumn,
   Entity,
   getRepository,
-  Index,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
-import { DbAwareColumn } from '../utilities'
+import {
+  DbAwareColumn,
+  DbAwarePGC,
+  sanitizeConditions,
+} from '../utilities'
 
 @Entity()
 export class Message extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column()
@@ -37,7 +38,7 @@ export class Message extends PapyrEntity {
 
   toModel(): types.Message {
     return {
-      id: this.id,
+      id: this.id.toString(),
       name: this.name,
       email: this.email,
       message: this.message,
@@ -48,23 +49,27 @@ export class Message extends PapyrEntity {
   }
 
   static async saveFromModel(
-    event: types.Message
+    message: types.Message
   ): Promise<types.Message> {
     const messageRepo = getRepository<Message>('Message')
-    let foundMessage = await messageRepo.findOne({
-      where: {
-        id: event.id,
-      },
-    })
+    let foundMessage
+
+    if (message.id) {
+      foundMessage = await messageRepo.findOne({
+        where: sanitizeConditions({
+          id: message.id,
+        }),
+      })
+    }
 
     if (!foundMessage) {
       foundMessage = messageRepo.create()
     }
 
-    foundMessage.name = event.name
-    foundMessage.email = event.email
-    foundMessage.message = event.message
-    foundMessage.emailSent = event.emailSent
+    foundMessage.name = message.name
+    foundMessage.email = message.email
+    foundMessage.message = message.message
+    foundMessage.emailSent = message.emailSent
 
     foundMessage = await foundMessage.save()
 

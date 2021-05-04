@@ -3,9 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   getRepository,
-  Index,
   OneToMany,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { Order } from './Order'
@@ -14,11 +12,11 @@ import { Comment } from './Comment'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
 import { Product } from './Product'
+import { DbAwarePGC, sanitizeConditions } from '../utilities'
 
 @Entity()
 export class User extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column({ unique: true })
@@ -105,17 +103,32 @@ export class User extends PapyrEntity {
   async toModel(): Promise<types.User> {
     const cartProdRepo = getRepository<CartProduct>('CartProduct')
     const connectedProducts = await cartProdRepo.find({
-      where: {
-        userId: this.id,
-      },
+      where: sanitizeConditions({
+        userId: this.id.toString(),
+      }),
       relations: ['product'],
     })
-    const cart = connectedProducts.map((connectedProduct) =>
-      (connectedProduct.product as Product).toModel()
-    )
+
+    // Fake join if necessary (mongo)
+    if (connectedProducts.some((cp) => !cp.product)) {
+      const productRepo = getRepository<Product>('Product')
+      for (const connectedProduct of connectedProducts) {
+        if (connectedProduct.product) continue
+
+        connectedProduct.product = (await productRepo.findOne({
+          where: sanitizeConditions({
+            id: connectedProduct.productId,
+          }),
+        })) as Product
+      }
+    }
+
+    const cart = connectedProducts.map((connectedProduct) => {
+      return (connectedProduct.product as Product).toModel()
+    })
 
     return {
-      id: this.id,
+      id: this.id.toString(),
       email: this.email,
       password: this.password,
       firstName: this.firstName,
@@ -148,11 +161,14 @@ export class User extends PapyrEntity {
     const userRepo = getRepository<User>('User')
     const cartProdRepo = getRepository<CartProduct>('CartProduct')
 
-    let foundUser = await userRepo.findOne({
-      where: {
-        id: user.id,
-      },
-    })
+    let foundUser
+    if (user.id) {
+      foundUser = await userRepo.findOne({
+        where: sanitizeConditions({
+          id: user.id,
+        }),
+      })
+    }
 
     if (!foundUser) {
       foundUser = userRepo.create()
@@ -186,9 +202,9 @@ export class User extends PapyrEntity {
     // Note: This assumes products will only ever be added OR removed
     // from the cart in one transaction. Should that change, this needs redone
     const cartProducts = await cartProdRepo.find({
-      where: {
-        userId: user.id,
-      },
+      where: sanitizeConditions({
+        userId: foundUser.id.toString(),
+      }),
     })
 
     if (!user.cart) {
@@ -224,8 +240,8 @@ export class User extends PapyrEntity {
         if (addedToCart) {
           await cartProdRepo
             .create({
-              userId: user.id,
-              productId: product.id,
+              userId: user.id.toString(),
+              productId: product.id.toString(),
             })
             .save()
           // Only ever add one at a time

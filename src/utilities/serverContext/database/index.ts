@@ -9,6 +9,7 @@ import keys from '../../../config/keys'
 import * as types from '../../../types'
 import * as entities from './entities'
 import { PapyrEntity } from './entities/PapyrEntity'
+import { sanitizeConditions } from './utilities'
 
 export const init = async (
   connectionName: string = 'default'
@@ -119,7 +120,7 @@ export const findOne = async <M extends types.DbModel>(
 ): Promise<M | undefined> => {
   const repository = getRepository(EntityType[entityType])
   const foundEntity = (await repository.findOne({
-    where: conditions,
+    where: sanitizeConditions(conditions),
   })) as PapyrEntity
   return (await foundEntity?.toModel()) as M
 }
@@ -130,7 +131,7 @@ export const findAll = async <M extends types.DbModel>(
 ): Promise<M[]> => {
   const repository = getRepository(EntityType[entityType])
   const foundEntities = (await repository.find({
-    where: conditions ?? {},
+    where: sanitizeConditions(conditions ?? {}),
   })) as PapyrEntity[]
   const entityModels: M[] = []
 
@@ -156,7 +157,7 @@ export const destroy = async (
 ): Promise<boolean> => {
   const repository = getRepository(EntityType[entityType])
   const foundEntity = (await repository.findOne({
-    where: { id: model.id },
+    where: sanitizeConditions({ id: model.id }),
   })) as PapyrEntity
   return !!(await foundEntity?.remove())
 }
@@ -166,7 +167,9 @@ export const destroyAll = async (
   conditions?: Record<string, any>
 ): Promise<boolean> => {
   const repository = getRepository(EntityType[entityType])
-  return !!(await repository.delete(conditions ?? {}))
+  return !!(await repository.delete(
+    sanitizeConditions(conditions ?? {})
+  ))
 }
 
 export const countAll = async (
@@ -174,5 +177,5 @@ export const countAll = async (
   conditions?: Record<string, any>
 ): Promise<number> => {
   const repository = getRepository(EntityType[entityType])
-  return await repository.count(conditions ?? {})
+  return await repository.count(sanitizeConditions(conditions ?? {}))
 }

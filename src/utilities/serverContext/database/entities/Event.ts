@@ -4,17 +4,19 @@ import {
   Entity,
   getRepository,
   Index,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
-import { DbAwareColumn } from '../utilities'
+import {
+  DbAwareColumn,
+  DbAwarePGC,
+  sanitizeConditions,
+} from '../utilities'
 
 @Entity()
 export class Event extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column({ default: '' })
@@ -56,7 +58,7 @@ export class Event extends PapyrEntity {
 
   toModel(): types.Event {
     return {
-      id: this.id,
+      id: this.id.toString(),
       title: this.title,
       tags: this.tags.split(',').map((tag) => tag.trim()),
       slug: this.slug,
@@ -76,11 +78,15 @@ export class Event extends PapyrEntity {
     event: types.Event
   ): Promise<types.Event> {
     const eventRepo = getRepository<Event>('Event')
-    let foundEvent = await eventRepo.findOne({
-      where: {
-        id: event.id,
-      },
-    })
+    let foundEvent
+
+    if (event.id) {
+      foundEvent = await eventRepo.findOne({
+        where: sanitizeConditions({
+          id: event.id,
+        }),
+      })
+    }
 
     if (!foundEvent) {
       foundEvent = eventRepo.create()
@@ -92,7 +98,13 @@ export class Event extends PapyrEntity {
     foundEvent.media = event.media
     foundEvent.content = event.content || ''
     foundEvent.isPublished = event.isPublished
+    if (typeof event.latitude === 'string') {
+      event.latitude = parseFloat(event.latitude)
+    }
     foundEvent.latitude = event.latitude
+    if (typeof event.longitude === 'string') {
+      event.longitude = parseFloat(event.longitude)
+    }
     foundEvent.longitude = event.longitude
     foundEvent.address = event.address
     foundEvent.date = event.date

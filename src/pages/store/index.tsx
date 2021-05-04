@@ -33,7 +33,7 @@ const StorePage = () => {
       }
       fetchProducts()
     }
-  }, [products, currentUser])
+  }, [currentUser])
 
   const renderPriceAndQuantity = (product: Product) => {
     return (

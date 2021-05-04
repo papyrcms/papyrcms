@@ -4,17 +4,19 @@ import {
   Entity,
   getRepository,
   Index,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
-import { DbAwareColumn } from '../utilities'
+import {
+  DbAwareColumn,
+  DbAwarePGC,
+  sanitizeConditions,
+} from '../utilities'
 
 @Entity()
 export class Post extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column({ default: '' })
@@ -44,7 +46,7 @@ export class Post extends PapyrEntity {
 
   toModel(): types.Post {
     return {
-      id: this.id,
+      id: this.id.toString(),
       title: this.title,
       tags: this.tags.split(',').map((tag) => tag.trim()),
       slug: this.slug,
@@ -58,11 +60,15 @@ export class Post extends PapyrEntity {
 
   static async saveFromModel(post: types.Post): Promise<types.Post> {
     const postRepo = getRepository<Post>('Post')
-    let foundPost = await postRepo.findOne({
-      where: {
-        id: post.id,
-      },
-    })
+    let foundPost
+
+    if (post.id) {
+      foundPost = await postRepo.findOne({
+        where: sanitizeConditions({
+          id: post.id,
+        }),
+      })
+    }
 
     if (!foundPost) {
       foundPost = postRepo.create()

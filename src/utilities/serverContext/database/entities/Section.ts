@@ -5,17 +5,16 @@ import {
   getRepository,
   Index,
   OneToMany,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { Page } from './Page'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
+import { DbAwarePGC, sanitizeConditions } from '../utilities'
 
 @Entity()
 export class Section extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column()
@@ -51,7 +50,7 @@ export class Section extends PapyrEntity {
 
   toModel(): types.Section {
     return {
-      id: this.id,
+      id: this.id.toString(),
       order: this.order,
       pageId: this.pageId,
       type: this.type,
@@ -68,11 +67,15 @@ export class Section extends PapyrEntity {
     section: types.Section
   ): Promise<types.Section> {
     const sectionRepo = getRepository<Section>('Section')
-    let foundSection = await sectionRepo.findOne({
-      where: {
-        id: section.id,
-      },
-    })
+    let foundSection
+
+    if (section.id) {
+      foundSection = await sectionRepo.findOne({
+        where: sanitizeConditions({
+          id: section.id,
+        }),
+      })
+    }
 
     if (!foundSection) {
       foundSection = sectionRepo.create()

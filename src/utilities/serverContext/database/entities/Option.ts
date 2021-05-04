@@ -5,15 +5,14 @@ import {
   Entity,
   Index,
   OneToMany,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
+import { DbAwarePGC } from '../utilities'
 import { Settings } from './Settings'
 
 @Entity()
 export class Option extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column()

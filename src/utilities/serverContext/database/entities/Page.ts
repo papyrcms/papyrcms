@@ -3,20 +3,21 @@ import {
   CreateDateColumn,
   Entity,
   getRepository,
-  Index,
   ManyToOne,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 import { Section } from './Section'
 import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
-import { DbAwareColumn } from '../utilities'
+import {
+  DbAwareColumn,
+  DbAwarePGC,
+  sanitizeConditions,
+} from '../utilities'
 
 @Entity()
 export class Page extends PapyrEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Index()
+  @DbAwarePGC()
   id!: string
 
   @Column({ default: '' })
@@ -54,9 +55,9 @@ export class Page extends PapyrEntity {
   async toModel(): Promise<types.Page> {
     const sectionRepo = getRepository<Section>('Section')
     let sectionEntities = await sectionRepo.find({
-      where: {
+      where: sanitizeConditions({
         pageId: this.id,
-      },
+      }),
       order: { order: 'ASC' },
     })
     const sections = sectionEntities.map((section) =>
@@ -64,7 +65,7 @@ export class Page extends PapyrEntity {
     )
 
     return {
-      id: this.id,
+      id: this.id.toString(),
       title: this.title,
       className: this.className,
       route: this.route,
@@ -80,11 +81,15 @@ export class Page extends PapyrEntity {
 
   static async saveFromModel(page: types.Page): Promise<types.Page> {
     const pageRepo = getRepository<Page>('Page')
-    let foundPage = await pageRepo.findOne({
-      where: {
-        id: page.id,
-      },
-    })
+    let foundPage
+
+    if (page.id) {
+      foundPage = await pageRepo.findOne({
+        where: sanitizeConditions({
+          id: page.id,
+        }),
+      })
+    }
 
     if (!foundPage) {
       foundPage = pageRepo.create()
