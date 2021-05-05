@@ -87,8 +87,6 @@ The following keys can be obtained by signing up for an account at cloudinary.co
   - mysql
   - mariadb
   - postgres
-  - mssql
-  - sqlite
 
 - mongoURI (deprecated): The MongoDB specific URI for your database.
 
