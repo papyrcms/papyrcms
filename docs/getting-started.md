@@ -1,10 +1,10 @@
 ## Getting Started
 
-Starting a Papyr website can be super quick and easy. In order to follow these instructions, you'll need git, nvm, and npm.
+Starting a Papyr website can be super quick and easy. In order to follow these instructions, you'll need git, and npm.
 
 ### Environment Setup
 
-Fork or copy the repo and clone it into your own environment. Next, run `nvm use` to make sure you're using the right Node version (lower versions can cause problems with Node's debugger with Next. If you insist on a lower version and have problems running it, try removing `NODE_OPTIONS=\"--inspect\"` from the start script). Then run `npm install`.
+Fork or copy the repo and clone it into your own environment. Then run `npm install`.
 
 ### Config Variables
 
