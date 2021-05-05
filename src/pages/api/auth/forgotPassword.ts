@@ -50,6 +50,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       passwordResetLink: `${
         keys.rootURL
       }/forgotPassword?token=${jwt.sign({ email }, keys.jwtSecret)}`,
+      website: keys.rootURL,
     }
     mailer.sendEmail(variables, email, 'forgot-password', subject)
 
