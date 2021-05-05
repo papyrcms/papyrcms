@@ -88,7 +88,7 @@ The following keys can be obtained by signing up for an account at cloudinary.co
   - mariadb
   - postgres
 
-- mongoURI (deprecated): The MongoDB specific URI for your database.
+- `mongoURI` (deprecated): The MongoDB specific URI for your database.
 
 ### Etc (Required for site use)
 
