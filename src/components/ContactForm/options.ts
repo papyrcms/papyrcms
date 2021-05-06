@@ -5,8 +5,8 @@ export const options: SectionOptions = {
     component: 'ContactForm',
     name: 'Contact Form',
     description:
-      'This is a simple contact form where people can leave their name, email, and a message for you. It is not content-based.',
-    inputs: ['className'],
+      'This is a simple contact form where people can leave their name, email, and a message for you. If you include a post, the message will initially be populated by the post content.',
+    inputs: ['className', 'tags', 'maxPosts'],
     // maxPosts: null,
     defaultProps: {},
   },

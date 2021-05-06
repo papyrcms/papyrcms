@@ -3,12 +3,18 @@ import { userContext } from '@/context'
 import { Input, Button } from '@/components'
 import { useForm } from '@/hooks'
 import styles from './ContactForm.module.scss'
+import { Post } from '@/types'
+
+type Props = {
+  className?: string
+  post?: Post
+}
 
 /**
  * ContactForm is the main contact form component
  */
-const ContactForm: React.FC<{ className?: string }> = (props) => {
-  const { className } = props
+const ContactForm: React.FC<Props> = (props) => {
+  const { className, post } = props
   const { currentUser } = useContext(userContext)
 
   let name = ''
@@ -27,13 +33,23 @@ const ContactForm: React.FC<{ className?: string }> = (props) => {
     email = currentUser.email ? currentUser.email : ''
   }
 
+  let message = ''
+  if (post?.content) {
+    message = post.content.replace('<p>', '').replace('</p>', '')
+  }
+
   const {
     values,
     handleChange,
     errors,
     validateField,
     submitForm,
-  } = useForm({ name, email, message: '', validation: '' })
+  } = useForm({
+    name,
+    email,
+    message,
+    validation: '',
+  })
 
   const handleSubmit = (event: any, resetButton: Function) => {
     event.preventDefault()

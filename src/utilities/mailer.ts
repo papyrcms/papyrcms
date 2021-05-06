@@ -81,7 +81,7 @@ class Mailer {
     return template
   }
 
-  async sendBulkEmail(post: Post) {
+  async sendBulkEmail(post: Post): Promise<boolean> {
     const { findAll, EntityType } = this.database
     const subscribedUsers = await findAll<User>(EntityType.User, {
       isSubscribed: true,
