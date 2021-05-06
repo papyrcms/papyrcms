@@ -29,7 +29,7 @@ const createPage = async (body: any, database: Database) => {
     }
 
     // Make sure the section has a valid maxPosts
-    if (section.maxPosts < 1 || section.maxPosts % 1 !== 0) {
+    if (section.maxPosts < 0 || section.maxPosts % 1 !== 0) {
       throw new Error(
         'You can only choose positive integers for max posts.'
       )
