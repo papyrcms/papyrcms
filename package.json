@@ -29,7 +29,6 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mongodb": "^3.6.6",
-    "mssql": "^6.3.1",
     "mysql2": "^2.2.5",
     "next": "^10.2.0",
     "nodemailer": "^6.6.0",
@@ -42,9 +41,7 @@
     "react-tinymce": "^0.7.0",
     "reflect-metadata": "^0.1.13",
     "sanitize-html": "^2.3.3",
-    "sql.js": "^1.5.0",
-    "sqlite3": "^5.0.2",
-    "stripe": "^8.146.0",
+    "stripe": "^8.148.0",
     "swagger-ui-react": "^3.48.0",
     "typeorm": "^0.2.32"
   },

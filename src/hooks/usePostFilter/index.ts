@@ -32,7 +32,7 @@ const usePostFilter = <T extends Post>(
   const filterByMaxPosts = (postsToFilter: T[], filters: Filters) => {
     const { maxPosts } = filters
 
-    if (maxPosts) {
+    if (maxPosts || maxPosts === 0) {
       postsToFilter.length = maxPosts
     }
 
