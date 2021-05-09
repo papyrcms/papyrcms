@@ -81,6 +81,7 @@ export class Page extends PapyrEntity {
 
   static async saveFromModel(page: types.Page): Promise<types.Page> {
     const pageRepo = getRepository<Page>('Page')
+    const sectionRepo = getRepository<Section>('Section')
     let foundPage
 
     if (page.id) {
@@ -106,11 +107,25 @@ export class Page extends PapyrEntity {
     foundPage = await foundPage.save()
 
     let i = 0
+    let sectionIds: string[] = []
     for (const section of page.sections) {
       section.pageId = foundPage.id
       section.order = i
       i++
-      await Section.saveFromModel(section)
+      const { id } = await Section.saveFromModel(section)
+      sectionIds.push(id.toString())
+    }
+
+    const sections = await sectionRepo.find({
+      where: sanitizeConditions({
+        pageId: page.id.toString(),
+      }),
+    })
+
+    for (const section of sections) {
+      if (!sectionIds.includes(section.id.toString())) {
+        await section.remove()
+      }
     }
 
     return await foundPage.toModel()
