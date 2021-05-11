@@ -40,6 +40,10 @@
   max-width: $max-text-width;
 }
 
+.imageWrapper {
+  display: block;
+}
+
 .image {
   grid-column: span 1;
 

@@ -36,6 +36,10 @@
   align-content: start;
 }
 
+.imageWrapper {
+  display: block;
+}
+
 .image {
   width: 100%;
   box-shadow: $shadow-low;

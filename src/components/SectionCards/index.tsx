@@ -95,12 +95,14 @@ const SectionCards: React.FC<Props> = (props) => {
   const renderMediaSection = (post: Post) => {
     if (post.media) {
       return (
-        <Media
-          className={styles.image}
-          src={post.media}
-          alt={post.title}
-          clickable={clickableMedia}
-        />
+        <div className={styles.imageWrapper}>
+          <Media
+            className={styles.image}
+            src={post.media}
+            alt={post.title}
+            clickable={clickableMedia}
+          />
+        </div>
       )
     }
   }

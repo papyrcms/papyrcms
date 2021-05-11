@@ -98,12 +98,14 @@ const SectionStrip: React.FC<Props> = (props) => {
       return (
         <>
           {beforePostMedia(post)}
-          <Media
-            className={styles.image}
-            src={post.media}
-            alt={post.title}
-            clickable={clickableMedia}
-          />
+          <div className={styles.imageWrapper}>
+            <Media
+              className={styles.image}
+              src={post.media}
+              alt={post.title}
+              clickable={clickableMedia}
+            />
+          </div>
           {afterPostMedia(post)}
         </>
       )

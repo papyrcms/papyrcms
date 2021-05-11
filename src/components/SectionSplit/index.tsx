@@ -69,12 +69,14 @@ const SectionSplit: React.FC<Props> = (props) => {
       return (
         <>
           {beforePostMedia(post)}
-          <Media
-            className={styles.image}
-            src={post.media}
-            alt={post.title}
-            clickable={clickableMedia}
-          />
+          <div className={styles.iamgeWrapper}>
+            <Media
+              className={styles.image}
+              src={post.media}
+              alt={post.title}
+              clickable={clickableMedia}
+            />
+          </div>
           {afterPostMedia(post)}
         </>
       )
