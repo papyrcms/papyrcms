@@ -64,3 +64,17 @@ body {
     color: $color-grey-light;
   }
 }
+
+p,
+a {
+  .fa,
+  .fas,
+  .far,
+  .fab,
+  .fal,
+  .fad,
+  .svg-inline--fa {
+    color: $color-grey-dark;
+    font-size: 3rem;
+  }
+}
