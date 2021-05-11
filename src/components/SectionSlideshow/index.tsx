@@ -9,16 +9,11 @@ type Props = {
   posts: Post[]
   emptyTitle?: string
   emptyMessage?: string
+  className?: string
 }
 
-/**
- * SectionSlideshow will render a media slideshow across the width of the screen
- *
- * @prop timer - Integer - Milliseconds between media changes
- * @prop posts - Array[Object - Posts to be switched between]
- */
 const SectionSlideshow: React.FC<Props> = (props) => {
-  const { timer, posts, emptyTitle, emptyMessage } = props
+  const { timer, posts, emptyTitle, emptyMessage, className } = props
 
   if (posts.length === 0) {
     return (
@@ -82,7 +77,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
   }
 
   return (
-    <section className={styles.section}>
+    <section className={`${className} ${styles.section}`}>
       {renderSlides()}
       <div className={styles.buttons}>{renderButtons()}</div>
     </section>

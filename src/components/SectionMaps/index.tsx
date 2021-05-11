@@ -10,6 +10,7 @@ type Props = {
   emptyTitle?: string
   emptyMessage?: string
   mapLocation?: 'start' | 'end'
+  className?: string
 }
 
 /**
@@ -25,6 +26,7 @@ const SectionMaps: React.FC<Props> = (props) => {
     emptyTitle,
     emptyMessage,
     mapLocation = 'start',
+    className,
   } = props
 
   let latitudePost: Post
@@ -67,7 +69,7 @@ const SectionMaps: React.FC<Props> = (props) => {
   const { title, content } = contentPost
 
   return (
-    <section className={styles.section}>
+    <section className={`${className} ${styles.section}`}>
       <h2 className={`heading-secondary ${styles.title}`}>{title}</h2>
 
       <div className={styles.content}>
