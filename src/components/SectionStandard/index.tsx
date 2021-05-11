@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
 import Link from 'next/link'
-import Router from 'next/router'
+import { useRouter } from 'next/router'
 import renderHTML from 'react-render-html'
 import { userContext, postsContext } from '@/context'
 import { Media, PageHead } from '@/components'
@@ -68,6 +68,8 @@ type Props = {
 const SectionStandard: React.FC<Props> = (props) => {
   const { currentUser } = useContext(userContext)
   const { posts, setPosts } = useContext(postsContext)
+  const router = useRouter()
+  const { push, route } = router
 
   if (!props.posts?.find((p) => !!p)) return null
 
@@ -123,7 +125,7 @@ const SectionStandard: React.FC<Props> = (props) => {
             (filtered) => filtered.id !== post.id
           )
           setPosts(newPosts)
-          Router.push(deleteRedirect)
+          push(deleteRedirect)
         })
         .catch((error) => {
           console.error(error)
@@ -163,7 +165,12 @@ const SectionStandard: React.FC<Props> = (props) => {
   }
 
   const renderTagsSection = (post: Post) => {
-    if (post.tags && post.tags[0] && currentUser?.isAdmin) {
+    if (
+      post.tags &&
+      post.tags[0] &&
+      currentUser?.isAdmin &&
+      !['/', '/[page]'].includes(route)
+    ) {
       return (
         <p className={styles.tags}>
           Tags: <em>{renderTags(post)}</em>
