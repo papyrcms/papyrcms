@@ -102,7 +102,7 @@ const PostsForm: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={`${styles.container} ${className}`}>
+    <div className={`${styles.container} ${className || ''}`}>
       <h2 className="heading-secondary">
         {pageTitle ? pageTitle : 'New Post'}
       </h2>

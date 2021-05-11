@@ -160,7 +160,7 @@ const SectionCards: React.FC<Props> = (props) => {
     : styles.list3
 
   return (
-    <section className={`${className} ${styles.section}`}>
+    <section className={`${className || ''} ${styles.section}`}>
       {beforeTitle()}
       <h2 className={`heading-secondary ${styles.header}`}>
         {title}

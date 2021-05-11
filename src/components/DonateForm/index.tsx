@@ -55,7 +55,7 @@ const DonateForm: React.FC<{ className?: string }> = (props) => {
 
   if (paid) {
     return (
-      <div className={`${styles.container} ${className}`}>
+      <div className={`${styles.container} ${className || ''}`}>
         <div className={styles.thanks}>
           <h3 className="heading-tertiary">
             Thank you for your donation!
@@ -70,7 +70,7 @@ const DonateForm: React.FC<{ className?: string }> = (props) => {
   }
 
   return (
-    <section className={`${styles.container} ${className}`}>
+    <section className={`${styles.container} ${className || ''}`}>
       <form className={styles.form}>
         <div className="u-form-row">
           <Input

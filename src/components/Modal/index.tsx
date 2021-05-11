@@ -84,7 +84,7 @@ const Modal: React.FC<Props> = (props) => {
           >
             &#10005;
           </button>
-          <div className={`${styles.content} ${className}`}>
+          <div className={`${styles.content} ${className || ''}`}>
             {children}
           </div>
         </div>

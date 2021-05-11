@@ -69,7 +69,7 @@ const SectionMaps: React.FC<Props> = (props) => {
   const { title, content } = contentPost
 
   return (
-    <section className={`${className} ${styles.section}`}>
+    <section className={`${className || ''} ${styles.section}`}>
       <h2 className={`heading-secondary ${styles.title}`}>{title}</h2>
 
       <div className={styles.content}>

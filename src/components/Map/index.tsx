@@ -29,7 +29,7 @@ const Map: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={`${styles.container} ${className}`}>
+    <div className={`${styles.container} ${className || ''}`}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: keys['googleMapsKey'] }}
         defaultCenter={{ lat: latitude, lng: longitude }}

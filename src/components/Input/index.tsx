@@ -126,7 +126,7 @@ const Input = (props: Props) => {
   }
 
   return (
-    <div className={`${styles.container} ${className}`}>
+    <div className={`${styles.container} ${className || ''}`}>
       {renderInput()}
       <p className={styles.validation}>{validation}</p>
       {children}

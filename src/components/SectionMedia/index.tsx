@@ -41,7 +41,7 @@ const SectionMedia: React.FC<Props> = (props) => {
 
   return (
     <section
-      className={`${className} ${
+      className={`${className || ''} ${
         fixed ? styles.fixed : styles.section
       }`}
     >

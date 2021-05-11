@@ -65,7 +65,7 @@ const ContactForm: React.FC<Props> = (props) => {
   }
 
   return (
-    <section className={`${className} ${styles.section}`}>
+    <section className={`${className || ''} ${styles.section}`}>
       <form className={styles.form}>
         <div className="u-form-row">
           <Input

@@ -36,7 +36,7 @@ const Button: React.FC<Props> = (props) => {
   const [buttonDisabled, setButtonDisabled] = useState(disabled)
   const [isLoading, setIsLoading] = useState(false)
 
-  const actualClassName = `${styles[type]} ${className}`
+  const actualClassName = `${styles[type]} ${className || ''}`
 
   const handleClick = (event: any) => {
     setButtonDisabled(true)

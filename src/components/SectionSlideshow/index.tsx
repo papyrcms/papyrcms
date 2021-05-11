@@ -77,7 +77,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
   }
 
   return (
-    <section className={`${className} ${styles.section}`}>
+    <section className={`${className || ''} ${styles.section}`}>
       {renderSlides()}
       <div className={styles.buttons}>{renderButtons()}</div>
     </section>
