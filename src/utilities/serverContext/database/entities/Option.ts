@@ -44,7 +44,7 @@ export class Option extends BaseEntity {
       case 'int':
         return parseInt(this.value)
       case 'float':
-        return parseFloat(this.key)
+        return parseFloat(this.value)
       case 'boolean':
         return this.value.toLowerCase() === 'true'
     }
