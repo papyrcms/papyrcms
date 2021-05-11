@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React, { useState, useEffect } from 'react'
-import _ from 'lodash'
 import { SectionMedia } from '@/components'
 import styles from './SectionSlideshow.module.scss'
 
@@ -44,7 +43,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
   }
 
   const renderSlides = () => {
-    return _.map(posts, (post, i) => {
+    return posts.map((post, i) => {
       const slideClassName = counter !== i ? styles.hidden : ''
 
       return (
@@ -59,7 +58,7 @@ const SectionSlideshow: React.FC<Props> = (props) => {
   }
 
   const renderButtons = () => {
-    return _.map(posts, (post, i) => {
+    return posts.map((post, i) => {
       return (
         <input
           onClick={() => {

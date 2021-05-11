@@ -1,7 +1,6 @@
 import { Product } from '@/types'
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import _ from 'lodash'
 import { storeContext } from '@/context'
 import { SectionStrip } from '@/components'
 
@@ -21,7 +20,7 @@ const Cart = () => {
 
   const renderTotal = () => {
     let totalCost = 0
-    _.forEach(cart, (item) => (totalCost += item.price))
+    cart.forEach((item) => (totalCost += item.price))
 
     return (
       <>
@@ -39,7 +38,7 @@ const Cart = () => {
     let quantity
     let totalCost = 0
 
-    quantity = _.filter(cart, (item) => {
+    quantity = cart.filter((item) => {
       if (item.id === product.id) {
         totalCost += item.price
         return true

@@ -1,7 +1,6 @@
 import { Product } from '@/types'
 import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import StoreContext from './storeContext'
 import UserContext from './userContext'
 
@@ -30,7 +29,7 @@ const StoreProvider: React.FC<Props> = (props) => {
     const newCart = [...cart, product]
     if (!currentUser) {
       if (
-        _.filter(cart, (inCart) => inCart.id === product.id).length <
+        cart.filter((inCart) => inCart.id === product.id).length <
         product.quantity
       ) {
         localStorage.setItem('cart', JSON.stringify(newCart))
@@ -48,7 +47,7 @@ const StoreProvider: React.FC<Props> = (props) => {
 
   const removeFromCart = async (product: Product) => {
     let removed = false
-    const newCart = _.filter(cart, (item) => {
+    const newCart = cart.filter((item) => {
       if (item.id === product.id && !removed) {
         removed = true
         return false
@@ -58,8 +57,7 @@ const StoreProvider: React.FC<Props> = (props) => {
 
     if (!currentUser) {
       if (
-        _.filter(cart, (inCart) => inCart.id === product.id).length >
-        0
+        cart.filter((inCart) => inCart.id === product.id).length > 0
       ) {
         localStorage.setItem('cart', JSON.stringify(newCart))
         setCart(newCart)

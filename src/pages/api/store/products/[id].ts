@@ -1,6 +1,5 @@
 import { Database, Product } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getProduct = async (id: string, database: Database) => {
@@ -35,7 +34,7 @@ const updateProduct = async (
   if (!product) throw new Error('Product not found')
 
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
-  body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
+  body.tags = body.tags.split(',').map((tag: string) => tag.trim())
   const newProduct = { ...product, ...body }
 
   return await save(EntityType.Product, newProduct)

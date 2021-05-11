@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React from 'react'
-import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import { Map } from '@/components'
 import styles from './SectionMaps.module.scss'
@@ -34,7 +33,7 @@ const SectionMaps: React.FC<Props> = (props) => {
   let contentPost: Post
 
   // Pick out the text, latitude, and logitude posts
-  _.forEach(posts, (post) => {
+  posts.forEach((post) => {
     switch (true) {
       case post.tags.includes('latitude'):
         latitudePost = post

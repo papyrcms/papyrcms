@@ -1,6 +1,5 @@
 import { Database, Page, Section } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getPage = async (route: string, database: Database) => {
@@ -43,17 +42,16 @@ const updatePage = async (
       )
     }
 
-    const tags = _.map(
-      _.split((section.tags as unknown) as string, ','),
-      (tag) => {
+    section.tags = ((section.tags as unknown) as string)
+      .split(',')
+      .map((tag) => {
         let pendingTag = tag
         pendingTag = pendingTag.trim()
         if (!!pendingTag) {
           return pendingTag
         }
-      }
-    )
-    section.tags = _.filter(tags, (tag) => !!tag) as string[]
+      })
+      .filter((tag) => !!tag) as string[]
   })
 
   // Make sure the page has at least one section

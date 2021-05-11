@@ -1,7 +1,6 @@
 import { Product } from '@/types'
 import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
-import _ from 'lodash'
 import axios from 'axios'
 import { userContext, storeContext, postsContext } from '@/context'
 import { usePostFilter } from '@/hooks'
@@ -49,8 +48,7 @@ const StorePage = () => {
   }
 
   const renderAddToCart = (product: Product) => {
-    const quantityInCart = _.filter(
-      cart,
+    const quantityInCart = cart.filter(
       (cartProduct) => cartProduct.id === product.id
     ).length
     let message = 'Add to cart'

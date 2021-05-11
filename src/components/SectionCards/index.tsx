@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React from 'react'
-import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import { Media } from '@/components'
@@ -121,7 +120,7 @@ const SectionCards: React.FC<Props> = (props) => {
     // Set defaults for characterCount
     const characterCount = contentLength || 300
 
-    return _.map(posts, (post) => {
+    return posts.map((post) => {
       let postContent =
         post.content && post.content.length >= characterCount
           ? `${post.content

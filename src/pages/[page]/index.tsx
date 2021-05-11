@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import _ from 'lodash'
 import {
   postsContext,
   pagesContext,
@@ -29,7 +28,7 @@ const PageRenderer = (props: Props) => {
   const { query } = useRouter()
   const { pages } = useContext(pagesContext)
   if (!page) {
-    _.forEach(pages, (foundPage) => {
+    pages.forEach((foundPage) => {
       if (foundPage.route === '') foundPage.route = 'home'
       if (foundPage.route === query.page) page = foundPage
     })
@@ -42,7 +41,7 @@ const PageRenderer = (props: Props) => {
 
   // Get our filter settings from the page sections
   const settings: any = []
-  _.forEach(page.sections, (section, i) => {
+  page.sections.forEach((section, i) => {
     settings.push({
       propName: `${section.type}-${i}`,
       maxPosts: section.maxPosts,
@@ -59,12 +58,11 @@ const PageRenderer = (props: Props) => {
   const { sectionOptions } = useContext(sectionOptionsContext)
 
   const renderSections = (page: Page) => {
-    return _.map(page.sections, (section, i) => {
+    return page.sections.map((section, i) => {
       // Get properties by the section info
       const key = `${section.type}-${i}`
       const filteredPosts = filtered[key]
-      const emptyMessage = `Create content with the ${_.join(
-        section.tags,
+      const emptyMessage = `Create content with the ${section.tags.join(
         ', '
       )} tags.`
 
@@ -93,7 +91,7 @@ const PageRenderer = (props: Props) => {
 
   const renderPageHead = (page: Page) => {
     let SectionStandard = false
-    _.forEach(page.sections, (section) => {
+    page.sections.forEach((section) => {
       if (section.type === 'SectionStandard') {
         SectionStandard = true
       }

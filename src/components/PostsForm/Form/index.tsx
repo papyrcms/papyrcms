@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import RichTextEditor from '../../RichTextEditor'
 import Media from '../../Media'
 import Input from '../../Input'
@@ -146,7 +145,7 @@ const Form: React.FC<Props> = (props) => {
 
   const renderAdditionalFields = () => {
     if (additionalFields) {
-      return _.map(additionalFields, (Field, i) => {
+      return additionalFields.map((Field, i) => {
         return (
           <Field
             key={`field-${i}`}

@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import _ from 'lodash'
 import Link from 'next/link'
 import { settingsContext, pagesContext } from '@/context'
 import { Page } from '@/types'
@@ -31,17 +30,18 @@ const NavLink: React.FC<LinkProps> = (props) => {
 }
 
 const Submenu: React.FC<{ pages: Page[] }> = ({ pages }) => {
-  pages = _.sortBy(pages, (page) => page.navOrder)
   return (
     <div className={styles.submenu}>
-      {_.map(pages, (page) => {
-        const href = page.route === 'home' ? '/' : `/${page.route}`
-        return (
-          <NavLink href={href} key={page.id}>
-            {page.title}
-          </NavLink>
-        )
-      })}
+      {pages
+        .sort((a, b) => (a.navOrder > b.navOrder ? 1 : -1))
+        .map((page) => {
+          const href = page.route === 'home' ? '/' : `/${page.route}`
+          return (
+            <NavLink href={href} key={page.id}>
+              {page.title}
+            </NavLink>
+          )
+        })}
     </div>
   )
 }
@@ -80,8 +80,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
       } as Page)
     }
 
-    menuPages = _.filter(
-      menuPages,
+    menuPages = menuPages.filter(
       (page) => !!page.title && !!page.navOrder
     )
 
@@ -91,30 +90,25 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
       pages?: Page[]
       index: number
     }
-    const menuItems: MenuItem[] = _.reduce(
-      menuPages,
-      (items, page) => {
-        const menuItem = _.find(
-          items,
-          (item) => item.index === Math.floor(page.navOrder)
-        )
-        if (!menuItem) {
-          items.push({
-            page,
-            index: Math.floor(page.navOrder),
-          })
-        } else if (menuItem) {
-          if (!menuItem.pages && menuItem.page) {
-            menuItem.pages = []
-            menuItem.pages.push(menuItem.page)
-            delete menuItem.page
-          }
-          ;(menuItem.pages as Page[]).push(page)
+    const menuItems: MenuItem[] = menuPages.reduce((items, page) => {
+      const menuItem = items.find(
+        (item) => item.index === Math.floor(page.navOrder)
+      )
+      if (!menuItem) {
+        items.push({
+          page,
+          index: Math.floor(page.navOrder),
+        })
+      } else if (menuItem) {
+        if (!menuItem.pages && menuItem.page) {
+          menuItem.pages = []
+          menuItem.pages.push(menuItem.page)
+          delete menuItem.page
         }
-        return items
-      },
-      [] as MenuItem[]
-    )
+        ;(menuItem.pages as Page[]).push(page)
+      }
+      return items
+    }, [] as MenuItem[])
 
     menuItems.sort((a, b) =>
       typeof a === 'object' &&
@@ -124,7 +118,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
         : -1
     )
 
-    return _.map(menuItems, ({ page, pages }) => {
+    return menuItems.map(({ page, pages }) => {
       if (page) {
         const href = page.route === 'home' ? '/' : `/${page.route}`
         return (

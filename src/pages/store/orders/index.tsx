@@ -2,7 +2,6 @@ import { Product, Order } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import Error from 'next/error'
 import axios from 'axios'
-import _ from 'lodash'
 import moment from 'moment'
 import { userContext } from '@/context'
 import styles from './orders.module.scss'
@@ -25,7 +24,7 @@ const Orders = () => {
   if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   const renderProducts = (products: Product[]) => {
-    return _.map(products, (product) => {
+    return products.map((product) => {
       return (
         <p className="order__product" key={product.id}>
           {product.title}
@@ -42,7 +41,7 @@ const Orders = () => {
     axios
       .put(`/api/store/orders/${shippedOrder.id}`, newOrder)
       .then((response) => {
-        const newOrders = _.map(orders, (order) => {
+        const newOrders = orders.map((order) => {
           if (order.id === newOrder.id) {
             order = newOrder
           }
@@ -64,8 +63,7 @@ const Orders = () => {
     axios
       .delete(`/api/store/orders/${deletedOrder.id}`)
       .then((response) => {
-        const newOrders = _.filter(
-          orders,
+        const newOrders = orders.filter(
           (order) => order.id !== deletedOrder.id
         )
         setOrders(newOrders)
@@ -76,7 +74,7 @@ const Orders = () => {
   }
 
   const renderOrders = () => {
-    return _.map(orders, (order) => {
+    return orders.map((order) => {
       const {
         createdAt,
         user,

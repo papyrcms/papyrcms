@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
-import _ from 'lodash'
 import renderHTML from 'react-render-html'
 import { postsContext, keysContext } from '@/context'
 import { usePostFilter } from '@/hooks'
@@ -36,7 +35,7 @@ const Layout: React.FC = (props) => {
     keywords = '',
     shareImage = ''
 
-  _.forEach(filtered.posts, (post) => {
+  filtered.posts.forEach((post) => {
     if (post.tags && post.tags.includes('section-header')) {
       headerTitle = post.title || ''
       headerSubTitle = post.content || ''
@@ -60,7 +59,7 @@ const Layout: React.FC = (props) => {
       descriptionContent = sanitizeHTML(post.content || '', {
         allowedTags: [],
       })
-      _.forEach(post.tags, (tag) => {
+      post.tags.forEach((tag) => {
         if (tag !== 'site-description') {
           keywords =
             keywords.length === 0 ? tag : `${keywords}, ${tag}`
@@ -77,7 +76,7 @@ const Layout: React.FC = (props) => {
   })
 
   const renderNotifications = () => {
-    return _.map(notifications.posts, (post) => {
+    return notifications.posts.map((post) => {
       return <Notification key={post.id} post={post} />
     })
   }

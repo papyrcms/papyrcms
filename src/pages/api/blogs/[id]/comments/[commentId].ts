@@ -1,6 +1,5 @@
 import { Database, Comment } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const deleteComment = async (

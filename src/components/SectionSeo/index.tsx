@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React from 'react'
-import _ from 'lodash'
 import sanitizeHTML from 'sanitize-html'
 import { PageHead } from '@/components'
 import styles from './SectionSeo.module.scss'
@@ -30,7 +29,7 @@ const SectionSeo: React.FC<Props> = (props) => {
       title={title}
       image={media}
       description={sanitizeHTML(content, { allowedTags: [] })}
-      keywords={_.join(tags, ', ')}
+      keywords={tags.join(', ')}
     />
   )
 }

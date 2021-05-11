@@ -1,6 +1,5 @@
 import { Database, Blog } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getBlog = async (id: string, database: Database) => {
@@ -42,7 +41,7 @@ const updateBlog = async (
   }
 
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
-  body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
+  body.tags = body.tags.split(',').map((tag: string) => tag.trim())
 
   return await save<Blog>(EntityType.Blog, { ...oldBlog, ...body })
 }

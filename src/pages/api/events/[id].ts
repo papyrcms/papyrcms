@@ -1,6 +1,5 @@
 import { Database, Event } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import moment from 'moment'
 import serverContext from '@/serverContext'
 
@@ -32,7 +31,7 @@ const updateEvent = async (
 ) => {
   body.date = moment(body.date).toISOString()
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
-  body.tags = _.map(_.split(body.tags, ','), (tag) => tag.trim())
+  body.tags = body.tags.split(',').map((tag: string) => tag.trim())
 
   const { save, findOne, EntityType } = database
   const event = await findOne<Event>(EntityType.Event, { id })

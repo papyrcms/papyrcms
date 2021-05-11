@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import { settingsContext } from '@/context'
 import Input from '../../Input'
 import styles from './AppSettingsForm.module.scss'
@@ -81,7 +80,7 @@ const AppSettingsForm: React.FC = () => {
   }
 
   const renderSettingsInputs = () => {
-    return _.map(settings, (setting, key) => {
+    return Object.keys(settings).map((key) => {
       // Format label
       const result = key.replace(/([A-Z])/g, ' $1')
       const label = result.charAt(0).toUpperCase() + result.slice(1)

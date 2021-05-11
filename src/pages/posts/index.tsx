@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import { postsContext, userContext } from '@/context'
 import { PostIndex, Input } from '@/components'
 import styles from './posts.module.scss'
@@ -25,7 +24,7 @@ const Posts = () => {
     // Set the search bar state
     setSearch(event.target.value)
 
-    let foundPosts = _.filter(posts, (post) => {
+    let foundPosts = posts.filter((post) => {
       let isFound = false
 
       // Go through each post's tags

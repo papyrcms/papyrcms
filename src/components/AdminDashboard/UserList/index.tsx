@@ -1,7 +1,6 @@
 import { User } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import { userContext } from '@/context'
 import Modal from '../../Modal'
 import styles from './UserList.module.scss'
@@ -30,8 +29,7 @@ const UserList = () => {
       axios
         .delete(`/api/users/${user.id}`)
         .then((response) => {
-          const newUsers = _.filter(
-            users,
+          const newUsers = users.filter(
             (foundUser) => user.id !== foundUser.id
           )
           setUsers(newUsers)
@@ -50,7 +48,7 @@ const UserList = () => {
           isAdmin: !user.isAdmin,
         })
         .then((response) => {
-          const newUsers = _.map(users, (foundUser) => {
+          const newUsers = users.map((foundUser) => {
             if (user.id === foundUser.id) {
               foundUser.isAdmin = !user.isAdmin
             }
@@ -72,7 +70,7 @@ const UserList = () => {
           isBanned: !user.isBanned,
         })
         .then((response) => {
-          const newUsers = _.map(users, (foundUser) => {
+          const newUsers = users.map((foundUser) => {
             if (user.id === foundUser.id) {
               foundUser.isBanned = !user.isBanned
             }
@@ -136,7 +134,7 @@ const UserList = () => {
   }
 
   const renderUsers = () => {
-    return _.map(users, (user) => {
+    return users.map((user) => {
       return (
         <li key={user.id} className={styles.user}>
           <div className={styles.item}>

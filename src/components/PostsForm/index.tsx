@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React, { useContext } from 'react'
-import _ from 'lodash'
 import Router from 'next/router'
 import Form from './Form'
 import { postsContext } from '@/context'
@@ -25,7 +24,7 @@ const PostsForm: React.FC<Props> = (props) => {
   const mapTagsToString = (tags: string[]) => {
     let newTags = ''
 
-    _.forEach(tags, (tag, i) => {
+    tags.forEach((tag, i) => {
       if (i < tags.length - 1) {
         newTags = `${newTags}${tag}, `
       } else {
@@ -71,7 +70,7 @@ const PostsForm: React.FC<Props> = (props) => {
     const success = (response: any, resetForm: Function) => {
       let newPosts = []
       if (editing && post) {
-        newPosts = _.map(posts, (mappedPost) => {
+        newPosts = posts.map((mappedPost) => {
           if (mappedPost.id === post.id) return response.data
           return mappedPost
         })
@@ -95,7 +94,7 @@ const PostsForm: React.FC<Props> = (props) => {
   const additionalProps = {}
 
   if (additionalState) {
-    _.forEach(additionalState, (state, key) => {
+    Object.keys(additionalState).forEach((key) => {
       // @ts-ignore not sure how to handle this
       additionalProps[key] = values[key]
     })

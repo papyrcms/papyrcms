@@ -1,5 +1,4 @@
 import { Post } from '@/types'
-import _ from 'lodash'
 
 type Filters = {
   propName?: string
@@ -20,10 +19,7 @@ const usePostFilter = <T extends Post>(
     const { showAll } = filters
 
     if (!showAll) {
-      postsToFilter = _.filter(
-        postsToFilter,
-        (post) => post.isPublished
-      )
+      postsToFilter = postsToFilter.filter((post) => post.isPublished)
     }
 
     return postsToFilter
@@ -36,7 +32,7 @@ const usePostFilter = <T extends Post>(
       postsToFilter.length = maxPosts
     }
 
-    return _.filter(postsToFilter, (post) => !!post)
+    return postsToFilter.filter((post) => !!post)
   }
 
   const filterByPostTags = (postsToFilter: T[], filters: Filters) => {
@@ -44,7 +40,7 @@ const usePostFilter = <T extends Post>(
 
     // Filter posts by postTags
     if (postTags && postTags.length > 0) {
-      return _.filter(postsToFilter, (post) => {
+      return postsToFilter.filter((post) => {
         let included = false
         let done = false
 
@@ -54,7 +50,7 @@ const usePostFilter = <T extends Post>(
         ) {
           included = true
         } else if (Array.isArray(postTags)) {
-          _.forEach(postTags, (tag) => {
+          postTags.forEach((tag) => {
             if (!done && post.tags.includes(tag)) {
               included = true
             }
@@ -76,15 +72,14 @@ const usePostFilter = <T extends Post>(
     const orderedPosts: T[] = []
     const unorderedPosts: T[] = []
 
-    // for (const post of postsToFilter) {
-    _.forEach(postsToFilter, (post) => {
+    postsToFilter.forEach((post) => {
       let found = false
 
       // for (const tag of post.tags) {
-      _.forEach(post.tags, (tag) => {
+      post.tags.forEach((tag) => {
         if (!found && tag.includes('order-')) {
           // use index of a tag such as order-2 to be index 2
-          orderedPosts[parseInt(_.split(tag, '-')[1])] = post
+          orderedPosts[parseInt(tag.split('-')[1])] = post
           found = true
         }
       })
@@ -94,8 +89,7 @@ const usePostFilter = <T extends Post>(
       }
     })
 
-    return _.filter(
-      [...orderedPosts, ...unorderedPosts],
+    return [...orderedPosts, ...unorderedPosts].filter(
       (post) => !!post
     )
   }
@@ -113,7 +107,7 @@ const usePostFilter = <T extends Post>(
   const filtered: { [key: string]: T[] } = {}
 
   if (Array.isArray(settings)) {
-    _.forEach(settings, (filters) => {
+    settings.forEach((filters) => {
       if (filters.propName) {
         filtered[filters.propName] = filterPosts(posts, filters)
       }

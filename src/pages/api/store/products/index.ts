@@ -1,6 +1,5 @@
 import { Database, Product } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getProducts = async (database: Database) => {
@@ -17,7 +16,7 @@ const createProduct = async (body: any, database: Database) => {
 
   const productData = {
     ...body,
-    tags: _.map(_.split(tags, ','), (tag) => tag.trim()),
+    tags: body.tags.split(',').map((tag: string) => tag.trim()),
     slug: title.replace(/\s+/g, '-').toLowerCase(),
   } as Product
 

@@ -1,6 +1,5 @@
 import { Database, Blog } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const getBlogs = async (database: Database) => {
@@ -21,7 +20,7 @@ const createBlog = async (body: any, database: Database) => {
   const blogData = {
     ...body,
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
-    tags: _.map(_.split(body.tags, ','), (tag) => tag.trim()),
+    tags: body.tags.split(',').map((tag: string) => tag.trim()),
   }
 
   if (body.isPublished) {

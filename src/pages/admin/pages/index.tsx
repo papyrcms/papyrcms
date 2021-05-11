@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import Link from 'next/link'
 import Error from 'next/error'
-import _ from 'lodash'
 import axios from 'axios'
 import { userContext, pagesContext } from '@/context'
 import styles from './pages.module.scss'
@@ -21,33 +20,31 @@ const Pages = () => {
   if (!currentUser?.isAdmin) return <Error statusCode={403} />
 
   const renderPages = () => {
-    pages = _.sortBy(pages, [
-      (page) => !!page.navOrder,
-      (page) => page.navOrder,
-    ])
-    return _.map(pages, (page) => (
-      <li className={styles.page} key={page.id}>
-        <div>
-          Visit page{' - '}
-          <Link href="/[page]" as={`/${page.route}`}>
-            <a>/{page.route}</a>
-          </Link>
-        </div>
+    return pages
+      .sort((a, b) => (a.navOrder < b.navOrder ? 1 : -1))
+      .map((page) => (
+        <li className={styles.page} key={page.id}>
+          <div>
+            Visit page{' - '}
+            <Link href="/[page]" as={`/${page.route}`}>
+              <a>/{page.route}</a>
+            </Link>
+          </div>
 
-        <div className={styles.linkDivider}>|</div>
+          <div className={styles.linkDivider}>|</div>
 
-        <div>
-          Edit page{' - '}
-          <Link
-            href="/admin/pages/[page]"
-            as={`/admin/pages/${page.route}`}
-          >
-            <a>/admin/pages/{page.route}</a>
-          </Link>
-          {' - '} Menu: {page.navOrder}
-        </div>
-      </li>
-    ))
+          <div>
+            Edit page{' - '}
+            <Link
+              href="/admin/pages/[page]"
+              as={`/admin/pages/${page.route}`}
+            >
+              <a>/admin/pages/{page.route}</a>
+            </Link>
+            {' - '} Menu: {page.navOrder}
+          </div>
+        </li>
+      ))
   }
 
   return (

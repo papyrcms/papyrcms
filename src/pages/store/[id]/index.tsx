@@ -2,7 +2,6 @@ import { Product } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import _ from 'lodash'
 import { useRouter } from 'next/router'
 import { userContext, storeContext } from '@/context'
 import keys from '@/keys'
@@ -37,8 +36,7 @@ const StoreShow = (props: { product: Product }) => {
   }
 
   const renderAddToCart = (product: Product) => {
-    const quantityInCart = _.filter(
-      cart,
+    const quantityInCart = cart.filter(
       (cartProduct) => cartProduct.id === product.id
     ).length
     let message = 'Add to cart'

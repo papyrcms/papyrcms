@@ -1,6 +1,5 @@
 import { Database, Event } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import moment from 'moment'
 import serverContext from '@/serverContext'
 
@@ -17,7 +16,7 @@ const createEvent = async (body: any, database: Database) => {
   const eventData = {
     ...body,
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
-    tags: _.map(_.split(body.tags, ','), (tag) => tag.trim()),
+    tags: body.tags.split(',').map((tag: string) => tag.trim()),
   }
   const { save, EntityType } = database
   return await save<Event>(EntityType.Event, eventData)

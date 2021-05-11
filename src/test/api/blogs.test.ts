@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import axios from 'axios'
-import _ from 'lodash'
 import keys from '../../config/keys'
+import { Blog } from '@/types'
 const { rootURL, test } = keys
 
 const axiosConfig = {
@@ -51,7 +51,7 @@ describe('/api/blogs', () => {
         axiosConfig
       )
       let allArePublished = true
-      _.forEach(blogs, (found) => {
+      blogs.forEach((found: Blog) => {
         if (!found.isPublished) allArePublished = false
       })
 

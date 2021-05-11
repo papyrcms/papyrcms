@@ -3,7 +3,6 @@ import { Post, Comment } from '@/types'
 import axios from 'axios'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
-import _ from 'lodash'
 import { settingsContext, userContext } from '@/context'
 import CommentForm from '../CommentForm'
 import styles from './Comments.module.scss'
@@ -60,7 +59,7 @@ const Comments: React.FC<Props> = (props) => {
           commentObject
         )
         .then((res) => {
-          const newComments = _.map(comments, (comment) => {
+          const newComments = comments.map((comment) => {
             if (comment.id === editing) {
               comment = res.data
             }
@@ -85,8 +84,7 @@ const Comments: React.FC<Props> = (props) => {
       axios
         .delete(`${apiPath}/${post.id}/comments/${comment.id}`)
         .then((res) => {
-          const newComments = _.filter(
-            comments,
+          const newComments = comments.filter(
             (comm) => comm.id !== comment.id
           )
           setComments(newComments)
@@ -129,7 +127,7 @@ const Comments: React.FC<Props> = (props) => {
       return <p className={styles.none}>Leave a comment.</p>
     }
 
-    return _.map(comments, (comment) => {
+    return comments.map((comment) => {
       const { content, author, id } = comment
 
       return (

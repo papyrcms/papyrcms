@@ -1,7 +1,6 @@
 import { Message } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import moment from 'moment'
 import Modal from '../../Modal'
 import { userContext } from '@/context'
@@ -29,8 +28,7 @@ const MessageList = () => {
       axios
         .delete(`/api/messages/${id}`)
         .then((res) => {
-          const newMessages = _.filter(
-            messages,
+          const newMessages = messages.filter(
             (message) => message.id !== id
           )
           setMessages(newMessages)
@@ -42,32 +40,29 @@ const MessageList = () => {
   }
 
   const renderMessages = () => {
-    return _.map(
-      messages,
-      ({ name, email, message, createdAt, id }) => {
-        const localReadableDate = moment(createdAt).format('LLLL')
+    return messages.map(({ name, email, message, createdAt, id }) => {
+      const localReadableDate = moment(createdAt).format('LLLL')
 
-        return (
-          <div key={id} className={styles.message}>
-            <p>Sent: {localReadableDate}</p>
+      return (
+        <div key={id} className={styles.message}>
+          <p>Sent: {localReadableDate}</p>
 
-            <div className={styles.info}>
-              <span>From: {name}</span>
-              <span>Email: {email}</span>
-            </div>
-
-            <div className={styles.content}>{message}</div>
-
-            <button
-              className="button-tertiary button-small"
-              onClick={() => deleteMessage(id)}
-            >
-              Delete
-            </button>
+          <div className={styles.info}>
+            <span>From: {name}</span>
+            <span>Email: {email}</span>
           </div>
-        )
-      }
-    )
+
+          <div className={styles.content}>{message}</div>
+
+          <button
+            className="button-tertiary button-small"
+            onClick={() => deleteMessage(id)}
+          >
+            Delete
+          </button>
+        </div>
+      )
+    })
   }
 
   return (

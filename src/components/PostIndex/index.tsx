@@ -2,7 +2,6 @@ import { Post } from '@/types'
 import React from 'react'
 import renderHTML from 'react-render-html'
 import Link from 'next/link'
-import _ from 'lodash'
 import Media from '../Media'
 import styles from './PostIndex.module.scss'
 
@@ -12,7 +11,7 @@ type Props = {
 
 const PostIndex = (props: Props) => {
   const renderTags = (tags: string[]) => {
-    return _.map(tags, (tag, i) => {
+    return tags.map((tag, i) => {
       if (i < tags.length - 1) {
         return <span key={tag}>{tag}, </span>
       } else {
@@ -60,7 +59,7 @@ const PostIndex = (props: Props) => {
       )
     }
 
-    return _.map(posts, (post) => {
+    return posts.map((post) => {
       const { id, title, tags, media, content, isPublished } = post
 
       let postContent = ''

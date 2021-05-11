@@ -6,7 +6,6 @@ import React, {
   MutableRefObject,
 } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import keys from '@/keys'
 import { storeContext } from '@/context'
 import { CreditCardForm, Input, UserInfoForm } from '@/components'
@@ -87,7 +86,7 @@ const Checkout = (props: { product: Product }) => {
   }
 
   const renderProductsList = () => {
-    return _.map(cart, (product, i) => {
+    return cart.map((product, i) => {
       return (
         <p key={product.id + i.toString()}>
           {product.title}: ${product.price.toFixed(2)}
@@ -98,7 +97,7 @@ const Checkout = (props: { product: Product }) => {
 
   const renderTotalCost = () => {
     let totalCost = 0
-    _.forEach(cart, (product) => (totalCost += product.price))
+    cart.forEach((product) => (totalCost += product.price))
     return (
       <p className="u-margin-bottom-small">
         Total Cost: ${totalCost.toFixed(2)}

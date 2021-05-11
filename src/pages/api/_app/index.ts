@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import fs from 'fs'
 import util from 'util'
 import path from 'path'
-import _ from 'lodash'
 import keys from '@/keys'
 import serverContext from '@/serverContext'
 import { Blog, Page, Post, Event, Product } from '@/types'
@@ -36,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const components = await util.promisify(fs.readdir)(
       path.join('src', 'components')
     )
-    _.forEach(components, (component) => {
+    components.forEach((component) => {
       const hasOptions = fs.existsSync(
         path.join('src', 'components', component, 'options.ts')
       )

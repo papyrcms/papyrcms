@@ -1,6 +1,5 @@
 import { User, Database, Product } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 
 const addToCart = async (
@@ -22,8 +21,8 @@ const addToCart = async (
 
   // If we have all available products in our cart
   if (
-    _.filter(user.cart, (inCart) => product.id == inCart.id).length >=
-    product.quantity
+    (user.cart?.filter((inCart) => product.id == inCart.id).length ??
+      0) >= product.quantity
   ) {
     throw new Error('You cannot buy more than what is available.')
   }
@@ -40,7 +39,7 @@ const removeFromCart = async (
   database: Database
 ) => {
   let removed = false
-  user.cart = _.filter(user.cart, (product) => {
+  user.cart = user.cart?.filter((product) => {
     // If one has not been removed and it has the passed id, remove it
     if (product.id === productId && !removed) {
       removed = true

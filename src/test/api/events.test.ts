@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import axios from 'axios'
-import _ from 'lodash'
 import keys from '../../config/keys'
+import { Event } from '@/types'
 const { rootURL, test } = keys
 
 const axiosConfig = {
@@ -55,7 +55,7 @@ describe('/api/events', () => {
         axiosConfig
       )
       let allArePublished = true
-      _.forEach(events, (found) => {
+      events.forEach((found: Event) => {
         if (!found.isPublished) allArePublished = false
       })
 

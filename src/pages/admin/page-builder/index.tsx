@@ -1,7 +1,6 @@
 import { Page, Section } from '@/types'
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
-import _ from 'lodash'
 import Router from 'next/router'
 import Error from 'next/error'
 import { userContext, sectionOptionsContext } from '@/context'
@@ -70,10 +69,10 @@ const PageBuilder = (props: Props) => {
     INITIAL_STATE.omitDefaultHeader = !!props.page.omitDefaultHeader
     INITIAL_STATE.omitDefaultFooter = !!props.page.omitDefaultFooter
     INITIAL_STATE.css = props.page.css
-    INITIAL_STATE.sections = _.map(props.page.sections, (section) => {
+    INITIAL_STATE.sections = props.page.sections.map((section) => {
       return {
         ...section,
-        tags: _.join(section.tags, ', '),
+        tags: section.tags.join(', '),
       }
     })
     INITIAL_STATE.page = props.page
@@ -82,8 +81,7 @@ const PageBuilder = (props: Props) => {
   const [state, setState] = useState(INITIAL_STATE)
 
   const removeSection = (index: number) => {
-    const newSections = _.filter(
-      state.sections,
+    const newSections = state.sections.filter(
       (section, i) => i !== index
     )
     setState({
@@ -98,30 +96,21 @@ const PageBuilder = (props: Props) => {
     key: string,
     value: string
   ) => {
-    const newSections = _.map(state.sections, (section, i) => {
+    const newSections = state.sections.map((section, i) => {
       if (index === i) {
         return { ...section, [key]: value }
       }
       return section
     })
 
-    const newPageSections = _.map(
-      state.page.sections,
-      (section, i) => {
-        if (index === i) {
-          // @ts-ignore
-          section[key] = value
-        }
-
-        if (typeof section.tags === 'string') {
-          // section.tags = _.map(_.split(section.tags, ','), (tag) =>
-          //   tag.trim()
-          // )
-        }
-
-        return section
+    const newPageSections = state.page.sections.map((section, i) => {
+      if (index === i) {
+        // @ts-ignore
+        section[key] = value
       }
-    )
+
+      return section
+    })
 
     setState({
       ...state,
@@ -243,7 +232,7 @@ const PageBuilder = (props: Props) => {
   const renderSections = () => {
     const { sections } = state
 
-    return _.map(sections, (section, i) => {
+    return sections.map((section, i) => {
       if (section) {
         const { type } = section
         const { name, description } = sectionOptions[type]
@@ -295,7 +284,8 @@ const PageBuilder = (props: Props) => {
   }
 
   const renderSelectOptions = () => {
-    return _.map(sectionOptions, (option, key) => {
+    return Object.keys(sectionOptions).map((key) => {
+      const option = sectionOptions[key]
       return (
         <option key={key} value={key}>
           {option.name}
@@ -316,8 +306,7 @@ const PageBuilder = (props: Props) => {
       className: '',
     }
 
-    const newPageSections = _.map(
-      state.page.sections,
+    const newPageSections = state.page.sections.map(
       (section) => section
     )
     newPageSections.push(newSection as any)

@@ -1,6 +1,5 @@
 import { Page } from '@/types'
 import React, { useContext } from 'react'
-import _ from 'lodash'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import {
@@ -23,7 +22,7 @@ const Header: React.FC<Props> = (props) => {
   const { pages } = useContext(pagesContext)
   const { query } = useRouter()
 
-  const page = _.find(pages, (foundPage) => {
+  const page = pages.find((foundPage) => {
     if (foundPage.route === '') foundPage.route = 'home'
     if (foundPage.route === query.page) return true
   }) as Page

@@ -1,6 +1,5 @@
 import { Database, Post } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import _ from 'lodash'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
 
@@ -19,14 +18,16 @@ const createPost = async (
   database: Database
 ) => {
   if (body.tags) {
-    let newTags = _.map(_.split(body.tags, ','), (tag) => {
-      let pendingTag = tag
-      pendingTag = pendingTag.trim()
+    const newTags: string[] = body.tags
+      .split(',')
+      .map((tag: string) => {
+        let pendingTag = tag
+        pendingTag = pendingTag.trim()
 
-      if (!!pendingTag) return pendingTag
-    })
-    newTags = _.filter(newTags, (tag) => !!tag)
-    body.tags = _.uniq(newTags)
+        if (!!pendingTag) return pendingTag
+      })
+      .filter((tag: string) => !!tag)
+    body.tags = [...new Set(newTags)]
   }
 
   const { EntityType, save } = database
