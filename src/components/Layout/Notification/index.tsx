@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React, { useState, useEffect } from 'react'
-import renderHTML from 'react-render-html'
 import styles from './Notification.module.scss'
 
 type Props = {
@@ -65,7 +64,10 @@ const Notification: React.FC<Props> = (props) => {
     >
       <div className={styles.content}>
         <h4 className={styles.title}>{title}</h4>
-        <div className={styles.text}>{renderHTML(content)}</div>
+        <div
+          className={styles.text}
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </div>
       <button className={styles.close} onClick={closeNotification}>
         &#10005;

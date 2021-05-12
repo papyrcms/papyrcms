@@ -109,7 +109,10 @@ const Header: React.FC<Props> = (props) => {
     return (
       <>
         <span className="heading-primary--main">{mainTitle}</span>
-        <span className="heading-primary--sub">{subTitle}</span>
+        <span
+          className="heading-primary--sub"
+          dangerouslySetInnerHTML={{ __html: subTitle }}
+        />
       </>
     )
   }

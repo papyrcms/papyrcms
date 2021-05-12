@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React from 'react'
-import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import Media from '../Media'
 import styles from './PostIndex.module.scss'
@@ -81,9 +80,10 @@ const PostIndex = (props: Props) => {
               {renderTagsSection(tags)}
               {renderPublishSection(isPublished)}
             </div>
-            <div className={styles.content}>
-              {renderHTML(postContent)}
-            </div>
+            <div
+              className={styles.content}
+              dangerouslySetInnerHTML={{ __html: postContent }}
+            />
             <div className={styles.link}>
               <Link href={`/posts/[id]`} as={`/posts/${id}`}>
                 <a className="button button-primary">Read More</a>

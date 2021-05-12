@@ -28,14 +28,19 @@ const Footer: React.FC<Props> = (props) => {
       {/* Footer contact form */}
       <div className={styles.cta}>
         <h2 className={styles.ctaTitle}>{props.footerTitle}</h2>
-        <div>{props.footerContent}</div>
+        <div
+          dangerouslySetInnerHTML={{ __html: props.footerContent }}
+        />
       </div>
 
       {/* Credit section */}
       <div className={styles.credit}>
-        <div className={styles.creditText}>
-          {props.footerCopyrightContent}
-        </div>
+        <div
+          className={styles.creditText}
+          dangerouslySetInnerHTML={{
+            __html: props.footerCopyrightContent,
+          }}
+        />
       </div>
     </footer>
   )

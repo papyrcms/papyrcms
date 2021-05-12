@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
-import renderHTML from 'react-render-html'
 import { postsContext, keysContext } from '@/context'
 import { usePostFilter } from '@/hooks'
 import Notification from './Notification'
@@ -121,17 +120,14 @@ const Layout: React.FC = (props) => {
 
       <NavMenu logo={logo} />
 
-      <Header
-        mainTitle={headerTitle}
-        subTitle={renderHTML(headerSubTitle)}
-      />
+      <Header mainTitle={headerTitle} subTitle={headerSubTitle} />
 
       <main>{props.children}</main>
 
       <Footer
         footerTitle={footerTitle}
-        footerContent={renderHTML(footerContent)}
-        footerCopyrightContent={renderHTML(footerCopyrightContent)}
+        footerContent={footerContent}
+        footerCopyrightContent={footerCopyrightContent}
       />
     </div>
   )

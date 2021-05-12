@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import renderHTML from 'react-render-html'
 import { userContext, postsContext } from '@/context'
 import { Media, PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
@@ -231,9 +230,10 @@ const SectionStandard: React.FC<Props> = (props) => {
             {aftermedia(post)}
 
             {beforeContent(post)}
-            <div className={styles.content}>
-              {renderHTML(post.content || '')}
-            </div>
+            <div
+              className={styles.content}
+              dangerouslySetInnerHTML={{ __html: post.content ?? '' }}
+            />
             {afterContent(post)}
 
             {renderAuthOptions(post)}

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { Post, Comment } from '@/types'
 import axios from 'axios'
-import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import { settingsContext, userContext } from '@/context'
 import CommentForm from '../CommentForm'
@@ -132,7 +131,7 @@ const Comments: React.FC<Props> = (props) => {
 
       return (
         <div className={styles.comment} key={id}>
-          <p className={styles.content}>{renderHTML(content)}</p>
+          <p className={styles.content}>{content}</p>
           <p className={styles.author}>
             &mdash;{' '}
             {author.firstName ? author.firstName : author.email}

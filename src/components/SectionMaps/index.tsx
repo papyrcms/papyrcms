@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React from 'react'
-import renderHTML from 'react-render-html'
 import { Map } from '@/components'
 import styles from './SectionMaps.module.scss'
 
@@ -75,7 +74,10 @@ const SectionMaps: React.FC<Props> = (props) => {
         {mapLocation === 'start' ? renderMap() : null}
 
         <div className={styles.text}>
-          <div className={styles.subtext}>{renderHTML(content)}</div>
+          <div
+            className={styles.subtext}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
         </div>
 
         {mapLocation === 'end' ? renderMap() : null}

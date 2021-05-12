@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React from 'react'
-import renderHTML from 'react-render-html'
 import Link from 'next/link'
 import { Media } from '@/components'
 import styles from './SectionCards.module.scss'
@@ -141,9 +140,10 @@ const SectionCards: React.FC<Props> = (props) => {
           {afterPostMedia(post)}
 
           {beforePostContent(post)}
-          <div className={styles.content}>
-            {renderHTML(postContent)}
-          </div>
+          <div
+            className={styles.content}
+            dangerouslySetInnerHTML={{ __html: postContent }}
+          />
           {afterPostContent(post)}
 
           {beforePostLink(post)}

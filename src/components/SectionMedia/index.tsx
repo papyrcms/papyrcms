@@ -1,6 +1,5 @@
 import { Post } from '@/types'
 import React from 'react'
-import renderHTML from 'react-render-html'
 import { Media } from '@/components'
 import styles from './SectionMedia.module.scss'
 
@@ -47,7 +46,10 @@ const SectionMedia: React.FC<Props> = (props) => {
     >
       <div className={styles.text}>
         <h2 className={styles.title}>{title}</h2>
-        <div className={styles.subtext}>{renderHTML(content)}</div>
+        <div
+          className={styles.subtext}
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </div>
 
       <Media
