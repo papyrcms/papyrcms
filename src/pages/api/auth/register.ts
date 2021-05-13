@@ -1,10 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import keys from '@/keys'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
-import { User } from '@/types'
+import { DbModel, Token, User } from '@/types'
 
 const verifyEmailSyntax = (email: string) => {
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -64,9 +62,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       lastName,
     } as User
     let newUser
+    const { save, EntityType } = database
 
     try {
-      const { save, EntityType } = database
       newUser = await save<User>(EntityType.User, userData)
       if (!newUser) throw new Error()
     } catch (error) {
@@ -89,20 +87,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       )
     }
 
-    // generate a signed json web token with the contents of user object and return it in the response
     const now = new Date()
-    const expiry = new Date(now).setDate(now.getDate() + 30)
+    const token = await save<Token>(EntityType.Token, {
+      id: (undefined as unknown) as string,
+      userId: newUser.id,
+      issued: now,
+      expiry: new Date(new Date(now).setDate(now.getDate() + 30)),
+    } as DbModel)
 
-    const token = jwt.sign(
-      {
-        uid: newUser.id,
-        iat: Math.floor(now.getTime() / 1000),
-        exp: Math.floor(expiry / 1000),
-      },
-      keys.jwtSecret
-    )
-
-    return await done(200, { user: newUser, token })
+    return await done(200, { user: newUser, token: token?.value })
   }
 
   return res.status(404).send({ message: 'Page not found.' })

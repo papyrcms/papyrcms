@@ -8,6 +8,7 @@ import { Blog } from './Blog'
 import { Order } from './Order'
 import { Option } from './Option'
 import { Section } from './Section'
+import { Token } from './Token'
 import { Page } from './Page'
 import { Product } from './Product'
 import { OrderedProduct } from './OrderedProduct'
@@ -25,6 +26,7 @@ export {
   Option,
   Section,
   Page,
+  Token,
   Product,
   OrderedProduct,
   CartProduct,

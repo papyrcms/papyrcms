@@ -1,4 +1,4 @@
-import { Database, User } from '@/types'
+import { User } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
 import serverContext from '@/serverContext'

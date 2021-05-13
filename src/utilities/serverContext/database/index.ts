@@ -99,6 +99,7 @@ export enum EntityType {
   Product,
   Settings,
   User,
+  Token,
 }
 
 const EntityMap: Record<EntityType, typeof PapyrEntity> = {
@@ -112,6 +113,7 @@ const EntityMap: Record<EntityType, typeof PapyrEntity> = {
   [EntityType.Product]: entities.Product,
   [EntityType.Settings]: entities.Settings,
   [EntityType.User]: entities.User,
+  [EntityType.Token]: entities.Token,
 }
 
 export const findOne = async <M extends types.DbModel>(

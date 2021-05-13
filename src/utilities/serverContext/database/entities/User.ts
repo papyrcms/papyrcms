@@ -13,6 +13,7 @@ import * as types from '@/types'
 import { PapyrEntity } from './PapyrEntity'
 import { Product } from './Product'
 import { DbAwarePGC, sanitizeConditions } from '../utilities'
+import { Token } from './Token'
 
 @Entity()
 export class User extends PapyrEntity {
@@ -99,6 +100,9 @@ export class User extends PapyrEntity {
 
   @OneToMany(() => Order, (order) => order.user)
   orders!: Partial<Order[]>
+
+  @OneToMany(() => Token, (token) => token.user)
+  tokens!: Partial<Token[]>
 
   async toModel(): Promise<types.User> {
     const cartProdRepo = getRepository<CartProduct>('CartProduct')

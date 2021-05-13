@@ -14,6 +14,13 @@ export abstract class DbModel {
   id!: string
 }
 
+export class Token extends DbModel {
+  value!: string
+  userId!: string
+  issued!: Date
+  expiry!: Date
+}
+
 export class Page extends DbModel {
   title!: string
   className!: string
@@ -63,6 +70,7 @@ export class User extends DbModel {
   shippingCountry?: string
   shippingZip?: string
   cart?: Product[]
+  tokens?: string[]
   updatedAt?: Date
   createdAt?: Date
 }
