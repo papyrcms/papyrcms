@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, database: Database) => {
 
       const [one, two] = token.split('.')
       const foundToken = await findOne(EntityType.Token, {
-        value: [one, two].join('.'),
+        value: `${one}.${two}`,
       })
       if (!foundToken) throw new Error('Token not found')
 
