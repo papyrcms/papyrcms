@@ -27,6 +27,7 @@ const ProfilePage = () => {
 
   const onLogoutClick = async () => {
     Router.push('/')
+    await axios.delete('/api/auth/logout')
     localStorage.removeItem('token')
     await setCurrentUser(null)
   }
