@@ -62,9 +62,10 @@ const PageRenderer = (props: Props) => {
       // Get properties by the section info
       const key = `${section.type}-${i}`
       const filteredPosts = filtered[key]
-      const emptyMessage = `Create content with the ${section.tags.join(
-        ', '
-      )} tags.`
+      const tags = Array.isArray(section.tags)
+        ? section.tags.join(', ')
+        : section.tags
+      const emptyMessage = `Create content with the ${tags} tags.`
 
       // Get the section component
       const options = sectionOptions[section.type]
