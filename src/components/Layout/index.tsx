@@ -13,12 +13,13 @@ const Layout: React.FC = (props) => {
   const { posts } = useContext(postsContext)
 
   const settings = {
-    maxPosts: 4,
+    maxPosts: 5,
     postTags: [
       'section-header',
       'section-footer',
       'site-description',
       'copyright',
+      'favicon',
     ],
   }
   const filtered = usePostFilter(posts, settings)
@@ -30,6 +31,7 @@ const Layout: React.FC = (props) => {
     footerContent = '',
     footerCopyrightContent = '',
     logo = '',
+    favicon = '',
     descriptionContent = '',
     keywords = '',
     shareImage = ''
@@ -38,7 +40,12 @@ const Layout: React.FC = (props) => {
     if (post.tags && post.tags.includes('section-header')) {
       headerTitle = post.title || ''
       headerSubTitle = post.content || ''
-      logo = post.media || ''
+      if (!logo) {
+        logo = post.media || ''
+      }
+      if (!favicon) {
+        favicon = post.media || ''
+      }
       titleHeaderContent = ''
 
       if (post.content) {
@@ -67,6 +74,8 @@ const Layout: React.FC = (props) => {
       if (post.media) {
         shareImage = post.media
       }
+    } else if (post.tags.includes('favicon')) {
+      favicon = post.media
     }
   })
 
@@ -98,9 +107,13 @@ const Layout: React.FC = (props) => {
         />
         <meta name="language" content="en-us" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-        <link rel="shortcut icon" type="image/x-icon" href={logo} />
-        <link rel="apple-touch-icon" sizes="57x57" href={logo} />
-        <link rel="apple-touch-icon" sizes="180x180" href={logo} />
+        <link
+          rel="shortcut icon"
+          type="image/x-icon"
+          href={favicon}
+        />
+        <link rel="apple-touch-icon" sizes="57x57" href={favicon} />
+        <link rel="apple-touch-icon" sizes="180x180" href={favicon} />
         <link
           href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,600,700"
           rel="stylesheet"

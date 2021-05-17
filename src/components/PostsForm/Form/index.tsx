@@ -163,6 +163,7 @@ const Form: React.FC<Props> = (props) => {
   * section-header
   * section-footer
   * copyright
+  * favicon
   * site-description
   * notification
   * persist
