@@ -13,11 +13,11 @@ type Props = {
 
 const PageHead = (props: Props) => {
   const {
-    title,
-    titleContent,
-    image,
-    description,
-    keywords,
+    title = '',
+    titleContent = '',
+    image = '',
+    description = '',
+    keywords = '',
     children,
   } = props
 
