@@ -85,7 +85,9 @@ const PageBuilder = (props: Props) => {
     INITIAL_STATE.sections = props.page.sections.map((section) => {
       return {
         ...section,
-        tags: section.tags.join(', '),
+        tags: Array.isArray(section.tags)
+          ? section.tags.join(', ')
+          : section.tags,
       }
     })
     INITIAL_STATE.page = props.page
