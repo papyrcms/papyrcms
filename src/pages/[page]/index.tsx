@@ -1,4 +1,4 @@
-import { Page } from '@/types'
+import { Page, Post } from '@/types'
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
@@ -7,6 +7,9 @@ import {
   postsContext,
   pagesContext,
   sectionOptionsContext,
+  blogsContext,
+  storeContext,
+  eventsContext,
 } from '@/context'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
@@ -40,19 +43,45 @@ const PageRenderer = (props: Props) => {
   }
 
   // Get our filter settings from the page sections
-  const settings: any = []
+  const postSettings: any = []
+  const blogSettings: any = []
+  const eventSettings: any = []
+  const productSettings: any = []
+
   page.sections.forEach((section, i) => {
-    settings.push({
+    const settings = {
       propName: `${section.type}-${i}`,
       maxPosts: section.maxPosts,
       postTags: section.tags,
       strictTags: true,
-    })
+    }
+
+    switch (section.postType) {
+      case 'post':
+        postSettings.push(settings)
+        break
+      case 'blog':
+        blogSettings.push(settings)
+        break
+      case 'event':
+        eventSettings.push(settings)
+        break
+      case 'product':
+        productSettings.push(settings)
+        break
+    }
   })
 
   // Get posts and filter those by the settings
   const { posts } = useContext(postsContext)
-  const filtered = usePostFilter(posts, settings)
+  const { blogs } = useContext(blogsContext)
+  const { events } = useContext(eventsContext)
+  const { products } = useContext(storeContext)
+
+  const filteredPosts = usePostFilter(posts, postSettings)
+  const filteredBlogs = usePostFilter(blogs, blogSettings)
+  const filteredEvents = usePostFilter(events, eventSettings)
+  const filteredProducts = usePostFilter(products, productSettings)
 
   // Get our section options
   const { sectionOptions } = useContext(sectionOptionsContext)
@@ -61,7 +90,21 @@ const PageRenderer = (props: Props) => {
     return page.sections.map((section, i) => {
       // Get properties by the section info
       const key = `${section.type}-${i}`
-      const filteredPosts = filtered[key]
+      let filtered: Post[] = []
+      switch (section.postType) {
+        case 'post':
+          filtered = filteredPosts[key]
+          break
+        case 'blog':
+          filtered = filteredBlogs[key]
+          break
+        case 'event':
+          filtered = filteredEvents[key]
+          break
+        case 'product':
+          filtered = filteredProducts[key]
+          break
+      }
       const tags = Array.isArray(section.tags)
         ? section.tags.join(', ')
         : section.tags
@@ -79,8 +122,8 @@ const PageRenderer = (props: Props) => {
           key={key}
           title={section.title}
           className={section.className || ''}
-          post={filteredPosts[0]}
-          posts={filteredPosts}
+          post={filtered[0]}
+          posts={filtered}
           emptyTitle={section.title || ''}
           emptyMessage={emptyMessage || ''}
           alt={section.title || ''}

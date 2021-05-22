@@ -33,6 +33,9 @@ export class Section extends PapyrEntity {
   @Column({ default: '' })
   tags!: string
 
+  @Column('varchar', { default: 'post' })
+  postType!: types.PostType
+
   @Column({ default: '' })
   title!: string
 
@@ -54,6 +57,7 @@ export class Section extends PapyrEntity {
       order: this.order,
       pageId: this.pageId,
       type: this.type,
+      postType: this.postType,
       maxPosts: this.maxPosts,
       tags: this.tags.split(',').map((tag) => tag.trim()),
       title: this.title,
@@ -84,6 +88,7 @@ export class Section extends PapyrEntity {
     foundSection.pageId = section.pageId
     foundSection.order = section.order
     foundSection.type = section.type
+    foundSection.postType = section.postType
     foundSection.tags = section.tags.join(', ')
     foundSection.maxPosts = section.maxPosts
     foundSection.title = section.title

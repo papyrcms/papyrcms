@@ -118,7 +118,7 @@ export class Page extends PapyrEntity {
 
     const sections = await sectionRepo.find({
       where: sanitizeConditions({
-        pageId: page.id.toString(),
+        pageId: foundPage.id.toString(),
       }),
     })
 

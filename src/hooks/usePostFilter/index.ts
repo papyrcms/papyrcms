@@ -69,13 +69,18 @@ const usePostFilter = <T extends Post>(
   }
 
   const orderPosts = (postsToFilter: T[]) => {
+    // First, order by date
+    postsToFilter.sort((a, b) => {
+      if (!a.createdAt || !b.createdAt) return 0
+      return a.createdAt > b.createdAt ? 1 : -1
+    })
+
     const orderedPosts: T[] = []
     const unorderedPosts: T[] = []
 
     postsToFilter.forEach((post) => {
       let found = false
 
-      // for (const tag of post.tags) {
       post.tags.forEach((tag) => {
         if (!found && tag.includes('order-')) {
           // use index of a tag such as order-2 to be index 2

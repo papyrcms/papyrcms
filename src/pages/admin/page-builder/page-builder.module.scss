@@ -112,6 +112,13 @@
   }
 }
 
+.postTypes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
 .sectionButtons {
   display: flex;
   justify-content: space-between;

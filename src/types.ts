@@ -34,10 +34,13 @@ export class Page extends DbModel {
   createdAt?: Date
 }
 
+export type PostType = 'post' | 'blog' | 'event' | 'product'
+
 export class Section extends DbModel {
   order!: number
   pageId!: string
   type!: string
+  postType!: PostType
   tags!: string[]
   title!: string
   maxPosts!: number

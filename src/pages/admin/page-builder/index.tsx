@@ -1,9 +1,13 @@
-import { Page, Section } from '@/types'
-import React, { useState, useContext } from 'react'
+import { Page, Section, PostType } from '@/types'
+import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Error from 'next/error'
-import { userContext, sectionOptionsContext } from '@/context'
+import {
+  userContext,
+  sectionOptionsContext,
+  settingsContext,
+} from '@/context'
 import keys from '@/keys'
 import { Input, Button, Modal, PostsForm } from '@/components'
 import PageRenderer from '../../[page]'
@@ -15,6 +19,15 @@ type Props = {
 
 const PageBuilder = (props: Props) => {
   const { sectionOptions } = useContext(sectionOptionsContext)
+  const { settings } = useContext(settingsContext)
+  const [postTypes, setPostTypes] = useState<PostType[]>([])
+  useEffect(() => {
+    const types: PostType[] = ['post']
+    if (settings.enableBlog) types.push('blog')
+    if (settings.enableEvents) types.push('event')
+    if (settings.enableStore) types.push('product')
+    setPostTypes(types)
+  }, [settings])
 
   type InitialState = {
     id: string
@@ -205,6 +218,35 @@ const PageBuilder = (props: Props) => {
     }
   }
 
+  const renderPostTypes = () => {
+    return postTypes.map((type) => {
+      return (
+        <option value={type}>
+          {type.charAt(0).toUpperCase() + type.slice(1)}
+        </option>
+      )
+    })
+  }
+
+  const renderPostTypesInput = (
+    i: number,
+    section: { type: string; postType: PostType }
+  ) => {
+    const { type, postType } = section
+
+    return (
+      <select
+        className={`button button-secondary ${styles.sectionSelector}`}
+        onChange={(event: any) =>
+          changeSectionState(i, 'postType', event.target.value)
+        }
+        value={postType}
+      >
+        {renderPostTypes()}
+      </select>
+    )
+  }
+
   const moveSection = (oldIndex: number, newIndex: number) => {
     const { sections } = state
 
@@ -250,6 +292,11 @@ const PageBuilder = (props: Props) => {
                 {renderClassNameInput(i, section)}
                 {renderTagsInput(i, section)}
                 {renderMaxPostsInput(i, section)}
+              </div>
+
+              <div className={styles.postTypes}>
+                <label>Post Type</label>
+                {renderPostTypesInput(i, section)}
               </div>
 
               <div className={styles.sectionButtons}>
@@ -300,6 +347,7 @@ const PageBuilder = (props: Props) => {
 
     const newSection = {
       type: sectionSelect,
+      postType: 'post',
       tags: '',
       title: '',
       maxPosts: section.maxPosts || 1,
