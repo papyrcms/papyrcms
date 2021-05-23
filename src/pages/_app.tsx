@@ -31,7 +31,7 @@ type Props = {
   sectionOptions: SectionOptions
 }
 
-const App = (props: Props) => {
+const PapyrCms = (props: Props) => {
   const { asPath } = useRouter()
   let {
     Component,
@@ -76,7 +76,7 @@ const App = (props: Props) => {
   )
 }
 
-App.getInitialProps = async ({
+PapyrCms.getInitialProps = async ({
   Component,
   ctx,
 }: {
@@ -102,4 +102,4 @@ App.getInitialProps = async ({
   return pageProps
 }
 
-export default App
+export default PapyrCms
