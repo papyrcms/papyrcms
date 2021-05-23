@@ -91,17 +91,22 @@ const PageRenderer = (props: Props) => {
       // Get properties by the section info
       const key = `${section.type}-${i}`
       let filtered: Post[] = []
+      let path: string
       switch (section.postType) {
         case 'post':
+          path = 'posts'
           filtered = filteredPosts[key]
           break
         case 'blog':
+          path = 'blog'
           filtered = filteredBlogs[key]
           break
         case 'event':
+          path = 'events'
           filtered = filteredEvents[key]
           break
         case 'product':
+          path = 'store'
           filtered = filteredProducts[key]
           break
       }
@@ -127,6 +132,7 @@ const PageRenderer = (props: Props) => {
           emptyTitle={section.title || ''}
           emptyMessage={emptyMessage || ''}
           alt={section.title || ''}
+          path={path}
           {...options.defaultProps}
         />
       )

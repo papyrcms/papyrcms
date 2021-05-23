@@ -71,8 +71,8 @@ const SectionCards: React.FC<Props> = (props) => {
 
       return (
         <Link
-          href={`/${readMorePath || 'posts'}/[id]`}
-          as={`/${readMorePath || 'posts'}/${post.slug || post.id}`}
+          href={`/${readMorePath}/[id]`}
+          as={`/${readMorePath}/${post.slug || post.id}`}
         >
           <a className={styles.link}>Read More</a>
         </Link>
