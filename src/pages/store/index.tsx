@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { userContext, storeContext, postsContext } from '@/context'
-import { usePostFilter } from '@/hooks'
+import { usePostFilter, useSearchBar } from '@/hooks'
 import { PageHead } from '@/components'
 import { SectionCards } from '@/components'
 import styles from './store.module.scss'
@@ -94,11 +94,14 @@ const StorePage = () => {
     headTitle = `${headerPost.title} | ${headTitle}`
   }
 
+  const { SearchBar, searchPosts } = useSearchBar(products)
+
   return (
     <div className={styles.store}>
       <PageHead title={headTitle} />
       <SectionCards
-        posts={products}
+        afterTitle={() => <SearchBar className={styles.searchBar} />}
+        posts={searchPosts}
         title="Store"
         clickableMedia
         perRow={4}

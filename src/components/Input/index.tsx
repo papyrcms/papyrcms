@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { MutableRefObject } from 'react'
 import Tooltip from '../Tooltip'
 import styles from './Input.module.scss'
 
@@ -17,6 +17,7 @@ type Props = {
   children?: any
   validation?: string
   tooltip?: string
+  refProp?: MutableRefObject<any>
   formState?: { [key: string]: any }
 }
 
@@ -38,6 +39,7 @@ const Input = (props: Props) => {
     validation = '',
     formState,
     tooltip,
+    refProp,
   } = props
 
   // Set formstate vars, but don't overwrite if passed explicitely
@@ -70,6 +72,8 @@ const Input = (props: Props) => {
         <>
           {renderLabel()}
           <textarea
+            ref={refProp}
+            key={id}
             placeholder={placeholder}
             name={name}
             id={id}
@@ -88,6 +92,8 @@ const Input = (props: Props) => {
       return (
         <>
           <input
+            ref={refProp}
+            key={id}
             type={type}
             placeholder={placeholder}
             name={name}
@@ -108,6 +114,8 @@ const Input = (props: Props) => {
       <>
         {renderLabel()}
         <input
+          ref={refProp}
+          key={id}
           type={type}
           placeholder={placeholder}
           name={name}

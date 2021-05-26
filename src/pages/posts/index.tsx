@@ -25,18 +25,13 @@ const Posts = () => {
     setSearch(event.target.value)
 
     let foundPosts = posts.filter((post) => {
-      let isFound = false
-
-      // Go through each post's tags
       for (const tag of post.tags) {
-        // If we find it, mark it and break out of this loop
         if (tag.includes(event.target.value)) {
-          isFound = true
-          break
+          return true
         }
       }
 
-      return isFound
+      return false
     })
 
     setSearchPosts(foundPosts)
