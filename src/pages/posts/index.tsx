@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import { postsContext, userContext } from '@/context'
-import { PostIndex, Input } from '@/components'
+import { PostIndex } from '@/components'
 import styles from './posts.module.scss'
+import { useSearchBar } from 'src/hooks'
 
 const Posts = () => {
   const { currentUser } = useContext(userContext)
@@ -17,25 +18,7 @@ const Posts = () => {
     resetPosts()
   }, [currentUser])
 
-  const [search, setSearch] = useState('')
-  const [searchPosts, setSearchPosts] = useState(posts)
-
-  const onSearchTextChange = (event: any) => {
-    // Set the search bar state
-    setSearch(event.target.value)
-
-    let foundPosts = posts.filter((post) => {
-      for (const tag of post.tags) {
-        if (tag.includes(event.target.value)) {
-          return true
-        }
-      }
-
-      return false
-    })
-
-    setSearchPosts(foundPosts)
-  }
+  const { SearchBar, searchPosts } = useSearchBar(posts)
 
   return (
     <div className={styles.main}>
@@ -43,15 +26,7 @@ const Posts = () => {
         <h2 className={`heading-secondary ${styles.header}`}>
           My Content
         </h2>
-        <Input
-          id="posts-search"
-          label="Search Posts"
-          placeholder="search tags here"
-          name="search"
-          value={search}
-          onChange={onSearchTextChange}
-          className={styles.input}
-        />
+        <SearchBar className={styles.input} />
       </div>
       <PostIndex posts={searchPosts} />
     </div>

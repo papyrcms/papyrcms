@@ -5,7 +5,8 @@ import moment from 'moment'
 import { PageHead } from '@/components'
 import { userContext, blogsContext, postsContext } from '@/context'
 import { SectionCards } from '@/components'
-import { usePostFilter } from '@/hooks'
+import { usePostFilter, useSearchBar } from '@/hooks'
+import styles from './blog.module.scss'
 
 const BlogAllPage = () => {
   const { currentUser } = useContext(userContext)
@@ -27,7 +28,7 @@ const BlogAllPage = () => {
       }
       fetchBlogs()
     }
-  }, [currentUser, blogs])
+  }, [currentUser])
 
   const renderDate = (post: Blog) => {
     const date =
@@ -52,17 +53,22 @@ const BlogAllPage = () => {
     headTitle = `${headerPost.title} | ${headTitle}`
   }
 
+  const { SearchBar, searchPosts } = useSearchBar(blogs)
+
   return (
     <>
       <PageHead title={headTitle} />
       <SectionCards
+        afterTitle={() => (
+          <SearchBar className={styles.searchBar} placeholder=" " />
+        )}
         title="Blog"
         perRow={4}
         path="blog"
         contentLength={100}
         emptyMessage="There are no blogs yet."
         readMore
-        posts={blogs}
+        posts={searchPosts}
         afterPostTitle={renderDate}
       />
     </>

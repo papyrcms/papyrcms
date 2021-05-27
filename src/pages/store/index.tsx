@@ -100,7 +100,9 @@ const StorePage = () => {
     <div className={styles.store}>
       <PageHead title={headTitle} />
       <SectionCards
-        afterTitle={() => <SearchBar className={styles.searchBar} />}
+        afterTitle={() => (
+          <SearchBar className={styles.searchBar} placeholder=" " />
+        )}
         posts={searchPosts}
         title="Store"
         clickableMedia
