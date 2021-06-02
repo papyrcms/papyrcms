@@ -1,9 +1,14 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import { settingsContext, pagesContext } from '@/context'
+import {
+  settingsContext,
+  pagesContext,
+  postsContext,
+} from '@/context'
 import { Page } from '@/types'
 import styles from './NavMenu.module.scss'
 import { useRouter } from 'next/router'
+import { usePostFilter } from 'src/hooks'
 
 const onClick = () => {
   const checkbox = document.getElementById('nav-menu-checkbox')
@@ -15,10 +20,24 @@ type LinkProps = {
   href: string
   title?: string
   children: string
+  isExternal: boolean
 }
 
 const NavLink: React.FC<LinkProps> = (props) => {
   const { asPath } = useRouter()
+
+  if (props.isExternal) {
+    return (
+      <a
+        href={props.href}
+        target="_blank"
+        className={styles.item}
+        title={props.title || props.children}
+      >
+        <li onClick={onClick}>{props.children}</li>
+      </a>
+    )
+  }
 
   return (
     <Link href={props.href}>
@@ -40,9 +59,17 @@ const Submenu: React.FC<{ pages: Page[] }> = ({ pages }) => {
       {pages
         .sort((a, b) => (a.navOrder > b.navOrder ? 1 : -1))
         .map((page) => {
-          const href = page.route === 'home' ? '/' : `/${page.route}`
+          const isExternal = page.className === 'external-link'
+          let href = page.route
+          if (!isExternal) {
+            href = page.route === 'home' ? '/' : `/${page.route}`
+          }
           return (
-            <NavLink href={href} key={page.id}>
+            <NavLink
+              href={href}
+              key={page.id}
+              isExternal={page.className === 'external-link'}
+            >
               {page.title}
             </NavLink>
           )
@@ -53,10 +80,39 @@ const Submenu: React.FC<{ pages: Page[] }> = ({ pages }) => {
 
 const NavMenu: React.FC<{ logo?: string }> = (props) => {
   const { pages } = useContext(pagesContext)
+  const { posts } = useContext(postsContext)
   const { settings } = useContext(settingsContext)
 
   const renderMenuItems = () => {
     let menuPages = [...pages]
+
+    const postFilterSettings = {
+      postTags: ['external-link'],
+    }
+    const { posts: externalLinkPosts } = usePostFilter(
+      posts,
+      postFilterSettings
+    )
+    externalLinkPosts.forEach((post) => {
+      const route = post.content
+        .replace('<p>', '')
+        .replace('</p>', '')
+      const order = post.tags
+        .find((tag) => tag.includes('order-'))
+        ?.split('-')[1]
+      const navOrder =
+        !order || isNaN(parseFloat(order)) ? 0 : parseFloat(order)
+
+      if (navOrder) {
+        menuPages.push({
+          id: route,
+          route,
+          title: post.title,
+          navOrder,
+          className: 'external-link',
+        } as Page)
+      }
+    })
 
     if (settings.enableBlog) {
       menuPages.push({
@@ -125,9 +181,13 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
 
     return menuItems.map(({ page, pages }) => {
       if (page) {
-        const href = page.route === 'home' ? '/' : `/${page.route}`
+        const isExternal = page.className === 'external-link'
+        let href = page.route
+        if (!isExternal) {
+          href = page.route === 'home' ? '/' : `/${page.route}`
+        }
         return (
-          <NavLink href={href} key={page.id}>
+          <NavLink href={href} key={page.id} isExternal={isExternal}>
             {page.title}
           </NavLink>
         )

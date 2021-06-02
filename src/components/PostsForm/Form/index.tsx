@@ -173,7 +173,8 @@ const Form: React.FC<Props> = (props) => {
   * welcome
   * forgot-password
   * bulk-email
-  * order-{number}`
+  * order-{number}
+  * external-link`
 
   return (
     <form encType="multipart/form-data" className={styles.form}>
