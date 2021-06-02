@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { settingsContext, pagesContext } from '@/context'
 import { Page } from '@/types'
 import styles from './NavMenu.module.scss'
+import { useRouter } from 'next/router'
 
 const onClick = () => {
   const checkbox = document.getElementById('nav-menu-checkbox')
@@ -17,10 +18,14 @@ type LinkProps = {
 }
 
 const NavLink: React.FC<LinkProps> = (props) => {
+  const { asPath } = useRouter()
+
   return (
     <Link href={props.href}>
       <a
-        className={styles.item}
+        className={`${styles.item} ${
+          asPath === props.href && styles.selected
+        }`}
         title={props.title || props.children}
       >
         <li onClick={onClick}>{props.children}</li>

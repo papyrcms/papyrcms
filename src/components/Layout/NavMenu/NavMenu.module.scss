@@ -175,6 +175,10 @@
   }
 }
 
+.selected {
+  font-weight: 700;
+}
+
 @media (max-width: 28.125em) {
   .checked {
     transition: all 0.3s;
