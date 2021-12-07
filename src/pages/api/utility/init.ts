@@ -45,7 +45,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       let passwordHash
       try {
         passwordHash = await bcrypt.hash(password, 15)
-      } catch (error) {
+      } catch (error: any) {
         return await done(400, error)
       }
 
@@ -122,7 +122,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         token,
         user,
       })
-    } catch (err) {
+    } catch (err: any) {
       // If something in the process fails, we must
       // undo everything done in the process so the
       // user can try again.

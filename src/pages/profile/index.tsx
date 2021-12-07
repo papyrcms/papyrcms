@@ -72,7 +72,7 @@ const ProfilePage = () => {
         isSubscribed: !currentUser.isSubscribed,
       })
       setCurrentUser(response.data)
-    } catch (err) {
+    } catch (err: any) {
       console.error(err)
     }
 

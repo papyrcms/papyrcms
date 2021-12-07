@@ -9,7 +9,7 @@ const getPost = async (id: string, database: Database) => {
 
   try {
     post = await findOne<Post>(EntityType.Post, { id })
-  } catch (err) {}
+  } catch (err: any) {}
 
   if (!post) {
     post = await findOne<Post>(EntityType.Post, { slug: id })

@@ -75,7 +75,7 @@ const useForm = (initialState: { [key: string]: any }) => {
       success(response, (message: string) =>
         setValues({ ...resetState, validation: message })
       )
-    } catch (err) {
+    } catch (err: any) {
       let message = 'Something went wrong. Please try again.'
 
       if (err.data && err.data.error && err.data.error.message) {

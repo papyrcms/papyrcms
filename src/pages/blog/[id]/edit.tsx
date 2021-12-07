@@ -49,7 +49,7 @@ BlogEdit.getInitialProps = async ({
     )
 
     return { blog }
-  } catch (err) {
+  } catch (err: any) {
     return {}
   }
 }

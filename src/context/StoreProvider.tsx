@@ -39,7 +39,7 @@ const StoreProvider: React.FC<Props> = (props) => {
       try {
         await axios.put(`/api/store/cart/${product.id}`)
         setCart(newCart)
-      } catch (err) {
+      } catch (err: any) {
         console.error(err)
       }
     }
@@ -66,7 +66,7 @@ const StoreProvider: React.FC<Props> = (props) => {
       try {
         await axios.delete(`/api/store/cart/${product.id}`)
         setCart(newCart)
-      } catch (err) {
+      } catch (err: any) {
         console.error(err)
       }
     }

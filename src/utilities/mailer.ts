@@ -29,7 +29,7 @@ class Mailer {
     try {
       const { token } = await oauth2Client.getAccessToken()
       return token
-    } catch (err) {
+    } catch (err: any) {
       console.error('error', err)
       return false
     }

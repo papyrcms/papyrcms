@@ -8,7 +8,7 @@ const getProduct = async (id: string, database: Database) => {
 
   try {
     product = await findOne<Product>(EntityType.Product, { id })
-  } catch (err) {}
+  } catch (err: any) {}
 
   if (!product) {
     product = await findOne<Product>(EntityType.Product, { slug: id })

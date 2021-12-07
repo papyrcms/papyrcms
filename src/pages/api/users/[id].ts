@@ -25,7 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       if (!toDelete) throw new Error('User not found')
       await destroy(EntityType.User, toDelete)
       return await done(200, { message: 'user deleted' })
-    } catch (err) {
+    } catch (err: any) {
       return await done(400, { message: err.message })
     }
   }

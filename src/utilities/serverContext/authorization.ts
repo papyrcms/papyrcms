@@ -27,7 +27,7 @@ export default async (req: NextApiRequest, database: Database) => {
         })
         return user
       }
-    } catch (err) {}
+    } catch (err: any) {}
   }
 
   return null

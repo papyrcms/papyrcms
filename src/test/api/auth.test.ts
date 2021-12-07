@@ -40,7 +40,7 @@ describe('/api/auth', () => {
         })
         // Fail if we made it here.
         expect(true).to.equal(false)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -53,7 +53,7 @@ describe('/api/auth', () => {
         })
         // Fail if we made it here.
         expect(true).to.equal(false)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -66,7 +66,7 @@ describe('/api/auth', () => {
         })
         // Fail if we made it here.
         expect(true).to.equal(false)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -79,7 +79,7 @@ describe('/api/auth', () => {
         })
         // Fail if we made it here.
         expect(true).to.equal(false)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -99,7 +99,7 @@ describe('/api/auth', () => {
         await axios.post(`${rootURL}/api/auth/register`, newUser)
         // Fail if we made it here.
         expect(true).to.equal(false)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -107,12 +107,13 @@ describe('/api/auth', () => {
 
   describe('/login', () => {
     it('returns the authenticated user', async () => {
-      const {
-        data: foundUser,
-      } = await axios.post(`${rootURL}/api/auth/login`, {
-        email: newUser.email,
-        password: newUser.password,
-      })
+      const { data: foundUser } = await axios.post(
+        `${rootURL}/api/auth/login`,
+        {
+          email: newUser.email,
+          password: newUser.password,
+        }
+      )
       expect(newUser.email).to.equal(foundUser.user.email) &&
         expect(newUser.firstName).to.equal(
           foundUser.user.firstName
@@ -126,7 +127,7 @@ describe('/api/auth', () => {
           email: 'abcd@abcd.com',
           password: 'invalid',
         })
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(400)
       }
     }).timeout(10000)
@@ -137,7 +138,7 @@ describe('/api/auth', () => {
           email: newUser.email,
           password: 'invalid',
         })
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -172,7 +173,7 @@ describe('/api/auth', () => {
           data,
           axiosConfig
         )
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -189,7 +190,7 @@ describe('/api/auth', () => {
           data,
           axiosConfig
         )
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -206,7 +207,7 @@ describe('/api/auth', () => {
           data,
           axiosConfig
         )
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -223,7 +224,7 @@ describe('/api/auth', () => {
           data,
           axiosConfig
         )
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -248,7 +249,7 @@ describe('/api/auth', () => {
         await axios.post(`${rootURL}/api/auth/forgotPassword`, {
           email: '',
         })
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)
@@ -258,7 +259,7 @@ describe('/api/auth', () => {
         await axios.post(`${rootURL}/api/auth/forgotPassword`, {
           email: 'tester@gmail.com',
         })
-      } catch (err) {
+      } catch (err: any) {
         // disable emailing to users now that the tests are finished
         // const expectedSettings = {
         //   enableMenu: true,
@@ -290,7 +291,7 @@ describe('/api/auth', () => {
           `${rootURL}/api/auth/requestPasswordChange`,
           { ...data, confirmPassword: 'notamatch' }
         )
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)

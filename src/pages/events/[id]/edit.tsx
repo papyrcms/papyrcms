@@ -111,7 +111,7 @@ EventsEdit.getInitialProps = async ({
     )
 
     return { event }
-  } catch (err) {
+  } catch (err: any) {
     return {}
   }
 }

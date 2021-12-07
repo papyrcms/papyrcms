@@ -29,7 +29,7 @@ const createMessage = async (
     const mailer = new Mailer(database)
     const subject = `New message from ${messageBody.name}!`
 
-    const sent = mailer.sendEmail(
+    const sent = await mailer.sendEmail(
       messageBody,
       keys.adminEmail,
       'contact',

@@ -120,7 +120,7 @@ describe('/api/users', () => {
       try {
         await axios.delete(`${rootURL}/api/users/${testUser?.id}`)
         expect(1).to.equal(2)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(403)
       }
     }).timeout(10000)
@@ -138,7 +138,7 @@ describe('/api/users', () => {
           axiosConfig
         )
         expect(1).to.equal(2)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(401)
       }
     }).timeout(10000)

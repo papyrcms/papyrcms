@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       user = await findOne<User>(EntityType.User, {
         email: req.body.email,
       })
-    } catch (error) {
+    } catch (error: any) {
       return await done(400, error)
     }
 
@@ -26,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     let result
     try {
       result = await bcrypt.compare(req.body.password, user.password)
-    } catch (error) {
+    } catch (error: any) {
       return await done(401, error)
     }
 

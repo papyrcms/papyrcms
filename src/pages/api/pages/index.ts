@@ -54,7 +54,7 @@ const createPage = async (body: any, database: Database) => {
   try {
     const { save, EntityType } = database
     return await save<Page>(EntityType.Page, body)
-  } catch (err) {
+  } catch (err: any) {
     let message = 'There was a problem. Try again later.'
     if (err.code === 11000) {
       message =

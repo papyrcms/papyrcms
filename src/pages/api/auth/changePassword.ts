@@ -43,7 +43,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     let result
     try {
       result = await bcrypt.compare(oldPass, foundUser.password)
-    } catch (error) {
+    } catch (error: any) {
       return await done(401, error)
     }
 
@@ -64,7 +64,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     let passwordHash
     try {
       passwordHash = await bcrypt.hash(newPass, 15)
-    } catch (error) {
+    } catch (error: any) {
       return await done(400, error)
     }
 

@@ -51,7 +51,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     let passwordHash
     try {
       passwordHash = await bcrypt.hash(password, 15)
-    } catch (error) {
+    } catch (error: any) {
       return await done(400, error)
     }
 
@@ -67,7 +67,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       newUser = await save<User>(EntityType.User, userData)
       if (!newUser) throw new Error()
-    } catch (error) {
+    } catch (error: any) {
       let message = 'Uh oh, something went wrong.'
       if (error.code == 11000) {
         message = 'This email is already in use.'

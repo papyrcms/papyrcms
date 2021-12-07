@@ -57,7 +57,7 @@ describe('/api/utility', () => {
     it('will only allow settings to be posted by admin users', async () => {
       try {
         await axios.post(`${rootURL}/api/utility/settings`)
-      } catch (err) {
+      } catch (err: any) {
         expect(err.response.status).to.equal(403)
       }
     }).timeout(10000)

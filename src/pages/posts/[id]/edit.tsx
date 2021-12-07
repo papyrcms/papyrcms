@@ -47,7 +47,7 @@ PostsEdit.getInitialProps = async ({
     )
 
     return { post }
-  } catch (err) {
+  } catch (err: any) {
     return {}
   }
 }

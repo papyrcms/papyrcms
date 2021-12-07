@@ -91,7 +91,7 @@ StoreShow.getInitialProps = async ({
       `${rootUrl}/api/store/products/${query.id}`
     )
     return { product }
-  } catch (err) {
+  } catch (err: any) {
     return {}
   }
 }

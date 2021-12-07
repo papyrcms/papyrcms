@@ -97,7 +97,7 @@ StoreEdit.getInitialProps = async ({
     )
 
     return { product }
-  } catch (err) {
+  } catch (err: any) {
     return {}
   }
 }

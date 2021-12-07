@@ -34,7 +34,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     let passwordHash
     try {
       passwordHash = await bcrypt.hash(password, 15)
-    } catch (error) {
+    } catch (error: any) {
       return await done(400, error)
     }
 

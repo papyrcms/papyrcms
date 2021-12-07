@@ -9,7 +9,7 @@ const getBlog = async (id: string, database: Database) => {
   // Search for the blog by its id
   try {
     blog = await findOne<Blog>(EntityType.Blog, { id })
-  } catch (err) {}
+  } catch (err: any) {}
 
   // Then search by its slug
   if (!blog) {

@@ -64,7 +64,7 @@ const updatePage = async (
     const page = await findOne<Page>(EntityType.Page, { id })
     if (!page) throw new Error('Page not found')
     return await save<Page>(EntityType.Page, { ...page, ...body })
-  } catch (err) {
+  } catch (err: any) {
     let message = 'There was a problem. Try again later.'
     if (err.code === 11000) {
       message =
@@ -93,7 +93,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const page = await getPage(req.query.id, database)
       return await done(200, page)
-    } catch (err) {
+    } catch (err: any) {
       return await done(403, {
         message: 'You are not allowed to do that.',
       })

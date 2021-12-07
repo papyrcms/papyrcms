@@ -9,7 +9,7 @@ const getEvent = async (id: string, database: Database) => {
 
   try {
     event = await findOne<Event>(EntityType.Event, { id })
-  } catch (err) {}
+  } catch (err: any) {}
 
   if (!event) {
     event = await findOne<Event>(EntityType.Event, { slug: id })
