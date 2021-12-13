@@ -26,8 +26,8 @@ type Props = {
   afterPost?: Function
   beforeTitle?: Function
   afterTitle?: Function
-  beforemedia?: Function
-  aftermedia?: Function
+  beforeMedia?: Function
+  afterMedia?: Function
   beforeContent?: Function
   afterContent?: Function
   beforeComments?: Function
@@ -54,8 +54,8 @@ type Props = {
  * @prop afterPost - Function - Rendered after each post
  * @prop beforeTitle - Function - Rendered before each post title
  * @prop afterTitle - Function - Rendered after each post title
- * @prop beforemedia - Function - Rendered before each post main media
- * @prop aftermedia - Function - Rendered after each post main media
+ * @prop beforeMedia - Function - Rendered before each post main media
+ * @prop afterMedia - Function - Rendered after each post main media
  * @prop beforeContent - Function - Rendered before each post content
  * @prop afterContent - Function - Rendered after each post content
  * @prop beforeComments - Function - Rendered before each post comments
@@ -87,8 +87,8 @@ const SectionStandard: React.FC<Props> = (props) => {
     afterPost = () => null,
     beforeTitle = () => null,
     afterTitle = () => null,
-    beforemedia = () => null,
-    aftermedia = () => null,
+    beforeMedia = () => null,
+    afterMedia = () => null,
     beforeContent = () => null,
     afterContent = () => null,
     beforeComments = () => null,
@@ -99,10 +99,10 @@ const SectionStandard: React.FC<Props> = (props) => {
 
   if (posts.length === 0 || Object.keys(posts).length == 0) {
     return (
-      <div className={`${styles.section} ${className || ''}`}>
+      <section className={`${styles.section} ${className || ''}`}>
         <h2 className="heading-secondary">{emptyTitle}</h2>
         <h3 className="heading-tertiary">{emptyMessage}</h3>
-      </div>
+      </section>
     )
   }
 
@@ -176,7 +176,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     }
   }
 
-  const rendermedia = (post: Post) => {
+  const renderMedia = (post: Post) => {
     if (post.media) {
       return (
         <div className={styles.image}>
@@ -225,9 +225,9 @@ const SectionStandard: React.FC<Props> = (props) => {
 
             {renderTagsSection(post)}
 
-            {beforemedia(post)}
-            {rendermedia(post)}
-            {aftermedia(post)}
+            {beforeMedia(post)}
+            {renderMedia(post)}
+            {afterMedia(post)}
 
             {beforeContent(post)}
             <div
@@ -280,11 +280,11 @@ const SectionStandard: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={`${styles.section} ${className || ''}`}>
+    <section className={`${styles.section} ${className || ''}`}>
       {renderPageHead(props.posts)}
 
       {renderPosts()}
-    </div>
+    </section>
   )
 }
 
