@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "description": "A dynamic CMS template made with NextJS and Typescript",
   "engines": {
-    "node": "14.16.1"
+    "node": "16.6.2"
   },
   "scripts": {
     "dev": "next dev -p 5000",
