@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Page } from './Page'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { PapyrEntity } from './PapyrEntity'
 import { DbAwarePGC, sanitizeConditions } from '../utilities'
 

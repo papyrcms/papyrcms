@@ -2,17 +2,37 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/serverContext": ["src/utilities/serverContext"],
-      "@/keys": ["src/config/keys"],
-      "@/context": ["src/context/"],
-      "@/hooks": ["src/hooks/"],
-      "@/utilities/*": ["src/utilities/*"],
-      "@/components": ["src/components/"],
-      "@/types": ["src/types"],
-      "@/constants": ["src/constants"]
+      "@/serverContext": [
+        "src/utilities/serverContext"
+      ],
+      "@/keys": [
+        "src/config/keys"
+      ],
+      "@/context": [
+        "src/context/"
+      ],
+      "@/hooks": [
+        "src/hooks/"
+      ],
+      "@/utilities/*": [
+        "src/utilities/*"
+      ],
+      "@/components": [
+        "src/components/"
+      ],
+      "@/types": [
+        "src/types"
+      ],
+      "@/constants": [
+        "src/constants"
+      ]
     },
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -27,7 +47,14 @@
     "jsx": "preserve",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

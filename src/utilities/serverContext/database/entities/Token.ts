@@ -9,10 +9,10 @@ import {
 } from 'typeorm'
 import jwt from 'jsonwebtoken'
 import { PapyrEntity } from './PapyrEntity'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { DbAwarePGC } from '../utilities'
 import { User } from './User'
-import keys from '@/keys'
+import keys from '../../../../config/keys'
 
 @Entity()
 export class Token extends PapyrEntity {

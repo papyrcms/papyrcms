@@ -9,7 +9,7 @@ import {
 import { Order } from './Order'
 import { CartProduct } from './CartProduct'
 import { Comment } from './Comment'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { PapyrEntity } from './PapyrEntity'
 import { Product } from './Product'
 import { DbAwarePGC, sanitizeConditions } from '../utilities'

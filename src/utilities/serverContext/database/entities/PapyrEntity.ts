@@ -1,5 +1,5 @@
 import { BaseEntity } from 'typeorm'
-import * as types from '@/types'
+import * as types from '../../../../types'
 
 export abstract class PapyrEntity extends BaseEntity {
   toModel(): Promise<types.DbModel> | types.DbModel {

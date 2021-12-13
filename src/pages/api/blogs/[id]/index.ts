@@ -33,7 +33,7 @@ const updateBlog = async (
 ) => {
   const { findOne, save, EntityType } = database
 
-  const oldBlog = await findOne<Blog>(EntityType.Blog, { id: id })
+  const oldBlog = await findOne<Blog>(EntityType.Blog, { id })
   if (!oldBlog) throw new Error('Blog not found')
 
   if (!oldBlog.isPublished && body.isPublished) {
@@ -49,7 +49,7 @@ const updateBlog = async (
 const deleteBlog = async (id: string, database: Database) => {
   const { findOne, destroy, EntityType } = database
 
-  const blog = await findOne<Blog>(EntityType.Blog, { id: id })
+  const blog = await findOne<Blog>(EntityType.Blog, { id })
   if (!blog) throw new Error('Blog not found')
   await destroy(EntityType.Blog, blog)
 

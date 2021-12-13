@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 import { User } from './User'
 import { OrderedProduct } from './OrderedProduct'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { PapyrEntity } from './PapyrEntity'
 import { Product } from './Product'
 import {
@@ -50,9 +50,8 @@ export class Order extends PapyrEntity {
   updatedAt!: Date
 
   async toModel(): Promise<types.Order> {
-    const orderedProdRepo = getRepository<OrderedProduct>(
-      'OrderedProduct'
-    )
+    const orderedProdRepo =
+      getRepository<OrderedProduct>('OrderedProduct')
     const userRepo = getRepository<User>('User')
     const orderedProducts = await orderedProdRepo.find({
       where: sanitizeConditions({
@@ -101,9 +100,8 @@ export class Order extends PapyrEntity {
     order: types.Order
   ): Promise<types.Order> {
     const orderRepo = getRepository<Order>('Order')
-    const orderedProdRepo = getRepository<OrderedProduct>(
-      'OrderedProduct'
-    )
+    const orderedProdRepo =
+      getRepository<OrderedProduct>('OrderedProduct')
     let foundOrder
     if (order.id) {
       foundOrder = await orderRepo.findOne({

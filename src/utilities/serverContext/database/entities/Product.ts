@@ -9,7 +9,7 @@ import {
 } from 'typeorm'
 import { CartProduct } from './CartProduct'
 import { OrderedProduct } from './OrderedProduct'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { PapyrEntity } from './PapyrEntity'
 import {
   DbAwareColumn,

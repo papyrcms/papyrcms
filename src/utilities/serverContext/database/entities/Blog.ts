@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Comment } from './Comment'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { PapyrEntity } from './PapyrEntity'
 import {
   DbAwareColumn,

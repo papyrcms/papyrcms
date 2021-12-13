@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 import { Section } from './Section'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { PapyrEntity } from './PapyrEntity'
 import {
   DbAwareColumn,

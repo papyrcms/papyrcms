@@ -1,9 +1,5 @@
 /// <reference types="next" />
-/// <reference types="next/types/global" />
+/// <reference types="next/image-types/global" />
 
-declare module 'react-tinymce'
-declare module 'mongodb'
-
-declare var tinymce: any
-declare var GA_INITIALIZED: boolean
-declare var FontAwesome: any
+// NOTE: This file should not be edited
+// see https://nextjs.org/docs/basic-features/typescript for more information.

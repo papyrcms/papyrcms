@@ -6,7 +6,7 @@ import {
   Index,
   UpdateDateColumn,
 } from 'typeorm'
-import * as types from '@/types'
+import * as types from '../../../../types'
 import { PapyrEntity } from './PapyrEntity'
 import {
   DbAwareColumn,
