@@ -82,6 +82,7 @@ describe('/api/blogs', () => {
       )
       const updatedBlog = {
         ...found,
+        tags: found.tags.join(','),
         content: 'This is updated test blog content.',
       }
       const { data: updated, status } = await axios.put(

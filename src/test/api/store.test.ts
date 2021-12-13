@@ -88,6 +88,7 @@ describe('/api/store', () => {
         )
         const updatedProduct = {
           ...found,
+          tags: found.tags.join(','),
           content: 'This is updated test product content.',
         }
         const { data: updated, status } = await axios.put(

@@ -86,6 +86,7 @@ describe('/api/events', () => {
       )
       const updatedEvent = {
         ...found,
+        tags: found.tags.join(','),
         content: 'This is updated test event content.',
       }
       const { data: updated, status } = await axios.put(
