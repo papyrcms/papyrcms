@@ -1,4 +1,4 @@
-import { Post } from '@/types'
+import { Post, Tags } from '@/types'
 import React from 'react'
 import { Map } from '@/components'
 import styles from './SectionMaps.module.scss'
@@ -34,10 +34,10 @@ const SectionMaps: React.FC<Props> = (props) => {
   // Pick out the text, latitude, and logitude posts
   posts.forEach((post) => {
     switch (true) {
-      case post.tags.includes('latitude'):
+      case post.tags.includes(Tags.latitide):
         latitudePost = post
         break
-      case post.tags.includes('longitude'):
+      case post.tags.includes(Tags.longitude):
         longitudePost = post
         break
       default:

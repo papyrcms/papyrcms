@@ -1,4 +1,4 @@
-import { Blog } from '@/types'
+import { Blog, Tags } from '@/types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
@@ -44,7 +44,7 @@ const BlogAllPage = () => {
   let headTitle = 'Blog'
   const headerSettings = {
     maxPosts: 1,
-    postTags: ['section-header'],
+    postTags: [Tags.sectionHeader],
   }
   const {
     posts: [headerPost],

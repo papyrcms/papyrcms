@@ -2,10 +2,11 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcrypt'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
-import { DbModel, Token, User } from '@/types'
+import { DbModel, Tags, Token, User } from '@/types'
 
 const verifyEmailSyntax = (email: string) => {
-  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  const regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return regex.test(String(email).toLowerCase())
 }
 
@@ -13,13 +14,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const { settings, done, database } = await serverContext(req, res)
 
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      passwordConfirm,
-    } = req.body
+    const { firstName, lastName, email, password, passwordConfirm } =
+      req.body
 
     if (!firstName) {
       return await done(401, {
@@ -82,14 +78,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       await mailer.sendEmail(
         JSON.parse(JSON.stringify(newUser)),
         newUser.email,
-        'welcome',
+        Tags.welcome,
         subject
       )
     }
 
     const now = new Date()
     const token = await save<Token>(EntityType.Token, {
-      id: (undefined as unknown) as string,
+      id: undefined as unknown as string,
       userId: newUser.id,
       issued: now,
       expiry: new Date(new Date(now).setDate(now.getDate() + 30)),

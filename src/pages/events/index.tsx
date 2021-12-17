@@ -1,4 +1,4 @@
-import { Event } from '@/types'
+import { Event, Tags } from '@/types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
@@ -32,7 +32,7 @@ const EventsPage = () => {
   let headTitle = 'Events'
   const headerSettings = {
     maxPosts: 1,
-    postTags: ['section-header'],
+    postTags: [Tags.sectionHeader],
   }
   const {
     posts: [headerPost],

@@ -5,7 +5,7 @@ import {
   pagesContext,
   postsContext,
 } from '@/context'
-import { Page } from '@/types'
+import { Page, Tags } from '@/types'
 import styles from './NavMenu.module.scss'
 import { useRouter } from 'next/router'
 import { usePostFilter } from 'src/hooks'
@@ -87,7 +87,7 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
     let menuPages = [...pages]
 
     const postFilterSettings = {
-      postTags: ['external-link'],
+      postTags: [Tags.externalLink],
     }
     const { posts: externalLinkPosts } = usePostFilter(
       posts,

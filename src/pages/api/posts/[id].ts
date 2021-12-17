@@ -1,4 +1,4 @@
-import { Database, Post } from '@/types'
+import { Database, Post, Tags } from '@/types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
@@ -57,7 +57,7 @@ const updatePost = async (
   if (
     enableEmailingToUsers &&
     updated.tags.includes(mailer.templateTag) &&
-    updated.tags.includes('bulk-email') &&
+    updated.tags.includes(Tags.bulkEmail) &&
     updated.isPublished
   ) {
     await mailer.sendBulkEmail(updated)

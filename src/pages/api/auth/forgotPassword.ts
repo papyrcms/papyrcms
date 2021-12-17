@@ -3,10 +3,11 @@ import jwt from 'jsonwebtoken'
 import serverContext from '@/serverContext'
 import Mailer from '@/utilities/mailer'
 import keys from '@/keys'
-import { User } from '@/types'
+import { Tags, User } from '@/types'
 
 const verifyEmailSyntax = (email: string) => {
-  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  const regex =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return regex.test(String(email).toLowerCase())
 }
 
@@ -52,7 +53,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       }/forgotPassword?token=${jwt.sign({ email }, keys.jwtSecret)}`,
       website: keys.rootURL,
     }
-    mailer.sendEmail(variables, email, 'forgot-password', subject)
+    mailer.sendEmail(variables, email, Tags.forgotPassword, subject)
 
     return await done(200, { message: 'Your email is on its way!' })
   }

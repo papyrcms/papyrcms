@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import serverContext from '@/serverContext'
 import keys from '@/keys'
-import { Page, Post, User } from '@/types'
+import { Page, Post, Tags, User } from '@/types'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -76,7 +76,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         title: headerTitle,
         content: headerSubtitle,
         media: siteLogo,
-        tags: ['section-header'],
+        tags: [Tags.sectionHeader],
         isPublished: true,
       } as Post
       const header = await save<Post>(EntityType.Post, headerFields)
@@ -84,7 +84,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       const footerFields = {
         title: footerTitle,
         content: footerSubtitle,
-        tags: ['section-footer'],
+        tags: [Tags.sectionFooter],
         isPublished: true,
       } as Post
       const footer = await save<Post>(EntityType.Post, footerFields)

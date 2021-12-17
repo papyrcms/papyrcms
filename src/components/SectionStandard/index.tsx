@@ -1,4 +1,4 @@
-import { Blog, Post } from '@/types'
+import { Blog, Post, Tags } from '@/types'
 import React, { useContext } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
@@ -258,7 +258,7 @@ const SectionStandard: React.FC<Props> = (props) => {
     let headTitle
     const headerSettings = {
       maxPosts: 1,
-      postTags: ['section-header'],
+      postTags: [Tags.sectionHeader],
     }
     const {
       posts: [headerPost],

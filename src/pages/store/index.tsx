@@ -1,4 +1,4 @@
-import { Product } from '@/types'
+import { Product, Tags } from '@/types'
 import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
@@ -9,9 +9,8 @@ import { SectionCards } from '@/components'
 import styles from './store.module.scss'
 
 const StorePage = () => {
-  const { cart, addToCart, products, setProducts } = useContext(
-    storeContext
-  )
+  const { cart, addToCart, products, setProducts } =
+    useContext(storeContext)
   const { currentUser } = useContext(userContext)
 
   useEffect(() => {
@@ -85,7 +84,7 @@ const StorePage = () => {
   let headTitle = 'Store'
   const headerSettings = {
     maxPosts: 1,
-    postTags: ['section-header'],
+    postTags: [Tags.sectionHeader],
   }
   const {
     posts: [headerPost],

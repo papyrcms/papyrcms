@@ -1,4 +1,4 @@
-import { Database, Post, User } from '@/types'
+import { Database, Post, Tags, User } from '@/types'
 import nodemailer from 'nodemailer'
 import { google } from 'googleapis'
 import fs from 'fs'
@@ -12,7 +12,7 @@ class Mailer {
 
   constructor(database: Database) {
     this.database = database
-    this.templateTag = 'email-template'
+    this.templateTag = Tags.emailTemplate
   }
 
   async getAccessToken() {

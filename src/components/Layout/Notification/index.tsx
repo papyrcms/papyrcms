@@ -1,4 +1,4 @@
-import { Post } from '@/types'
+import { Post, Tags } from '@/types'
 import React, { useState, useEffect } from 'react'
 import styles from './Notification.module.scss'
 
@@ -17,7 +17,7 @@ const Notification: React.FC<Props> = (props) => {
   >([])
 
   useEffect(() => {
-    if (post.tags.includes('persist')) {
+    if (post.tags.includes(Tags.persist)) {
       setStorage(sessionStorage)
     } else {
       setStorage(localStorage)

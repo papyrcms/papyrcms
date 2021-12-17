@@ -7,6 +7,7 @@ import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
+import { Tags } from '@/types'
 
 const Layout: React.FC = (props) => {
   const { keys } = useContext(keysContext)
@@ -15,11 +16,11 @@ const Layout: React.FC = (props) => {
   const settings = {
     maxPosts: 5,
     postTags: [
-      'section-header',
-      'section-footer',
-      'site-description',
-      'copyright',
-      'favicon',
+      Tags.sectionHeader,
+      Tags.sectionFooter,
+      Tags.siteDescription,
+      Tags.copyright,
+      Tags.favicon,
     ],
   }
   const filtered = usePostFilter(posts, settings)
@@ -37,7 +38,7 @@ const Layout: React.FC = (props) => {
     shareImage = ''
 
   filtered.posts.forEach((post) => {
-    if (post.tags && post.tags.includes('section-header')) {
+    if (post.tags && post.tags.includes(Tags.sectionHeader)) {
       headerTitle = post.title || ''
       headerSubTitle = post.content || ''
       if (!logo) {
@@ -56,17 +57,17 @@ const Layout: React.FC = (props) => {
       if (!shareImage) {
         shareImage = post.media || ''
       }
-    } else if (post.tags.includes('section-footer')) {
+    } else if (post.tags.includes(Tags.sectionFooter)) {
       footerTitle = post.title
       footerContent = post.content || ''
-    } else if (post.tags.includes('copyright')) {
+    } else if (post.tags.includes(Tags.copyright)) {
       footerCopyrightContent = post.content || ''
-    } else if (post.tags.includes('site-description')) {
+    } else if (post.tags.includes(Tags.siteDescription)) {
       descriptionContent = sanitizeHTML(post.content || '', {
         allowedTags: [],
       })
       post.tags.forEach((tag) => {
-        if (tag !== 'site-description') {
+        if (tag !== Tags.siteDescription) {
           keywords =
             keywords.length === 0 ? tag : `${keywords}, ${tag}`
         }
@@ -74,13 +75,13 @@ const Layout: React.FC = (props) => {
       if (post.media) {
         shareImage = post.media
       }
-    } else if (post.tags.includes('favicon')) {
+    } else if (post.tags.includes(Tags.favicon)) {
       favicon = post.media
     }
   })
 
   const notifications = usePostFilter(posts, {
-    postTags: ['notification'],
+    postTags: [Tags.notification],
   })
 
   const renderNotifications = () => {

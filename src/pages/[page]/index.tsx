@@ -1,4 +1,4 @@
-import { Page, Post } from '@/types'
+import { Page, Post, Tags } from '@/types'
 import React, { useContext } from 'react'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
@@ -150,7 +150,7 @@ const PageRenderer = (props: Props) => {
     let title
     const headerSettings = {
       maxPosts: 1,
-      postTags: ['section-header'],
+      postTags: [Tags.sectionHeader],
     }
     const {
       posts: [headerPost],
