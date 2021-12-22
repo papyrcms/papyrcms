@@ -6,7 +6,7 @@ import axios from 'axios'
 import {
   postsContext,
   pagesContext,
-  sectionOptionsContext,
+  useSectionOptions,
   blogsContext,
   useStore,
   eventsContext,
@@ -84,7 +84,7 @@ const PageRenderer = (props: Props) => {
   const filteredProducts = usePostFilter(products, productSettings)
 
   // Get our section options
-  const { sectionOptions } = useContext(sectionOptionsContext)
+  const { sectionOptions } = useSectionOptions()
 
   const renderSections = (page: Page) => {
     return page.sections.map((section, i) => {

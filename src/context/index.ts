@@ -3,7 +3,7 @@ import eventsContext from './eventsContext'
 import keysContext from './keysContext'
 import pagesContext from './pagesContext'
 import postsContext from './postsContext'
-import sectionOptionsContext from './sectionOptionsContext'
+import useSectionOptions from './sectionOptionsContext'
 import useSettings from './settingsContext'
 import useStore from './storeContext'
 import useUser from './userContext'
@@ -15,7 +15,7 @@ export {
   keysContext,
   pagesContext,
   postsContext,
-  sectionOptionsContext,
+  useSectionOptions,
   useSettings,
   useStore,
   useUser,

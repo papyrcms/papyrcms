@@ -3,11 +3,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Error from 'next/error'
-import {
-  useUser,
-  sectionOptionsContext,
-  useSettings,
-} from '@/context'
+import { useUser, useSectionOptions, useSettings } from '@/context'
 import keys from '@/keys'
 import { Input, Button, Modal, PostsForm } from '@/components'
 import PageRenderer from '../../[page]'
@@ -18,7 +14,7 @@ type Props = {
 }
 
 const PageBuilder = (props: Props) => {
-  const { sectionOptions } = useContext(sectionOptionsContext)
+  const { sectionOptions } = useSectionOptions()
   const { settings } = useSettings()
   const [postTypes, setPostTypes] = useState<PostType[]>([])
   useEffect(() => {
