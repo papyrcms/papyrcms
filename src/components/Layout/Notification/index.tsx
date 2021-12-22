@@ -1,5 +1,5 @@
 import { Post, Tags } from '@/types'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './Notification.module.scss'
 
 type Props = {

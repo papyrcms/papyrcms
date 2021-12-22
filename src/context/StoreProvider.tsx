@@ -1,5 +1,5 @@
 import { Product } from '@/types'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { storeContext } from './storeContext'
 import { useUser } from '@/context'

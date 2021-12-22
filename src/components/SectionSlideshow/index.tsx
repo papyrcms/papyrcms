@@ -1,5 +1,5 @@
 import { Post } from '@/types'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { SectionMedia } from '@/components'
 import styles from './SectionSlideshow.module.scss'
 

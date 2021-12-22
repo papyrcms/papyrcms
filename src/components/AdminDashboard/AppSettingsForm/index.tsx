@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import { useSettings } from '@/context'
 import Input from '../../Input'

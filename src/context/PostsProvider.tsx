@@ -1,5 +1,5 @@
 import { Post } from '@/types'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { postsContext } from './postsContext'
 
 type Props = {

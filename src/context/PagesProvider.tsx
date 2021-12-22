@@ -1,5 +1,5 @@
 import { Page } from '@/types'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { pagesContext } from './pagesContext'
 
 type Props = {

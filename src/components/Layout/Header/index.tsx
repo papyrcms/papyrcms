@@ -1,5 +1,5 @@
 import { Page } from '@/types'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useSettings, useStore, useUser, usePages } from '@/context'

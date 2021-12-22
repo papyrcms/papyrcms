@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import { useUser } from '@/context'
 import { CreditCardForm, Input } from '@/components'

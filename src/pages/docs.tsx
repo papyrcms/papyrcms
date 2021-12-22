@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import spec from '../../swagger-config.json'
 
-
 const Docs = () => {
-
   const [domRendered, setDomRendered] = useState(false)
   useEffect(() => {
     setDomRendered(true)

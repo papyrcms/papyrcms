@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import GoogleMapReact from 'google-map-react'
 import { useKeys } from '@/context'
 import styles from './Map.module.scss'

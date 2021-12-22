@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
 import { usePosts, useKeys } from '@/context'
 import { usePostFilter } from '@/hooks'

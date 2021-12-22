@@ -1,5 +1,5 @@
 import { Event, Tags } from '@/types'
-import React, { useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import { usePosts, useEvents } from '@/context'

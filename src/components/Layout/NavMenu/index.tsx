@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Link from 'next/link'
 import { useSettings, usePages, usePosts } from '@/context'
 import { Page, Tags } from '@/types'

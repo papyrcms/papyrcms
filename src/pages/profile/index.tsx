@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'

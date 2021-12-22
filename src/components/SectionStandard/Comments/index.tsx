@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { Post, Comment } from '@/types'
 import axios from 'axios'
 import Link from 'next/link'

@@ -1,5 +1,5 @@
 import { Product } from '@/types'
-import React, { useState, useRef, MutableRefObject } from 'react'
+import { useState, useRef, MutableRefObject } from 'react'
 import axios from 'axios'
 import keys from '@/keys'
 import { useStore } from '@/context'

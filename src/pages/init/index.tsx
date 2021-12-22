@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import { useEffect, useContext } from 'react'
 import Error from 'next/error'
 import Router from 'next/router'
 import { usePosts, usePages, useUser } from '@/context'

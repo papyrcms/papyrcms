@@ -1,5 +1,5 @@
 import { User } from '@/types'
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { useUser } from '@/context'
 import Modal from '../../Modal'

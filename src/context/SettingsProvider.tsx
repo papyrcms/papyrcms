@@ -1,5 +1,5 @@
 import { AppSettings } from '@/types'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { settingsContext } from './settingsContext'
 
 type Props = {

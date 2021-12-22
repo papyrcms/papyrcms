@@ -1,4 +1,4 @@
-import React, { MutableRefObject } from 'react'
+import { MutableRefObject } from 'react'
 import Tooltip from '../Tooltip'
 import styles from './Input.module.scss'
 

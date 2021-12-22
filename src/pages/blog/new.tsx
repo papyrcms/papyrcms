@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import Error from 'next/error'
 import { useUser } from '@/context'
 import { PostsForm } from '@/components'
