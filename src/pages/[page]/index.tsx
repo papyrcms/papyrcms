@@ -7,7 +7,7 @@ import {
   usePosts,
   usePages,
   useSectionOptions,
-  blogsContext,
+  useBlogs,
   useStore,
   useEvents,
 } from '@/context'
@@ -74,7 +74,7 @@ const PageRenderer = (props: Props) => {
 
   // Get posts and filter those by the settings
   const { posts } = usePosts()
-  const { blogs } = useContext(blogsContext)
+  const { blogs } = useBlogs()
   const { events } = useEvents()
   const { products } = useStore()
 

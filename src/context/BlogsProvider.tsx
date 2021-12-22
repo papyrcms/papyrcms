@@ -1,6 +1,6 @@
 import { Blog } from '@/types'
 import React, { useState } from 'react'
-import blogsContext from './blogsContext'
+import { blogsContext } from './blogsContext'
 
 type Props = {
   blogs: Blog[]

@@ -1,4 +1,4 @@
-import blogsContext from './blogsContext'
+import useBlogs from './blogsContext'
 import useEvents from './eventsContext'
 import useKeys from './keysContext'
 import usePages from './pagesContext'
@@ -10,7 +10,7 @@ import useUser from './userContext'
 import GlobalState from './GlobalState'
 
 export {
-  blogsContext,
+  useBlogs,
   useEvents,
   useKeys,
   usePages,

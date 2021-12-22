@@ -3,14 +3,14 @@ import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import { PageHead } from '@/components'
-import { useUser, blogsContext, usePosts } from '@/context'
+import { useUser, useBlogs, usePosts } from '@/context'
 import { SectionCards } from '@/components'
 import { usePostFilter, useSearchBar } from '@/hooks'
 import styles from './blog.module.scss'
 
 const BlogAllPage = () => {
   const { currentUser } = useUser()
-  const { blogs, setBlogs } = useContext(blogsContext)
+  const { blogs, setBlogs } = useBlogs()
 
   useEffect(() => {
     if (currentUser?.isAdmin) {

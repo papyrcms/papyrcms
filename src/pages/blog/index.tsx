@@ -6,11 +6,11 @@ import Link from 'next/link'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import { SectionStrip } from '@/components'
-import { blogsContext, usePosts } from '@/context'
+import { useBlogs, usePosts } from '@/context'
 import styles from './blog.module.scss'
 
 const BlogPage = () => {
-  const { blogs, setBlogs } = useContext(blogsContext)
+  const { blogs, setBlogs } = useBlogs()
 
   useEffect(() => {
     const fetchBlogs = async () => {
