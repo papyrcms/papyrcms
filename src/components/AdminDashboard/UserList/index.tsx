@@ -1,14 +1,14 @@
 import { User } from '@/types'
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import Modal from '../../Modal'
 import styles from './UserList.module.scss'
 
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([])
   const [selectedUser, setSelectedUser] = useState('')
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
 
   useEffect(() => {
     const getUsers = async () => {

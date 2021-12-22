@@ -4,7 +4,7 @@ import React, {
   useContext,
 } from 'react'
 import axios from 'axios'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import { useForm } from '@/hooks'
 import Input from '../Input'
 import Button from '../Button'
@@ -29,7 +29,7 @@ const UserInfoForm: React.FC<Props> = (props) => {
     submitRef,
   } = props
 
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { currentUser, setCurrentUser } = useUser()
 
   const INITIAL_STATE = {
     firstName: '',

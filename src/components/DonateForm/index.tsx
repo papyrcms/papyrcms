@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import { CreditCardForm, Input } from '@/components'
 import styles from './DonateForm.module.scss'
 
 const DonateForm: React.FC<{ className?: string }> = (props) => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const { className } = props
   const [email, setEmail] = useState(
     currentUser ? currentUser.email : ''

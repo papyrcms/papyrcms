@@ -4,7 +4,7 @@ import axios from 'axios'
 import Router from 'next/router'
 import Error from 'next/error'
 import {
-  userContext,
+  useUser,
   sectionOptionsContext,
   settingsContext,
 } from '@/context'
@@ -469,7 +469,7 @@ const PageBuilder = (props: Props) => {
     page,
     css,
   } = state
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
 
   if (!currentUser?.isAdmin) return <Error statusCode={403} />
 

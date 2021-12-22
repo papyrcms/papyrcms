@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Router from 'next/router'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import { useForm } from '@/hooks'
 import Input from '../Input'
 import Button from '../Button'
@@ -9,7 +9,7 @@ import ForgotPasswordForm from './ForgotPasswordForm'
 import styles from './LoginForm.module.scss'
 
 const LoginForm = () => {
-  const { setCurrentUser } = useContext(userContext)
+  const { setCurrentUser } = useUser()
   const INITIAL_STATE = {
     email: '',
     password: '',

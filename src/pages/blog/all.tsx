@@ -3,13 +3,13 @@ import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import { PageHead } from '@/components'
-import { userContext, blogsContext, postsContext } from '@/context'
+import { useUser, blogsContext, postsContext } from '@/context'
 import { SectionCards } from '@/components'
 import { usePostFilter, useSearchBar } from '@/hooks'
 import styles from './blog.module.scss'
 
 const BlogAllPage = () => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const { blogs, setBlogs } = useContext(blogsContext)
 
   useEffect(() => {

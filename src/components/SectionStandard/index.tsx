@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { userContext, postsContext } from '@/context'
+import { useUser, postsContext } from '@/context'
 import { Media, PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import Comments from './Comments'
@@ -64,7 +64,7 @@ type Props = {
  * @prop afterCommentForm - Function - Rendered after each post comment form
  */
 const SectionStandard: React.FC<Props> = (props) => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const { posts, setPosts } = useContext(postsContext)
   const router = useRouter()
   const { push, route } = router

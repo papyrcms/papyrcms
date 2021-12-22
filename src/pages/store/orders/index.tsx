@@ -3,11 +3,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import Error from 'next/error'
 import axios from 'axios'
 import moment from 'moment'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import styles from './orders.module.scss'
 
 const Orders = () => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const [orders, setOrders] = useState<Order[]>([])
   useEffect(() => {
     const resetOrders = async () => {
@@ -75,14 +75,8 @@ const Orders = () => {
 
   const renderOrders = () => {
     return orders.map((order) => {
-      const {
-        createdAt,
-        user,
-        products,
-        id,
-        notes,
-        isShipped,
-      } = order
+      const { createdAt, user, products, id, notes, isShipped } =
+        order
 
       return (
         <li key={id} className={styles['order']}>

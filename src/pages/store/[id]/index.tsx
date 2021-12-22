@@ -3,12 +3,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { userContext, storeContext } from '@/context'
+import { useUser, storeContext } from '@/context'
 import keys from '@/keys'
 import { SectionStandard } from '@/components'
 
 const StoreShow = (props: { product: Product }) => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const { cart, addToCart } = useContext(storeContext)
   const [product, setProduct] = useState(props.product)
   const { query } = useRouter()

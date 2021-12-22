@@ -3,12 +3,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Modal from '../../Modal'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import styles from './MessageList.module.scss'
 
 const MessageList = () => {
   const [messages, setMessages] = useState<Message[]>([])
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   useEffect(() => {
     const getMessages = async () => {
       if (currentUser?.isAdmin) {

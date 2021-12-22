@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 import axios from 'axios'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import keys from '@/keys'
 import { PostsForm, Input } from '@/components'
 
@@ -50,7 +50,7 @@ const ProductFields = ({
 }
 
 const StoreEdit = (props: { product: Product }) => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
 
   const [product, setProduct] = useState(props.product)
   const { query } = useRouter()

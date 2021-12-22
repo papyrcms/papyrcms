@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import Error from 'next/error'
 import Router from 'next/router'
-import { postsContext, pagesContext, userContext } from '@/context'
+import { postsContext, pagesContext, useUser } from '@/context'
 import { useForm } from '@/hooks'
 import { Input, Modal } from '@/components'
 import styles from './init.module.scss'
@@ -9,7 +9,7 @@ import styles from './init.module.scss'
 const Init = () => {
   const { posts, setPosts } = useContext(postsContext)
   const { pages, setPages } = useContext(pagesContext)
-  const { setCurrentUser } = useContext(userContext)
+  const { setCurrentUser } = useUser()
 
   const INITIAL_STATE = {
     email: '',

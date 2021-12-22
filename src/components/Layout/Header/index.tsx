@@ -5,7 +5,7 @@ import Link from 'next/link'
 import {
   settingsContext,
   storeContext,
-  userContext,
+  useUser,
   pagesContext,
 } from '@/context'
 import styles from './Header.module.scss'
@@ -17,7 +17,7 @@ type Props = {
 
 const Header: React.FC<Props> = (props) => {
   const { mainTitle, subTitle } = props
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const { settings } = useContext(settingsContext)
   const { pages } = useContext(pagesContext)
   const { query } = useRouter()

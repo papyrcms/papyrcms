@@ -1,7 +1,7 @@
 import { User } from '@/types'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import userContext from './userContext'
+import { userContext } from './userContext'
 
 const UserProvider = (props: { children: any }) => {
   const [currentUser, setUser] = useState<User | null>(null)

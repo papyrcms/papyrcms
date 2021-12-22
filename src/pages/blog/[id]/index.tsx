@@ -3,12 +3,12 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import moment from 'moment'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import keys from '@/keys'
 import { SectionStandard } from '@/components'
 
 const BlogShow = (props: { blog: Blog }) => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const [blog, setBlog] = useState(props.blog || {})
   const { query } = useRouter()
 

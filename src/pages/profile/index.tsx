@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import Router from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
-import { userContext } from '@/context'
+import { useUser } from '@/context'
 import { Input, Button, UserInfoForm } from '@/components'
 import { useForm } from '@/hooks'
 import styles from './profile.module.scss'
@@ -15,7 +15,7 @@ const ProfilePage = () => {
     confirmPass: '',
     validation: '',
   })
-  const { currentUser, setCurrentUser } = useContext(userContext)
+  const { currentUser, setCurrentUser } = useUser()
 
   if (!currentUser) {
     return (

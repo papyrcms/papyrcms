@@ -2,13 +2,13 @@ import { Event, Tags } from '@/types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
-import { userContext, eventsContext, postsContext } from '@/context'
+import { useUser, eventsContext, postsContext } from '@/context'
 import { PageHead } from '@/components'
 import { SectionCards } from '@/components'
 import { usePostFilter } from '@/hooks'
 
 const EventsAllPage = () => {
-  const { currentUser } = useContext(userContext)
+  const { currentUser } = useUser()
   const { events, setEvents } = useContext(eventsContext)
 
   useEffect(() => {

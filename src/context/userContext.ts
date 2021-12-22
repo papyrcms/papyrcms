@@ -1,12 +1,12 @@
 import { User } from '@/types'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 type UserContext = {
   currentUser: User | null
   setCurrentUser: Function
 }
 
-export default createContext<UserContext>({
+export const userContext = createContext<UserContext>({
   currentUser: {
     id: '',
     password: '',
@@ -49,3 +49,6 @@ export default createContext<UserContext>({
   },
   setCurrentUser: (user: User) => {},
 })
+
+const useUser = () => useContext(userContext)
+export default useUser

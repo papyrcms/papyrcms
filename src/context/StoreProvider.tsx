@@ -1,8 +1,8 @@
 import { Product } from '@/types'
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import StoreContext from './storeContext'
-import UserContext from './userContext'
+import { useUser } from '@/context'
 
 type Props = {
   products: Product[]
@@ -11,7 +11,7 @@ type Props = {
 const StoreProvider: React.FC<Props> = (props) => {
   const [products, setProducts] = useState(props.products)
   const [cart, setCart] = useState<Product[]>([])
-  const { currentUser } = useContext(UserContext)
+  const { currentUser } = useUser()
 
   useEffect(() => {
     if (currentUser?.cart) {
