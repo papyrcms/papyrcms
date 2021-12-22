@@ -8,7 +8,7 @@ import {
   pagesContext,
   sectionOptionsContext,
   blogsContext,
-  storeContext,
+  useStore,
   eventsContext,
 } from '@/context'
 import { PageHead } from '@/components'
@@ -76,7 +76,7 @@ const PageRenderer = (props: Props) => {
   const { posts } = useContext(postsContext)
   const { blogs } = useContext(blogsContext)
   const { events } = useContext(eventsContext)
-  const { products } = useContext(storeContext)
+  const { products } = useStore()
 
   const filteredPosts = usePostFilter(posts, postSettings)
   const filteredBlogs = usePostFilter(blogs, blogSettings)

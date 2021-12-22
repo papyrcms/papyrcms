@@ -1,18 +1,13 @@
 import { Product } from '@/types'
-import React, {
-  useState,
-  useContext,
-  useRef,
-  MutableRefObject,
-} from 'react'
+import React, { useState, useRef, MutableRefObject } from 'react'
 import axios from 'axios'
 import keys from '@/keys'
-import { storeContext } from '@/context'
+import { useStore } from '@/context'
 import { CreditCardForm, Input, UserInfoForm } from '@/components'
 import styles from './checkout.module.scss'
 
 const Checkout = (props: { product: Product }) => {
-  const cartState = useContext(storeContext)
+  const cartState = useStore()
 
   let cart: Product[] = []
   let fromCart = false
@@ -26,14 +21,10 @@ const Checkout = (props: { product: Product }) => {
   }
 
   const [orderNotes, setOrderNotes] = useState('')
-  const [
-    handleSubmitSuccess,
-    setHandleSubmitSuccess,
-  ] = useState<Function>(() => null)
-  const [
-    handleSubmitError,
-    setHandleSubmitError,
-  ] = useState<Function>(() => null)
+  const [handleSubmitSuccess, setHandleSubmitSuccess] =
+    useState<Function>(() => null)
+  const [handleSubmitError, setHandleSubmitError] =
+    useState<Function>(() => null)
 
   const userInfoRef = useRef<HTMLButtonElement>()
 

@@ -1,5 +1,5 @@
 import { Product } from '@/types'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 type StoreContext = {
   cart: Product[]
@@ -10,7 +10,7 @@ type StoreContext = {
   setProducts: Function
 }
 
-export default createContext<StoreContext>({
+export const storeContext = createContext<StoreContext>({
   cart: [],
   addToCart: (product: Product) => {},
   removeFromCart: (product: Product) => {},
@@ -18,3 +18,6 @@ export default createContext<StoreContext>({
   products: [],
   setProducts: (products: Product[]) => {},
 })
+
+const useStore = () => useContext(storeContext)
+export default useStore

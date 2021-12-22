@@ -2,15 +2,14 @@ import { Product, Tags } from '@/types'
 import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import { useUser, storeContext, postsContext } from '@/context'
+import { useUser, useStore, postsContext } from '@/context'
 import { usePostFilter, useSearchBar } from '@/hooks'
 import { PageHead } from '@/components'
 import { SectionCards } from '@/components'
 import styles from './store.module.scss'
 
 const StorePage = () => {
-  const { cart, addToCart, products, setProducts } =
-    useContext(storeContext)
+  const { cart, addToCart, products, setProducts } = useStore()
   const { currentUser } = useUser()
 
   useEffect(() => {

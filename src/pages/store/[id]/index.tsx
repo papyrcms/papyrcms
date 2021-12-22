@@ -1,15 +1,15 @@
 import { Product } from '@/types'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import { useUser, storeContext } from '@/context'
+import { useUser, useStore } from '@/context'
 import keys from '@/keys'
 import { SectionStandard } from '@/components'
 
 const StoreShow = (props: { product: Product }) => {
   const { currentUser } = useUser()
-  const { cart, addToCart } = useContext(storeContext)
+  const { cart, addToCart } = useStore()
   const [product, setProduct] = useState(props.product)
   const { query } = useRouter()
 

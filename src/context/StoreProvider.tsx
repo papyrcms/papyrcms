@@ -1,7 +1,7 @@
 import { Product } from '@/types'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import StoreContext from './storeContext'
+import { storeContext } from './storeContext'
 import { useUser } from '@/context'
 
 type Props = {
@@ -80,7 +80,7 @@ const StoreProvider: React.FC<Props> = (props) => {
   }
 
   return (
-    <StoreContext.Provider
+    <storeContext.Provider
       value={{
         cart,
         addToCart,
@@ -91,7 +91,7 @@ const StoreProvider: React.FC<Props> = (props) => {
       }}
     >
       {props.children}
-    </StoreContext.Provider>
+    </storeContext.Provider>
   )
 }
 

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import {
   settingsContext,
-  storeContext,
+  useStore,
   useUser,
   pagesContext,
 } from '@/context'
@@ -21,6 +21,7 @@ const Header: React.FC<Props> = (props) => {
   const { settings } = useContext(settingsContext)
   const { pages } = useContext(pagesContext)
   const { query } = useRouter()
+  const { cart } = useStore()
 
   const page = pages.find((foundPage) => {
     if (foundPage.route === '') foundPage.route = 'home'
@@ -54,7 +55,6 @@ const Header: React.FC<Props> = (props) => {
     )
   }
 
-  const { cart } = useContext(storeContext)
   const renderCart = () => {
     if (settings.enableStore) {
       const menuText = `Cart${

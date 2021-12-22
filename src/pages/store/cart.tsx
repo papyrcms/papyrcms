@@ -1,11 +1,11 @@
 import { Product } from '@/types'
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import { storeContext } from '@/context'
+import { useStore } from '@/context'
 import { SectionStrip } from '@/components'
 
 const Cart = () => {
-  const { cart, removeFromCart } = useContext(storeContext)
+  const { cart, removeFromCart } = useStore()
 
   const uniqueProducts = []
   for (const product of cart) {
