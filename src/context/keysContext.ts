@@ -1,7 +1,7 @@
 import { Keys } from '@/types'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
-export default createContext<{ keys: Keys }>({
+export const keysContext = createContext<{ keys: Keys }>({
   keys: {
     stripePublishableKey: '',
     googleMapsKey: '',
@@ -9,3 +9,6 @@ export default createContext<{ keys: Keys }>({
     tinyMceKey: '',
   },
 })
+
+const useKeys = () => useContext(keysContext)
+export default useKeys

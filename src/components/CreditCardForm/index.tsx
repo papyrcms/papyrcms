@@ -7,7 +7,7 @@ import {
   CardNumberElement,
   injectStripe,
 } from 'react-stripe-elements'
-import { keysContext } from '@/context'
+import { useKeys } from '@/context'
 import Button from '../Button'
 import styles from './CreditCardForm.module.scss'
 
@@ -86,7 +86,7 @@ type FormProps = {
 const StripeForm = (props: FormProps) => {
   const { className, onSubmit } = props
   const [stripe, setStripe] = useState<stripe.Stripe | null>(null)
-  const { keys } = useContext(keysContext)
+  const { keys } = useKeys()
 
   useEffect(() => {
     const stripeInstance = window.Stripe(keys.stripePublishableKey)

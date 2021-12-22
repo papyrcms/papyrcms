@@ -1,6 +1,6 @@
 import { Keys } from '@/types'
 import React, { useState } from 'react'
-import keysContext from './keysContext'
+import { keysContext } from './keysContext'
 
 type Props = {
   keys: Keys
