@@ -1,6 +1,6 @@
 import { AppSettings } from '@/types'
 import React, { useState } from 'react'
-import settingsContext from './settingsContext'
+import { settingsContext } from './settingsContext'
 
 type Props = {
   settings: AppSettings

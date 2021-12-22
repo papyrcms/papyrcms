@@ -1,12 +1,12 @@
 import { AppSettings } from '@/types'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 type SettingsContext = {
   settings: AppSettings
   setSettings: Function
 }
 
-export default createContext<SettingsContext>({
+export const settingsContext = createContext<SettingsContext>({
   settings: {
     enableMenu: false,
     enableStore: false,
@@ -22,3 +22,6 @@ export default createContext<SettingsContext>({
   },
   setSettings: (settings: AppSettings) => {},
 })
+
+const useSettings = () => useContext(settingsContext)
+export default useSettings

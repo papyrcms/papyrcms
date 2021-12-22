@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { Post, Comment } from '@/types'
 import axios from 'axios'
 import Link from 'next/link'
-import { settingsContext, useUser } from '@/context'
+import { useSettings, useUser } from '@/context'
 import CommentForm from '../CommentForm'
 import styles from './Comments.module.scss'
 
@@ -24,7 +24,7 @@ const Comments: React.FC<Props> = (props) => {
     afterCommentForm = () => null,
   } = props
 
-  const { settings } = useContext(settingsContext)
+  const { settings } = useSettings()
   const { currentUser } = useUser()
 
   const [formContent, setFormContent] = useState('')

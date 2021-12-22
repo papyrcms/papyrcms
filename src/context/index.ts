@@ -4,7 +4,7 @@ import keysContext from './keysContext'
 import pagesContext from './pagesContext'
 import postsContext from './postsContext'
 import sectionOptionsContext from './sectionOptionsContext'
-import settingsContext from './settingsContext'
+import useSettings from './settingsContext'
 import useStore from './storeContext'
 import useUser from './userContext'
 import GlobalState from './GlobalState'
@@ -16,7 +16,7 @@ export {
   pagesContext,
   postsContext,
   sectionOptionsContext,
-  settingsContext,
+  useSettings,
   useStore,
   useUser,
   GlobalState,

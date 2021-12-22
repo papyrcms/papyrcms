@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import { settingsContext } from '@/context'
+import { useSettings } from '@/context'
 import styles from './AdminLinks.module.scss'
 
 const AdminLinks: React.FC = () => {
-  const { settings } = useContext(settingsContext)
+  const { settings } = useSettings()
 
   const renderStoreMenuItems = () => {
     if (settings.enableStore) {

@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
 import axios from 'axios'
-import { settingsContext } from '@/context'
+import { useSettings } from '@/context'
 import Input from '../../Input'
 import styles from './AppSettingsForm.module.scss'
 
 const AppSettingsForm: React.FC = () => {
   const [verification, setVerification] = useState('')
-  const { settings, setSettings } = useContext(settingsContext)
+  const { settings, setSettings } = useSettings()
   const [formSettings, setFormSettings] = useState(settings)
 
   const handleSubmit = (event: any) => {

@@ -6,7 +6,7 @@ import Error from 'next/error'
 import {
   useUser,
   sectionOptionsContext,
-  settingsContext,
+  useSettings,
 } from '@/context'
 import keys from '@/keys'
 import { Input, Button, Modal, PostsForm } from '@/components'
@@ -19,7 +19,7 @@ type Props = {
 
 const PageBuilder = (props: Props) => {
   const { sectionOptions } = useContext(sectionOptionsContext)
-  const { settings } = useContext(settingsContext)
+  const { settings } = useSettings()
   const [postTypes, setPostTypes] = useState<PostType[]>([])
   useEffect(() => {
     const types: PostType[] = ['post']

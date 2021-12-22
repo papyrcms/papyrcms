@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import {
-  settingsContext,
+  useSettings,
   useStore,
   useUser,
   pagesContext,
@@ -18,7 +18,7 @@ type Props = {
 const Header: React.FC<Props> = (props) => {
   const { mainTitle, subTitle } = props
   const { currentUser } = useUser()
-  const { settings } = useContext(settingsContext)
+  const { settings } = useSettings()
   const { pages } = useContext(pagesContext)
   const { query } = useRouter()
   const { cart } = useStore()
