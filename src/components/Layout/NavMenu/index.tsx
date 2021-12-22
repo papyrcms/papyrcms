@@ -3,7 +3,7 @@ import { useSettings, usePages, usePosts } from '@/context'
 import { Page, Tags } from '@/types'
 import styles from './NavMenu.module.scss'
 import { useRouter } from 'next/router'
-import { usePostFilter } from 'src/hooks'
+import { usePostFilter } from '@/hooks'
 
 const onClick = () => {
   const checkbox = document.getElementById('nav-menu-checkbox')
