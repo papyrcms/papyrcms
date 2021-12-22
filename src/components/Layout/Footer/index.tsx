@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { Page } from '@/types'
-import { pagesContext } from '@/context'
+import { usePages } from '@/context'
 import styles from './Footer.module.scss'
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const Footer: React.FC<Props> = (props) => {
-  const { pages } = useContext(pagesContext)
+  const { pages } = usePages()
   const { query } = useRouter()
 
   const page = pages.find((foundPage) => {

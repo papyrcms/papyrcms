@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import {
   usePosts,
-  pagesContext,
+  usePages,
   useSectionOptions,
   blogsContext,
   useStore,
@@ -29,7 +29,7 @@ const PageRenderer = (props: Props) => {
   // On a client load, we are not fetching the page from the server,
   // So we'll get it from the pages in our pages context
   const { query } = useRouter()
-  const { pages } = useContext(pagesContext)
+  const { pages } = usePages()
   if (!page) {
     pages.forEach((foundPage) => {
       if (foundPage.route === '') foundPage.route = 'home'

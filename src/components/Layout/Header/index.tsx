@@ -2,12 +2,7 @@ import { Page } from '@/types'
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import {
-  useSettings,
-  useStore,
-  useUser,
-  pagesContext,
-} from '@/context'
+import { useSettings, useStore, useUser, usePages } from '@/context'
 import styles from './Header.module.scss'
 
 type Props = {
@@ -19,7 +14,7 @@ const Header: React.FC<Props> = (props) => {
   const { mainTitle, subTitle } = props
   const { currentUser } = useUser()
   const { settings } = useSettings()
-  const { pages } = useContext(pagesContext)
+  const { pages } = usePages()
   const { query } = useRouter()
   const { cart } = useStore()
 

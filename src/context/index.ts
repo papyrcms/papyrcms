@@ -1,7 +1,7 @@
 import blogsContext from './blogsContext'
 import eventsContext from './eventsContext'
 import keysContext from './keysContext'
-import pagesContext from './pagesContext'
+import usePages from './pagesContext'
 import usePosts from './postsContext'
 import useSectionOptions from './sectionOptionsContext'
 import useSettings from './settingsContext'
@@ -13,7 +13,7 @@ export {
   blogsContext,
   eventsContext,
   keysContext,
-  pagesContext,
+  usePages,
   usePosts,
   useSectionOptions,
   useSettings,

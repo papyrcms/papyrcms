@@ -1,12 +1,15 @@
 import { Page } from '@/types'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 type PageContext = {
   pages: Page[]
   setPages: Function
 }
 
-export default createContext<PageContext>({
+export const pagesContext = createContext<PageContext>({
   pages: [],
   setPages: (pages: Page[]) => {},
 })
+
+const usePages = () => useContext(pagesContext)
+export default usePages
