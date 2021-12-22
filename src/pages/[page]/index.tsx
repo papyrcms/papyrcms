@@ -9,7 +9,7 @@ import {
   useSectionOptions,
   blogsContext,
   useStore,
-  eventsContext,
+  useEvents,
 } from '@/context'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
@@ -75,7 +75,7 @@ const PageRenderer = (props: Props) => {
   // Get posts and filter those by the settings
   const { posts } = usePosts()
   const { blogs } = useContext(blogsContext)
-  const { events } = useContext(eventsContext)
+  const { events } = useEvents()
   const { products } = useStore()
 
   const filteredPosts = usePostFilter(posts, postSettings)

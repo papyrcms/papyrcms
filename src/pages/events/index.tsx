@@ -2,14 +2,14 @@ import { Event, Tags } from '@/types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
-import { usePosts, eventsContext } from '@/context'
+import { usePosts, useEvents } from '@/context'
 import { SectionStrip } from '@/components'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import styles from './events.module.scss'
 
 const EventsPage = () => {
-  const { events, setEvents } = useContext(eventsContext)
+  const { events, setEvents } = useEvents()
 
   useEffect(() => {
     const fetchEvents = async () => {

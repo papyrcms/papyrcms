@@ -1,6 +1,6 @@
 import { Event } from '@/types'
 import React, { useState } from 'react'
-import eventsContext from './eventsContext'
+import { eventsContext } from './eventsContext'
 
 type Props = {
   events: Event[]

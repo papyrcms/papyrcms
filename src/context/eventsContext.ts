@@ -1,12 +1,15 @@
 import { Event } from '@/types'
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
 type EventContext = {
   events: Event[]
   setEvents: Function
 }
 
-export default createContext<EventContext>({
+export const eventsContext = createContext<EventContext>({
   events: [],
   setEvents: (events: Event[]) => {},
 })
+
+const useEvents = () => useContext(eventsContext)
+export default useEvents

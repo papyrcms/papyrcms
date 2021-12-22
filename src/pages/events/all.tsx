@@ -2,14 +2,14 @@ import { Event, Tags } from '@/types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
-import { useUser, eventsContext, usePosts } from '@/context'
+import { useUser, useEvents, usePosts } from '@/context'
 import { PageHead } from '@/components'
 import { SectionCards } from '@/components'
 import { usePostFilter } from '@/hooks'
 
 const EventsAllPage = () => {
   const { currentUser } = useUser()
-  const { events, setEvents } = useContext(eventsContext)
+  const { events, setEvents } = useEvents()
 
   useEffect(() => {
     if (currentUser?.isAdmin) {

@@ -1,5 +1,5 @@
 import blogsContext from './blogsContext'
-import eventsContext from './eventsContext'
+import useEvents from './eventsContext'
 import useKeys from './keysContext'
 import usePages from './pagesContext'
 import usePosts from './postsContext'
@@ -11,7 +11,7 @@ import GlobalState from './GlobalState'
 
 export {
   blogsContext,
-  eventsContext,
+  useEvents,
   useKeys,
   usePages,
   usePosts,
