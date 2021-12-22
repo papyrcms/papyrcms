@@ -2,7 +2,7 @@ import { Post } from '@/types'
 import React, { useContext } from 'react'
 import Router from 'next/router'
 import Form from './Form'
-import { postsContext } from '@/context'
+import { usePosts } from '@/context'
 import { useForm } from '@/hooks'
 import styles from './PostsForm.module.scss'
 
@@ -19,7 +19,7 @@ type Props = {
 }
 
 const PostsForm: React.FC<Props> = (props) => {
-  const { posts, setPosts } = useContext(postsContext)
+  const { posts, setPosts } = usePosts()
 
   const mapTagsToString = (tags: string[]) => {
     let newTags = ''
@@ -46,13 +46,8 @@ const PostsForm: React.FC<Props> = (props) => {
     isPublished: post ? post.isPublished : false,
     validation: '',
   }
-  const {
-    values,
-    handleChange,
-    errors,
-    validateField,
-    submitForm,
-  } = useForm(INITIAL_STATE)
+  const { values, handleChange, errors, validateField, submitForm } =
+    useForm(INITIAL_STATE)
 
   const handleSubmit = async (event: any, resetButton: Function) => {
     event.preventDefault()

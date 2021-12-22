@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Link from 'next/link'
-import { useSettings, pagesContext, postsContext } from '@/context'
+import { useSettings, pagesContext, usePosts } from '@/context'
 import { Page, Tags } from '@/types'
 import styles from './NavMenu.module.scss'
 import { useRouter } from 'next/router'
@@ -76,7 +76,7 @@ const Submenu: React.FC<{ pages: Page[] }> = ({ pages }) => {
 
 const NavMenu: React.FC<{ logo?: string }> = (props) => {
   const { pages } = useContext(pagesContext)
-  const { posts } = useContext(postsContext)
+  const { posts } = usePosts()
   const { settings } = useSettings()
 
   const renderMenuItems = () => {

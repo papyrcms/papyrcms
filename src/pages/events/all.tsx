@@ -2,7 +2,7 @@ import { Event, Tags } from '@/types'
 import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
-import { useUser, eventsContext, postsContext } from '@/context'
+import { useUser, eventsContext, usePosts } from '@/context'
 import { PageHead } from '@/components'
 import { SectionCards } from '@/components'
 import { usePostFilter } from '@/hooks'
@@ -33,7 +33,7 @@ const EventsAllPage = () => {
     <p>{moment(post.date).format('MMMM Do, YYYY')}</p>
   )
 
-  const { posts } = useContext(postsContext)
+  const { posts } = usePosts()
 
   let headTitle = 'Events'
   const headerSettings = {

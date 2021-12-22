@@ -4,7 +4,7 @@ import Error from 'next/error'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import {
-  postsContext,
+  usePosts,
   pagesContext,
   useSectionOptions,
   blogsContext,
@@ -73,7 +73,7 @@ const PageRenderer = (props: Props) => {
   })
 
   // Get posts and filter those by the settings
-  const { posts } = useContext(postsContext)
+  const { posts } = usePosts()
   const { blogs } = useContext(blogsContext)
   const { events } = useContext(eventsContext)
   const { products } = useStore()

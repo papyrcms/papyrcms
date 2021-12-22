@@ -2,7 +2,7 @@ import { Product, Tags } from '@/types'
 import React, { useContext, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import { useUser, useStore, postsContext } from '@/context'
+import { useUser, useStore, usePosts } from '@/context'
 import { usePostFilter, useSearchBar } from '@/hooks'
 import { PageHead } from '@/components'
 import { SectionCards } from '@/components'
@@ -78,7 +78,7 @@ const StorePage = () => {
     }
   }
 
-  const { posts } = useContext(postsContext)
+  const { posts } = usePosts()
 
   let headTitle = 'Store'
   const headerSettings = {

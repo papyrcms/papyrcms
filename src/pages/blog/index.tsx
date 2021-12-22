@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import { SectionStrip } from '@/components'
-import { blogsContext, postsContext } from '@/context'
+import { blogsContext, usePosts } from '@/context'
 import styles from './blog.module.scss'
 
 const BlogPage = () => {
@@ -50,7 +50,7 @@ const BlogPage = () => {
     return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }
 
-  const { posts } = useContext(postsContext)
+  const { posts } = usePosts()
 
   let headTitle = 'Blog'
   const headerSettings = {

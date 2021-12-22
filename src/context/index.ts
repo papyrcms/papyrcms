@@ -2,7 +2,7 @@ import blogsContext from './blogsContext'
 import eventsContext from './eventsContext'
 import keysContext from './keysContext'
 import pagesContext from './pagesContext'
-import postsContext from './postsContext'
+import usePosts from './postsContext'
 import useSectionOptions from './sectionOptionsContext'
 import useSettings from './settingsContext'
 import useStore from './storeContext'
@@ -14,7 +14,7 @@ export {
   eventsContext,
   keysContext,
   pagesContext,
-  postsContext,
+  usePosts,
   useSectionOptions,
   useSettings,
   useStore,

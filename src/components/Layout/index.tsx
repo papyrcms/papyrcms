@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import sanitizeHTML from 'sanitize-html'
-import { postsContext, keysContext } from '@/context'
+import { usePosts, keysContext } from '@/context'
 import { usePostFilter } from '@/hooks'
 import Notification from './Notification'
 import Header from './Header'
@@ -11,7 +11,7 @@ import { Tags } from '@/types'
 
 const Layout: React.FC = (props) => {
   const { keys } = useContext(keysContext)
-  const { posts } = useContext(postsContext)
+  const { posts } = usePosts()
 
   const settings = {
     maxPosts: 5,

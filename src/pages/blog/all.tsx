@@ -3,7 +3,7 @@ import React, { useEffect, useContext } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import { PageHead } from '@/components'
-import { useUser, blogsContext, postsContext } from '@/context'
+import { useUser, blogsContext, usePosts } from '@/context'
 import { SectionCards } from '@/components'
 import { usePostFilter, useSearchBar } from '@/hooks'
 import styles from './blog.module.scss'
@@ -39,7 +39,7 @@ const BlogAllPage = () => {
     return <p>{moment(date).format('MMMM Do, YYYY')}</p>
   }
 
-  const { posts } = useContext(postsContext)
+  const { posts } = usePosts()
 
   let headTitle = 'Blog'
   const headerSettings = {
