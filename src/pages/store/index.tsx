@@ -1,5 +1,5 @@
 import { Product, Tags } from '@/types'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { useUser, useStore, usePosts } from '@/context'

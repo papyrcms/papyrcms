@@ -1,5 +1,4 @@
 import { Post } from '@/types'
-import { useContext } from 'react'
 import Router from 'next/router'
 import Form from './Form'
 import { usePosts } from '@/context'

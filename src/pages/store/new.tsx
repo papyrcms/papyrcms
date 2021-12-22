@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import Error from 'next/error'
 import { useUser } from '@/context'
 import { PostsForm, Input } from '@/components'

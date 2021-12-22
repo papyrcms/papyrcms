@@ -1,5 +1,4 @@
 import { Product } from '@/types'
-import { useContext } from 'react'
 import Link from 'next/link'
 import { useStore } from '@/context'
 import { SectionStrip } from '@/components'

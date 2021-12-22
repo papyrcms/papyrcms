@@ -1,5 +1,5 @@
 import { Blog } from '@/types'
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 import axios from 'axios'

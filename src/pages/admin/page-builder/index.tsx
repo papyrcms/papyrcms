@@ -1,5 +1,5 @@
 import { Page, Section, PostType } from '@/types'
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Router from 'next/router'
 import Error from 'next/error'

@@ -1,5 +1,5 @@
 import { Product } from '@/types'
-import { useContext, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Error from 'next/error'
 import axios from 'axios'

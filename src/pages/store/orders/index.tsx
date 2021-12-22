@@ -1,5 +1,5 @@
 import { Product, Order } from '@/types'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import Error from 'next/error'
 import axios from 'axios'
 import moment from 'moment'

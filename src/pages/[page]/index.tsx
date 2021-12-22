@@ -1,5 +1,4 @@
 import { Page, Post, Tags } from '@/types'
-import { useContext } from 'react'
 import Error from 'next/error'
 import { useRouter } from 'next/router'
 import axios from 'axios'

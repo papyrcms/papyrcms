@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import Link from 'next/link'
 import { useSettings } from '@/context'
 import styles from './AdminLinks.module.scss'

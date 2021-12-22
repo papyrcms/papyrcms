@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import Error from 'next/error'
 import axios from 'axios'

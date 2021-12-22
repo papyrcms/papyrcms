@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { Page } from '@/types'
 import { usePages } from '@/context'

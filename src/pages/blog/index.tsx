@@ -1,5 +1,5 @@
 import { Blog, Tags } from '@/types'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import axios from 'axios'
 import moment from 'moment'
 import Link from 'next/link'
