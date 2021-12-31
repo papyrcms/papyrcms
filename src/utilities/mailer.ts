@@ -116,7 +116,7 @@ class Mailer {
   }
 
   async sendEmail(
-    variables: { [key: string]: any },
+    variables: Record<string, any>,
     recipient: string,
     templateName: string,
     subject?: string

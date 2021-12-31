@@ -8,17 +8,17 @@ import styles from './Form.module.scss'
 import { Tags } from '@/types'
 
 type FieldProps = {
-  values: { [key: string]: any }
+  values: Record<string, any>
   handleChange: Function
-  errors: { [key: string]: any }
+  errors: Record<string, any>
   validateField: Function
 }
 
 type Props = {
   additionalFields?: React.FC<FieldProps>[]
-  values: { [key: string]: any }
+  values: Record<string, any>
   handleChange: Function
-  errors: { [key: string]: any }
+  errors: Record<string, any>
   validateField: Function
   handleSubmit: Function
 }

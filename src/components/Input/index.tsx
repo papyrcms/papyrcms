@@ -18,7 +18,7 @@ type Props = {
   validation?: string
   tooltip?: string
   refProp?: MutableRefObject<any>
-  formState?: { [key: string]: any }
+  formState?: Record<string, any>
 }
 
 const Input = (props: Props) => {

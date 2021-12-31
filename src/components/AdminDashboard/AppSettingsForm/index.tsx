@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useSettings } from '@/context'
 import Input from '../../Input'
 import styles from './AppSettingsForm.module.scss'
+import { AppSettings } from '@/types'
 
 const AppSettingsForm: React.FC = () => {
   const [verification, setVerification] = useState('')
@@ -32,7 +33,7 @@ const AppSettingsForm: React.FC = () => {
   }
 
   const renderSettingsInput = (
-    newSetting: any,
+    newSetting: number | boolean,
     key: string,
     label: string
   ) => {
@@ -85,8 +86,7 @@ const AppSettingsForm: React.FC = () => {
       const result = key.replace(/([A-Z])/g, ' $1')
       const label = result.charAt(0).toUpperCase() + result.slice(1)
 
-      //@ts-ignore not sure how to handle this
-      const newSetting = formSettings[key]
+      const newSetting = formSettings[key as keyof AppSettings]
 
       return (
         <div className={styles.field} key={key}>

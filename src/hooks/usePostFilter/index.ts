@@ -109,7 +109,7 @@ const usePostFilter = <T extends Post>(
   }
 
   // Begin the filtering
-  const filtered: { [key: string]: T[] } = {}
+  const filtered: Record<string, T[]> = {}
 
   if (Array.isArray(settings)) {
     settings.forEach((filters) => {

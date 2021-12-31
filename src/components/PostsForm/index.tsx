@@ -16,7 +16,7 @@ type Props = {
   redirectRoute?: string
   editing?: boolean
   additionalFields?: React.FC<any>[]
-  additionalState?: { [key: string]: any }
+  additionalState?: Record<string, any>
 }
 
 const MOCK_PAGE: Page = {

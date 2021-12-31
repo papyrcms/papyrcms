@@ -3,8 +3,8 @@ import { useUser } from '@/context'
 import { PostsForm, Input } from '@/components'
 
 type Props = {
-  values: { [key: string]: any }
-  errors: { [key: string]: any }
+  values: Record<string, any>
+  errors: Record<string, any>
   validateField: Function
   handleChange: Function
 }

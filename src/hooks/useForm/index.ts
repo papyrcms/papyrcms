@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import axios from 'axios'
 
-const useForm = (initialState: { [key: string]: any }) => {
-  const initialErrors: { [key: string]: string } = {}
+const useForm = (initialState: Record<string, any>) => {
+  const initialErrors: Record<string, string> = {}
 
   const [values, setValues] = useState(initialState)
   const [errors, setErrors] = useState(initialErrors)
@@ -26,7 +26,8 @@ const useForm = (initialState: { [key: string]: any }) => {
     }
     const { type, required, value, name }: Target = event.target
 
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const regex =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
     if (required && !value) {
       setErrors({ ...errors, [name]: 'Please complete this field.' })

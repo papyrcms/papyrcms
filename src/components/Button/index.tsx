@@ -7,7 +7,7 @@ type Props = {
   disabled?: boolean
   onClick: Function
   id?: string
-  style?: { [key: string]: string }
+  style?: Record<string, string>
   title?: string
   children: string
   type?:
