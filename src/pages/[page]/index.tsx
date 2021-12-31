@@ -18,6 +18,7 @@ import * as Components from '@/components'
 
 type Props = {
   previewPage?: Page
+  mockPosts?: Post[]
   page?: Page
 }
 
@@ -108,6 +109,9 @@ const PageRenderer = (props: Props) => {
           path = 'store'
           filtered = filteredProducts[key]
           break
+      }
+      if (props.mockPosts) {
+        filtered = props.mockPosts
       }
       const tags = Array.isArray(section.tags)
         ? section.tags.join(', ')

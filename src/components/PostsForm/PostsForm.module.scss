@@ -3,4 +3,5 @@
 
 .container {
   @include sectionStyle();
+  max-width: $max-section-width;
 }
