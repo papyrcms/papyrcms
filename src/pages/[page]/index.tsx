@@ -14,7 +14,7 @@ import { PageHead } from '@/components'
 import { usePostFilter } from '@/hooks'
 import keys from '@/keys'
 import styles from './page.module.scss'
-import * as Components from '@/components'
+import { SectionRenderer } from '@/components'
 
 type Props = {
   previewPage?: Page
@@ -121,22 +121,17 @@ const PageRenderer = (props: Props) => {
       // Get the section component
       const options = sectionOptions[section.type]
 
-      // @ts-ignore Not sure how to fix this
-      let Component: React.FC = Components[options.component]
-
       // Return the section component
       return (
-        <Component
+        <SectionRenderer
           key={key}
-          title={section.title}
-          className={section.className || ''}
-          post={filtered[0]}
-          posts={filtered}
-          emptyTitle={section.title || ''}
-          emptyMessage={emptyMessage || ''}
-          alt={section.title || ''}
           path={path}
-          {...options.defaultProps}
+          posts={filtered}
+          title={section.title}
+          className={section.className ?? ''}
+          emptyMessage={emptyMessage ?? ''}
+          component={options.component}
+          defaultProps={options.defaultProps}
         />
       )
     })

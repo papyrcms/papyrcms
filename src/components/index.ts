@@ -13,6 +13,7 @@ import PageHead from './PageHead'
 import PostIndex from './PostIndex'
 import RegisterForm from './RegisterForm'
 import RichTextEditor from './RichTextEditor'
+import SectionRenderer from './SectionRenderer'
 import Tooltip from './Tooltip'
 import UserInfoForm from './UserInfoForm'
 
@@ -44,6 +45,7 @@ export {
   PostIndex,
   RegisterForm,
   RichTextEditor,
+  SectionRenderer,
   Tooltip,
   UserInfoForm,
   // Sections
