@@ -16,6 +16,7 @@ const Layout: React.FC = (props) => {
     postTags: [
       Tags.customHeader,
       Tags.sectionHeader,
+      Tags.customFooter,
       Tags.sectionFooter,
       Tags.siteDescription,
       Tags.copyright,
@@ -35,10 +36,15 @@ const Layout: React.FC = (props) => {
     descriptionContent = '',
     keywords = '',
     shareImage = '',
-    customHeader: Post | undefined
+    customHeader: Post | undefined,
+    customFooter: Post | undefined
 
   filtered.posts.forEach((post) => {
-    if (post.tags && post.tags.includes(Tags.sectionHeader)) {
+    if (post.tags.includes(Tags.customHeader)) {
+      customHeader = post
+    } else if (post.tags.includes(Tags.customFooter)) {
+      customFooter = post
+    } else if (post.tags.includes(Tags.sectionHeader)) {
       headerTitle = post.title || ''
       headerSubTitle = post.content || ''
       if (!logo) {
@@ -77,8 +83,6 @@ const Layout: React.FC = (props) => {
       }
     } else if (post.tags.includes(Tags.favicon)) {
       favicon = post.media
-    } else if (post.tags.includes(Tags.customHeader)) {
-      customHeader = post
     }
   })
 
@@ -148,6 +152,7 @@ const Layout: React.FC = (props) => {
         footerTitle={footerTitle}
         footerContent={footerContent}
         footerCopyrightContent={footerCopyrightContent}
+        customFooter={customFooter}
       />
     </div>
   )

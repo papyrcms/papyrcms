@@ -207,6 +207,7 @@ export class Tags {
   static bulkEmail = 'bulk-email'
   static externalLink = 'external-link'
   static customHeader = 'custom-header'
+  static customFooter = 'custom-footer'
   static orderNumber(number?: number) {
     if (!number) {
       return 'order-{number}'
