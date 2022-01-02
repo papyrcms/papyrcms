@@ -129,8 +129,14 @@ const SectionStandard: React.FC<Props> = (props) => {
     }
   }
 
+  const publicRoutes = ['/', '/[page]', '/blog', '/events', '/store']
+
   const renderAuthOptions = (post: Post) => {
-    if (currentUser?.isAdmin && renderAuthButtons) {
+    if (
+      currentUser?.isAdmin &&
+      renderAuthButtons &&
+      !publicRoutes.includes(route)
+    ) {
       return (
         <div className={styles.buttons}>
           <button
@@ -165,7 +171,7 @@ const SectionStandard: React.FC<Props> = (props) => {
       post.tags &&
       post.tags[0] &&
       currentUser?.isAdmin &&
-      !['/', '/[page]'].includes(route)
+      !publicRoutes.includes(route)
     ) {
       return (
         <p className={styles.tags}>

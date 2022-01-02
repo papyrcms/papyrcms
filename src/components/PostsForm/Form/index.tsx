@@ -175,7 +175,8 @@ const Form: React.FC<Props> = (props) => {
   * ${Tags.forgotPassword}
   * ${Tags.bulkEmail}
   * ${Tags.orderNumber()}
-  * ${Tags.externalLink}`
+  * ${Tags.externalLink}
+  * ${Tags.customHeader}`
 
   return (
     <form encType="multipart/form-data" className={styles.form}>

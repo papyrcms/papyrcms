@@ -6,15 +6,17 @@ import Header from './Header'
 import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
-import { Tags } from '@/types'
+import { Post, Tags } from '@/types'
+import { SectionStandard } from '..'
 
 const Layout: React.FC = (props) => {
   const { keys } = useKeys()
   const { posts } = usePosts()
 
   const settings = {
-    maxPosts: 5,
+    maxPosts: 6,
     postTags: [
+      Tags.customHeader,
       Tags.sectionHeader,
       Tags.sectionFooter,
       Tags.siteDescription,
@@ -34,7 +36,8 @@ const Layout: React.FC = (props) => {
     favicon = '',
     descriptionContent = '',
     keywords = '',
-    shareImage = ''
+    shareImage = '',
+    customHeader: Post
 
   filtered.posts.forEach((post) => {
     if (post.tags && post.tags.includes(Tags.sectionHeader)) {
@@ -76,6 +79,8 @@ const Layout: React.FC = (props) => {
       }
     } else if (post.tags.includes(Tags.favicon)) {
       favicon = post.media
+    } else if (post.tags.includes(Tags.customHeader)) {
+      customHeader = post
     }
   })
 
@@ -89,8 +94,18 @@ const Layout: React.FC = (props) => {
     })
   }
 
+  const renderHeader = () => {
+    if (customHeader) {
+      return <SectionStandard posts={[customHeader]} />
+    }
+
+    return (
+      <Header mainTitle={headerTitle} subTitle={headerSubTitle} />
+    )
+  }
+
   return (
-    <div className="papyr-app">
+    <div className="papyr-cms">
       <PageHead
         title={headerTitle}
         titleContent={titleHeaderContent}
@@ -133,7 +148,7 @@ const Layout: React.FC = (props) => {
 
       <NavMenu logo={logo} />
 
-      <Header mainTitle={headerTitle} subTitle={headerSubTitle} />
+      {renderHeader()}
 
       <main>{props.children}</main>
 
