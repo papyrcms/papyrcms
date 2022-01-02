@@ -214,4 +214,11 @@ export class Tags {
       return `order-${number}`
     }
   }
+  static sectionType(type?: string) {
+    if (!type) {
+      return 'section-type-{type}'
+    } else {
+      return `section-type-${type}`
+    }
+  }
 }

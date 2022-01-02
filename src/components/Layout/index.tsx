@@ -1,5 +1,5 @@
 import sanitizeHTML from 'sanitize-html'
-import { usePosts, useKeys } from '@/context'
+import { usePosts, useKeys, useSectionOptions } from '@/context'
 import { usePostFilter } from '@/hooks'
 import Notification from './Notification'
 import Header from './Header'
@@ -7,14 +7,14 @@ import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
 import { Post, Tags } from '@/types'
-import { SectionStandard } from '..'
+import { SectionRenderer } from '..'
 
 const Layout: React.FC = (props) => {
   const { keys } = useKeys()
   const { posts } = usePosts()
+  const { sectionOptions } = useSectionOptions()
 
   const settings = {
-    maxPosts: 6,
     postTags: [
       Tags.customHeader,
       Tags.sectionHeader,
@@ -96,7 +96,21 @@ const Layout: React.FC = (props) => {
 
   const renderHeader = () => {
     if (customHeader) {
-      return <SectionStandard posts={[customHeader]} />
+      const type =
+        Object.keys(sectionOptions).find((key) =>
+          customHeader.tags.includes(
+            Tags.sectionType(key.toLowerCase())
+          )
+        ) ?? 'Standard'
+      const option = sectionOptions[type]
+
+      return (
+        <SectionRenderer
+          component={option.component}
+          posts={[customHeader]}
+          defaultProps={option.defaultProps}
+        />
+      )
     }
 
     return (
