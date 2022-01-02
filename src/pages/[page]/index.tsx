@@ -128,8 +128,8 @@ const PageRenderer = (props: Props) => {
           path={path}
           posts={filtered}
           title={section.title}
-          className={section.className ?? ''}
-          emptyMessage={emptyMessage ?? ''}
+          className={section.className}
+          emptyMessage={emptyMessage}
           component={options.component}
           defaultProps={options.defaultProps}
         />

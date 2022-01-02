@@ -3,9 +3,9 @@ import Router from 'next/router'
 import Form from './Form'
 import { usePosts, useSectionOptions } from '@/context'
 import { useForm } from '@/hooks'
-import PageRenderer from '../../pages/[page]'
 import styles from './PostsForm.module.scss'
 import { useState } from 'react'
+import { SectionRenderer } from '..'
 
 type Props = {
   post?: Post
@@ -137,20 +137,17 @@ const PostsForm: React.FC<Props> = (props) => {
           )
         })}
       </select>
-      <PageRenderer
-        previewPage={{
-          ...MOCK_PAGE,
-          sections: [
-            { ...MOCK_PAGE.sections[0], type: previewSection },
-          ],
-        }}
-        mockPosts={[
+      <SectionRenderer
+        posts={[
           {
             ...values,
             id: 'test',
             tags: values.tags.split(',').map((s: string) => s.trim()),
           } as Post,
         ]}
+        title="Preview"
+        component={sectionOptions[previewSection].component}
+        defaultProps={sectionOptions[previewSection].defaultProps}
       />
     </div>
   )
