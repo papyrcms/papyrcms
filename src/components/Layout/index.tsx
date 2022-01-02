@@ -7,12 +7,10 @@ import Footer from './Footer'
 import NavMenu from './NavMenu'
 import PageHead from '../PageHead'
 import { Post, Tags } from '@/types'
-import { SectionRenderer } from '..'
 
 const Layout: React.FC = (props) => {
   const { keys } = useKeys()
   const { posts } = usePosts()
-  const { sectionOptions } = useSectionOptions()
 
   const settings = {
     postTags: [
@@ -37,7 +35,7 @@ const Layout: React.FC = (props) => {
     descriptionContent = '',
     keywords = '',
     shareImage = '',
-    customHeader: Post
+    customHeader: Post | undefined
 
   filtered.posts.forEach((post) => {
     if (post.tags && post.tags.includes(Tags.sectionHeader)) {
@@ -94,30 +92,6 @@ const Layout: React.FC = (props) => {
     })
   }
 
-  const renderHeader = () => {
-    if (customHeader) {
-      const type =
-        Object.keys(sectionOptions).find((key) =>
-          customHeader.tags.includes(
-            Tags.sectionType(key.toLowerCase())
-          )
-        ) ?? 'Standard'
-      const option = sectionOptions[type]
-
-      return (
-        <SectionRenderer
-          component={option.component}
-          posts={[customHeader]}
-          defaultProps={option.defaultProps}
-        />
-      )
-    }
-
-    return (
-      <Header mainTitle={headerTitle} subTitle={headerSubTitle} />
-    )
-  }
-
   return (
     <div className="papyr-cms">
       <PageHead
@@ -162,7 +136,11 @@ const Layout: React.FC = (props) => {
 
       <NavMenu logo={logo} />
 
-      {renderHeader()}
+      <Header
+        mainTitle={headerTitle}
+        subTitle={headerSubTitle}
+        customHeader={customHeader}
+      />
 
       <main>{props.children}</main>
 

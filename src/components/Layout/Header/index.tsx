@@ -1,21 +1,30 @@
-import { Page } from '@/types'
+import { Page, Post, Tags } from '@/types'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { useSettings, useStore, useUser, usePages } from '@/context'
+import {
+  useSettings,
+  useStore,
+  useUser,
+  usePages,
+  useSectionOptions,
+} from '@/context'
 import styles from './Header.module.scss'
+import { SectionRenderer } from '@/components'
 
 type Props = {
   mainTitle: string
   subTitle: string
+  customHeader?: Post
 }
 
 const Header: React.FC<Props> = (props) => {
-  const { mainTitle, subTitle } = props
+  const { mainTitle, subTitle, customHeader } = props
   const { currentUser } = useUser()
   const { settings } = useSettings()
   const { pages } = usePages()
   const { query } = useRouter()
   const { cart } = useStore()
+  const { sectionOptions } = useSectionOptions()
 
   const page = pages.find((foundPage) => {
     if (foundPage.route === '') foundPage.route = 'home'
@@ -108,6 +117,26 @@ const Header: React.FC<Props> = (props) => {
           dangerouslySetInnerHTML={{ __html: subTitle }}
         />
       </>
+    )
+  }
+
+  if (customHeader) {
+    const type =
+      Object.keys(sectionOptions).find((key) =>
+        customHeader.tags.includes(
+          Tags.sectionType(key.toLowerCase())
+        )
+      ) ?? 'Standard'
+    const option = sectionOptions[type]
+
+    return (
+      <header>
+        <SectionRenderer
+          component={option.component}
+          posts={[customHeader]}
+          defaultProps={option.defaultProps}
+        />
+      </header>
     )
   }
 
