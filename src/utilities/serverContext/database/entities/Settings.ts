@@ -59,7 +59,7 @@ export class Settings extends PapyrEntity {
     const settingsRepo = getRepository<Settings>('Settings')
     const optionsRepo = getRepository<Option>('Option')
     let foundSettings
-    debugger
+
     if (settings.id) {
       foundSettings = await settingsRepo.findOne({
         where: sanitizeConditions({

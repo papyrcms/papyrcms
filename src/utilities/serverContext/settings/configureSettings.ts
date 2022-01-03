@@ -13,14 +13,28 @@ const configureSettings = async (
     name,
   })
 
-  // If we found one
+  let hasOptions = false
   if (settings) {
+    const defaultOptionsKeys = Object.keys(settings.options)
+    hasOptions = Object.keys(defaultOptions).every((optionKey) =>
+      defaultOptionsKeys.includes(optionKey)
+    )
+  }
+
+  // If we found one
+  if (hasOptions) {
     appSettings = settings
   } else {
+    const options = {
+      ...defaultOptions,
+      ...(settings?.options ?? {}),
+    }
+
     // If we did not find one, create one
     appSettings = await save<Settings>(EntityType.Settings, {
+      id: settings?.id,
       name,
-      options: defaultOptions,
+      options,
     } as Settings)
   }
 

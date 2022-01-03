@@ -142,6 +142,8 @@ export class Settings extends DbModel {
 
 export class AppSettings {
   enableMenu!: boolean
+  enableNav!: boolean
+  stickyNav!: boolean
   enableStore!: boolean
   storeMenuLocation!: number
   enableBlog!: boolean

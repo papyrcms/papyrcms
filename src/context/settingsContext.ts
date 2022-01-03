@@ -9,6 +9,8 @@ type SettingsContext = {
 export const settingsContext = createContext<SettingsContext>({
   settings: {
     enableMenu: false,
+    enableNav: true,
+    stickyNav: false,
     enableStore: false,
     storeMenuLocation: 0,
     enableBlog: false,

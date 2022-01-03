@@ -78,6 +78,10 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
   const { posts } = usePosts()
   const { settings } = useSettings()
 
+  if (!settings.enableNav) {
+    return null
+  }
+
   const renderMenuItems = () => {
     let menuPages = [...pages]
 
@@ -207,7 +211,11 @@ const NavMenu: React.FC<{ logo?: string }> = (props) => {
   }
 
   return (
-    <nav>
+    <nav
+      className={`${styles.nav} ${
+        settings.stickyNav ? styles.sticky : ''
+      }`}
+    >
       <ul className={styles.menu}>
         {renderLogo()}
 

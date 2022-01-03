@@ -1,6 +1,27 @@
 @import 'src/sass/abstracts/_variables.scss';
 @import 'src/sass/abstracts/_mixins.scss';
 
+.nav {
+  width: 100%;
+  z-index: 10;
+
+  &.sticky {
+    position: fixed;
+
+    .menu {
+      background-color: rgba($color-grey-dark, 0.7) !important;
+
+      @include respond(tab-port) {
+        height: 4.1rem;
+      }
+
+      @include respond(tab-land) {
+        height: 6.1rem;
+      }
+    }
+  }
+}
+
 .menu {
   background-color: transparent;
   position: absolute;
