@@ -92,7 +92,7 @@ const Header: React.FC<Props> = (props) => {
     }
   }
 
-  const renderNav = () => {
+  const renderMenu = () => {
     if (settings.enableMenu || currentUser?.isAdmin) {
       return (
         <ul className={styles.menu}>
@@ -144,7 +144,7 @@ const Header: React.FC<Props> = (props) => {
     <header className={styles.header}>
       <div className={styles.container}>
         <h1 className="heading-primary">{renderTitle()}</h1>
-        {renderNav()}
+        {renderMenu()}
       </div>
     </header>
   )
