@@ -30,18 +30,10 @@ const updatePost = async (
   enableEmailingToUsers: boolean,
   database: Database
 ) => {
-  if (body.tags) {
-    const newTags: string[] = body.tags
-      .split(',')
-      .map((tag: string) => {
-        let pendingTag = tag
-        pendingTag = pendingTag.trim()
-
-        if (!!pendingTag) return pendingTag
-      })
-      .filter((tag: string) => !!tag)
-    body.tags = [...new Set(newTags)]
-  }
+  body.tags = body.tags
+    .split(',')
+    .map((tag: string) => tag.trim())
+    .filter((tag: string) => !!tag)
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
 
   const { save, findOne, EntityType } = database

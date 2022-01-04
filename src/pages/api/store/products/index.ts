@@ -16,7 +16,10 @@ const createProduct = async (body: any, database: Database) => {
 
   const productData = {
     ...body,
-    tags: body.tags.split(',').map((tag: string) => tag.trim()),
+    tags: tags
+      .split(',')
+      .map((tag: string) => tag.trim())
+      .filter((tag: string) => !!tag),
     slug: title.replace(/\s+/g, '-').toLowerCase(),
   } as Product
 

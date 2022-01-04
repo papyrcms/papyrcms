@@ -17,24 +17,15 @@ const createPost = async (
   enableEmailingToUsers: boolean,
   database: Database
 ) => {
-  if (body.tags) {
-    const newTags: string[] = body.tags
-      .split(',')
-      .map((tag: string) => {
-        let pendingTag = tag
-        pendingTag = pendingTag.trim()
-
-        if (!!pendingTag) return pendingTag
-      })
-      .filter((tag: string) => !!tag)
-    body.tags = [...new Set(newTags)]
-  }
-
   const { EntityType, save } = database
 
   const postData = {
     ...body,
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
+    tags: body.tags
+      .split(',')
+      .map((tag: string) => tag.trim())
+      .filter((tag: string) => !!tag),
   }
   const post = await save<Post>(EntityType.Post, postData)
   if (!post) throw new Error('Post not created')

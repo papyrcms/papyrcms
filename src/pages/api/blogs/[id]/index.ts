@@ -41,7 +41,10 @@ const updateBlog = async (
   }
 
   body.slug = body.title.replace(/\s+/g, '-').toLowerCase()
-  body.tags = body.tags.split(',').map((tag: string) => tag.trim())
+  body.tags = body.tags
+    .split(',')
+    .map((tag: string) => tag.trim())
+    .filter((tag: string) => !!tag)
 
   return await save<Blog>(EntityType.Blog, { ...oldBlog, ...body })
 }

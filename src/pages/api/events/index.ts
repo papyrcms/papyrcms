@@ -16,7 +16,10 @@ const createEvent = async (body: any, database: Database) => {
   const eventData = {
     ...body,
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
-    tags: body.tags.split(',').map((tag: string) => tag.trim()),
+    tags: body.tags
+      .split(',')
+      .map((tag: string) => tag.trim())
+      .filter((tag: string) => !!tag),
   }
   const { save, EntityType } = database
   return await save<Event>(EntityType.Event, eventData)

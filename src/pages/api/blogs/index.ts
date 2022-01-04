@@ -20,7 +20,10 @@ const createBlog = async (body: any, database: Database) => {
   const blogData = {
     ...body,
     slug: body.title.replace(/\s+/g, '-').toLowerCase(),
-    tags: body.tags.split(',').map((tag: string) => tag.trim()),
+    tags: body.tags
+      .split(',')
+      .map((tag: string) => tag.trim())
+      .filter((tag: string) => !!tag),
   }
 
   if (body.isPublished) {
