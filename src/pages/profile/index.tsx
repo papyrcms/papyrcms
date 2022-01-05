@@ -3,7 +3,7 @@ import Router from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import { useUser } from '@/context'
-import { Input, Button, UserInfoForm } from '@/components'
+import { Input, Button, UserInfoForm, Tooltip } from '@/components'
 import { useForm } from '@/hooks'
 import styles from './profile.module.scss'
 
@@ -96,7 +96,15 @@ const ProfilePage = () => {
         </div>
 
         <div className={styles.unsubscribe}>
-          You are {currentUser.isSubscribed ? '' : 'not '}subscribed.
+          <span>
+            You are {currentUser.isSubscribed ? '' : 'not '}
+            subscribed.{' '}
+            <Tooltip>
+              You are {currentUser.isSubscribed ? '' : 'not '}{' '}
+              currently receiving email updates from us. You can click
+              this button to change this.
+            </Tooltip>
+          </span>
           <Button onClick={onSubscribeClick}>
             {currentUser.isSubscribed ? 'Unsubscribe' : 'Subscribe'}
           </Button>

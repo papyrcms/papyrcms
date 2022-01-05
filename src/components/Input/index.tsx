@@ -59,7 +59,7 @@ const Input = (props: Props) => {
             {label}
             {required && ' *'}
           </label>{' '}
-          {tooltip && <Tooltip text={tooltip} />}
+          {tooltip && <Tooltip>{tooltip}</Tooltip>}
         </div>
       )
     }
