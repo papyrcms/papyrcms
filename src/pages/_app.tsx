@@ -7,7 +7,7 @@ import {
   SectionOptions,
   Keys,
 } from '@/types'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import '@fortawesome/fontawesome-free/js/all.min'
@@ -18,6 +18,7 @@ import { GlobalState } from '@/context'
 import { initGA, logPageView } from '@/utilities/analytics'
 import '../sass/main.scss'
 import 'swagger-ui-react/swagger-ui.css'
+import { useNextAnchors } from '@/hooks'
 
 type Props = {
   Component: any
@@ -32,29 +33,9 @@ type Props = {
 }
 
 const PapyrCms = (props: Props) => {
-  const { asPath, push } = useRouter()
-  const anchorsRef = useRef<
-    [HTMLAnchorElement, EventListenerOrEventListenerObject][]
-  >([])
-  useEffect(() => {
-    const anchors = document.querySelectorAll('a')
-    for (const anchor of anchors) {
-      if (anchor.classList.contains('papyr-link')) {
-        const handleClick = (event: any) => {
-          event.preventDefault()
-          push(event.target.href)
-        }
-        anchor.addEventListener('click', handleClick)
-        anchorsRef.current.push([anchor, handleClick])
-      }
-    }
+  const { asPath } = useRouter()
+  useNextAnchors()
 
-    return () => {
-      anchorsRef.current.forEach(([anchor, callback]) => {
-        anchor.removeEventListener('click', callback)
-      })
-    }
-  }, [asPath])
   let {
     Component,
     pages = [],
