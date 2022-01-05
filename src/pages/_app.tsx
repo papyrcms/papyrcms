@@ -7,18 +7,15 @@ import {
   SectionOptions,
   Keys,
 } from '@/types'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import axios from 'axios'
-import '@fortawesome/fontawesome-free/js/all.min'
-import '@fortawesome/fontawesome-free/css/all.min.css'
 import { Layout } from '@/components'
 import keys from '@/keys'
 import { GlobalState } from '@/context'
-import { initGA, logPageView } from '@/utilities/analytics'
-import '../sass/main.scss'
+import { useGa, useNextAnchors } from '@/hooks'
 import 'swagger-ui-react/swagger-ui.css'
-import { useNextAnchors } from '@/hooks'
+import '@fortawesome/fontawesome-free/js/all.min'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import '../sass/main.scss'
 
 interface Props {
   Component: any
@@ -33,8 +30,8 @@ interface Props {
 }
 
 const PapyrCms = (props: Props) => {
-  const { asPath } = useRouter()
   useNextAnchors()
+  useGa()
 
   let {
     Component,
@@ -48,18 +45,6 @@ const PapyrCms = (props: Props) => {
     sectionOptions,
     ...pageProps
   } = props
-  const [gaInitialized, setGaInitialized] = useState(false)
-
-  useEffect(() => {
-    if (!gaInitialized) {
-      setGaInitialized(true)
-      initGA(keys.googleAnalyticsId)
-    }
-    if (gaInitialized) {
-      logPageView()
-    }
-    FontAwesome.config.autoAddCss = false
-  }, [asPath])
 
   return (
     <GlobalState
