@@ -11,7 +11,7 @@ const Position = (coords: Coords) => (
   <div className={styles.position} />
 )
 
-type Props = {
+interface Props {
   className?: string
   latitude: number
   longitude: number

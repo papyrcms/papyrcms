@@ -2,7 +2,7 @@ import { SectionOptions } from '@/types'
 import { useState } from 'react'
 import { sectionOptionsContext } from './sectionOptionsContext'
 
-type Props = {
+interface Props {
   sectionOptions: SectionOptions
   children: any
 }

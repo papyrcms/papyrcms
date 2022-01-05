@@ -3,7 +3,7 @@ import React from 'react'
 import { Map } from '@/components'
 import styles from './SectionMaps.module.scss'
 
-type Props = {
+interface Props {
   posts: Post[]
   emptyTitle?: string
   emptyMessage?: string

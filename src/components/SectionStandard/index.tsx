@@ -8,7 +8,7 @@ import { usePostFilter } from '@/hooks'
 import Comments from './Comments'
 import styles from './SectionStandard.module.scss'
 
-type Props = {
+interface Props {
   posts?: Post[]
   enableCommenting?: boolean
   apiPath?: string

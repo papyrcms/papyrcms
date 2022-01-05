@@ -4,7 +4,7 @@ import { usePages, useSectionOptions } from '@/context'
 import styles from './Footer.module.scss'
 import { SectionRenderer } from '@/components'
 
-type Props = {
+interface Props {
   footerTitle: string
   footerContent: string
   footerCopyrightContent: string

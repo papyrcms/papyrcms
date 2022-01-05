@@ -2,7 +2,7 @@ import { Post } from '@/types'
 import { useState } from 'react'
 import { postsContext } from './postsContext'
 
-type Props = {
+interface Props {
   posts: Post[]
   children: any
 }

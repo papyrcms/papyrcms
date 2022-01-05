@@ -2,7 +2,7 @@ import { Event } from '@/types'
 import { useState } from 'react'
 import { eventsContext } from './eventsContext'
 
-type Props = {
+interface Props {
   events: Event[]
   children: any
 }

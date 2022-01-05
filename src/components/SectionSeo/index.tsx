@@ -4,7 +4,7 @@ import sanitizeHTML from 'sanitize-html'
 import { PageHead } from '@/components'
 import styles from './SectionSeo.module.scss'
 
-type Props = {
+interface Props {
   post: Post
 }
 

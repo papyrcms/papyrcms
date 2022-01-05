@@ -16,7 +16,7 @@ import keys from '@/keys'
 import styles from './page.module.scss'
 import { SectionRenderer } from '@/components'
 
-type Props = {
+interface Props {
   previewPage?: Page
   mockPosts?: Post[]
   page?: Page

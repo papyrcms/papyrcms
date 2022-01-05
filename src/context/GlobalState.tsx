@@ -18,7 +18,7 @@ import BlogsProvider from './BlogsProvider'
 import EventsProvider from './EventsProvider'
 import PagesProvider from './PagesProvider'
 
-type Props = {
+interface Props {
   keys: Keys
   settings: AppSettings
   sectionOptions: SectionOptions

@@ -3,7 +3,7 @@ import React from 'react'
 import { Media } from '@/components'
 import styles from './SectionMedia.module.scss'
 
-type Props = {
+interface Props {
   post: Post
   emptyMessage?: string
   emptyTitle?: string

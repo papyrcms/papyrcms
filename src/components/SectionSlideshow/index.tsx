@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { SectionMedia } from '@/components'
 import styles from './SectionSlideshow.module.scss'
 
-type Props = {
+interface Props {
   timer?: number
   posts: Post[]
   emptyTitle?: string

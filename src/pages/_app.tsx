@@ -20,7 +20,7 @@ import '../sass/main.scss'
 import 'swagger-ui-react/swagger-ui.css'
 import { useNextAnchors } from '@/hooks'
 
-type Props = {
+interface Props {
   Component: any
   pages: Page[]
   posts: Post[]

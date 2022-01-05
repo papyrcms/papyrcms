@@ -2,7 +2,7 @@ import { Blog } from '@/types'
 import { useState } from 'react'
 import { blogsContext } from './blogsContext'
 
-type Props = {
+interface Props {
   blogs: Blog[]
   children: any
 }

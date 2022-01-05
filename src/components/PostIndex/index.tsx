@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Media from '../Media'
 import styles from './PostIndex.module.scss'
 
-type Props = {
+interface Props {
   posts: Post[]
 }
 

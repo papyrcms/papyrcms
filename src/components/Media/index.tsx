@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from '../Modal'
 import styles from './Media.module.scss'
 
-type Props = {
+interface Props {
   src: string
   className?: string
   alt: string

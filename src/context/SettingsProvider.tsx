@@ -2,7 +2,7 @@ import { AppSettings } from '@/types'
 import { useState } from 'react'
 import { settingsContext } from './settingsContext'
 
-type Props = {
+interface Props {
   settings: AppSettings
   children: any
 }

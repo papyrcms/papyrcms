@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Media } from '@/components'
 import styles from './SectionStrip.module.scss'
 
-type Props = {
+interface Props {
   clickableMedia?: boolean
   mediaLeft?: boolean
   mediaRight?: boolean

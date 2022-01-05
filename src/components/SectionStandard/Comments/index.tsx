@@ -6,7 +6,7 @@ import { useSettings, useUser } from '@/context'
 import CommentForm from '../CommentForm'
 import styles from './Comments.module.scss'
 
-type Props = {
+interface Props {
   comments: Comment[]
   enableCommenting?: boolean
   post: Post

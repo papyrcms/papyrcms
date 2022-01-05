@@ -7,7 +7,7 @@ import styles from './PostsForm.module.scss'
 import { useState } from 'react'
 import { SectionRenderer } from '..'
 
-type Props = {
+interface Props {
   post?: Post
   pageTitle: string
   className?: string

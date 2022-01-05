@@ -11,7 +11,7 @@ import {
 import styles from './Header.module.scss'
 import { SectionRenderer } from '@/components'
 
-type Props = {
+interface Props {
   mainTitle: string
   subTitle: string
   customHeader?: Post

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import styles from './Modal.module.scss'
 
-type Props = {
+interface Props {
   buttonClasses?: string
   buttonId?: string
   buttonText?: string

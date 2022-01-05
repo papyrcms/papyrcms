@@ -4,7 +4,7 @@ import { useForm } from '@/hooks'
 import styles from './ContactForm.module.scss'
 import { Post } from '@/types'
 
-type Props = {
+interface Props {
   className?: string
   post?: Post
 }

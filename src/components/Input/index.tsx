@@ -2,7 +2,7 @@ import { MutableRefObject } from 'react'
 import Tooltip from '../Tooltip'
 import styles from './Input.module.scss'
 
-type Props = {
+interface Props {
   className?: string
   type?: string
   placeholder?: string

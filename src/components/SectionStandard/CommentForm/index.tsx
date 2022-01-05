@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './CommentForm.module.scss'
 
-type Props = {
+interface Props {
   content: string
   onChange: Function
   onSubmit: Function
@@ -10,13 +10,8 @@ type Props = {
 }
 
 const CommentForm: React.FC<Props> = (props) => {
-  const {
-    content,
-    onChange,
-    onSubmit,
-    detached,
-    onDetachClick,
-  } = props
+  const { content, onChange, onSubmit, detached, onDetachClick } =
+    props
 
   return (
     <form

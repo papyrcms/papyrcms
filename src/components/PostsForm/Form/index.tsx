@@ -14,7 +14,7 @@ type FieldProps = {
   validateField: Function
 }
 
-type Props = {
+interface Props {
   additionalFields?: React.FC<FieldProps>[]
   values: Record<string, any>
   handleChange: Function

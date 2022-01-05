@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Media } from '@/components'
 import styles from './SectionCards.module.scss'
 
-type Props = {
+interface Props {
   className?: string
   posts: Post[]
   contentLength?: number

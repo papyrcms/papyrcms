@@ -2,7 +2,7 @@ import { Post, Tags } from '@/types'
 import { useState, useEffect } from 'react'
 import styles from './Notification.module.scss'
 
-type Props = {
+interface Props {
   post: Post
 }
 

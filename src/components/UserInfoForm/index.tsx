@@ -6,7 +6,7 @@ import Input from '../Input'
 import Button from '../Button'
 import styles from './UserInfoForm.module.scss'
 
-type Props = {
+interface Props {
   submitRef?: MutableRefObject<HTMLButtonElement>
   beforeSubmit?: Function
   onSubmitError?: Function

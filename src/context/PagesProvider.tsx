@@ -2,7 +2,7 @@ import { Page } from '@/types'
 import { useState } from 'react'
 import { pagesContext } from './pagesContext'
 
-type Props = {
+interface Props {
   pages: Page[]
   children: any
 }

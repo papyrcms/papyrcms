@@ -7,7 +7,7 @@ import { useUser } from '@/context'
 import keys from '@/keys'
 import { PostsForm, Input } from '@/components'
 
-type Props = {
+interface Props {
   values: any
   errors: any
   validateField: Function

@@ -4,7 +4,7 @@ import axios from 'axios'
 import { storeContext } from './storeContext'
 import { useUser } from '@/context'
 
-type Props = {
+interface Props {
   products: Product[]
 }
 

@@ -9,7 +9,7 @@ import { Input, Button, Modal, PostsForm } from '@/components'
 import PageRenderer from '../../[page]'
 import styles from './page-builder.module.scss'
 
-type Props = {
+interface Props {
   page: Page
 }
 
