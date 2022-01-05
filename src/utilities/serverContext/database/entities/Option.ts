@@ -37,7 +37,7 @@ export class Option extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date
 
-  getParsedValue(): any {
+  getParsedValue(): string | number | boolean {
     switch (this.type) {
       case 'string':
         return this.value

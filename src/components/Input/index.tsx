@@ -1,4 +1,4 @@
-import { MutableRefObject } from 'react'
+import { MutableRefObject, FC } from 'react'
 import Tooltip from '../Tooltip'
 import styles from './Input.module.scss'
 
@@ -14,14 +14,13 @@ interface Props {
   onChange?: Function
   onFocus?: Function
   onBlur?: Function
-  children?: any
   validation?: string
   tooltip?: string
   refProp?: MutableRefObject<any>
   formState?: Record<string, any>
 }
 
-const Input = (props: Props) => {
+const Input: FC<Props> = (props) => {
   // Instantiate props with defaults
   let {
     className = '',

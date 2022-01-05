@@ -6,7 +6,9 @@ import {
   Product,
   SectionOptions,
   Keys,
+  AppSettings,
 } from '@/types'
+import { NextComponentType, NextPageContext } from 'next'
 import axios from 'axios'
 import { Layout } from '@/components'
 import keys from '@/keys'
@@ -18,14 +20,14 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import '../sass/main.scss'
 
 interface Props {
-  Component: any
+  Component: NextComponentType
   pages: Page[]
   posts: Post[]
   blogs: Blog[]
   events: Event[]
   products: Product[]
   keys: Keys
-  settings: any
+  settings: AppSettings
   sectionOptions: SectionOptions
 }
 
@@ -33,7 +35,7 @@ const PapyrCms = (props: Props) => {
   useNextAnchors()
   useGa()
 
-  let {
+  const {
     Component,
     pages = [],
     posts = [],
@@ -68,11 +70,11 @@ PapyrCms.getInitialProps = async ({
   Component,
   ctx,
 }: {
-  Component: any
-  ctx: any
+  Component: NextComponentType
+  ctx: NextPageContext
 }) => {
-  let pageProps: any = {}
-  const rootUrl = keys.rootURL ? keys.rootURL : ''
+  let pageProps: Record<string, any> = {}
+  const rootUrl = keys.rootURL ?? ''
 
   // Run getInitialProps for each component
   if (Component.getInitialProps) {

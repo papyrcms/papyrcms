@@ -32,7 +32,7 @@ class Payments {
     try {
       const charge = await this.stripe.charges.create(paymentDetails)
       return charge
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err)
       return null
     }
