@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { Modal } from '@/components'
 import { useSettings } from '@/context'
 import Input from '../../Input'
 import styles from './AppSettingsForm.module.scss'
@@ -97,17 +98,19 @@ const AppSettingsForm: React.FC = () => {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <h3 className="heading-tertiary">App Settings</h3>
+    <Modal buttonClasses="button-primary" buttonText="App Settings">
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <h3 className="heading-tertiary">App Settings</h3>
 
-      <p className={styles.verification}>{verification}</p>
+        <p className={styles.verification}>{verification}</p>
 
-      {renderSettingsInputs()}
+        {renderSettingsInputs()}
 
-      <div className={styles.submit}>
-        <input type="submit" className="button button-primary" />
-      </div>
-    </form>
+        <div className={styles.submit}>
+          <input type="submit" className="button button-primary" />
+        </div>
+      </form>
+    </Modal>
   )
 }
 

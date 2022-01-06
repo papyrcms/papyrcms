@@ -26,7 +26,8 @@
 
   display: grid;
   grid-auto-flow: row;
-  justify-items: start;
+  justify-items: center;
+  align-content: center;
 
   @include respond(tab-port) {
     margin-left: 2rem;
