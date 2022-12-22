@@ -25,7 +25,7 @@
     "formidable": "^2.0.1",
     "google-map-react": "^2.1.9",
     "googleapis": "^92.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.29.1",
     "mongodb": "^3.6.6",
     "mysql2": "^2.2.5",
